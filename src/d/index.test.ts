@@ -1,4 +1,4 @@
-import d from './d';
+import d from './index';
 import { RollModifier } from './rollModifiers';
 
 describe('D objects', () => {

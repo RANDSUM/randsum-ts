@@ -1,6 +1,6 @@
 {
-  "name": "d",
-  "description": "Your Typical dice rolling package. new D(20).",
+  "name": "droll",
+  "description": "Modern Dice-Rolling in JS (And Typescript!)",
   "license": "MIT",
   "author": "Alex Jarvis",
   "version": "0.1.1",
@@ -10,8 +10,7 @@
     "prepare": "npm run compile",
     "pretest": "npm run compile",
     "test": "jest --coverage",
-    "watch-build": "tsc -w -p .",
-    "watch-test": "test --watch"
+    "watch-build": "tsc -w -p ."
   },
   "dependencies": {
     "@types/lodash": "^4.14.104",
@@ -27,6 +26,7 @@
     "typescript": "~2.6.1"
   },
   "keywords": [
+    "typescript",
     "dice",
     "rolling",
     "die",
@@ -35,6 +35,11 @@
     "chance",
     "rand"
   ],
+  "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/alxjrvs/droll.git"
+  },
+
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
