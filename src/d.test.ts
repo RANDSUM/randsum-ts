@@ -1,14 +1,14 @@
-import D from './D';
-import { RollModifier } from './RollModifier';
+import d from './d';
+import { RollModifier } from './rollModifiers';
 
 describe('D objects', () => {
   test('can be created when provided a side', () => {
-    expect(new D(6)).not.toThrowError
+    expect(new d(6)).not.toThrowError
   });
 })
 
 const RollCoreTests = ({n, modifier} : {n?: number, modifier?: RollModifier} = {}) => {
-  const D6 = new D(6);
+  const D6 = new d(6);
   const initialLogLength = D6.log.length;
   let total: number;
   if (n && modifier) {

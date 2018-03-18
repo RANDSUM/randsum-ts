@@ -1,6 +1,6 @@
 import { RollModifier } from './rollModifiers';
 
-export default class RollLog {
+export default class rollLog {
   readonly total: number;
   readonly results: number[];
   readonly modifier?: RollModifier;

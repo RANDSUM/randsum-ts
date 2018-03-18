@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var D_1 = require("./D");
+var d_1 = require("./d");
 describe('D objects', function () {
     test('can be created when provided a side', function () {
-        expect(new D_1.default(6)).not.toThrowError;
+        expect(new d_1.default(6)).not.toThrowError;
     });
 });
 var RollCoreTests = function (_a) {
     var _b = _a === void 0 ? {} : _a, n = _b.n, modifier = _b.modifier;
-    var D6 = new D_1.default(6);
+    var D6 = new d_1.default(6);
     var initialLogLength = D6.log.length;
     var total;
     if (n && modifier) {
@@ -57,4 +57,4 @@ describe('D methods:', function () {
         });
     });
 });
-//# sourceMappingURL=D.test.js.map
+//# sourceMappingURL=d.test.js.map

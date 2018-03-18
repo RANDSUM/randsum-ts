@@ -1,3 +1,3 @@
-import D from './D';
-export declare const D3: D, D4: D, D5: D, D6: D, D8: D, D10: D, D12: D;
-export default D;
+import d from './d';
+export declare const D4: d, D6: d, D8: d, D10: d, D12: d, D20: d, D100: d;
+export default d;

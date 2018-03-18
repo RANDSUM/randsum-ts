@@ -1,11 +1,11 @@
 import { random } from 'lodash';
-import RollLog from './RollLog';
+import rollLog from './rollLog';
 
 import generateTotal, { RollModifier } from './rollModifiers';
 
 class d {
   readonly sides: number;
-  readonly log: RollLog[] = [];
+  readonly log: rollLog[] = [];
 
   constructor(sides: number){
    this.sides = sides;
@@ -14,7 +14,7 @@ class d {
   roll(number = 1, modifier?: RollModifier ) {
     const results = Array.from(Array(number), () => this.singleRoll)
     const total = generateTotal(results, modifier)
-    this.log.push(new RollLog(total, results, modifier));
+    this.log.push(new rollLog(total, results, modifier));
 
     return total;
   }

@@ -1,4 +1,4 @@
-import { RollModifier } from './RollModifier';
+import { RollModifier } from './rollModifiers';
 export default class RollLog {
     readonly total: number;
     readonly results: number[];
