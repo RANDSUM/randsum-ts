@@ -39,6 +39,7 @@
     "rolling",
     "typescript"
   ],
+  "engines" : { "node" : ">=6.2.2" }, 
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
