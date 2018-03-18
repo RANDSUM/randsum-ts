@@ -3,6 +3,10 @@
   "description": "Modern Dice-Rolling in JS (And Typescript!)",
   "license": "MIT",
   "author": "Alex Jarvis",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alxjrvs/droll.git"
+  },
   "version": "0.1.1",
   "main": "build/src/index.js",
   "scripts": {
@@ -26,20 +30,15 @@
     "typescript": "~2.6.1"
   },
   "keywords": [
-    "typescript",
+    "chance",
     "dice",
-    "rolling",
+    "dice rolls",
     "die",
     "die rolling",
-    "dice rolls",
-    "chance",
-    "rand"
+    "rand",
+    "rolling",
+    "typescript"
   ],
-  "repository" :
-  { "type" : "git"
-  , "url" : "https://github.com/alxjrvs/droll.git"
-  },
-
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
