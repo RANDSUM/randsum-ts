@@ -3,7 +3,7 @@
   "description": "Your Typical dice rolling package. new D(20).",
   "license": "MIT",
   "author": "Alex Jarvis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "build/src/index.js",
   "scripts": {
     "compile": "tsc -p .",
@@ -26,7 +26,15 @@
     "ts-jest": "^22.4.1",
     "typescript": "~2.6.1"
   },
-  "keywords": ["dice", "rolling", "die", "die rolling", "dice rolls", "chance", "rand"],
+  "keywords": [
+    "dice",
+    "rolling",
+    "die",
+    "die rolling",
+    "dice rolls",
+    "chance",
+    "rand"
+  ],
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
