@@ -1,5 +1,5 @@
 import d from './index';
-import { RollModifier } from './rollModifiers';
+import { RollModifier } from './types';
 
 describe('D objects', () => {
   test('can be created when provided a side', () => {

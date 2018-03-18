@@ -1,4 +1,6 @@
-import RollAccessor from './accessor';
-import { RollParameters } from './parameters';
+import ParameterDigester, { RollParameters } from './parameters';
+export declare type RollAccessor = (results: number[]) => number;
 export declare type RollModifier = RollAccessor | RollParameters;
-export default function generateTotal(results: number[], modifier?: RollModifier): number;
+export { ParameterDigester, RollParameters };
+declare function generateTotal(results: number[], modifier?: RollModifier): number;
+export default generateTotal;

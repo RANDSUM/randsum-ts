@@ -1,7 +1,7 @@
 import { random } from 'lodash';
 import rollLog from './rollLog';
-
-import generateTotal, { RollModifier } from './rollModifiers';
+import generateModifiedTotal from './generateModifiedTotal';
+import { RollModifier } from './types';
 
 class d {
   readonly sides: number;
@@ -13,7 +13,7 @@ class d {
 
   roll(number = 1, modifier?: RollModifier ) {
     const results = Array.from(Array(number), () => this.singleRoll)
-    const total = generateTotal(results, modifier)
+    const total = generateModifiedTotal(results, modifier)
     this.log.push(new rollLog(total, results, modifier));
 
     return total;

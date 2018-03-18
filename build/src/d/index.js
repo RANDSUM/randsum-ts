@@ -9,5 +9,7 @@ exports.D10 = constants_1.D10;
 exports.D12 = constants_1.D12;
 exports.D20 = constants_1.D20;
 exports.D100 = constants_1.D100;
+var rollLog_1 = require("./rollLog");
+exports.rollLog = rollLog_1.default;
 exports.default = d_1.default;
 //# sourceMappingURL=index.js.map

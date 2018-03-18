@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var parameters_1 = require("./parameters");
+exports.ParameterDigester = parameters_1.default;
 function generateTotal(results, modifier) {
     if (lodash_1.isPlainObject(modifier)) {
         modifier = modifier;

@@ -57,4 +57,4 @@ describe('D methods:', function () {
         });
     });
 });
-//# sourceMappingURL=d.test.js.map
+//# sourceMappingURL=index.test.js.map

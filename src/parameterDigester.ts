@@ -1,13 +1,5 @@
 import { isNumber, times, sum} from 'lodash';
-
-export type RollParameters = {
-  plus?: number;
-  minus?: number;
-  drop?: {
-    highest?: number | boolean;
-    lowest?: number | boolean ;
-  }
-};
+import { RollParameters } from './types';
 
 export default function ParameterDigester(results: number[], parameters: RollParameters) {
   const modifiedResults = results.slice().sort();

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
-var RollLog_1 = require("./RollLog");
-var rollModifiers_1 = require("./rollModifiers");
+var rollLog_1 = require("./rollLog");
+var generateModifiedTotal_1 = require("./generateModifiedTotal");
 var d = /** @class */ (function () {
     function d(sides) {
         this.log = [];
@@ -12,8 +12,8 @@ var d = /** @class */ (function () {
         var _this = this;
         if (number === void 0) { number = 1; }
         var results = Array.from(Array(number), function () { return _this.singleRoll; });
-        var total = rollModifiers_1.default(results, modifier);
-        this.log.push(new RollLog_1.default(total, results, modifier));
+        var total = generateModifiedTotal_1.default(results, modifier);
+        this.log.push(new rollLog_1.default(total, results, modifier));
         return total;
     };
     Object.defineProperty(d.prototype, "singleRoll", {
