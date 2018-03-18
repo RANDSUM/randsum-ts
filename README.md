@@ -33,7 +33,7 @@ const D10 = require('droll').D10;
 `D4.sides // 4`
 This represents the number of sides on the die, represeting the highest value in the range of numbers this die can produce.
 
-#### `roll: (number?, RollModifier?) => number`
+#### `roll: (n: number?, modifier: RollModifier?) => number`
 ```
 D4.roll() // a random number between 1-4
 D4.roll(2) // a random number between 2-8
@@ -60,7 +60,7 @@ D4.log  /* [ {
 ```
 `d` objects keep a log of every roll they've made. See `rollLog` for more information.
 
-### The `Dn` Constants
+### The `D{n}` Constants
 ```
 import { D10 } from 'droll'
 
@@ -75,7 +75,61 @@ console.log(D10.roll()) // 1-10
 - D20 
 - D100
 
-These are all the equivalent of `const D6 = new d(6)`. Keep in mind that these constants will share a `log`, if you care about that sort of thing.
+These are all the equivalent of `const D6 = new d(6)`. 
+
+### Types 
+#### `RollModifier: { plus?: number; minus?: number; drop?: { highest?: number | boolean; lowest?: number | boolean ; } }`
+
+`RollModifier` describes a configuration object that can be passed to `d#roll`'s second argument. 
+
+##### `drop?: { highest?: number | boolean; lowest?: number | boolean }`
+`drop` takes an object that you can use to remove dice from the result pool of dice rolled. 
+
+##### `drop.highest` 
+`drop.highest` will remove the highest-value dice from the dice pool. 
+
+if `drop.highest` is set to `true`, the highest die will be removed from the results pool before the total is calculated.
+
+`D4.roll(2, { drop: { highest: true }}) // A random number between 1-4 (2 dice rolled, the highest removed)`
+
+if `drop.highest` is set to a number (n), the highest n die will be removed from the results pool before the total is calculated.
+`D4.roll(3, { drop: { highest: 2 }}) // A random number between 1-4 ( 3 dice rolled, the highest 2 removed)`
+
+##### `drop.lowest` 
+`drop.lowest` will remove the lowest-value dice from the dice pool. 
+
+if `drop.lowest` is set to `true`, the lowest die will be removed from the results pool before the total is calculated.
+
+`D4.roll(2, { drop: { lowest: true }}) // A random number between 1-4 (2 dice rolled, the lowest removed)`
+
+if `drop.lowest` is set to a number (n), the lowest n die will be removed from the results pool before the total is calculated.
+`D4.roll(3, { drop: { lowest: 2 }}) // A random number between 1-4 ( 3 dice rolled, the lowest 2 removed)`
+
+
+##### `plus?: number`
+`plus` will add the provided number to the total calculation of die rolled.
+
+`D4.roll(2, { plus: 2}) // A random number between 2-8, +2`
+
+##### `minus?: number`
+`minus` will subtract the provided number (or add, if the provided number is negative itself) from the total calculation of die rolled.
+
+`D4.roll(2, { minus: 2}) // A random number between 2-8, -2`
+
+`D4.roll(2, { minus: -2}) // A random number between 2-8, -2`
+
+#### `RollAccessor: (results: number[]) => number`
+`RollAccessor` describes the optional function that can be passed to `d#roll`'s second argument. 
+
+An array of individual roll results will be made available to the callback. You can operate on this array to manipulate the total however you'd like! 
+
+For instance, if you wanted to double each number rolled (and were using a cool library like `lodash` for the math!), we could do something like this: 
+
+`D4.roll(4, (results) => _.sum(results.map( n => n*2)))`
+
+#### `RollModifier: RollAccessor | RollParameters`
+`RollModifier` is a wrapper for `RollAccessor` and `RollParameters`.
+
 
 ## Contributing
 
