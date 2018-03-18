@@ -29,11 +29,11 @@ const D10 = require('droll').D10;
 #### `constructor: (sides: number)`
 `const D4 = new d(4);`
 
-### `sides: number`
+#### `sides: number`
 `D4.sides // 4`
 This represents the number of sides on the die, represeting the highest value in the range of numbers this die can produce.
 
-### `roll: (number?, RollModifier?) => number`
+#### `roll: (number?, RollModifier?) => number`
 ```
 D4.roll() // a random number between 1-4
 D4.roll(2) // a random number between 2-8
@@ -46,7 +46,7 @@ It takes two optional arguments:
   - a `number`, representing the number of times you want to roll the die in this `roll`. 
   - a `RollModifier`, a function or object you can use to modify the result of the die roll. see `RollModifier` for more information.
 
-### `log: rollLog[]`
+#### `log: rollLog[]`
 ```
 const D4 = new d(4);
 D4.log // [];
