@@ -1,25 +1,26 @@
-import * as _ from 'lodash';
+import { random } from 'lodash';
 import RollLog from './RollLog';
+
+import generateTotal, { RollModifier } from './RollModifier';
 
 class D {
   readonly sides: number;
   public log: RollLog[] = [];
-  public total?: number;
-  public results?: number[];
 
   constructor(sides: number){
    this.sides = sides;
   }
 
-  public roll(number: string) {
-    this.results = Array(number).map(() => this.singleRoll());
-    this.total = _.sum(this.results);
-    this.log.push( new RollLog(this.total, this.results));
-    return this;
+  public roll(number: number = 1, modifier?: RollModifier ) {
+    const results = Array.from(Array(number), () => this.singleRoll)
+    const total = generateTotal(results, modifier)
+    this.log.push(new RollLog(total, results, modifier));
+
+    return total;
   }
 
-  private singleRoll() {
-    return _.random(1, this.sides);
+  private get singleRoll() {
+    return random(1, this.sides);
   }
 }
 

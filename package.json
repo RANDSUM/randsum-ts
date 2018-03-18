@@ -2,12 +2,13 @@
   "name": "rollr-t",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc -p .",
+    "watch": "tsc -w -p .",
     "fix": "gts fix",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
@@ -15,7 +16,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "gts": "^0.5.4",
     "typescript": "~2.6.1"
@@ -23,6 +24,7 @@
   "dependencies": {
     "@types/lodash": "^4.14.104",
     "lodash": "^4.17.5",
+    "log": "^1.4.0",
     "tslint": "^5.9.1"
   }
 }

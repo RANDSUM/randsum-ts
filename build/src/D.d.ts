@@ -1,11 +1,10 @@
 import RollLog from './RollLog';
+import { RollModifier } from './RollModifier';
 declare class D {
     readonly sides: number;
     log: RollLog[];
-    total?: number;
-    results?: number[];
     constructor(sides: number);
-    roll(number: string): this;
-    private singleRoll();
+    roll(number?: number, modifier?: RollModifier): number;
+    private readonly singleRoll;
 }
 export default D;

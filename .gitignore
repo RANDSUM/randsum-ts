@@ -64,3 +64,6 @@ typings/
 
 
 # End of https://www.gitignore.io/api/node
+
+# just a file to fuck around with
+scratchpad.js
