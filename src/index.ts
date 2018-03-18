@@ -1,20 +1,20 @@
-import D from './D';
+import d from './d';
 
 export const [ 
-  D3, 
   D4, 
-  D5, 
   D6, 
   D8, 
   D10, 
-  D12
+  D12,
+  D20,
+  D100,
 ] = [
-  3, 
   4, 
-  5, 
   6, 
   8, 
   10, 
-  12
-].map((sides) => new D(sides));
-export default D;
+  12,
+  20,
+  100,
+].map((sides) => new d(sides));
+export default d;

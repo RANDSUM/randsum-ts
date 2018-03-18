@@ -4,8 +4,8 @@ export type RollParameters = {
   plus?: number;
   minus?: number;
   drop?: {
-    highest?: number | true;
-    lowest?: number | true;
+    highest?: number | boolean;
+    lowest?: number | boolean ;
   }
 };
 

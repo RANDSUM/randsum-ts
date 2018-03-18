@@ -1,9 +1,9 @@
 import { random } from 'lodash';
 import RollLog from './RollLog';
 
-import generateTotal, { RollModifier } from './RollModifier';
+import generateTotal, { RollModifier } from './rollModifiers';
 
-class D {
+class d {
   readonly sides: number;
   readonly log: RollLog[] = [];
 
@@ -11,7 +11,7 @@ class D {
    this.sides = sides;
   }
 
-  roll(number: number = 1, modifier?: RollModifier ) {
+  roll(number = 1, modifier?: RollModifier ) {
     const results = Array.from(Array(number), () => this.singleRoll)
     const total = generateTotal(results, modifier)
     this.log.push(new RollLog(total, results, modifier));
@@ -24,4 +24,4 @@ class D {
   }
 }
 
-export default D;
+export default d;

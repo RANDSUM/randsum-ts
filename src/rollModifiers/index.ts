@@ -1,6 +1,6 @@
 import { sum, isPlainObject, isFunction} from 'lodash';
-import RollAccessor from './Accessor';
-import ParameterDigester, { RollParameters } from './Parameters';
+import RollAccessor from './accessor';
+import ParameterDigester, { RollParameters } from './parameters';
 
 export type RollModifier = RollAccessor | RollParameters;
 

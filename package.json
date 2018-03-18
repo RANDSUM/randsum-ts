@@ -1,22 +1,24 @@
 {
-  "name": "rollr-t",
-  "version": "1.0.0",
-  "description": "",
+  "name": "d",
+  "description": "Your Typical dice rolling package. new D(20).",
+  "license": "MIT",
+  "author": "Alex Jarvis",
+  "version": "0.1.0",
   "main": "build/src/index.js",
   "scripts": {
-    "test": "jest --coverage",
-    "check": "gts check",
-    "clean": "gts clean",
     "compile": "tsc -p .",
-    "watch": "tsc -w -p .",
-    "fix": "gts fix",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
-    "posttest": ""
+    "test": "jest --coverage",
+    "watch-build": "tsc -w -p .",
+    "watch-test": "test --watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "dependencies": {
+    "@types/lodash": "^4.14.104",
+    "lodash": "^4.17.5",
+    "log": "^1.4.0",
+    "tslint": "^5.9.1"
+  },
   "devDependencies": {
     "@types/jest": "^22.2.0",
     "gts": "^0.5.4",
@@ -24,24 +26,18 @@
     "ts-jest": "^22.4.1",
     "typescript": "~2.6.1"
   },
+  "keywords": ["dice", "rolling", "die", "die rolling", "dice rolls", "chance", "rand"],
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$",
     "moduleFileExtensions": [
       "ts",
-      "tsx",
       "js",
-      "jsx",
       "json",
       "node"
-    ]
-  },
-  "dependencies": {
-    "@types/lodash": "^4.14.104",
-    "lodash": "^4.17.5",
-    "log": "^1.4.0",
-    "tslint": "^5.9.1"
+    ],
+    "rootDir": "src/"
   }
 }

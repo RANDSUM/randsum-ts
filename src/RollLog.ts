@@ -1,16 +1,15 @@
-import { RollModifier } from './RollModifier';
+import { RollModifier } from './rollModifiers';
 
 export default class RollLog {
   readonly total: number;
   readonly results: number[];
-  readonly modifier: RollModifier
+  readonly modifier?: RollModifier;
   readonly dateRolled: Date;
 
   constructor(
     total: number, 
     results: number[], 
-    modifier: RollModifier = {} 
-
+    modifier?: RollModifier
   ) {
     this.total = total;
     this.results = results;
