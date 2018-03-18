@@ -46,17 +46,14 @@ It takes two optional arguments:
   - a `number`, representing the number of times you want to roll the die in this `roll`. 
   - a `RollModifier`, a function or object you can use to modify the result of the die roll. see `RollModifier` for more information.
 
+`roll` will also record the results of the roll to the `log`. 
+
 #### `log: rollLog[]`
 ```
 const D4 = new d(4);
 D4.log // [];
-D4.roll();
-D4.log  /* [ { 
-  total: 4, 
-  results: [ 4 ],
-  dateRolled: '2018-03-18T15:10:28.833Z'
-}]
-*/
+D4.roll(2);
+D4.log  // [{ total: 6, results: [ 2, 4 ], dateRolled: '2018-03-18T15:10:28.833Z' }]
 ```
 `d` objects keep a log of every roll they've made. See `rollLog` for more information.
 
