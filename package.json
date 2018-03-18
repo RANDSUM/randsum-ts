@@ -13,7 +13,7 @@
     "compile": "tsc -p .",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
-    "test": "jest --coverage",
+    "test": "jest",
     "watch-build": "tsc -w -p ."
   },
   "dependencies": {
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@types/jest": "^22.2.0",
+    "codecov": "^3.0.0",
     "gts": "^0.5.4",
     "jest": "^22.4.2",
     "ts-jest": "^22.4.1",
@@ -39,8 +40,12 @@
     "rolling",
     "typescript"
   ],
-  "engines" : { "node" : ">=6.2.2" }, 
+  "engines": {
+    "node": ">=6.2.2"
+  },
   "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
