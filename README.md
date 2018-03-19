@@ -1,24 +1,24 @@
-# droll 
+# Randsum
 ## Random Numbers, but for Humans
 
-[![Build Status](https://travis-ci.org/alxjrvs/droll.svg?branch=master)](https://travis-ci.org/alxjrvs/droll)
-[![codecov](https://codecov.io/gh/alxjrvs/droll/branch/master/graph/badge.svg)](https://codecov.io/gh/alxjrvs/droll)
+[![Build Status](https://travis-ci.org/alxjrvs/randsum.svg?branch=master)](https://travis-ci.org/alxjrvs/randsum)
+[![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/master/graph/badge.svg)](https://codecov.io/gh/alxjrvs/randsum)
 
 ## Installation
 You can use yarn: 
 
-`yarn add droll` 
+`yarn add randsum` 
 
 or NPM 
 
-`npm install droll`
+`npm install randsum`
 
 Then, include it in your project however you'd like: 
 
 ```
-import d from 'droll';
+import d from 'randsum';
 
-const D10 = require('droll').D10;
+const D10 = require('randsum').D10;
 ```
 
 ## Usage
@@ -59,11 +59,11 @@ D4.log  // [{ total: 6, results: [ 2, 4 ], dateRolled: '2018-03-18T15:10:28.833Z
 
 ### The `D{n}` Constants
 ```
-import { D10 } from 'droll'
+import { D10 } from 'randsum'
 
 console.log(D10.roll()) // 1-10
 ```
-`droll` also provides several constants based on popular Dice Sizes:
+`randsum` also provides several constants based on popular Dice Sizes:
 
 - D4
 - D6

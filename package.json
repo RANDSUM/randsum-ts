@@ -1,11 +1,11 @@
 {
-  "name": "droll",
-  "description": "Modern Dice-Rolling in JS (And Typescript!)",
+  "name": "randsum",
+  "description": "Random Numbers For Humans in JS (And Typescript!)",
   "license": "MIT",
   "author": "Alex Jarvis",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alxjrvs/droll.git"
+    "url": "https://github.com/alxjrvs/randsum.git"
   },
   "version": "0.1.2",
   "main": "build/src/index.js",
