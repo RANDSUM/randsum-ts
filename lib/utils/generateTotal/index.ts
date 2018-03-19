@@ -1,2 +1,3 @@
 import generateTotal from './generateTotal';
-export { generateTotal };
+
+export default generateTotal;

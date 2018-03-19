@@ -1,4 +1,4 @@
-import  generateTotal from './generateTotal/generateTotal';
+import  generateTotal from './generateTotal';
 
 export { 
   generateTotal
