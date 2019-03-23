@@ -1,9 +1,19 @@
 "use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var ex = require("./index");
-var d_1 = require("./d");
+var ex = __importStar(require("./index"));
+var d_1 = __importDefault(require("./d"));
 var constants_1 = require("./constants");
-var rollLog_1 = require("./rollLog");
+var rollLog_1 = __importDefault(require("./rollLog"));
 describe('Index Exports', function () {
     test('include d as named export', function () {
         expect(ex.d).toEqual(d_1.default);
@@ -21,4 +31,3 @@ describe('Index Exports', function () {
         expect(ex.D100).toEqual(constants_1.D100);
     });
 });
-//# sourceMappingURL=exports.test.js.map

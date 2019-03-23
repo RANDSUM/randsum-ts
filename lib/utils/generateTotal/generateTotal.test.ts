@@ -1,4 +1,4 @@
-import { sum } from 'lodash';
+import { sum } from '../../utils';
 import generateTotal from './generateTotal';
 
 const RESULTS = [1, 2, 3];

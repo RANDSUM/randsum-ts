@@ -1,27 +1,27 @@
-import { isNumber, times, sum} from 'lodash';
+import { isNumber, times, sum } from '../../utils';
 import { RollParameters } from '../../types';
 
 export default function ParameterDigester(results: number[], parameters: RollParameters) {
-  const modifiedResults = results.slice().sort();
+  const sortedResults = results.slice().sort();
 
   if (parameters.drop) {
     if (parameters.drop.highest){
       isNumber(parameters.drop.highest)
-      ? times(parameters.drop.highest, () => modifiedResults.pop())
-      : modifiedResults.pop();
+      ? times(parameters.drop.highest as number)(() => sortedResults.pop())
+      : sortedResults.pop();
 
     }
     if (parameters.drop.lowest){
       isNumber(parameters.drop.lowest)
-      ? times(parameters.drop.lowest, () => modifiedResults.shift())
-      : modifiedResults.shift();
+      ? times(parameters.drop.lowest as number)(() => sortedResults.shift())
+      : sortedResults.shift();
     }
   }
 
-  let total = sum(modifiedResults);
+  let total = sum(sortedResults);
 
   if( parameters.plus) { total = total + parameters.plus }
-  if( parameters.minus) { 
+  if( parameters.minus) {
     parameters.minus < 0
     ? total = total + parameters.minus
     : total = total - parameters.minus

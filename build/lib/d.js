@@ -1,7 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = require("lodash");
-var rollLog_1 = require("./rollLog");
+var rollLog_1 = __importDefault(require("./rollLog"));
 var utils_1 = require("./utils");
 var d = /** @class */ (function () {
     function d(sides) {
@@ -18,7 +20,7 @@ var d = /** @class */ (function () {
     };
     Object.defineProperty(d.prototype, "singleRoll", {
         get: function () {
-            return lodash_1.random(1, this.sides);
+            return utils_1.random(this.sides);
         },
         enumerable: true,
         configurable: true
@@ -26,4 +28,3 @@ var d = /** @class */ (function () {
     return d;
 }());
 exports.default = d;
-//# sourceMappingURL=d.js.map

@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = require("lodash");
+var utils_1 = require("../../utils");
 function ParameterDigester(results, parameters) {
-    var modifiedResults = results.slice().sort();
+    var sortedResults = results.slice().sort();
     if (parameters.drop) {
         if (parameters.drop.highest) {
-            lodash_1.isNumber(parameters.drop.highest)
-                ? lodash_1.times(parameters.drop.highest, function () { return modifiedResults.pop(); })
-                : modifiedResults.pop();
+            utils_1.isNumber(parameters.drop.highest)
+                ? utils_1.times(parameters.drop.highest)(function () { return sortedResults.pop(); })
+                : sortedResults.pop();
         }
         if (parameters.drop.lowest) {
-            lodash_1.isNumber(parameters.drop.lowest)
-                ? lodash_1.times(parameters.drop.lowest, function () { return modifiedResults.shift(); })
-                : modifiedResults.shift();
+            utils_1.isNumber(parameters.drop.lowest)
+                ? utils_1.times(parameters.drop.lowest)(function () { return sortedResults.shift(); })
+                : sortedResults.shift();
         }
     }
-    var total = lodash_1.sum(modifiedResults);
+    var total = utils_1.sum(sortedResults);
     if (parameters.plus) {
         total = total + parameters.plus;
     }
@@ -27,4 +27,3 @@ function ParameterDigester(results, parameters) {
     return total;
 }
 exports.default = ParameterDigester;
-//# sourceMappingURL=parameterDigester.js.map

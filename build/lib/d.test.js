@@ -1,6 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var d_1 = require("./d");
+var d_1 = __importDefault(require("./d"));
 describe('D objects', function () {
     test('can be created when provided a side', function () {
         expect(new d_1.default(6)).not.toThrowError;
@@ -57,4 +60,3 @@ describe('D methods:', function () {
         });
     });
 });
-//# sourceMappingURL=d.test.js.map

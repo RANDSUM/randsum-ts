@@ -1,4 +1,4 @@
-import { sum, isPlainObject, isFunction} from 'lodash';
+import { sum, isPlainObject, isFunction} from '../../utils';
 import { RollModifier, RollAccessor, RollParameters } from '../../types';
 import parameterDigester from './parameterDigester';
 

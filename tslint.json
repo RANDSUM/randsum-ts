@@ -1,11 +1,31 @@
 {
   "defaultSeverity": "error",
   "extends": [
-    "tslint:recommended"
+    "tslint:recommended",
+    "tslint-config-standard",
+    "tslint-config-prettier"
   ],
   "jsRules": {},
   "rules": {
+    "array-bracket-spacing": [true, "never"],
+    "interface-name": [true, "never-prefix"],
+    "no-default-export": true,
+    "no-empty-interface": false,
+    "object-curly-spacing": true,
+    "ordered-imports": true,
     "quotemark": [true, "single"],
+    "trailing-comma": [
+      true,
+      {
+        "singleline": "never",
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "always",
+          "typeLiterals": "always"
+        }
+      }
+    ]
   },
   "rulesDirectory": []
 }

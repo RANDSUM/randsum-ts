@@ -10,4 +10,3 @@ var rollLog = /** @class */ (function () {
     return rollLog;
 }());
 exports.default = rollLog;
-//# sourceMappingURL=rollLog.js.map

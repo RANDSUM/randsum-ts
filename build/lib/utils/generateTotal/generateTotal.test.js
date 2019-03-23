@@ -1,12 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = require("lodash");
-var generateTotal_1 = require("./generateTotal");
+var utils_1 = require("../../utils");
+var generateTotal_1 = __importDefault(require("./generateTotal"));
 var RESULTS = [1, 2, 3];
 var LOWEST_ROLL = RESULTS[0]; // 1
 var MEDIAN_ROLL = RESULTS[1]; // 2
 var HIGHEST_ROLL = RESULTS[2]; // 3
-var TOTAL = lodash_1.sum(RESULTS); // 6
+var TOTAL = utils_1.sum(RESULTS); // 6
 describe('generateTotal', function () {
     test('when not provided a modifier, sums the results and returns the total', function () {
         expect(generateTotal_1.default(RESULTS)).toEqual(TOTAL);
@@ -52,4 +55,3 @@ describe('generateTotal', function () {
         });
     });
 });
-//# sourceMappingURL=generateTotal.test.js.map

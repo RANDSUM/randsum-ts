@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/alxjrvs/randsum.git"
   },
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "build/lib/index.js",
   "scripts": {
     "compile": "tsc -p .",
@@ -17,19 +17,17 @@
     "watch-build": "tsc -w -p ."
   },
   "dependencies": {
-    "@types/lodash": "^4.14.104",
-    "lodash": "^4.17.5",
     "log": "^1.4.0",
-    "npm": "^5.7.1",
+    "npm": "^6.9.0",
     "tslint": "^5.9.1"
   },
   "devDependencies": {
-    "@types/jest": "^22.2.0",
+    "@types/jest": "^24.0.11",
+    "jest": "^24.5.0",
     "codecov": "^3.0.0",
-    "gts": "^0.5.4",
-    "jest": "^22.4.2",
-    "ts-jest": "^22.4.1",
-    "typescript": "~2.6.1"
+    "ts-jest": "^24.0.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "~3.2.2"
   },
   "keywords": [
     "chance",

@@ -1,6 +1,5 @@
-import { random } from 'lodash';
 import rollLog from './rollLog';
-import { generateTotal } from './utils';
+import { random, generateTotal } from './utils';
 import { RollModifier } from './types';
 
 class d {
@@ -20,7 +19,7 @@ class d {
   }
 
   private get singleRoll() {
-    return random(1, this.sides);
+    return random(this.sides);
   }
 }
 
