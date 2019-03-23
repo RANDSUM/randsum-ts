@@ -2,7 +2,7 @@
 
 Random Numbers, for Humans
 
-[![Build Status](https://travis-ci.org/alxjrvs/randsum.svg?branch=master)](https://travis-ci.org/alxjrvs/randsum)
+[![CircleCI](https://circleci.com/gh/alxjrvs/randsum.svg?style=svg)](https://circleci.com/gh/alxjrvs/randsum)
 [![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/master/graph/badge.svg)](https://codecov.io/gh/alxjrvs/randsum)
 
 ## Installation
