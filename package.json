@@ -9,10 +9,9 @@
   },
   "version": "0.1.4",
   "main": "build/lib/index.js",
+  "types": "build/lib/index.d.ts",
   "scripts": {
     "compile": "tsc -p .",
-    "prepare": "npm run compile",
-    "pretest": "npm run compile",
     "test": "jest",
     "watch-build": "tsc -w -p ."
   },

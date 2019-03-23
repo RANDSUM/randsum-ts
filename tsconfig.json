@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": ".",
+    "declaration": true,
     "outDir": "build",
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -8,10 +9,7 @@
     "strictNullChecks": true,
     "alwaysStrict": true,
     "esModuleInterop": true,
-    "lib": ["es2015"],
     "module": "commonjs",
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "es5"
+    "target": "es6"
   }
 }
