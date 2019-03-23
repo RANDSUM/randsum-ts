@@ -1,5 +1,6 @@
 import d from './d';
 import { RollModifier } from './types';
+import { D6 } from '.';
 
 describe('D objects', () => {
   test('can be created when provided a side', () => {
@@ -46,6 +47,22 @@ const RollCoreTests = ({n, modifier} : {n?: number, modifier?: RollModifier} = {
     });
   }
 }
+
+describe('The Worst Test Ive ever written', () => {
+  it('hits all of the sides', () => {
+    const results = Array.from(Array(3000)).map(() => D6.roll())
+
+    expect(results).not.toContain(0)
+    expect(results).toContain(1)
+    expect(results).toContain(2)
+    expect(results).toContain(3)
+    expect(results).toContain(4)
+    expect(results).toContain(5)
+    expect(results).toContain(6)
+    expect(results).not.toContain(7)
+
+  })
+})
 
 describe('D methods:', () => {
   describe('#roll', () => {

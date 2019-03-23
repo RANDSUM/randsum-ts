@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/alxjrvs/randsum.git"
   },
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "build/lib/index.js",
   "types": "build/lib/index.d.ts",
   "scripts": {
