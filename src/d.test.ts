@@ -8,11 +8,17 @@ const RollCoreTests = ({
 }: { n?: number; modifier?: RollModifier; persist?: boolean } = {}) => {
   const D6 = new D(6, persist)
   const initialLogLength = D6.log.length
-  const { total } = D6.roll(n, modifier)
+  const { total, results } = D6.roll(n, modifier)
   const latestRollLog = D6.log[0]
 
-  test('returns a number', () => {
+  test('returns a number as total', () => {
     expect(Number.isInteger(total)).toBe(true)
+  })
+
+  test('returns an array of results as results', () => {
+    results.forEach(result => {
+      expect(Number.isInteger(result)).toBe(true)
+    })
   })
 
   if (persist) {
