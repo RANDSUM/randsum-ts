@@ -81,7 +81,7 @@ Here's an example of rolling a D6 twice, then multipying each individual roll by
 
 ```js
 D6.roll(2, roll => roll * 2)
-// { total: 34, rolls: [12, 10, 2], modifier: roll => roll *2 }
+// { total: 34, rolls: [6, 5, 1], modifier: roll => roll *2 }
 ```
 
 When calling `roll` with a modifier, a new key, `modifier`, is included in the result. This also works when using a configuration object. Here's an example of rolling 4 d6, dropping the lowest, and adding four:
