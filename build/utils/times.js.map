@@ -1,0 +1,1 @@
+{"version":3,"file":"times.js","sourceRoot":"","sources":["../../src/utils/times.ts"],"names":[],"mappings":";;AAAa,QAAA,KAAK,GAAG,UAAC,QAAgB,IAAK,OAAA,UAAC,QAA8B;IACxE,IAAI,QAAQ,GAAG,CAAC,EAAE;QAChB,QAAQ,CAAC,QAAQ,CAAC,CAAA;QAClB,aAAK,CAAC,QAAQ,GAAG,CAAC,CAAC,CAAC,QAAQ,CAAC,CAAA;KAC9B;AACH,CAAC,EAL0C,CAK1C,CAAA"}
