@@ -25,8 +25,6 @@
     "@types/jest": "^24.0.18",
     "codecov": "^3.6.1",
     "jest": "^24.9.0",
-    "mem": "^5.1.1",
-    "npm": "^6.11.3",
     "ts-jest": "^24.1.0",
     "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
