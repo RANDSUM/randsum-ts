@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var __1 = require("..");
+var utils_1 = require("../../utils");
 exports.parameterDigester = function (results, parameters) {
     var sortedResults = results.slice().sort();
     if (parameters.drop) {
         if (parameters.drop.highest) {
-            __1.isNumber(parameters.drop.highest)
-                ? __1.times(parameters.drop.highest)(function () { return sortedResults.pop(); })
+            utils_1.isNumber(parameters.drop.highest)
+                ? utils_1.times(parameters.drop.highest)(function () { return sortedResults.pop(); })
                 : sortedResults.pop();
         }
         if (parameters.drop.lowest) {
-            __1.isNumber(parameters.drop.lowest)
-                ? __1.times(parameters.drop.lowest)(function () { return sortedResults.shift(); })
+            utils_1.isNumber(parameters.drop.lowest)
+                ? utils_1.times(parameters.drop.lowest)(function () { return sortedResults.shift(); })
                 : sortedResults.shift();
         }
     }
-    var total = __1.sum(sortedResults);
+    var total = utils_1.sum(sortedResults);
     if (parameters.plus) {
         total = total + parameters.plus;
     }

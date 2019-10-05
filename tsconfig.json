@@ -4,8 +4,8 @@
     "lib": ["es6"],
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "./build",
-    "isolatedModules": true,
+    "outDir": "build",
+    "declaration": true,
 
     /* Strict Type-Checking Options */
     "strict": true,
@@ -25,5 +25,5 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
-  "exclude": ["./node_modules", "src/coverage/**", "**/*.test.ts"]
+  "exclude": ["node_modules", "src/coverage/**", "**/*.test.ts", "build"]
 }
