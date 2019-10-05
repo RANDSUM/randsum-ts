@@ -11,7 +11,7 @@
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "scripts": {
-    "compile": "tsc -p .",
+    "build": "tsc",
     "test": "jest",
     "lint": "tslint --project .",
     "lint:fix": "tslint --project . --fix",
