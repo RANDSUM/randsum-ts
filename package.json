@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/alxjrvs/randsum.git"
   },
-  "version": "0.2.4",
+  "version": "0.2.5",
   "main": "build/index.js",
   "scripts": {
     "build": "tsc -p .",
