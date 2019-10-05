@@ -18,20 +18,20 @@ or NPM
 Then, include it in your project however you'd like:
 
 ```
-import { d } from 'randsum';
+import { D } from 'randsum';
 
 const D10 = require('randsum').D10;
 ```
 
 ## API
 
-## `d`
+## `D`
 
-`d` represents an instance of a single Die, which can then be rolled with the `roll()` method.
+`D` represents an instance of a single Die, which can then be rolled with the `roll()` method.
 
 ### `constructor: (sides: number)`
 
-`const D4 = new d(4);`
+`const D4 = new D(4);`
 
 ### `sides: number`
 
@@ -59,7 +59,7 @@ It takes two optional arguments:
 ### `log: rollLog[]`
 
 ```
-const D4 = new d(4);
+const D4 = new D(4);
 D4.log // [];
 D4.roll(2);
 D4.log  // [{ total: 6, results: [ 2, 4 ], dateRolled: '2018-03-18T15:10:28.833Z' }]
