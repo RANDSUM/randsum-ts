@@ -1,24 +1,26 @@
-import { RollParameters } from '../../types'
-import { isNumber, sum, times } from '../../utils'
+import { DropParameters, RollParameters } from '../../types'
+import { sum, times } from '../../utils'
+
+const dropDigester = (results: number[], dropParams?: DropParameters) => {
+  if (dropParams) {
+    const { highest, lowest } = dropParams
+    highest &&
+      (Number.isInteger(highest as number)
+        ? times(highest as number)(() => results.pop())
+        : results.pop())
+    lowest &&
+      (Number.isInteger(lowest as number)
+        ? times(lowest as number)(() => results.shift())
+        : results.shift())
+  }
+}
 
 export const parameterDigester = (
   results: number[],
   parameters: RollParameters,
 ) => {
   const sortedResults = results.slice().sort()
-
-  if (parameters.drop) {
-    if (parameters.drop.highest) {
-      isNumber(parameters.drop.highest)
-        ? times(parameters.drop.highest as number)(() => sortedResults.pop())
-        : sortedResults.pop()
-    }
-    if (parameters.drop.lowest) {
-      isNumber(parameters.drop.lowest)
-        ? times(parameters.drop.lowest as number)(() => sortedResults.shift())
-        : sortedResults.shift()
-    }
-  }
+  dropDigester(sortedResults, parameters.drop)
 
   let total = sum(sortedResults)
 

@@ -6,17 +6,20 @@ import { generateTotal, random } from './utils'
 export class D {
   public readonly sides: number
   public readonly log: RollLog[] = []
+  public readonly persist: boolean
 
-  constructor(sides: number) {
+  constructor(sides: number, persist = false) {
     this.sides = sides
+    this.persist = persist
   }
 
   public roll = (num = 1, modifier?: RollModifier) => {
     const results = Array.from(Array(num)).map(this.singleRoll)
     const total = generateTotal(results, modifier)
-    this.log.push(new RollLog(total, results, modifier))
-
-    return total
+    if (this.persist) {
+      this.log.push(new RollLog(total, results, modifier))
+    }
+    return { total, results }
   }
 
   private singleRoll = () => {

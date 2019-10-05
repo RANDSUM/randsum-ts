@@ -1,52 +1,54 @@
 import { D } from '.'
 import { RollModifier } from './types'
-import { isNumber } from './utils/isNumber'
 
 const RollCoreTests = ({
   n,
   modifier,
-}: { n?: number; modifier?: RollModifier } = {}) => {
-  const D6 = new D(6)
+  persist,
+}: { n?: number; modifier?: RollModifier; persist?: boolean } = {}) => {
+  const D6 = new D(6, persist)
   const initialLogLength = D6.log.length
-  let total: number
-  if (n && modifier) {
-    total = D6.roll(n, modifier)
-  } else if (n) {
-    total = D6.roll(n)
-  } else {
-    total = D6.roll()
-  }
+  const { total } = D6.roll(n, modifier)
   const latestRollLog = D6.log[0]
 
   test('returns a number', () => {
-    expect(isNumber(total)).toBe(true)
+    expect(Number.isInteger(total)).toBe(true)
   })
 
-  test('adds a log of the roll', () => {
-    expect(D6.log.length - initialLogLength).toEqual(1)
-  })
+  if (persist) {
+    test('adds a log of the roll', () => {
+      expect(D6.log.length - initialLogLength).toEqual(1)
+    })
 
-  test('logs a results array equal in length to the number of die rolled', () => {
-    expect(latestRollLog.results.length).toEqual(n || 1)
-  })
+    test('logs a results array equal in length to the number of die rolled', () => {
+      expect(latestRollLog.results.length).toEqual(n || 1)
+    })
 
-  test('logs the total', () => {
-    expect(latestRollLog.total).toEqual(total)
-  })
+    test('logs the total', () => {
+      expect(latestRollLog.total).toEqual(total)
+    })
 
-  test('logs the date time of the roll', () => {
-    expect(latestRollLog.dateRolled).toBeInstanceOf(Date)
-  })
+    test('logs the date time of the roll', () => {
+      expect(latestRollLog.dateRolled).toBeInstanceOf(Date)
+    })
 
-  if (modifier) {
-    test('logs the modifier used in the total calculation', () => {
-      expect(latestRollLog.modifier).toEqual(modifier)
+    if (modifier) {
+      test('logs the modifier used in the total calculation', () => {
+        expect(latestRollLog.modifier).toEqual(modifier)
+      })
+    }
+  } else {
+    test('does not add a log of the roll', () => {
+      expect(D6.log.length - initialLogLength).toEqual(0)
     })
   }
 }
 
 describe('D methods:', () => {
   describe('#roll', () => {
+    describe('persist logging', () => {
+      RollCoreTests({ persist: true })
+    })
     describe('(n)', () => {
       describe('with a modifier', () => {
         RollCoreTests({ n: 3, modifier: () => 4 })

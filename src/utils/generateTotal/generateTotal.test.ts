@@ -2,7 +2,6 @@ import { generateTotal, sum } from '..'
 
 const RESULTS = [1, 2, 3]
 const LOWEST_ROLL = RESULTS[0] // 1
-const MEDIAN_ROLL = RESULTS[1] // 2
 const HIGHEST_ROLL = RESULTS[2] // 3
 const TOTAL = sum(RESULTS) // 6
 
@@ -30,9 +29,7 @@ describe('generateTotal', () => {
 
       test('with a number value n, it removes the n highest roll and sums the rest', () => {
         const modifier = { drop: { highest: 2 } }
-        expect(generateTotal(RESULTS, modifier)).toEqual(
-          TOTAL - (MEDIAN_ROLL + HIGHEST_ROLL),
-        )
+        expect(generateTotal(RESULTS, modifier)).toEqual(LOWEST_ROLL)
       })
     })
 
@@ -42,11 +39,9 @@ describe('generateTotal', () => {
         expect(generateTotal(RESULTS, modifier)).toEqual(TOTAL - LOWEST_ROLL)
       })
 
-      test('with a number value n, it removes the n highest roll and sums the rest', () => {
+      test('with a number value n, it removes the n lowest roll and sums the rest', () => {
         const modifier = { drop: { lowest: 2 } }
-        expect(generateTotal(RESULTS, modifier)).toEqual(
-          TOTAL - (MEDIAN_ROLL + LOWEST_ROLL),
-        )
+        expect(generateTotal(RESULTS, modifier)).toEqual(HIGHEST_ROLL)
       })
     })
 
