@@ -1,8 +1,7 @@
 import { RollLog } from './rollLog'
-import { RollModifier } from './types'
+import { RollModifier, RollResult } from './types'
 import { generateTotal, random } from './utils'
 
-// tslint:disable-next-line: class-name
 export class D {
   public readonly sides: number
   public readonly log: RollLog[] = []
@@ -13,13 +12,13 @@ export class D {
     this.persist = persist
   }
 
-  public roll = (num = 1, modifier?: RollModifier) => {
-    const results = Array.from(Array(num)).map(this.singleRoll)
-    const total = generateTotal(results, modifier)
-    if (this.persist) {
-      this.log.push(new RollLog(total, results, modifier))
-    }
-    return { total, results }
+  public roll = (num = 1, modifier?: RollModifier): RollResult => {
+    const rolls = Array.from(Array(num)).map(this.singleRoll)
+    const total = generateTotal(rolls, modifier)
+
+    this.persist && this.log.push(new RollLog(total, rolls, modifier))
+
+    return { total, rolls, modifier }
   }
 
   private singleRoll = () => {
