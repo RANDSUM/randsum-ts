@@ -1,4 +1,4 @@
-import { D } from './D'
+import { D } from './d'
 import { RollModifier } from './types'
 import { isNumber } from './utils/isNumber'
 
