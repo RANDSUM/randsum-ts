@@ -18,7 +18,7 @@ or NPM
 Then, include it in your project however you'd like:
 
 ```
-import d from 'randsum';
+import { d } from 'randsum';
 
 const D10 = require('randsum').D10;
 ```

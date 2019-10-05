@@ -1,15 +1,29 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
-    "declaration": true,
-    "outDir": "build",
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "alwaysStrict": true,
-    "esModuleInterop": true,
+    "target": "es5",
+    "lib": ["es6"],
     "module": "commonjs",
-    "target": "es6"
-  }
+    "sourceMap": true,
+    "outDir": "./build",
+    "isolatedModules": true,
+
+    /* Strict Type-Checking Options */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "exclude": ["./node_modules", "src/coverage/**", "**/*.test.ts"]
 }

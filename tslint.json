@@ -13,6 +13,7 @@
     "no-empty-interface": false,
     "object-curly-spacing": true,
     "ordered-imports": true,
+    "semicolon": [true, "never"],
     "quotemark": [true, "single"],
     "trailing-comma": [
       true,
