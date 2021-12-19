@@ -15,7 +15,7 @@ export class Die {
     this.persist = persist
   }
 
-  public roll(num = 1, modifier?: RollModifier): RollResult {
+  public roll = (num = 1, modifier?: RollModifier): RollResult => {
     const rolls = Array.from(Array(num)).map(this.singleRoll)
     const total = generateTotal(rolls, modifier)
 
@@ -24,7 +24,7 @@ export class Die {
     return { total, rolls, modifier }
   }
 
-  private singleRoll() {
+  singleRoll = () => {
     return randomNumber(this.sides)
   }
 }
