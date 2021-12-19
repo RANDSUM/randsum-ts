@@ -1,4 +1,5 @@
-import { Die, RollModifier } from '.'
+import { Die } from '.'
+import { RollModifier } from './types'
 
 const RollCoreTests = ({
   n,
