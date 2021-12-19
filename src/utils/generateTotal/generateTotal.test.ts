@@ -1,9 +1,9 @@
-import { generateTotal, sum } from '..'
+import { generateTotal, sumArray } from '..'
 
 const RESULTS = [1, 2, 3]
 const LOWEST_ROLL = RESULTS[0] // 1
 const HIGHEST_ROLL = RESULTS[2] // 3
-const TOTAL = sum(RESULTS) // 6
+const TOTAL = sumArray(RESULTS) // 6
 
 describe('generateTotal', () => {
   test('when not provided a modifier, sums the results and returns the total', () => {

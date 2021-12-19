@@ -1,5 +1,5 @@
-import { RollParameters } from '../../types'
-import { sum } from '../../utils'
+import { RollParameters } from 'types'
+import { sumArray } from 'utils'
 import { dropDigester } from './dropDigester'
 
 export const parameterDigester = (
@@ -11,7 +11,7 @@ export const parameterDigester = (
   const { drop } = parameters
   drop && dropDigester(sortedResults, drop)
 
-  let total = sum(sortedResults)
+  let total = sumArray(sortedResults)
 
   if (parameters.plus) {
     total = total + parameters.plus

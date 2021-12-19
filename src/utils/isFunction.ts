@@ -1,4 +1,4 @@
-export const isFunction = (functionProspect: unknown) => {
+export function isFunction(functionProspect: unknown) {
   return (
     functionProspect &&
     {}.toString.call(functionProspect) === '[object Function]'

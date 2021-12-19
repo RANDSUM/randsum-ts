@@ -1,16 +1,15 @@
-import { RollAccessor, RollModifier, RollParameters } from '../../types'
-import { isFunction, isPlainObject, sum } from '../../utils'
+import { RollModifier } from 'types'
+import { sumArray } from 'utils'
+import { modifierIsAccessor, modifierIsParamater } from 'types/guards'
 import { parameterDigester } from './parameterDigester'
 
-export const generateTotal = (results: number[], modifier?: RollModifier) => {
-  if (isPlainObject(modifier)) {
-    modifier = modifier as RollParameters
+export function generateTotal(results: number[], modifier?: RollModifier) {
+  if (modifierIsParamater(modifier)) {
     return parameterDigester(results, modifier)
   }
 
-  if (isFunction(modifier)) {
-    modifier = modifier as RollAccessor
+  if (modifierIsAccessor(modifier)) {
     return modifier(results)
   }
-  return sum(results)
+  return sumArray(results)
 }

@@ -1,8 +1,6 @@
-import { generateTotal } from './generateTotal'
-import { isFunction } from './isFunction'
-import { isPlainObject } from './isPlainObject'
-import { random } from './random'
-import { sum } from './sum'
-import { times } from './times'
-
-export { generateTotal, random, times, isFunction, isPlainObject, sum }
+export * from './generateTotal'
+export * from './sumArray'
+export * from './isFunction'
+export * from './isPlainObject'
+export * from './randomNumber'
+export * from './times'

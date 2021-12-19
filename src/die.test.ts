@@ -1,12 +1,11 @@
-import { D } from '.'
-import { RollModifier } from './types'
+import { Die, RollModifier } from '.'
 
 const RollCoreTests = ({
   n,
   rollModifier,
   persist,
 }: { n?: number; rollModifier?: RollModifier; persist?: boolean } = {}) => {
-  const D6 = new D(6, persist)
+  const D6 = new Die(6, persist)
   const initialLogLength = D6.log.length
   const { total, rolls, modifier } = D6.roll(n, rollModifier)
   const latestRollLog = D6.log[0]
