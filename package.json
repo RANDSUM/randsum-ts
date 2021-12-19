@@ -14,8 +14,8 @@
     "test": "jest",
     "generate:docs": "typedoc --out docs src --exclude src/**/index.ts --exclude src/**/**/*.test.ts  --theme minimal",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
-    "lint": "tslint -p tsconfig.json",
-    "lint:fix": "tslint -p tsconfig.json --fix",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
     "watch-build": "tsc -w -p ."
   },
   "files": [
@@ -23,7 +23,10 @@
   ],
   "devDependencies": {
     "@types/jest": "^24.0.18",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
     "codecov": "^3.6.1",
+    "eslint": "^8.5.0",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
     "typedoc": "^0.15.0",
