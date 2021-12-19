@@ -1,4 +1,4 @@
-export const isPlainObject = (objProspect: unknown) => {
+export function isPlainObject(objProspect: unknown) {
   return (
     typeof objProspect === 'object' &&
     objProspect !== null &&

@@ -1,6 +1,7 @@
-export const isFunction = (functionProspect: unknown) => {
+export function isFunction(functionProspect: unknown): boolean {
   return (
-    functionProspect &&
-    {}.toString.call(functionProspect) === '[object Function]'
+    functionProspect
+    ?  {}.toString.call(functionProspect) === '[object Function]'
+    : false
   )
 }
