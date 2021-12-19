@@ -14,8 +14,8 @@
     "test": "jest",
     "generate:docs": "typedoc --out docs src --exclude src/**/index.ts --exclude src/**/**/*.test.ts  --theme minimal",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix",
+    "lint": "eslint . --ext .ts -c .eslint",
+    "lint:fix": "eslint . --ext .ts  -c .eslint --fix",
     "watch-build": "tsc -w -p ."
   },
   "files": [
