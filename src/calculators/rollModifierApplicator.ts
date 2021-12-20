@@ -2,7 +2,7 @@ import { RollParameters } from 'types'
 import { sumArray } from 'utils'
 import { dropDigester } from './dropDigester'
 
-export function totalCalculator(rollTotals: number[], { drop, minus, plus }: RollParameters) {
+export function rollModifierApplicator(rollTotals: number[], { drop, minus, plus }: RollParameters) {
   let modifiedTotals = rollTotals.slice()
 
   if (drop !== undefined) {
