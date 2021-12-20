@@ -5,11 +5,11 @@ export function dropDigester(rollTotals: number[], { highest, lowest }: DropPara
   const sortedResults = rollTotals.slice().sort()
 
   if (highest) {
-    times(Number(highest))(() => sortedResults.shift())
+    times(Number(highest))(() => sortedResults.pop())
   }
 
   if (lowest) {
-    times(Number(highest))(() => sortedResults.shift())
+    times(Number(lowest))(() => sortedResults.shift())
   }
 
   return sortedResults
