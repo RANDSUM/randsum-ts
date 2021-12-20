@@ -1,0 +1,66 @@
+import { calculateTotal } from './calculateTotal'
+import { RollParameters } from '../types'
+
+describe('calculateTotal', () => {
+  const rollTotals = [1, 2, 3, 4]
+  const baseModifier = { sides: 6, rolls: rollTotals.length }
+  const mockGenerator = (_sides: number, _rolls: number) => rollTotals
+
+  const calculator = (modifier: RollParameters) => calculateTotal(modifier, mockGenerator)
+
+  describe('when given roll totals with no modifiers', () => {
+    test('it returns the sum total of the rolls', () => {
+      // Remaining Rolls: [1,2,3,4]
+      expect(calculator(baseModifier)).toEqual(10)
+    })
+  })
+
+  describe('when given an "acessor" modifier', () => {
+    const accessor = (rolls: number[]) => rolls[0]
+    const baseAccessorModifier = {...baseModifier, accessor}
+
+    describe('and modifiers other than size or rolls', () => {
+      const extraModifier = {...baseAccessorModifier, plus: 2}
+      // it('gives a warning', () => {
+
+      // })
+
+      it('passes the rollTotals into the accessor function and returns the result', () => {
+        expect(calculator(extraModifier)).toEqual(rollTotals[0])
+      })
+    })
+
+    it('passes the rollTotals into the accessor function and returns the result', () => {
+      expect(calculator(baseAccessorModifier)).toEqual(rollTotals[0])
+    })
+  })
+
+  describe('when not given an "acessor" modifier', () => {
+    describe('when given roll totals with a "drop" modifier', () => {
+      const dropModifier = { ...baseModifier, drop: { highest: true, lowest: 2 } }
+
+      test('it returns the total without the provided values', () => {
+        // Remaining Rolls: [3]
+        expect(calculator(dropModifier)).toEqual(3)
+      })
+    })
+
+    describe('when given roll totals with a "plus" modifier', () => {
+      const dropModifier = { ...baseModifier, plus: 2 }
+
+      test('it returns the total without the provided values', () => {
+        // Remaining Rolls: [1,2,3,4] + 2
+        expect(calculator(dropModifier)).toEqual(12)
+      })
+    })
+
+    describe('when given roll totals with a "minus" modifier', () => {
+      const dropModifier = { ...baseModifier, minus: 2 }
+
+      test('it returns the total without the provided values', () => {
+        // Remaining Rolls: [1,2,3,4] + 2
+        expect(calculator(dropModifier)).toEqual(8)
+      })
+    })
+  })
+})

@@ -1,11 +1,11 @@
 import { RollParameters } from 'types'
-import { randomNumber } from 'utils'
+import { generateRollTotals } from './generateRollTotals'
 import { rollModifierCalculator } from './rollModifierCalculator'
 
-export function calculateTotal(rollParameters: RollParameters) {
+export function calculateTotal(rollParameters: RollParameters, rollGenerator = generateRollTotals) {
   const { sides, rolls, accessor, ...params } = rollParameters
 
-  const rollTotals = Array.from(Array(rolls)).map(() => randomNumber(sides))
+  const rollTotals = rollGenerator(sides, rolls)
 
   if (accessor) {
     if (Object.keys(params).length > 0) {
