@@ -1,29 +1,18 @@
 import { randsum } from '.'
-import { RollOptions } from './types'
+import { RollOptions, RollResult } from './types'
 
 const randsumCoreTests = ({
   sides = 6,
   rollModifier = {},
 }: { sides?: number; rollModifier?: RollOptions } = {}) => {
-  const result = randsum(sides, rollModifier)
-
-  test('returns a number as total', () => {
-    expect(Number.isInteger(result)).toBe(true)
-  })
 
   if (rollModifier.full) {
-    test('result.rolls returns an array of results as rolls', () => {
-      expect(result.rolls.length).toEqual(rollModifier.rolls)
+    const result = randsum(sides, rollModifier) as RollResult
 
-      result.rolls.forEach(result => {
-        expect(Number.isInteger(result)).toBe(true)
-      })
-    })
+    test('result.rollTotals returns an array of results as rolls', () => {
+      expect(result.rollTotals.length).toEqual(rollModifier.rolls)
 
-    test('result.rolls returns an array of results as rolls', () => {
-      expect(result.rolls.length).toEqual(rollModifier.rolls)
-
-      result.rolls.forEach(result => {
+      result.rollTotals.forEach(result => {
         expect(Number.isInteger(result)).toBe(true)
       })
     })
@@ -34,6 +23,12 @@ const randsumCoreTests = ({
         rolls: rollModifier.rolls || 1,
         rollModifier
       })
+    })
+  } else {
+    const result = randsum(sides, rollModifier) as Number
+
+    test('returns a number as total', () => {
+      expect(Number.isInteger(result)).toBe(true)
     })
   }
 }
