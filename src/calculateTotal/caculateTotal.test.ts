@@ -33,11 +33,21 @@ describe('calculateTotal', () => {
 
   describe('when not given an "acessor" modifier', () => {
     describe('when given roll totals with a "drop" modifier', () => {
-      const dropModifier = { ...baseModifier, drop: { highest: true, lowest: 2 } }
+      const dropModifier = {
+        ...baseModifier,
+        drop: {
+          highest: 1,
+          lowest: 2,
+          greaterThan: 8,
+          lessThan: 2,
+          exact: [5],
+        },
+      }
+      const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
       test('it returns the total without the provided values', () => {
-        // Remaining Rolls: [3]
-        expect(calculateTotal(rollTotals, dropModifier)).toEqual(3)
+        // Remaining Rolls: [4,6,7]
+        expect(calculateTotal(longerRollTotals, dropModifier)).toEqual(17)
       })
     })
 

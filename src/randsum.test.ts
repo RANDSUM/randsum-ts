@@ -31,7 +31,7 @@ const randsumCoreTests = ({ sides = 6, rollModifier = {} }: { sides?: number; ro
 
 describe('Randsum', () => {
   describe('with a modifier object', () => {
-    randsumCoreTests({ sides: 3, rollModifier: { drop: { highest: true } } })
+    randsumCoreTests({ sides: 3, rollModifier: { drop: { highest: 1 } } })
   })
   describe('with a modifier function', () => {
     randsumCoreTests({ sides: 3, rollModifier: { accessor: () => 4 } })
