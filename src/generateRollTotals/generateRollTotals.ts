@@ -8,20 +8,20 @@ export function generateRollTotals({ sides, rolls, unique, notUnique }: RollPara
   while (rollTotals.length < rolls) {
     const tempRoll = roller(sides)
     if (unique) {
-      if(rolls > sides){
-        if(rollTotals.length < sides) {
-          generateUniqueFullRolls(sides).forEach(num => rollTotals.push(num))
+      if (rolls > sides) {
+        if (rollTotals.length < sides) {
+          generateUniqueFullRolls(sides).forEach((num) => rollTotals.push(num))
         } else {
           rollTotals.push(tempRoll)
         }
       }
 
-      if(notUnique?.includes(tempRoll)){
+      if (notUnique?.includes(tempRoll)) {
         rollTotals.push(tempRoll)
         continue
       }
 
-      if(rollTotals.includes(tempRoll)){
+      if (rollTotals.includes(tempRoll)) {
         continue
       }
       rollTotals.push(tempRoll)
