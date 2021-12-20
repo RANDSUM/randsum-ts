@@ -1,4 +1,4 @@
-import { calculateTotal } from 'calculators'
+import { calculateTotal } from 'calculateTotal'
 import { RollOptions, RollResult } from 'types'
 
 export function randsum(firstArg: string | number, modifier?: RollOptions): number | RollResult {
