@@ -1,5 +1,3 @@
 export * from './sumArray'
-export * from './isFunction'
-export * from './isPlainObject'
 export * from './randomNumber'
 export * from './times'
