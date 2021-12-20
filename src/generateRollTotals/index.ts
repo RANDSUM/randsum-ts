@@ -1,2 +1,1 @@
-// Test
 export * from './generateRollTotals'
