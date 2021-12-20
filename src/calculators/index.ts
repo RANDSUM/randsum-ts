@@ -1,6 +1,6 @@
 import { RollParameters } from 'types'
 import { randomNumber } from 'utils'
-import { rollModifierApplicator } from './rollModifierApplicator'
+import { rollModifierCalculator } from './rollModifierCalculator'
 
 export function calculateTotal(rollParameters: RollParameters) {
   const { sides, rolls, accessor, ...params } = rollParameters
@@ -18,7 +18,7 @@ export function calculateTotal(rollParameters: RollParameters) {
     }
   }
 
-  const total = rollModifierApplicator(rollTotals, rollParameters)
+  const total = rollModifierCalculator(rollTotals, rollParameters)
 
   return {
     total,
