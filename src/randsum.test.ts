@@ -8,7 +8,7 @@ const randsumCoreTests = ({ sides = 6, rollModifier = {} }: { sides?: number; ro
     test('result.rollTotals returns an array of results as rolls', () => {
       expect(result.rollTotals.length).toEqual(rollModifier.rolls)
 
-      result.rollTotals.forEach((result) => {
+      result.rollTotals.forEach(result => {
         expect(Number.isInteger(result)).toBe(true)
       })
     })

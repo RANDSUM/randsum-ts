@@ -16,7 +16,8 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint . --ext .ts -c .eslint",
     "lint:fix": "eslint . --ext .ts  -c .eslint --fix",
-    "watch-build": "tsc -w -p ."
+    "watch-build": "tsc -w -p .",
+    "prepare": "husky install"
   },
   "files": [
     "build/**/*"
@@ -29,7 +30,9 @@
     "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
     "jest": "^27.0.0",
+    "lint-staged": "^12.1.3",
     "prettier": "^2.5.1",
     "ts-jest": "^27.0.0",
     "typedoc": "^0.22.10",
@@ -50,6 +53,14 @@
   ],
   "engines": {
     "node": ">=6.2.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./src/**": "eslint --cache -c .eslint --fix"
   },
   "jest": {
     "coverageDirectory": "./coverage/",

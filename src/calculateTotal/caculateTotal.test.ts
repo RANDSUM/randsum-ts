@@ -52,7 +52,13 @@ describe('calculateTotal', () => {
     })
 
     describe('when given roll totals with a "replace" modifier', () => {
-      const dropModifier = { ...baseModifier, replace: [{from: 1, to: 2}, {from: {above: 3}, to: 6}] }
+      const dropModifier = {
+        ...baseModifier,
+        replace: [
+          { from: 1, to: 2 },
+          { from: { above: 3 }, to: 6 },
+        ],
+      }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
         // Remaining Rolls: [2,2,3,6]
@@ -61,7 +67,7 @@ describe('calculateTotal', () => {
     })
 
     describe('when given roll totals with a "cap" modifier', () => {
-      const dropModifier = { ...baseModifier, cap: {above: 3, below: 2} }
+      const dropModifier = { ...baseModifier, cap: { above: 3, below: 2 } }
 
       test('it returns the total with all values above above and below below replaced with their respective comparitor', () => {
         // Remaining Rolls: [2,2,3,3]

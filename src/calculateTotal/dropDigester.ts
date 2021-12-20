@@ -4,7 +4,7 @@ import { DropOptions } from 'types'
 export function dropDigester(rollTotals: number[], { highest, lowest, greaterThan, lessThan, exact }: DropOptions) {
   const sortedResults = rollTotals
     .slice()
-    .filter((num) => {
+    .filter(num => {
       switch (true) {
         case greaterThan && num > greaterThan:
         case lessThan && num < lessThan:
