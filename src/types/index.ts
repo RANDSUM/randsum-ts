@@ -6,17 +6,22 @@ export interface DropParameters {
   lowest?: DropParamValue
 }
 
-export interface RollParameters {
+export type RollOptions = {
+  accessor?: RollAccessor
   plus?: number
   minus?: number
   drop?: DropParameters
+  rolls?: number
+  full?: boolean
 }
-export type RollModifier = RollAccessor | RollParameters
+
+export type RollParameters = RollOptions & {
+  sides: number
+  rolls: number
+}
 
 export interface RollResult {
   total: number
-  rolls: number[]
-  modifier?: RollModifier
+  rollTotals: number[]
+  rollParams: RollParameters
 }
-
-export * from './guards'

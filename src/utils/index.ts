@@ -1,4 +1,3 @@
-export * from './generateTotal'
 export * from './sumArray'
 export * from './isFunction'
 export * from './isPlainObject'
