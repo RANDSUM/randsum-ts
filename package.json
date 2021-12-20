@@ -59,7 +59,7 @@
     }
   },
   "lint-staged": {
-    "*.ts": "eslint --cache --fix"
+    "./src/**": ["eslint --cache --fix", "prettier --write"]
   },
   "jest": {
     "coverageDirectory": "./coverage/",
