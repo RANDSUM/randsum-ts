@@ -1,21 +1,15 @@
-import { generateTotal } from 'calculators'
-import { isNumber, RollModifier, RollResult } from 'types'
-import { randomNumber } from 'utils'
+import { digestArgs } from 'calculators'
+import { RollOptions, RollResult } from 'types'
 
 
-function formatResult(total, rolls, {})
-function calculateNumberArg(sides: number, modifier?: RollModifier) {
-    if (!modifier) return randomNumber(sides)
-    const roll = generateTotal([sides], modifier)
+export function randsum(
+  firstArg: string | number,
+  modifier?: RollOptions
+): number | RollResult {
+  const rollParams = digestArgs(firstArg, modifier)
 
-
-
-}
-
-export function randsum(firstArg: string | number, modifier?: RollModifier): number | RollResult {
-  if (isNumber(firstArg)) { return calculateNumberArg(firstArg, modifier) }
-
-
+  // convert into InternalRoll
+  //Roll InternalRoll
 
   return 2
 }

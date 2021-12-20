@@ -1,1 +1,1 @@
-export * from './generateTotal'
+export * from './digestArgs'

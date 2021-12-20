@@ -6,25 +6,30 @@ export interface DropParameters {
   lowest?: DropParamValue
 }
 
-export interface RollParameters {
-  rolls?: number
+export interface RollAccessorOptions {
+  callback?: RollAccessor
+}
+
+export interface LongRollOptions {
   plus?: number
   minus?: number
   drop?: DropParameters
   full?: boolean
 }
 
-export interface InternalRollParamaters extends RollParameters {
+export type RollOptions = (RollAccessorOptions | LongRollOptions) & {
+  rolls?: number
+}
+
+export type RollParameters = RollOptions & {
   sides: number
   rolls: number
 }
 
-export type RollModifier = RollAccessor | RollParameters
-
 export interface RollResult {
   total: number
   rolls: number[]
-  modifier?: RollModifier
+  rollParams: RollParameters
 }
 
 export * from './guards'
