@@ -1,11 +1,13 @@
 import { RollParameters } from 'types'
-import { sumArray } from 'utils'
+import { randomNumber, sumArray } from 'utils'
 import { dropDigester } from './dropDigester'
 
 export const parameterDigester = (
-  results: number[],
+  sides: number,
   parameters: RollParameters,
 ) => {
+  const rolls = parameters.rolls || 1
+  const results = Array.from(Array(rolls)).map(() => randomNumber(sides))
   const sortedResults = results.slice().sort()
 
   const { drop } = parameters

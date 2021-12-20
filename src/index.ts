@@ -1,9 +1,11 @@
 import { RollLog } from 'rollLog'
 import { RollModifier, RollResult } from 'types'
-import { generateTotal, randomNumber } from 'utils'
+import { randomNumber } from 'utils'
+import { generateTotal } from 'calculators'
 
 export * from 'utils'
 export * from 'types'
+
 
 export class Die {
   public readonly sides: number
