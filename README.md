@@ -1,6 +1,6 @@
 # Randsum
 
-`rand` for the rest of us
+`rand` for the rest of us, **Currently Being Re-Written! ~1.0 Release to come soon.**
 
 [![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/master/graph/badge.svg)](https://codecov.io/gh/alxjrvs/randsum)
 
