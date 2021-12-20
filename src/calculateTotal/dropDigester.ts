@@ -1,7 +1,7 @@
 import { times } from 'utils'
-import { DropParameters } from 'types'
+import { DropOptions } from 'types'
 
-export function dropDigester(rollTotals: number[], { highest, lowest, greaterThan, lessThan, exact }: DropParameters) {
+export function dropDigester(rollTotals: number[], { highest, lowest, greaterThan, lessThan, exact }: DropOptions) {
   const sortedResults = rollTotals
     .slice()
     .filter((num) => {
