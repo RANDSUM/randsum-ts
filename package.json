@@ -16,7 +16,8 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint . --ext .ts -c .eslint",
     "lint:fix": "eslint . --ext .ts  -c .eslint --fix",
-    "watch-build": "tsc -w -p ."
+    "watch-build": "tsc -w -p .",
+    "prepare": "husky install"
   },
   "files": [
     "build/**/*"
@@ -59,7 +60,10 @@
     }
   },
   "lint-staged": {
-    "./src/**": ["eslint --cache --fix", "prettier --write"]
+    "./src/**": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ]
   },
   "jest": {
     "coverageDirectory": "./coverage/",
