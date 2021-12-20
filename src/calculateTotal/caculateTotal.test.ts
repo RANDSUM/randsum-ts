@@ -50,7 +50,7 @@ describe('calculateTotal', () => {
         expect(calculateTotal(longerRollTotals, dropModifier)).toEqual(17)
       })
     })
-6
+
     describe('when given roll totals with a "replace" modifier', () => {
       const dropModifier = { ...baseModifier, replace: [{from: 1, to: 2}, {from: {above: 3}, to: 6}] }
 
