@@ -1,27 +1,30 @@
 import { RollParameters } from 'types'
-import { generateRollTotals } from './generateRollTotals'
-import { rollModifierCalculator } from './rollModifierCalculator'
+import { sumArray } from 'utils'
+import { dropDigester } from './dropDigester'
 
-export function calculateTotal(rollParameters: RollParameters, rollGenerator = generateRollTotals) {
-  const { sides, rolls, accessor, ...params } = rollParameters
-
-  const rollTotals = rollGenerator(sides, rolls)
-
+export function calculateTotal(
+  rollTotals: number[],
+  { accessor, drop, plus, minus }: RollParameters
+) {
   if (accessor) {
-    if (Object.keys(params).length > 0) {
-      console.warn('When provided a callback, randsum ignores all other modifiers besides Sides and # of dice rolled.')
-    }
-
-    return {
-      total: accessor(rollTotals),
-      rollTotals,
-    }
+    return accessor(rollTotals)
   }
 
-  const total = rollModifierCalculator(rollTotals, rollParameters)
+  let modifiedTotals = rollTotals.slice()
 
-  return {
-    total,
-    rollTotals,
+  if (drop !== undefined) {
+    modifiedTotals = dropDigester(modifiedTotals, drop)
   }
+
+  let total = sumArray(modifiedTotals)
+
+  if (plus !== undefined) {
+    total += plus
+  }
+
+  if (minus !== undefined) {
+    total -= minus
+  }
+
+  return total
 }

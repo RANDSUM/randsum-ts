@@ -1,37 +1,33 @@
 import { calculateTotal } from './calculateTotal'
-import { RollParameters } from '../types'
 
 describe('calculateTotal', () => {
   const rollTotals = [1, 2, 3, 4]
   const baseModifier = { sides: 6, rolls: rollTotals.length }
-  const mockGenerator = (_sides: number, _rolls: number) => rollTotals
-
-  const calculator = (modifier: RollParameters) => calculateTotal(modifier, mockGenerator)
 
   describe('when given roll totals with no modifiers', () => {
-    test('it returns the sum total of the rolls', () => {
+    test('it returns the sum total of the rolls and the roll totals', () => {
       // Remaining Rolls: [1,2,3,4]
-      expect(calculator(baseModifier)).toEqual(10)
+      expect(calculateTotal(rollTotals, baseModifier)).toEqual(10)
     })
   })
 
   describe('when given an "acessor" modifier', () => {
     const accessor = (rolls: number[]) => rolls[0]
-    const baseAccessorModifier = {...baseModifier, accessor}
+    const baseAccessorModifier = { ...baseModifier, accessor }
 
     describe('and modifiers other than size or rolls', () => {
-      const extraModifier = {...baseAccessorModifier, plus: 2}
+      const extraModifier = { ...baseAccessorModifier, plus: 2 }
       // it('gives a warning', () => {
 
       // })
 
       it('passes the rollTotals into the accessor function and returns the result', () => {
-        expect(calculator(extraModifier)).toEqual(rollTotals[0])
+        expect(calculateTotal(rollTotals, extraModifier)).toEqual(rollTotals[0])
       })
     })
 
     it('passes the rollTotals into the accessor function and returns the result', () => {
-      expect(calculator(baseAccessorModifier)).toEqual(rollTotals[0])
+      expect(calculateTotal(rollTotals, baseAccessorModifier)).toEqual(rollTotals[0])
     })
   })
 
@@ -41,7 +37,7 @@ describe('calculateTotal', () => {
 
       test('it returns the total without the provided values', () => {
         // Remaining Rolls: [3]
-        expect(calculator(dropModifier)).toEqual(3)
+        expect(calculateTotal(rollTotals, dropModifier)).toEqual(3)
       })
     })
 
@@ -50,7 +46,7 @@ describe('calculateTotal', () => {
 
       test('it returns the total without the provided values', () => {
         // Remaining Rolls: [1,2,3,4] + 2
-        expect(calculator(dropModifier)).toEqual(12)
+        expect(calculateTotal(rollTotals, dropModifier)).toEqual(12)
       })
     })
 
@@ -59,7 +55,7 @@ describe('calculateTotal', () => {
 
       test('it returns the total without the provided values', () => {
         // Remaining Rolls: [1,2,3,4] + 2
-        expect(calculator(dropModifier)).toEqual(8)
+        expect(calculateTotal(rollTotals, dropModifier)).toEqual(8)
       })
     })
   })

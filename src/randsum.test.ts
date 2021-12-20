@@ -13,12 +13,12 @@ const randsumCoreTests = ({ sides = 6, rollModifier = {} }: { sides?: number; ro
       })
     })
 
-    test('result.rollParams returns data related to the roll', () => {
-      expect(result.rollParams).toEqual({
-        sides,
-        rolls: rollModifier.rolls || 1,
-        rollModifier,
-      })
+    test('result.sides returns the number of sides of the dice rolled', () => {
+      expect(result.sides).toEqual(sides)
+    })
+
+    test('result.rolls returns the number of dice rolled', () => {
+      expect(result.rolls).toEqual(rollModifier.rolls || 1)
     })
   } else {
     const result = randsum(sides, rollModifier) as number

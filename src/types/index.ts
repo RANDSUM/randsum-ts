@@ -20,8 +20,7 @@ export type RollParameters = RollOptions & {
   rolls: number
 }
 
-export interface RollResult {
+export type RollResult = RollParameters & {
   total: number
   rollTotals: number[]
-  rollParams: RollParameters
 }

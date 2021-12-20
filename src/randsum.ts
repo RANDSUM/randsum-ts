@@ -1,5 +1,6 @@
 import { calculateTotal } from 'calculateTotal'
 import { RollOptions, RollResult } from 'types'
+import { generateRollTotals } from 'utils'
 
 export function randsum(firstArg: string | number, modifier?: RollOptions): number | RollResult {
   const partialParams = { rolls: modifier?.rolls || 1, ...modifier }
@@ -7,8 +8,9 @@ export function randsum(firstArg: string | number, modifier?: RollOptions): numb
   // Replace "20" with "read the dice notation and overwrite PartialParams"
   const rollParams = { ...partialParams, sides: Number(firstArg) || 20 }
 
-  // parse rollParams
-  const { total, rollTotals } = calculateTotal(rollParams)
+  const rollTotals = generateRollTotals(rollParams)
 
-  return modifier?.full ? { total, rollTotals, rollParams } : total
+  const total = calculateTotal(rollTotals, rollParams)
+
+  return modifier?.full ? { total, rollTotals, ...rollParams } : total
 }
