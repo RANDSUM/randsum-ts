@@ -1,9 +1,11 @@
 export type RollAccessor = (results: number[]) => number
-export type DropParamValue = number | boolean
 
 export interface DropParameters {
-  highest?: DropParamValue
-  lowest?: DropParamValue
+  highest?: number
+  lowest?: number
+  greaterThan?: number
+  lessThan?: number
+  exact?: number[]
 }
 
 export type RollOptions = {

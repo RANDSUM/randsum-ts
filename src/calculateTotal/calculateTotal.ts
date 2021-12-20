@@ -2,10 +2,7 @@ import { RollParameters } from 'types'
 import { sumArray } from 'utils'
 import { dropDigester } from './dropDigester'
 
-export function calculateTotal(
-  rollTotals: number[],
-  { accessor, drop, plus, minus }: RollParameters
-) {
+export function calculateTotal(rollTotals: number[], { accessor, drop, plus, minus }: RollParameters) {
   if (accessor) {
     return accessor(rollTotals)
   }
