@@ -15,6 +15,8 @@ export type RollOptions = {
   drop?: DropParameters
   rolls?: number
   full?: boolean
+  unique?: boolean
+  notUnique?: number[]
 }
 
 export type RollParameters = RollOptions & {
