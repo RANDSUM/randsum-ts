@@ -3,7 +3,7 @@ import { generateRollTotals } from './generateRollTotals'
 
 let mockRollerCount = 0
 const mockRollerTotals = [2, 3, 6, 3, 6, 3, 2, 5, 1, 4, 2, 1]
-const mockRoller = (_sides: number) => {
+const mockRoller = () => {
   const result = mockRollerTotals[mockRollerCount]
   mockRollerCount === mockRollerTotals.length - 1 ? (mockRollerCount = 0) : mockRollerCount++
 
