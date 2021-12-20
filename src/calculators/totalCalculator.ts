@@ -2,11 +2,7 @@ import { RollParameters } from 'types'
 import { sumArray } from 'utils'
 import { dropDigester } from './dropDigester'
 
-export function totalCalculator(
-  rollTotals: number[],
-  {drop, minus, plus}: RollParameters,
-) {
-
+export function totalCalculator(rollTotals: number[], { drop, minus, plus }: RollParameters) {
   let modifiedTotals = rollTotals.slice()
 
   if (drop !== undefined) {
@@ -15,7 +11,7 @@ export function totalCalculator(
 
   let total = sumArray(modifiedTotals)
 
-  if(plus !== undefined) {
+  if (plus !== undefined) {
     total += plus
   }
 
