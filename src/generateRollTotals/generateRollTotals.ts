@@ -10,7 +10,7 @@ export function generateRollTotals({ sides, rolls, unique, notUnique }: RollPara
     if (unique) {
       if (rolls > sides) {
         if (rollTotals.length < sides) {
-          generateUniqueFullRolls(sides).forEach((num) => rollTotals.push(num))
+          generateUniqueFullRolls(sides).forEach(num => rollTotals.push(num))
         } else {
           rollTotals.push(tempRoll)
         }
