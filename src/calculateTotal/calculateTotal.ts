@@ -11,8 +11,8 @@ export function calculateTotal(rollTotals: number[], { accessor, cap, drop, repl
 
   let modifiedTotals = rollTotals.slice()
 
-  if (replace !== undefined ) {
-    if (Array.isArray(replace)){
+  if (replace !== undefined) {
+    if (Array.isArray(replace)) {
       replace.forEach(replaceModifier => {
         modifiedTotals = replacementDigester(modifiedTotals, replaceModifier)
       })
