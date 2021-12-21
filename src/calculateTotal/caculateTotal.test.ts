@@ -96,6 +96,16 @@ describe('calculateTotal', () => {
       })
     })
 
+    describe('when given roll totals with a "reroll" modifier', () => {
+      const rerollModifier = { ...baseModifier, reroll: { below: 2, on: 3, maxRerolls: 2 } }
+      const fakeRandom = () => 200
+
+      test('it returns the total with all values matching the queries rerolled', () => {
+        // Remaining Rolls: [200,2,200,4]
+        expect(calculateTotal(rollTotals, rerollModifier, fakeRandom)).toEqual(406)
+      })
+    })
+
     describe('when given roll totals with a "cap" modifier', () => {
       const dropModifier = { ...baseModifier, cap: { above: 3, below: 2 } }
 
