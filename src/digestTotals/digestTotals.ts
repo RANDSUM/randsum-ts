@@ -5,10 +5,11 @@ import { capDigester } from './capDigester'
 import { replacementDigester } from './replacementDigester'
 import { uniqueDigester } from './uniqueDigester'
 import { rerollDigester } from './rerollDigester'
+import { explodeDigester } from './explodeDigester'
 
 export function digestTotals(
   rollTotals: number[],
-  { accessor, sides, rolls, reroll, unique, notUnique, cap, drop, replace, plus, minus }: RollParameters,
+  { accessor, sides, rolls, reroll, unique, explode, notUnique, cap, drop, replace, plus, minus }: RollParameters,
   roller = randomNumber,
 ) {
   if (accessor) {
@@ -16,19 +17,20 @@ export function digestTotals(
   }
 
   let modifiedTotals = rollTotals.slice()
+  const rollDie = () => roller(sides)
 
   if (reroll !== undefined) {
     if (Array.isArray(reroll)) {
       reroll.forEach(rerollModifier => {
-        modifiedTotals = rerollDigester(modifiedTotals, rerollModifier, () => roller(sides))
+        modifiedTotals = rerollDigester(modifiedTotals, rerollModifier, rollDie)
       })
     } else {
-      modifiedTotals = rerollDigester(modifiedTotals, reroll, () => roller(sides))
+      modifiedTotals = rerollDigester(modifiedTotals, reroll, rollDie)
     }
   }
 
-  if (unique !== undefined) {
-    modifiedTotals = uniqueDigester(modifiedTotals, { sides, rolls, notUnique })
+  if (unique !== undefined && unique) {
+    modifiedTotals = uniqueDigester(modifiedTotals, { sides, rolls, notUnique }, rollDie)
   }
 
   if (replace !== undefined) {
@@ -47,6 +49,10 @@ export function digestTotals(
 
   if (drop !== undefined) {
     modifiedTotals = dropDigester(modifiedTotals, drop)
+  }
+
+  if (explode) {
+    modifiedTotals = explodeDigester(modifiedTotals, { sides }, rollDie)
   }
 
   let total = sumArray(modifiedTotals)

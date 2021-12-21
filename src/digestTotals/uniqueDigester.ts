@@ -1,9 +1,9 @@
 import { RollParameters } from 'types'
-import { randomNumber } from 'utils'
 
 export function uniqueDigester(
   rollTotals: number[],
   { rolls, sides, notUnique }: Pick<RollParameters, 'notUnique' | 'rolls' | 'sides'>,
+  rollDie: () => number,
 ): number[] {
   if (rolls > sides) {
     console.warn('You cannot have unique rolls when there are more rolls than sides of die. Disregarding "unique".')
@@ -19,7 +19,7 @@ export function uniqueDigester(
         return num
       default:
         do {
-          roll = randomNumber(sides)
+          roll = rollDie()
         } while (filteredArray.includes(roll))
         return roll
     }
