@@ -4,9 +4,8 @@ import { dropDigester } from './drop/dropDigester'
 import { capDigester } from './cap/capDigester'
 import { replacementDigester } from './replacement/replacementDigester'
 import { uniqueDigester } from './unique/uniqueDigester'
-import { rerollDigester } from './reroll/rerollDigester'
 import { explodeDigester } from './explode/explodeDigester'
-import { parseReroll } from './reroll'
+import { parseRerollFactory } from './reroll'
 
 export function digestTotals(
   rollTotals: RollTotals,
@@ -19,7 +18,7 @@ export function digestTotals(
   }
   let modifiedTotals = rollTotals.slice()
 
-  modifiedTotals = parseReroll(modifiedTotals, reroll, rollDie)
+  modifiedTotals = parseRerollFactory(reroll, rollDie)(modifiedTotals)
 
   if (unique !== undefined && unique) {
     modifiedTotals = uniqueDigester(modifiedTotals, { sides, rolls, notUnique }, rollDie)
