@@ -32,14 +32,15 @@ export interface RollOptions {
   replace?: ReplaceOptions | ReplaceOptions[]
   reroll?: ReRollOptions
   rolls?: number
-  full?: boolean
+  detailed?: boolean
   unique?: boolean
   explode?: boolean
   notUnique?: number[]
+  rollTotals?: number[]
+  sides: number
 }
 
 export interface RollParameters extends RollOptions {
-  sides: number
   rolls: number
 }
 
@@ -47,3 +48,5 @@ export interface RollResult extends RollParameters {
   total: number
   rollTotals: number[]
 }
+
+export type RandsumFirstArg = string | number | RollOptions
