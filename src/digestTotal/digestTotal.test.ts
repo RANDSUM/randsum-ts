@@ -1,13 +1,13 @@
-import { calculateTotal } from './calculateTotal'
+import { digestTotal } from './digestTotal'
 
-describe('calculateTotal', () => {
+describe('digestTotal', () => {
   const rollTotals = [1, 2, 3, 4]
   const baseModifier = { sides: 6, rolls: rollTotals.length }
 
   describe('when given roll totals with no modifiers', () => {
     test('it returns the sum total of the rolls and the roll totals', () => {
       // Remaining Rolls: [1,2,3,4]
-      expect(calculateTotal(rollTotals, baseModifier)).toEqual(10)
+      expect(digestTotal(rollTotals, baseModifier)).toEqual(10)
     })
   })
 
@@ -22,12 +22,12 @@ describe('calculateTotal', () => {
       // })
 
       it('passes the rollTotals into the accessor function and returns the result', () => {
-        expect(calculateTotal(rollTotals, extraModifier)).toEqual(rollTotals[0])
+        expect(digestTotal(rollTotals, extraModifier)).toEqual(rollTotals[0])
       })
     })
 
     it('passes the rollTotals into the accessor function and returns the result', () => {
-      expect(calculateTotal(rollTotals, baseAccessorModifier)).toEqual(rollTotals[0])
+      expect(digestTotal(rollTotals, baseAccessorModifier)).toEqual(rollTotals[0])
     })
   })
 
@@ -38,7 +38,7 @@ describe('calculateTotal', () => {
 
       test('it re-rolls non-unique modifiers ', () => {
         // Remaining Rolls: [1,2,3,4]
-        expect(calculateTotal(duplicateRollTotals, uniqueModifier)).toEqual(10)
+        expect(digestTotal(duplicateRollTotals, uniqueModifier)).toEqual(10)
       })
 
       describe('when given a "notUnique" array', () => {
@@ -46,7 +46,7 @@ describe('calculateTotal', () => {
 
         test('it disregards any numbers in that array and makes the rest unique', () => {
           // Remaining Rolls: [1,1,2,3]
-          expect(calculateTotal(duplicateRollTotals, notUniqueModifier)).toEqual(7)
+          expect(digestTotal(duplicateRollTotals, notUniqueModifier)).toEqual(7)
         })
       })
 
@@ -56,7 +56,7 @@ describe('calculateTotal', () => {
 
         test('it disregards the unique modifier and returns the row as-is', () => {
           // Remaining Rolls:  overflowRollTotals
-          expect(calculateTotal(overflowRollTotals, overflowModifier)).toEqual(18)
+          expect(digestTotal(overflowRollTotals, overflowModifier)).toEqual(18)
         })
       })
     })
@@ -77,7 +77,7 @@ describe('calculateTotal', () => {
 
       test('it returns the total without the provided values', () => {
         // Remaining Rolls: [4,6,7]
-        expect(calculateTotal(longerRollTotals, dropModifier)).toEqual(17)
+        expect(digestTotal(longerRollTotals, dropModifier)).toEqual(17)
       })
     })
 
@@ -92,7 +92,7 @@ describe('calculateTotal', () => {
 
       test('it returns the total with all values replaced according to the provided rules', () => {
         // Remaining Rolls: [2,2,3,6]
-        expect(calculateTotal(rollTotals, dropModifier)).toEqual(13)
+        expect(digestTotal(rollTotals, dropModifier)).toEqual(13)
       })
     })
 
@@ -102,7 +102,7 @@ describe('calculateTotal', () => {
 
       test('it returns the total with all values matching the queries rerolled', () => {
         // Remaining Rolls: [200,2,200,4]
-        expect(calculateTotal(rollTotals, rerollModifier, fakeRandom)).toEqual(406)
+        expect(digestTotal(rollTotals, rerollModifier, fakeRandom)).toEqual(406)
       })
     })
 
@@ -111,7 +111,7 @@ describe('calculateTotal', () => {
 
       test('it returns the total with all values above above and below below replaced with their respective comparitor', () => {
         // Remaining Rolls: [2,2,3,3]
-        expect(calculateTotal(rollTotals, dropModifier)).toEqual(10)
+        expect(digestTotal(rollTotals, dropModifier)).toEqual(10)
       })
     })
 
@@ -120,7 +120,7 @@ describe('calculateTotal', () => {
 
       test('it returns the total without the provided values', () => {
         // Remaining Rolls: [1,2,3,4] + 2
-        expect(calculateTotal(rollTotals, dropModifier)).toEqual(12)
+        expect(digestTotal(rollTotals, dropModifier)).toEqual(12)
       })
     })
 
@@ -129,7 +129,7 @@ describe('calculateTotal', () => {
 
       test('it returns the total without the provided values', () => {
         // Remaining Rolls: [1,2,3,4] + 2
-        expect(calculateTotal(rollTotals, dropModifier)).toEqual(8)
+        expect(digestTotal(rollTotals, dropModifier)).toEqual(8)
       })
     })
   })
