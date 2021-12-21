@@ -3,6 +3,7 @@ import { digestTotals } from './digestTotals'
 describe('digestTotals', () => {
   const rollTotals = [1, 2, 3, 4]
   const baseModifier = { sides: 6, rolls: rollTotals.length }
+  const fakeRandom = () => 200
 
   describe('when given roll totals with no modifiers', () => {
     test('it returns the sum total of the rolls and the roll totals', () => {
@@ -96,9 +97,18 @@ describe('digestTotals', () => {
       })
     })
 
+    describe('when given roll totals with an "explode" modifier', () => {
+      const explodeModifier = { ...baseModifier, explode: true }
+      const explodeRolls = [1, 2, 3, 6]
+
+      test('it returns the total with all values matching the queries rerolled', () => {
+        // Remaining Rolls: [1,2,3,6,200]
+        expect(digestTotals(explodeRolls, explodeModifier, fakeRandom)).toEqual(212)
+      })
+    })
+
     describe('when given roll totals with a "reroll" modifier', () => {
       const rerollModifier = { ...baseModifier, reroll: { below: 2, on: 3, maxRerolls: 2 } }
-      const fakeRandom = () => 200
 
       test('it returns the total with all values matching the queries rerolled', () => {
         // Remaining Rolls: [200,2,200,4]

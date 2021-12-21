@@ -34,6 +34,7 @@ export interface RollOptions {
   rolls?: number
   full?: boolean
   unique?: boolean
+  explode?: boolean
   notUnique?: number[]
 }
 
