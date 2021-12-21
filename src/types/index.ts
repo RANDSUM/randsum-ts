@@ -13,6 +13,11 @@ export interface CapOptions {
   below?: number
 }
 
+export interface ReRollOptions extends CapOptions {
+  on?: number | number[]
+  maxReroll?: number
+}
+
 export interface ReplaceOptions {
   from: number | CapOptions
   to: number
@@ -25,6 +30,7 @@ export interface RollOptions {
   cap?: CapOptions
   drop?: DropOptions
   replace?: ReplaceOptions | ReplaceOptions[]
+  reroll?: ReRollOptions
   rolls?: number
   full?: boolean
   unique?: boolean
