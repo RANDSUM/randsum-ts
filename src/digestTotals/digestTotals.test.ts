@@ -55,9 +55,11 @@ describe('digestTotals', () => {
         const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
         const overflowModifier = { ...uniqueModifier, rolls: overflowRollTotals.length }
 
-        test('it disregards the unique modifier and returns the row as-is', () => {
+        test('it throws an error', () => {
           // Remaining Rolls:  overflowRollTotals
-          expect(digestTotals(overflowRollTotals, overflowModifier)).toEqual(18)
+          expect(() => digestTotals(overflowRollTotals, overflowModifier)).toThrow(
+            'You cannot have unique rolls when there are more rolls than sides of die.',
+          )
         })
       })
     })

@@ -6,8 +6,7 @@ export function uniqueDigester(
   rollDie: () => number,
 ): number[] {
   if (rolls > sides) {
-    console.warn('You cannot have unique rolls when there are more rolls than sides of die. Disregarding "unique".')
-    return rollTotals
+    throw 'You cannot have unique rolls when there are more rolls than sides of die.'
   }
 
   const filteredArray = rollTotals.filter(n => !(notUnique && notUnique.includes(n)))
