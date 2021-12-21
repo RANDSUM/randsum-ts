@@ -32,9 +32,40 @@ describe('calculateTotal', () => {
   })
 
   describe('when not given an "acessor" modifier', () => {
+    describe('when given roll totals with a "unique" modifier', () => {
+      const duplicateRollTotals = [1, 1, 2, 3]
+      const uniqueModifier = { sides: 4, rolls: duplicateRollTotals.length, unique: true }
+
+      test('it re-rolls non-unique modifiers ', () => {
+        // Remaining Rolls: [1,2,3,4]
+        expect(calculateTotal(duplicateRollTotals, uniqueModifier)).toEqual(10)
+      })
+
+      describe('when given a "notUnique" array', () => {
+        const notUniqueModifier = { ...uniqueModifier, notUnique: [1] }
+
+        test('it disregards any numbers in that array and makes the rest unique', () => {
+          // Remaining Rolls: [1,1,2,3]
+          expect(calculateTotal(duplicateRollTotals, notUniqueModifier)).toEqual(7)
+        })
+      })
+
+      describe('and the # of rolls is greater than the sides of the die', () => {
+        const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
+        const overflowModifier = { ...uniqueModifier, rolls: overflowRollTotals.length }
+
+        test('it disregards the unique modifier and returns the row as-is', () => {
+          // Remaining Rolls:  overflowRollTotals
+          expect(calculateTotal(overflowRollTotals, overflowModifier)).toEqual(18)
+        })
+      })
+    })
+
     describe('when given roll totals with a "drop" modifier', () => {
+      const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
       const dropModifier = {
-        ...baseModifier,
+        sides: 10,
+        rolls: longerRollTotals.length,
         drop: {
           highest: 1,
           lowest: 2,
@@ -43,7 +74,6 @@ describe('calculateTotal', () => {
           exact: [5],
         },
       }
-      const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
       test('it returns the total without the provided values', () => {
         // Remaining Rolls: [4,6,7]
