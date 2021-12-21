@@ -6,7 +6,7 @@ import { replacementDigester } from './replacementDigester'
 import { uniqueDigester } from './uniqueDigester'
 import { rerollDigester } from './rerollDigester'
 
-export function digestTotal(
+export function digestTotals(
   rollTotals: number[],
   { accessor, sides, rolls, reroll, unique, notUnique, cap, drop, replace, plus, minus }: RollParameters,
   roller = randomNumber,
