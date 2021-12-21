@@ -3,13 +3,21 @@ import { sumArray } from 'utils'
 import { dropDigester } from './dropDigester'
 import { capDigester } from './capDigester'
 import { replacementDigester } from './replacementDigester'
+import { uniqueDigester } from './uniqueDigester'
 
-export function calculateTotal(rollTotals: number[], { accessor, cap, drop, replace, plus, minus }: RollParameters) {
+export function calculateTotal(
+  rollTotals: number[],
+  { accessor, sides, rolls, unique, notUnique, cap, drop, replace, plus, minus }: RollParameters,
+) {
   if (accessor) {
     return accessor(rollTotals)
   }
 
   let modifiedTotals = rollTotals.slice()
+
+  if (unique !== undefined) {
+    modifiedTotals = uniqueDigester(modifiedTotals, { sides, rolls, notUnique })
+  }
 
   if (replace !== undefined) {
     if (Array.isArray(replace)) {
