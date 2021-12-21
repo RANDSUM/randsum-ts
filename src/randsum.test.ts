@@ -1,12 +1,14 @@
 import { randsum } from '.'
-import { RollOptions, RollResult } from './types'
+import { RandsumFirstArg } from './types'
+import { digestArgsIntoParameters } from './digestArgsIntoParameters'
 
-const randsumCoreTests = ({ sides = 6, rollModifier = {} }: { sides?: number; rollModifier?: RollOptions } = {}) => {
-  if (rollModifier.full) {
-    const result = randsum(sides, rollModifier) as RollResult
+const randsumCoreTests = (firstArg: RandsumFirstArg, detailed?: boolean) => {
+  const comparitorOptions = digestArgsIntoParameters(firstArg)
+  if (detailed) {
+    const result = randsum(firstArg, detailed)
 
     test('result.rollTotals returns an array of results as rolls', () => {
-      expect(result.rollTotals.length).toEqual(rollModifier.rolls)
+      expect(result.rollTotals.length).toEqual(comparitorOptions.rolls)
 
       result.rollTotals.forEach(result => {
         expect(Number.isInteger(result)).toBe(true)
@@ -14,14 +16,14 @@ const randsumCoreTests = ({ sides = 6, rollModifier = {} }: { sides?: number; ro
     })
 
     test('result.sides returns the number of sides of the dice rolled', () => {
-      expect(result.sides).toEqual(sides)
+      expect(result.sides).toEqual(comparitorOptions.sides)
     })
 
     test('result.rolls returns the number of dice rolled', () => {
-      expect(result.rolls).toEqual(rollModifier.rolls || 1)
+      expect(result.rolls).toEqual(comparitorOptions.rolls || 1)
     })
   } else {
-    const result = randsum(sides, rollModifier) as number
+    const result = randsum(firstArg)
 
     test('returns a number as total', () => {
       expect(Number.isInteger(result)).toBe(true)
@@ -31,12 +33,12 @@ const randsumCoreTests = ({ sides = 6, rollModifier = {} }: { sides?: number; ro
 
 describe('Randsum', () => {
   describe('with a modifier object', () => {
-    randsumCoreTests({ sides: 3, rollModifier: { drop: { highest: 1 } } })
+    randsumCoreTests({ sides: 3, drop: { highest: 1 } })
   })
   describe('with a modifier function', () => {
-    randsumCoreTests({ sides: 3, rollModifier: { accessor: () => 4 } })
+    randsumCoreTests({ sides: 3, accessor: () => 4 })
   })
-  describe('without a modifier', () => {
-    randsumCoreTests({ sides: 3 })
+  describe('with basic dice notation', () => {
+    randsumCoreTests('2d20')
   })
 })
