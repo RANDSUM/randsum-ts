@@ -1,4 +1,4 @@
-import { calculateTotal } from 'calculateTotal'
+import { digestTotal } from 'digestTotal'
 import { RollOptions, RollResult } from 'types'
 import { generateRollTotals } from 'generateRollTotals'
 
@@ -9,7 +9,7 @@ export function randsum(firstArg: string | number, modifier?: RollOptions): numb
   const rollParams = { ...partialParams, sides: Number(firstArg) || 20 }
 
   const rollTotals = generateRollTotals(rollParams)
-  const total = calculateTotal(rollTotals, rollParams)
+  const total = digestTotal(rollTotals, rollParams)
 
   return modifier?.full ? { total, rollTotals, ...rollParams } : total
 }
