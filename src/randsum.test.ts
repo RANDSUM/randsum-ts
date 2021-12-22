@@ -8,7 +8,7 @@ const randsumSimpleTests = (result: number) => {
 }
 
 const mockRandomizerRoll = 420
-const mockRandomizer: Randomizer = _sides => mockRandomizerRoll
+const mockRandomizer: Randomizer = () => mockRandomizerRoll
 const randsumCustomRandomizerSimpleTests = (result: number, rolls: number) => {
   test('returns a number as total', () => {
     expect(Number.isInteger(result)).toBe(true)
