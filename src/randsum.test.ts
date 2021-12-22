@@ -1,5 +1,5 @@
-import { randsum } from '.'
-import { Randomizer, RollResult } from './types'
+import randsum from '.'
+import { Randomizer, RollResult } from 'types'
 
 const randsumSimpleTests = (result: number) => {
   test('returns a number as total', () => {

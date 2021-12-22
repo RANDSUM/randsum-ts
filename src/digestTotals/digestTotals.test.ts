@@ -1,4 +1,4 @@
-import { digestTotals } from './digestTotals'
+import { digestTotals } from 'digestTotals'
 
 describe('digestTotals', () => {
   const rollTotals = [1, 2, 3, 4]

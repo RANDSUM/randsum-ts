@@ -3,6 +3,7 @@ export type RollTotals = number[]
 export type RandsumPrimeArg = string | number | RollOptions
 export type Randomizer = (sides: number) => number
 export type RollDie = () => number
+export type RollResultOrNum<T> = T extends true ? RollResult : number
 
 export interface DropOptions {
   highest?: number

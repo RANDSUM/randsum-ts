@@ -1,20 +1,16 @@
 import { digestTotals } from 'digestTotals'
-import { Randomizer, RandsumPrimeArg, RollModifier, RollResult } from 'types'
+import { Randomizer, RandsumPrimeArg, RollModifier, RollResult, RollResultOrNum } from 'types'
 import { digestPrimeArgIntoParameters } from 'digestPrimeArgIntoParameters'
 import { randomNumber } from 'utils'
 
-// randsum(6) - return a random d6 roll
-// randsum('2d6') - roll 2 d6, add the totals, and return the result
-// randsum('3d20', true) - roll 3 d20, return a detailed result
-
 export function randsum(primeArg: RandsumPrimeArg): number
 export function randsum(primeArg: RandsumPrimeArg, customRandomizer: Randomizer): number
-export function randsum<D extends boolean>(primeArg: RandsumPrimeArg, detailed: D): D extends true ? RollResult : number
+export function randsum<D extends boolean>(primeArg: RandsumPrimeArg, detailed: D): RollResultOrNum<D>
 export function randsum<D extends boolean>(
   primeArg: RandsumPrimeArg,
   detailed: D,
-  customRandomizer?: Randomizer,
-): D extends true ? RollResult : number
+  customRandomizer: Randomizer,
+): RollResultOrNum<D>
 export function randsum(
   primeArg: RandsumPrimeArg,
   secondArg?: boolean | Randomizer,
