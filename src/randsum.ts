@@ -1,4 +1,4 @@
-import { digestTotals } from 'digestTotals'
+import { transformRollTotalsWithParameters } from 'transformRollTotalsWithParameters'
 import { Randomizer, RandsumPrimeArg, RollModifier, RollResult, RollResultOrNum } from 'types'
 import { digestPrimeArgIntoParameters } from 'digestPrimeArgIntoParameters'
 import { randomNumber } from 'utils'
@@ -16,21 +16,24 @@ export function randsum(
   secondArg?: boolean | Randomizer,
   customRandomizer?: Randomizer,
 ): number | RollResult {
-  const rollParams = digestPrimeArgIntoParameters(primeArg)
-
   const showDetailed = typeof secondArg === 'function' ? false : secondArg
   const randomizer = (typeof secondArg === 'function' ? secondArg : customRandomizer) || randomNumber
 
+  const rollParams = digestPrimeArgIntoParameters(primeArg)
+
   const rollDie = () => randomizer(rollParams.sides)
 
-  const rollTotals = Array.from(Array(rollParams.rolls)).map(rollDie)
-  const total = digestTotals(rollTotals, rollParams, rollDie)
+  const initialRollTotals = Array.from(Array(rollParams.rolls)).map(rollDie)
+
+  const [total, rollTotals] = transformRollTotalsWithParameters(initialRollTotals, rollParams, rollDie)
 
   const rollResult: RollResult = {
     total,
+    initialRollTotals,
     rollTotals,
     ...rollParams,
-    modifyRoll: (callbackFunc: RollModifier) => callbackFunc(rollTotals.slice()),
+    modifyInitialRoll: (callbackFunc: RollModifier) => callbackFunc(initialRollTotals.slice()),
+    modifyModifiedRoll: (callbackFunc: RollModifier) => callbackFunc(rollTotals.slice()),
   }
 
   return showDetailed ? rollResult : total

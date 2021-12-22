@@ -37,7 +37,10 @@ const randsumDetailedTests = (result: RollResult, sides: number, rolls: number) 
   })
 
   test('result.modifyRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
-    expect(result.modifyRoll(rolls => 40 * rolls.length)).toEqual(rolls * 40)
+    expect(result.modifyInitialRoll(rolls => 40 * rolls.length)).toEqual(rolls * 40)
+  })
+  test('result.modifyRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
+    expect(result.modifyModifiedRoll(rolls => 40 * rolls.length)).toEqual(rolls * 40)
   })
 }
 

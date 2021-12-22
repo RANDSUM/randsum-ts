@@ -1,9 +1,11 @@
 export type RollModifier = (results: number[]) => number
+export type RollModifierAccessor = (callback: RollModifier) => number
 export type RollTotals = number[]
 export type RandsumPrimeArg = string | number | RollOptions
 export type Randomizer = (sides: number) => number
 export type RollDie = () => number
 export type RollResultOrNum<T> = T extends true ? RollResult : number
+export type NotationModifiers = Partial<RollParameters>[]
 
 export interface DropOptions {
   highest?: number
@@ -46,10 +48,13 @@ export interface RollOptions {
 
 export interface RollParameters extends RollOptions {
   rolls: number
+  notationModifiers?: NotationModifiers
 }
 
 export interface RollResult extends RollParameters {
   total: number
   rollTotals: number[]
-  modifyRoll: (callbackFn: RollModifier) => number
+  initialRollTotals: number[]
+  modifyInitialRoll: RollModifierAccessor
+  modifyModifiedRoll: RollModifierAccessor
 }
