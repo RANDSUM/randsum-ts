@@ -14,7 +14,7 @@
     "test": "jest",
     "generate:docs": "typedoc --out docs src --exclude src/**/index.ts --exclude src/**/**/*.test.ts ",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
-    "lint": "eslint . --ext .ts -c .eslint",
+    "lint": "eslint ./src --ext .ts -c .eslint",
     "watch-build": "tsc -w -p .",
     "prepare": "husky install"
   },
