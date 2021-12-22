@@ -1,60 +1,19 @@
 import { RollParameters, RollTotals } from 'types'
-import { randomNumber, sumArray } from 'utils'
-import { dropDigester } from './drop/dropDigester'
-import { capDigester } from './cap/capDigester'
-import { replacementDigester } from './replacement/replacementDigester'
-import { uniqueDigester } from './unique/uniqueDigester'
-import { explodeDigester } from './explode/explodeDigester'
-import { parseRerollFactory } from './reroll'
+import { sumArray } from 'utils'
+import { modifyRollTotals } from './modifyRollTotals'
+import { modifyTotal } from './modifyTotal'
 
 export function digestTotals(
   rollTotals: RollTotals,
-  { accessor, sides, rolls, reroll, unique, explode, notUnique, cap, drop, replace, plus, minus }: RollParameters,
-  roller = randomNumber,
+  { accessor, plus, minus, ...rollParams }: RollParameters,
+  rollDie: () => number,
 ) {
-  const rollDie = () => roller(sides)
+  const freshTotals = rollTotals.slice()
   if (accessor) {
-    return accessor(rollTotals.slice())
-  }
-  let modifiedTotals = rollTotals.slice()
-
-  modifiedTotals = parseRerollFactory(reroll, rollDie)(modifiedTotals)
-
-  if (unique !== undefined && unique) {
-    modifiedTotals = uniqueDigester(modifiedTotals, { sides, rolls, notUnique }, rollDie)
+    return accessor(freshTotals)
   }
 
-  if (replace !== undefined) {
-    if (Array.isArray(replace)) {
-      replace.forEach(replaceModifier => {
-        modifiedTotals = replacementDigester(modifiedTotals, replaceModifier)
-      })
-    } else {
-      modifiedTotals = replacementDigester(modifiedTotals, replace)
-    }
-  }
-
-  if (cap !== undefined) {
-    modifiedTotals = capDigester(modifiedTotals, cap)
-  }
-
-  if (drop !== undefined) {
-    modifiedTotals = dropDigester(modifiedTotals, drop)
-  }
-
-  if (explode) {
-    modifiedTotals = explodeDigester(modifiedTotals, { sides }, rollDie)
-  }
-
-  let total = sumArray(modifiedTotals)
-
-  if (plus !== undefined) {
-    total += plus
-  }
-
-  if (minus !== undefined) {
-    total -= minus
-  }
-
-  return total
+  const modifiedTotals = modifyRollTotals(freshTotals, rollParams, rollDie)
+  const baseTotal = sumArray(modifiedTotals)
+  return modifyTotal(baseTotal, { plus, minus })
 }

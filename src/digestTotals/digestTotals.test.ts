@@ -8,7 +8,7 @@ describe('digestTotals', () => {
   describe('when given roll totals with no modifiers', () => {
     test('it returns the sum total of the rolls and the roll totals', () => {
       // Remaining Rolls: [1,2,3,4]
-      expect(digestTotals(rollTotals, baseModifier)).toEqual(10)
+      expect(digestTotals(rollTotals, baseModifier, fakeRandom)).toEqual(10)
     })
   })
 
@@ -23,12 +23,12 @@ describe('digestTotals', () => {
       // })
 
       it('passes the rollTotals into the accessor function and returns the result', () => {
-        expect(digestTotals(rollTotals, extraModifier)).toEqual(rollTotals[0])
+        expect(digestTotals(rollTotals, extraModifier, fakeRandom)).toEqual(rollTotals[0])
       })
     })
 
     it('passes the rollTotals into the accessor function and returns the result', () => {
-      expect(digestTotals(rollTotals, baseAccessorModifier)).toEqual(rollTotals[0])
+      expect(digestTotals(rollTotals, baseAccessorModifier, fakeRandom)).toEqual(rollTotals[0])
     })
   })
 
@@ -38,8 +38,8 @@ describe('digestTotals', () => {
       const uniqueModifier = { sides: 4, rolls: duplicateRollTotals.length, unique: true }
 
       test('it re-rolls non-unique modifiers ', () => {
-        // Remaining Rolls: [1,2,3,4]
-        expect(digestTotals(duplicateRollTotals, uniqueModifier)).toEqual(10)
+        // Remaining Rolls: [1,200,2,3]
+        expect(digestTotals(duplicateRollTotals, uniqueModifier, fakeRandom)).toEqual(206)
       })
 
       describe('when given a "notUnique" array', () => {
@@ -47,7 +47,7 @@ describe('digestTotals', () => {
 
         test('it disregards any numbers in that array and makes the rest unique', () => {
           // Remaining Rolls: [1,1,2,3]
-          expect(digestTotals(duplicateRollTotals, notUniqueModifier)).toEqual(7)
+          expect(digestTotals(duplicateRollTotals, notUniqueModifier, fakeRandom)).toEqual(7)
         })
       })
 
@@ -57,7 +57,7 @@ describe('digestTotals', () => {
 
         test('it throws an error', () => {
           // Remaining Rolls:  overflowRollTotals
-          expect(() => digestTotals(overflowRollTotals, overflowModifier)).toThrow(
+          expect(() => digestTotals(overflowRollTotals, overflowModifier, fakeRandom)).toThrow(
             'You cannot have unique rolls when there are more rolls than sides of die.',
           )
         })
@@ -80,22 +80,36 @@ describe('digestTotals', () => {
 
       test('it returns the total without the provided values', () => {
         // Remaining Rolls: [4,6,7]
-        expect(digestTotals(longerRollTotals, dropModifier)).toEqual(17)
+        expect(digestTotals(longerRollTotals, dropModifier, fakeRandom)).toEqual(17)
       })
     })
 
     describe('when given roll totals with a "replace" modifier', () => {
-      const dropModifier = {
-        ...baseModifier,
-        replace: [
-          { from: 1, to: 2 },
-          { from: { above: 3 }, to: 6 },
-        ],
-      }
+      describe('that is a single replace modifiers', () => {
+        const dropModifier = {
+          ...baseModifier,
+          replace: { from: 1, to: 2 },
+        }
 
-      test('it returns the total with all values replaced according to the provided rules', () => {
-        // Remaining Rolls: [2,2,3,6]
-        expect(digestTotals(rollTotals, dropModifier)).toEqual(13)
+        test('it returns the total with all values replaced according to the provided rules', () => {
+          // Remaining Rolls: [2,2,3,4]
+          expect(digestTotals(rollTotals, dropModifier, fakeRandom)).toEqual(11)
+        })
+      })
+
+      describe('that is an array of replace modifiers', () => {
+        const dropModifier = {
+          ...baseModifier,
+          replace: [
+            { from: 1, to: 2 },
+            { from: { above: 3 }, to: 6 },
+          ],
+        }
+
+        test('it returns the total with all values replaced according to the provided rules', () => {
+          // Remaining Rolls: [2,2,3,6]
+          expect(digestTotals(rollTotals, dropModifier, fakeRandom)).toEqual(13)
+        })
       })
     })
 
@@ -110,11 +124,22 @@ describe('digestTotals', () => {
     })
 
     describe('when given roll totals with a "reroll" modifier', () => {
-      const rerollModifier = { ...baseModifier, reroll: { below: 2, on: 3, maxRerolls: 2 } }
+      describe('that is a single reroll modifier', () => {
+        const rerollModifier = { ...baseModifier, reroll: { below: 2, on: 3, maxRerolls: 2 } }
 
-      test('it returns the total with all values matching the queries rerolled', () => {
-        // Remaining Rolls: [200,2,200,4]
-        expect(digestTotals(rollTotals, rerollModifier, fakeRandom)).toEqual(406)
+        test('it returns the total with all values matching the queries rerolled', () => {
+          // Remaining Rolls: [200,2,200,4]
+          expect(digestTotals(rollTotals, rerollModifier, fakeRandom)).toEqual(406)
+        })
+      })
+
+      describe('that is an array of reroll modifiers', () => {
+        const rerollModifier = { ...baseModifier, reroll: [{ below: 2, maxRerolls: 2 }, { on: 3 }] }
+
+        test('it returns the total with all values matching the queries rerolled', () => {
+          // Remaining Rolls: [200,2,200,4]
+          expect(digestTotals(rollTotals, rerollModifier, fakeRandom)).toEqual(406)
+        })
       })
     })
 
@@ -123,7 +148,7 @@ describe('digestTotals', () => {
 
       test('it returns the total with all values above above and below below replaced with their respective comparitor', () => {
         // Remaining Rolls: [2,2,3,3]
-        expect(digestTotals(rollTotals, dropModifier)).toEqual(10)
+        expect(digestTotals(rollTotals, dropModifier, fakeRandom)).toEqual(10)
       })
     })
 
@@ -132,7 +157,7 @@ describe('digestTotals', () => {
 
       test('it returns the total without the provided values', () => {
         // Remaining Rolls: [1,2,3,4] + 2
-        expect(digestTotals(rollTotals, dropModifier)).toEqual(12)
+        expect(digestTotals(rollTotals, dropModifier, fakeRandom)).toEqual(12)
       })
     })
 
@@ -141,7 +166,7 @@ describe('digestTotals', () => {
 
       test('it returns the total without the provided values', () => {
         // Remaining Rolls: [1,2,3,4] + 2
-        expect(digestTotals(rollTotals, dropModifier)).toEqual(8)
+        expect(digestTotals(rollTotals, dropModifier, fakeRandom)).toEqual(8)
       })
     })
   })
