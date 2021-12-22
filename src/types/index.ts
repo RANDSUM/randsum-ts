@@ -49,7 +49,7 @@ export interface RollOptions {
   notUnique?: number[]
   rollTotals?: RollTotals
   sides: number
-  notationModifiers?: NotifiableOptions[]
+  notation?: string
 }
 
 export type NotifiableOptions = Pick<
@@ -62,6 +62,7 @@ export type NotificationModifier = {
 
 export interface RollParameters extends RollOptions {
   rolls: number
+  notationModifiers?: NotifiableOptions[]
 }
 
 export interface RollResult extends RollParameters {
