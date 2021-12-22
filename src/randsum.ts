@@ -24,11 +24,9 @@ export function randsum(
   primeArg: RandsumPrimeArg,
   { detailed, customRandomizer }: RandsumOptions = {},
 ): number | RollResult {
-  const randomizer = customRandomizer || randomNumber
-
   const rollParams = digestPrimeArgIntoParameters(primeArg)
 
-  const rollDie = () => randomizer(rollParams.sides)
+  const rollDie = () => (customRandomizer || randomNumber)(rollParams.sides)
 
   const initialRollTotals = Array.from(Array(rollParams.rolls)).map(rollDie)
 
