@@ -6,6 +6,6 @@ export function parseUniqueFactory(
   rollDie: RollDie,
 ) {
   return function parseUnique(rollTotals: RollTotals) {
-    return !unique ? rollTotals : uniqueDigester(rollTotals.slice(), uniqueParams, rollDie)
+    return !unique ? rollTotals : uniqueDigester(rollTotals, uniqueParams, rollDie)
   }
 }
