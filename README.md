@@ -38,4 +38,4 @@ Sometime around 2012, I decided I wanted to learn to program. I was living at my
 
 I spent an easy 30 minutes trying to figure out how to make `rand(n)` return `1-n` instead of `0-(n-1)`.
 
-When I realized what the answer, I laughed and laughed. I've been chasing that high ever since.
+When I found the answer, I laughed and laughed. I've been chasing that high ever since.
