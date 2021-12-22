@@ -16,10 +16,10 @@ export function randsum(
   secondArg?: boolean | Randomizer,
   customRandomizer?: Randomizer,
 ): number | RollResult {
-  const rollParams = digestPrimeArgIntoParameters(primeArg)
-
   const showDetailed = typeof secondArg === 'function' ? false : secondArg
   const randomizer = (typeof secondArg === 'function' ? secondArg : customRandomizer) || randomNumber
+
+  const rollParams = digestPrimeArgIntoParameters(primeArg)
 
   const rollDie = () => randomizer(rollParams.sides)
 
