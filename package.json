@@ -17,7 +17,6 @@
     "lint": "eslint ./src --ext .ts -c .eslint",
     "prepare": "husky install",
     "release": "yarn build && npm publish",
-    "pre-push": "yarn test && yarn docs && git add docs && git commit -m 'Generating Docs...'",
     "watch-build": "tsc -w -p ."
   },
   "files": [
@@ -59,12 +58,14 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "yarn pre-push"
+      "pre-push": "yarn test"
     }
   },
   "lint-staged": {
     "./src/**": [
-      "yarn lint --cache --fix"
+      "yarn lint --cache --fix",
+      "yarn docs",
+      "git add docs"
     ]
   },
   "jest": {
