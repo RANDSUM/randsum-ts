@@ -1,11 +1,12 @@
-export type RollModifier = (results: number[]) => number
-export type RollModifierAccessor = (callback: RollModifier) => number
 export type RollTotals = number[]
-export type RandsumPrimeArg = string | number | RollOptions
+
+export type RollModifier = (results: RollTotals) => number
+export type RollModifierAccessor = (callback: RollModifier) => number
 export type Randomizer = (sides: number) => number
 export type RollDie = () => number
-export type RollResultOrNum<T> = T extends true ? RollResult : number
-export type NotationModifiers = Partial<RollParameters>[]
+
+export type RandsumPrimeArg = string | number | RollOptions
+export type RollResultOrNum<T extends boolean> = T extends true ? RollResult : number
 
 export interface DropOptions {
   highest?: number
@@ -38,17 +39,24 @@ export interface RollOptions {
   replace?: ReplaceOptions | ReplaceOptions[]
   reroll?: ReRollOptions | ReRollOptions[]
   rolls?: number
-  detailed?: boolean
   unique?: boolean
   explode?: boolean
   notUnique?: number[]
   rollTotals?: RollTotals
   sides: number
+  notationModifiers?: NotifiableOptions[]
+}
+
+export type NotifiableOptions = Pick<
+  RollOptions,
+  'plus' | 'minus' | 'cap' | 'drop' | 'replace' | 'reroll' | 'rolls' | 'unique' | 'explode' | 'notUnique'
+>
+export type NotificationModifier = {
+  -readonly [K in keyof NotifiableOptions]: NotifiableOptions[K]
 }
 
 export interface RollParameters extends RollOptions {
   rolls: number
-  notationModifiers?: NotationModifiers
 }
 
 export interface RollResult extends RollParameters {
