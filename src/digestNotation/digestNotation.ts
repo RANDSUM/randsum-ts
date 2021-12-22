@@ -1,4 +1,5 @@
 import { digestCore } from './digestCore'
+import { digestModifiers } from './digestModifiers'
 import { diceNotationPattern } from './matchers'
 
 export function digestNotation(notationString: string) {
@@ -9,7 +10,8 @@ export function digestNotation(notationString: string) {
   }
 
   const coreNotation = coreMatches[0]
-  // const modifierNotation = notationString.replace(coreNotation, '')
+  const coreParams = digestCore(coreNotation)
+  const modifierNotation = notationString.replace(coreNotation, '')
 
-  return { ...digestCore(coreNotation) }
+  return { ...coreParams, ...digestModifiers(modifierNotation, coreParams) }
 }

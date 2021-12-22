@@ -1,7 +1,11 @@
 {
+  "entryPointStrategy": "packages",
+  "entryPoints": ".",
   "out": "./docs",
-  "includeVersion": true,
   "sort": ["source-order"],
-  "exclude": "./src/**/**/*.test.ts",
-  "entryPoints": ["./src"]
+  "exclude": ["./src/**/**/*.test.ts", "./build", "./src/coverage"],
+  "tsconfig": "./tsconfig.json",
+  "name": "randsum",
+  "includeVersion": true,
+  "readme": "./README.md"
 }
