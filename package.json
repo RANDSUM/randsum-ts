@@ -3,6 +3,7 @@
   "description": "Random Numbers, free of charge",
   "license": "MIT",
   "author": "Alex Jarvis",
+  "homepage": "https://github.com/alxjrvs/randsum",
   "repository": {
     "type": "git",
     "url": "https://github.com/alxjrvs/randsum.git"
