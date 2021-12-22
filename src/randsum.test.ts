@@ -68,4 +68,13 @@ describe('Randsum', () => {
   describe('with a detailed report', () => {
     randsumDetailedTests(randsum('2d20', { detailed: true }), 20, 2)
   })
+
+  describe('when provided a rollsTotal', () => {
+    test('it returns that rollsTotal and uses it for calculations', () => {
+      const rollTotals = [20, 20, 20, 20]
+      const result = randsum({ sides: 20, rolls: 4, rollTotals }, { detailed: true })
+
+      expect(result.rollTotals).toEqual(rollTotals)
+    })
+  })
 })
