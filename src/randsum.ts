@@ -16,7 +16,7 @@ export function randsum<D extends boolean>(
 ): RollResultOrNum<D>
 export function randsum<D extends boolean>(
   rollOptions: RollOptions,
-  { detailed }: RandsumOptions<D>,
+  { detailed }: Pick<RandsumOptions<D>, 'detailed'>,
 ): RollResultOrNum<D>
 export function randsum<D extends boolean>(sides: number | string, randsumOpts: RandsumOptions<D>): RollResultOrNum<D>
 export function randsum<D extends boolean>(rollOptions: RollOptions, randsumOpts: RandsumOptions<D>): RollResultOrNum<D>
