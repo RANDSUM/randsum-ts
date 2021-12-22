@@ -10,5 +10,5 @@ export function transformRollTotalsWithParameters(
 ): [number, number[]] {
   const modifiedRollTotals = modifyRollTotals(rollTotals.slice(), rollParams, rollDie)
 
-  return [modifyTotal(sumArray(modifiedRollTotals), { plus, minus }), modifiedRollTotals]
+  return [modifyTotal(sumArray(modifiedRollTotals.slice()), { plus, minus }), modifiedRollTotals]
 }
