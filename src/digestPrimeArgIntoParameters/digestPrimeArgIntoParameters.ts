@@ -4,7 +4,7 @@ import { isDiceNotation, isRollOptions } from 'utils'
 
 export function digestPrimeArgIntoParameters(primeArg: RandsumPrimeArg): RollParameters {
   if (isRollOptions(primeArg)) {
-    return { rolls: primeArg?.rolls || 1, ...primeArg }
+    return { rolls: 1, ...primeArg }
   }
 
   return isDiceNotation(primeArg) ? digestNotation(primeArg) : { rolls: 1, sides: Number(primeArg) }

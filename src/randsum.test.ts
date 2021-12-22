@@ -35,21 +35,25 @@ const randsumDetailedTests = (result: RollResult, sides: number, rolls: number) 
   test('result.rolls returns the number of dice rolled', () => {
     expect(result.rolls).toEqual(rolls)
   })
+
+  test('result.modifyRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
+    expect(result.modifyRoll(rolls => 40 * rolls.length)).toEqual(rolls * 40)
+  })
 }
 
 describe('Randsum', () => {
   describe('with a string', () => {
     randsumSimpleTests(randsum('20'))
   })
+
   describe('with a number', () => {
     randsumSimpleTests(randsum(20))
   })
+
   describe('with a modifier object', () => {
     randsumSimpleTests(randsum({ sides: 20, rolls: 2, drop: { highest: 1 } }))
   })
-  describe('with a modifier function', () => {
-    randsumSimpleTests(randsum({ sides: 20, rolls: 2, accessor: () => 4 }))
-  })
+
   describe('with basic dice notation', () => {
     randsumSimpleTests(randsum('2d20'))
   })

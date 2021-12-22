@@ -8,17 +8,7 @@ import { parseUniqueFactory } from './unique'
 
 export function modifyRollTotals(
   rollTotals: RollTotals,
-  {
-    sides,
-    rolls,
-    reroll,
-    unique,
-    explode,
-    notUnique,
-    cap,
-    drop,
-    replace,
-  }: Omit<RollParameters, 'plus' | 'minus' | 'accessor'>,
+  { sides, rolls, reroll, unique, explode, notUnique, cap, drop, replace }: Omit<RollParameters, 'plus' | 'minus'>,
   rollDie: RollDie,
 ) {
   return [
