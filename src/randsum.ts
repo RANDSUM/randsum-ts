@@ -1,4 +1,4 @@
-import { digestTotals } from 'digestTotals'
+import { transformRollTotalsWithParameters } from 'transformRollTotalsWithParameters'
 import { Randomizer, RandsumPrimeArg, RollModifier, RollResult, RollResultOrNum } from 'types'
 import { digestPrimeArgIntoParameters } from 'digestPrimeArgIntoParameters'
 import { randomNumber } from 'utils'
@@ -24,7 +24,8 @@ export function randsum(
   const rollDie = () => randomizer(rollParams.sides)
 
   const rollTotals = Array.from(Array(rollParams.rolls)).map(rollDie)
-  const total = digestTotals(rollTotals, rollParams, rollDie)
+
+  const total = transformRollTotalsWithParameters(rollTotals, rollParams, rollDie)
 
   const rollResult: RollResult = {
     total,
