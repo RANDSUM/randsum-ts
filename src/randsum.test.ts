@@ -41,4 +41,7 @@ describe('Randsum', () => {
   describe('with basic dice notation', () => {
     randsumCoreTests('2d20')
   })
+  describe('with a detailed report', () => {
+    randsumCoreTests('2d20', true)
+  })
 })

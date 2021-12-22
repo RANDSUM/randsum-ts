@@ -1,4 +1,7 @@
 export type RollAccessor = (results: number[]) => number
+export type RollTotals = number[]
+export type RandsumFirstArg = string | number | RollOptions
+export type RollDie = () => number
 
 export interface DropOptions {
   highest?: number
@@ -30,13 +33,13 @@ export interface RollOptions {
   cap?: CapOptions
   drop?: DropOptions
   replace?: ReplaceOptions | ReplaceOptions[]
-  reroll?: ReRollOptions
+  reroll?: ReRollOptions | ReRollOptions[]
   rolls?: number
   detailed?: boolean
   unique?: boolean
   explode?: boolean
   notUnique?: number[]
-  rollTotals?: number[]
+  rollTotals?: RollTotals
   sides: number
 }
 
@@ -48,5 +51,3 @@ export interface RollResult extends RollParameters {
   total: number
   rollTotals: number[]
 }
-
-export type RandsumFirstArg = string | number | RollOptions

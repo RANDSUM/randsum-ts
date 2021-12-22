@@ -1,7 +1,7 @@
 import { digestTotals } from 'digestTotals'
 import { RandsumFirstArg, RollResult } from 'types'
-import { generateRollTotals } from 'generateRollTotals'
 import { digestArgsIntoParameters } from 'digestArgsIntoParameters'
+import { randomNumber } from 'utils'
 
 // randsum(6) - return a random d6 roll
 // randsum('2d6') - roll 2 d6, add the totals, and return the result
@@ -12,8 +12,10 @@ export function randsum<D extends boolean>(firstArg: RandsumFirstArg, detailed: 
 export function randsum(firstArg: RandsumFirstArg, detailed?: boolean): number | RollResult {
   const rollParams = digestArgsIntoParameters(firstArg)
 
-  const rollTotals = generateRollTotals(rollParams)
-  const total = digestTotals(rollTotals, rollParams)
+  const rollDie = () => randomNumber(rollParams.sides)
 
-  return (detailed ? { total, rollTotals, ...rollParams } : total) as any
+  const rollTotals = Array.from(Array(rollParams.rolls)).map(rollDie)
+  const total = digestTotals(rollTotals, rollParams, rollDie)
+
+  return detailed ? { total, rollTotals, ...rollParams } : total
 }
