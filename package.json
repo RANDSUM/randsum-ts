@@ -16,7 +16,7 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint ./src --ext .ts -c .eslint",
     "prepare": "husky install",
-    "pre-push": "yarn test && yarn docs && git add docs && git commit -m 'Generating Docs...'",
+    "release": "yarn build && npm publish",
     "watch-build": "tsc -w -p ."
   },
   "files": [
@@ -55,15 +55,11 @@
   "engines": {
     "node": ">=6.2.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn pre-push"
-    }
-  },
   "lint-staged": {
     "./src/**": [
-      "yarn lint --cache --fix"
+      "yarn lint --cache --fix",
+      "yarn docs",
+      "git add docs"
     ]
   },
   "jest": {

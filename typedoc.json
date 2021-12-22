@@ -1,5 +1,8 @@
 {
-  "out": "docs",
+  "out": "./docs",
+  "includeVersion": true,
+  "gitRevision": "main",
+  "sort": ["source-order"],
   "exclude": "./src/**/**/*.test.ts",
   "entryPoints": ["./src"]
 }
