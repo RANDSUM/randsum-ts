@@ -8,6 +8,11 @@ export type RollDie = () => number
 export type RandsumPrimeArg = string | number | RollOptions
 export type RollResultOrNum<T extends boolean> = T extends true ? RollResult : number
 
+export interface RandsumOptions<D = boolean> {
+  detailed?: D
+  customRandomizer?: Randomizer
+}
+
 export interface DropOptions {
   highest?: number
   lowest?: number
