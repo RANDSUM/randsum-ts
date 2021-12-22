@@ -62,16 +62,10 @@ describe('Randsum', () => {
   })
 
   describe('with a custom randomizer', () => {
-    describe('as the second argument', () => {
-      randsumCustomRandomizerSimpleTests(randsum('2d20', mockRandomizer), 2)
-    })
-
-    describe('as the third argument (simple)', () => {
-      randsumCustomRandomizerSimpleTests(randsum('2d20', false, mockRandomizer), 2)
-    })
+    randsumCustomRandomizerSimpleTests(randsum('2d20', { customRandomizer: mockRandomizer }), 2)
   })
 
   describe('with a detailed report', () => {
-    randsumDetailedTests(randsum('2d20', true), 20, 2)
+    randsumDetailedTests(randsum('2d20', { detailed: true }), 20, 2)
   })
 })
