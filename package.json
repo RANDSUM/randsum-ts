@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc -p .",
     "test": "jest",
-    "generate:docs": "typedoc --out docs src --exclude src/**/index.ts --exclude src/**/**/*.test.ts  --theme minimal",
+    "generate:docs": "typedoc --out docs src --exclude src/**/index.ts --exclude src/**/**/*.test.ts ",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint . --ext .ts -c .eslint",
     "lint:fix": "eslint . --ext .ts  -c .eslint --fix",
