@@ -31,3 +31,6 @@ jobs:
         uses: wearerequired/lint-action@v1
         with:
           eslint: true
+          eslint_args: './src --ext .ts -c .eslint'
+          eslint_extensions: ts
+          auto_fix: true
