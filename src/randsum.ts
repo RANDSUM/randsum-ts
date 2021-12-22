@@ -1,13 +1,21 @@
 import { transformRollTotalsWithParameters } from 'transformRollTotalsWithParameters'
-import { Randomizer, RandsumPrimeArg, RollModifier, RollResult, RollResultOrNum } from 'types'
+import { Randomizer, RandsumPrimeArg, RollModifier, RollOptions, RollResult, RollResultOrNum } from 'types'
 import { digestPrimeArgIntoParameters } from 'digestPrimeArgIntoParameters'
 import { randomNumber } from 'utils'
 
-export function randsum(primeArg: RandsumPrimeArg): number
-export function randsum(primeArg: RandsumPrimeArg, customRandomizer: Randomizer): number
-export function randsum<D extends boolean>(primeArg: RandsumPrimeArg, detailed: D): RollResultOrNum<D>
+export function randsum(sides: number): number
+export function randsum(sides: string): number
+export function randsum(rollOptions: RollOptions): number
+export function randsum(sides: number, customRandomizer: Randomizer): number
+export function randsum(sides: string, customRandomizer: Randomizer): number
+export function randsum(rollOptions: RollOptions, customRandomizer: Randomizer): number
+export function randsum<D extends boolean>(sides: number, detailed: D): RollResultOrNum<D>
+export function randsum<D extends boolean>(sides: string, detailed: D): RollResultOrNum<D>
+export function randsum<D extends boolean>(rollOptions: RollOptions, detailed: D): RollResultOrNum<D>
+export function randsum<D extends boolean>(sides: number, detailed: D, customRandomizer: Randomizer): RollResultOrNum<D>
+export function randsum<D extends boolean>(sides: string, detailed: D, customRandomizer: Randomizer): RollResultOrNum<D>
 export function randsum<D extends boolean>(
-  primeArg: RandsumPrimeArg,
+  rollOptions: RollOptions,
   detailed: D,
   customRandomizer: Randomizer,
 ): RollResultOrNum<D>
