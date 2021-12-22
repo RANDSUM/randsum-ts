@@ -62,7 +62,8 @@
   "lint-staged": {
     "./src/**": [
       "yarn lint --cache --fix",
-      "yarn docs"
+      "yarn docs",
+      "git add docs"
     ]
   },
   "jest": {
