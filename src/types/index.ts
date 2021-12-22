@@ -49,7 +49,6 @@ export interface RollOptions {
   notUnique?: number[]
   rollTotals?: RollTotals
   sides: number
-  notation?: string
 }
 
 export type NotifiableOptions = Pick<
