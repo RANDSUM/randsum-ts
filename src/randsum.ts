@@ -17,18 +17,18 @@ export function randsum(
 
   const rollDie = () => (customRandomizer || randomNumber)(rollParams.sides)
 
-  const initialRollTotals = Array.from(Array(rollParams.rolls)).map(rollDie)
+  const initialRollTotals = rollParams?.rollTotals || [...Array(rollParams.rolls)].map(rollDie)
 
   const [total, rollTotals] = transformRollTotalsWithParameters(initialRollTotals, rollParams, rollDie)
 
-  const rollResult: RollResult = {
-    total,
-    initialRollTotals,
-    rollTotals,
-    ...rollParams,
-    modifyInitialRoll: (callbackFunc: RollModifier) => callbackFunc(initialRollTotals.slice()),
-    modifyModifiedRoll: (callbackFunc: RollModifier) => callbackFunc(rollTotals.slice()),
-  }
-
-  return detailed ? rollResult : total
+  return detailed
+    ? {
+        total,
+        initialRollTotals,
+        rollTotals,
+        ...rollParams,
+        modifyInitialRoll: (callbackFunc: RollModifier) => callbackFunc(initialRollTotals.slice()),
+        modifyModifiedRoll: (callbackFunc: RollModifier) => callbackFunc(rollTotals.slice()),
+      }
+    : total
 }
