@@ -55,12 +55,6 @@
   "engines": {
     "node": ">=6.2.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn test"
-    }
-  },
   "lint-staged": {
     "./src/**": [
       "yarn lint --cache --fix",
