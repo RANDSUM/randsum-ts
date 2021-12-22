@@ -3,5 +3,5 @@
   "includeVersion": true,
   "sort": ["source-order"],
   "exclude": "./src/**/**/*.test.ts",
-  "entryPoints": ["./src"]
+  "entryPoints": ["./src/index.ts"]
 }
