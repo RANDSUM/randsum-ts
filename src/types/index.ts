@@ -1,4 +1,5 @@
 export type RollModifier = (results: number[]) => number
+export type RollModifierAccessor = (callback: RollModifier) => number
 export type RollTotals = number[]
 export type RandsumPrimeArg = string | number | RollOptions
 export type Randomizer = (sides: number) => number
@@ -51,5 +52,7 @@ export interface RollParameters extends RollOptions {
 export interface RollResult extends RollParameters {
   total: number
   rollTotals: number[]
-  modifyRoll: (callbackFn: RollModifier) => number
+  initialRollTotals: number[]
+  modifyInitialRoll: RollModifierAccessor
+  modifyModifiedRoll: RollModifierAccessor
 }
