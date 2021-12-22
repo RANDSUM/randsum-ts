@@ -15,7 +15,7 @@
     "generate:docs": "typedoc --out docs src --exclude src/**/index.ts --exclude src/**/**/*.test.ts ",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint . --ext .ts -c .eslint",
-    "lint:fix": "eslint . --ext .ts  -c .eslint --fix",
+    "lint:fix": "eslint ./src -c .eslint --fix",
     "watch-build": "tsc -w -p .",
     "prepare": "husky install"
   },
@@ -60,7 +60,7 @@
     }
   },
   "lint-staged": {
-    "./src/**": ["eslint --cache -c .eslint --fix", "yarn run generate:docs", "git add docs"]
+    "./src/**": ["yarn run lint --cache", "yarn run generate:docs", "git add docs"]
   },
   "jest": {
     "coverageDirectory": "./coverage/",
