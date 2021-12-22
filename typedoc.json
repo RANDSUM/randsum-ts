@@ -1,10 +1,11 @@
 {
-  "entryPoints": "./src",
+  "entryPointStrategy": "packages",
+  "entryPoints": ".",
   "out": "./docs",
   "sort": ["source-order"],
   "exclude": ["./src/**/**/*.test.ts", "./build", "./src/coverage"],
   "tsconfig": "./tsconfig.json",
+  "name": "randsum",
   "includeVersion": true,
-  "readme": "./README.md",
-  "logLevel": "Verbose"
+  "readme": "./README.md"
 }
