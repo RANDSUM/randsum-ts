@@ -1,6 +1,7 @@
 export type RollAccessor = (results: number[]) => number
 export type RollTotals = number[]
-export type RandsumFirstArg = string | number | RollOptions
+export type RandsumPrimeArg = string | number | RollOptions
+export type Randomizer = (sides: number) => number
 export type RollDie = () => number
 
 export interface DropOptions {
@@ -28,7 +29,6 @@ export interface ReplaceOptions {
 
 export interface RollOptions {
   accessor?: RollAccessor
-  roller?: (sides: number) => number
   plus?: number
   minus?: number
   cap?: CapOptions

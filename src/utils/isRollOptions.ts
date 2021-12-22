@@ -1,5 +1,5 @@
-import { RollOptions } from 'types'
+import { RandsumPrimeArg, RollOptions } from 'types'
 
-export function isRollOptions(arg: string | number | RollOptions): arg is RollOptions {
+export function isRollOptions(arg: RandsumPrimeArg): arg is RollOptions {
   return typeof arg === 'object'
 }
