@@ -8,11 +8,7 @@ export function digestTotals(
   { plus, minus, ...rollParams }: RollParameters,
   rollDie: () => number,
 ) {
-  const freshTotals = rollTotals.slice()
+  const modifiedTotals = modifyRollTotals(rollTotals.slice(), rollParams, rollDie)
 
-  const modifiedTotals = modifyRollTotals(freshTotals, rollParams, rollDie)
-
-  const baseTotal = sumArray(modifiedTotals)
-
-  return modifyTotal(baseTotal, { plus, minus })
+  return modifyTotal(sumArray(modifiedTotals), { plus, minus })
 }
