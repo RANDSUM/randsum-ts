@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc -p .",
     "test": "jest",
-    "generate:docs": "typedoc --out docs src --exclude src/**/**/*.test.ts",
+    "generate:docs": "typedoc --entryPointStrategy expand --out docs src --exclude src/**/**/*.test.ts",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint ./src --ext .ts -c .eslint",
     "watch-build": "tsc -w -p .",
@@ -35,6 +35,7 @@
     "prettier": "^2.5.1",
     "ts-jest": "^27.0.0",
     "typedoc": "^0.22.10",
+    "typedoc-plugin-rename-defaults": "^0.4.0",
     "typescript": "~4.5.4",
     "yarn": "^1.22.0"
   },
@@ -59,7 +60,11 @@
     }
   },
   "lint-staged": {
-    "./src/**": ["yarn lint --cache --fix", "yarn generate:docs", "git add docs"]
+    "./src/**": [
+      "yarn lint --cache --fix",
+      "yarn generate:docs",
+      "git add docs"
+    ]
   },
   "jest": {
     "coverageDirectory": "./coverage/",
