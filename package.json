@@ -60,7 +60,7 @@
     }
   },
   "lint-staged": {
-    "./src/**": "eslint --cache -c .eslint --fix"
+    "./src/**": ["eslint --cache -c .eslint --fix", "yarn run generate:docs && git add"]
   },
   "jest": {
     "coverageDirectory": "./coverage/",
