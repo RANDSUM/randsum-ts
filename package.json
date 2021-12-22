@@ -11,12 +11,12 @@
   "main": "build/index.js",
   "scripts": {
     "build": "tsc -p .",
+    "docs": "typedoc --entryPointStrategy expand --out docs src --exclude src/**/**/*.test.ts",
     "test": "jest",
-    "generate:docs": "typedoc --entryPointStrategy expand --out docs src --exclude src/**/**/*.test.ts",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint ./src --ext .ts -c .eslint",
-    "watch-build": "tsc -w -p .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "watch-build": "tsc -w -p ."
   },
   "files": [
     "build/**/*"
