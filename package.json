@@ -62,7 +62,7 @@
   "lint-staged": {
     "./src/**": [
       "yarn lint --cache --fix",
-      "yarn generate:docs",
+      "yarn docs",
       "git add docs"
     ]
   },
