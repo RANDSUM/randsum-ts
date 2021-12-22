@@ -28,6 +28,7 @@ export interface ReplaceOptions {
 
 export interface RollOptions {
   accessor?: RollAccessor
+  roller?: (sides: number) => number
   plus?: number
   minus?: number
   cap?: CapOptions

@@ -12,7 +12,7 @@ export function randsum<D extends boolean>(firstArg: RandsumFirstArg, detailed: 
 export function randsum(firstArg: RandsumFirstArg, detailed?: boolean): number | RollResult {
   const rollParams = digestArgsIntoParameters(firstArg)
 
-  const rollDie = () => randomNumber(rollParams.sides)
+  const rollDie = () => (rollParams?.roller || randomNumber)(rollParams.sides)
 
   const rollTotals = Array.from(Array(rollParams.rolls)).map(rollDie)
   const total = digestTotals(rollTotals, rollParams, rollDie)
