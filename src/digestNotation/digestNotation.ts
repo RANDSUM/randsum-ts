@@ -8,5 +8,8 @@ export function digestNotation(notationString: string) {
     throw `Dice Notation is not parseable. Received: ${notationString}`
   }
 
-  return { ...digestCore(coreMatches[0]) }
+  const coreNotation = coreMatches[0]
+  // const modifierNotation = notationString.replace(coreNotation, '')
+
+  return { ...digestCore(coreNotation) }
 }
