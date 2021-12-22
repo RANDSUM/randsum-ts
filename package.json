@@ -16,7 +16,7 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint ./src --ext .ts -c .eslint",
     "prepare": "husky install",
-    "pre-push": "yarn test && yarn docs && git add doc && git commit -m 'Generating Docs...'",
+    "pre-push": "yarn test && yarn docs && git add docs && git commit -m 'Generating Docs...'",
     "watch-build": "tsc -w -p ."
   },
   "files": [
