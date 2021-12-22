@@ -13,7 +13,7 @@ export function randsum<D extends boolean>(primeArg: RandsumPrimeArg, detailed: 
 export function randsum<D extends boolean>(
   primeArg: RandsumPrimeArg,
   detailed: D,
-  customRandomizer?: Randomizer,
+  customRandomizer: Randomizer,
 ): D extends true ? RollResult : number
 export function randsum(
   primeArg: RandsumPrimeArg,
