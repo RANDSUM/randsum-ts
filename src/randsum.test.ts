@@ -1,47 +1,70 @@
 import { randsum } from '.'
-import { RandsumFirstArg } from './types'
-import { digestArgsIntoParameters } from './digestArgsIntoParameters'
+import { Randomizer, RollResult } from './types'
 
-const randsumCoreTests = (firstArg: RandsumFirstArg, detailed?: boolean) => {
-  const comparitorOptions = digestArgsIntoParameters(firstArg)
-  if (detailed) {
-    const result = randsum(firstArg, detailed)
+const randsumSimpleTests = (result: number) => {
+  test('returns a number as total', () => {
+    expect(Number.isInteger(result)).toBe(true)
+  })
+}
 
-    test('result.rollTotals returns an array of results as rolls', () => {
-      expect(result.rollTotals.length).toEqual(comparitorOptions.rolls)
+const mockRandomizerRoll = 420
+const mockRandomizer: Randomizer = _sides => mockRandomizerRoll
+const randsumCustomRandomizerSimpleTests = (result: number, rolls: number) => {
+  test('returns a number as total', () => {
+    expect(Number.isInteger(result)).toBe(true)
+  })
 
-      result.rollTotals.forEach(result => {
-        expect(Number.isInteger(result)).toBe(true)
-      })
-    })
+  test('expects total to be correct', () => {
+    expect(result).toEqual(rolls * mockRandomizerRoll)
+  })
+}
 
-    test('result.sides returns the number of sides of the dice rolled', () => {
-      expect(result.sides).toEqual(comparitorOptions.sides)
-    })
+const randsumDetailedTests = (result: RollResult, sides: number, rolls: number) => {
+  test('result.rollTotals returns an array of results as rolls', () => {
+    expect(result.rollTotals.length).toEqual(rolls)
 
-    test('result.rolls returns the number of dice rolled', () => {
-      expect(result.rolls).toEqual(comparitorOptions.rolls || 1)
-    })
-  } else {
-    const result = randsum(firstArg)
-
-    test('returns a number as total', () => {
+    result.rollTotals.forEach(result => {
       expect(Number.isInteger(result)).toBe(true)
     })
-  }
+  })
+
+  test('result.sides returns the number of sides of the dice rolled', () => {
+    expect(result.sides).toEqual(sides)
+  })
+
+  test('result.rolls returns the number of dice rolled', () => {
+    expect(result.rolls).toEqual(rolls)
+  })
 }
 
 describe('Randsum', () => {
+  describe('with a string', () => {
+    randsumSimpleTests(randsum('20'))
+  })
+  describe('with a number', () => {
+    randsumSimpleTests(randsum(20))
+  })
   describe('with a modifier object', () => {
-    randsumCoreTests({ sides: 3, drop: { highest: 1 } })
+    randsumSimpleTests(randsum({ sides: 20, rolls: 2, drop: { highest: 1 } }))
   })
   describe('with a modifier function', () => {
-    randsumCoreTests({ sides: 3, accessor: () => 4 })
+    randsumSimpleTests(randsum({ sides: 20, rolls: 2, accessor: () => 4 }))
   })
   describe('with basic dice notation', () => {
-    randsumCoreTests('2d20')
+    randsumSimpleTests(randsum('2d20'))
   })
+
+  describe('with a custom randomizer', () => {
+    describe('as the second argument', () => {
+      randsumCustomRandomizerSimpleTests(randsum('2d20', mockRandomizer), 2)
+    })
+
+    describe('as the third argument (simple)', () => {
+      randsumCustomRandomizerSimpleTests(randsum('2d20', false, mockRandomizer), 2)
+    })
+  })
+
   describe('with a detailed report', () => {
-    randsumCoreTests('2d20', true)
+    randsumDetailedTests(randsum('2d20', true), 20, 2)
   })
 })
