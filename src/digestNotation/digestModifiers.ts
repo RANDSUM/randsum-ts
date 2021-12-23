@@ -9,7 +9,7 @@ export function digestModifiers(modifierString: string) {
     { replace: undefined },
     { reroll: undefined },
     { explode: undefined },
-    { unique: undefined, notUnique: undefined },
+    { unique: undefined },
   ].reduce((parameters, current) => {
     if (Object.values(current).every(val => val !== undefined)) {
       return { ...parameters, ...current }

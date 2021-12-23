@@ -39,6 +39,10 @@ export interface ReplaceOptions {
   to: number
 }
 
+export interface UniqueOptions {
+  notUnique: number[]
+}
+
 export interface RollOptions {
   rolls?: number
   rollTotals?: RollTotals
@@ -49,9 +53,8 @@ export interface RollOptions {
   drop?: DropOptions
   replace?: ReplaceOptions | ReplaceOptions[]
   reroll?: ReRollOptions | ReRollOptions[]
-  unique?: boolean
+  unique?: boolean | UniqueOptions
   explode?: boolean
-  notUnique?: number[]
 }
 
 export interface RollParameters extends RollOptions {

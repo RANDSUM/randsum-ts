@@ -23,7 +23,7 @@ describe('transformRollTotalsWithParameters', () => {
     })
 
     describe('when given a "notUnique" array', () => {
-      const notUniqueModifier = { ...uniqueModifier, notUnique: [1] }
+      const notUniqueModifier = { ...uniqueModifier, unique: { notUnique: [1] } }
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
         expect(transformRollTotalsWithParameters(duplicateRollTotals, notUniqueModifier, mockRandomizer)).toEqual([

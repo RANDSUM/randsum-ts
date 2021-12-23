@@ -38,6 +38,12 @@ describe('isDiceNotation', () => {
         expect(isDiceNotation(notNotation)).toBe(false)
       })
     })
+    describe('such as the very concept of deception', () => {
+      const notNotation = false
+      test('it returns false', () => {
+        expect(isDiceNotation(notNotation)).toBe(false)
+      })
+    })
     describe('such as undefined', () => {
       const notNotation = undefined
       test('it returns false', () => {
