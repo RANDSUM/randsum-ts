@@ -1,7 +1,6 @@
 {
   "entryPoints": "./src",
   "out": "./docs",
-  "sort": ["source-order"],
   "exclude": ["./src/**/**/*.test.ts", "./build", "./src/coverage"],
   "name": "randsum",
   "includeVersion": true
