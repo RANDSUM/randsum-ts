@@ -32,6 +32,10 @@ const randsum = require('randsum')
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
+## Attributions
+
+I looked high and wide for a consensus on a sort "Extended Standard Dice Notation", and could not find anything. The most extensive and thought-out documentation I found was for the game's [Sophie's Dice](https://sophiehoulden.com/dice/documentation/notation.html#keep). Thanks, [Sophie](https://www.patreon.com/SophieHoulden)! Your examples were invaluable. Consider buying their [games](https://sophieh.itch.io/)!
+
 ## Why did you make this?
 
 Sometime around 2012, I decided I wanted to learn to program. I was living at my friends apartment rent-free, and I was using a banged up laptop. I had installed ruby, set to make a dice roller as an easy first project.

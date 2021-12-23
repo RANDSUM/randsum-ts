@@ -1,10 +1,12 @@
+import {
+  parseRerollFactory,
+  parseUniqueFactory,
+  parseReplaceFactory,
+  parseCapFactory,
+  parseDropFactory,
+  parseExplodeFactory,
+} from 'modifiers'
 import { RollDie, RollParameters, RollTotals } from 'types'
-import { parseCapFactory } from './cap'
-import { parseDropFactory } from './drop'
-import { parseExplodeFactory } from './explode'
-import { parseReplaceFactory } from './replace'
-import { parseRerollFactory } from './reroll'
-import { parseUniqueFactory } from './unique'
 
 export function modifyRollTotals(
   rollTotals: RollTotals,
