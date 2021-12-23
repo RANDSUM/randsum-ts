@@ -26,6 +26,17 @@ describe('digestNotation', () => {
     })
   })
 
+  describe('given a notation that contains a drop less than, greater than, and exact', () => {
+    const testString: DiceNotation = `${baseTestString}D{<2,>5,2,4}`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({
+        ...baseRollParams,
+        drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] },
+      })
+    })
+  })
+
   describe('given a notation with a space', () => {
     const testString: DiceNotation = '4d6V {>2=6}'
 
