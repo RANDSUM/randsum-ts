@@ -1,13 +1,11 @@
-import { parseDropNotation } from './notationParsers'
-import { parseMinusNotation } from './notationParsers/parseMinusNotation'
-import { parsePlusNotation } from './notationParsers/parsePlusNotation'
+import { parseDropNotation, parsePlusNotation, parseMinusNotation, parseCapNotation } from './notationParsers'
 
 export function digestModifiers(modifierString: string) {
   return [
     { drop: parseDropNotation(modifierString) },
     { plus: parsePlusNotation(modifierString) },
     { minus: parseMinusNotation(modifierString) },
-    { cap: undefined },
+    { cap: parseCapNotation(modifierString) },
     { replace: undefined },
     { reroll: undefined },
     { explode: undefined },

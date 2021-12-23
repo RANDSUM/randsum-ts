@@ -37,6 +37,17 @@ describe('digestNotation', () => {
     })
   })
 
+  describe('given a notation that contains a cap before and below', () => {
+    const testString: DiceNotation = `${baseTestString}C<2>5`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({
+        ...baseRollParams,
+        cap: { below: 2, above: 5 },
+      })
+    })
+  })
+
   describe('given a notation that contains a minus modifier', () => {
     const testString: DiceNotation = `${baseTestString}-2`
 
