@@ -1,4 +1,4 @@
-type D = 'd' | 'D'
+export type D = 'd' | 'D'
 export type Sides = number | `${number}`
 export type DiceNotation = `${number}${D}${number}${string}`
 export type RollTotals = number[]
