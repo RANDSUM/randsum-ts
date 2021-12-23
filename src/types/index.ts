@@ -40,7 +40,7 @@ export interface ReplaceOptions {
 }
 
 export interface UniqueOptions {
-  notUnqiue: number[]
+  notUnique: number[]
 }
 
 export interface RollOptions {

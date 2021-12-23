@@ -8,7 +8,7 @@ export function uniqueDigester(
   if (rolls > sides) {
     throw 'You cannot have unique rolls when there are more rolls than sides of die.'
   }
-  const notUnique = typeof unique === 'boolean' ? false : unique?.notUnqiue
+  const notUnique = typeof unique === 'boolean' ? false : unique?.notUnique
 
   const filteredArray = rollTotals.filter(n => !(notUnique && notUnique.includes(n)))
   const fixedRollTotals = rollTotals.map((num, index, arr) => {
