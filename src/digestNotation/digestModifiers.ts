@@ -1,4 +1,4 @@
-import { RollParameters } from 'types'
+import { parseDropHighNotation } from './notationParsers'
 
 // 2d20K
 
@@ -10,6 +10,8 @@ import { RollParameters } from 'types'
 // drop any dice that landed on face 4,
 // and explode dice
 
-export function digestModifiers(_modifierString: string, _coreParams: Pick<RollParameters, 'sides' | 'rolls'>) {
-  return { notificationModifiers: [] }
+export function digestModifiers(modifierString: string) {
+  const dropHigh = parseDropHighNotation(modifierString)
+  const drop = { ...dropHigh }
+  return { drop }
 }

@@ -11,8 +11,7 @@ export function digestNotation(notationString: DiceNotation) {
   const coreMatches = notationString.toLowerCase().match(diceNotationPattern) as RegExpMatchArray
 
   const coreNotation = coreMatches[0]
-  const coreParams = digestCore(coreNotation)
   const modifierNotation = notationString.replace(coreNotation, '')
 
-  return { ...coreParams, ...digestModifiers(modifierNotation, coreParams), notation: notationString }
+  return { ...digestCore(coreNotation), ...digestModifiers(modifierNotation), notation: notationString }
 }

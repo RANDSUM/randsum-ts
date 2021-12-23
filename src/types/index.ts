@@ -54,14 +54,6 @@ export interface RollOptions {
   sides: number
 }
 
-export type NotifiableOptions = Pick<
-  RollOptions,
-  'plus' | 'minus' | 'cap' | 'drop' | 'replace' | 'reroll' | 'rolls' | 'unique' | 'explode' | 'notUnique'
->
-export type NotificationModifier = {
-  -readonly [K in keyof NotifiableOptions]: NotifiableOptions[K]
-}
-
 export interface RollParameters extends RollOptions {
   rolls: number
 }

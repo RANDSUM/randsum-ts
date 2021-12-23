@@ -5,3 +5,5 @@ export const explode = /[!]+\{?([<|>]?\d+,?)*\}?/g
 export const unique = /[uU]\{?\d+\}?/g
 export const replacement = /[vV]\{?([<|>]?\d+=?\d+,?)*\}?/g
 export const cap = /[vV]\{?([<|>]?\d+=?\d+,?)*\}?/g
+export const plus = /[+]\d+/g
+export const minus = /[-]\d+/g
