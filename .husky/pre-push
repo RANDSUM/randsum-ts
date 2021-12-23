@@ -6,4 +6,5 @@ yarn test && yarn build YY && typedoc --options ./typedoc.json
 if [ ! -z "$(git status --porcelain ./docs  )" ]; then
   git add ./docs
   git commit -m "Updating Docs..." --no-verify
+  echo "Generated docs 👍"
 fi
