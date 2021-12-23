@@ -40,26 +40,18 @@ export interface ReplaceOptions {
 }
 
 export interface RollOptions {
+  rolls?: number
+  rollTotals?: RollTotals
+  sides: number
   plus?: number
   minus?: number
   cap?: CapOptions
   drop?: DropOptions
   replace?: ReplaceOptions | ReplaceOptions[]
   reroll?: ReRollOptions | ReRollOptions[]
-  rolls?: number
   unique?: boolean
   explode?: boolean
   notUnique?: number[]
-  rollTotals?: RollTotals
-  sides: number
-}
-
-export type NotifiableOptions = Pick<
-  RollOptions,
-  'plus' | 'minus' | 'cap' | 'drop' | 'replace' | 'reroll' | 'rolls' | 'unique' | 'explode' | 'notUnique'
->
-export type NotificationModifier = {
-  -readonly [K in keyof NotifiableOptions]: NotifiableOptions[K]
 }
 
 export interface RollParameters extends RollOptions {
