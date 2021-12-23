@@ -1,7 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn test && yarn build && typedoc --options ./typedoc.json
+yarn test && yarn build && yarn docs
 
 if [ ! -z "$(git status --porcelain ./docs  )" ]; then
   git add ./docs
