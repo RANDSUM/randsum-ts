@@ -64,6 +64,20 @@ describe('digestNotation', () => {
     })
   })
 
+  describe('given a notation that contains a replace modifier', () => {
+    const testString: DiceNotation = `${baseTestString}V{1=2,>2=6}`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({
+        ...baseRollParams,
+        replace: [
+          { from: 1, to: 2 },
+          { from: { above: 2 }, to: 6 },
+        ],
+      })
+    })
+  })
+
   describe('given a notation with a space', () => {
     const testString: DiceNotation = '4d6V {>2=6}'
 
