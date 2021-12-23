@@ -1,4 +1,5 @@
 type D = 'd' | 'D'
+export type Sides = number | `${number}`
 export type DiceNotation = `${number}${D}${number}${string}`
 export type RollTotals = number[]
 
@@ -7,7 +8,7 @@ export type RollModifierAccessor = (callback: RollModifier) => number
 export type Randomizer = (sides: number) => number
 export type RollDie = () => number
 
-export type RandsumPrimeArg = string | number | RollOptions | DiceNotation
+export type RandsumPrimeArg = Sides | RollOptions | DiceNotation
 export type RollResultOrNum<T extends boolean> = T extends true ? RollResult : number
 
 export interface RandsumOptions<D = boolean> {
@@ -66,6 +67,7 @@ export interface RollParameters extends RollOptions {
 }
 
 export interface RollResult extends RollParameters {
+  args: [RandsumPrimeArg, RandsumOptions | undefined]
   total: number
   rollTotals: number[]
   initialRollTotals: number[]
