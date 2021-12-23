@@ -1,14 +1,6 @@
 import { digestNotation } from '.'
 
 describe('digestNotation', () => {
-  describe('given nonsense', () => {
-    const testString = '221212eee11www'
-
-    test('throws an error', () => {
-      expect(() => digestNotation(testString)).toThrow(`Dice Notation is not parseable. Received: ${testString}`)
-    })
-  })
-
   describe('given a basic notation string', () => {
     const testString = '4d6'
 
