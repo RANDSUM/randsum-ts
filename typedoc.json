@@ -1,5 +1,5 @@
 {
-  "entryPoints": "./src",
+  "entryPoints": ["./src"],
   "out": "./docs",
   "exclude": ["./src/**/**/*.test.ts", "./build", "./src/coverage"],
   "name": "randsum",
