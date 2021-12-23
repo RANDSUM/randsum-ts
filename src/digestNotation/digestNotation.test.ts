@@ -37,6 +37,22 @@ describe('digestNotation', () => {
     })
   })
 
+  describe('given a notation that contains a minus modifier', () => {
+    const testString: DiceNotation = `${baseTestString}-2`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, minus: 2 })
+    })
+  })
+
+  describe('given a notation that contains a plus modifier', () => {
+    const testString: DiceNotation = `${baseTestString}+2`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, plus: 2 })
+    })
+  })
+
   describe('given a notation with a space', () => {
     const testString: DiceNotation = '4d6V {>2=6}'
 
