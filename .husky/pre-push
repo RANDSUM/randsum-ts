@@ -1,4 +1,11 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn test && yarn build
+yarn test && yarn build && yarn docs
+
+if [ ! -z "$(git status --porcelain ./docs  )" ]; then
+  git add ./docs
+  git commit -m "Updating Docs..." --no-verify
+
+  echo "Generated docs 👍"
+fi
