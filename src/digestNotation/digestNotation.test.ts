@@ -18,6 +18,14 @@ describe('digestNotation', () => {
     })
   })
 
+  describe('given a notation that contains a drop lowest modifier', () => {
+    const testString: DiceNotation = `${baseTestString}L2`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, drop: { lowest: 2 } })
+    })
+  })
+
   describe('given a notation with a space', () => {
     const testString: DiceNotation = '4d6V {>2=6}'
 

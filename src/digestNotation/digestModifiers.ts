@@ -1,4 +1,4 @@
-import { parseDropHighNotation } from './notationParsers'
+import { parseDropHighNotation, parseDropLowNotation } from './notationParsers'
 
 // 2d20K
 
@@ -12,6 +12,7 @@ import { parseDropHighNotation } from './notationParsers'
 
 export function digestModifiers(modifierString: string) {
   const dropHigh = parseDropHighNotation(modifierString)
-  const drop = { ...dropHigh }
+  const dropwLow = parseDropLowNotation(modifierString)
+  const drop = { ...dropHigh, ...dropwLow }
   return { drop }
 }
