@@ -1,0 +1,52 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    name: Run CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PERSONALACCESSTOKEN }}
+
+      - name: Install Yarn Dependencies
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
+
+      - name: Run Tests
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: "test:ci"
+
+      - name: Code Cov
+        uses: codecov/codecov-action@v2.1.0
+
+      - name: Run Linters
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: lint
+
+      - name: Build Package
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: build
+
+      - name: Build Docs
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: docs
+
+      - name: Commit Docs
+        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        with:
+          add: 'docs'
+          message: '📄 Updating Docs (skip ci) 📄'
+          pull: 'NO-PULL'
+          push: '--no-verify'
