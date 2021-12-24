@@ -1,18 +1,24 @@
 import { DropOptions } from 'types'
 
 export function parseDropConstrainNotation(notationString: string) {
+  let dropConstraintParameters: Pick<DropOptions, 'exact' | 'greaterThan' | 'lessThan'> = { exact: [] }
   const constraints = notationString.split('d')[2].replace(/{/g, '').replace(/}/g, '').split(',')
-  return constraints.reduce<DropOptions & { exact: number[] }>(
-    (parameters, constraint) => {
-      switch (true) {
-        case constraint.includes('<'):
-          return { ...parameters, lessThan: Number(constraint.split('<')[1]) }
-        case constraint.includes('>'):
-          return { ...parameters, greaterThan: Number(constraint.split('>')[1]) }
-        default:
-          return { ...parameters, exact: [...parameters.exact, Number(constraint)] }
-      }
-    },
-    { exact: [] },
-  )
+  for (const constraint of constraints) {
+    if (constraint.includes('<')) {
+      dropConstraintParameters = { ...dropConstraintParameters, lessThan: Number(constraint.split('<')[1]) }
+      continue
+    }
+    if (constraint.includes('>')) {
+      dropConstraintParameters = { ...dropConstraintParameters, greaterThan: Number(constraint.split('>')[1]) }
+      continue
+    }
+    dropConstraintParameters = {
+      ...dropConstraintParameters,
+      exact: [
+        ...(Array.isArray(dropConstraintParameters?.exact) ? dropConstraintParameters.exact : []),
+        Number(constraint),
+      ],
+    }
+  }
+  return dropConstraintParameters
 }
