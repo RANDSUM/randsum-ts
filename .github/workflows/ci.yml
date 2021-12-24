@@ -47,6 +47,6 @@ jobs:
         uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
         with:
           add: 'docs'
-          message: '📄 Updating Docs (skip ci) 📄'
+          message: '📄 Updating Docs 📄'
           pull: 'NO-PULL'
           push: '--no-verify'
