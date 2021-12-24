@@ -9,7 +9,7 @@ export function parseRerollFactory(reroll: RollParameters['reroll'], rollDie: Ro
     }
     const parameters = Array.isArray(reroll) ? reroll : [reroll]
 
-    let rerollRolls: number[] = []
+    let rerollRolls = rollTotals
     for (const rerollModifier of parameters) {
       rerollRolls = rerollDigester(rerollRolls, rerollModifier, rollDie)
     }

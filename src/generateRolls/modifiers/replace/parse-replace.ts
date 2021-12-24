@@ -9,7 +9,7 @@ export function parseReplaceFactory(replace: RollParameters['replace']) {
     }
     const parameters = Array.isArray(replace) ? replace : [replace]
 
-    let replaceRolls: number[] = []
+    let replaceRolls = rollTotals
     for (const replaceModifier of parameters) {
       replaceRolls = replaceDigester(replaceRolls, replaceModifier)
     }
