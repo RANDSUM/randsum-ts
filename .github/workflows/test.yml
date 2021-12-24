@@ -14,5 +14,5 @@ jobs:
           cmd: build # will run `yarn build` command
       - uses: borales/actions-yarn@v2.3.0
         with:
-          cmd: test # will run `yarn test` command
+          cmd: test:ci # will run `yarn test` command
       - uses: codecov/codecov-action@v2.1.0
