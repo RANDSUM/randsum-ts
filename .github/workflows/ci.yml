@@ -50,3 +50,8 @@ jobs:
           message: '📄 Updating Docs 📄'
           pull: 'NO-PULL'
           push: '--no-verify'
+
+      - uses: sarthak-saxena/JSBundleSize@master
+        with:
+          dist_path: 'build'
+          token: ${{ secrets.PERSONALACCESSTOKEN }}
