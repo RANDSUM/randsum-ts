@@ -23,8 +23,8 @@ jobs:
       - name: Install Node.js dependencies
         run: yarn
 
-      - name: Build Package
-        run: yarn build
+      - name: Build Docs
+        run: yarn docs
 
       - name: Commit Docs
         uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
