@@ -1,5 +1,4 @@
 name: Docs
-
 on:
   push:
     branches:
@@ -7,7 +6,6 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   run-linters:
     name: Build Docs
@@ -32,16 +30,16 @@ jobs:
         run: yarn docs
 
       - name: Commit Docs
-        - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
-          with:
-            # The arguments for the `git add` command (see the paragraph below for more info)
-            # Default: '.'
-            add: 'docs'
+        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        with:
+          # The arguments for the `git add` command (see the paragraph below for more info)
+          # Default: '.'
+          add: 'docs'
 
-            # The message for the commit.
-            # Default: 'Commit from GitHub Actions (name of the workflow)'
-            message: '📄 Updating Docs 📄'
+          # The message for the commit.
+          # Default: 'Commit from GitHub Actions (name of the workflow)'
+          message: '📄 Updating Docs 📄'
 
-            # Arguments for the git pull command. Use NO-PULL to avoid the action pulling at all.
-            # Default: '--no-rebase'
-            pull: 'NO-PULL'
+          # Arguments for the git pull command. Use NO-PULL to avoid the action pulling at all.
+          # Default: '--no-rebase'
+          pull: 'NO-PULL'
