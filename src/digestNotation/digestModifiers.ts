@@ -4,6 +4,7 @@ import {
   parseMinusNotation,
   parseCapNotation,
   parseReplaceNotation,
+  parseUniqeNotation,
 } from './notationParsers'
 
 export function digestModifiers(modifierString: string) {
@@ -15,7 +16,7 @@ export function digestModifiers(modifierString: string) {
     { replace: parseReplaceNotation(modifierString) },
     { reroll: undefined },
     { explode: undefined },
-    { unique: undefined },
+    { unique: parseUniqeNotation(modifierString) },
   ].reduce((parameters, current) => {
     if (Object.values(current).every(val => val != {} || !!val)) {
       return { ...parameters, ...current }

@@ -64,6 +64,17 @@ describe('digestNotation', () => {
     })
   })
 
+  describe('given a notation that contains a unique modifier', () => {
+    const testString: DiceNotation = `${baseTestString}U{5,6}`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({
+        ...baseRollParams,
+        unique: { notUnique: [5, 6] },
+      })
+    })
+  })
+
   describe('given a notation that contains a replace modifier', () => {
     const testString: DiceNotation = `${baseTestString}V{1=2,>2=6}`
 
