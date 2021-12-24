@@ -1,16 +1,9 @@
 import { generateRolls } from 'generateRolls'
 import { parseArguments } from 'parseArguments'
-import {
-  DiceNotation,
-  RandsumDynamicReturn,
-  RandsumOptions,
-  RandsumPrimeArgument,
-  RollModifier,
-  RollOptions,
-  RollResult,
-  Sides,
-} from 'types'
+import { DiceNotation, RandsumOptions, RandsumPrimeArgument, RollModifier, RollOptions, RollResult, Sides } from 'types'
 import { randomNumber } from 'utils'
+
+type RandsumDynamicReturn<T extends boolean> = T extends true ? RollResult : number
 
 export function randsum(sides: Sides): number
 export function randsum(notation: DiceNotation): number
