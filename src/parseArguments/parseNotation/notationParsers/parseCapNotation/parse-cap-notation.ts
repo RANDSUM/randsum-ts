@@ -1,11 +1,12 @@
 export function parseCapNotation(notationString: string) {
+  let capParameters = {}
   const capString = notationString.split('c')[1].split(/(?!\d)/)
-  return capString.reduce((total, note) => {
-    switch (true) {
-      case note.includes('<'):
-        return { ...total, below: Number(note.replace(/</g, '')) }
-      default:
-        return { ...total, above: Number(note.replace(/>/g, '')) }
+  for (const note of capString) {
+    if (note.includes('<')) {
+      capParameters = { ...capParameters, below: Number(note.replace(/</g, '')) }
+      continue
     }
-  }, {})
+    capParameters = { ...capParameters, above: Number(note.replace(/>/g, '')) }
+  }
+  return capParameters
 }
