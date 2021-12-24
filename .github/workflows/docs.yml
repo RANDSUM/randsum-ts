@@ -1,9 +1,7 @@
 name: Docs
 
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
-  pull_request:
+  push:
     branches:
       - main
 
