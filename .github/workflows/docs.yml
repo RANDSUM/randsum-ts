@@ -1,0 +1,47 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-linters:
+    name: Build Docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 17
+
+      - name: Install Node.js dependencies
+        run: yarn
+
+      - name: Build Package
+        run: yarn build
+
+      - name: Build Package
+        run: yarn docs
+
+      - name: Commit Docs
+        - uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+          with:
+            # The arguments for the `git add` command (see the paragraph below for more info)
+            # Default: '.'
+            add: 'docs'
+
+            # The message for the commit.
+            # Default: 'Commit from GitHub Actions (name of the workflow)'
+            message: '📄 Updating Docs 📄'
+
+            # Arguments for the git pull command. Use NO-PULL to avoid the action pulling at all.
+            # Default: '--no-rebase'
+            pull: 'NO-PULL'
