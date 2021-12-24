@@ -14,9 +14,8 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:regexp/recommended",
         "plugin:jest/recommended",
-        "plugin:array-func/recommended",
+        "plugin:unicorn/recommended",
 
         "plugin:prettier/recommended"
     ],
@@ -27,6 +26,7 @@
         "project": "./tsconfig.json"
     },
     "rules": {
+        "unicorn/no-new-array": "off",
         "simple-import-sort/imports": "error",
         "simple-import-sort/exports": "error",
         "arrow-parens": ["error", "as-needed"],
