@@ -14,8 +14,7 @@
   "scripts": {
     "build": "tsc -p .",
     "docs": "typedoc --options ./typedoc.json",
-    "test": "jest --maxWorkers='50%'",
-    "test:ci ": "jest --runInBand",
+    "test": "jest",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint ./src --ext .ts -c .eslintrc.json",
     "watch-build": "tsc -w -p .",
