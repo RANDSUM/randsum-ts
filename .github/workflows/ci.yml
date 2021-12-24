@@ -7,6 +7,7 @@ on:
     branches:
       - main
 jobs:
+  if: "!contains(github.event.head_commit.message, 'skip ci')"
   build:
     name: Run CI
     runs-on: ubuntu-latest
@@ -47,6 +48,6 @@ jobs:
         uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
         with:
           add: 'docs'
-          message: '📄 Updating Docs 📄'
+          message: '📄 Updating Docs (skip ci) 📄'
           pull: 'NO-PULL'
           push: '--no-verify'

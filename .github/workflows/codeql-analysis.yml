@@ -21,6 +21,7 @@ on:
     - cron: '42 10 * * 1'
 
 jobs:
+  if: "!contains(github.event.head_commit.message, 'skip ci')"
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
