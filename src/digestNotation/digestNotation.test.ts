@@ -75,6 +75,17 @@ describe('digestNotation', () => {
     })
   })
 
+  describe('given a notation that contains an explode modifier', () => {
+    const testString: DiceNotation = `${baseTestString}!`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({
+        ...baseRollParams,
+        explode: true,
+      })
+    })
+  })
+
   describe('given a notation that contains a replace modifier', () => {
     const testString: DiceNotation = `${baseTestString}V{1=2,>2=6}`
 
