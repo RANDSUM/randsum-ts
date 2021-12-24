@@ -7,7 +7,8 @@
         "@typescript-eslint",
         "regexp",
         "simple-import-sort",
-        "jest"
+        "jest",
+        "unused-imports"
     ],
     "extends": [
         "standard",
@@ -25,6 +26,11 @@
         "sourceType": "module"
     },
     "rules": {
+        "unused-imports/no-unused-imports": "error",
+		"unused-imports/no-unused-vars": [
+			"warn",
+			{ "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+		],
         "unicorn/no-new-array": "off",
         "simple-import-sort/imports": "error",
         "simple-import-sort/exports": "error",

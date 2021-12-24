@@ -1,5 +1,6 @@
-import { rollParsers } from 'generateRolls/parsers'
 import { RollDie, RollParameters, RollTotals } from 'types'
+
+import { rollParsers } from './roll-parsers'
 
 export function modifyRollTotals(rollTotals: RollTotals, rollParameters: RollParameters, rollDie: RollDie) {
   let parsedRollTotals: number[] = rollTotals
