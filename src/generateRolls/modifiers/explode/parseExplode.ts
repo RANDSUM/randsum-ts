@@ -1,4 +1,5 @@
 import { RollDie, RollParameters, RollTotals } from 'types'
+
 import { explodeDigester } from './explodeDigester'
 
 export function parseExplodeFactory(

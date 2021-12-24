@@ -1,6 +1,7 @@
 import { RollParameters, RollTotals } from 'types'
 import { sumArray } from 'utils'
-import { modifyTotal, modifyRollTotals } from './modifiers'
+
+import { modifyRollTotals, modifyTotal } from './modifiers'
 
 export function generateRolls(
   rollTotals: RollTotals,

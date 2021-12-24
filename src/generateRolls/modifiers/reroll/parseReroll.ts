@@ -1,4 +1,5 @@
-import { RollParameters, RollTotals, RollDie } from 'types'
+import { RollDie, RollParameters, RollTotals } from 'types'
+
 import { rerollDigester } from './rerollDigester'
 
 export function parseRerollFactory(reroll: RollParameters['reroll'], rollDie: RollDie) {

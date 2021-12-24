@@ -1,4 +1,5 @@
 import { DiceNotation, RollParameters } from 'types'
+
 import { parseNotation } from '.'
 
 describe('parseNotation', () => {

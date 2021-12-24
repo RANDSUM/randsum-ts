@@ -1,4 +1,5 @@
 import { DiceNotation, RollParameters } from 'types'
+
 import { notationParsers } from './notationParsers'
 
 export function parseNotation(notationString: DiceNotation): RollParameters {

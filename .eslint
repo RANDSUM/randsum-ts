@@ -3,7 +3,8 @@
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint",
-    "regexp"
+    "regexp",
+    "simple-import-sort"
   ],
   "extends": [
     "eslint:recommended",
@@ -14,6 +15,8 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
     "arrow-parens": ["error", "as-needed"],
     "@typescript-eslint/quotes": [
       "error",

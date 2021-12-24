@@ -1,4 +1,5 @@
 import { generateRolls } from 'generateRolls'
+import { parseArgs } from 'parseArgs'
 import {
   DiceNotation,
   RandsumOptions,
@@ -9,7 +10,6 @@ import {
   RollResultOrNum,
   Sides,
 } from 'types'
-import { parseArgs } from 'parseArgs'
 import { randomNumber } from 'utils'
 
 export function randsum(sides: Sides): number

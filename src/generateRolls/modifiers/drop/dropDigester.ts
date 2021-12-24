@@ -1,5 +1,5 @@
-import { times } from 'utils'
 import { DropOptions } from 'types'
+import { times } from 'utils'
 
 export function dropDigester(rollTotals: number[], { highest, lowest, greaterThan, lessThan, exact }: DropOptions) {
   const sortedResults = rollTotals

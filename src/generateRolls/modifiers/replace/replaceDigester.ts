@@ -1,4 +1,5 @@
 import { ReplaceOptions } from 'types'
+
 import { singleCapDigester } from '../cap/singleCapDigester'
 
 export function replaceDigester(rollTotals: number[], { from, to }: ReplaceOptions) {

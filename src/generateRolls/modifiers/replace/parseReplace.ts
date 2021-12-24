@@ -1,4 +1,5 @@
 import { RollParameters, RollTotals } from 'types'
+
 import { replaceDigester } from './replaceDigester'
 
 export function parseReplaceFactory(replace: RollParameters['replace']) {

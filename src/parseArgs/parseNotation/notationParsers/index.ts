@@ -1,19 +1,20 @@
 import {
-  dropHigh,
-  dropConstraints,
-  dropLow,
-  plus,
-  minus,
   cap,
+  diceNotationPattern,
+  dropConstraints,
+  dropHigh,
+  dropLow,
+  explode,
+  minus,
+  plus,
   replace,
   reroll,
-  explode,
   unique,
-  diceNotationPattern,
 } from 'parseArgs/parseNotation/matchers'
 import { RollParameters } from 'types'
+
 import { parseCapNotation } from './parseCapNotation'
-import { parseDropHighNotation, parseDropConstrainNotation, parseDropLowNotation } from './parseDropNotation'
+import { parseDropConstrainNotation, parseDropHighNotation, parseDropLowNotation } from './parseDropNotation'
 import { parseExplodeNotation } from './parseExplodeNotation'
 import { parseMinusNotation } from './parseMinusNotation'
 import { parsePlusNotation } from './parsePlusNotation'

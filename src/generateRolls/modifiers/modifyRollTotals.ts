@@ -1,10 +1,10 @@
 import {
-  parseRerollFactory,
-  parseUniqueFactory,
-  parseReplaceFactory,
   parseCapFactory,
   parseDropFactory,
   parseExplodeFactory,
+  parseReplaceFactory,
+  parseRerollFactory,
+  parseUniqueFactory,
 } from 'generateRolls/modifiers'
 import { RollDie, RollParameters, RollTotals } from 'types'
 

@@ -1,5 +1,6 @@
-import randsum from '.'
 import { Randomizer } from 'types'
+
+import randsum from '.'
 
 const randsumSimpleTests = (result: number) => {
   test('returns a number as total', () => {

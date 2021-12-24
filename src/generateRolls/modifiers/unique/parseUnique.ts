@@ -1,4 +1,5 @@
-import { RollParameters, RollTotals, RollDie } from 'types'
+import { RollDie, RollParameters, RollTotals } from 'types'
+
 import { uniqueDigester } from './uniqueDigester'
 
 export function parseUniqueFactory(
