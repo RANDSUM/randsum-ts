@@ -1,7 +1,7 @@
 import { DiceNotation, RollParameters } from 'types'
 import { notationParsers } from './notationParsers'
 
-export function digestNotation(notationString: DiceNotation): RollParameters {
+export function parseNotation(notationString: DiceNotation): RollParameters {
   if (notationString.includes(' ')) {
     throw 'Notation cannot include spaces.'
   }

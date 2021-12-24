@@ -10,7 +10,7 @@ import {
   explode,
   unique,
   diceNotationPattern,
-} from 'digestNotation/matchers'
+} from 'parseNotation/matchers'
 import { RollParameters } from 'types'
 import { parseCapNotation } from './parseCapNotation'
 import { parseDropHighNotation, parseDropConstrainNotation, parseDropLowNotation } from './parseDropNotation'

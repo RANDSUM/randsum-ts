@@ -1,4 +1,4 @@
-import { digestNotation } from 'digestNotation'
+import { parseNotation } from 'parseNotation'
 import { RandsumPrimeArg, RollParameters } from 'types'
 import { isDiceNotation, isRollOptions } from 'utils'
 
@@ -7,5 +7,5 @@ export function digestPrimeArgIntoParameters(primeArg: RandsumPrimeArg): RollPar
     return { rolls: 1, ...primeArg }
   }
 
-  return isDiceNotation(primeArg) ? digestNotation(primeArg) : { rolls: 1, sides: Number(primeArg) }
+  return isDiceNotation(primeArg) ? parseNotation(primeArg) : { rolls: 1, sides: Number(primeArg) }
 }
