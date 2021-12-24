@@ -4,7 +4,7 @@ function reroll(num: number, { above, below, on, maxReroll }: ReRollOptions, rol
   if (maxReroll === index) {
     return num
   }
-  if (99 === index) {
+  if (index === 99) {
     console.warn('You have rerolled 99 times, stopping reroll.')
     return num
   }

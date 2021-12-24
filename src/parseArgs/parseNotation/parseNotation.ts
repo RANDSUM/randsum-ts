@@ -4,7 +4,7 @@ import { notationParsers } from './notationParsers'
 
 export function parseNotation(notationString: DiceNotation): RollParameters {
   if (notationString.includes(' ')) {
-    throw 'Notation cannot include spaces.'
+    throw new Error('Notation cannot include spaces.')
   }
 
   const formattedNotations = notationString.toLowerCase()

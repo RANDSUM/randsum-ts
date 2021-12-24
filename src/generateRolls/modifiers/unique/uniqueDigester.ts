@@ -6,7 +6,7 @@ export function uniqueDigester(
   rollDie: () => number,
 ): number[] {
   if (rolls > sides) {
-    throw 'You cannot have unique rolls when there are more rolls than sides of die.'
+    throw new Error('You cannot have unique rolls when there are more rolls than sides of die.')
   }
   const notUnique = !unique || typeof unique === 'boolean' ? [] : unique.notUnique
 
