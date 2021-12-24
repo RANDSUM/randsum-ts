@@ -9,6 +9,7 @@ export function generateRolls(
   rollDie: () => number,
 ): [number, RollTotals, RollTotals] {
   const modifiedRollTotals = modifyRollTotals(rollTotals.slice(), rollParams, rollDie)
+  const total = modifyTotal(sumArray(modifiedRollTotals.slice()), { plus, minus })
 
-  return [modifyTotal(sumArray(modifiedRollTotals.slice()), { plus, minus }), modifiedRollTotals, rollTotals]
+  return [total, modifiedRollTotals, rollTotals]
 }
