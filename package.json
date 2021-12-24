@@ -17,7 +17,6 @@
     "test": "jest",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint ./src --ext .ts -c .eslint",
-    "prepare": "husky install",
     "watch-build": "tsc -w -p .",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",

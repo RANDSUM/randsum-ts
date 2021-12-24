@@ -7,5 +7,9 @@ export function parseArgs(primeArg: RandsumPrimeArg): RollParameters {
     return { rolls: 1, ...primeArg }
   }
 
-  return isDiceNotation(primeArg) ? parseNotation(primeArg) : { rolls: 1, sides: Number(primeArg) }
+  if (isDiceNotation(primeArg)) {
+    return parseNotation(primeArg)
+  }
+
+  return { rolls: 1, sides: Number(primeArg) }
 }
