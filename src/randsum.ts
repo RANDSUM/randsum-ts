@@ -9,7 +9,7 @@ import {
   RollResultOrNum,
   Sides,
 } from 'types'
-import { digestPrimeArgIntoParameters } from 'digestPrimeArgIntoParameters'
+import { parseArgs } from 'parseArgs'
 import { randomNumber } from 'utils'
 
 export function randsum(sides: Sides): number
@@ -23,7 +23,7 @@ export function randsum<D extends boolean>(notation: DiceNotation, randsumOpts: 
 export function randsum<D extends boolean>(rollOptions: RollOptions, randsumOpts: RandsumOptions<D>): RollResultOrNum<D>
 export function randsum(primeArg: RandsumPrimeArg, randsumOpts?: RandsumOptions): number | RollResult {
   const { customRandomizer, detailed } = randsumOpts || {}
-  const rollParams = digestPrimeArgIntoParameters(primeArg)
+  const rollParams = parseArgs(primeArg)
 
   const rollDie = () => (customRandomizer || randomNumber)(rollParams.sides)
 
