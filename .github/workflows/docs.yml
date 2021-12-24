@@ -28,5 +28,5 @@ jobs:
       - name: Add Docs
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_options: '--no-veriy'
+          commit_options: '--no-verify'
           commit_message: 'Generating Docs 📚'
