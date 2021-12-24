@@ -9,8 +9,11 @@ export function parseReplaceFactory(replace: RollParameters['replace']) {
     }
     const parameters = Array.isArray(replace) ? replace : [replace]
 
-    return parameters.reduce((newTotals, replaceModifier) => {
-      return replaceDigester(newTotals, replaceModifier)
-    }, rollTotals)
+    let replaceRolls: number[] = []
+    parameters.forEach(replaceModifier => {
+      replaceRolls = replaceDigester(replaceRolls, replaceModifier)
+    })
+
+    return replaceRolls
   }
 }
