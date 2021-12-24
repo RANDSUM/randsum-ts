@@ -25,7 +25,7 @@ export function parseRerollFactory(reroll: ReRollOptions | ReRollOptions[], roll
 
     let rerollRolls = rollTotals
     for (const rerollModifier of parameters) {
-      rerollRolls = rollTotals.map(roll => {
+      rerollRolls = rerollRolls.map(roll => {
         return rerollRoll(roll, rerollModifier, rollDie, 0)
       })
     }

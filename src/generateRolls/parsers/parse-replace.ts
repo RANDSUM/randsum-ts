@@ -8,7 +8,7 @@ export function parseReplaceFactory(replace: ReplaceOptions | ReplaceOptions[]) 
 
     let replaceRolls = rollTotals
     for (const { from, to } of parameters) {
-      replaceRolls = rollTotals.map(roll => {
+      replaceRolls = replaceRolls.map(roll => {
         if (from) {
           if (typeof from === 'number') {
             if (roll === from) {
