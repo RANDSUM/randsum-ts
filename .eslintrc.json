@@ -21,9 +21,8 @@
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 13,
-        "sourceType": "module",
-        "project": "./tsconfig.json"
+        "ecmaVersion": "latest",
+        "sourceType": "module"
     },
     "rules": {
         "unicorn/no-new-array": "off",
