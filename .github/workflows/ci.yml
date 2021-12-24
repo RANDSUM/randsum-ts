@@ -55,5 +55,6 @@ jobs:
 
       - uses: sarthak-saxena/JSBundleSize@master
         with:
+          bootstrap: 'yarn install'
+          build_command: 'yarn build'
           dist_path: 'build'
-          token: ${{ secrets.PERSONALACCESSTOKEN }}
