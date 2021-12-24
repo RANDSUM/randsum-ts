@@ -5,7 +5,7 @@ import {
   parseCapFactory,
   parseDropFactory,
   parseExplodeFactory,
-} from 'modifyRolls/modifiers'
+} from 'generateRolls/modifiers'
 import { RollDie, RollParameters, RollTotals } from 'types'
 
 export function modifyRollTotals(

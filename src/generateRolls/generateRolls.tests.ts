@@ -1,13 +1,13 @@
-import { modifyRolls } from 'modifyRolls'
+import { generateRolls } from 'generateRolls'
 
-describe('modifyRolls', () => {
+describe('generateRolls', () => {
   const rollTotals = [1, 2, 3, 4]
   const baseModifier = { sides: 6, rolls: rollTotals.length }
   const mockRandomizer = () => 200
 
   describe('when given roll totals with no modifiers', () => {
     test('it returns the sum total of the rolls and the roll totals', () => {
-      expect(modifyRolls(rollTotals, baseModifier, mockRandomizer)).toEqual([10, [1, 2, 3, 4]])
+      expect(generateRolls(rollTotals, baseModifier, mockRandomizer)).toEqual([10, [1, 2, 3, 4]])
     })
   })
 
@@ -16,14 +16,14 @@ describe('modifyRolls', () => {
     const uniqueModifier = { sides: 4, rolls: duplicateRollTotals.length, unique: true }
 
     test('it re-rolls non-unique modifiers ', () => {
-      expect(modifyRolls(duplicateRollTotals, uniqueModifier, mockRandomizer)).toEqual([206, [1, 200, 2, 3]])
+      expect(generateRolls(duplicateRollTotals, uniqueModifier, mockRandomizer)).toEqual([206, [1, 200, 2, 3]])
     })
 
     describe('when given a "notUnique" array', () => {
       const notUniqueModifier = { ...uniqueModifier, unique: { notUnique: [1] } }
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
-        expect(modifyRolls(duplicateRollTotals, notUniqueModifier, mockRandomizer)).toEqual([7, [1, 1, 2, 3]])
+        expect(generateRolls(duplicateRollTotals, notUniqueModifier, mockRandomizer)).toEqual([7, [1, 1, 2, 3]])
       })
     })
 
@@ -33,7 +33,7 @@ describe('modifyRolls', () => {
 
       test('it throws an error', () => {
         // Remaining Rolls:  overflowRollTotals
-        expect(() => modifyRolls(overflowRollTotals, overflowModifier, mockRandomizer)).toThrow(
+        expect(() => generateRolls(overflowRollTotals, overflowModifier, mockRandomizer)).toThrow(
           'You cannot have unique rolls when there are more rolls than sides of die.',
         )
       })
@@ -55,7 +55,7 @@ describe('modifyRolls', () => {
     }
 
     test('it returns the total without the provided values', () => {
-      expect(modifyRolls(longerRollTotals, dropModifier, mockRandomizer)).toEqual([17, [4, 6, 7]])
+      expect(generateRolls(longerRollTotals, dropModifier, mockRandomizer)).toEqual([17, [4, 6, 7]])
     })
   })
 
@@ -67,7 +67,7 @@ describe('modifyRolls', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(modifyRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([11, [2, 2, 3, 4]])
+        expect(generateRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([11, [2, 2, 3, 4]])
       })
     })
 
@@ -81,7 +81,7 @@ describe('modifyRolls', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(modifyRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([13, [2, 2, 3, 6]])
+        expect(generateRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([13, [2, 2, 3, 6]])
       })
     })
   })
@@ -92,7 +92,7 @@ describe('modifyRolls', () => {
 
     test('it returns the total with all values matching the queries rerolled', () => {
       // Remaining Rolls: [1,2,3,6,200]
-      expect(modifyRolls(explodeRolls, explodeModifier, mockRandomizer)).toEqual([212, [1, 2, 3, 6, 200]])
+      expect(generateRolls(explodeRolls, explodeModifier, mockRandomizer)).toEqual([212, [1, 2, 3, 6, 200]])
     })
   })
 
@@ -107,7 +107,7 @@ describe('modifyRolls', () => {
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         // Remaining Rolls: [1,2,3,200]
-        expect(modifyRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([206, [1, 2, 3, 200]])
+        expect(generateRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([206, [1, 2, 3, 200]])
       })
     })
 
@@ -116,7 +116,7 @@ describe('modifyRolls', () => {
 
       test('it returns the total with all values matching the queries rerolled', () => {
         // Remaining Rolls: [1,200,3,200]
-        expect(modifyRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([404, [1, 200, 3, 200]])
+        expect(generateRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([404, [1, 200, 3, 200]])
       })
     })
 
@@ -125,7 +125,7 @@ describe('modifyRolls', () => {
 
       test('it returns the total with all values matching the queries rerolled', () => {
         // Remaining Rolls: [200,2,200,4]
-        expect(modifyRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([406, [200, 2, 200, 4]])
+        expect(generateRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([406, [200, 2, 200, 4]])
       })
     })
   })
@@ -134,7 +134,7 @@ describe('modifyRolls', () => {
     const dropModifier = { ...baseModifier, cap: { above: 3, below: 2 } }
 
     test('it returns the total with all values above above and below below replaced with their respective comparitor and the roll totals', () => {
-      expect(modifyRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([10, [2, 2, 3, 3]])
+      expect(generateRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([10, [2, 2, 3, 3]])
     })
   })
 
@@ -142,7 +142,7 @@ describe('modifyRolls', () => {
     const dropModifier = { ...baseModifier, plus: 2 }
 
     test('it returns the total plus the "plus" modifier, and the roll totals', () => {
-      expect(modifyRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([12, [1, 2, 3, 4]])
+      expect(generateRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([12, [1, 2, 3, 4]])
     })
   })
 
@@ -150,7 +150,7 @@ describe('modifyRolls', () => {
     const dropModifier = { ...baseModifier, minus: 2 }
 
     test('it returns the total minust the "minus" modifier, and the roll totals', () => {
-      expect(modifyRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([8, [1, 2, 3, 4]])
+      expect(generateRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([8, [1, 2, 3, 4]])
     })
   })
 })

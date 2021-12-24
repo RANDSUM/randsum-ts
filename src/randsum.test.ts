@@ -63,10 +63,10 @@ describe('Randsum', () => {
       expect(result.rolls).toEqual(2)
     })
 
-    test('result.modifyRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
+    test('result.generateRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
       expect(result.modifyInitialRoll(rolls => 40 * rolls.length)).toEqual(80)
     })
-    test('result.modifyRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
+    test('result.generateRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
       expect(result.modifyModifiedRoll(rolls => 40 * rolls.length)).toEqual(80)
     })
   })
