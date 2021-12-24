@@ -1,13 +1,13 @@
-import { transformRollTotalsWithParameters } from 'transformRollTotalsWithParameters'
+import { modifyRolls } from 'modifyRolls'
 
-describe('transformRollTotalsWithParameters', () => {
+describe('modifyRolls', () => {
   const rollTotals = [1, 2, 3, 4]
   const baseModifier = { sides: 6, rolls: rollTotals.length }
   const mockRandomizer = () => 200
 
   describe('when given roll totals with no modifiers', () => {
     test('it returns the sum total of the rolls and the roll totals', () => {
-      expect(transformRollTotalsWithParameters(rollTotals, baseModifier, mockRandomizer)).toEqual([10, [1, 2, 3, 4]])
+      expect(modifyRolls(rollTotals, baseModifier, mockRandomizer)).toEqual([10, [1, 2, 3, 4]])
     })
   })
 
@@ -16,20 +16,14 @@ describe('transformRollTotalsWithParameters', () => {
     const uniqueModifier = { sides: 4, rolls: duplicateRollTotals.length, unique: true }
 
     test('it re-rolls non-unique modifiers ', () => {
-      expect(transformRollTotalsWithParameters(duplicateRollTotals, uniqueModifier, mockRandomizer)).toEqual([
-        206,
-        [1, 200, 2, 3],
-      ])
+      expect(modifyRolls(duplicateRollTotals, uniqueModifier, mockRandomizer)).toEqual([206, [1, 200, 2, 3]])
     })
 
     describe('when given a "notUnique" array', () => {
       const notUniqueModifier = { ...uniqueModifier, unique: { notUnique: [1] } }
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
-        expect(transformRollTotalsWithParameters(duplicateRollTotals, notUniqueModifier, mockRandomizer)).toEqual([
-          7,
-          [1, 1, 2, 3],
-        ])
+        expect(modifyRolls(duplicateRollTotals, notUniqueModifier, mockRandomizer)).toEqual([7, [1, 1, 2, 3]])
       })
     })
 
@@ -39,7 +33,7 @@ describe('transformRollTotalsWithParameters', () => {
 
       test('it throws an error', () => {
         // Remaining Rolls:  overflowRollTotals
-        expect(() => transformRollTotalsWithParameters(overflowRollTotals, overflowModifier, mockRandomizer)).toThrow(
+        expect(() => modifyRolls(overflowRollTotals, overflowModifier, mockRandomizer)).toThrow(
           'You cannot have unique rolls when there are more rolls than sides of die.',
         )
       })
@@ -61,7 +55,7 @@ describe('transformRollTotalsWithParameters', () => {
     }
 
     test('it returns the total without the provided values', () => {
-      expect(transformRollTotalsWithParameters(longerRollTotals, dropModifier, mockRandomizer)).toEqual([17, [4, 6, 7]])
+      expect(modifyRolls(longerRollTotals, dropModifier, mockRandomizer)).toEqual([17, [4, 6, 7]])
     })
   })
 
@@ -73,7 +67,7 @@ describe('transformRollTotalsWithParameters', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(transformRollTotalsWithParameters(rollTotals, dropModifier, mockRandomizer)).toEqual([11, [2, 2, 3, 4]])
+        expect(modifyRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([11, [2, 2, 3, 4]])
       })
     })
 
@@ -87,7 +81,7 @@ describe('transformRollTotalsWithParameters', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(transformRollTotalsWithParameters(rollTotals, dropModifier, mockRandomizer)).toEqual([13, [2, 2, 3, 6]])
+        expect(modifyRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([13, [2, 2, 3, 6]])
       })
     })
   })
@@ -98,10 +92,7 @@ describe('transformRollTotalsWithParameters', () => {
 
     test('it returns the total with all values matching the queries rerolled', () => {
       // Remaining Rolls: [1,2,3,6,200]
-      expect(transformRollTotalsWithParameters(explodeRolls, explodeModifier, mockRandomizer)).toEqual([
-        212,
-        [1, 2, 3, 6, 200],
-      ])
+      expect(modifyRolls(explodeRolls, explodeModifier, mockRandomizer)).toEqual([212, [1, 2, 3, 6, 200]])
     })
   })
 
@@ -116,10 +107,7 @@ describe('transformRollTotalsWithParameters', () => {
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         // Remaining Rolls: [1,2,3,200]
-        expect(transformRollTotalsWithParameters(rollTotals, rerollModifier, mockRandomizer)).toEqual([
-          206,
-          [1, 2, 3, 200],
-        ])
+        expect(modifyRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([206, [1, 2, 3, 200]])
       })
     })
 
@@ -128,10 +116,7 @@ describe('transformRollTotalsWithParameters', () => {
 
       test('it returns the total with all values matching the queries rerolled', () => {
         // Remaining Rolls: [1,200,3,200]
-        expect(transformRollTotalsWithParameters(rollTotals, rerollModifier, mockRandomizer)).toEqual([
-          404,
-          [1, 200, 3, 200],
-        ])
+        expect(modifyRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([404, [1, 200, 3, 200]])
       })
     })
 
@@ -140,10 +125,7 @@ describe('transformRollTotalsWithParameters', () => {
 
       test('it returns the total with all values matching the queries rerolled', () => {
         // Remaining Rolls: [200,2,200,4]
-        expect(transformRollTotalsWithParameters(rollTotals, rerollModifier, mockRandomizer)).toEqual([
-          406,
-          [200, 2, 200, 4],
-        ])
+        expect(modifyRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([406, [200, 2, 200, 4]])
       })
     })
   })
@@ -152,7 +134,7 @@ describe('transformRollTotalsWithParameters', () => {
     const dropModifier = { ...baseModifier, cap: { above: 3, below: 2 } }
 
     test('it returns the total with all values above above and below below replaced with their respective comparitor and the roll totals', () => {
-      expect(transformRollTotalsWithParameters(rollTotals, dropModifier, mockRandomizer)).toEqual([10, [2, 2, 3, 3]])
+      expect(modifyRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([10, [2, 2, 3, 3]])
     })
   })
 
@@ -160,7 +142,7 @@ describe('transformRollTotalsWithParameters', () => {
     const dropModifier = { ...baseModifier, plus: 2 }
 
     test('it returns the total plus the "plus" modifier, and the roll totals', () => {
-      expect(transformRollTotalsWithParameters(rollTotals, dropModifier, mockRandomizer)).toEqual([12, [1, 2, 3, 4]])
+      expect(modifyRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([12, [1, 2, 3, 4]])
     })
   })
 
@@ -168,7 +150,7 @@ describe('transformRollTotalsWithParameters', () => {
     const dropModifier = { ...baseModifier, minus: 2 }
 
     test('it returns the total minust the "minus" modifier, and the roll totals', () => {
-      expect(transformRollTotalsWithParameters(rollTotals, dropModifier, mockRandomizer)).toEqual([8, [1, 2, 3, 4]])
+      expect(modifyRolls(rollTotals, dropModifier, mockRandomizer)).toEqual([8, [1, 2, 3, 4]])
     })
   })
 })

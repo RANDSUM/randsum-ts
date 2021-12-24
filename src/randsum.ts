@@ -1,4 +1,4 @@
-import { transformRollTotalsWithParameters } from 'transformRollTotalsWithParameters'
+import { modifyRolls } from 'modifyRolls'
 import {
   DiceNotation,
   RandsumOptions,
@@ -29,7 +29,7 @@ export function randsum(primeArg: RandsumPrimeArg, randsumOpts?: RandsumOptions)
 
   const initialRollTotals = [...Array(rollParams.rolls)].map(rollDie)
 
-  const [total, rollTotals] = transformRollTotalsWithParameters(initialRollTotals, rollParams, rollDie)
+  const [total, rollTotals] = modifyRolls(initialRollTotals, rollParams, rollDie)
 
   return detailed
     ? {

@@ -3,7 +3,7 @@ import { sumArray } from 'utils'
 import { modifyRollTotals } from './modifyRollTotals'
 import { modifyTotal } from './modifyTotal'
 
-export function transformRollTotalsWithParameters(
+export function modifyRolls(
   rollTotals: RollTotals,
   { plus, minus, ...rollParams }: RollParameters,
   rollDie: () => number,
