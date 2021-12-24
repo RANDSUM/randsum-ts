@@ -1,25 +1,29 @@
+import { ReRollOptions } from 'types'
+
 export function parseRerollNotation(notationString: string) {
-  return notationString
-    .split('r')[1]
-    .replace(/{/g, '')
-    .replace(/}/g, ',!')
-    .split(',')
-    .reduce(
-      (options, notation) => {
-        if (notation === '!') {
-          return options
-        }
-        switch (true) {
-          case notation.includes('<'):
-            return { ...options, below: Number(notation.split('<')[1]) }
-          case notation.includes('>'):
-            return { ...options, above: Number(notation.split('>')[1]) }
-          case notation.includes('!'):
-            return { ...options, maxReroll: Number(notation.split('!')[1]) }
-          default:
-            return { ...options, on: [...options.on, Number(notation)] }
-        }
-      },
-      { on: [] as number[] },
-    )
+  const parsedString = notationString.split('r')[1].replace(/{/g, '').replace(/}/g, ',!').split(',')
+  let rerollParameters: ReRollOptions = { on: [] }
+  for (const notation of parsedString) {
+    if (notation === '!') {
+      continue
+    }
+    if (notation.includes('<')) {
+      rerollParameters = { ...rerollParameters, below: Number(notation.split('<')[1]) }
+      continue
+    }
+    if (notation.includes('>')) {
+      rerollParameters = { ...rerollParameters, above: Number(notation.split('>')[1]) }
+      continue
+    }
+    if (notation.includes('!')) {
+      rerollParameters = { ...rerollParameters, maxReroll: Number(notation.split('!')[1]) }
+      continue
+    }
+    rerollParameters = {
+      ...rerollParameters,
+      on: [...(Array.isArray(rerollParameters?.on) ? rerollParameters.on : ([] as number[])), Number(notation)],
+    }
+  }
+
+  return rerollParameters
 }
