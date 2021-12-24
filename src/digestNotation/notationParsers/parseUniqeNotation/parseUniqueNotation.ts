@@ -1,7 +1,7 @@
-import { reroll } from 'digestNotation/matchers'
+import { unique } from 'digestNotation/matchers'
 
 export function parseUniqeNotation(modifierString: string) {
-  const match = modifierString.match(reroll)
+  const match = modifierString.match(unique)
 
   if (!match) {
     return undefined
@@ -13,11 +13,10 @@ export function parseUniqeNotation(modifierString: string) {
     return true
   }
 
+  const notUnique = matchStr.replace('u{', '').replace('}', '').split(',')
+  console.log(notUnique)
+
   return {
-    notUnique: matchStr
-      .replace('u{', '')
-      .replace('}', '')
-      .split(',')
-      .map(num => Number(num)),
+    notUnique: notUnique.map(num => Number(num)),
   }
 }
