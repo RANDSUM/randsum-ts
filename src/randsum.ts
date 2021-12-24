@@ -2,12 +2,12 @@ import { generateRolls } from 'generateRolls'
 import { parseArguments } from 'parseArguments'
 import {
   DiceNotation,
+  RandsumDynamicReturn,
   RandsumOptions,
   RandsumPrimeArgument,
   RollModifier,
   RollOptions,
   RollResult,
-  RandsumDynamicReturn,
   Sides,
 } from 'types'
 import { randomNumber } from 'utils'
@@ -33,7 +33,7 @@ export function randsum(primeArgument: RandsumPrimeArgument, randsumOptions?: Ra
 
   const rollDie = () => (customRandomizer || randomNumber)(rollParameters.sides)
 
-  const initialRollTotals = [...new Array(rollParameters.rolls)].map(rollDie)
+  const initialRollTotals = [...new Array(rollParameters.rolls)].map(() => rollDie())
 
   const [total, rollTotals] = generateRolls(initialRollTotals, rollParameters, rollDie)
 

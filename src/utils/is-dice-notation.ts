@@ -7,4 +7,3 @@ export function isDiceNotation(argument: unknown): argument is DiceNotation {
   }
   return !!diceNotationPattern.test(argument)
 }
-;``
