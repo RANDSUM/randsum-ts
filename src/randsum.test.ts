@@ -29,7 +29,7 @@ describe('Randsum', () => {
   })
 
   describe('with a modifier object', () => {
-    randsumSimpleTests(randsum({ rollTotals: [20, 19], sides: 20, rolls: 2, drop: { highest: 1 } }))
+    randsumSimpleTests(randsum({ sides: 20, rolls: 2, drop: { highest: 1 } }))
   })
 
   describe('with basic dice notation', () => {
@@ -68,15 +68,6 @@ describe('Randsum', () => {
     })
     test('result.modifyRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
       expect(result.modifyModifiedRoll(rolls => 40 * rolls.length)).toEqual(80)
-    })
-  })
-
-  describe('when provided a rollsTotal', () => {
-    test('it returns that rollsTotal and uses it for calculations', () => {
-      const rollTotals = [20, 20, 20, 20]
-      const result = randsum({ sides: 20, rolls: 4, rollTotals }, { detailed: true })
-
-      expect(result.rollTotals).toEqual(rollTotals)
     })
   })
 })
