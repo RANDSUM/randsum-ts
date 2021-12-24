@@ -2,8 +2,8 @@ export type D = 'd' | 'D'
 export type Sides = number | `${number}`
 export type DiceNotation = `${number}${D}${number}${string}`
 
-export type Randomizer = (sides: number) => number
 export type RollDie = () => number
+export type Randomizer = (sides: number) => number
 
 export type RollTotals = number[]
 
