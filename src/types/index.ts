@@ -45,7 +45,6 @@ export interface UniqueOptions {
 
 export interface RollOptions {
   rolls?: number
-  rollTotals?: RollTotals
   sides: number
   plus?: number
   minus?: number
@@ -59,6 +58,7 @@ export interface RollOptions {
 
 export interface RollParameters extends RollOptions {
   rolls: number
+  notation?: string
 }
 
 export interface RollResult extends RollParameters {

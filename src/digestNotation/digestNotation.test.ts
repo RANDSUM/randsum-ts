@@ -11,18 +11,38 @@ describe('digestNotation', () => {
   })
 
   describe('given a notation that contains a drop highest modifier', () => {
-    const testString: DiceNotation = `${baseTestString}H2`
+    describe('with a simple notation', () => {
+      const testString: DiceNotation = `${baseTestString}H`
 
-    test('returns a RollParameter matching the notation', () => {
-      expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, drop: { highest: 2 } })
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, drop: { highest: 1 } })
+      })
+    })
+
+    describe('with a complex notation', () => {
+      const testString: DiceNotation = `${baseTestString}H2`
+
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, drop: { highest: 2 } })
+      })
     })
   })
 
   describe('given a notation that contains a drop lowest modifier', () => {
-    const testString: DiceNotation = `${baseTestString}L2`
+    describe('with a simple notation', () => {
+      const testString: DiceNotation = `${baseTestString}L`
 
-    test('returns a RollParameter matching the notation', () => {
-      expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, drop: { lowest: 2 } })
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, drop: { lowest: 1 } })
+      })
+    })
+
+    describe('with a simple notation', () => {
+      const testString: DiceNotation = `${baseTestString}L2`
+
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, drop: { lowest: 2 } })
+      })
     })
   })
 
@@ -33,6 +53,118 @@ describe('digestNotation', () => {
       expect(digestNotation(testString)).toMatchObject({
         ...baseRollParams,
         drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] },
+      })
+    })
+  })
+
+  describe('given a notation that contains a cap before and below', () => {
+    const testString: DiceNotation = `${baseTestString}C<2>5`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({
+        ...baseRollParams,
+        cap: { below: 2, above: 5 },
+      })
+    })
+  })
+
+  describe('given a notation that contains a minus modifier', () => {
+    const testString: DiceNotation = `${baseTestString}-2`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, minus: 2 })
+    })
+  })
+
+  describe('given a notation that contains a plus modifier', () => {
+    const testString: DiceNotation = `${baseTestString}+2`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({ ...baseRollParams, plus: 2 })
+    })
+  })
+
+  describe('given a notation that contains a reroll modifier', () => {
+    describe('with a simple value', () => {
+      const testString: DiceNotation = `${baseTestString}R{>6}`
+
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({
+          ...baseRollParams,
+          reroll: { above: 6 },
+        })
+      })
+    })
+
+    describe('with a complex value', () => {
+      const testString: DiceNotation = `${baseTestString}R{5,2,<6}3`
+
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({
+          ...baseRollParams,
+          reroll: { on: [5, 2], below: 6, maxReroll: 3 },
+        })
+      })
+    })
+  })
+
+  describe('given a notation that contains a unique notation', () => {
+    describe('with a unique notation', () => {
+      const testString: DiceNotation = `${baseTestString}U{5,6}`
+
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({
+          ...baseRollParams,
+          unique: { notUnique: [5, 6] },
+        })
+      })
+    })
+    describe('with a simple unique notation', () => {
+      const testString: DiceNotation = `${baseTestString}U`
+
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({
+          ...baseRollParams,
+          unique: true,
+        })
+      })
+    })
+  })
+
+  describe('given a notation that contains an explode modifier', () => {
+    const testString: DiceNotation = `${baseTestString}!`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({
+        ...baseRollParams,
+        explode: true,
+      })
+    })
+  })
+
+  describe('given a notation that contains a replace modifier', () => {
+    describe('with multiple replacements', () => {
+      const testString: DiceNotation = `${baseTestString}V{1=2,>2=6}`
+
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({
+          ...baseRollParams,
+          replace: [
+            { from: 1, to: 2 },
+            { from: { above: 2 }, to: 6 },
+          ],
+        })
+      })
+    })
+
+    describe('with a single replaceent', () => {
+      const testString: DiceNotation = `${baseTestString}V{<2=6}`
+
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({
+          ...baseRollParams,
+          replace: { from: { below: 2 }, to: 6 },
+        })
       })
     })
   })

@@ -1,17 +1,35 @@
-import { DiceNotation } from 'types'
-import { digestCore } from './digestCore'
-import { digestModifiers } from './digestModifiers'
-import { diceNotationPattern } from './matchers'
+import { DiceNotation, RollParameters } from 'types'
+import { notationParsers } from './notationParsers'
 
-export function digestNotation(notationString: DiceNotation) {
+export function digestNotation(notationString: DiceNotation): RollParameters {
   if (notationString.includes(' ')) {
     throw 'Notation cannot include spaces.'
   }
-  //Condifent this is a DiceNotation string, so this DiceNotation pattern would find something.
-  const coreMatches = notationString.toLowerCase().match(diceNotationPattern) as RegExpMatchArray
 
-  const coreNotation = coreMatches[0]
-  const modifierNotation = notationString.replace(coreNotation, '')
+  const formattedNotations = notationString.toLowerCase()
+  const modifiedParams = notationParsers.reduce(
+    (parameters, [matcher, key, func]) => {
+      const match = formattedNotations.match(matcher)
+      if (!match) {
+        return parameters
+      }
+      const value = func(match[0])
 
-  return { ...digestCore(coreNotation), ...digestModifiers(modifierNotation), notation: notationString }
+      if (Array.isArray(value)) {
+        const spreadArray = (parameters[key] as typeof value[]) || []
+        return { ...parameters, [key]: [...spreadArray, ...value] }
+      }
+      if (typeof value === 'object') {
+        const spreadObj = (parameters[key] as Record<string, unknown>) || {}
+        return { ...parameters, [key]: { ...spreadObj, ...value } }
+      }
+      return {
+        ...parameters,
+        [key]: value,
+      }
+    },
+    { sides: 0 } as RollParameters,
+  )
+
+  return { ...modifiedParams, notation: notationString }
 }
