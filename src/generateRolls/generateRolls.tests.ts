@@ -15,7 +15,7 @@ describe('generateRolls', () => {
     const duplicateRollTotals = [1, 1, 2, 3]
     const uniqueModifier = { sides: 4, rolls: duplicateRollTotals.length, unique: true }
 
-    test('it re-rolls non-unique modifiers ', () => {
+    test('it re-rolls non-unique modifiers', () => {
       expect(generateRolls(duplicateRollTotals, uniqueModifier, mockRandomizer)).toEqual([206, [1, 200, 2, 3]])
     })
 
@@ -32,7 +32,6 @@ describe('generateRolls', () => {
       const overflowModifier = { ...uniqueModifier, rolls: overflowRollTotals.length }
 
       test('it throws an error', () => {
-        // Remaining Rolls:  overflowRollTotals
         expect(() => generateRolls(overflowRollTotals, overflowModifier, mockRandomizer)).toThrow(
           'You cannot have unique rolls when there are more rolls than sides of die.',
         )
@@ -91,22 +90,15 @@ describe('generateRolls', () => {
     const explodeRolls = [1, 2, 3, 6]
 
     test('it returns the total with all values matching the queries rerolled', () => {
-      // Remaining Rolls: [1,2,3,6,200]
       expect(generateRolls(explodeRolls, explodeModifier, mockRandomizer)).toEqual([212, [1, 2, 3, 6, 200]])
     })
   })
 
   describe('when given roll totals with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
-      // without a max reroll, our mockRandomizer will always return 200.
-      // by setting to reroll above 3, it will theorhetically run indefinitely.
-      // This will hit our backstop and produce a warning.
       const rerollModifier = { ...baseModifier, reroll: { above: 3 } }
 
-      // test('it produces a console warning')
-
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
-        // Remaining Rolls: [1,2,3,200]
         expect(generateRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([206, [1, 2, 3, 200]])
       })
     })
@@ -115,7 +107,6 @@ describe('generateRolls', () => {
       const rerollModifier = { ...baseModifier, reroll: { above: 3, on: 2, maxReroll: 2 } }
 
       test('it returns the total with all values matching the queries rerolled', () => {
-        // Remaining Rolls: [1,200,3,200]
         expect(generateRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([404, [1, 200, 3, 200]])
       })
     })
@@ -124,7 +115,6 @@ describe('generateRolls', () => {
       const rerollModifier = { ...baseModifier, reroll: [{ below: 2, maxReroll: 2 }, { on: [3] }] }
 
       test('it returns the total with all values matching the queries rerolled', () => {
-        // Remaining Rolls: [200,2,200,4]
         expect(generateRolls(rollTotals, rerollModifier, mockRandomizer)).toEqual([406, [200, 2, 200, 4]])
       })
     })

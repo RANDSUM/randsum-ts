@@ -66,6 +66,6 @@ export interface RollResult extends RollParameters {
   total: number
   rollTotals: number[]
   initialRollTotals: number[]
-  modifyInitialRoll: RollModifierAccessor
-  modifyModifiedRoll: RollModifierAccessor
+  modifyInitialRolls: RollModifierAccessor
+  modifyModifiedRolls: RollModifierAccessor
 }

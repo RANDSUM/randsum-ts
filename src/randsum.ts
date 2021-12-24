@@ -38,8 +38,8 @@ export function randsum(primeArg: RandsumPrimeArg, randsumOpts?: RandsumOptions)
         initialRollTotals,
         rollTotals,
         ...rollParams,
-        modifyInitialRoll: (callbackFunc: RollModifier) => callbackFunc(initialRollTotals.slice()),
-        modifyModifiedRoll: (callbackFunc: RollModifier) => callbackFunc(rollTotals.slice()),
+        modifyInitialRolls: (callbackFunc: RollModifier) => callbackFunc(initialRollTotals.slice()),
+        modifyModifiedRolls: (callbackFunc: RollModifier) => callbackFunc(rollTotals.slice()),
       }
     : total
 }

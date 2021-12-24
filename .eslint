@@ -4,13 +4,15 @@
   "plugins": [
     "@typescript-eslint",
     "regexp",
-    "simple-import-sort"
+    "simple-import-sort",
+    "jest"
   ],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:regexp/recommended",
+    "plugin:jest/recommended",
 
     "plugin:prettier/recommended"
   ],

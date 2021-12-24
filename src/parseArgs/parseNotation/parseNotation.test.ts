@@ -38,7 +38,7 @@ describe('parseNotation', () => {
       })
     })
 
-    describe('with a simple notation', () => {
+    describe('with a complex notation', () => {
       const testString: DiceNotation = `${baseTestString}L2`
 
       test('returns a RollParameter matching the notation', () => {
