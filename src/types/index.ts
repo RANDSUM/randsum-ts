@@ -6,6 +6,7 @@ export type RollDie = () => number
 export type Randomizer = (sides: number) => number
 
 export type RollTotals = number[]
+export type RollParser = (results: RollTotals) => RollTotals
 
 export type RollModifier = (results: RollTotals) => number
 export type RollModifierAccessor = (callback: RollModifier) => number

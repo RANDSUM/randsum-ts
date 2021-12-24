@@ -1,15 +1,26 @@
 import { RollParameters, RollTotals } from 'types'
 import { sumArray } from 'utils'
 
-import { modifyRollTotals, modifyTotal } from './modifiers'
+import { rollParsers, totalParsers } from './parsers'
 
 export function generateRolls(
   rollTotals: RollTotals,
-  { plus, minus, ...rollParameters }: RollParameters,
+  rollParameters: RollParameters,
   rollDie: () => number,
 ): [number, RollTotals] {
-  const modifiedRollTotals = modifyRollTotals([...rollTotals], rollParameters, rollDie)
-  const total = modifyTotal(sumArray([...modifiedRollTotals]), { plus, minus })
+  let modifiedRollTotals: RollTotals = [...rollTotals]
 
-  return [total, modifiedRollTotals]
+  for (const parser of rollParsers(rollParameters, rollDie)) {
+    modifiedRollTotals = parser([...modifiedRollTotals])
+  }
+
+  const rawTotal = sumArray([...modifiedRollTotals])
+
+  let modifiedTotal = rawTotal
+
+  for (const modifierFunction of totalParsers(rollParameters)) {
+    modifiedTotal = modifierFunction(modifiedTotal)
+  }
+
+  return [modifiedTotal, modifiedRollTotals]
 }
