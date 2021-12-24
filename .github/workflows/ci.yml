@@ -1,5 +1,10 @@
 name: CI
 on:
+  workflow_call:
+    secrets:
+      PAT:
+        description: 'A token passed from the caller workflow'
+        required: true
   push:
     branches:
       - main
