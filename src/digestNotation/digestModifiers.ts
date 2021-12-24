@@ -6,6 +6,7 @@ import {
   parseReplaceNotation,
   parseUniqeNotation,
   parseExplodeNotation,
+  parseRerollNotation,
 } from './notationParsers'
 
 export function digestModifiers(modifierString: string) {
@@ -15,7 +16,7 @@ export function digestModifiers(modifierString: string) {
     { minus: parseMinusNotation(modifierString) },
     { cap: parseCapNotation(modifierString) },
     { replace: parseReplaceNotation(modifierString) },
-    { reroll: undefined },
+    { reroll: parseRerollNotation(modifierString) },
     { explode: parseExplodeNotation(modifierString) },
     { unique: parseUniqeNotation(modifierString) },
   ].reduce((parameters, current) => {

@@ -65,6 +65,17 @@ describe('digestNotation', () => {
   })
 
   describe('given a notation that contains a unique modifier', () => {
+    const testString: DiceNotation = `${baseTestString}R{5,2,<6}3`
+
+    test('returns a RollParameter matching the notation', () => {
+      expect(digestNotation(testString)).toMatchObject({
+        ...baseRollParams,
+        reroll: { on: [5, 2], below: 6, maxReroll: 3 },
+      })
+    })
+  })
+
+  describe('given a notation that contains a unique modifier', () => {
     const testString: DiceNotation = `${baseTestString}U{5,6}`
 
     test('returns a RollParameter matching the notation', () => {
