@@ -1,28 +1,10 @@
-import {
-  parseCapFactory,
-  parseDropFactory,
-  parseExplodeFactory,
-  parseReplaceFactory,
-  parseRerollFactory,
-  parseUniqueFactory,
-} from 'generateRolls/modifiers'
+import { rollParsers } from 'generateRolls/parsers'
 import { RollDie, RollParameters, RollTotals } from 'types'
 
-export function modifyRollTotals(
-  rollTotals: RollTotals,
-  { sides, rolls, reroll, unique, explode, cap, drop, replace }: Omit<RollParameters, 'plus' | 'minus'>,
-  rollDie: RollDie,
-) {
-  const rollParsers = [
-    parseRerollFactory(reroll, rollDie),
-    parseUniqueFactory({ sides, rolls, unique }, rollDie),
-    parseReplaceFactory(replace),
-    parseCapFactory(cap),
-    parseDropFactory(drop),
-    parseExplodeFactory({ explode, sides }, rollDie),
-  ]
+export function modifyRollTotals(rollTotals: RollTotals, rollParameters: RollParameters, rollDie: RollDie) {
   let parsedRollTotals: number[] = rollTotals
-  for (const parser of rollParsers) {
+
+  for (const parser of rollParsers(rollParameters, rollDie)) {
     parsedRollTotals = parser([...parsedRollTotals])
   }
 

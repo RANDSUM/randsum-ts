@@ -1,6 +1,3 @@
-export * from './cap'
-export * from './drop'
-export * from './explode'
 export * from './modify-roll-totals'
 export * from './modify-total'
 export * from './replace'
