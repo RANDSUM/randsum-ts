@@ -3,34 +3,38 @@ import { DiceNotation, RollParameters } from 'types'
 import { notationParsers } from './notationParsers'
 
 export function parseNotation(notationString: DiceNotation): RollParameters {
-  if (notationString.includes(' ')) {
+  const formattedNotations = notationString.toLowerCase()
+
+  if (formattedNotations.includes(' ')) {
     throw new Error('Notation cannot include spaces.')
   }
 
-  const formattedNotations = notationString.toLowerCase()
-  const modifiedParameters = notationParsers.reduce(
-    (parameters, [matcher, key, function_]) => {
-      const match = formattedNotations.match(matcher)
-      if (!match) {
-        return parameters
-      }
-      const value = function_(match[0])
+  let rollParameters: RollParameters = { sides: 0, rolls: 1, notation: formattedNotations }
 
-      if (Array.isArray(value)) {
-        const spreadArray = (parameters[key] as typeof value[]) || []
-        return { ...parameters, [key]: [...spreadArray, ...value] }
-      }
-      if (typeof value === 'object') {
-        const spreadObject = (parameters[key] as Record<string, unknown>) || {}
-        return { ...parameters, [key]: { ...spreadObject, ...value } }
-      }
-      return {
-        ...parameters,
-        [key]: value,
-      }
-    },
-    { sides: 0 } as RollParameters,
-  )
+  for (const [matcher, key, parser] of notationParsers) {
+    const match = formattedNotations.match(matcher)
+    if (!match) {
+      continue
+    }
+    const value = parser(match[0])
 
-  return { ...modifiedParameters, notation: notationString }
+    if (Array.isArray(value)) {
+      const spreadArray = (rollParameters[key] as typeof value[]) || []
+      rollParameters = { ...rollParameters, [key]: [...spreadArray, ...value] }
+      continue
+    }
+    if (typeof value === 'object') {
+      const spreadObject = (rollParameters[key] as Record<string, unknown>) || {}
+      rollParameters = { ...rollParameters, [key]: { ...spreadObject, ...value } }
+      continue
+    }
+
+    rollParameters = {
+      ...rollParameters,
+      [key]: value,
+    }
+    continue
+  }
+
+  return rollParameters
 }
