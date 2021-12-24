@@ -16,11 +16,11 @@ export function digestNotation(notationString: DiceNotation): RollParameters {
       const value = func(match[0])
 
       if (Array.isArray(value)) {
-        const spreadArray = Array.isArray(parameters[key]) ? (parameters[key] as typeof value[]) : []
+        const spreadArray = (parameters[key] as typeof value[]) || []
         return { ...parameters, [key]: [...spreadArray, ...value] }
       }
       if (typeof value === 'object') {
-        const spreadObj = typeof parameters[key] === 'object' ? (parameters[key] as Record<string, unknown>) : {}
+        const spreadObj = (parameters[key] as Record<string, unknown>) || {}
         return { ...parameters, [key]: { ...spreadObj, ...value } }
       }
       return {
