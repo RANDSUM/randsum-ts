@@ -1,28 +1,23 @@
-import {
-  parseDropNotation,
-  parsePlusNotation,
-  parseMinusNotation,
-  parseCapNotation,
-  parseReplaceNotation,
-  parseUniqeNotation,
-  parseExplodeNotation,
-  parseRerollNotation,
-} from './notationParsers'
+import { notationParsers } from './notationParsers'
 
 export function digestModifiers(modifierString: string) {
-  return [
-    { drop: parseDropNotation(modifierString) },
-    { plus: parsePlusNotation(modifierString) },
-    { minus: parseMinusNotation(modifierString) },
-    { cap: parseCapNotation(modifierString) },
-    { replace: parseReplaceNotation(modifierString) },
-    { reroll: parseRerollNotation(modifierString) },
-    { explode: parseExplodeNotation(modifierString) },
-    { unique: parseUniqeNotation(modifierString) },
-  ].reduce((parameters, current) => {
-    if (Object.values(current).every(val => val != {} || !!val)) {
-      return { ...parameters, ...current }
+  const formattedModifiers = modifierString.toLowerCase()
+  return notationParsers.reduce((parameters, [matcher, key, func]) => {
+    const match = formattedModifiers.match(matcher)
+    if (!match) {
+      return parameters
     }
-    return parameters
-  }, {})
+    const value = func(match[0])
+
+    if (Array.isArray(value)) {
+      return { ...parameters, [key]: value }
+    }
+    if (typeof value === 'object') {
+      return { ...parameters, [key]: { ...(parameters[key] as Record<string, unknown>), ...value } }
+    }
+    return {
+      ...parameters,
+      [key]: value,
+    }
+  }, {} as Record<string, unknown>)
 }

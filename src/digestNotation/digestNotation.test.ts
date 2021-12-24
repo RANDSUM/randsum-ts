@@ -64,7 +64,7 @@ describe('digestNotation', () => {
     })
   })
 
-  describe('given a notation that contains a unique modifier', () => {
+  describe('given a notation that contains a reroll modifier', () => {
     const testString: DiceNotation = `${baseTestString}R{5,2,<6}3`
 
     test('returns a RollParameter matching the notation', () => {
@@ -75,13 +75,25 @@ describe('digestNotation', () => {
     })
   })
 
-  describe('given a notation that contains a unique modifier', () => {
-    const testString: DiceNotation = `${baseTestString}U{5,6}`
+  describe('given a notation that contains a unique notation', () => {
+    describe('with a unique notation', () => {
+      const testString: DiceNotation = `${baseTestString}U{5,6}`
 
-    test('returns a RollParameter matching the notation', () => {
-      expect(digestNotation(testString)).toMatchObject({
-        ...baseRollParams,
-        unique: { notUnique: [5, 6] },
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({
+          ...baseRollParams,
+          unique: { notUnique: [5, 6] },
+        })
+      })
+    })
+    describe('with a simple unique notation', () => {
+      const testString: DiceNotation = `${baseTestString}U`
+
+      test('returns a RollParameter matching the notation', () => {
+        expect(digestNotation(testString)).toMatchObject({
+          ...baseRollParams,
+          unique: true,
+        })
       })
     })
   })

@@ -1,14 +1,7 @@
-import { dropConstraints } from 'digestNotation/matchers'
 import { DropOptions } from 'types'
 
 export function parseDropConstrainNotation(modifierString: string) {
-  const match = modifierString.match(dropConstraints)
-
-  if (!match) {
-    return {}
-  }
-
-  const constraints = match[0].toLowerCase().split('d')[1].replace('{', '').replace('}', '').split(',')
+  const constraints = modifierString.split('d')[1].replace('{', '').replace('}', '').split(',')
   return constraints.reduce<DropOptions & { exact: number[] }>(
     (params, constraint) => {
       switch (true) {
