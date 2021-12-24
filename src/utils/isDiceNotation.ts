@@ -1,4 +1,4 @@
-import { diceNotationPattern } from 'digestNotation/matchers'
+import { diceNotationPattern } from 'parseArgs/parseNotation/matchers'
 import { DiceNotation } from 'types'
 
 export function isDiceNotation(arg: unknown): arg is DiceNotation {

@@ -1,4 +1,5 @@
-import { transformRollTotalsWithParameters } from 'transformRollTotalsWithParameters'
+import { generateRolls } from 'generateRolls'
+import { parseArgs } from 'parseArgs'
 import {
   DiceNotation,
   RandsumOptions,
@@ -9,7 +10,6 @@ import {
   RollResultOrNum,
   Sides,
 } from 'types'
-import { digestPrimeArgIntoParameters } from 'digestPrimeArgIntoParameters'
 import { randomNumber } from 'utils'
 
 export function randsum(sides: Sides): number
@@ -23,13 +23,13 @@ export function randsum<D extends boolean>(notation: DiceNotation, randsumOpts: 
 export function randsum<D extends boolean>(rollOptions: RollOptions, randsumOpts: RandsumOptions<D>): RollResultOrNum<D>
 export function randsum(primeArg: RandsumPrimeArg, randsumOpts?: RandsumOptions): number | RollResult {
   const { customRandomizer, detailed } = randsumOpts || {}
-  const rollParams = digestPrimeArgIntoParameters(primeArg)
+  const rollParams = parseArgs(primeArg)
 
   const rollDie = () => (customRandomizer || randomNumber)(rollParams.sides)
 
-  const initialRollTotals = [...Array(rollParams.rolls)].map(rollDie)
+  const initialRollTotals = Array.from(Array(rollParams.rolls), rollDie)
 
-  const [total, rollTotals] = transformRollTotalsWithParameters(initialRollTotals, rollParams, rollDie)
+  const [total, rollTotals] = generateRolls(initialRollTotals, rollParams, rollDie)
 
   return detailed
     ? {
@@ -38,8 +38,8 @@ export function randsum(primeArg: RandsumPrimeArg, randsumOpts?: RandsumOptions)
         initialRollTotals,
         rollTotals,
         ...rollParams,
-        modifyInitialRoll: (callbackFunc: RollModifier) => callbackFunc(initialRollTotals.slice()),
-        modifyModifiedRoll: (callbackFunc: RollModifier) => callbackFunc(rollTotals.slice()),
+        modifyInitialRolls: (callbackFunc: RollModifier) => callbackFunc(initialRollTotals.slice()),
+        modifyModifiedRolls: (callbackFunc: RollModifier) => callbackFunc(rollTotals.slice()),
       }
     : total
 }

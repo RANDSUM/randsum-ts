@@ -1,5 +1,6 @@
-import randsum from '.'
 import { Randomizer } from 'types'
+
+import randsum from '.'
 
 const randsumSimpleTests = (result: number) => {
   test('returns a number as total', () => {
@@ -10,10 +11,6 @@ const randsumSimpleTests = (result: number) => {
 const mockRandomizerRoll = 420
 const mockRandomizer: Randomizer = () => mockRandomizerRoll
 const randsumCustomRandomizerSimpleTests = (result: number, rolls: number) => {
-  test('returns a number as total', () => {
-    expect(Number.isInteger(result)).toBe(true)
-  })
-
   test('expects total to be correct', () => {
     expect(result).toEqual(rolls * mockRandomizerRoll)
   })
@@ -63,11 +60,12 @@ describe('Randsum', () => {
       expect(result.rolls).toEqual(2)
     })
 
-    test('result.modifyRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
-      expect(result.modifyInitialRoll(rolls => 40 * rolls.length)).toEqual(80)
+    test('result.modifyInitialRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
+      expect(result.modifyInitialRolls(rolls => 40 * rolls.length)).toEqual(80)
     })
-    test('result.modifyRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
-      expect(result.modifyModifiedRoll(rolls => 40 * rolls.length)).toEqual(80)
+
+    test('result.modifyModifiedRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
+      expect(result.modifyModifiedRolls(rolls => 40 * rolls.length)).toEqual(80)
     })
   })
 })
