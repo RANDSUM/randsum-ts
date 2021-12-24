@@ -13,18 +13,16 @@ import {
 } from 'parseArguments/parseNotation/matchers'
 import { RollParameters } from 'types'
 
-import { parseCapNotation } from './parse-cap-notation'
-import { parseDropConstrainNotation } from './parse-drop-contstraint-notation'
-import { parseDropHighNotation } from './parse-drop-high-notation'
-import { parseDropLowNotation } from './parse-drop-low-notation'
-import { parseExplodeNotation } from './parse-explode-notation'
-import { parseMinusNotation } from './parse-minus-notation'
-import { parsePlusNotation } from './parse-plus-notation'
-import { parseReplaceNotation } from './parse-replace-notation'
-import { parseRerollNotation } from './parse-reroll-notation'
-import { parseRollsNotation } from './parse-rolls-notation'
-import { parseSideNotation } from './parse-side-notation'
-import { parseUniqeNotation } from './parse-unique-notation'
+import { parseCapNotation } from './parseCapNotation'
+import { parseDropConstrainNotation, parseDropHighNotation, parseDropLowNotation } from './parseDropNotation'
+import { parseExplodeNotation } from './parseExplodeNotation'
+import { parseMinusNotation } from './parseMinusNotation'
+import { parsePlusNotation } from './parsePlusNotation'
+import { parseReplaceNotation } from './parseReplaceNotation'
+import { parseRerollNotation } from './parseRerollNotation'
+import { parseRollsNotation } from './parseRollsNotation'
+import { parseSideNotation } from './parseSidesNotation'
+import { parseUniqeNotation } from './parseUniqeNotation'
 
 type NotationParsers = [RegExp, keyof RollParameters, (notationString: string) => unknown]
 
