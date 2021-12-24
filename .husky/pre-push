@@ -1,7 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn test && yarn build && yarn docs
+(yarn test || exit 1) && (yarn build || exit 1) && yarn docs
 
 if [ ! -z "$(git status --porcelain ./docs  )" ]; then
   git add ./docs
