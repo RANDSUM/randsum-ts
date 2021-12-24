@@ -13,12 +13,18 @@ export function modifyRollTotals(
   { sides, rolls, reroll, unique, explode, cap, drop, replace }: Omit<RollParameters, 'plus' | 'minus'>,
   rollDie: RollDie,
 ) {
-  return [
+  const rollParsers = [
     parseRerollFactory(reroll, rollDie),
     parseUniqueFactory({ sides, rolls, unique }, rollDie),
     parseReplaceFactory(replace),
     parseCapFactory(cap),
     parseDropFactory(drop),
     parseExplodeFactory({ explode, sides }, rollDie),
-  ].reduce((newTotals, parser) => parser([...newTotals]), [...rollTotals])
+  ]
+  let parsedRollTotals: number[] = rollTotals
+  for (const parser of rollParsers) {
+    parsedRollTotals = parser([...parsedRollTotals])
+  }
+
+  return parsedRollTotals
 }
