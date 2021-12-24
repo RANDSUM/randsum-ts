@@ -27,7 +27,7 @@ export function randsum(primeArg: RandsumPrimeArg, randsumOpts?: RandsumOptions)
 
   const rollDie = () => (customRandomizer || randomNumber)(rollParams.sides)
 
-  const initialRollTotals = [...Array(rollParams.rolls)].map(rollDie)
+  const initialRollTotals = Array.from(Array(rollParams.rolls), rollDie)
 
   const [total, rollTotals] = generateRolls(initialRollTotals, rollParams, rollDie)
 

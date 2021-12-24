@@ -13,6 +13,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:regexp/recommended",
     "plugin:jest/recommended",
+    "plugin:array-func/recommended",
 
     "plugin:prettier/recommended"
   ],

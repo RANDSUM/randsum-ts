@@ -32,6 +32,7 @@
     "codecov": "^3.8.3",
     "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-array-func": "^3.1.7",
     "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-regexp": "^1.5.1",
