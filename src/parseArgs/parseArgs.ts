@@ -1,4 +1,4 @@
-import { parseNotation } from 'parseNotation'
+import { parseNotation } from 'parseArgs/parseNotation'
 import { RandsumPrimeArg, RollParameters } from 'types'
 import { isDiceNotation, isRollOptions } from 'utils'
 
