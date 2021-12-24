@@ -1,17 +1,5 @@
-import {
-  cap,
-  diceNotationPattern,
-  dropConstraints,
-  dropHigh,
-  dropLow,
-  explode,
-  minus,
-  plus,
-  replace,
-  reroll,
-  unique,
-} from 'parseArguments/parseNotation/matchers'
 import { RollParameters } from 'types'
+import { diceNotationPattern } from 'utils'
 
 import { parseCapNotation } from './parse-cap-notation'
 import { parseDropConstrainNotation } from './parse-drop-contstraint-notation'
@@ -25,6 +13,17 @@ import { parseRerollNotation } from './parse-reroll-notation'
 import { parseRollsNotation } from './parse-rolls-notation'
 import { parseSideNotation } from './parse-side-notation'
 import { parseUniqeNotation } from './parse-unique-notation'
+
+const dropHigh = /[Hh](\d*)/
+const dropLow = /[Ll](\d*)/
+const dropConstraints = /.{3,}[Dd]{?([<>|]?\d,?)*}?/
+const explode = /!+{?([<>|]?\d+,?)*}?/
+const unique = /[Uu]({(\d,?)+})?/
+const replace = /[Vv]{?([<>|]?\d+=?\d+,?)*}?/
+const reroll = /[Rr]{?([<>|]?\d,?)*}\d?/
+const cap = /[Cc]([<>|]?\d+)*/
+const plus = /\+\d+/
+const minus = /-\d+/
 
 type NotationParsers = [RegExp, keyof RollParameters, (notationString: string) => unknown]
 
