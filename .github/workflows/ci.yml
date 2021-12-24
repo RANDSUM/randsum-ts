@@ -23,6 +23,9 @@ jobs:
         with:
           cmd: "test:ci"
 
+      - name: Code Cov
+        uses: codecov/codecov-action@v2.1.0
+
       - name: Run Linters
         uses: borales/actions-yarn@v2.3.0
         with:
