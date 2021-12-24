@@ -1,5 +1,5 @@
-export function parseCapNotation(modifierString: string) {
-  const capString = modifierString.split('c')[1].split(/(?!\d)/)
+export function parseCapNotation(notationString: string) {
+  const capString = notationString.split('c')[1].split(/(?!\d)/)
   return capString.reduce((total, note) => {
     switch (true) {
       case note.includes('<'):

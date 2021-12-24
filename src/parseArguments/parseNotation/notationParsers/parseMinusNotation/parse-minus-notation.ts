@@ -1,3 +1,3 @@
-export function parseMinusNotation(modifierString: string) {
-  return Number(modifierString.split('-')[1])
+export function parseMinusNotation(notationString: string) {
+  return Number(notationString.split('-')[1])
 }

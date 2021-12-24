@@ -1,5 +1,5 @@
-export function parseRerollNotation(modifierString: string) {
-  return modifierString
+export function parseRerollNotation(notationString: string) {
+  return notationString
     .split('r')[1]
     .replace(/{/g, '')
     .replace(/}/g, ',!')

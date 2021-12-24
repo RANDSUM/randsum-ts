@@ -1,4 +1,4 @@
-export function parseDropHighNotation(modifierString: string) {
-  const highest = Number(modifierString.split('h')[1]) || 1
+export function parseDropHighNotation(notationString: string) {
+  const highest = Number(notationString.split('h')[1]) || 1
   return { highest }
 }

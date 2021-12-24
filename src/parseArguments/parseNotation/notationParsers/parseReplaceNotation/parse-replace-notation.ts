@@ -1,5 +1,5 @@
-export function parseReplaceNotation(modifierString: string) {
-  const replaceOptions = modifierString
+export function parseReplaceNotation(notationString: string) {
+  const replaceOptions = notationString
     .split('v')[1]
     .replace(/{/g, '')
     .replace(/}/g, '')

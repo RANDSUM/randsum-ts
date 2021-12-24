@@ -1,3 +1,3 @@
-export function parseRollsNotation(modifierString: string) {
-  return Number(modifierString.split('d')[0])
+export function parseRollsNotation(notationString: string) {
+  return Number(notationString.split('d')[0])
 }

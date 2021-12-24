@@ -1,3 +1,3 @@
-export function parseExplodeNotation(_modifierString: string) {
+export function parseExplodeNotation(_notationString: string) {
   return true
 }

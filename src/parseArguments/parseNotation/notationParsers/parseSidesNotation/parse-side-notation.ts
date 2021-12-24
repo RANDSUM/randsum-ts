@@ -1,3 +1,3 @@
-export function parseSideNotation(modifierString: string) {
-  return Number(modifierString.split('d')[1])
+export function parseSideNotation(notationString: string) {
+  return Number(notationString.split('d')[1])
 }

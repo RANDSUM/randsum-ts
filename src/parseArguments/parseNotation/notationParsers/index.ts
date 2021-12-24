@@ -24,7 +24,7 @@ import { parseRollsNotation } from './parseRollsNotation'
 import { parseSideNotation } from './parseSidesNotation'
 import { parseUniqeNotation } from './parseUniqeNotation'
 
-type NotationParsers = [RegExp, keyof RollParameters, (modifierString: string) => unknown]
+type NotationParsers = [RegExp, keyof RollParameters, (notationString: string) => unknown]
 
 export const notationParsers: NotationParsers[] = [
   [diceNotationPattern, 'sides', parseSideNotation],
