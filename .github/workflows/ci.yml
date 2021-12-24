@@ -1,0 +1,36 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install # will run `yarn install` command
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: build # will run `yarn build` command
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: "test:ci" # will run `yarn test` command
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v1
+        with:
+          eslint: true
+          eslint_args: './src --ext .ts -c .eslintrc.json'
+          eslint_extensions: ts
+          auto_fix: true
+
+      - name: Build Docs
+        run: yarn docs
+
+      - name: Commit Docs
+        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        with:
+          add: 'docs'
+          message: '📄 Updating Docs 📄'
+          pull: 'NO-PULL'
+          push: '--no-verify'
