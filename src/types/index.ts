@@ -67,3 +67,5 @@ export interface RollResult extends RollParameters {
   modifyInitialRolls: RollModifierAccessor
   modifyModifiedRolls: RollModifierAccessor
 }
+
+export type RandsumDynamicReturn<T extends boolean> = T extends true ? RollResult : number
