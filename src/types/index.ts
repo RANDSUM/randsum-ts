@@ -1,12 +1,14 @@
 export type D = 'd' | 'D'
 export type Sides = number | `${number}`
 export type DiceNotation = `${number}${D}${number}${string}`
+
+export type Randomizer = (sides: number) => number
+export type RollDie = () => number
+
 export type RollTotals = number[]
 
 export type RollModifier = (results: RollTotals) => number
 export type RollModifierAccessor = (callback: RollModifier) => number
-export type Randomizer = (sides: number) => number
-export type RollDie = () => number
 
 export interface RandsumOptions<D = boolean> {
   detailed?: D
