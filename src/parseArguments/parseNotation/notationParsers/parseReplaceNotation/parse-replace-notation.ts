@@ -10,9 +10,9 @@ export function parseReplaceNotation(notationString: string) {
       const baseReplacement = { to: Number(noteTo) }
       switch (true) {
         case noteFrom.includes('>'):
-          return { ...baseReplacement, from: { above: Number(noteFrom.replace(/>/g, '')) } }
+          return { ...baseReplacement, from: { above: Number(noteFrom.replaceAll('>', '')) } }
         case noteFrom.includes('<'):
-          return { ...baseReplacement, from: { below: Number(noteFrom.replace(/</g, '')) } }
+          return { ...baseReplacement, from: { below: Number(noteFrom.replaceAll('<', '')) } }
         default:
           return { ...baseReplacement, from: Number(noteFrom) }
       }
