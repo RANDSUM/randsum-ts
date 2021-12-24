@@ -3,7 +3,7 @@ export function parseUniqeNotation(modifierString: string) {
     return true
   }
 
-  const notUnique = modifierString.replace('u{', '').replace('}', '').split(',')
+  const notUnique = modifierString.replace(/\u{/g, '').replace(/\}/g, '').split(',')
 
   return {
     notUnique: notUnique.map(num => Number(num)),

@@ -3,9 +3,9 @@ export function parseCapNotation(modifierString: string) {
   return capString.reduce((total, note) => {
     switch (true) {
       case note.includes('<'):
-        return { ...total, below: Number(note.replace('<', '')) }
+        return { ...total, below: Number(note.replace(/</g, '')) }
       default:
-        return { ...total, above: Number(note.replace('>', '')) }
+        return { ...total, above: Number(note.replace(/>/g, '')) }
     }
   }, {})
 }
