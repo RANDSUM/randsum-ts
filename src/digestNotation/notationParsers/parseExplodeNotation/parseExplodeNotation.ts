@@ -1,11 +1,3 @@
-import { explode } from 'digestNotation/matchers'
-
-export function parseExplodeNotation(modifierString: string) {
-  const match = modifierString.match(explode)
-
-  if (!match) {
-    return undefined
-  }
-
+export function parseExplodeNotation(_modifierString: string) {
   return true
 }

@@ -9,7 +9,9 @@ import {
   reroll,
   explode,
   unique,
+  diceNotationPattern,
 } from 'digestNotation/matchers'
+import { RollParameters } from 'types'
 import { parseCapNotation } from './parseCapNotation'
 import { parseDropHighNotation, parseDropConstrainNotation, parseDropLowNotation } from './parseDropNotation'
 import { parseExplodeNotation } from './parseExplodeNotation'
@@ -17,11 +19,15 @@ import { parseMinusNotation } from './parseMinusNotation'
 import { parsePlusNotation } from './parsePlusNotation'
 import { parseReplaceNotation } from './parseReplaceNotation'
 import { parseRerollNotation } from './parseRerollNotation'
+import { parseRollsNotation } from './parseRollsNotation'
+import { parseSideNotation } from './parseSidesNotation'
 import { parseUniqeNotation } from './parseUniqeNotation'
 
-type NotationParsers = [RegExp, string, (modifierString: string) => unknown]
+type NotationParsers = [RegExp, keyof RollParameters, (modifierString: string) => unknown]
 
 export const notationParsers: NotationParsers[] = [
+  [diceNotationPattern, 'sides', parseSideNotation],
+  [diceNotationPattern, 'rolls', parseRollsNotation],
   [dropHigh, 'drop', parseDropHighNotation],
   [dropConstraints, 'drop', parseDropConstrainNotation],
   [dropLow, 'drop', parseDropLowNotation],

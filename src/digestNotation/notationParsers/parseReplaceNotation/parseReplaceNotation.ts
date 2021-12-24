@@ -1,14 +1,5 @@
-import { replace } from 'digestNotation/matchers'
-
 export function parseReplaceNotation(modifierString: string) {
-  const match = modifierString.match(replace)
-
-  if (!match) {
-    return undefined
-  }
-
-  const replaceOpts = match[0]
-    .toLowerCase()
+  const replaceOpts = modifierString
     .split('v')[1]
     .replace('{', '')
     .replace('}', '')

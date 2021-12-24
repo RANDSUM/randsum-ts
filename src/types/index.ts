@@ -59,6 +59,7 @@ export interface RollOptions {
 
 export interface RollParameters extends RollOptions {
   rolls: number
+  notation?: string
 }
 
 export interface RollResult extends RollParameters {

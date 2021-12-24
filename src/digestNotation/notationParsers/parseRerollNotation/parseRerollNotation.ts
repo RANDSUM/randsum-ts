@@ -1,14 +1,5 @@
-import { reroll } from 'digestNotation/matchers'
-
 export function parseRerollNotation(modifierString: string) {
-  const match = modifierString.match(reroll)
-
-  if (!match) {
-    return undefined
-  }
-
-  return match[0]
-    .toLowerCase()
+  return modifierString
     .split('r')[1]
     .replace('{', '')
     .replace('}', ',!')

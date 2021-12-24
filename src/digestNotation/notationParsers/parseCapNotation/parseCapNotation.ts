@@ -1,14 +1,5 @@
-import { cap } from 'digestNotation/matchers'
-
 export function parseCapNotation(modifierString: string) {
-  const match = modifierString.match(cap)
-
-  if (!match) {
-    return undefined
-  }
-
-  return match[0]
-    .toLowerCase()
+  return modifierString
     .split('c')[1]
     .split(/(?!\d)/)
     .reduce((total, note) => {

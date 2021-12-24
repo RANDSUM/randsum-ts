@@ -1,20 +1,9 @@
-import { unique } from 'digestNotation/matchers'
-
 export function parseUniqeNotation(modifierString: string) {
-  const match = modifierString.match(unique)
-
-  if (!match) {
-    return undefined
-  }
-
-  const matchStr = match[0].toLowerCase()
-
-  if (matchStr === 'u') {
+  if (modifierString === 'u') {
     return true
   }
 
-  const notUnique = matchStr.replace('u{', '').replace('}', '').split(',')
-  console.log(notUnique)
+  const notUnique = modifierString.replace('u{', '').replace('}', '').split(',')
 
   return {
     notUnique: notUnique.map(num => Number(num)),
