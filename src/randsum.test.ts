@@ -43,9 +43,9 @@ describe('Randsum', () => {
     test('result.rollTotals returns an array of results as rolls', () => {
       expect(result.rollTotals.length).toEqual(2)
 
-      result.rollTotals.forEach(result => {
-        expect(Number.isInteger(result)).toBe(true)
-      })
+      for (const roll of result.rollTotals) {
+        expect(Number.isInteger(roll)).toBe(true)
+      }
     })
 
     test('it returns the args passed in to the function', () => {

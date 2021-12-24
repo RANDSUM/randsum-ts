@@ -1,13 +1,13 @@
 import { generateRolls } from 'generateRolls'
-import { parseArgs } from 'parseArgs'
+import { parseArguments } from 'parseArguments'
 import {
   DiceNotation,
+  RandsumDynamicReturn,
   RandsumOptions,
-  RandsumPrimeArg,
+  RandsumPrimeArgument,
   RollModifier,
   RollOptions,
   RollResult,
-  RollResultOrNum,
   Sides,
 } from 'types'
 import { randomNumber } from 'utils'
@@ -15,31 +15,37 @@ import { randomNumber } from 'utils'
 export function randsum(sides: Sides): number
 export function randsum(notation: DiceNotation): number
 export function randsum(rollOptions: RollOptions): number
-export function randsum(sides: Sides, randsumOpts: Pick<RandsumOptions, 'customRandomizer'>): number
-export function randsum(notation: DiceNotation, randsumOpts: Pick<RandsumOptions, 'customRandomizer'>): number
-export function randsum(rollOptions: RollOptions, randsumOpts: Pick<RandsumOptions, 'customRandomizer'>): number
-export function randsum<D extends boolean>(sides: Sides, randsumOpts: RandsumOptions<D>): RollResultOrNum<D>
-export function randsum<D extends boolean>(notation: DiceNotation, randsumOpts: RandsumOptions<D>): RollResultOrNum<D>
-export function randsum<D extends boolean>(rollOptions: RollOptions, randsumOpts: RandsumOptions<D>): RollResultOrNum<D>
-export function randsum(primeArg: RandsumPrimeArg, randsumOpts?: RandsumOptions): number | RollResult {
-  const { customRandomizer, detailed } = randsumOpts || {}
-  const rollParams = parseArgs(primeArg)
+export function randsum(sides: Sides, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
+export function randsum(notation: DiceNotation, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
+export function randsum(rollOptions: RollOptions, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
+export function randsum<D extends boolean>(sides: Sides, randsumOptions: RandsumOptions<D>): RandsumDynamicReturn<D>
+export function randsum<D extends boolean>(
+  notation: DiceNotation,
+  randsumOptions: RandsumOptions<D>,
+): RandsumDynamicReturn<D>
+export function randsum<D extends boolean>(
+  rollOptions: RollOptions,
+  randsumOptions: RandsumOptions<D>,
+): RandsumDynamicReturn<D>
+export function randsum(primeArgument: RandsumPrimeArgument, randsumOptions?: RandsumOptions): number | RollResult {
+  const { customRandomizer, detailed } = randsumOptions || {}
+  const rollParameters = parseArguments(primeArgument)
 
-  const rollDie = () => (customRandomizer || randomNumber)(rollParams.sides)
+  const rollDie = () => (customRandomizer || randomNumber)(rollParameters.sides)
 
-  const initialRollTotals = Array.from(Array(rollParams.rolls), rollDie)
+  const initialRollTotals = [...new Array(rollParameters.rolls)].map(() => rollDie())
 
-  const [total, rollTotals] = generateRolls(initialRollTotals, rollParams, rollDie)
+  const [total, rollTotals] = generateRolls(initialRollTotals, rollParameters, rollDie)
 
   return detailed
     ? {
         total,
-        args: [primeArg, randsumOpts],
+        args: [primeArgument, randsumOptions],
         initialRollTotals,
         rollTotals,
-        ...rollParams,
-        modifyInitialRolls: (callbackFunc: RollModifier) => callbackFunc(initialRollTotals.slice()),
-        modifyModifiedRolls: (callbackFunc: RollModifier) => callbackFunc(rollTotals.slice()),
+        ...rollParameters,
+        modifyInitialRolls: (callbackFunction: RollModifier) => callbackFunction([...initialRollTotals]),
+        modifyModifiedRolls: (callbackFunction: RollModifier) => callbackFunction([...rollTotals]),
       }
     : total
 }

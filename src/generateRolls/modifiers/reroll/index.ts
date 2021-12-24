@@ -1,1 +1,1 @@
-export * from './parseReroll'
+export * from './parse-reroll'
