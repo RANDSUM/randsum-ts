@@ -1,5 +1,6 @@
 {
   "entryPoints": ["./src"],
+  "gitRevision": "v1.0.0-beta",
   "sort":["source-order"],
   "out": "./docs",
   "exclude": ["./src/**/**/*.test.ts", "./build", "./src/coverage"],
