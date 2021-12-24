@@ -1,3 +1,5 @@
+export * from './modifyTotal'
+export * from './modifyRollTotals'
 export * from './cap'
 export * from './drop'
 export * from './explode'
