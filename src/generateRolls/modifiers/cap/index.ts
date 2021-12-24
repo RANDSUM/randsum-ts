@@ -1,1 +1,1 @@
-export * from './parseCap'
+export * from './parse-cap'

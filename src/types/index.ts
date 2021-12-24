@@ -58,13 +58,13 @@ export interface RollParameters extends RollOptions {
   notation?: string
 }
 
-export type RandsumPrimeArg = Sides | RollOptions | DiceNotation
+export type RandsumPrimeArgument = Sides | RollOptions | DiceNotation
 export interface RollResult extends RollParameters {
-  args: [RandsumPrimeArg, RandsumOptions | undefined]
+  args: [RandsumPrimeArgument, RandsumOptions | undefined]
   total: number
   rollTotals: number[]
   initialRollTotals: number[]
   modifyInitialRolls: RollModifierAccessor
   modifyModifiedRolls: RollModifierAccessor
 }
-export type RollResultOrNum<T extends boolean> = T extends true ? RollResult : number
+export type RandsumDynamicReturn<T extends boolean> = T extends true ? RollResult : number

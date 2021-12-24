@@ -1,1 +1,1 @@
-export * from './parseExplode'
+export * from './parse-explode'

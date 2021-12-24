@@ -1,1 +1,1 @@
-export * from './parseUnique'
+export * from './parse-unique'

@@ -1,1 +1,1 @@
-export * from './parseDrop'
+export * from './parse-drop'

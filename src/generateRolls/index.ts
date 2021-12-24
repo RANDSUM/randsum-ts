@@ -1,1 +1,1 @@
-export * from './generateRolls'
+export * from './generate-rolls'

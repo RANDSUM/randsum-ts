@@ -1,1 +1,1 @@
-export * from './parseReplace'
+export * from './parse-replace'
