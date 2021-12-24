@@ -10,6 +10,7 @@ jobs:
   run-linters:
     name: Build Docs
     runs-on: ubuntu-latest
+    with: {{ secrets.PAT }}
 
     steps:
       - name: Check out Git repository

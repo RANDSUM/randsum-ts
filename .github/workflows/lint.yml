@@ -14,6 +14,7 @@ jobs:
   run-linters:
     name: Run linters
     runs-on: ubuntu-latest
+    with: {{ secrets.PAT }}
 
     steps:
       - name: Check out Git repository
