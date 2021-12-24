@@ -3,16 +3,16 @@ import { ReplaceOptions } from 'types'
 import { singleCapDigester } from '../cap/singleCapDigester'
 
 export function replaceDigester(rollTotals: number[], { from, to }: ReplaceOptions) {
-  return rollTotals.map(num => {
+  return rollTotals.map(number_ => {
     if (from) {
       if (typeof from === 'number') {
-        if (num === from) {
+        if (number_ === from) {
           return to
         }
       } else {
-        return singleCapDigester(from, to)(num)
+        return singleCapDigester(from, to)(number_)
       }
     }
-    return num
+    return number_
   })
 }

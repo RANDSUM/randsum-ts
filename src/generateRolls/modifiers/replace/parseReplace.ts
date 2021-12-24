@@ -7,9 +7,9 @@ export function parseReplaceFactory(replace: RollParameters['replace']) {
     if (!replace) {
       return rollTotals
     }
-    const params = Array.isArray(replace) ? replace : [replace]
+    const parameters = Array.isArray(replace) ? replace : [replace]
 
-    return params.reduce((newTotals, replaceModifier) => {
+    return parameters.reduce((newTotals, replaceModifier) => {
       return replaceDigester(newTotals, replaceModifier)
     }, rollTotals)
   }

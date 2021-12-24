@@ -1,6 +1,10 @@
 import { diceNotationPattern } from 'parseArgs/parseNotation/matchers'
 import { DiceNotation } from 'types'
 
-export function isDiceNotation(arg: unknown): arg is DiceNotation {
-  return !!String(arg).match(diceNotationPattern)
+export function isDiceNotation(argument: unknown): argument is DiceNotation {
+  if (typeof argument !== 'string') {
+    return false
+  }
+  return !!diceNotationPattern.test(argument)
 }
+;``

@@ -1,4 +1,2 @@
-import { randsum } from 'randsum'
+export { randsum as default } from 'randsum'
 export * from 'types'
-
-export default randsum

@@ -1,8 +1,8 @@
 export function parseReplaceNotation(modifierString: string) {
-  const replaceOpts = modifierString
+  const replaceOptions = modifierString
     .split('v')[1]
-    .replace(/\{/g, '')
-    .replace(/\}/g, '')
+    .replace(/{/g, '')
+    .replace(/}/g, '')
     .split(',')
     .map(replacement => {
       const [noteFrom, noteTo] = replacement.split('=')
@@ -18,5 +18,5 @@ export function parseReplaceNotation(modifierString: string) {
       }
     })
 
-  return replaceOpts.length === 1 ? replaceOpts[0] : replaceOpts
+  return replaceOptions.length === 1 ? replaceOptions[0] : replaceOptions
 }

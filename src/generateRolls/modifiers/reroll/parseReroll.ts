@@ -7,9 +7,9 @@ export function parseRerollFactory(reroll: RollParameters['reroll'], rollDie: Ro
     if (!reroll) {
       return rollTotals
     }
-    const params = Array.isArray(reroll) ? reroll : [reroll]
+    const parameters = Array.isArray(reroll) ? reroll : [reroll]
 
-    return params.reduce((newTotals, rerollModifier) => {
+    return parameters.reduce((newTotals, rerollModifier) => {
       return rerollDigester(newTotals, rerollModifier, rollDie)
     }, rollTotals)
   }

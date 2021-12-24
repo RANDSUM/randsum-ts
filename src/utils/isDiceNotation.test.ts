@@ -53,15 +53,14 @@ describe('isDiceNotation', () => {
   })
   describe('given valid Dice Notation', () => {
     describe('be it simple', () => {
-      const simple = '2d20'
       test('returns true', () => {
-        expect(isDiceNotation(simple)).toBe(true)
+        expect(isDiceNotation('2d20')).toBe(true)
       })
     })
+
     describe('be it complex', () => {
-      const complex = '2d20V{<2,>2}!L2U'
       test('returns true', () => {
-        expect(isDiceNotation(complex)).toBe(true)
+        expect(isDiceNotation('2d20V{<2,>2}!L2U')).toBe(true)
       })
     })
   })

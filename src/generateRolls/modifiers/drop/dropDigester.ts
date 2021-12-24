@@ -3,11 +3,11 @@ import { times } from 'utils'
 
 export function dropDigester(rollTotals: number[], { highest, lowest, greaterThan, lessThan, exact }: DropOptions) {
   const sortedResults = rollTotals
-    .filter(num => {
+    .filter(number_ => {
       switch (true) {
-        case greaterThan && num > greaterThan:
-        case lessThan && num < lessThan:
-        case exact && exact.includes(num):
+        case greaterThan && number_ > greaterThan:
+        case lessThan && number_ < lessThan:
+        case exact && exact.includes(number_):
           return false
         default:
           return true

@@ -10,17 +10,17 @@ export function uniqueDigester(
   }
   const notUnique = !unique || typeof unique === 'boolean' ? [] : unique.notUnique
 
-  const filteredArray = rollTotals.filter(n => !notUnique.includes(n))
-  const fixedRollTotals = rollTotals.map((num, index, arr) => {
+  const filteredArray = new Set(rollTotals.filter(n => !notUnique.includes(n)))
+  const fixedRollTotals = rollTotals.map((number_, index, array) => {
     let roll
     switch (true) {
-      case arr.indexOf(num) === index:
-      case notUnique.includes(num):
-        return num
+      case array.indexOf(number_) === index:
+      case notUnique.includes(number_):
+        return number_
       default:
         do {
           roll = rollDie()
-        } while (filteredArray.includes(roll))
+        } while (filteredArray.has(roll))
         return roll
     }
   })

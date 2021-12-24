@@ -3,10 +3,10 @@ import { RollDie, RollParameters, RollTotals } from 'types'
 import { uniqueDigester } from './uniqueDigester'
 
 export function parseUniqueFactory(
-  { unique, ...uniqueParams }: { unique: RollParameters['unique'] } & Parameters<typeof uniqueDigester>[1],
+  { unique, ...uniqueParameters }: { unique: RollParameters['unique'] } & Parameters<typeof uniqueDigester>[1],
   rollDie: RollDie,
 ) {
   return function parseUnique(rollTotals: RollTotals) {
-    return !unique ? rollTotals : uniqueDigester(rollTotals, { unique, ...uniqueParams }, rollDie)
+    return !unique ? rollTotals : uniqueDigester(rollTotals, { unique, ...uniqueParameters }, rollDie)
   }
 }

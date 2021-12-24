@@ -4,10 +4,10 @@ import { parseNotation } from '.'
 
 describe('parseNotation', () => {
   const baseTestString: DiceNotation = '4d6'
-  const baseRollParams: RollParameters = { sides: 6, rolls: 4 }
+  const baseRollParameters: RollParameters = { sides: 6, rolls: 4 }
   describe('given a basic notation', () => {
     test('returns a RollParameter matching the notation', () => {
-      expect(parseNotation(baseTestString)).toMatchObject(baseRollParams)
+      expect(parseNotation(baseTestString)).toMatchObject(baseRollParameters)
     })
   })
 
@@ -16,7 +16,7 @@ describe('parseNotation', () => {
       const testString: DiceNotation = `${baseTestString}H`
 
       test('returns a RollParameter matching the notation', () => {
-        expect(parseNotation(testString)).toMatchObject({ ...baseRollParams, drop: { highest: 1 } })
+        expect(parseNotation(testString)).toMatchObject({ ...baseRollParameters, drop: { highest: 1 } })
       })
     })
 
@@ -24,7 +24,7 @@ describe('parseNotation', () => {
       const testString: DiceNotation = `${baseTestString}H2`
 
       test('returns a RollParameter matching the notation', () => {
-        expect(parseNotation(testString)).toMatchObject({ ...baseRollParams, drop: { highest: 2 } })
+        expect(parseNotation(testString)).toMatchObject({ ...baseRollParameters, drop: { highest: 2 } })
       })
     })
   })
@@ -34,7 +34,7 @@ describe('parseNotation', () => {
       const testString: DiceNotation = `${baseTestString}L`
 
       test('returns a RollParameter matching the notation', () => {
-        expect(parseNotation(testString)).toMatchObject({ ...baseRollParams, drop: { lowest: 1 } })
+        expect(parseNotation(testString)).toMatchObject({ ...baseRollParameters, drop: { lowest: 1 } })
       })
     })
 
@@ -42,7 +42,7 @@ describe('parseNotation', () => {
       const testString: DiceNotation = `${baseTestString}L2`
 
       test('returns a RollParameter matching the notation', () => {
-        expect(parseNotation(testString)).toMatchObject({ ...baseRollParams, drop: { lowest: 2 } })
+        expect(parseNotation(testString)).toMatchObject({ ...baseRollParameters, drop: { lowest: 2 } })
       })
     })
   })
@@ -52,7 +52,7 @@ describe('parseNotation', () => {
 
     test('returns a RollParameter matching the notation', () => {
       expect(parseNotation(testString)).toMatchObject({
-        ...baseRollParams,
+        ...baseRollParameters,
         drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] },
       })
     })
@@ -63,7 +63,7 @@ describe('parseNotation', () => {
 
     test('returns a RollParameter matching the notation', () => {
       expect(parseNotation(testString)).toMatchObject({
-        ...baseRollParams,
+        ...baseRollParameters,
         cap: { below: 2, above: 5 },
       })
     })
@@ -73,7 +73,7 @@ describe('parseNotation', () => {
     const testString: DiceNotation = `${baseTestString}-2`
 
     test('returns a RollParameter matching the notation', () => {
-      expect(parseNotation(testString)).toMatchObject({ ...baseRollParams, minus: 2 })
+      expect(parseNotation(testString)).toMatchObject({ ...baseRollParameters, minus: 2 })
     })
   })
 
@@ -81,7 +81,7 @@ describe('parseNotation', () => {
     const testString: DiceNotation = `${baseTestString}+2`
 
     test('returns a RollParameter matching the notation', () => {
-      expect(parseNotation(testString)).toMatchObject({ ...baseRollParams, plus: 2 })
+      expect(parseNotation(testString)).toMatchObject({ ...baseRollParameters, plus: 2 })
     })
   })
 
@@ -91,7 +91,7 @@ describe('parseNotation', () => {
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseNotation(testString)).toMatchObject({
-          ...baseRollParams,
+          ...baseRollParameters,
           reroll: { above: 6 },
         })
       })
@@ -102,7 +102,7 @@ describe('parseNotation', () => {
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseNotation(testString)).toMatchObject({
-          ...baseRollParams,
+          ...baseRollParameters,
           reroll: { on: [5, 2], below: 6, maxReroll: 3 },
         })
       })
@@ -115,7 +115,7 @@ describe('parseNotation', () => {
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseNotation(testString)).toMatchObject({
-          ...baseRollParams,
+          ...baseRollParameters,
           unique: { notUnique: [5, 6] },
         })
       })
@@ -125,7 +125,7 @@ describe('parseNotation', () => {
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseNotation(testString)).toMatchObject({
-          ...baseRollParams,
+          ...baseRollParameters,
           unique: true,
         })
       })
@@ -137,7 +137,7 @@ describe('parseNotation', () => {
 
     test('returns a RollParameter matching the notation', () => {
       expect(parseNotation(testString)).toMatchObject({
-        ...baseRollParams,
+        ...baseRollParameters,
         explode: true,
       })
     })
@@ -149,7 +149,7 @@ describe('parseNotation', () => {
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseNotation(testString)).toMatchObject({
-          ...baseRollParams,
+          ...baseRollParameters,
           replace: [
             { from: 1, to: 2 },
             { from: { above: 2 }, to: 6 },
@@ -163,7 +163,7 @@ describe('parseNotation', () => {
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseNotation(testString)).toMatchObject({
-          ...baseRollParams,
+          ...baseRollParameters,
           replace: { from: { below: 2 }, to: 6 },
         })
       })

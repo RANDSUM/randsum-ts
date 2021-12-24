@@ -1,3 +1,3 @@
 export function sumArray(array: number[]) {
-  return array.reduce((total, num) => total + num, 0)
+  return array.reduce((total, number_) => total + number_, 0)
 }

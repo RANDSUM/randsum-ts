@@ -8,21 +8,21 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   const formattedNotations = notationString.toLowerCase()
-  const modifiedParams = notationParsers.reduce(
-    (parameters, [matcher, key, func]) => {
+  const modifiedParameters = notationParsers.reduce(
+    (parameters, [matcher, key, function_]) => {
       const match = formattedNotations.match(matcher)
       if (!match) {
         return parameters
       }
-      const value = func(match[0])
+      const value = function_(match[0])
 
       if (Array.isArray(value)) {
         const spreadArray = (parameters[key] as typeof value[]) || []
         return { ...parameters, [key]: [...spreadArray, ...value] }
       }
       if (typeof value === 'object') {
-        const spreadObj = (parameters[key] as Record<string, unknown>) || {}
-        return { ...parameters, [key]: { ...spreadObj, ...value } }
+        const spreadObject = (parameters[key] as Record<string, unknown>) || {}
+        return { ...parameters, [key]: { ...spreadObject, ...value } }
       }
       return {
         ...parameters,
@@ -32,5 +32,5 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
     { sides: 0 } as RollParameters,
   )
 
-  return { ...modifiedParams, notation: notationString }
+  return { ...modifiedParameters, notation: notationString }
 }

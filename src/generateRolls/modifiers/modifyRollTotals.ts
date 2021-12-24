@@ -20,5 +20,5 @@ export function modifyRollTotals(
     parseCapFactory(cap),
     parseDropFactory(drop),
     parseExplodeFactory({ explode, sides }, rollDie),
-  ].reduce((newTotals, parser) => parser(newTotals.slice()), rollTotals.slice())
+  ].reduce((newTotals, parser) => parser([...newTotals]), [...rollTotals])
 }

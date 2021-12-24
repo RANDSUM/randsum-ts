@@ -5,11 +5,11 @@ import { modifyRollTotals, modifyTotal } from './modifiers'
 
 export function generateRolls(
   rollTotals: RollTotals,
-  { plus, minus, ...rollParams }: RollParameters,
+  { plus, minus, ...rollParameters }: RollParameters,
   rollDie: () => number,
 ): [number, RollTotals] {
-  const modifiedRollTotals = modifyRollTotals(rollTotals.slice(), rollParams, rollDie)
-  const total = modifyTotal(sumArray(modifiedRollTotals.slice()), { plus, minus })
+  const modifiedRollTotals = modifyRollTotals([...rollTotals], rollParameters, rollDie)
+  const total = modifyTotal(sumArray([...modifiedRollTotals]), { plus, minus })
 
   return [total, modifiedRollTotals]
 }
