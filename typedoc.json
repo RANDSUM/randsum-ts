@@ -3,7 +3,7 @@
   "gitRevision": "v1.0.0-beta3",
   "sort":["source-order"],
   "out": "./docs",
-  "exclude": ["./src/**/**/*.test.ts", "./build", "./src/coverage"],
+  "exclude": ["./src/**/**/*.test.ts", "./dist", "./src/coverage"],
   "name": "randsum",
   "includeVersion": true
 }

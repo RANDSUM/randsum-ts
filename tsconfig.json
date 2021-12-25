@@ -4,7 +4,7 @@
     "lib": ["es2017", "es7", "es6", "dom"],
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "build",
+    "outDir": "dist",
     "declaration": true,
     "baseUrl": "src",
 
@@ -28,5 +28,5 @@
     "importHelpers": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "src/coverage/**", "build", "docs"]
+  "exclude": ["node_modules", "src/coverage/**", "dist", "docs"]
 }

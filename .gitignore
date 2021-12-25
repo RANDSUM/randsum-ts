@@ -31,7 +31,7 @@ coverage
 bower_components
 
 #Build files
-build
+dist
 
 # node-waf configuration
 .lock-wscript
