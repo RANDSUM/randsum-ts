@@ -47,11 +47,11 @@ describe('generateRolls', () => {
       sides: 10,
       rolls: longerRollTotals.length,
       drop: {
-        highest: 1,
+        highest: '1',
         lowest: '2',
-        greaterThan: 8,
-        lessThan: 2,
-        exact: ['5', 5],
+        greaterThan: '8',
+        lessThan: '2',
+        exact: ['5', '5'],
       },
     }
 
@@ -76,8 +76,8 @@ describe('generateRolls', () => {
       const dropParameters: RollParameters = {
         ...baseParameters,
         replace: [
-          { from: 1, to: 2 },
-          { from: { above: 3 }, to: '6' },
+          { from: '1', to: 2 },
+          { from: { above: '3' }, to: '6' },
         ],
       }
 

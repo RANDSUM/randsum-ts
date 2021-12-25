@@ -6,19 +6,19 @@ export function parseReplaceFactory(replace: ReplaceOptions | ReplaceOptions[]) 
   return function parseReplace(rollTotals: RollTotals) {
     const parameters = Array.isArray(replace) ? replace : [replace]
 
-    let replaceRolls = rollTotals
+    let replaceRolls = rollTotals.map(roll => Number(roll))
     for (const { from, to } of parameters) {
       replaceRolls = replaceRolls.map(roll => {
         if (from) {
-          if (typeof from === 'number') {
-            if (Number(roll) === from) {
-              return to
-            }
+          if (typeof from === 'object') {
+            return parseSingleCap(from, Number(to))(roll)
           } else {
-            return parseSingleCap(from, to)(roll)
+            if (roll === Number(from)) {
+              return Number(to)
+            }
           }
         }
-        return Number(roll)
+        return roll
       })
     }
 
