@@ -18,6 +18,7 @@
     "test:ci": "jest --runInBand",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint ./src --ext .ts -c .eslintrc.json",
+    "check-build": "bundlewatch",
     "watch-build": "tsc -w -p .",
     "postinstall": "husky install",
     "prepublish": "yarn build",
