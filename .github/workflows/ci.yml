@@ -40,7 +40,7 @@ jobs:
         with:
           cmd: build
 
-      - uses: jackyef/bundlewatch-gh-action@master
+      - uses: jackyef/bundlewatch-gh-action@0.2.0
         with:
           build-script: yarn build
           bundlewatch-github-token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
