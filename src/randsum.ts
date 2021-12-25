@@ -5,7 +5,6 @@ import {
   RandsumDynamicReturn,
   RandsumOptions,
   RandsumPrimeArgument,
-  RollModifier,
   RollOptions,
   RollResult,
   Sides,
@@ -31,7 +30,7 @@ export function randsum(primeArgument: RandsumPrimeArgument, randsumOptions?: Ra
   const { customRandomizer, detailed } = randsumOptions || {}
   const rollParameters = parseArguments(primeArgument)
 
-  const rollDie = () => (customRandomizer || randomNumber)(rollParameters.sides)
+  const rollDie = () => (customRandomizer || randomNumber)(Number(rollParameters.sides))
 
   const initialRollTotals = [...new Array(rollParameters.rolls)].map(() => rollDie())
 
@@ -44,8 +43,8 @@ export function randsum(primeArgument: RandsumPrimeArgument, randsumOptions?: Ra
         initialRollTotals,
         rollTotals,
         ...rollParameters,
-        modifyInitialRolls: (callbackFunction: RollModifier) => callbackFunction([...initialRollTotals]),
-        modifyModifiedRolls: (callbackFunction: RollModifier) => callbackFunction([...rollTotals]),
+        modifyInitialRolls: callbackFunction => callbackFunction([...initialRollTotals]),
+        modifyModifiedRolls: callbackFunction => callbackFunction([...rollTotals]),
       }
     : total
 }

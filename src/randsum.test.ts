@@ -1,5 +1,3 @@
-import { Randomizer } from 'types'
-
 import randsum from '.'
 
 const randsumSimpleTests = (result: number) => {
@@ -9,7 +7,7 @@ const randsumSimpleTests = (result: number) => {
 }
 
 const mockRandomizerRoll = 420
-const mockRandomizer: Randomizer = () => mockRandomizerRoll
+const mockRandomizer = () => mockRandomizerRoll
 const randsumCustomRandomizerSimpleTests = (result: number, rolls: number) => {
   test('expects total to be correct', () => {
     expect(result).toEqual(rolls * mockRandomizerRoll)

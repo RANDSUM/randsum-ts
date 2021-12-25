@@ -1,20 +1,9 @@
-export type D = 'd' | 'D'
 export type Sides = number | `${number}`
-export type DiceNotation = `${number}${D}${number}${string}`
+export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
 export type RollDie = () => number
-export type Randomizer = (sides: number) => number
 
 export type RollTotals = number[]
-export type RollParser = (results: RollTotals) => RollTotals
-
-export type RollModifier = (results: RollTotals) => number
-export type RollModifierAccessor = (callback: RollModifier) => number
-
-export interface RandsumOptions<D = boolean> {
-  detailed?: D
-  customRandomizer?: Randomizer
-}
 
 export interface DropOptions {
   highest?: number
@@ -45,7 +34,7 @@ export interface UniqueOptions {
 
 export interface RollOptions {
   rolls?: number
-  sides: number
+  sides: Sides
   plus?: number
   minus?: number
   cap?: CapOptions
@@ -56,19 +45,25 @@ export interface RollOptions {
   explode?: boolean
 }
 
+export type RandsumPrimeArgument = Sides | RollOptions | DiceNotation
+
+export interface RandsumOptions<D = boolean> {
+  detailed?: D
+  customRandomizer?: (sides: Sides) => number
+}
+
 export interface RollParameters extends RollOptions {
   rolls: number
   notation?: string
 }
 
-export type RandsumPrimeArgument = Sides | RollOptions | DiceNotation
 export interface RollResult extends RollParameters {
   args: [RandsumPrimeArgument, RandsumOptions | undefined]
   total: number
-  rollTotals: number[]
+  rollTotals: RollTotals
   initialRollTotals: number[]
-  modifyInitialRolls: RollModifierAccessor
-  modifyModifiedRolls: RollModifierAccessor
+  modifyInitialRolls: (callbackFunction: (results: RollTotals) => number) => number
+  modifyModifiedRolls: (callbackFunction: (results: RollTotals) => number) => number
 }
 
 export type RandsumDynamicReturn<T extends boolean> = T extends true ? RollResult : number
