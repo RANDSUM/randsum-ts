@@ -11,14 +11,14 @@ export function parseReplaceFactory(replace: ReplaceOptions | ReplaceOptions[]) 
       replaceRolls = replaceRolls.map(roll => {
         if (from) {
           if (typeof from === 'number') {
-            if (roll === from) {
+            if (Number(roll) === from) {
               return to
             }
           } else {
             return parseSingleCap(from, to)(roll)
           }
         }
-        return roll
+        return Number(roll)
       })
     }
 

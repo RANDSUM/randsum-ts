@@ -1,42 +1,42 @@
-export type Sides = number | `${number}`
+export type NumberString = number | `${number}`
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
 export type RollDie = () => number
 
-export type RollTotals = number[]
+export type RollTotals = NumberString[]
 
 export interface DropOptions {
-  highest?: number
-  lowest?: number
-  greaterThan?: number
-  lessThan?: number
-  exact?: number[]
+  highest?: NumberString
+  lowest?: NumberString
+  greaterThan?: NumberString
+  lessThan?: NumberString
+  exact?: NumberString[]
 }
 
 export interface CapOptions {
-  above?: number
-  below?: number
+  above?: NumberString
+  below?: NumberString
 }
 
 export interface ReRollOptions extends CapOptions {
-  on?: number | number[]
-  maxReroll?: number
+  on?: NumberString | NumberString[]
+  maxReroll?: NumberString
 }
 
 export interface ReplaceOptions {
-  from: number | CapOptions
-  to: number
+  from: NumberString | CapOptions
+  to: NumberString
 }
 
 export interface UniqueOptions {
-  notUnique: number[]
+  notUnique: NumberString[]
 }
 
 export interface RollOptions {
-  rolls?: number
-  sides: Sides
-  plus?: number
-  minus?: number
+  rolls?: NumberString
+  sides: NumberString
+  plus?: NumberString
+  minus?: NumberString
   cap?: CapOptions
   drop?: DropOptions
   replace?: ReplaceOptions | ReplaceOptions[]
@@ -45,15 +45,15 @@ export interface RollOptions {
   explode?: boolean
 }
 
-export type RandsumPrimeArgument = Sides | RollOptions | DiceNotation
+export type RandsumPrimeArgument = NumberString | RollOptions | DiceNotation
 
 export interface RandsumOptions<D = boolean> {
   detailed?: D
-  customRandomizer?: (sides: Sides) => number
+  customRandomizer?: (sides: NumberString) => number
 }
 
 export interface RollParameters extends RollOptions {
-  rolls: number
+  rolls: NumberString
   notation?: string
 }
 
@@ -61,7 +61,7 @@ export interface RollResult extends RollParameters {
   args: [RandsumPrimeArgument, RandsumOptions | undefined]
   total: number
   rollTotals: RollTotals
-  initialRollTotals: number[]
+  initialRollTotals: NumberString[]
   modifyInitialRolls: (callbackFunction: (results: RollTotals) => number) => number
   modifyModifiedRolls: (callbackFunction: (results: RollTotals) => number) => number
 }

@@ -20,5 +20,5 @@ export function generateRolls(
     modifiedTotal = modifierFunction(modifiedTotal)
   }
 
-  return [modifiedTotal, modifiedRollTotals]
+  return [modifiedTotal, modifiedRollTotals.map(number => Number(number))]
 }
