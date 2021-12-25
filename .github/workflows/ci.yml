@@ -40,6 +40,11 @@ jobs:
         with:
           cmd: build
 
+      - name: Check Bundle Size
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: "run bundlewatch"
+
       - name: Build Docs
         uses: borales/actions-yarn@v2.3.0
         with:
