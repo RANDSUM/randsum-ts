@@ -80,7 +80,10 @@
         "path": "build/*.js",
         "maxSize": "100kB"
       }
-    ]
+    ],
+    "ci": {
+      "trackBranches": ["main"]
+    }
   },
   "jest": {
     "coverageDirectory": "./coverage/",

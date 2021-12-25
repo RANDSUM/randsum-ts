@@ -35,10 +35,11 @@ jobs:
         with:
           cmd: lint
 
-      - name: Build Package
-        uses: borales/actions-yarn@v2.3.0
+      - name: Check Bundle Size
+        uses: jackyef/bundlewatch-gh-action@0.2.0
         with:
-          cmd: build
+          build-script: yarn build
+          bundlewatch-github-token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
 
       - name: Build Docs
         uses: borales/actions-yarn@v2.3.0
