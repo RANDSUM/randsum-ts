@@ -10,7 +10,7 @@
   },
   "version": "1.0.0-beta3",
   "private": false,
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p .",
     "docs": "typedoc --options ./typedoc.json",
@@ -24,7 +24,7 @@
     "postpublish": "pinst --enable"
   },
   "files": [
-    "build/**/*"
+    "dist/**/*"
   ],
   "devDependencies": {
     "@types/jest": "^27.0.0",
@@ -77,7 +77,7 @@
   "bundlewatch": {
     "files": [
       {
-        "path": "build/*.js",
+        "path": "dist/*.js",
         "maxSize": "100kB"
       }
     ],
