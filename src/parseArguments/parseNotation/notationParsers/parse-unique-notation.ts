@@ -6,6 +6,6 @@ export function parseUniqeNotation(notationString: string) {
   const notUnique = notationString.replace(/u{/g, '').replace(/}/g, '').split(',')
 
   return {
-    notUnique: notUnique.map(number_ => Number(number_)),
+    notUnique: notUnique.map(number => Number(number)),
   }
 }

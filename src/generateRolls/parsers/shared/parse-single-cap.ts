@@ -1,13 +1,13 @@
 import { CapOptions } from 'types'
 
 export function parseSingleCap({ above, below }: CapOptions, value?: number) {
-  return (number_: number) => {
-    if (above && number_ > above) {
-      return value || above
+  return (roll: number) => {
+    if (above && roll > above) {
+      return Number(value || above)
     }
-    if (below && number_ < below) {
-      return value || below
+    if (below && roll < below) {
+      return Number(value || below)
     }
-    return number_
+    return Number(roll)
   }
 }

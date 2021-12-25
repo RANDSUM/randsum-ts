@@ -5,7 +5,6 @@ import {
   RandsumDynamicReturn,
   RandsumOptions,
   RandsumPrimeArgument,
-  RollModifier,
   RollOptions,
   RollResult,
   Sides,
@@ -44,8 +43,8 @@ export function randsum(primeArgument: RandsumPrimeArgument, randsumOptions?: Ra
         initialRollTotals,
         rollTotals,
         ...rollParameters,
-        modifyInitialRolls: (callbackFunction: RollModifier) => callbackFunction([...initialRollTotals]),
-        modifyModifiedRolls: (callbackFunction: RollModifier) => callbackFunction([...rollTotals]),
+        modifyInitialRolls: callbackFunction => callbackFunction([...initialRollTotals]),
+        modifyModifiedRolls: callbackFunction => callbackFunction([...rollTotals]),
       }
     : total
 }
