@@ -53,3 +53,4 @@ jobs:
           message: '📄 Updating Docs 📄'
           pull: 'NO-PULL'
           push: '--no-verify'
+          default_author: github_actions
