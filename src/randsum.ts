@@ -2,22 +2,25 @@ import { generateRolls } from 'generateRolls'
 import { parseArguments } from 'parseArguments'
 import {
   DiceNotation,
+  NumberString,
   RandsumDynamicReturn,
   RandsumOptions,
   RandsumPrimeArgument,
   RollOptions,
   RollResult,
-  Sides,
 } from 'types'
 import { randomNumber } from 'utils'
 
-export function randsum(sides: Sides): number
+export function randsum(sides: NumberString): number
 export function randsum(notation: DiceNotation): number
 export function randsum(rollOptions: RollOptions): number
-export function randsum(sides: Sides, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
+export function randsum(sides: NumberString, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
 export function randsum(notation: DiceNotation, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
 export function randsum(rollOptions: RollOptions, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
-export function randsum<D extends boolean>(sides: Sides, randsumOptions: RandsumOptions<D>): RandsumDynamicReturn<D>
+export function randsum<D extends boolean>(
+  sides: NumberString,
+  randsumOptions: RandsumOptions<D>,
+): RandsumDynamicReturn<D>
 export function randsum<D extends boolean>(
   notation: DiceNotation,
   randsumOptions: RandsumOptions<D>,

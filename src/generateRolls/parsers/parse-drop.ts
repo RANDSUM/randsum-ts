@@ -17,11 +17,11 @@ export function parseDropFactory({ highest, lowest, greaterThan, lessThan, exact
       .sort()
 
     if (highest) {
-      times(highest)(() => sortedResults.pop())
+      times(Number(highest))(() => sortedResults.pop())
     }
 
     if (lowest) {
-      times(lowest)(() => sortedResults.shift())
+      times(Number(lowest))(() => sortedResults.shift())
     }
 
     return sortedResults

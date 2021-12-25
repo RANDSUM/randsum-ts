@@ -1,7 +1,7 @@
-import { CapOptions } from 'types'
+import { CapOptions, NumberString } from 'types'
 
-export function parseSingleCap({ above, below }: CapOptions, value?: number) {
-  return (roll: number) => {
+export function parseSingleCap({ above, below }: CapOptions, value?: NumberString) {
+  return (roll: NumberString) => {
     if (above && roll > above) {
       return Number(value || above)
     }

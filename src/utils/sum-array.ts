@@ -1,3 +1,5 @@
-export function sumArray(array: number[]) {
-  return array.reduce((total, roll) => total + roll, 0)
+import { RollTotals } from 'types'
+
+export function sumArray(array: RollTotals) {
+  return Number(array.reduce((total, roll) => Number(total) + Number(roll), 0))
 }

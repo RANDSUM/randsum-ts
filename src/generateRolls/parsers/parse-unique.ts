@@ -8,19 +8,21 @@ export function parseUniqueFactory({ unique, rolls, sides }: RollParameters, rol
     const notUnique = !unique || typeof unique === 'boolean' ? [] : unique.notUnique
 
     const filteredArray = new Set(rollTotals.filter(n => !notUnique.includes(n)))
-    const fixedRollTotals = rollTotals.map((roll, index, array) => {
-      let newRoll
-      switch (true) {
-        case array.indexOf(roll) === index:
-        case notUnique.includes(roll):
-          return roll
-        default:
-          do {
-            newRoll = rollDie()
-          } while (filteredArray.has(newRoll))
-          return newRoll
-      }
-    })
+    const fixedRollTotals = rollTotals
+      .map(number => Number(number))
+      .map((roll, index, array) => {
+        let newRoll
+        switch (true) {
+          case array.indexOf(roll) === index:
+          case notUnique.includes(roll):
+            return roll
+          default:
+            do {
+              newRoll = rollDie()
+            } while (filteredArray.has(newRoll))
+            return newRoll
+        }
+      })
 
     return fixedRollTotals
   }
