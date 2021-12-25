@@ -78,7 +78,7 @@
   "bundlewatch": {
     "files": [
       {
-        "path": "dist/*.js",
+        "path": "./dist/**/*.ts",
         "maxSize": "100kB"
       }
     ],
