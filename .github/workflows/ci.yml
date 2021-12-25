@@ -20,7 +20,7 @@ jobs:
       - name: Install Yarn Dependencies
         uses: borales/actions-yarn@v2.3.0
         with:
-          cmd: install
+          cmd: "install --ignore-engines"
 
       - name: Run Tests
         uses: borales/actions-yarn@v2.3.0
@@ -55,7 +55,7 @@ jobs:
 
       - uses: sarthak-saxena/JSBundleSize@master
         with:
-          bootstrap: 'yarn install'
+          bootstrap: 'yarn install --ignore-engines'
           build_command: 'yarn build'
           dist_path: 'build'
           token: ${{ secrets.PERSONALACCESSTOKEN }}
