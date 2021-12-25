@@ -35,11 +35,6 @@ jobs:
         with:
           cmd: lint
 
-      - name: Build Package
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build
-
       - uses: jackyef/bundlewatch-gh-action@0.2.0
         with:
           build-script: yarn build
