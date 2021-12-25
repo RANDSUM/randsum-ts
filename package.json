@@ -13,7 +13,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p .",
-    "docs": "typedoc --options ./typedoc.json",
+    "docs": "typedoc --options ./typedoc.json -gitRevision %npm_package_version%",
     "test": "jest",
     "test:ci": "jest --runInBand",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
