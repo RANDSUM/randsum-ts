@@ -55,7 +55,7 @@ export interface RandsumOptions<D = boolean> {
   customRandomizer?: (sides: NumberString<'options'>) => number
 }
 
-export interface RollParameters extends RollOptions {
+export interface RollParameters extends RollOptions<'parameters'> {
   rolls: NumberString<'parameters'>
   notation?: string
 }
