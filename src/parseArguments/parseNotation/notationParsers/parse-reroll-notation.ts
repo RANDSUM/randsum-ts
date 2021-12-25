@@ -1,8 +1,8 @@
-import { ReRollOptions } from 'types'
+import { RerollOptions } from 'types'
 
 export function parseRerollNotation(notationString: string) {
   const parsedString = notationString.split('r')[1].replace(/{/g, '').replace(/}/g, ',!').split(',')
-  let rerollParameters: ReRollOptions = { on: [] }
+  let rerollParameters: RerollOptions = { on: [] }
   for (const notation of parsedString) {
     if (notation === '!') {
       continue

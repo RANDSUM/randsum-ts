@@ -21,7 +21,7 @@ export interface CapOptions<T extends OptionsParameters = 'options'> {
   below?: NumberString<T>
 }
 
-export interface ReRollOptions<T extends OptionsParameters = 'options'> extends CapOptions<T> {
+export interface RerollOptions<T extends OptionsParameters = 'options'> extends CapOptions<T> {
   on?: NumberString<T> | NumberString<T>[]
   maxReroll?: NumberString<T>
 }
@@ -43,7 +43,7 @@ export interface RollOptions<T extends OptionsParameters = 'options'> {
   cap?: CapOptions<T>
   drop?: DropOptions<T>
   replace?: ReplaceOptions<T> | ReplaceOptions<T>[]
-  reroll?: ReRollOptions<T> | ReRollOptions<T>[]
+  reroll?: RerollOptions<T> | RerollOptions<T>[]
   unique?: boolean | UniqueOptions<T>
   explode?: boolean
 }

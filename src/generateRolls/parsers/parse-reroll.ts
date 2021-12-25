@@ -1,6 +1,6 @@
-import { ReRollOptions, RollDie, RollTotals } from 'types'
+import { RerollOptions, RollDie, RollTotals } from 'types'
 
-function rerollRoll(roll: number, { above, below, on, maxReroll }: ReRollOptions, rollDie: RollDie, index = 0): number {
+function rerollRoll(roll: number, { above, below, on, maxReroll }: RerollOptions, rollDie: RollDie, index = 0): number {
   if (Number(maxReroll) === index) {
     return roll
   }
@@ -19,7 +19,7 @@ function rerollRoll(roll: number, { above, below, on, maxReroll }: ReRollOptions
   }
 }
 
-export function parseRerollFactory(reroll: ReRollOptions | ReRollOptions[], rollDie: RollDie) {
+export function parseRerollFactory(reroll: RerollOptions | RerollOptions[], rollDie: RollDie) {
   return function parseReroll(rollTotals: RollTotals) {
     const parameters = Array.isArray(reroll) ? reroll : [reroll]
 
