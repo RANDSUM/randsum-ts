@@ -2,6 +2,7 @@ type OptionsParameters = 'options' | 'parameters'
 export type NumberString<T extends OptionsParameters = 'options'> = T extends 'parameters'
   ? number
   : number | `${number}`
+
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
 export type RollDie = () => number
