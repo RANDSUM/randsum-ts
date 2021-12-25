@@ -8,12 +8,12 @@
     "type": "git",
     "url": "https://github.com/alxjrvs/randsum.git"
   },
-  "version": "1.0.0-beta4",
+  "version": "1.0.0-beta5",
   "private": false,
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p .",
-    "docs": "typedoc --options ./typedoc.json -gitRevision %npm_package_version%",
+    "docs": "typedoc --options ./typedoc.json -gitRevision $npm_package_version",
     "test": "jest",
     "test:ci": "jest --runInBand",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
