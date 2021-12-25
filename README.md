@@ -2,7 +2,7 @@
 
 `rand` for the rest of us, **Currently Being Re-Written! ~1.0 Release to come soon.**
 
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/alxjrvs/randsum/blob/master/LICENSEs)
 [![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/master/graph/badge.svg)](https://codecov.io/gh/alxjrvs/randsum)
 [![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md)
 
