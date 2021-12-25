@@ -74,19 +74,19 @@
   "lint-staged": {
     "./src/**": "yarn lint --cache --fix"
   },
+  "bundlewatch": {
+    "files": [
+      {
+        "path": "build/*.js",
+        "maxSize": "100kB"
+      }
+    ]
+  },
   "jest": {
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
-    },
-    "bundlewatch": {
-      "files": [
-        {
-          "path": "build/*.js",
-          "maxSize": "100kB"
-        }
-      ]
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$",
     "moduleDirectories": [
