@@ -15,10 +15,12 @@ jobs:
         with:
           token: ${{ secrets.PERSONALACCESSTOKEN }}
 
+      - uses: c-hive/gha-yarn-cache@v2
+
       - name: Install Yarn Dependencies
         uses: borales/actions-yarn@v2.3.0
         with:
-          cmd: install
+          cmd: "install --ignore-engines --ignore-scripts"
 
       - name: Run Tests
         uses: borales/actions-yarn@v2.3.0
@@ -47,6 +49,6 @@ jobs:
         uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
         with:
           add: 'docs'
-          message: '📄 Updating Docs (skip ci) 📄'
+          message: '📄 Updating Docs 📄'
           pull: 'NO-PULL'
           push: '--no-verify'
