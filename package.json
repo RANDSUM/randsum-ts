@@ -30,6 +30,7 @@
     "@types/jest": "^27.0.0",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
+    "bundlewatch": "^0.3.2",
     "codecov": "^3.8.3",
     "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
@@ -78,6 +79,14 @@
     "collectCoverage": true,
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
+    },
+    "bundlewatch": {
+      "files": [
+        {
+          "path": "build/*.js",
+          "maxSize": "100kB"
+        }
+      ]
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$",
     "moduleDirectories": [

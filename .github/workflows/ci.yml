@@ -52,10 +52,3 @@ jobs:
           message: '📄 Updating Docs 📄'
           pull: 'NO-PULL'
           push: '--no-verify'
-
-      - uses: sarthak-saxena/JSBundleSize@master
-        with:
-          bootstrap: 'yarn install --ignore-engines --ignore-scripts'
-          build_command: 'yarn build'
-          dist_path: 'build'
-          token: ${{ secrets.PERSONALACCESSTOKEN }}
