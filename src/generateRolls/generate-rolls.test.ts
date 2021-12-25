@@ -14,8 +14,8 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with a "unique" modifier', () => {
-    const duplicateRollTotals: RollTotals = [1, '1', 2, 3]
-    const uniqueParameters: RollParameters = { sides: 4, rolls: duplicateRollTotals.length, unique: true }
+    const duplicateRollTotals: RollTotals = [1, 1, 2, 3]
+    const uniqueParameters: RollParameters = { sides: '4', rolls: duplicateRollTotals.length, unique: true }
 
     test('it re-rolls non-unique modifiers', () => {
       expect(generateRolls(duplicateRollTotals, uniqueParameters, mockRandomizer)).toEqual([206, [1, 200, 2, 3]])
@@ -30,7 +30,7 @@ describe('generateRolls', () => {
     })
 
     describe('and the # of rolls is greater than the sides of the die', () => {
-      const overflowRollTotals: RollTotals = [1, 1, 1, '2', 3, 4, '3', 3]
+      const overflowRollTotals: RollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
       const overflowParameters: RollParameters = { ...uniqueParameters, rolls: overflowRollTotals.length }
 
       test('it throws an error', () => {
@@ -42,7 +42,7 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with a "drop" modifier', () => {
-    const longerRollTotals: RollTotals = [1, '2', 3, 4, 5, 6, 7, '8', 9]
+    const longerRollTotals: RollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     const dropParameters: RollParameters = {
       sides: 10,
       rolls: longerRollTotals.length,
@@ -51,7 +51,7 @@ describe('generateRolls', () => {
         lowest: '2',
         greaterThan: '8',
         lessThan: '2',
-        exact: ['5', '5'],
+        exact: ['5'],
       },
     }
 
@@ -88,8 +88,8 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with an "explode" modifier', () => {
+    const explodeRollTotals: RollTotals = [1, 2, 3, 6]
     const explodeParameters: RollParameters = { ...baseParameters, explode: true }
-    const explodeRollTotals: RollTotals = [1, 2, '3', 6]
 
     test('it returns the total with all values matching the queries rerolled', () => {
       expect(generateRolls(explodeRollTotals, explodeParameters, mockRandomizer)).toEqual([212, [1, 2, 3, 6, 200]])

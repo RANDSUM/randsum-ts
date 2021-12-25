@@ -6,9 +6,9 @@ export function parseDropFactory({ highest, lowest, greaterThan, lessThan, exact
     const sortedResults = rollTotals
       .filter(roll => {
         switch (true) {
-          case greaterThan && roll > greaterThan:
-          case lessThan && roll < lessThan:
-          case exact && exact.includes(roll):
+          case greaterThan && roll > Number(greaterThan):
+          case lessThan && roll < Number(lessThan):
+          case exact && exact.map(number => Number(number)).includes(roll):
             return false
           default:
             return true

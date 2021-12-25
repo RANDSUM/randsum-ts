@@ -3,7 +3,7 @@ export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
 export type RollDie = () => number
 
-export type RollTotals = NumberString[]
+export type RollTotals = number[]
 
 export interface DropOptions {
   highest?: NumberString
