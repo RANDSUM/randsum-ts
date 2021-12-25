@@ -1,4 +1,4 @@
-export type OptionsParameters = 'options' | 'parameters'
+type OptionsParameters = 'options' | 'parameters'
 export type NumberString<T extends OptionsParameters = 'options'> = T extends 'parameters'
   ? number
   : number | `${number}`

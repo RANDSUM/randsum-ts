@@ -64,7 +64,7 @@ describe('generateRolls', () => {
     describe('that is a single replace modifiers', () => {
       const dropParameters: RollParameters = {
         ...baseParameters,
-        replace: { from: 1, to: 2 },
+        replace: { from: 1, to: '2' },
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
@@ -98,7 +98,7 @@ describe('generateRolls', () => {
 
   describe('when given roll totals with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
-      const rerollParameters: RollParameters = { ...baseParameters, reroll: { above: 3 } }
+      const rerollParameters: RollParameters = { ...baseParameters, reroll: { above: '3' } }
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         expect(generateRolls(rollTotals, rerollParameters, mockRandomizer)).toEqual([206, [1, 2, 3, 200]])
@@ -106,7 +106,7 @@ describe('generateRolls', () => {
     })
 
     describe('that is a single reroll modifier', () => {
-      const rerollParameters: RollParameters = { ...baseParameters, reroll: { above: 3, on: 2, maxReroll: 2 } }
+      const rerollParameters: RollParameters = { ...baseParameters, reroll: { above: '3', on: '2', maxReroll: '2' } }
 
       test('it returns the total with all values matching the queries rerolled', () => {
         expect(generateRolls(rollTotals, rerollParameters, mockRandomizer)).toEqual([404, [1, 200, 3, 200]])
@@ -114,7 +114,10 @@ describe('generateRolls', () => {
     })
 
     describe('that is an array of reroll modifiers', () => {
-      const rerollParameters: RollParameters = { ...baseParameters, reroll: [{ below: 2, maxReroll: 2 }, { on: [3] }] }
+      const rerollParameters: RollParameters = {
+        ...baseParameters,
+        reroll: [{ below: 2, maxReroll: 2 }, { on: ['3'] }],
+      }
 
       test('it returns the total with all values matching the queries rerolled', () => {
         expect(generateRolls(rollTotals, rerollParameters, mockRandomizer)).toEqual([406, [200, 2, 200, 4]])
@@ -123,7 +126,7 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with a "cap" modifier', () => {
-    const dropParameters: RollParameters = { ...baseParameters, cap: { above: 3, below: 2 } }
+    const dropParameters: RollParameters = { ...baseParameters, cap: { above: '3', below: '2' } }
 
     test('it returns the total with all values above above and below below replaced with their respective comparitor and the roll totals', () => {
       expect(generateRolls(rollTotals, dropParameters, mockRandomizer)).toEqual([10, [2, 2, 3, 3]])
@@ -131,7 +134,7 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with a "plus" modifier', () => {
-    const dropParameters: RollParameters = { ...baseParameters, plus: 2 }
+    const dropParameters: RollParameters = { ...baseParameters, plus: '2' }
 
     test('it returns the total plus the "plus" modifier, and the roll totals', () => {
       expect(generateRolls(rollTotals, dropParameters, mockRandomizer)).toEqual([12, [1, 2, 3, 4]])

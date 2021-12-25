@@ -1,7 +1,7 @@
 import { ReRollOptions, RollDie, RollTotals } from 'types'
 
 function rerollRoll(roll: number, { above, below, on, maxReroll }: ReRollOptions, rollDie: RollDie, index = 0): number {
-  if (maxReroll === index) {
+  if (Number(maxReroll) === index) {
     return roll
   }
   if (index === 99) {
@@ -10,9 +10,9 @@ function rerollRoll(roll: number, { above, below, on, maxReroll }: ReRollOptions
   }
 
   switch (true) {
-    case above && roll > above:
-    case below && roll < below:
-    case on && Array.isArray(on) ? on.includes(roll) : on === roll:
+    case above && roll > Number(above):
+    case below && roll < Number(below):
+    case on && Array.isArray(on) ? on.map(number => Number(number)).includes(roll) : Number(on) === roll:
       return rerollRoll(rollDie(), { above, below, on, maxReroll }, rollDie, index + 1)
     default:
       return roll
