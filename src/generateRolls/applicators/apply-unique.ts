@@ -1,18 +1,18 @@
 import { RollParameters } from 'types'
 
 export function applyUnique(
-  rollTotals: number[],
-  { unique, rolls, sides }: RollParameters,
+  rolls: number[],
+  { unique, quantity, sides }: RollParameters,
   rollOne: () => number,
 ): number[] {
-  if (rolls > sides) {
+  if (quantity > sides) {
     throw new Error('You cannot have unique rolls when there are more rolls than sides of die.')
   }
   const notUnique =
     unique === undefined || typeof unique === 'boolean' ? [] : unique.notUnique.map(number => Number(number))
 
-  const filteredArray = new Set(rollTotals.filter(n => !notUnique.includes(Number(n))))
-  const fixedRollTotals = rollTotals
+  const filteredArray = new Set(rolls.filter(n => !notUnique.includes(Number(n))))
+  const fixedRollTotals = rolls
     .map(number => Number(number))
     .map((roll, index, array) => {
       let newRoll: number

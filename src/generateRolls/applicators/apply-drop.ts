@@ -10,10 +10,10 @@ function times(iterator: number) {
 }
 
 export function applyDrop(
-  rollTotals: number[],
+  rolls: number[],
   { highest, lowest, greaterThan, lessThan, exact }: DropOptions<number>,
 ): number[] {
-  const sortedResults = rollTotals
+  const sortedResults = rolls
     .filter(roll => {
       switch (true) {
         case greaterThan !== undefined && roll > greaterThan:

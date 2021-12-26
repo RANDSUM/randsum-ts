@@ -5,18 +5,18 @@ import { parseArguments } from './parse-arguments'
 describe('parseArguments', () => {
   describe('given a number string', () => {
     test('returns a RollParameter matching the notation', () => {
-      expect(parseArguments('2')).toMatchObject({ rolls: 1, sides: 2 })
+      expect(parseArguments('2')).toMatchObject({ quantity: 1, sides: 2 })
     })
     describe('and a complex RandsumOption', () => {
       test('returns a RollParameter matching the notation', () => {
-        expect(parseArguments('2', { detailed: true })).toMatchObject({ rolls: 1, sides: 2, detailed: true })
+        expect(parseArguments('2', { detailed: true })).toMatchObject({ quantity: 1, sides: 2, detailed: true })
       })
     })
   })
 
   describe('given a number', () => {
     test('returns a RollParameter matching the notation', () => {
-      expect(parseArguments(2)).toMatchObject({ rolls: 1, sides: 2 })
+      expect(parseArguments(2)).toMatchObject({ quantity: 1, sides: 2 })
     })
   })
 
@@ -25,14 +25,14 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(
           parseArguments({
-            rolls: 4,
+            quantity: 4,
             sides: '6',
             reroll: { on: ['2', 1] },
             replace: { from: '6', to: '1' },
             unique: true,
           }),
         ).toMatchObject({
-          rolls: 4,
+          quantity: 4,
           sides: 6,
           reroll: { on: [2, 1] },
           replace: { from: 6, to: 1 },
@@ -47,7 +47,7 @@ describe('parseArguments', () => {
           parseArguments({
             plus: 2,
             minus: 1,
-            rolls: 4,
+            quantity: 4,
             sides: '6',
             drop: { highest: '5', greaterThan: '2', lessThan: '6', lowest: '1', exact: [2, '3'] },
             reroll: [{ on: ['2', 1] }],
@@ -58,7 +58,7 @@ describe('parseArguments', () => {
         ).toMatchObject({
           plus: 2,
           minus: 1,
-          rolls: 4,
+          quantity: 4,
           sides: 6,
           drop: { highest: 5, greaterThan: 2, lessThan: 6, lowest: 1, exact: [2, 3] },
           reroll: [{ on: [2, 1] }],
@@ -72,7 +72,7 @@ describe('parseArguments', () => {
 
   describe('given DiceNotation', () => {
     const baseTestString: DiceNotation = '4d6'
-    const baseRollParameters: RollParameters = { sides: 6, rolls: 4 }
+    const baseRollParameters: RollParameters = { sides: 6, quantity: 4 }
 
     describe('given a basic notation', () => {
       test('returns a RollParameter matching the notation', () => {
