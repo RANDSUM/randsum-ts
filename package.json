@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/alxjrvs/randsum.git"
   },
-  "version": "1.0.0-beta8",
+  "version": "1.0.0-beta9",
   "private": false,
   "main": "dist/index.js",
   "scripts": {
@@ -104,6 +104,5 @@
     ],
     "rootDir": "src/"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
