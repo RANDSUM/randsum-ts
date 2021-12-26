@@ -27,11 +27,7 @@ export function findMatch(notationString: string, pattern: RegExp): string | und
 }
 
 export function parseNotation(notationString: DiceNotation): RollParameters {
-  const formattedNotations = notationString.toLowerCase()
-
-  if (formattedNotations.includes(' ')) {
-    throw new Error('Notation cannot include spaces.')
-  }
+  const formattedNotations = notationString.toLowerCase().replace(' ', '')
 
   const coreNotation = findMatch(formattedNotations, diceNotationPattern) as DiceNotation
   const [quantity, sides] = coreNotation.split('d').map(number => Number(number))

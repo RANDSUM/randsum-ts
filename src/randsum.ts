@@ -1,4 +1,4 @@
-import { generateRolls } from 'generateRolls'
+import { modifyRolls } from 'modifyRolls'
 import { parseArguments } from 'parseArguments'
 import { DiceNotation, NumberString, RandsumOptions, RollResult, UserOptions } from 'types'
 
@@ -23,7 +23,7 @@ export function randsum(
 
   const initialRollTotals = [...new Array(rollParameters.quantity)].map(() => rollOne())
 
-  const [total, rolls] = generateRolls(initialRollTotals, rollParameters, rollOne)
+  const [total, rolls] = modifyRolls(initialRollTotals, rollParameters, rollOne)
 
   const result: RollResult = {
     total,

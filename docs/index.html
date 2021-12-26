@@ -8,73 +8,15 @@
 <a href="https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat" alt="Code of Conduct"></a></p>
 <p><a href="https://www.npmjs.com/package/randsum"><img src="https://nodei.co/npm/randsum.png?downloads=true" alt="NPM"></a></p>
 
-<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
-  <h2>Getting Started</h2>
-</a>
-
-<a href="#insalling" id="insalling" style="color: inherit; text-decoration: none;">
-  <h3>Insalling</h3>
-</a>
-<p>Add <code>randsum</code> to your package.json, or copy and paste one of these:</p>
-<p><code>npm install randsum --save-dev</code></p>
-<p><code>yarn add randsum -D</code></p>
-
-<a href="#using-randsum" id="using-randsum" style="color: inherit; text-decoration: none;">
-  <h3>using <code>randsum</code></h3>
-</a>
-<p><code>randsum</code> exports a default function, which can be imported normally:</p>
-<pre><code class="language-ts"><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">randsum</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;randsum&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">foo</span><span class="hl-1"> = </span><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-7">20</span><span class="hl-1">)</span><br/><br/><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-2">foo</span><span class="hl-1">) </span><span class="hl-8">// a random number between 1 and 20</span>
-</code></pre>
-
-<a href="#passing-a-number-or-number-like-string" id="passing-a-number-or-number-like-string" style="color: inherit; text-decoration: none;">
-  <h4>Passing a <code>number</code> (or number-like <code>string</code>)</h4>
-</a>
-<p>When a <code>number</code> (or <code>number</code>-like <code>string</code>)</p>
-<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-7">20</span><span class="hl-1">) </span><span class="hl-8">// A random number between 1 and 20</span><br/><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;20&#39;</span><span class="hl-1">) </span><span class="hl-8">// A random number between 1 and 20</span>
-</code></pre>
-<p>You can pass in an Object as the second parameter, which can include any key of <code>RandsumOptions</code> (except <code>sides</code>).</p>
-<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;20&#39;</span><span class="hl-1">, { </span><span class="hl-2">quantity:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1">, </span><span class="hl-2">randomizer:</span><span class="hl-1"> ... }) </span><span class="hl-8">// Roll 4 20 sided die, using a custom randomizer function</span>
-</code></pre>
-
-<a href="#passing-a-dice-notation-string" id="passing-a-dice-notation-string" style="color: inherit; text-decoration: none;">
-  <h4>Passing a Dice Notation <code>string</code></h4>
-</a>
-<p>See the Randsum Dice Notation syntax document for more info.</p>
-<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;4d20H+2&#39;</span><span class="hl-1">) </span><span class="hl-8">// Roll 4 20 sided die, drop highest, add 2</span>
-</code></pre>
-<p>You can pass in a <code>UserOptions</code> object as the second argument to further modify the rolls, but you can&#39;t override any settings that would be set by the Dice Notation.</p>
-<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;4d20H+2&#39;</span><span class="hl-1">, { </span><span class="hl-2">randomizer:</span><span class="hl-1"> ... }) </span><span class="hl-8">// Roll 4 20 sided die, drop highest, add 2, using a custom randomizer function</span>
-</code></pre>
-
-<a href="#passing-in-options" id="passing-in-options" style="color: inherit; text-decoration: none;">
-  <h4>Passing in Options</h4>
-</a>
-<p>You can pass in a <code>RandsumOptions</code> as the first argument. The only required key is <code>sides</code>, which represents the number of sides on the die.</p>
-<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">({</span><span class="hl-2">sides:</span><span class="hl-1"> </span><span class="hl-7">20</span><span class="hl-1">}) </span><span class="hl-8">// Roll a single 20 sided die</span>
-</code></pre>
-<p>You can use any keys of <code>RandsumOptions</code> to further modify your roll:</p>
-<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">({ </span><span class="hl-2">sides:</span><span class="hl-1"> </span><span class="hl-7">20</span><span class="hl-1">, </span><span class="hl-2">quantity:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1">, </span><span class="hl-2">drop:</span><span class="hl-1"> { </span><span class="hl-2">highest:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1"> }, </span><span class="hl-2">plus:</span><span class="hl-1"> </span><span class="hl-7">2</span><span class="hl-1">, </span><span class="hl-2">randomizer:</span><span class="hl-1"> ... }) </span><span class="hl-8">// Roll 4 20 sided die, drop highest, plus 2, using a custom randomizer function</span>
-</code></pre>
-
-<a href="#returning-a-rollresult" id="returning-a-rollresult" style="color: inherit; text-decoration: none;">
-  <h4>returning a <code>RollResult</code></h4>
-</a>
-<p>You can mark a roll as <code>detailed</code> to return a <code>RollResult</code> instead of a simple number.</p>
-<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-7">20</span><span class="hl-1">, { </span><span class="hl-2">quantity:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1"> }) </span><span class="hl-8">// Roll 4 20 sided die, returns a number</span><br/><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;4d20&#39;</span><span class="hl-1">) </span><span class="hl-8">// Roll 4 20 sided die, returns a number</span><br/><span class="hl-6">randsum</span><span class="hl-1">({ </span><span class="hl-2">sides:</span><span class="hl-1"> </span><span class="hl-7">20</span><span class="hl-1">, </span><span class="hl-2">quantity:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1"> }) </span><span class="hl-8">// Roll 4 20 sided die, returns a number</span><br/><br/><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-7">20</span><span class="hl-1">, { </span><span class="hl-2">quantity:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1">, </span><span class="hl-2">detailed:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1">}) </span><span class="hl-8">// Roll 4 20 sided die, returns a RollResult</span><br/><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;4d20&#39;</span><span class="hl-1">, { </span><span class="hl-2">detailed:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1"> }) </span><span class="hl-8">// Roll 4 20 sided die, returns a RollResult</span><br/><span class="hl-6">randsum</span><span class="hl-1">({ </span><span class="hl-2">sides:</span><span class="hl-1"> </span><span class="hl-7">20</span><span class="hl-1">, </span><span class="hl-2">quantity:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1">, </span><span class="hl-2">detailed:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1"> }) </span><span class="hl-8">// Roll 4 20 sided die, returns a RollResult</span>
-</code></pre>
-<p>If you are using typescript, the types should be helpful here, as <code>randsum</code> will correctly identify the return value based on the presence and <code>truthiness</code> of <code>detailed</code>.</p>
-<p>With a <code>RollResult</code>, you can look at the specific details of your roll.</p>
-<pre><code class="language-ts"><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">result</span><span class="hl-1"> = </span><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-7">20</span><span class="hl-1">, { </span><span class="hl-2">quantity:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1">, </span><span class="hl-2">detailed:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1">}) </span><span class="hl-8">// Roll 4 20 sided die, returns a RollResult</span><br/><br/><span class="hl-2">result</span><span class="hl-1">.</span><span class="hl-2">rolls</span><span class="hl-1"> =</span>
-</code></pre>
-<p>Check out the Typedocs RollResult page for more information.</p>
-
 <a href="#further-reading" id="further-reading" style="color: inherit; text-decoration: none;">
   <h2>Further Reading</h2>
 </a>
-<ul>
-<li><a href="https://alxjrvs.github.io/randsum">TypeDoc Types</a></li>
-<li><a href="/RANDSUM_DICE_NOTATION.md">Randsum Dice Notation</a></li>
-</ul>
+<p><a href="/GETTING_STARTED.md">Getting Started</a> - Installation and Documentation for using <code>randsum</code></p>
+<p><a href="/RANDSUM_DICE_NOTATION.md">Randsum Dice Notation</a> - A guide for using <a href="https://en.wikipedia.org/wiki/Dice_notation">Dice Notation</a> with <code>randsum</code>.</p>
+<p><a href="https://alxjrvs.github.io/randsum">TypeDoc Types</a> - Generated Type Documentation, helpful for debugging</p>
+<p><a href="/CONTRIBUTING.md">Contributing</a> - help make <code>randsum</code> better!</p>
+<p><a href="https://sophiehoulden.com/dice/documentation/notation.html">Sophie&#39;s Dice Notation</a> - a great dice notation guide that helped me along the way</p>
+<p><a href="https://poignant.guide/">_why&#39;s poigniant guide to ruby</a> - _why not?</p>
 
 <a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
   <h2>Contributing</h2>
@@ -86,11 +28,6 @@
 <li>Push to the branch: <code>git push origin my-new-feature</code></li>
 <li>Submit a pull request :D</li>
 </ol>
-
-<a href="#attributions" id="attributions" style="color: inherit; text-decoration: none;">
-  <h2>Attributions</h2>
-</a>
-<p>I looked high and wide for a consensus on a sort &quot;Extended Standard Dice Notation&quot;, and could not find anything. The most extensive and thought-out documentation I found was for the game&#39;s <a href="https://sophiehoulden.com/dice/documentation/notation.html#keep">Sophie&#39;s Dice</a>. Thanks, <a href="https://www.patreon.com/SophieHoulden">Sophie</a>! Your examples were invaluable. Consider buying their <a href="https://sophieh.itch.io/">games</a>!</p>
 
 <a href="#why-did-you-make-this" id="why-did-you-make-this" style="color: inherit; text-decoration: none;">
   <h2>Why did you make this?</h2>

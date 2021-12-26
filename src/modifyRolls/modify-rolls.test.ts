@@ -1,15 +1,15 @@
 import { RollParameters } from 'types'
 
-import { generateRolls } from './generate-rolls'
+import { modifyRolls } from './modify-rolls'
 
 const mockRandomizer = (): number => 200
-describe('generateRolls', () => {
+describe('modifyRolls', () => {
   const rolls = [1, 2, 3, 4]
   const baseParameters: RollParameters = { sides: 6, quantity: rolls.length }
 
   describe('when given roll totals with no modifiers', () => {
     test('it returns the sum total of the quantity and the roll totals', () => {
-      expect(generateRolls(rolls, baseParameters, mockRandomizer)).toEqual([10, [1, 2, 3, 4]])
+      expect(modifyRolls(rolls, baseParameters, mockRandomizer)).toEqual([10, [1, 2, 3, 4]])
     })
   })
 
@@ -18,14 +18,14 @@ describe('generateRolls', () => {
     const uniqueParameters: RollParameters = { sides: 4, quantity: duplicateRollTotals.length, unique: true }
 
     test('it re-quantity non-unique modifiers', () => {
-      expect(generateRolls(duplicateRollTotals, uniqueParameters, mockRandomizer)).toEqual([206, [1, 200, 2, 3]])
+      expect(modifyRolls(duplicateRollTotals, uniqueParameters, mockRandomizer)).toEqual([206, [1, 200, 2, 3]])
     })
 
     describe('when given a "notUnique" array', () => {
       const notUniqueParameters: RollParameters = { ...uniqueParameters, unique: { notUnique: [1] } }
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
-        expect(generateRolls(duplicateRollTotals, notUniqueParameters, mockRandomizer)).toEqual([7, [1, 1, 2, 3]])
+        expect(modifyRolls(duplicateRollTotals, notUniqueParameters, mockRandomizer)).toEqual([7, [1, 1, 2, 3]])
       })
     })
 
@@ -34,7 +34,7 @@ describe('generateRolls', () => {
       const overflowParameters: RollParameters = { ...uniqueParameters, quantity: overflowRollTotals.length }
 
       test('it throws an error', () => {
-        expect(() => generateRolls(overflowRollTotals, overflowParameters, mockRandomizer)).toThrow(
+        expect(() => modifyRolls(overflowRollTotals, overflowParameters, mockRandomizer)).toThrow(
           'You cannot have unique rolls when there are more rolls than sides of die.',
         )
       })
@@ -56,7 +56,7 @@ describe('generateRolls', () => {
     }
 
     test('it returns the total without the provided values', () => {
-      expect(generateRolls(longerRollTotals, dropParameters, mockRandomizer)).toEqual([17, [4, 6, 7]])
+      expect(modifyRolls(longerRollTotals, dropParameters, mockRandomizer)).toEqual([17, [4, 6, 7]])
     })
   })
 
@@ -68,7 +68,7 @@ describe('generateRolls', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(generateRolls(rolls, dropParameters, mockRandomizer)).toEqual([11, [2, 2, 3, 4]])
+        expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([11, [2, 2, 3, 4]])
       })
     })
 
@@ -82,7 +82,7 @@ describe('generateRolls', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(generateRolls(rolls, dropParameters, mockRandomizer)).toEqual([13, [2, 2, 3, 6]])
+        expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([13, [2, 2, 3, 6]])
       })
     })
   })
@@ -92,7 +92,7 @@ describe('generateRolls', () => {
     const explodeParameters: RollParameters = { ...baseParameters, explode: true }
 
     test('it returns the total with all values matching the queries rerolled', () => {
-      expect(generateRolls(explodeRollTotals, explodeParameters, mockRandomizer)).toEqual([212, [1, 2, 3, 6, 200]])
+      expect(modifyRolls(explodeRollTotals, explodeParameters, mockRandomizer)).toEqual([212, [1, 2, 3, 6, 200]])
     })
   })
 
@@ -101,7 +101,7 @@ describe('generateRolls', () => {
       const rerollParameters: RollParameters = { ...baseParameters, reroll: { above: 3 } }
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
-        expect(generateRolls(rolls, rerollParameters, mockRandomizer)).toEqual([206, [1, 2, 3, 200]])
+        expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toEqual([206, [1, 2, 3, 200]])
       })
     })
 
@@ -109,7 +109,7 @@ describe('generateRolls', () => {
       const rerollParameters: RollParameters = { ...baseParameters, reroll: { above: 3, on: 2, maxReroll: 2 } }
 
       test('it returns the total with all values matching the queries rerolled', () => {
-        expect(generateRolls(rolls, rerollParameters, mockRandomizer)).toEqual([404, [1, 200, 3, 200]])
+        expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toEqual([404, [1, 200, 3, 200]])
       })
     })
 
@@ -120,7 +120,7 @@ describe('generateRolls', () => {
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
-        expect(generateRolls(rolls, rerollParameters, mockRandomizer)).toEqual([406, [200, 2, 200, 4]])
+        expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toEqual([406, [200, 2, 200, 4]])
       })
     })
   })
@@ -129,7 +129,7 @@ describe('generateRolls', () => {
     const dropParameters: RollParameters = { ...baseParameters, cap: { above: 3, below: 2 } }
 
     test('it returns the total with all values above above and below below replaced with their respective comparitor and the roll totals', () => {
-      expect(generateRolls(rolls, dropParameters, mockRandomizer)).toEqual([10, [2, 2, 3, 3]])
+      expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([10, [2, 2, 3, 3]])
     })
   })
 
@@ -137,7 +137,7 @@ describe('generateRolls', () => {
     const dropParameters: RollParameters = { ...baseParameters, plus: 2 }
 
     test('it returns the total plus the "plus" modifier, and the roll totals', () => {
-      expect(generateRolls(rolls, dropParameters, mockRandomizer)).toEqual([12, [1, 2, 3, 4]])
+      expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([12, [1, 2, 3, 4]])
     })
   })
 
@@ -145,7 +145,7 @@ describe('generateRolls', () => {
     const dropParameters: RollParameters = { ...baseParameters, minus: 2 }
 
     test('it returns the total minust the "minus" modifier, and the roll totals', () => {
-      expect(generateRolls(rolls, dropParameters, mockRandomizer)).toEqual([8, [1, 2, 3, 4]])
+      expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([8, [1, 2, 3, 4]])
     })
   })
 })

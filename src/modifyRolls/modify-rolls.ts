@@ -2,7 +2,7 @@ import { RollParameters } from 'types'
 
 import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, applyUnique } from './applicators'
 
-export function generateRolls(
+export function modifyRolls(
   rolls: number[],
   rollParameters: RollParameters,
   rollOne: () => number,
