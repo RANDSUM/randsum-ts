@@ -5,18 +5,18 @@ import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, app
 export function generateRolls(
   rollTotals: number[],
   rollParameters: RollParameters,
-  rollDie: () => number,
+  rollOne: () => number,
 ): [number, number[]] {
   let modifiedRollTotals = [...rollTotals]
 
   const { unique, explode, reroll, plus, minus, cap, sides, rolls, replace, drop } = rollParameters
 
   if (reroll !== undefined) {
-    modifiedRollTotals = applyReroll(modifiedRollTotals, reroll, rollDie)
+    modifiedRollTotals = applyReroll(modifiedRollTotals, reroll, rollOne)
   }
 
   if (unique !== undefined) {
-    modifiedRollTotals = applyUnique(modifiedRollTotals, { sides, rolls, unique }, rollDie)
+    modifiedRollTotals = applyUnique(modifiedRollTotals, { sides, rolls, unique }, rollOne)
   }
 
   if (replace !== undefined) {
@@ -32,10 +32,10 @@ export function generateRolls(
   }
 
   if (explode !== undefined) {
-    modifiedRollTotals = applyExplode(modifiedRollTotals, { sides }, rollDie)
+    modifiedRollTotals = applyExplode(modifiedRollTotals, { sides }, rollOne)
   }
 
-  let modifiedTotal = Number([...modifiedRollTotals].reduce((total, roll) => Number(total) + Number(roll), 0))
+  let modifiedTotal = Number([...modifiedRollTotals].reduce((total, roll) => total + roll, 0))
 
   if (plus !== undefined) {
     modifiedTotal = modifiedTotal + plus

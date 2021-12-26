@@ -11,7 +11,7 @@ function times(iterator: number) {
 
 export function applyDrop(
   rollTotals: number[],
-  { highest, lowest, greaterThan, lessThan, exact }: DropOptions<'strict'>,
+  { highest, lowest, greaterThan, lessThan, exact }: DropOptions<number>,
 ) {
   const sortedResults = rollTotals
     .filter(roll => {

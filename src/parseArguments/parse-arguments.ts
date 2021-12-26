@@ -1,5 +1,5 @@
 import { parseNotation } from 'parseArguments/parseNotation'
-import { DiceNotation, NumberString, RandsumOptions, RollOptions, RollParameters, UserOptions } from 'types'
+import { DiceNotation, NumberString, RollOptions, RollParameters, UserOptions } from 'types'
 import { diceNotationPattern } from 'utils'
 
 import { convertOptionsToParameters } from './convertOptionsToParameters'
@@ -14,7 +14,7 @@ function isDiceNotation(argument: unknown): argument is DiceNotation {
 
 export function parseArguments(
   primeArgument: NumberString | RollOptions | DiceNotation,
-  secondArgument: Omit<RandsumOptions, 'sides'> = {},
+  secondArgument: Omit<RollOptions & UserOptions, 'sides'> = {},
 ): RollParameters & UserOptions {
   const secondaryParameters = convertOptionsToParameters(secondArgument)
 
@@ -25,6 +25,10 @@ export function parseArguments(
   const primeParameters = isRollOptions(primeArgument)
     ? convertOptionsToParameters(primeArgument)
     : { sides: Number(primeArgument) }
+
+  if (!primeParameters.sides) {
+    throw new Error(`Bad Argument: ${primeArgument}`)
+  }
 
   return { sides: 0, rolls: 1, ...primeParameters, ...secondaryParameters }
 }

@@ -1,11 +1,10 @@
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
-type Strict = 'strict' | undefined
-export type NumberString<T extends 'strict' | undefined = undefined> = T extends 'strict'
-  ? number
-  : number | `${number}`
+export type Inclusive = 'inclusive'
+type NumberStringType = number | Inclusive
+export type NumberString<T extends NumberStringType = Inclusive> = T extends number ? number : number | `${number}`
 
-export interface DropOptions<T extends Strict = undefined> {
+export interface DropOptions<T extends NumberStringType = Inclusive> {
   highest?: NumberString<T>
   lowest?: NumberString<T>
   greaterThan?: NumberString<T>
@@ -13,26 +12,26 @@ export interface DropOptions<T extends Strict = undefined> {
   exact?: NumberString<T>[]
 }
 
-export interface CapOptions<T extends Strict = undefined> {
+export interface CapOptions<T extends NumberStringType = Inclusive> {
   above?: NumberString<T>
   below?: NumberString<T>
 }
 
-export interface RerollOptions<T extends Strict = undefined> extends CapOptions<T> {
+export interface RerollOptions<T extends NumberStringType = Inclusive> extends CapOptions<T> {
   on?: NumberString<T> | NumberString<T>[]
   maxReroll?: NumberString<T>
 }
 
-export interface ReplaceOptions<T extends Strict = undefined> {
+export interface ReplaceOptions<T extends NumberStringType = Inclusive> {
   from: NumberString<T> | CapOptions<T>
   to: NumberString<T>
 }
 
-export interface UniqueOptions<T extends Strict = undefined> {
+export interface UniqueOptions<T extends NumberStringType = Inclusive> {
   notUnique: NumberString<T>[]
 }
 
-export interface RollOptions<T extends Strict = undefined> {
+export interface RollOptions<T extends NumberStringType = Inclusive> {
   rolls?: NumberString<T>
   sides: NumberString<T>
   plus?: NumberString<T>
@@ -45,14 +44,7 @@ export interface RollOptions<T extends Strict = undefined> {
   explode?: boolean
 }
 
-export interface UserOptions<D extends boolean = boolean> {
-  detailed?: D
-  customRandomizer?: (sides: NumberString) => number
-}
-
-export type RandsumOptions<D extends boolean = boolean> = RollOptions & UserOptions<D>
-
-export interface RollParameters extends RollOptions<'strict'> {
+export interface RollParameters extends RollOptions<number> {
   rolls: number
   notation?: string
 }
@@ -63,4 +55,9 @@ export interface RollResult extends RollParameters {
   initialRollTotals: number[]
   modifyInitialRolls: (callbackFunction: (results: number[]) => number) => number
   modifyModifiedRolls: (callbackFunction: (results: number[]) => number) => number
+}
+
+export interface UserOptions<D extends boolean = boolean> {
+  detailed?: D
+  customRandomizer?: (sides: NumberString) => number
 }

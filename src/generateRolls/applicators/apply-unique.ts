@@ -1,6 +1,6 @@
 import { RollParameters } from 'types'
 
-export function applyUnique(rollTotals: number[], { unique, rolls, sides }: RollParameters, rollDie: () => number) {
+export function applyUnique(rollTotals: number[], { unique, rolls, sides }: RollParameters, rollOne: () => number) {
   if (rolls > sides) {
     throw new Error('You cannot have unique rolls when there are more rolls than sides of die.')
   }
@@ -17,7 +17,7 @@ export function applyUnique(rollTotals: number[], { unique, rolls, sides }: Roll
           return roll
         default:
           do {
-            newRoll = rollDie()
+            newRoll = rollOne()
           } while (filteredArray.has(newRoll))
           return newRoll
       }

@@ -2,8 +2,8 @@ import { RerollOptions } from 'types'
 
 function rerollRoll(
   roll: number,
-  { above, below, on, maxReroll }: RerollOptions<'strict'>,
-  rollDie: () => number,
+  { above, below, on, maxReroll }: RerollOptions<number>,
+  rollOne: () => number,
   index = 0,
 ): number {
   if (maxReroll === index) {
@@ -18,7 +18,7 @@ function rerollRoll(
     case above && roll > above:
     case below && roll < below:
     case on && Array.isArray(on) ? on.includes(roll) : on === roll:
-      return rerollRoll(rollDie(), { above, below, on, maxReroll }, rollDie, index + 1)
+      return rerollRoll(rollOne(), { above, below, on, maxReroll }, rollOne, index + 1)
     default:
       return roll
   }
@@ -26,15 +26,15 @@ function rerollRoll(
 
 export function applyReroll(
   rollTotals: number[],
-  reroll: RerollOptions<'strict'> | RerollOptions<'strict'>[],
-  rollDie: () => number,
+  reroll: RerollOptions<number> | RerollOptions<number>[],
+  rollOne: () => number,
 ) {
   const parameters = Array.isArray(reroll) ? reroll : [reroll]
 
   let rerollRolls = rollTotals
   for (const rerollModifier of parameters) {
     rerollRolls = rerollRolls.map(roll => {
-      return rerollRoll(roll, rerollModifier, rollDie)
+      return rerollRoll(roll, rerollModifier, rollOne)
     })
   }
   return rerollRolls
