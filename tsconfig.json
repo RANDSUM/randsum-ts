@@ -6,7 +6,6 @@
     "sourceMap": true,
     "outDir": "dist",
     "declaration": true,
-    "baseUrl": "src",
 
     /* Strict Type-Checking Options */
     "strict": true,

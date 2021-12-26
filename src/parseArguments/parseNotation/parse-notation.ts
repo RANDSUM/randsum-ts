@@ -1,6 +1,5 @@
-import { DiceNotation, RollParameters } from 'types'
-import { diceNotationPattern } from 'utils'
-
+import { DiceNotation, RollParameters } from '../../types'
+import { diceNotationPattern } from '../../utils'
 import {
   parseCapNotation,
   parseDropConstraintsNotation,

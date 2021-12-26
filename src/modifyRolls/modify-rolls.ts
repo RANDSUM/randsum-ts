@@ -1,5 +1,4 @@
-import { RollParameters } from 'types'
-
+import { RollParameters } from '../types'
 import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, applyUnique } from './applicators'
 
 export function modifyRolls(

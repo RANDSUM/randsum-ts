@@ -1,4 +1,4 @@
-import { RollParameters } from 'types'
+import { RollParameters } from '../../../types'
 
 export function parseReplaceNotation(notationString: string): Pick<RollParameters, 'replace'> {
   const replaceOptions = notationString

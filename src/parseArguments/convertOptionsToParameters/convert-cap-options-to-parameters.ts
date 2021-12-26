@@ -1,4 +1,4 @@
-import { CapOptions } from 'types'
+import { CapOptions } from '../../types'
 
 export function convertCapOptionsToParameters({ above, below }: CapOptions): CapOptions<number> {
   return {
