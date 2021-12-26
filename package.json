@@ -1,6 +1,6 @@
 {
   "name": "randsum",
-  "description": "Random Numbers, free of charge",
+  "description": "rand for the rest of us",
   "license": "MIT",
   "author": "Alex Jarvis",
   "homepage": "https://github.com/alxjrvs/randsum",
@@ -11,6 +11,7 @@
   "version": "1.0.0-beta9",
   "private": false,
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p .",
     "docs": "typedoc --options ./typedoc.json -gitRevision $npm_package_version",
