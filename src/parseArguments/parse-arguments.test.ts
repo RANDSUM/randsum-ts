@@ -238,13 +238,5 @@ describe('parseArguments', () => {
         })
       })
     })
-
-    describe('given a notation with a space', () => {
-      const testString: DiceNotation = '4d6V {>2=6}'
-
-      test('throws an error', () => {
-        expect(() => parseArguments(testString)).toThrow('Notation cannot include spaces.')
-      })
-    })
   })
 })
