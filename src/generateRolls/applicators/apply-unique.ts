@@ -1,6 +1,6 @@
-import { RollDie, RollParameters, RollTotals } from 'types'
+import { RollParameters } from 'types'
 
-export function applyUnique(rollTotals: RollTotals, { unique, rolls, sides }: RollParameters, rollDie: RollDie) {
+export function applyUnique(rollTotals: number[], { unique, rolls, sides }: RollParameters, rollDie: () => number) {
   if (rolls > sides) {
     throw new Error('You cannot have unique rolls when there are more rolls than sides of die.')
   }

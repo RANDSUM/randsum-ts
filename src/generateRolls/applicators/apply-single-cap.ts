@@ -1,7 +1,7 @@
-import { CapOptions, NumberString } from 'types'
+import { CapOptions } from 'types'
 
-export function applySingleCap({ above, below }: CapOptions<'strict'>, value?: NumberString<'strict'>) {
-  return (roll: NumberString<'strict'>) => {
+export function applySingleCap({ above, below }: CapOptions<'strict'>, value?: number) {
+  return (roll: number) => {
     if (above && roll > above) {
       return value || above
     }

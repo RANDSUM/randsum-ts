@@ -1,9 +1,9 @@
-import { RerollOptions, RollDie, RollTotals } from 'types'
+import { RerollOptions } from 'types'
 
 function rerollRoll(
   roll: number,
   { above, below, on, maxReroll }: RerollOptions<'strict'>,
-  rollDie: RollDie,
+  rollDie: () => number,
   index = 0,
 ): number {
   if (maxReroll === index) {
@@ -25,9 +25,9 @@ function rerollRoll(
 }
 
 export function applyReroll(
-  rollTotals: RollTotals,
+  rollTotals: number[],
   reroll: RerollOptions<'strict'> | RerollOptions<'strict'>[],
-  rollDie: RollDie,
+  rollDie: () => number,
 ) {
   const parameters = Array.isArray(reroll) ? reroll : [reroll]
 

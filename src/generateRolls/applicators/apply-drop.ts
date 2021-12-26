@@ -1,4 +1,4 @@
-import { DropOptions, RollTotals } from 'types'
+import { DropOptions } from 'types'
 
 function times(iterator: number) {
   return (callback: (index?: number) => void) => {
@@ -10,7 +10,7 @@ function times(iterator: number) {
 }
 
 export function applyDrop(
-  rollTotals: RollTotals,
+  rollTotals: number[],
   { highest, lowest, greaterThan, lessThan, exact }: DropOptions<'strict'>,
 ) {
   const sortedResults = rollTotals

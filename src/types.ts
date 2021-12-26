@@ -1,13 +1,9 @@
+export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
+
 type Strict = 'strict' | undefined
 export type NumberString<T extends 'strict' | undefined = undefined> = T extends 'strict'
   ? number
   : number | `${number}`
-
-export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
-
-export type RollTotals = NumberString<'strict'>[]
-
-export type RollDie = () => number
 
 export interface DropOptions<T extends Strict = undefined> {
   highest?: NumberString<T>
@@ -56,20 +52,15 @@ export interface UserOptions<D extends boolean = boolean> {
 
 export type RandsumOptions<D extends boolean = boolean> = RollOptions & UserOptions<D>
 
-export type RollParameters<D extends boolean = boolean> = RollOptions<'strict'> &
-  UserOptions<D> & {
-    rolls: NumberString<'strict'>
-    notation?: string
-  }
-
-export type PrimeArgument = NumberString | RollOptions | DiceNotation
-
-export type RollModifier = (callbackFunction: (results: RollTotals) => number) => number
+export interface RollParameters extends RollOptions<'strict'> {
+  rolls: number
+  notation?: string
+}
 
 export interface RollResult extends RollParameters {
   total: number
-  rollTotals: RollTotals
-  initialRollTotals: NumberString<'strict'>[]
-  modifyInitialRolls: RollModifier
-  modifyModifiedRolls: RollModifier
+  rollTotals: number[]
+  initialRollTotals: number[]
+  modifyInitialRolls: (callbackFunction: (results: number[]) => number) => number
+  modifyModifiedRolls: (callbackFunction: (results: number[]) => number) => number
 }
