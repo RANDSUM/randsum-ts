@@ -32,7 +32,7 @@ export function convertOptionsToParameters({
   }
 
   if (minus) {
-    rollParameters = { ...rollParameters, sides: Number(minus) }
+    rollParameters = { ...rollParameters, minus: Number(minus) }
   }
 
   if (cap) {
