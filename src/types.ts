@@ -58,5 +58,5 @@ export interface RollResult extends RollParameters {
 
 export interface UserOptions<D extends boolean = boolean> {
   detailed?: D
-  customRandomizer?: (sides: NumberString) => number
+  randomizer?: (sides: NumberString) => number
 }

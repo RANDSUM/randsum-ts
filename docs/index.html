@@ -1,27 +1,76 @@
 <!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>randsum - v1.0.0-beta9</title><meta name="description" content="Documentation for randsum - v1.0.0-beta9"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">randsum - v1.0.0-beta9</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>randsum - v1.0.0-beta9</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
 <a href="#randsum" id="randsum" style="color: inherit; text-decoration: none;">
-  <h1>Randsum</h1>
+  <h1><code>randsum</code></h1>
 </a>
-<p><code>rand</code> for the rest of us, <strong>Currently Being Re-Written! ~1.0 Release to come soon.</strong></p>
+<p><code>rand</code> for the rest of us</p>
 <p><a href="https://github.com/alxjrvs/randsum/blob/main/LICENSE.md"><img src="https://img.shields.io/apm/l/atomic-design-ui.svg?" alt="MIT License"></a>
 <a href="https://codecov.io/gh/alxjrvs/randsum"><img src="https://codecov.io/gh/alxjrvs/randsum/branch/master/graph/badge.svg" alt="codecov"></a>
 <a href="https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat" alt="Code of Conduct"></a></p>
 <p><a href="https://www.npmjs.com/package/randsum"><img src="https://nodei.co/npm/randsum.png?downloads=true" alt="NPM"></a></p>
 
-<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
-  <h2>Installation</h2>
+<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+  <h2>Getting Started</h2>
 </a>
-<p>You can use yarn:</p>
-<p><code>yarn add randsum</code></p>
-<p>or NPM</p>
-<p><code>npm install randsum</code></p>
-<p>Then, include it in your project however you&#39;d like:</p>
-<pre><code class="language-js"><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-5">randsum</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-4">&#39;randsum&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">randsum</span><span class="hl-1"> = </span><span class="hl-0">require</span><span class="hl-1">(</span><span class="hl-4">&#39;randsum&#39;</span><span class="hl-1">)</span>
+
+<a href="#insalling" id="insalling" style="color: inherit; text-decoration: none;">
+  <h3>Insalling</h3>
+</a>
+<p>Add <code>randsum</code> to your package.json, or copy and paste one of these:</p>
+<p><code>npm install randsum --save-dev</code></p>
+<p><code>yarn add randsum -D</code></p>
+
+<a href="#using-randsum" id="using-randsum" style="color: inherit; text-decoration: none;">
+  <h3>using <code>randsum</code></h3>
+</a>
+<p><code>randsum</code> exports a default function, which can be imported normally:</p>
+<pre><code class="language-ts"><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">randsum</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;randsum&#39;</span><br/><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">foo</span><span class="hl-1"> = </span><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-7">20</span><span class="hl-1">)</span><br/><br/><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-2">foo</span><span class="hl-1">) </span><span class="hl-8">// a random number between 1 and 20</span>
 </code></pre>
 
-<a href="#how-to-use" id="how-to-use" style="color: inherit; text-decoration: none;">
-  <h2>How to Use</h2>
+<a href="#passing-a-number-or-number-like-string" id="passing-a-number-or-number-like-string" style="color: inherit; text-decoration: none;">
+  <h4>Passing a <code>number</code> (or number-like <code>string</code>)</h4>
 </a>
+<p>When a <code>number</code> (or <code>number</code>-like <code>string</code>)</p>
+<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-7">20</span><span class="hl-1">) </span><span class="hl-8">// A random number between 1 and 20</span><br/><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;20&#39;</span><span class="hl-1">) </span><span class="hl-8">// A random number between 1 and 20</span>
+</code></pre>
+<p>You can pass in an Object as the second parameter, which can include any key of <code>RollOptions</code> (except <code>sides</code>) and any key of <code>UserOptions</code>, like so:</p>
+<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;20&#39;</span><span class="hl-1">, { </span><span class="hl-2">rolls:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1">, </span><span class="hl-2">randomizer:</span><span class="hl-1"> ... }) </span><span class="hl-8">// Roll 4 20 sided die, using a custom randomizer function</span>
+</code></pre>
+
+<a href="#passing-a-dice-notation-string" id="passing-a-dice-notation-string" style="color: inherit; text-decoration: none;">
+  <h4>Passing a Dice Notation <code>string</code></h4>
+</a>
+<p>See the Randsum Dice Notation syntax document for more info.</p>
+<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;4d20H+2&#39;</span><span class="hl-1">) </span><span class="hl-8">// Roll 4 20 sided die, drop highest, add 2</span>
+</code></pre>
+<p>You can pass in a <code>UserOptions</code> object as the second argument to further modify the rolls, but you can&#39;t override any settings that would be set by the Dice Notation.</p>
+<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;4d20H+2&#39;</span><span class="hl-1">, { </span><span class="hl-2">randomizer:</span><span class="hl-1"> ... }) </span><span class="hl-8">// Roll 4 20 sided die, drop highest, add 2, using a custom randomizer function</span>
+</code></pre>
+
+<a href="#passing-in-options" id="passing-in-options" style="color: inherit; text-decoration: none;">
+  <h4>Passing in Options</h4>
+</a>
+<p>You can pass in an Object as the first argument. The only required key is <code>sides</code>, which represents the number of sides on the die.</p>
+<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">({</span><span class="hl-2">sides:</span><span class="hl-1"> </span><span class="hl-7">20</span><span class="hl-1">}) </span><span class="hl-8">// Roll a single 20 sided die</span>
+</code></pre>
+<p>You can use any keys of <code>RollOptions</code>, and <code>UserOptions</code> to further modify your roll:</p>
+<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">({ </span><span class="hl-2">sides:</span><span class="hl-1"> </span><span class="hl-7">20</span><span class="hl-1">, </span><span class="hl-2">rolls:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1">, </span><span class="hl-2">drop:</span><span class="hl-1"> { </span><span class="hl-2">highest:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1"> }, </span><span class="hl-2">plus:</span><span class="hl-1"> </span><span class="hl-7">2</span><span class="hl-1">, </span><span class="hl-2">randomizer:</span><span class="hl-1"> ... }) </span><span class="hl-8">// Roll 4 20 sided die, drop highest, plus 2, using a custom randomizer function</span>
+</code></pre>
+
+<a href="#returning-a-rollresult" id="returning-a-rollresult" style="color: inherit; text-decoration: none;">
+  <h4>returning a <code>RollResult</code></h4>
+</a>
+<p>You can mark a roll as <code>detailed</code> to return a <code>RollResult</code> instead of a simple number.</p>
+<pre><code class="language-ts"><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-7">20</span><span class="hl-1">, { </span><span class="hl-2">rolls:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1"> }) </span><span class="hl-8">// Roll 4 20 sided die, returns a number</span><br/><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;4d20&#39;</span><span class="hl-1">) </span><span class="hl-8">// Roll 4 20 sided die, returns a number</span><br/><span class="hl-6">randsum</span><span class="hl-1">({ </span><span class="hl-2">sides:</span><span class="hl-1"> </span><span class="hl-7">20</span><span class="hl-1">, </span><span class="hl-2">rolls:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1"> }) </span><span class="hl-8">// Roll 4 20 sided die, returns a number</span><br/><br/><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-7">20</span><span class="hl-1">, { </span><span class="hl-2">rolls:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1">, </span><span class="hl-2">detailed:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1">}) </span><span class="hl-8">// Roll 4 20 sided die, returns a RollResult</span><br/><span class="hl-6">randsum</span><span class="hl-1">(</span><span class="hl-3">&#39;4d20&#39;</span><span class="hl-1">, { </span><span class="hl-2">detailed:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1"> }) </span><span class="hl-8">// Roll 4 20 sided die, returns a RollResult</span><br/><span class="hl-6">randsum</span><span class="hl-1">({ </span><span class="hl-2">sides:</span><span class="hl-1"> </span><span class="hl-7">20</span><span class="hl-1">, </span><span class="hl-2">rolls:</span><span class="hl-1"> </span><span class="hl-7">4</span><span class="hl-1">, </span><span class="hl-2">detailed:</span><span class="hl-1"> </span><span class="hl-4">true</span><span class="hl-1"> }) </span><span class="hl-8">// Roll 4 20 sided die, returns a RollResult</span>
+</code></pre>
+<p>If you are using typescript, the types should be helpful here, and randsum will correctly identify the return value based on the presence and <code>true</code>-ness of <code>detailed</code>.</p>
+
+<a href="#further-reading" id="further-reading" style="color: inherit; text-decoration: none;">
+  <h2>Further Reading</h2>
+</a>
+<ul>
+<li><a href="https://alxjrvs.github.io/randsum">TypeDoc Types</a></li>
+<li><a href="/RANDSUM_DICE_NOTATION.md">Randsum Dice Notation</a></li>
+</ul>
 
 <a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
   <h2>Contributing</h2>
@@ -45,4 +94,4 @@
 <p>Sometime around 2012, I decided I wanted to learn to program. I was living at my friends apartment rent-free, and I was using a banged up laptop. I had installed ruby, set to make a dice roller as an easy first project.</p>
 <p>I spent an easy 30 minutes trying to figure out how to make <code>rand(n)</code> return <code>1-n</code> instead of <code>0-(n-1)</code>.</p>
 <p>When I found the answer, I laughed and laughed. I&#39;ve been chasing that high ever since.</p>
-</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-function"><a href="modules.html#randsum" class="tsd-kind-icon">randsum</a></li><li class="tsd-kind-type-alias"><a href="modules.html#DiceNotation" class="tsd-kind-icon">Dice<wbr/>Notation</a></li><li class="tsd-kind-type-alias"><a href="modules.html#Inclusive" class="tsd-kind-icon">Inclusive</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#NumberString" class="tsd-kind-icon">Number<wbr/>String</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/DropOptions.html" class="tsd-kind-icon">Drop<wbr/>Options</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/CapOptions.html" class="tsd-kind-icon">Cap<wbr/>Options</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/RerollOptions.html" class="tsd-kind-icon">Reroll<wbr/>Options</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/ReplaceOptions.html" class="tsd-kind-icon">Replace<wbr/>Options</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/UniqueOptions.html" class="tsd-kind-icon">Unique<wbr/>Options</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/RollOptions.html" class="tsd-kind-icon">Roll<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/RollParameters.html" class="tsd-kind-icon">Roll<wbr/>Parameters</a></li><li class="tsd-kind-interface"><a href="interfaces/RollResult.html" class="tsd-kind-icon">Roll<wbr/>Result</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/UserOptions.html" class="tsd-kind-icon">User<wbr/>Options</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-function"><a href="modules.html#randsum" class="tsd-kind-icon">randsum</a></li><li class="tsd-kind-type-alias"><a href="modules.html#DiceNotation" class="tsd-kind-icon">Dice<wbr/>Notation</a></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#NumberString" class="tsd-kind-icon">Number<wbr/>String</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/DropOptions.html" class="tsd-kind-icon">Drop<wbr/>Options</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/CapOptions.html" class="tsd-kind-icon">Cap<wbr/>Options</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/RerollOptions.html" class="tsd-kind-icon">Reroll<wbr/>Options</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/ReplaceOptions.html" class="tsd-kind-icon">Replace<wbr/>Options</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/UniqueOptions.html" class="tsd-kind-icon">Unique<wbr/>Options</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/RollOptions.html" class="tsd-kind-icon">Roll<wbr/>Options</a></li><li class="tsd-kind-interface"><a href="interfaces/RollParameters.html" class="tsd-kind-icon">Roll<wbr/>Parameters</a></li><li class="tsd-kind-interface"><a href="interfaces/RollResult.html" class="tsd-kind-icon">Roll<wbr/>Result</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/UserOptions.html" class="tsd-kind-icon">User<wbr/>Options</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

@@ -37,7 +37,7 @@ describe('Randsum', () => {
   const mockRandomizer = (): number => mockRandomizerRoll
 
   describe('with a custom randomizer', () => {
-    const result = randsum('2d20', { customRandomizer: mockRandomizer })
+    const result = randsum('2d20', { randomizer: mockRandomizer })
 
     test('expects total to be correct', () => {
       expect(result).toEqual(2 * mockRandomizerRoll)
