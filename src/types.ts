@@ -49,25 +49,28 @@ export interface RollOptions<T extends Strict = undefined> {
   explode?: boolean
 }
 
-export type PrimeArgument = NumberString | RollOptions | DiceNotation
-
-export interface RandsumOptions<D = boolean> {
+interface UserOptions<D extends boolean = boolean> {
   detailed?: D
   customRandomizer?: (sides: NumberString) => number
 }
 
-export interface RollParameters extends RollOptions<'strict'> {
-  rolls: NumberString<'strict'>
-  notation?: string
-}
+export type RandsumOptions<D extends boolean = boolean> = RollOptions & UserOptions<D>
+
+export type RollParameters<D extends boolean = boolean> = RollOptions<'strict'> &
+  UserOptions<D> & {
+    rolls: NumberString<'strict'>
+    notation?: string
+  }
+
+export type PrimeArgument = NumberString | RollOptions | DiceNotation
+export type RandsumOptionsWithoutSides<D extends boolean = boolean> = Omit<RandsumOptions<D>, 'sides'>
+
+export type RollModifier = (callbackFunction: (results: RollTotals) => number) => number
 
 export interface RollResult extends RollParameters {
-  args: [PrimeArgument, RandsumOptions | undefined]
   total: number
   rollTotals: RollTotals
   initialRollTotals: NumberString<'strict'>[]
-  modifyInitialRolls: (callbackFunction: (results: RollTotals) => number) => number
-  modifyModifiedRolls: (callbackFunction: (results: RollTotals) => number) => number
+  modifyInitialRolls: RollModifier
+  modifyModifiedRolls: RollModifier
 }
-
-export type NumberOrResult<T extends boolean> = T extends true ? RollResult : number

@@ -1,4 +1,4 @@
-import { RollOptions, RollParameters } from 'types'
+import { RandsumOptions, RollParameters } from 'types'
 
 import { convertCapOptionsToParameters } from './convert-cap-options-to-parameters'
 import { convertDropOptionsToParameters } from './convert-drop-options-to-parameters'
@@ -7,34 +7,66 @@ import { convertRerollOptionsToParameters } from './convert-reroll-options-to-pa
 
 export function convertOptionsToParameters({
   rolls,
-  sides,
   plus,
   minus,
+  sides,
   cap,
   drop,
   replace,
   reroll,
   unique,
   ...restOptions
-}: Partial<RollOptions>): RollParameters {
-  return {
-    ...restOptions,
-    rolls: rolls ? Number(rolls) : 1,
-    sides: sides ? Number(sides) : 1,
-    plus: plus ? Number(plus) : undefined,
-    minus: minus ? Number(minus) : undefined,
-    cap: cap ? convertCapOptionsToParameters(cap) : undefined,
-    drop: drop ? convertDropOptionsToParameters(drop) : undefined,
-    replace: replace
-      ? Array.isArray(replace)
-        ? replace.map(option => convertReplaceOptionsToParameters(option))
-        : convertReplaceOptionsToParameters(replace)
-      : undefined,
-    reroll: reroll
-      ? Array.isArray(reroll)
-        ? reroll.map(option => convertRerollOptionsToParameters(option))
-        : convertRerollOptionsToParameters(reroll)
-      : undefined,
-    unique: typeof unique === 'object' ? { notUnique: unique.notUnique.map(number => Number(number)) } : unique,
+}: Partial<RandsumOptions>): Partial<RollParameters> {
+  let rollParameters: Partial<RollParameters> = { ...restOptions }
+
+  if (rolls) {
+    rollParameters = { ...rollParameters, rolls: Number(rolls) }
   }
+
+  if (sides) {
+    rollParameters = { ...rollParameters, sides: Number(sides) }
+  }
+
+  if (plus) {
+    rollParameters = { ...rollParameters, plus: Number(plus) }
+  }
+
+  if (minus) {
+    rollParameters = { ...rollParameters, sides: Number(minus) }
+  }
+
+  if (cap) {
+    rollParameters = { ...rollParameters, cap: convertCapOptionsToParameters(cap) }
+  }
+
+  if (drop) {
+    rollParameters = { ...rollParameters, drop: convertDropOptionsToParameters(drop) }
+  }
+
+  if (replace) {
+    rollParameters = {
+      ...rollParameters,
+      replace: Array.isArray(replace)
+        ? replace.map(option => convertReplaceOptionsToParameters(option))
+        : convertReplaceOptionsToParameters(replace),
+    }
+  }
+
+  if (reroll) {
+    rollParameters = {
+      ...rollParameters,
+      reroll: Array.isArray(reroll)
+        ? reroll.map(option => convertRerollOptionsToParameters(option))
+        : convertRerollOptionsToParameters(reroll),
+    }
+  }
+
+  if (unique) {
+    rollParameters = {
+      ...rollParameters,
+      unique: typeof unique === 'object' ? { notUnique: unique.notUnique.map(number => Number(number)) } : unique,
+    }
+  }
+
+  return rollParameters
 }

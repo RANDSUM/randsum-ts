@@ -1,38 +1,47 @@
-import randsum from '.'
-
-const randsumSimpleTests = (result: number) => {
-  test('returns a number as total', () => {
-    expect(Number.isInteger(result)).toBe(true)
-  })
-}
-
-const mockRandomizerRoll = 420
-const mockRandomizer = () => mockRandomizerRoll
-const randsumCustomRandomizerSimpleTests = (result: number, rolls: number) => {
-  test('expects total to be correct', () => {
-    expect(result).toEqual(rolls * mockRandomizerRoll)
-  })
-}
+import { randsum } from 'randsum'
 
 describe('Randsum', () => {
   describe('with a string', () => {
-    randsumSimpleTests(randsum('20'))
+    const result = randsum('20')
+
+    test('returns a number as total', () => {
+      expect(Number.isInteger(result)).toBe(true)
+    })
   })
 
   describe('with a number', () => {
-    randsumSimpleTests(randsum(20))
+    const result = randsum(20)
+
+    test('returns a number as total', () => {
+      expect(Number.isInteger(result)).toBe(true)
+    })
   })
 
   describe('with a modifier object', () => {
-    randsumSimpleTests(randsum({ sides: 20, rolls: 2, drop: { highest: 1 } }))
+    const result = randsum({ sides: 20, rolls: 2, drop: { highest: 1 } })
+
+    test('returns a number as total', () => {
+      expect(Number.isInteger(result)).toBe(true)
+    })
   })
 
   describe('with basic dice notation', () => {
-    randsumSimpleTests(randsum('2d20'))
+    const result = randsum('2d20')
+
+    test('returns a number as total', () => {
+      expect(Number.isInteger(result)).toBe(true)
+    })
   })
 
+  const mockRandomizerRoll = 420
+  const mockRandomizer = () => mockRandomizerRoll
+
   describe('with a custom randomizer', () => {
-    randsumCustomRandomizerSimpleTests(randsum('2d20', { customRandomizer: mockRandomizer }), 2)
+    const result = randsum('2d20', { customRandomizer: mockRandomizer })
+
+    test('expects total to be correct', () => {
+      expect(result).toEqual(2 * mockRandomizerRoll)
+    })
   })
 
   describe('with a detailed report', () => {
@@ -44,10 +53,6 @@ describe('Randsum', () => {
       for (const roll of result.rollTotals) {
         expect(Number.isInteger(roll)).toBe(true)
       }
-    })
-
-    test('it returns the args passed in to the function', () => {
-      expect(result.args).toEqual(['2d20', { detailed: true }])
     })
 
     test('result.sides returns the number of sides of the dice rolled', () => {

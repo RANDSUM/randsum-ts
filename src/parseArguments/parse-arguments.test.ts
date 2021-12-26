@@ -7,6 +7,11 @@ describe('parseArguments', () => {
     test('returns a RollParameter matching the notation', () => {
       expect(parseArguments('2')).toMatchObject({ rolls: 1, sides: 2 })
     })
+    describe('and a complex RandsumOption', () => {
+      test('returns a RollParameter matching the notation', () => {
+        expect(parseArguments('2', { detailed: true })).toMatchObject({ rolls: 1, sides: 2, detailed: true })
+      })
+    })
   })
 
   describe('given a number', () => {
