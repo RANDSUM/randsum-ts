@@ -3,12 +3,12 @@ import { ReplaceOptions } from 'types'
 import { applySingleCap } from '.'
 
 export function applyReplace(
-  rollTotals: number[],
+  rolls: number[],
   replace: ReplaceOptions<number> | Array<ReplaceOptions<number>>,
 ): number[] {
   const parameters = Array.isArray(replace) ? replace : [replace]
 
-  let replaceRolls = rollTotals
+  let replaceRolls = rolls
   for (const { from, to } of parameters) {
     replaceRolls = replaceRolls.map(roll => {
       if (from !== undefined) {

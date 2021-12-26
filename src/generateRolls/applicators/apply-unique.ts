@@ -1,7 +1,7 @@
 import { RollParameters } from 'types'
 
 export function applyUnique(
-  rollTotals: number[],
+  rolls: number[],
   { unique, quantity, sides }: RollParameters,
   rollOne: () => number,
 ): number[] {
@@ -11,8 +11,8 @@ export function applyUnique(
   const notUnique =
     unique === undefined || typeof unique === 'boolean' ? [] : unique.notUnique.map(number => Number(number))
 
-  const filteredArray = new Set(rollTotals.filter(n => !notUnique.includes(Number(n))))
-  const fixedRollTotals = rollTotals
+  const filteredArray = new Set(rolls.filter(n => !notUnique.includes(Number(n))))
+  const fixedRollTotals = rolls
     .map(number => Number(number))
     .map((roll, index, array) => {
       let newRoll: number

@@ -55,7 +55,7 @@ export interface RollParameters extends Omit<RandsumOptions<boolean, number>, 'd
 
 export interface RollResult {
   total: number
-  rollTotals: number[]
+  rolls: number[]
   initialRollTotals: number[]
   rollParameters: RollParameters
   modifyInitialRolls: (callbackFunction: (results: number[]) => number) => number

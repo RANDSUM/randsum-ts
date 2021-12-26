@@ -94,7 +94,7 @@ With a `RollResult`, you can look at the specific details of your roll.
 ```ts
 const result = randsum(20, { quantity: 4, detailed: true}) // Roll 4 20 sided die, returns a RollResult
 
-result.rollTotals =
+result.rolls =
 ```
 
 Check out the Typedocs RollResult page for more information.

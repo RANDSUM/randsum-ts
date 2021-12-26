@@ -25,13 +25,13 @@ function rerollRoll(
 }
 
 export function applyReroll(
-  rollTotals: number[],
+  rolls: number[],
   reroll: RerollOptions<number> | Array<RerollOptions<number>>,
   rollOne: () => number,
 ): number[] {
   const parameters = Array.isArray(reroll) ? reroll : [reroll]
 
-  let rerollRolls = rollTotals
+  let rerollRolls = rolls
   for (const rerollModifier of parameters) {
     rerollRolls = rerollRolls.map(roll => {
       return rerollRoll(roll, rerollModifier, rollOne)

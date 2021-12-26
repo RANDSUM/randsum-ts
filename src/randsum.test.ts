@@ -47,10 +47,10 @@ describe('Randsum', () => {
   describe('with a detailed report', () => {
     const result = randsum('2d20', { detailed: true })
 
-    test('result.rollTotals returns an array of results as rolls', () => {
-      expect(result.rollTotals.length).toEqual(2)
+    test('result.rolls returns an array of results as rolls', () => {
+      expect(result.rolls.length).toEqual(2)
 
-      for (const roll of result.rollTotals) {
+      for (const roll of result.rolls) {
         expect(Number.isInteger(roll)).toBe(true)
       }
     })
@@ -63,11 +63,11 @@ describe('Randsum', () => {
       expect(result.quantity).toEqual(2)
     })
 
-    test('result.modifyInitialRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
+    test('result.modifyInitialRolls returns a function that accepts a callback that gets passed the rolls', () => {
       expect(result.modifyInitialRolls(rolls => 40 * rolls.length)).toEqual(80)
     })
 
-    test('result.modifyModifiedRolls returns a function that accepts a callback that gets passed the rollTotals', () => {
+    test('result.modifyModifiedRolls returns a function that accepts a callback that gets passed the rolls', () => {
       expect(result.modifyModifiedRolls(rolls => 40 * rolls.length)).toEqual(80)
     })
   })

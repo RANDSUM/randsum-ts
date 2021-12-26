@@ -3,11 +3,11 @@ import { RollParameters } from 'types'
 import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, applyUnique } from './applicators'
 
 export function generateRolls(
-  rollTotals: number[],
+  rolls: number[],
   rollParameters: RollParameters,
   rollOne: () => number,
 ): [number, number[]] {
-  let modifiedRollTotals = [...rollTotals]
+  let modifiedRollTotals = [...rolls]
 
   const { unique, explode, reroll, plus, minus, cap, sides, quantity, replace, drop } = rollParameters
 

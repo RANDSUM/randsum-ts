@@ -23,15 +23,15 @@ export function randsum(
 
   const initialRollTotals = [...new Array(rollParameters.quantity)].map(() => rollOne())
 
-  const [total, rollTotals] = generateRolls(initialRollTotals, rollParameters, rollOne)
+  const [total, rolls] = generateRolls(initialRollTotals, rollParameters, rollOne)
 
   const result: RollResult = {
     total,
     initialRollTotals,
-    rollTotals,
+    rolls,
     rollParameters,
     modifyInitialRolls: callbackFunction => callbackFunction([...initialRollTotals]),
-    modifyModifiedRolls: callbackFunction => callbackFunction([...rollTotals]),
+    modifyModifiedRolls: callbackFunction => callbackFunction([...rolls]),
   }
 
   return detailed === true ? result : total
