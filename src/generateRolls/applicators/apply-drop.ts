@@ -12,25 +12,25 @@ function times(iterator: number) {
 export function applyDrop(
   rollTotals: number[],
   { highest, lowest, greaterThan, lessThan, exact }: DropOptions<number>,
-) {
+): number[] {
   const sortedResults = rollTotals
     .filter(roll => {
       switch (true) {
-        case greaterThan && roll > greaterThan:
-        case lessThan && roll < lessThan:
-        case exact && exact.map(number => number).includes(roll):
+        case greaterThan !== undefined && roll > greaterThan:
+        case lessThan !== undefined && roll < lessThan:
+        case exact?.map(number => number).includes(roll):
           return false
         default:
           return true
       }
     })
-    .sort()
+    .sort((a, b) => a - b)
 
-  if (highest) {
+  if (highest !== undefined) {
     times(highest)(() => sortedResults.pop())
   }
 
-  if (lowest) {
+  if (lowest !== undefined) {
     times(lowest)(() => sortedResults.shift())
   }
 

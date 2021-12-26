@@ -20,10 +20,10 @@ const cap = /[Cc]([<>|]?\d+)*/
 const plus = /\+\d+/
 const minus = /-\d+/
 
-export function findMatch(notationString: string, pattern: RegExp) {
+export function findMatch(notationString: string, pattern: RegExp): string | undefined {
   const match = notationString.match(pattern)
 
-  return match ? match[0] : false
+  return match !== null ? match[0] : undefined
 }
 
 export function parseNotation(notationString: DiceNotation): RollParameters {
@@ -43,29 +43,33 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   const dropHighMatch = findMatch(formattedNotations, dropHigh)
-  if (dropHighMatch) {
+  if (dropHighMatch !== undefined) {
+    const highestCount = dropHighMatch.split('h')[1]
+
     rollParameters = {
       ...rollParameters,
       drop: {
         ...rollParameters.drop,
-        highest: Number(dropHighMatch.split('h')[1]) || 1,
+        highest: highestCount !== '' ? Number(highestCount) : 1,
       },
     }
   }
 
   const dropLowMatch = findMatch(formattedNotations, dropLow)
-  if (dropLowMatch) {
+  if (dropLowMatch !== undefined) {
+    const lowestCount = dropLowMatch.split('l')[1]
+
     rollParameters = {
       ...rollParameters,
       drop: {
         ...rollParameters.drop,
-        lowest: Number(dropLowMatch.split('l')[1]) || 1,
+        lowest: lowestCount !== '' ? Number(lowestCount) : 1,
       },
     }
   }
 
   const dropConstraintsMatch = findMatch(formattedNotations, dropConstraints)
-  if (dropConstraintsMatch) {
+  if (dropConstraintsMatch !== undefined) {
     rollParameters = {
       ...rollParameters,
       drop: {
@@ -76,15 +80,15 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   const explodeMatch = findMatch(formattedNotations, explode)
-  if (explodeMatch) {
+  if (explodeMatch !== undefined) {
     rollParameters = {
       ...rollParameters,
-      explode: !!explodeMatch,
+      explode: Boolean(explodeMatch),
     }
   }
 
   const uniqueMatch = findMatch(formattedNotations, unique)
-  if (uniqueMatch) {
+  if (uniqueMatch !== undefined) {
     rollParameters = {
       ...rollParameters,
       ...parseUniqeNotation(uniqueMatch),
@@ -92,7 +96,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   const replaceMatch = findMatch(formattedNotations, replace)
-  if (replaceMatch) {
+  if (replaceMatch !== undefined) {
     rollParameters = {
       ...rollParameters,
       ...parseReplaceNotation(replaceMatch),
@@ -100,7 +104,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   const rerollMatch = findMatch(formattedNotations, reroll)
-  if (rerollMatch) {
+  if (rerollMatch !== undefined) {
     rollParameters = {
       ...rollParameters,
       ...parseRerollNotation(rerollMatch),
@@ -108,7 +112,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   const capMatch = findMatch(formattedNotations, cap)
-  if (capMatch) {
+  if (capMatch !== undefined) {
     rollParameters = {
       ...rollParameters,
       ...parseCapNotation(capMatch),
@@ -116,7 +120,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   const plusMatch = findMatch(formattedNotations, plus)
-  if (plusMatch) {
+  if (plusMatch !== undefined) {
     rollParameters = {
       ...rollParameters,
       plus: Number(notationString.split('+')[1]),
@@ -124,7 +128,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   const minusMatch = findMatch(formattedNotations, minus)
-  if (minusMatch) {
+  if (minusMatch !== undefined) {
     rollParameters = {
       ...rollParameters,
       minus: Number(notationString.split('-')[1]),

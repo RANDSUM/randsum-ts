@@ -2,7 +2,7 @@ import { RollParameters } from 'types'
 
 import { generateRolls } from './generate-rolls'
 
-const mockRandomizer = () => 200
+const mockRandomizer = (): number => 200
 describe('generateRolls', () => {
   const rollTotals = [1, 2, 3, 4]
   const baseParameters: RollParameters = { sides: 6, rolls: rollTotals.length }

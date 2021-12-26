@@ -19,31 +19,31 @@ export function convertOptionsToParameters({
 }: Partial<RollOptions & UserOptions>): Partial<RollParameters> & UserOptions {
   let rollParameters: Partial<RollParameters> = { ...restOptions }
 
-  if (rolls) {
+  if (rolls !== undefined) {
     rollParameters = { ...rollParameters, rolls: Number(rolls) }
   }
 
-  if (sides) {
+  if (sides !== undefined) {
     rollParameters = { ...rollParameters, sides: Number(sides) }
   }
 
-  if (plus) {
+  if (plus !== undefined) {
     rollParameters = { ...rollParameters, plus: Number(plus) }
   }
 
-  if (minus) {
+  if (minus !== undefined) {
     rollParameters = { ...rollParameters, minus: Number(minus) }
   }
 
-  if (cap) {
+  if (cap !== undefined) {
     rollParameters = { ...rollParameters, cap: convertCapOptionsToParameters(cap) }
   }
 
-  if (drop) {
+  if (drop !== undefined) {
     rollParameters = { ...rollParameters, drop: convertDropOptionsToParameters(drop) }
   }
 
-  if (replace) {
+  if (replace !== undefined) {
     rollParameters = {
       ...rollParameters,
       replace: Array.isArray(replace)
@@ -52,7 +52,7 @@ export function convertOptionsToParameters({
     }
   }
 
-  if (reroll) {
+  if (reroll !== undefined) {
     rollParameters = {
       ...rollParameters,
       reroll: Array.isArray(reroll)
@@ -61,7 +61,7 @@ export function convertOptionsToParameters({
     }
   }
 
-  if (unique) {
+  if (unique !== undefined) {
     rollParameters = {
       ...rollParameters,
       unique: typeof unique === 'object' ? { notUnique: unique.notUnique.map(number => Number(number)) } : unique,

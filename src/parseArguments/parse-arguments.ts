@@ -22,13 +22,15 @@ export function parseArguments(
     return { ...secondaryParameters, ...parseNotation(primeArgument) }
   }
 
-  const primeParameters = isRollOptions(primeArgument)
-    ? convertOptionsToParameters(primeArgument)
-    : { sides: Number(primeArgument) }
-
-  if (!primeParameters.sides) {
-    throw new Error(`Bad Argument: ${primeArgument}`)
+  if (isRollOptions(primeArgument)) {
+    return { sides: 0, rolls: 1, ...secondaryParameters, ...convertOptionsToParameters(primeArgument) }
   }
 
-  return { sides: 0, rolls: 1, ...primeParameters, ...secondaryParameters }
+  const sides = Number(primeArgument)
+
+  if (Number.isNaN(Number(sides))) {
+    throw new TypeError(`Bad Argument: ${String(primeArgument)}`)
+  }
+
+  return { sides, rolls: 1, ...secondaryParameters }
 }

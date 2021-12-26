@@ -9,7 +9,7 @@ export interface DropOptions<T extends NumberStringType = Inclusive> {
   lowest?: NumberString<T>
   greaterThan?: NumberString<T>
   lessThan?: NumberString<T>
-  exact?: NumberString<T>[]
+  exact?: Array<NumberString<T>>
 }
 
 export interface CapOptions<T extends NumberStringType = Inclusive> {
@@ -18,7 +18,7 @@ export interface CapOptions<T extends NumberStringType = Inclusive> {
 }
 
 export interface RerollOptions<T extends NumberStringType = Inclusive> extends CapOptions<T> {
-  on?: NumberString<T> | NumberString<T>[]
+  on?: NumberString<T> | Array<NumberString<T>>
   maxReroll?: NumberString<T>
 }
 
@@ -28,7 +28,7 @@ export interface ReplaceOptions<T extends NumberStringType = Inclusive> {
 }
 
 export interface UniqueOptions<T extends NumberStringType = Inclusive> {
-  notUnique: NumberString<T>[]
+  notUnique: Array<NumberString<T>>
 }
 
 export interface RollOptions<T extends NumberStringType = Inclusive> {
@@ -38,8 +38,8 @@ export interface RollOptions<T extends NumberStringType = Inclusive> {
   minus?: NumberString<T>
   cap?: CapOptions<T>
   drop?: DropOptions<T>
-  replace?: ReplaceOptions<T> | ReplaceOptions<T>[]
-  reroll?: RerollOptions<T> | RerollOptions<T>[]
+  replace?: ReplaceOptions<T> | Array<ReplaceOptions<T>>
+  reroll?: RerollOptions<T> | Array<RerollOptions<T>>
   unique?: boolean | UniqueOptions<T>
   explode?: boolean
 }

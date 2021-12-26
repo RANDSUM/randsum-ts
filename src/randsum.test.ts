@@ -34,7 +34,7 @@ describe('Randsum', () => {
   })
 
   const mockRandomizerRoll = 420
-  const mockRandomizer = () => mockRandomizerRoll
+  const mockRandomizer = (): number => mockRandomizerRoll
 
   describe('with a custom randomizer', () => {
     const result = randsum('2d20', { customRandomizer: mockRandomizer })

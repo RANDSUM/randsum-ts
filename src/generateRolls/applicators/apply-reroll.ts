@@ -15,9 +15,9 @@ function rerollRoll(
   }
 
   switch (true) {
-    case above && roll > above:
-    case below && roll < below:
-    case on && Array.isArray(on) ? on.includes(roll) : on === roll:
+    case above !== undefined && roll > above:
+    case below !== undefined && roll < below:
+    case on !== undefined && Array.isArray(on) ? on.includes(roll) : on === roll:
       return rerollRoll(rollOne(), { above, below, on, maxReroll }, rollOne, index + 1)
     default:
       return roll
@@ -26,9 +26,9 @@ function rerollRoll(
 
 export function applyReroll(
   rollTotals: number[],
-  reroll: RerollOptions<number> | RerollOptions<number>[],
+  reroll: RerollOptions<number> | Array<RerollOptions<number>>,
   rollOne: () => number,
-) {
+): number[] {
   const parameters = Array.isArray(reroll) ? reroll : [reroll]
 
   let rerollRolls = rollTotals

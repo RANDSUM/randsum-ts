@@ -87,8 +87,10 @@ export function randsum(
 ): RollResult | number {
   const { detailed, customRandomizer, ...rollParameters } = parseArguments(primeArgument, randsumOptions)
 
-  const rollOne = () =>
-    (customRandomizer || ((max: number) => Math.floor(Math.random() * Number(max)) + 1))(rollParameters.sides)
+  const rollOne = (): number =>
+    (customRandomizer !== undefined ? customRandomizer : (max: number) => Math.floor(Math.random() * Number(max)) + 1)(
+      rollParameters.sides,
+    )
 
   const initialRollTotals = [...new Array(rollParameters.rolls)].map(() => rollOne())
 
@@ -103,5 +105,5 @@ export function randsum(
     modifyModifiedRolls: callbackFunction => callbackFunction([...rollTotals]),
   }
 
-  return detailed ? result : total
+  return detailed === true ? result : total
 }
