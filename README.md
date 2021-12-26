@@ -10,6 +10,8 @@
 
 ## Further Reading
 
+---
+
 [Getting Started](/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
 [Randsum Dice Notation](/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
@@ -22,17 +24,11 @@
 
 [_why's poigniant guide to ruby](https://poignant.guide/) - _why not?
 
-## Contributing
-
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
-
 ## Why did you make this?
 
-Sometime around 2012, I decided I wanted to learn to program. I was living at my friends apartment rent-free, and I was using a banged up laptop. I had installed ruby, set to make a dice roller as an easy first project.
+---
+
+Sometime around 2012, I decided I wanted to learn to program. I had installed ruby on the best laptop six-hundred dollars could buy, set to make a dice roller as an easy first project.
 
 I spent an easy 30 minutes trying to figure out how to make `rand(n)` return `1-n` instead of `0-(n-1)`.
 

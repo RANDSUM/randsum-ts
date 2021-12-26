@@ -1,6 +1,6 @@
 {
   "name": "randsum",
-  "description": "Random Numbers, free of charge",
+  "description": "rand for the rest of us",
   "license": "MIT",
   "author": "Alex Jarvis",
   "homepage": "https://github.com/alxjrvs/randsum",
@@ -11,18 +11,20 @@
   "version": "1.0.0-beta9",
   "private": false,
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p .",
     "docs": "typedoc --options ./typedoc.json -gitRevision $npm_package_version",
     "test": "jest",
     "test:ci": "jest --runInBand",
     "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
-    "lint": "eslint ./src --ext .ts -c .eslintrc.json",
+    "lint": "eslint . -c .eslintrc.json",
     "watch-build": "tsc -w -p .",
     "postinstall": "husky install",
     "prepublish": "yarn build",
     "prepublishOnly": "pinst --disable",
-    "postpublish": "pinst --enable"
+    "postpublish": "pinst --enable",
+    "postversion": "git push && git push --tags"
   },
   "files": [
     "dist/**/*"
