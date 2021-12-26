@@ -2,7 +2,7 @@ import { RerollOptions, RollDie, RollTotals } from 'types'
 
 function rerollRoll(
   roll: number,
-  { above, below, on, maxReroll }: RerollOptions<'parameters'>,
+  { above, below, on, maxReroll }: RerollOptions<'strict'>,
   rollDie: RollDie,
   index = 0,
 ): number {
@@ -26,7 +26,7 @@ function rerollRoll(
 
 export function applyReroll(
   rollTotals: RollTotals,
-  reroll: RerollOptions<'parameters'> | RerollOptions<'parameters'>[],
+  reroll: RerollOptions<'strict'> | RerollOptions<'strict'>[],
   rollDie: RollDie,
 ) {
   const parameters = Array.isArray(reroll) ? reroll : [reroll]

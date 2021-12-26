@@ -6,7 +6,7 @@ export function convertRerollOptionsToParameters({
   on,
   maxReroll,
   ...restOptions
-}: RerollOptions<'options'>): RerollOptions<'parameters'> {
+}: RerollOptions): RerollOptions<'strict'> {
   return {
     ...convertCapOptionsToParameters(restOptions),
     on: on ? (Array.isArray(on) ? on.map(number => Number(number)) : Number(on)) : undefined,

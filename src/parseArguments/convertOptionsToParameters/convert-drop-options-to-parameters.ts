@@ -6,7 +6,7 @@ export function convertDropOptionsToParameters({
   greaterThan,
   lessThan,
   exact,
-}: DropOptions<'options'>): DropOptions<'parameters'> {
+}: DropOptions): DropOptions<'strict'> {
   return {
     highest: highest ? Number(highest) : undefined,
     lowest: lowest ? Number(lowest) : undefined,

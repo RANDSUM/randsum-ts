@@ -16,7 +16,7 @@ export function convertOptionsToParameters({
   reroll,
   unique,
   ...restOptions
-}: RollOptions<'options'>): RollOptions<'parameters'> {
+}: RollOptions): RollOptions<'strict'> {
   return {
     ...restOptions,
     rolls: rolls ? Number(rolls) : undefined,
