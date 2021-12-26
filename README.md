@@ -10,7 +10,6 @@
 
 ## Further Reading
 
----
 
 [Getting Started](/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
@@ -26,7 +25,6 @@
 
 ## Why did you make this?
 
----
 
 Sometime around 2012, I decided I wanted to learn to program. I had installed ruby on the best laptop six-hundred dollars could buy, set to make a dice roller as an easy first project.
 
