@@ -56,11 +56,11 @@ describe('Randsum', () => {
     })
 
     test('result.sides returns the number of sides of the dice rolled', () => {
-      expect(result.sides).toEqual(20)
+      expect(result.rollParameters.sides).toEqual(20)
     })
 
     test('result.quantity returns the number of dice rolled', () => {
-      expect(result.quantity).toEqual(2)
+      expect(result.rollParameters.quantity).toEqual(2)
     })
 
     test('result.modifyInitialRolls returns a function that accepts a callback that gets passed the rolls', () => {

@@ -35,7 +35,7 @@ describe('generateRolls', () => {
 
       test('it throws an error', () => {
         expect(() => generateRolls(overflowRollTotals, overflowParameters, mockRandomizer)).toThrow(
-          'You cannot have unique quantity when there are more quantity than sides of die.',
+          'You cannot have unique rolls when there are more rolls than sides of die.',
         )
       })
     })
