@@ -1,4 +1,4 @@
-name: CI
+name: Docs
 on:
   push:
     branches:
@@ -8,7 +8,7 @@ on:
       - main
 jobs:
   build:
-    name: Run CI
+    name: Build Docs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,10 +22,16 @@ jobs:
         with:
           cmd: "install --ignore-engines --ignore-scripts"
 
-      - name: Run Tests
+      - name: Build Docs
         uses: borales/actions-yarn@v2.3.0
         with:
-          cmd: "test:ci"
+          cmd: docs
 
-      - name: Code Cov
-        uses: codecov/codecov-action@v2.1.0
+      - name: Commit Docs
+        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        with:
+          add: 'docs'
+          message: '📄 Updating Docs 📄'
+          pull: 'NO-PULL'
+          push: '--no-verify'
+          default_author: github_actions

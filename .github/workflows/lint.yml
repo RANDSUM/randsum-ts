@@ -1,4 +1,4 @@
-name: CI
+name: Lint
 on:
   push:
     branches:
@@ -8,7 +8,7 @@ on:
       - main
 jobs:
   build:
-    name: Run CI
+    name: Lint Code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,10 +22,7 @@ jobs:
         with:
           cmd: "install --ignore-engines --ignore-scripts"
 
-      - name: Run Tests
+      - name: Run Linters
         uses: borales/actions-yarn@v2.3.0
         with:
-          cmd: "test:ci"
-
-      - name: Code Cov
-        uses: codecov/codecov-action@v2.1.0
+          cmd: lint
