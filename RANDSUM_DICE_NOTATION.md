@@ -2,7 +2,11 @@
 
 ## About
 
+---
+
 ### What is Dice Notation?
+
+---
 
 [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) is a way of representing different dice rolls and mutations in a simple string. For instance, `4d20+2` means "roll four twenty-sided die, then add two".
 
@@ -10,19 +14,27 @@ However, more complex operations - "Drop highest, reroll 3's, and make sure the 
 
 ### Attribution
 
+---
+
 I looked high and wide for a consensus on a sort "Extended Standard Dice Notation", and could not find anything. The most extensive and thought-out documentation I found was for the game's [Sophie's Dice](https://sophiehoulden.com/dice/documentation/notation.html#keep). Much of that syntax has been mirrored here.
 
 Thanks, [Sophie](https://www.patreon.com/SophieHoulden)! Your examples were invaluable. Consider buying their [games](https://sophieh.itch.io/)!
 
 ### Regarding order
 
+---
+
 `randsum` will attempt to resolve modifiers in a particular order, *regardless of the order they appear in the Dice Notation*. Check out [Regarding Order](/ORDER.md) for more.
 
 ## Dice Notation
 
+---
+
 Dice Notation in `randsum` is **case-insensitive**. `2d8` and `2D8` both work equally well.
 
 ### Sides And Quantity
+
+---
 
 ```md
 Roll X number of Y sided die
@@ -47,6 +59,8 @@ randsum({ sides: 20, quantity: 6 })
 
 ### Plus
 
+---
+
 **Key: `+`**
 Add values to the sum total of the rolled dice.
 
@@ -69,6 +83,8 @@ randsum({ sides: 20, quantity: 6, plus: 5 })
 
 ### Minus
 
+---
+
 **Key: `-`**
 Subtract values to the sum total of the rolled dice
 
@@ -89,6 +105,8 @@ randsum({ sides: 20, quantity: 6, minus: 5 })
 ```
 
 ### Drop
+
+---
 
 Remove values from the pool of rolled dice
 
@@ -191,6 +209,8 @@ randsum({ sides: 20, quantity: 6, drop: { greaterThan: 15, lessThan:5, exactly: 
 
 ### Cap
 
+---
+
 **Key: `c | C`**
 Reduce all values above a certain value or increase all values below a certain value
 
@@ -219,6 +239,8 @@ randsum({ sides: 20, quantity: 6, cap: { greaterThan: 15, lessThan:5, }})
 ```
 
 ### Reroll
+
+---
 
 **Key: `r | R`**
 Reroll all values above, below, or equal to certain values
@@ -257,6 +279,8 @@ randsum({ sides: 20, quantity: 6, reroll: { above: 15, below:5, on: [10], maxRer
 
 ### Replace
 
+---
+
 **Key: `v | V`**
 Replace all values above, below, or equal to certain values with other values
 
@@ -290,6 +314,8 @@ randsum({ sides: 20, quantity: 6, replace: [{ from: { above: 15 }, to: 20, }, { 
 
 ### Unique
 
+---
+
 **Key: `u | U`**
 Enforce all rolls in a given pool to be unique
 **Note: Rolls whose quantitiy of dice exceed the number of sides will fail!**
@@ -303,6 +329,7 @@ Allow 5's and 10's to be repeated, keep all others unique
 
 4d20U{5,10}
 ```
+
 In `randsum`:
 
 ```ts
@@ -320,6 +347,8 @@ randsum({ sides: 20, quantity: 6, unique: {notUnique: [5,10] }})
 ```
 
 ### Explode
+
+---
 
 **Key: `!`**
 Roll additional dice whenever a die in the pool rolls its maximum value
