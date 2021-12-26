@@ -1,7 +1,5 @@
-type OptionsParameters = 'options' | 'parameters'
-export type NumberString<T extends OptionsParameters = 'options'> = T extends 'parameters'
-  ? number
-  : number | `${number}`
+type Strict = 'strict' | undefined
+export type NumberString<T extends 'strict' | undefined> = T extends 'parameters' ? number : number | `${number}`
 
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
