@@ -1,10 +1,9 @@
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
+export type NumberString<T extends number | 'inclusive' = 'inclusive'> = T extends 'inclusive'
+  ? number | `${number}`
+  : number
 
-export type Inclusive = 'inclusive'
-type NumberStringType = number | Inclusive
-export type NumberString<T extends NumberStringType = Inclusive> = T extends number ? number : number | `${number}`
-
-export interface DropOptions<T extends NumberStringType = Inclusive> {
+export interface DropOptions<T extends number | 'inclusive' = 'inclusive'> {
   highest?: NumberString<T>
   lowest?: NumberString<T>
   greaterThan?: NumberString<T>
@@ -12,26 +11,26 @@ export interface DropOptions<T extends NumberStringType = Inclusive> {
   exact?: Array<NumberString<T>>
 }
 
-export interface CapOptions<T extends NumberStringType = Inclusive> {
+export interface CapOptions<T extends number | 'inclusive' = 'inclusive'> {
   above?: NumberString<T>
   below?: NumberString<T>
 }
 
-export interface RerollOptions<T extends NumberStringType = Inclusive> extends CapOptions<T> {
+export interface RerollOptions<T extends number | 'inclusive' = 'inclusive'> extends CapOptions<T> {
   on?: NumberString<T> | Array<NumberString<T>>
   maxReroll?: NumberString<T>
 }
 
-export interface ReplaceOptions<T extends NumberStringType = Inclusive> {
+export interface ReplaceOptions<T extends number | 'inclusive' = 'inclusive'> {
   from: NumberString<T> | CapOptions<T>
   to: NumberString<T>
 }
 
-export interface UniqueOptions<T extends NumberStringType = Inclusive> {
+export interface UniqueOptions<T extends number | 'inclusive' = 'inclusive'> {
   notUnique: Array<NumberString<T>>
 }
 
-export interface RollOptions<T extends NumberStringType = Inclusive> {
+export interface RollOptions<T extends number | 'inclusive' = 'inclusive'> {
   rolls?: NumberString<T>
   sides: NumberString<T>
   plus?: NumberString<T>
