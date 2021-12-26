@@ -49,7 +49,7 @@ export interface RollOptions<T extends Strict = undefined> {
   explode?: boolean
 }
 
-interface UserOptions<D extends boolean = boolean> {
+export interface UserOptions<D extends boolean = boolean> {
   detailed?: D
   customRandomizer?: (sides: NumberString) => number
 }
@@ -63,7 +63,6 @@ export type RollParameters<D extends boolean = boolean> = RollOptions<'strict'> 
   }
 
 export type PrimeArgument = NumberString | RollOptions | DiceNotation
-export type RandsumOptionsWithoutSides<D extends boolean = boolean> = Omit<RandsumOptions<D>, 'sides'>
 
 export type RollModifier = (callbackFunction: (results: RollTotals) => number) => number
 
