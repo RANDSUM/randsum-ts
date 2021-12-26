@@ -70,4 +70,4 @@ export interface RollResult extends RollParameters {
   modifyModifiedRolls: (callbackFunction: (results: RollTotals) => number) => number
 }
 
-export type RandsumDynamicReturn<T extends boolean> = T extends true ? RollResult : number
+export type NumberOrResult<T extends boolean> = T extends true ? RollResult : number
