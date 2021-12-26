@@ -18,5 +18,5 @@ export function parseReplaceNotation(notationString: string) {
       }
     })
 
-  return replaceOptions.length === 1 ? replaceOptions[0] : replaceOptions
+  return { replace: replaceOptions.length === 1 ? replaceOptions[0] : replaceOptions }
 }

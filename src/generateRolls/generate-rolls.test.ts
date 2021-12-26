@@ -14,7 +14,7 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with a "unique" modifier', () => {
-    const duplicateRollTotals: RollTotals = [1, '1', 2, 3]
+    const duplicateRollTotals: RollTotals = [1, 1, 2, 3]
     const uniqueParameters: RollParameters = { sides: 4, rolls: duplicateRollTotals.length, unique: true }
 
     test('it re-rolls non-unique modifiers', () => {
@@ -30,7 +30,7 @@ describe('generateRolls', () => {
     })
 
     describe('and the # of rolls is greater than the sides of the die', () => {
-      const overflowRollTotals: RollTotals = [1, 1, 1, '2', 3, 4, '3', 3]
+      const overflowRollTotals: RollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
       const overflowParameters: RollParameters = { ...uniqueParameters, rolls: overflowRollTotals.length }
 
       test('it throws an error', () => {
@@ -42,16 +42,16 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with a "drop" modifier', () => {
-    const longerRollTotals: RollTotals = [1, '2', 3, 4, 5, 6, 7, '8', 9]
+    const longerRollTotals: RollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     const dropParameters: RollParameters = {
       sides: 10,
       rolls: longerRollTotals.length,
       drop: {
         highest: 1,
-        lowest: '2',
+        lowest: 2,
         greaterThan: 8,
         lessThan: 2,
-        exact: ['5', 5],
+        exact: [5],
       },
     }
 
@@ -77,7 +77,7 @@ describe('generateRolls', () => {
         ...baseParameters,
         replace: [
           { from: 1, to: 2 },
-          { from: { above: 3 }, to: '6' },
+          { from: { above: 3 }, to: 6 },
         ],
       }
 
@@ -88,8 +88,8 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with an "explode" modifier', () => {
+    const explodeRollTotals: RollTotals = [1, 2, 3, 6]
     const explodeParameters: RollParameters = { ...baseParameters, explode: true }
-    const explodeRollTotals: RollTotals = [1, 2, '3', 6]
 
     test('it returns the total with all values matching the queries rerolled', () => {
       expect(generateRolls(explodeRollTotals, explodeParameters, mockRandomizer)).toEqual([212, [1, 2, 3, 6, 200]])
@@ -114,7 +114,10 @@ describe('generateRolls', () => {
     })
 
     describe('that is an array of reroll modifiers', () => {
-      const rerollParameters: RollParameters = { ...baseParameters, reroll: [{ below: 2, maxReroll: 2 }, { on: [3] }] }
+      const rerollParameters: RollParameters = {
+        ...baseParameters,
+        reroll: [{ below: 2, maxReroll: 2 }, { on: [3] }],
+      }
 
       test('it returns the total with all values matching the queries rerolled', () => {
         expect(generateRolls(rollTotals, rerollParameters, mockRandomizer)).toEqual([406, [200, 2, 200, 4]])
@@ -139,7 +142,7 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with a "minus" modifier', () => {
-    const dropParameters: RollParameters = { ...baseParameters, minus: '2' }
+    const dropParameters: RollParameters = { ...baseParameters, minus: 2 }
 
     test('it returns the total minust the "minus" modifier, and the roll totals', () => {
       expect(generateRolls(rollTotals, dropParameters, mockRandomizer)).toEqual([8, [1, 2, 3, 4]])

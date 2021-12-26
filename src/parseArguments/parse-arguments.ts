@@ -2,14 +2,15 @@ import { parseNotation } from 'parseArguments/parseNotation'
 import { RandsumPrimeArgument, RollParameters } from 'types'
 import { isDiceNotation, isRollOptions } from 'utils'
 
-export function parseArguments(primeArgument: RandsumPrimeArgument): RollParameters {
-  if (isRollOptions(primeArgument)) {
-    return { rolls: 1, ...primeArgument }
-  }
+import { convertOptionsToParameters } from './convertOptionsToParameters'
 
+export function parseArguments(primeArgument: RandsumPrimeArgument): RollParameters {
   if (isDiceNotation(primeArgument)) {
     return parseNotation(primeArgument)
   }
 
-  return { rolls: 1, sides: Number(primeArgument) }
+  return {
+    rolls: 1,
+    ...(isRollOptions(primeArgument) ? convertOptionsToParameters(primeArgument) : { sides: Number(primeArgument) }),
+  }
 }

@@ -1,14 +1,14 @@
 import { DropOptions, RollTotals } from 'types'
 import { times } from 'utils'
 
-export function parseDropFactory({ highest, lowest, greaterThan, lessThan, exact }: DropOptions) {
+export function parseDropFactory({ highest, lowest, greaterThan, lessThan, exact }: DropOptions<'parameters'>) {
   return function parseDrop(rollTotals: RollTotals) {
     const sortedResults = rollTotals
       .filter(roll => {
         switch (true) {
           case greaterThan && roll > greaterThan:
           case lessThan && roll < lessThan:
-          case exact && exact.includes(roll):
+          case exact && exact.map(number => number).includes(roll):
             return false
           default:
             return true
@@ -17,11 +17,11 @@ export function parseDropFactory({ highest, lowest, greaterThan, lessThan, exact
       .sort()
 
     if (highest) {
-      times(Number(highest))(() => sortedResults.pop())
+      times(highest)(() => sortedResults.pop())
     }
 
     if (lowest) {
-      times(Number(lowest))(() => sortedResults.shift())
+      times(lowest)(() => sortedResults.shift())
     }
 
     return sortedResults
