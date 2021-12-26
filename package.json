@@ -104,8 +104,5 @@
       "js"
     ],
     "rootDir": "src/"
-  },
-  "dependencies": {
-    "tslib": "^2.3.1"
   }
 }
