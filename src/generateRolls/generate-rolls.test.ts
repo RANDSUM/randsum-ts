@@ -5,19 +5,19 @@ import { generateRolls } from './generate-rolls'
 const mockRandomizer = (): number => 200
 describe('generateRolls', () => {
   const rollTotals = [1, 2, 3, 4]
-  const baseParameters: RollParameters = { sides: 6, rolls: rollTotals.length }
+  const baseParameters: RollParameters = { sides: 6, quantity: rollTotals.length }
 
   describe('when given roll totals with no modifiers', () => {
-    test('it returns the sum total of the rolls and the roll totals', () => {
+    test('it returns the sum total of the quantity and the roll totals', () => {
       expect(generateRolls(rollTotals, baseParameters, mockRandomizer)).toEqual([10, [1, 2, 3, 4]])
     })
   })
 
   describe('when given roll totals with a "unique" modifier', () => {
     const duplicateRollTotals = [1, 1, 2, 3]
-    const uniqueParameters: RollParameters = { sides: 4, rolls: duplicateRollTotals.length, unique: true }
+    const uniqueParameters: RollParameters = { sides: 4, quantity: duplicateRollTotals.length, unique: true }
 
-    test('it re-rolls non-unique modifiers', () => {
+    test('it re-quantity non-unique modifiers', () => {
       expect(generateRolls(duplicateRollTotals, uniqueParameters, mockRandomizer)).toEqual([206, [1, 200, 2, 3]])
     })
 
@@ -29,13 +29,13 @@ describe('generateRolls', () => {
       })
     })
 
-    describe('and the # of rolls is greater than the sides of the die', () => {
+    describe('and the # of quantity is greater than the sides of the die', () => {
       const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
-      const overflowParameters: RollParameters = { ...uniqueParameters, rolls: overflowRollTotals.length }
+      const overflowParameters: RollParameters = { ...uniqueParameters, quantity: overflowRollTotals.length }
 
       test('it throws an error', () => {
         expect(() => generateRolls(overflowRollTotals, overflowParameters, mockRandomizer)).toThrow(
-          'You cannot have unique rolls when there are more rolls than sides of die.',
+          'You cannot have unique quantity when there are more quantity than sides of die.',
         )
       })
     })
@@ -45,7 +45,7 @@ describe('generateRolls', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     const dropParameters: RollParameters = {
       sides: 10,
-      rolls: longerRollTotals.length,
+      quantity: longerRollTotals.length,
       drop: {
         highest: 1,
         lowest: 2,

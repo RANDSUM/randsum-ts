@@ -18,7 +18,7 @@ describe('Randsum', () => {
   })
 
   describe('with a modifier object', () => {
-    const result = randsum({ sides: 20, rolls: 2, drop: { highest: 1 } })
+    const result = randsum({ sides: 20, quantity: 2, drop: { highest: 1 } })
 
     test('returns a number as total', () => {
       expect(Number.isInteger(result)).toBe(true)
@@ -59,8 +59,8 @@ describe('Randsum', () => {
       expect(result.sides).toEqual(20)
     })
 
-    test('result.rolls returns the number of dice rolled', () => {
-      expect(result.rolls).toEqual(2)
+    test('result.quantity returns the number of dice rolled', () => {
+      expect(result.quantity).toEqual(2)
     })
 
     test('result.modifyInitialRolls returns a function that accepts a callback that gets passed the rollTotals', () => {

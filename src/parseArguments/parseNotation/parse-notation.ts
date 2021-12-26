@@ -34,12 +34,12 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   const coreNotation = findMatch(formattedNotations, diceNotationPattern) as DiceNotation
-  const [rolls, sides] = coreNotation.split('d').map(number => Number(number))
+  const [quantity, sides] = coreNotation.split('d').map(number => Number(number))
 
   let rollParameters: RollParameters = {
     notation: formattedNotations,
     sides,
-    rolls,
+    quantity,
   }
 
   const dropHighMatch = findMatch(formattedNotations, dropHigh)

@@ -2,10 +2,10 @@ import { RollParameters } from 'types'
 
 export function applyUnique(
   rollTotals: number[],
-  { unique, rolls, sides }: RollParameters,
+  { unique, quantity, sides }: RollParameters,
   rollOne: () => number,
 ): number[] {
-  if (rolls > sides) {
+  if (quantity > sides) {
     throw new Error('You cannot have unique rolls when there are more rolls than sides of die.')
   }
   const notUnique =

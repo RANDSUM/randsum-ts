@@ -1,5 +1,7 @@
-import { DiceNotation, NumberString, RollOptions, UserOptions } from 'types'
+import { DiceNotation, NumberString, RandsumOptions, UserOptions } from 'types'
 
-export function isOptions(argument: NumberString | RollOptions | DiceNotation): argument is RollOptions & UserOptions {
+export function isOptions(
+  argument: NumberString | RandsumOptions | DiceNotation,
+): argument is RandsumOptions & UserOptions {
   return typeof argument === 'object'
 }

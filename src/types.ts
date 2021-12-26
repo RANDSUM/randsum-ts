@@ -30,8 +30,13 @@ export interface UniqueOptions<T extends number | 'inclusive' = 'inclusive'> {
   notUnique: Array<NumberString<T>>
 }
 
-export interface RollOptions<T extends number | 'inclusive' = 'inclusive'> {
-  rolls?: NumberString<T>
+export interface UserOptions<D extends boolean = boolean> {
+  detailed?: D
+  randomizer?: (sides: NumberString) => number
+}
+export interface RandsumOptions<D extends boolean = boolean, T extends number | 'inclusive' = 'inclusive'>
+  extends UserOptions<D> {
+  quantity?: NumberString<T>
   sides: NumberString<T>
   plus?: NumberString<T>
   minus?: NumberString<T>
@@ -43,20 +48,16 @@ export interface RollOptions<T extends number | 'inclusive' = 'inclusive'> {
   explode?: boolean
 }
 
-export interface RollParameters extends RollOptions<number> {
-  rolls: number
+export interface RollParameters extends Omit<RandsumOptions<boolean, number>, 'detailed' | 'randomizer'> {
+  quantity: number
   notation?: string
 }
 
-export interface RollResult extends RollParameters {
+export interface RollResult {
   total: number
   rollTotals: number[]
   initialRollTotals: number[]
+  rollParameters: RollParameters
   modifyInitialRolls: (callbackFunction: (results: number[]) => number) => number
   modifyModifiedRolls: (callbackFunction: (results: number[]) => number) => number
-}
-
-export interface UserOptions<D extends boolean = boolean> {
-  detailed?: D
-  randomizer?: (sides: NumberString) => number
 }

@@ -9,14 +9,14 @@ export function generateRolls(
 ): [number, number[]] {
   let modifiedRollTotals = [...rollTotals]
 
-  const { unique, explode, reroll, plus, minus, cap, sides, rolls, replace, drop } = rollParameters
+  const { unique, explode, reroll, plus, minus, cap, sides, quantity, replace, drop } = rollParameters
 
   if (reroll !== undefined) {
     modifiedRollTotals = applyReroll(modifiedRollTotals, reroll, rollOne)
   }
 
   if (unique !== undefined) {
-    modifiedRollTotals = applyUnique(modifiedRollTotals, { sides, rolls, unique }, rollOne)
+    modifiedRollTotals = applyUnique(modifiedRollTotals, { sides, quantity, unique }, rollOne)
   }
 
   if (replace !== undefined) {
