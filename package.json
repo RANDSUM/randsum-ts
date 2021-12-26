@@ -23,7 +23,8 @@
     "postinstall": "husky install",
     "prepublish": "yarn build",
     "prepublishOnly": "pinst --disable",
-    "postpublish": "pinst --enable"
+    "postpublish": "pinst --enable",
+    "postversion": "git push && git push --tags"
   },
   "files": [
     "dist/**/*"
