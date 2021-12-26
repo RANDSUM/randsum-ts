@@ -48,6 +48,8 @@ randsum({ sides: 20, quantity: 6 })
 ### Plus
 
 **Key: `+`**
+Add values to the sum total of the rolled dice.
+
 
 ```md
 Add 2 to the final result
@@ -68,6 +70,7 @@ randsum({ sides: 20, quantity: 6, plus: 5 })
 ### Minus
 
 **Key: `-`**
+Subtract values to the sum total of the rolled dice
 
 ```md
 Subtract 2 from the final result
@@ -87,9 +90,12 @@ randsum({ sides: 20, quantity: 6, minus: 5 })
 
 ### Drop
 
+Remove values from the pool of rolled dice
+
 #### Highest
 
 **Key: `h | H`**
+Remove the highest value(s)
 
 ```md
 Drop Highest Die
@@ -121,6 +127,7 @@ randsum({ sides: 20, quantity: 6, drop: { highest: 3 }})
 #### Lowest
 
 **Key: `l | L`**
+Remove the lowest value(s)
 
 ```md
 Drop Lowest Die
@@ -152,6 +159,7 @@ randsum({ sides: 20, quantity: 6, drop: { lowest: 3 }})
 #### Greater Than, Less than, Exact
 
 **Key: `d | D`**
+Remove Dice greater than, lesser than, or equal to value(s)
 
 ```md
 Drop rolls greater than 17
@@ -184,6 +192,7 @@ randsum({ sides: 20, quantity: 6, drop: { greaterThan: 15, lessThan:5, exactly: 
 ### Cap
 
 **Key: `c | C`**
+Reduce all values above a certain value or increase all values below a certain value
 
 ```md
 Cap rolls greater than 18 to be 18
@@ -212,6 +221,7 @@ randsum({ sides: 20, quantity: 6, cap: { greaterThan: 15, lessThan:5, }})
 ### Reroll
 
 **Key: `r | R`**
+Reroll all values above, below, or equal to certain values
 
 ```md
 Reroll rolls greater than 17
@@ -248,6 +258,7 @@ randsum({ sides: 20, quantity: 6, reroll: { above: 15, below:5, on: [10], maxRer
 ### Replace
 
 **Key: `v | V`**
+Replace all values above, below, or equal to certain values with other values
 
 ```md
 Replace any die that rolls a 8 with a 12
@@ -280,6 +291,8 @@ randsum({ sides: 20, quantity: 6, replace: [{ from: { above: 15 }, to: 20, }, { 
 ### Unique
 
 **Key: `u | U`**
+Enforce all rolls in a given pool to be unique
+**Note: Rolls whose quantitiy of dice exceed the number of sides will fail!**
 
 ```md
 Force all rolls to be unique
@@ -290,9 +303,6 @@ Allow 5's and 10's to be repeated, keep all others unique
 
 4d20U{5,10}
 ```
-
-**Note: Rolls whose quantitiy of dice exceed the number of sides will fail!**
-
 In `randsum`:
 
 ```ts
@@ -312,6 +322,8 @@ randsum({ sides: 20, quantity: 6, unique: {notUnique: [5,10] }})
 ### Explode
 
 **Key: `!`**
+Roll additional dice whenever a die in the pool rolls its maximum value
+
 
 ```md
 Roll an additional die every time you roll maximum value of a die
