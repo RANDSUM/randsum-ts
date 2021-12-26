@@ -4,15 +4,8 @@ import { diceNotationPattern } from 'utils'
 import {
   parseCapNotation,
   parseDropConstraintsNotation,
-  parseDropHighNotation,
-  parseDropLowNotation,
-  parseExplodeNotation,
-  parseMinusNotation,
-  parsePlusNotation,
   parseReplaceNotation,
   parseRerollNotation,
-  parseRollsNotation,
-  parseSideNotation,
   parseUniqeNotation,
 } from './notationParsers'
 
@@ -41,11 +34,12 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   const coreNotation = findMatch(formattedNotations, diceNotationPattern) as DiceNotation
+  const [rolls, sides] = coreNotation.split('d').map(number => Number(number))
 
   let rollParameters: RollParameters = {
     notation: formattedNotations,
-    ...parseSideNotation(coreNotation),
-    ...parseRollsNotation(coreNotation),
+    sides,
+    rolls,
   }
 
   const dropHighMatch = findMatch(formattedNotations, dropHigh)
@@ -54,7 +48,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
       ...rollParameters,
       drop: {
         ...rollParameters.drop,
-        ...parseDropHighNotation(dropHighMatch),
+        highest: Number(dropHighMatch.split('h')[1]) || 1,
       },
     }
   }
@@ -65,7 +59,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
       ...rollParameters,
       drop: {
         ...rollParameters.drop,
-        ...parseDropLowNotation(dropLowMatch),
+        lowest: Number(dropLowMatch.split('l')[1]) || 1,
       },
     }
   }
@@ -85,7 +79,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   if (explodeMatch) {
     rollParameters = {
       ...rollParameters,
-      ...parseExplodeNotation(explodeMatch),
+      explode: !!explodeMatch,
     }
   }
 
@@ -125,7 +119,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   if (plusMatch) {
     rollParameters = {
       ...rollParameters,
-      ...parsePlusNotation(plusMatch),
+      plus: Number(notationString.split('+')[1]),
     }
   }
 
@@ -133,7 +127,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   if (minusMatch) {
     rollParameters = {
       ...rollParameters,
-      ...parseMinusNotation(minusMatch),
+      minus: Number(notationString.split('-')[1]),
     }
   }
 
