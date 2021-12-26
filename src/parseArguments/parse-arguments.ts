@@ -1,8 +1,16 @@
 import { parseNotation } from 'parseArguments/parseNotation'
-import { RandsumPrimeArgument, RollParameters } from 'types'
-import { isDiceNotation, isRollOptions } from 'utils'
+import { DiceNotation, RandsumPrimeArgument, RollOptions, RollParameters } from 'types'
+import { diceNotationPattern } from 'utils'
 
 import { convertOptionsToParameters } from './convertOptionsToParameters'
+
+function isRollOptions(argument: RandsumPrimeArgument): argument is RollOptions {
+  return typeof argument === 'object'
+}
+
+function isDiceNotation(argument: unknown): argument is DiceNotation {
+  return !!diceNotationPattern.test(String(argument))
+}
 
 export function parseArguments(primeArgument: RandsumPrimeArgument): RollParameters {
   if (isDiceNotation(primeArgument)) {
