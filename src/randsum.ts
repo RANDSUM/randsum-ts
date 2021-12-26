@@ -4,9 +4,9 @@ import {
   DiceNotation,
   NumberString,
   Options,
+  PrimeArgument,
   RandsumDynamicReturn,
   RandsumOptions,
-  RandsumPrimeArgument,
   RollResult,
 } from 'types'
 
@@ -28,7 +28,7 @@ export function randsum<D extends boolean>(
   rollOptions: Options,
   randsumOptions: RandsumOptions<D>,
 ): RandsumDynamicReturn<D>
-export function randsum(primeArgument: RandsumPrimeArgument, randsumOptions?: RandsumOptions): number | RollResult {
+export function randsum(primeArgument: PrimeArgument, randsumOptions?: RandsumOptions): number | RollResult {
   const { customRandomizer, detailed } = randsumOptions || {}
   const { sides, rolls, ...rollParameters } = parseArguments(primeArgument)
 

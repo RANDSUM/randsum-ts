@@ -49,7 +49,7 @@ export interface RollOptions<T extends Strict = undefined> {
   explode?: boolean
 }
 
-export type RandsumPrimeArgument = NumberString | RollOptions | DiceNotation
+export type PrimeArgument = NumberString | RollOptions | DiceNotation
 
 export interface RandsumOptions<D = boolean> {
   detailed?: D
@@ -62,7 +62,7 @@ export interface RollParameters extends RollOptions<'strict'> {
 }
 
 export interface RollResult extends RollParameters {
-  args: [RandsumPrimeArgument, RandsumOptions | undefined]
+  args: [PrimeArgument, RandsumOptions | undefined]
   total: number
   rollTotals: RollTotals
   initialRollTotals: NumberString<'strict'>[]
