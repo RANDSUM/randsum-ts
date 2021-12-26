@@ -1,10 +1,10 @@
 import { parseNotation } from 'parseArguments/parseNotation'
-import { DiceNotation, RandsumPrimeArgument, RollOptions, RollParameters } from 'types'
+import { DiceNotation, Options, RandsumPrimeArgument, RollParameters } from 'types'
 import { diceNotationPattern } from 'utils'
 
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 
-function isRollOptions(argument: RandsumPrimeArgument): argument is RollOptions {
+function isRollOptions(argument: RandsumPrimeArgument): argument is Options {
   return typeof argument === 'object'
 }
 

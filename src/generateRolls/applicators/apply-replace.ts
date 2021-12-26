@@ -2,10 +2,7 @@ import { ReplaceOptions, RollTotals } from 'types'
 
 import { applySingleCap } from '.'
 
-export function applyReplace(
-  rollTotals: RollTotals,
-  replace: ReplaceOptions<'parameters'> | ReplaceOptions<'parameters'>[],
-) {
+export function applyReplace(rollTotals: RollTotals, replace: ReplaceOptions<'strict'> | ReplaceOptions<'strict'>[]) {
   const parameters = Array.isArray(replace) ? replace : [replace]
 
   let replaceRolls = rollTotals

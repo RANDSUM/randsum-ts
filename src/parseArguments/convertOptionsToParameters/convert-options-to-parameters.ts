@@ -1,4 +1,4 @@
-import { RollOptions } from 'types'
+import { Options } from 'types'
 
 import { convertCapOptionsToParameters } from './convert-cap-options-to-parameters'
 import { convertDropOptionsToParameters } from './convert-drop-options-to-parameters'
@@ -16,7 +16,7 @@ export function convertOptionsToParameters({
   reroll,
   unique,
   ...restOptions
-}: RollOptions<'options'>): RollOptions<'parameters'> {
+}: Options): Options<'strict'> {
   return {
     ...restOptions,
     rolls: rolls ? Number(rolls) : undefined,

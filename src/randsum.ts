@@ -3,19 +3,19 @@ import { parseArguments } from 'parseArguments'
 import {
   DiceNotation,
   NumberString,
+  Options,
   RandsumDynamicReturn,
   RandsumOptions,
   RandsumPrimeArgument,
-  RollOptions,
   RollResult,
 } from 'types'
 
 export function randsum(sides: NumberString): number
 export function randsum(notation: DiceNotation): number
-export function randsum(rollOptions: RollOptions): number
+export function randsum(rollOptions: Options): number
 export function randsum(sides: NumberString, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
 export function randsum(notation: DiceNotation, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
-export function randsum(rollOptions: RollOptions, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
+export function randsum(rollOptions: Options, randsumOptions: Pick<RandsumOptions, 'customRandomizer'>): number
 export function randsum<D extends boolean>(
   sides: NumberString,
   randsumOptions: RandsumOptions<D>,
@@ -25,7 +25,7 @@ export function randsum<D extends boolean>(
   randsumOptions: RandsumOptions<D>,
 ): RandsumDynamicReturn<D>
 export function randsum<D extends boolean>(
-  rollOptions: RollOptions,
+  rollOptions: Options,
   randsumOptions: RandsumOptions<D>,
 ): RandsumDynamicReturn<D>
 export function randsum(primeArgument: RandsumPrimeArgument, randsumOptions?: RandsumOptions): number | RollResult {

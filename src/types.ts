@@ -1,13 +1,13 @@
 type Strict = 'strict' | undefined
-export type NumberString<T extends 'strict' | undefined> = T extends 'parameters' ? number : number | `${number}`
+export type NumberString<T extends 'strict' | undefined> = T extends 'strict' ? number : number | `${number}`
 
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
-export type RollTotals = NumberString<'parameters'>[]
+export type RollTotals = NumberString<'strict'>[]
 
 export type RollDie = () => number
 
-export interface DropOptions<T extends OptionsParameters = 'options'> {
+export interface DropOptions<T extends Strict = undefined> {
   highest?: NumberString<T>
   lowest?: NumberString<T>
   greaterThan?: NumberString<T>
@@ -15,26 +15,26 @@ export interface DropOptions<T extends OptionsParameters = 'options'> {
   exact?: NumberString<T>[]
 }
 
-export interface CapOptions<T extends OptionsParameters = 'options'> {
+export interface CapOptions<T extends Strict = undefined> {
   above?: NumberString<T>
   below?: NumberString<T>
 }
 
-export interface RerollOptions<T extends OptionsParameters = 'options'> extends CapOptions<T> {
+export interface RerollOptions<T extends Strict = undefined> extends CapOptions<T> {
   on?: NumberString<T> | NumberString<T>[]
   maxReroll?: NumberString<T>
 }
 
-export interface ReplaceOptions<T extends OptionsParameters = 'options'> {
+export interface ReplaceOptions<T extends Strict = undefined> {
   from: NumberString<T> | CapOptions<T>
   to: NumberString<T>
 }
 
-export interface UniqueOptions<T extends OptionsParameters = 'options'> {
+export interface UniqueOptions<T extends Strict = undefined> {
   notUnique: NumberString<T>[]
 }
 
-export interface RollOptions<T extends OptionsParameters = 'options'> {
+export interface RollOptions<T extends Strict = undefined> {
   rolls?: NumberString<T>
   sides: NumberString<T>
   plus?: NumberString<T>
@@ -47,15 +47,15 @@ export interface RollOptions<T extends OptionsParameters = 'options'> {
   explode?: boolean
 }
 
-export type RandsumPrimeArgument = NumberString<'options'> | RollOptions | DiceNotation
+export type RandsumPrimeArgument = NumberString<undefined> | RollOptions | DiceNotation
 
 export interface RandsumOptions<D = boolean> {
   detailed?: D
-  customRandomizer?: (sides: NumberString<'options'>) => number
+  customRandomizer?: (sides: NumberString<undefined>) => number
 }
 
-export interface RollParameters extends RollOptions<'parameters'> {
-  rolls: NumberString<'parameters'>
+export interface RollParameters extends RollOptions<'strict'> {
+  rolls: NumberString<'strict'>
   notation?: string
 }
 
@@ -63,7 +63,7 @@ export interface RollResult extends RollParameters {
   args: [RandsumPrimeArgument, RandsumOptions | undefined]
   total: number
   rollTotals: RollTotals
-  initialRollTotals: NumberString<'parameters'>[]
+  initialRollTotals: NumberString<'strict'>[]
   modifyInitialRolls: (callbackFunction: (results: RollTotals) => number) => number
   modifyModifiedRolls: (callbackFunction: (results: RollTotals) => number) => number
 }
