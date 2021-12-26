@@ -5,9 +5,9 @@ export type NumberString<T extends OptionsParameters = 'options'> = T extends 'p
 
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
-export type RollDie = () => number
-
 export type RollTotals = NumberString<'parameters'>[]
+
+export type RollDie = () => number
 
 export interface DropOptions<T extends OptionsParameters = 'options'> {
   highest?: NumberString<T>
