@@ -1,5 +1,7 @@
 type Strict = 'strict' | undefined
-export type NumberString<T extends 'strict' | undefined> = T extends 'strict' ? number : number | `${number}`
+export type NumberString<T extends 'strict' | undefined = undefined> = T extends 'strict'
+  ? number
+  : number | `${number}`
 
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
@@ -47,11 +49,11 @@ export interface RollOptions<T extends Strict = undefined> {
   explode?: boolean
 }
 
-export type RandsumPrimeArgument = NumberString<undefined> | RollOptions | DiceNotation
+export type RandsumPrimeArgument = NumberString | RollOptions | DiceNotation
 
 export interface RandsumOptions<D = boolean> {
   detailed?: D
-  customRandomizer?: (sides: NumberString<undefined>) => number
+  customRandomizer?: (sides: NumberString) => number
 }
 
 export interface RollParameters extends RollOptions<'strict'> {
