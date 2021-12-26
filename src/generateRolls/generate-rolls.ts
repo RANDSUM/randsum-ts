@@ -1,5 +1,4 @@
 import { RollDie, RollParameters, RollTotals } from 'types'
-import { sumArray } from 'utils'
 
 import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, applyUnique } from './applicators'
 
@@ -36,7 +35,7 @@ export function generateRolls(
     modifiedRollTotals = applyExplode(modifiedRollTotals, { sides }, rollDie)
   }
 
-  let modifiedTotal = sumArray([...modifiedRollTotals])
+  let modifiedTotal = Number([...modifiedRollTotals].reduce((total, roll) => Number(total) + Number(roll), 0))
 
   if (plus !== undefined) {
     modifiedTotal = modifiedTotal + plus
