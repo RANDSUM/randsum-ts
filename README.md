@@ -95,14 +95,22 @@ With a `RollResult`, you can look at the specific details of your roll.
 const result = randsum(20, { quantity: 4, detailed: true}) // Roll 4 20 sided die, returns a RollResult
 
 result.rolls =
-```
 
 Check out the Typedocs RollResult page for more information.
+
+#### Regarding order
+
+As of version 1.0.0, `randsum` will attempt to resolve modifiers to a dice roll in an order. Unless the [syntax](/RANDSUM_DICE_NOTATION.md) supports multiple values, it is unlikely you will be able to stack values (for instance, dice notation with multiple modifiers - `4d20+2+2` - will fail).
+
+When resolving modifiers, randsum will do so in this order:
+
+`reroll -> unique -> replace -> cap -> drop -> explode -> plus -> minus`
 
 ## Further Reading
 
 - [TypeDoc Types](https://alxjrvs.github.io/randsum)
 - [Randsum Dice Notation](/RANDSUM_DICE_NOTATION.md)
+- [Sophie's Dice Notation](https://sophiehoulden.com/dice/documentation/notation.html)
 
 ## Contributing
 
@@ -111,10 +119,6 @@ Check out the Typedocs RollResult page for more information.
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
-
-## Attributions
-
-I looked high and wide for a consensus on a sort "Extended Standard Dice Notation", and could not find anything. The most extensive and thought-out documentation I found was for the game's [Sophie's Dice](https://sophiehoulden.com/dice/documentation/notation.html#keep). Thanks, [Sophie](https://www.patreon.com/SophieHoulden)! Your examples were invaluable. Consider buying their [games](https://sophieh.itch.io/)!
 
 ## Why did you make this?
 
