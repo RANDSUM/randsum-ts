@@ -1,7 +1,9 @@
 import { DropOptions } from 'types'
 
-export function parseDropConstraintsNotation(notationString: string) {
-  let dropConstraintParameters: Pick<DropOptions<'strict'>, 'exact' | 'greaterThan' | 'lessThan'> = { exact: [] }
+export function parseDropConstraintsNotation(
+  notationString: string,
+): Pick<DropOptions<number>, 'exact' | 'greaterThan' | 'lessThan'> {
+  let dropConstraintParameters: Pick<DropOptions<number>, 'exact' | 'greaterThan' | 'lessThan'> = { exact: [] }
   const constraints = notationString.split('d')[2].replace(/{/g, '').replace(/}/g, '').split(',')
   for (const constraint of constraints) {
     if (constraint.includes('<')) {

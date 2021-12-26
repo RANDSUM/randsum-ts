@@ -1,10 +1,10 @@
-import { RollParameters, RollTotals } from 'types'
+import { RollParameters } from 'types'
 
 import { generateRolls } from './generate-rolls'
 
-const mockRandomizer = () => 200
+const mockRandomizer = (): number => 200
 describe('generateRolls', () => {
-  const rollTotals: RollTotals = [1, 2, 3, 4]
+  const rollTotals = [1, 2, 3, 4]
   const baseParameters: RollParameters = { sides: 6, rolls: rollTotals.length }
 
   describe('when given roll totals with no modifiers', () => {
@@ -14,7 +14,7 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with a "unique" modifier', () => {
-    const duplicateRollTotals: RollTotals = [1, 1, 2, 3]
+    const duplicateRollTotals = [1, 1, 2, 3]
     const uniqueParameters: RollParameters = { sides: 4, rolls: duplicateRollTotals.length, unique: true }
 
     test('it re-rolls non-unique modifiers', () => {
@@ -30,7 +30,7 @@ describe('generateRolls', () => {
     })
 
     describe('and the # of rolls is greater than the sides of the die', () => {
-      const overflowRollTotals: RollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
+      const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
       const overflowParameters: RollParameters = { ...uniqueParameters, rolls: overflowRollTotals.length }
 
       test('it throws an error', () => {
@@ -42,7 +42,7 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with a "drop" modifier', () => {
-    const longerRollTotals: RollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     const dropParameters: RollParameters = {
       sides: 10,
       rolls: longerRollTotals.length,
@@ -88,7 +88,7 @@ describe('generateRolls', () => {
   })
 
   describe('when given roll totals with an "explode" modifier', () => {
-    const explodeRollTotals: RollTotals = [1, 2, 3, 6]
+    const explodeRollTotals = [1, 2, 3, 6]
     const explodeParameters: RollParameters = { ...baseParameters, explode: true }
 
     test('it returns the total with all values matching the queries rerolled', () => {

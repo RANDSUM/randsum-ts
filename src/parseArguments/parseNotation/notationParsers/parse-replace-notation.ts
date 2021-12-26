@@ -1,4 +1,6 @@
-export function parseReplaceNotation(notationString: string) {
+import { RollParameters } from 'types'
+
+export function parseReplaceNotation(notationString: string): Pick<RollParameters, 'replace'> {
   const replaceOptions = notationString
     .split('v')[1]
     .replace(/{/g, '')

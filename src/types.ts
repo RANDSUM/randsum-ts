@@ -1,73 +1,63 @@
-type Strict = 'strict' | undefined
-export type NumberString<T extends 'strict' | undefined = undefined> = T extends 'strict'
-  ? number
-  : number | `${number}`
-
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
-export type RollTotals = NumberString<'strict'>[]
+export type Inclusive = 'inclusive'
+type NumberStringType = number | Inclusive
+export type NumberString<T extends NumberStringType = Inclusive> = T extends number ? number : number | `${number}`
 
-export type RollDie = () => number
-
-export interface DropOptions<T extends Strict = undefined> {
+export interface DropOptions<T extends NumberStringType = Inclusive> {
   highest?: NumberString<T>
   lowest?: NumberString<T>
   greaterThan?: NumberString<T>
   lessThan?: NumberString<T>
-  exact?: NumberString<T>[]
+  exact?: Array<NumberString<T>>
 }
 
-export interface CapOptions<T extends Strict = undefined> {
+export interface CapOptions<T extends NumberStringType = Inclusive> {
   above?: NumberString<T>
   below?: NumberString<T>
 }
 
-export interface RerollOptions<T extends Strict = undefined> extends CapOptions<T> {
-  on?: NumberString<T> | NumberString<T>[]
+export interface RerollOptions<T extends NumberStringType = Inclusive> extends CapOptions<T> {
+  on?: NumberString<T> | Array<NumberString<T>>
   maxReroll?: NumberString<T>
 }
 
-export interface ReplaceOptions<T extends Strict = undefined> {
+export interface ReplaceOptions<T extends NumberStringType = Inclusive> {
   from: NumberString<T> | CapOptions<T>
   to: NumberString<T>
 }
 
-export interface UniqueOptions<T extends Strict = undefined> {
-  notUnique: NumberString<T>[]
+export interface UniqueOptions<T extends NumberStringType = Inclusive> {
+  notUnique: Array<NumberString<T>>
 }
 
-export interface RollOptions<T extends Strict = undefined> {
+export interface RollOptions<T extends NumberStringType = Inclusive> {
   rolls?: NumberString<T>
   sides: NumberString<T>
   plus?: NumberString<T>
   minus?: NumberString<T>
   cap?: CapOptions<T>
   drop?: DropOptions<T>
-  replace?: ReplaceOptions<T> | ReplaceOptions<T>[]
-  reroll?: RerollOptions<T> | RerollOptions<T>[]
+  replace?: ReplaceOptions<T> | Array<ReplaceOptions<T>>
+  reroll?: RerollOptions<T> | Array<RerollOptions<T>>
   unique?: boolean | UniqueOptions<T>
   explode?: boolean
 }
 
-export type PrimeArgument = NumberString | RollOptions | DiceNotation
-
-export interface RandsumOptions<D = boolean> {
-  detailed?: D
-  customRandomizer?: (sides: NumberString) => number
-}
-
-export interface RollParameters extends RollOptions<'strict'> {
-  rolls: NumberString<'strict'>
+export interface RollParameters extends RollOptions<number> {
+  rolls: number
   notation?: string
 }
 
 export interface RollResult extends RollParameters {
-  args: [PrimeArgument, RandsumOptions | undefined]
   total: number
-  rollTotals: RollTotals
-  initialRollTotals: NumberString<'strict'>[]
-  modifyInitialRolls: (callbackFunction: (results: RollTotals) => number) => number
-  modifyModifiedRolls: (callbackFunction: (results: RollTotals) => number) => number
+  rollTotals: number[]
+  initialRollTotals: number[]
+  modifyInitialRolls: (callbackFunction: (results: number[]) => number) => number
+  modifyModifiedRolls: (callbackFunction: (results: number[]) => number) => number
 }
 
-export type NumberOrResult<T extends boolean> = T extends true ? RollResult : number
+export interface UserOptions<D extends boolean = boolean> {
+  detailed?: D
+  customRandomizer?: (sides: NumberString) => number
+}

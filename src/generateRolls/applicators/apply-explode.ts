@@ -1,7 +1,11 @@
-import { RollDie, RollParameters, RollTotals } from 'types'
+import { RollParameters } from 'types'
 
-export function applyExplode(rollTotals: RollTotals, { sides }: Pick<RollParameters, 'sides'>, rollDie: RollDie) {
+export function applyExplode(
+  rollTotals: number[],
+  { sides }: Pick<RollParameters, 'sides'>,
+  rollOne: () => number,
+): number[] {
   const explodeCount = rollTotals.filter(roll => roll === sides)
-  const explodeResults = [...new Array(explodeCount)].map(() => rollDie())
+  const explodeResults = [...new Array(explodeCount)].map(() => rollOne())
   return [...rollTotals, ...explodeResults]
 }
