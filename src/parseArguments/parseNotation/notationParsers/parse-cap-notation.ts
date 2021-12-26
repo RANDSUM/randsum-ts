@@ -8,5 +8,5 @@ export function parseCapNotation(notationString: string) {
     }
     capParameters = { ...capParameters, above: Number(note.replace('>', '')) }
   }
-  return capParameters
+  return { cap: capParameters }
 }

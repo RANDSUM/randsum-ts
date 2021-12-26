@@ -2,7 +2,7 @@ import { RerollOptions } from 'types'
 
 export function parseRerollNotation(notationString: string) {
   const parsedString = notationString.split('r')[1].replace(/{/g, '').replace(/}/g, ',!').split(',')
-  let rerollParameters: RerollOptions = { on: [] }
+  let rerollParameters: RerollOptions<'parameters'> = { on: [] }
   for (const notation of parsedString) {
     if (notation === '!') {
       continue
@@ -25,5 +25,5 @@ export function parseRerollNotation(notationString: string) {
     }
   }
 
-  return rerollParameters
+  return { reroll: rerollParameters }
 }

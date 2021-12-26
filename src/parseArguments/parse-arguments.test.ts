@@ -17,10 +17,22 @@ describe('parseArguments', () => {
 
   describe('given Roll Options', () => {
     test('returns a RollParameter matching the notation', () => {
-      expect(parseArguments({ rolls: 4, sides: '6', drop: { highest: 5 } })).toMatchObject({
+      expect(
+        parseArguments({
+          rolls: 4,
+          sides: '6',
+          drop: { highest: 5, lowest: '1', exact: [2, '3'] },
+          reroll: { on: ['2', 1] },
+          cap: { above: '2', below: 1 },
+          replace: [{ from: '6', to: '1' }],
+        }),
+      ).toMatchObject({
         rolls: 4,
         sides: 6,
-        drop: { highest: 5 },
+        drop: { highest: 5, lowest: 1, exact: [2, 3] },
+        reroll: { on: [2, 1] },
+        cap: { above: 2, below: 1 },
+        replace: [{ from: 6, to: 1 }],
       })
     })
   })
