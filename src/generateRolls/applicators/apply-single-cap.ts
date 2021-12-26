@@ -1,6 +1,6 @@
 import { CapOptions, NumberString } from 'types'
 
-export function parseSingleCap({ above, below }: CapOptions<'parameters'>, value?: NumberString<'parameters'>) {
+export function applySingleCap({ above, below }: CapOptions<'parameters'>, value?: NumberString<'parameters'>) {
   return (roll: NumberString<'parameters'>) => {
     if (above && roll > above) {
       return value || above

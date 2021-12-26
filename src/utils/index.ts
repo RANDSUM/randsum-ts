@@ -1,5 +1,1 @@
-export * from './is-dice-notation'
-export * from './is-roll-options'
-export * from './random-number'
-export * from './sum-array'
-export * from './times'
+export const diceNotationPattern = /(\d+)[Dd](\d+)/

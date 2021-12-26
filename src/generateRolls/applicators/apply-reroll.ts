@@ -6,7 +6,7 @@ function rerollRoll(
   rollDie: RollDie,
   index = 0,
 ): number {
-  if (Number(maxReroll) === index) {
+  if (maxReroll === index) {
     return roll
   }
   if (index === 99) {
@@ -24,19 +24,18 @@ function rerollRoll(
   }
 }
 
-export function parseRerollFactory(
+export function applyReroll(
+  rollTotals: RollTotals,
   reroll: RerollOptions<'parameters'> | RerollOptions<'parameters'>[],
   rollDie: RollDie,
 ) {
-  return function parseReroll(rollTotals: RollTotals) {
-    const parameters = Array.isArray(reroll) ? reroll : [reroll]
+  const parameters = Array.isArray(reroll) ? reroll : [reroll]
 
-    let rerollRolls = rollTotals
-    for (const rerollModifier of parameters) {
-      rerollRolls = rerollRolls.map(roll => {
-        return rerollRoll(roll, rerollModifier, rollDie)
-      })
-    }
-    return rerollRolls
+  let rerollRolls = rollTotals
+  for (const rerollModifier of parameters) {
+    rerollRolls = rerollRolls.map(roll => {
+      return rerollRoll(roll, rerollModifier, rollDie)
+    })
   }
+  return rerollRolls
 }
