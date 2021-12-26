@@ -1,6 +1,6 @@
-import { modifyRolls } from 'modifyRolls'
-import { parseArguments } from 'parseArguments'
-import { DiceNotation, NumberString, RandsumOptions, RollResult, UserOptions } from 'types'
+import { modifyRolls } from './modifyRolls'
+import { parseArguments } from './parseArguments'
+import { DiceNotation, NumberString, RandsumOptions, RollResult, UserOptions } from './types'
 
 export function randsum(sides: NumberString): number
 export function randsum(sides: NumberString, randsumOptions: Omit<RandsumOptions<false>, 'sides'>): number

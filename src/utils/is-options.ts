@@ -1,4 +1,4 @@
-import { DiceNotation, NumberString, RandsumOptions, UserOptions } from 'types'
+import { DiceNotation, NumberString, RandsumOptions, UserOptions } from '../types'
 
 export function isOptions(
   argument: NumberString | RandsumOptions | DiceNotation,

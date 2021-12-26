@@ -1,5 +1,4 @@
-import { ReplaceOptions } from 'types'
-
+import { ReplaceOptions } from '../../types'
 import { applySingleCap } from '.'
 
 export function applyReplace(

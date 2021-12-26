@@ -1,5 +1,4 @@
-import { RollParameters } from 'types'
-
+import { RollParameters } from '../types'
 import { modifyRolls } from './modify-rolls'
 
 const mockRandomizer = (): number => 200

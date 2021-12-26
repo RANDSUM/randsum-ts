@@ -1,5 +1,4 @@
-import { DiceNotation } from 'types'
-
+import { DiceNotation } from '../types'
 import { diceNotationPattern } from './dice-notation-pattern'
 
 export function isDiceNotation(argument: unknown): argument is DiceNotation {

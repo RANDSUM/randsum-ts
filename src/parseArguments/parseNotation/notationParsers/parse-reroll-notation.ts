@@ -1,4 +1,4 @@
-import { RerollOptions, RollParameters } from 'types'
+import { RerollOptions, RollParameters } from '../../../types'
 
 export function parseRerollNotation(notationString: string): Pick<RollParameters, 'reroll'> {
   const parsedString = notationString.split('r')[1].replace(/{/g, '').replace(/}/g, ',!').split(',')

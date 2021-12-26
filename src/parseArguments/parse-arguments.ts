@@ -1,8 +1,7 @@
-import { parseNotation } from 'parseArguments/parseNotation'
-import { DiceNotation, NumberString, RandsumOptions, RollParameters, UserOptions } from 'types'
-import { isDiceNotation, isOptions } from 'utils'
-
+import { DiceNotation, NumberString, RandsumOptions, RollParameters, UserOptions } from '../types'
+import { isDiceNotation, isOptions } from '../utils'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
+import { parseNotation } from './parseNotation'
 
 export function parseArguments(
   primeArgument: NumberString | RandsumOptions | DiceNotation,

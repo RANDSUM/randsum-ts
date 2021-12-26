@@ -1,5 +1,4 @@
-import { DiceNotation, RollParameters } from 'types'
-
+import { DiceNotation, RollParameters } from '../types'
 import { parseArguments } from './parse-arguments'
 
 describe('parseArguments', () => {
