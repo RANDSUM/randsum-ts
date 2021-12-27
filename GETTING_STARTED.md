@@ -22,6 +22,8 @@ console.log(foo) // a random number between 1 and 20
 
 ### Passing a `number` (or number-like `string`)
 
+---
+
 When a `number` (or `number`-like `string`)
 
 ```ts
@@ -37,6 +39,8 @@ randsum('20', { quantity: 4, randomizer: ... }) // Roll 4 20 sided die, using a 
 
 ### Passing a Dice Notation `string`
 
+---
+
 See the Randsum Dice Notation syntax document for more info.
 
 ```ts
@@ -51,6 +55,8 @@ randsum('4d20H+2', { randomizer: ... }) // Roll 4 20 sided die, drop highest, ad
 
 ### Passing in Options
 
+---
+
 You can pass in a `RandsumOptions` as the first argument. The only required key is `sides`, which represents the number of sides on the die.
 
 ```ts
@@ -64,6 +70,8 @@ randsum({ sides: 20, quantity: 4, drop: { highest: true }, plus: 2, randomizer: 
 ```
 
 ### returning a `RollResult`
+
+---
 
 You can mark a roll as `detailed` to return a `RollResult` instead of a simple number.
 
