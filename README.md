@@ -10,7 +10,6 @@
 
 ## Further Reading
 
-
 [Getting Started](/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
 [Randsum Dice Notation](/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
@@ -21,10 +20,9 @@
 
 [Sophie's Dice Notation](https://sophiehoulden.com/dice/documentation/notation.html) - a great dice notation guide that helped me along the way
 
-[_why's poigniant guide to ruby](https://poignant.guide/) - _why not?
+[\_why's poigniant guide to ruby](https://poignant.guide/) - \_why not?
 
 ## Why did you make this?
-
 
 Sometime around 2012, I decided I wanted to learn to program. I had installed ruby on the best laptop six-hundred dollars could buy, set to make a dice roller as an easy first project.
 

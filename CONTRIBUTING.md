@@ -43,10 +43,9 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 - What actually happens
 - Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
 
-People *love* thorough bug reports. I'm not even kidding.
+People _love_ thorough bug reports. I'm not even kidding.
 
 ## Use the Linter
-
 
 The linting here is meticulously engineered to my very specific tastes - though I'm always open to new ideas!
 
@@ -57,11 +56,9 @@ The linting here is meticulously engineered to my very specific tastes - though 
 
 ## License
 
-
 By contributing, you agree that your contributions will be licensed under its MIT License.
 
 ## References
-
 
 This document was adapted from [
 briandk](https://gist.github.com/briandk/3d2e8b3ec8daf5a27a62) on github, who adapted it from the open-source contribution guidelines for [Facebook's Draft](https://github.com/facebook/draft-js/blob/a9316a723f9e918afde44dea68b5f9f39b7d9b00/CONTRIBUTING.md)
