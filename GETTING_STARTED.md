@@ -60,7 +60,7 @@ randsum('4d20H+2', { randomizer: ... }) // Roll 4 20 sided die, drop highest, ad
 You can pass in a `RandsumOptions` as the first argument. The only required key is `sides`, which represents the number of sides on the die.
 
 ```ts
-randsum({sides: 20}) // Roll a single 20 sided die
+randsum({ sides: 20 }) // Roll a single 20 sided die
 ```
 
 You can use any keys of `RandsumOptions` to further modify your roll:
@@ -80,7 +80,7 @@ randsum(20, { quantity: 4 }) // Roll 4 20 sided die, returns a number
 randsum('4d20') // Roll 4 20 sided die, returns a number
 randsum({ sides: 20, quantity: 4 }) // Roll 4 20 sided die, returns a number
 
-randsum(20, { quantity: 4, detailed: true}) // Roll 4 20 sided die, returns a RollResult
+randsum(20, { quantity: 4, detailed: true }) // Roll 4 20 sided die, returns a RollResult
 randsum('4d20', { detailed: true }) // Roll 4 20 sided die, returns a RollResult
 randsum({ sides: 20, quantity: 4, detailed: true }) // Roll 4 20 sided die, returns a RollResult
 ```
@@ -98,3 +98,4 @@ Check out the Typedocs RollResult page for more information.
 
 #### Regarding order
 `randsum` will attempt to resolve modifiers in a particular order. Check out [Regarding Order](/ORDER.md) for more.
+```
