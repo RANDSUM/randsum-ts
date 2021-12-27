@@ -62,14 +62,6 @@ describe('Randsum', () => {
     test('result.quantity returns the number of dice rolled', () => {
       expect(result.rollParameters.quantity).toEqual(2)
     })
-
-    test('result.modifyInitialRolls returns a function that accepts a callback that gets passed the rolls', () => {
-      expect(result.modifyInitialRolls(rolls => 40 * rolls.length)).toEqual(80)
-    })
-
-    test('result.modifyModifiedRolls returns a function that accepts a callback that gets passed the rolls', () => {
-      expect(result.modifyModifiedRolls(rolls => 40 * rolls.length)).toEqual(80)
-    })
   })
 
   describe('with bad parameters', () => {
