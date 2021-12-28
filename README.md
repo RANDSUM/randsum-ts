@@ -20,7 +20,7 @@
 
 [Sophie's Dice Notation](https://sophiehoulden.com/dice/documentation/notation.html) - a great dice notation guide that helped me along the way
 
-[\_why's poigniant guide to ruby](https://poignant.guide/) - \_why not?
+[\_why's poignant guide to ruby](https://poignant.guide/) - \_why not?
 
 ## Why did you make this?
 
