@@ -12,7 +12,9 @@
 
 It's a dice roller! Specifically, it's a random number generator that generates numbers from 1-N, rather than traditional random number generators, which work from 0-(N-1).
 
-It accepts basic number and number strings, dice notation, and even its own API. Check out the docs below for more info!
+It accepts basic number and number strings, as well as dice notation for more complicated dice operations.
+
+Check out the docs below for more info!
 
 ## Further Reading
 
