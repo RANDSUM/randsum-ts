@@ -108,15 +108,15 @@ export interface RandsumOptions<D extends boolean = boolean, T extends number | 
   plus?: NumberString<T>
   /** Number to be subtracted to final result of roll */
   minus?: NumberString<T>
-  /** Options related to the "Cap" modifier { @link CapOptions } */
+  /** Options related to the "Cap" modifier {@link CapOptions} */
   cap?: CapOptions<T>
-  /** Options related to the "Drop" modifier { @link DropOptions } */
+  /** Options related to the "Drop" modifier {@link DropOptions} */
   drop?: DropOptions<T>
-  /** Options related to the "Replace" modifier { @link ReplaceOptions } */
+  /** Options related to the "Replace" modifier {@link ReplaceOptions} */
   replace?: ReplaceOptions<T> | Array<ReplaceOptions<T>>
-  /** Options related to the "Reroll" modifier { @link RerollOptions } */
+  /** Options related to the "Reroll" modifier {@link RerollOptions} */
   reroll?: RerollOptions<T> | Array<RerollOptions<T>>
-  /** Options related to the "Unique" modifier { @link UniqueOptions } */
+  /** Options related to the "Unique" modifier {@link UniqueOptions} */
   unique?: boolean | UniqueOptions<T>
   /** Options related to the "Explode" modifier */
   explode?: boolean
