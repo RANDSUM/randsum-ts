@@ -8,6 +8,12 @@
 
 [![NPM](https://nodei.co/npm/randsum.png?downloads=true)](https://www.npmjs.com/package/randsum)
 
+## What is this?
+
+It's a dice roller! Specifically, it's a random number generator that generates numbers from 1-N, rather than traditional random number generators, which work from 0-(N-1).
+
+It accepts basic number and number strings, dice notation, and even its own API. Check out the docs below for more info!
+
 ## Further Reading
 
 [Getting Started](https://github.com/alxjrvs/randsum/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`

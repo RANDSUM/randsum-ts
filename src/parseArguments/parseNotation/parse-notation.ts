@@ -32,7 +32,6 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   const [quantity, sides] = coreNotation.split('d').map(number => Number(number))
 
   let rollParameters: RollParameters = {
-    notation: formattedNotations,
     sides,
     quantity,
   }
