@@ -14,6 +14,8 @@ Add `randsum` to your package.json, or copy and paste one of these:
 
 ```ts
 import randsum from 'randsum'
+// or
+const randsum = require('randsum').default
 
 const foo = randsum(20)
 
