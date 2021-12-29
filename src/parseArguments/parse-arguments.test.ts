@@ -116,12 +116,26 @@ describe('parseArguments', () => {
     })
 
     describe('given a notation that contains a drop less than, greater than, and exact', () => {
-      const testString: DiceNotation = `${baseTestString}D{<2,>5,2,4}`
+      describe('simple', () => {
+        const testString: DiceNotation = `${baseTestString}D{<2,>5,2,4}`
 
-      test('returns a RollParameter matching the notation', () => {
-        expect(parseArguments(testString)).toMatchObject({
-          ...baseRollParameters,
-          drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] },
+        test('returns a RollParameter matching the notation', () => {
+          expect(parseArguments(testString)).toMatchObject({
+            ...baseRollParameters,
+            drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] },
+          })
+        })
+      })
+
+      describe('complex', () => {
+        const testString: DiceNotation = `400d20D{<2,>5,2,4}`
+
+        test('returns a RollParameter matching the notation', () => {
+          expect(parseArguments(testString)).toMatchObject({
+            quantity: 400,
+            sides: 20,
+            drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] },
+          })
         })
       })
     })
@@ -188,6 +202,7 @@ describe('parseArguments', () => {
           })
         })
       })
+
       describe('with a simple unique notation', () => {
         const testString: DiceNotation = `${baseTestString}U`
 
@@ -234,6 +249,33 @@ describe('parseArguments', () => {
             ...baseRollParameters,
             replace: { from: { below: 2 }, to: 6 },
           })
+        })
+      })
+    })
+    describe('With a complicated dice notation', () => {
+      const testString: DiceNotation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2,<6}3 U{5} ! +2 -5`
+
+      test('returns a RollParameter matching the notation', () => {
+        expect(parseArguments(testString)).toMatchObject({
+          quantity: 10,
+          sides: 20,
+          drop: {
+            exact: [2, 4],
+            greaterThan: 5,
+            highest: 2,
+            lessThan: 2,
+            lowest: 1,
+          },
+          plus: 2,
+          minus: 5,
+          cap: { above: 18, below: 2 },
+          reroll: { on: [5, 2], below: 6, maxReroll: 3 },
+          explode: true,
+          unique: { notUnique: [5] },
+          replace: [
+            { from: 1, to: 2 },
+            { from: { above: 2 }, to: 6 },
+          ],
         })
       })
     })
