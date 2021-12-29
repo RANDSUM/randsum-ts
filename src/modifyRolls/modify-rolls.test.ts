@@ -2,6 +2,7 @@ import { RollParameters } from '../types'
 import { modifyRolls } from './modify-rolls'
 
 const mockRandomizer = (): number => 200
+
 describe('modifyRolls', () => {
   const rolls = [1, 2, 3, 4]
   const baseParameters: RollParameters = { sides: 6, quantity: rolls.length }

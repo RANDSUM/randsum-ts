@@ -6,6 +6,7 @@ describe('parseArguments', () => {
     test('returns a RollParameter matching the notation', () => {
       expect(parseArguments('2')).toMatchObject({ quantity: 1, sides: 2 })
     })
+
     describe('and a complex RandsumOption', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments('2', { detailed: true })).toMatchObject({ quantity: 1, sides: 2, detailed: true })
@@ -252,6 +253,7 @@ describe('parseArguments', () => {
         })
       })
     })
+
     describe('With a complicated dice notation', () => {
       const testString: DiceNotation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2,<6}3 U{5} ! +2 -5`
 

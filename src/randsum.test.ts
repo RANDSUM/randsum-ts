@@ -48,7 +48,7 @@ describe('Randsum', () => {
     const result = randsum('2d20', { detailed: true })
 
     test('result.rolls returns an array of results as rolls', () => {
-      expect(result.rolls.length).toEqual(2)
+      expect(result.rolls).toHaveLength(2)
 
       for (const roll of result.rolls) {
         expect(Number.isInteger(roll)).toBe(true)
@@ -56,11 +56,11 @@ describe('Randsum', () => {
     })
 
     test('result.sides returns the number of sides of the dice rolled', () => {
-      expect(result.rollParameters.sides).toEqual(20)
+      expect(result.rollParameters.sides).toBe(20)
     })
 
     test('result.quantity returns the number of dice rolled', () => {
-      expect(result.rollParameters.quantity).toEqual(2)
+      expect(result.rollParameters.quantity).toBe(2)
     })
   })
 
