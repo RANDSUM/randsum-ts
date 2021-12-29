@@ -8,12 +8,15 @@
         "regexp",
         "simple-import-sort",
         "jest",
+        "jest-formatting",
         "unused-imports"
     ],
     "extends": [
         "standard-with-typescript",
-        "plugin:jest/recommended",
         "plugin:unicorn/recommended",
+        "plugin:jest/recommended",
+        "plugin:jest/style",
+        "plugin:jest-formatting/strict",
 
         "plugin:prettier/recommended"
     ],
