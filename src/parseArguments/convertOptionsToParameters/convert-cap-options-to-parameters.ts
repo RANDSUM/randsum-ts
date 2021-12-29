@@ -1,8 +1,8 @@
 import { CapOptions } from '../../types'
 
-export function convertCapOptionsToParameters({ above, below }: CapOptions): CapOptions<number> {
+export function convertCapOptionsToParameters({ greaterThan, lessThan }: CapOptions): CapOptions<number> {
   return {
-    above: above !== undefined ? Number(above) : undefined,
-    below: below !== undefined ? Number(below) : undefined,
+    greaterThan: greaterThan !== undefined ? Number(greaterThan) : undefined,
+    lessThan: lessThan !== undefined ? Number(lessThan) : undefined,
   }
 }

@@ -1,12 +1,12 @@
 import { CapOptions } from '../../types'
 
-export function applySingleCap({ above, below }: CapOptions<number>, value?: number) {
+export function applySingleCap({ greaterThan, lessThan }: CapOptions<number>, value?: number) {
   return (roll: number) => {
-    if (above !== undefined && roll > above) {
-      return value ?? above
+    if (greaterThan !== undefined && roll > greaterThan) {
+      return value ?? greaterThan
     }
-    if (below !== undefined && roll < below) {
-      return value ?? below
+    if (lessThan !== undefined && roll < lessThan) {
+      return value ?? lessThan
     }
     return roll
   }

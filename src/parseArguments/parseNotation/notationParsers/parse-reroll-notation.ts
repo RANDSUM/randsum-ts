@@ -2,17 +2,17 @@ import { RerollOptions, RollParameters } from '../../../types'
 
 export function parseRerollNotation(notationString: string): Pick<RollParameters, 'reroll'> {
   const parsedString = notationString.split('r')[1].replace(/{/g, '').replace(/}/g, ',!').split(',')
-  let rerollParameters: RerollOptions<number> = { on: [] }
+  let rerollParameters: RerollOptions<number> = { exact: [] }
   for (const notation of parsedString) {
     if (notation === '!') {
       continue
     }
     if (notation.includes('<')) {
-      rerollParameters = { ...rerollParameters, below: Number(notation.split('<')[1]) }
+      rerollParameters = { ...rerollParameters, lessThan: Number(notation.split('<')[1]) }
       continue
     }
     if (notation.includes('>')) {
-      rerollParameters = { ...rerollParameters, above: Number(notation.split('>')[1]) }
+      rerollParameters = { ...rerollParameters, greaterThan: Number(notation.split('>')[1]) }
       continue
     }
     if (notation.includes('!')) {
@@ -21,7 +21,10 @@ export function parseRerollNotation(notationString: string): Pick<RollParameters
     }
     rerollParameters = {
       ...rerollParameters,
-      on: [...(Array.isArray(rerollParameters?.on) ? rerollParameters.on : ([] as number[])), Number(notation)],
+      exact: [
+        ...(Array.isArray(rerollParameters?.exact) ? rerollParameters.exact : ([] as number[])),
+        Number(notation),
+      ],
     }
   }
 

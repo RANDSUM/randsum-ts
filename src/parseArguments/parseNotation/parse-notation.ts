@@ -10,11 +10,12 @@ import {
 
 const dropHigh = /[Hh](\d*)/
 const dropLow = /[Ll](\d*)/
-const dropConstraints = /.{3,}[Dd]{?([<>|]?\d,?)*}?/
+const dropConstraintsPartial = /[Dd]{?([<>|]?\d+,?)*}?/
+const dropConstraints = new RegExp(`${diceNotationPattern.source}.*${dropConstraintsPartial.source}`)
 const explode = /!+{?([<>|]?\d+,?)*}?/
-const unique = /[Uu]({(\d,?)+})?/
+const unique = /[Uu]({(\d+,?)+})?/
 const replace = /[Vv]{?([<>|]?\d+=?\d+,?)*}?/
-const reroll = /[Rr]{?([<>|]?\d,?)*}\d?/
+const reroll = /[Rr]{?([<>|]?\d,?)*}\d*/
 const cap = /[Cc]([<>|]?\d+)*/
 const plus = /\+\d+/
 const minus = /-\d+/
@@ -117,7 +118,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   if (plusMatch !== undefined) {
     rollParameters = {
       ...rollParameters,
-      plus: Number(notationString.split('+')[1]),
+      plus: Number(plusMatch.split('+')[1]),
     }
   }
 
@@ -125,7 +126,7 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   if (minusMatch !== undefined) {
     rollParameters = {
       ...rollParameters,
-      minus: Number(notationString.split('-')[1]),
+      minus: Number(minusMatch.split('-')[1]),
     }
   }
 

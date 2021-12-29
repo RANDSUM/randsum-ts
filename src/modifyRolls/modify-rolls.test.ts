@@ -76,7 +76,7 @@ describe('modifyRolls', () => {
         ...baseParameters,
         replace: [
           { from: 1, to: 2 },
-          { from: { above: 3 }, to: 6 },
+          { from: { greaterThan: 3 }, to: 6 },
         ],
       }
 
@@ -97,7 +97,7 @@ describe('modifyRolls', () => {
 
   describe('when given roll totals with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
-      const rerollParameters: RollParameters = { ...baseParameters, reroll: { above: 3 } }
+      const rerollParameters: RollParameters = { ...baseParameters, reroll: { greaterThan: 3 } }
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toEqual([206, [1, 2, 3, 200]])
@@ -105,7 +105,7 @@ describe('modifyRolls', () => {
     })
 
     describe('that is a single reroll modifier', () => {
-      const rerollParameters: RollParameters = { ...baseParameters, reroll: { above: 3, on: 2, maxReroll: 2 } }
+      const rerollParameters: RollParameters = { ...baseParameters, reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }
 
       test('it returns the total with all values matching the queries rerolled', () => {
         expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toEqual([404, [1, 200, 3, 200]])
@@ -115,7 +115,7 @@ describe('modifyRolls', () => {
     describe('that is an array of reroll modifiers', () => {
       const rerollParameters: RollParameters = {
         ...baseParameters,
-        reroll: [{ below: 2, maxReroll: 2 }, { on: [3] }],
+        reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }],
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
@@ -125,9 +125,9 @@ describe('modifyRolls', () => {
   })
 
   describe('when given roll totals with a "cap" modifier', () => {
-    const dropParameters: RollParameters = { ...baseParameters, cap: { above: 3, below: 2 } }
+    const dropParameters: RollParameters = { ...baseParameters, cap: { greaterThan: 3, lessThan: 2 } }
 
-    test('it returns the total with all values above above and below below replaced with their respective comparitor and the roll totals', () => {
+    test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll totals', () => {
       expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([10, [2, 2, 3, 3]])
     })
   })

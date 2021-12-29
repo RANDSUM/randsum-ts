@@ -5,10 +5,10 @@ export function parseCapNotation(notationString: string): Pick<RollParameters, '
   const capString = notationString.split('c')[1].split(/(?!\d)/)
   for (const note of capString) {
     if (note.includes('<')) {
-      capParameters = { ...capParameters, below: Number(note.replace('<', '')) }
+      capParameters = { ...capParameters, lessThan: Number(note.replace('<', '')) }
       continue
     }
-    capParameters = { ...capParameters, above: Number(note.replace('>', '')) }
+    capParameters = { ...capParameters, greaterThan: Number(note.replace('>', '')) }
   }
   return { cap: capParameters }
 }

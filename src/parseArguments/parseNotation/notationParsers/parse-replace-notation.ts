@@ -12,9 +12,9 @@ export function parseReplaceNotation(notationString: string): Pick<RollParameter
       const baseReplacement = { to: Number(noteTo) }
       switch (true) {
         case noteFrom.includes('>'):
-          return { ...baseReplacement, from: { above: Number(noteFrom.replace('>', '')) } }
+          return { ...baseReplacement, from: { greaterThan: Number(noteFrom.replace('>', '')) } }
         case noteFrom.includes('<'):
-          return { ...baseReplacement, from: { below: Number(noteFrom.replace('<', '')) } }
+          return { ...baseReplacement, from: { lessThan: Number(noteFrom.replace('<', '')) } }
         default:
           return { ...baseReplacement, from: Number(noteFrom) }
       }

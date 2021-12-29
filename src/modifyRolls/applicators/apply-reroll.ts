@@ -2,7 +2,7 @@ import { RerollOptions } from '../../types'
 
 function rerollRoll(
   roll: number,
-  { above, below, on, maxReroll }: RerollOptions<number>,
+  { greaterThan, lessThan, exact, maxReroll }: RerollOptions<number>,
   rollOne: () => number,
   index = 0,
 ): number {
@@ -15,10 +15,10 @@ function rerollRoll(
   }
 
   switch (true) {
-    case above !== undefined && roll > above:
-    case below !== undefined && roll < below:
-    case on !== undefined && Array.isArray(on) ? on.includes(roll) : on === roll:
-      return rerollRoll(rollOne(), { above, below, on, maxReroll }, rollOne, index + 1)
+    case greaterThan !== undefined && roll > greaterThan:
+    case lessThan !== undefined && roll < lessThan:
+    case exact !== undefined && Array.isArray(exact) ? exact.includes(roll) : exact === roll:
+      return rerollRoll(rollOne(), { greaterThan, lessThan, exact, maxReroll }, rollOne, index + 1)
     default:
       return roll
   }
