@@ -26,14 +26,14 @@ describe('parseArguments', () => {
           parseArguments({
             quantity: 4,
             sides: '6',
-            reroll: { on: ['2', 1] },
+            reroll: { exact: ['2', 1] },
             replace: { from: '6', to: '1' },
             unique: true,
           }),
         ).toMatchObject({
           quantity: 4,
           sides: 6,
-          reroll: { on: [2, 1] },
+          reroll: { exact: [2, 1] },
           replace: { from: 6, to: 1 },
           unique: true,
         })
@@ -49,8 +49,8 @@ describe('parseArguments', () => {
             quantity: 4,
             sides: '6',
             drop: { highest: '5', greaterThan: '2', lessThan: '6', lowest: '1', exact: [2, '3'] },
-            reroll: [{ on: ['2', 1] }],
-            cap: { above: '2', below: 1 },
+            reroll: [{ exact: ['2', 1] }],
+            cap: { greaterThan: '2', lessThan: 1 },
             replace: [{ from: '6', to: '1' }],
             unique: { notUnique: ['1', 2] },
           }),
@@ -60,8 +60,8 @@ describe('parseArguments', () => {
           quantity: 4,
           sides: 6,
           drop: { highest: 5, greaterThan: 2, lessThan: 6, lowest: 1, exact: [2, 3] },
-          reroll: [{ on: [2, 1] }],
-          cap: { above: 2, below: 1 },
+          reroll: [{ exact: [2, 1] }],
+          cap: { greaterThan: 2, lessThan: 1 },
           replace: [{ from: 6, to: 1 }],
           unique: { notUnique: [1, 2] },
         })
@@ -140,13 +140,13 @@ describe('parseArguments', () => {
       })
     })
 
-    describe('given a notation that contains a cap before and below', () => {
+    describe('given a notation that contains a cap before and lessThan', () => {
       const testString: DiceNotation = `${baseTestString}C<2>5`
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           ...baseRollParameters,
-          cap: { below: 2, above: 5 },
+          cap: { lessThan: 2, greaterThan: 5 },
         })
       })
     })
@@ -174,7 +174,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            reroll: { above: 6 },
+            reroll: { greaterThan: 6 },
           })
         })
       })
@@ -185,7 +185,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            reroll: { on: [5, 2], below: 6, maxReroll: 3 },
+            reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 },
           })
         })
       })
@@ -235,7 +235,7 @@ describe('parseArguments', () => {
             ...baseRollParameters,
             replace: [
               { from: 1, to: 2 },
-              { from: { above: 2 }, to: 6 },
+              { from: { greaterThan: 2 }, to: 6 },
             ],
           })
         })
@@ -247,7 +247,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            replace: { from: { below: 2 }, to: 6 },
+            replace: { from: { lessThan: 2 }, to: 6 },
           })
         })
       })
@@ -268,13 +268,13 @@ describe('parseArguments', () => {
           },
           plus: 2,
           minus: 5,
-          cap: { above: 18, below: 2 },
-          reroll: { on: [5, 2], below: 6, maxReroll: 3 },
+          cap: { greaterThan: 18, lessThan: 2 },
+          reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 },
           explode: true,
           unique: { notUnique: [5] },
           replace: [
             { from: 1, to: 2 },
-            { from: { above: 2 }, to: 6 },
+            { from: { greaterThan: 2 }, to: 6 },
           ],
         })
       })

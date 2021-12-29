@@ -43,9 +43,9 @@ export interface DropOptions<T extends number | 'inclusive' = 'inclusive'> {
  */
 export interface CapOptions<T extends number | 'inclusive' = 'inclusive'> {
   /** A {@link NumberString}, representing the maximum number allowed to be rolled on this die (all rolls greater will be reduced to this value) */
-  above?: NumberString<T>
-  /** A {@link NumberString}, representing the minimum number allowed to be rolled on this die (all rolls below will be increased to this value) */
-  below?: NumberString<T>
+  greaterThan?: NumberString<T>
+  /** A {@link NumberString}, representing the minimum number allowed to be rolled on this die (all rolls lessThan will be increased to this value) */
+  lessThan?: NumberString<T>
 }
 
 /**
@@ -55,7 +55,7 @@ export interface CapOptions<T extends number | 'inclusive' = 'inclusive'> {
  */
 export interface RerollOptions<T extends number | 'inclusive' = 'inclusive'> extends CapOptions<T> {
   /** A single instance or array of {@link NumberString}, representing what numbers will be rerolled. */
-  on?: NumberString<T> | Array<NumberString<T>>
+  exact?: NumberString<T> | Array<NumberString<T>>
   /** A {@link NumberString}, representing the maximum number of times a die will be rerolled */
   maxReroll?: NumberString<T>
 }
