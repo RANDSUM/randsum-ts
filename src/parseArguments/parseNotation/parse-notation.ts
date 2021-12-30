@@ -1,5 +1,17 @@
 import { DiceNotation, RollParameters } from '../../types'
-import { diceNotationPattern } from '../../utils'
+import {
+  cap,
+  diceNotationPattern,
+  dropConstraints,
+  dropHigh,
+  dropLow,
+  explode,
+  minus,
+  plus,
+  replace,
+  reroll,
+  unique,
+} from '../utils'
 import {
   parseCapNotation,
   parseDropConstraintsNotation,
@@ -7,18 +19,6 @@ import {
   parseRerollNotation,
   parseUniqeNotation,
 } from './notationParsers'
-
-const dropHigh = /[Hh](\d*)/
-const dropLow = /[Ll](\d*)/
-const dropConstraintsPartial = /[Dd]{?([<>|]?\d+,?)*}?/
-const dropConstraints = new RegExp(`${diceNotationPattern.source}.*${dropConstraintsPartial.source}`)
-const explode = /!+{?([<>|]?\d+,?)*}?/
-const unique = /[Uu]({(\d+,?)+})?/
-const replace = /[Vv]{?([<>|]?\d+=?\d+,?)*}?/
-const reroll = /[Rr]{?([<>|]?\d,?)*}\d*/
-const cap = /[Cc]([<>|]?\d+)*/
-const plus = /\+\d+/
-const minus = /-\d+/
 
 export function findMatch(notationString: string, pattern: RegExp): string | undefined {
   const match = notationString.match(pattern)
