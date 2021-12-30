@@ -1,6 +1,6 @@
 import { DiceNotation } from '../../types'
-import { diceNotationPattern } from './patterns'
+import { coreNotationPattern } from './patterns'
 
 export function isDiceNotation(argument: unknown): argument is DiceNotation {
-  return !!diceNotationPattern.test(String(argument))
+  return !!coreNotationPattern.test(String(argument))
 }

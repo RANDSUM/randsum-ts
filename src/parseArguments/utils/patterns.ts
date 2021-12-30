@@ -1,13 +1,27 @@
-export const diceNotationPattern = /(\d+)[Dd](\d+)/
+export const coreNotationPattern = /(?<coreNotationMatch>\d+[Dd]\d+)/
 
-export const dropHigh = /[Hh](\d*)/
-export const dropLow = /[Ll](\d*)/
-export const dropConstraintsPartial = /[Dd]{?([<>|]?\d+,?)*}?/
-export const dropConstraints = new RegExp(`${diceNotationPattern.source}.*${dropConstraintsPartial.source}`)
-export const explode = /!+{?([<>|]?\d+,?)*}?/
-export const unique = /[Uu]({(\d+,?)+})?/
-export const replace = /[Vv]{?([<>|]?\d+=?\d+,?)*}?/
-export const reroll = /[Rr]{?([<>|]?\d,?)*}\d*/
-export const cap = /[Cc]([<>|]?\d+)*/
-export const plus = /\+\d+/
-export const minus = /-\d+/
+export const dropHighPattern = /(?<dropHighMatch>[Hh]\d*)/
+export const dropLowPattern = /(?<dropLowMatch>[Ll]\d*)/
+export const dropConstraintsPattern = /(?<dropConstraintsMatch>[Dd]{?([<>|]?\d+,?)*}?)/
+export const explodePattern = /(?<explodeMatch>!+{?([<>|]?\d+,?)*}?)/
+export const uniquePattern = /(?<uniqueMatch>[Uu]({(\d+,?)+})?)/
+export const replacePattern = /(?<replaceMatch>[Vv]{?([<>|]?\d+=?\d+,?)*}?)/
+export const rerollPattern = /(?<rerollMatch>[Rr]{?([<>|]?\d,?)*}\d*)/
+export const capPattern = /(?<capMatch>[Cc]([<>|]?\d+)*)/
+export const plusPattern = /(?<plusMatch>\+\d+)/
+export const minusPattern = /(?<minusMatch>-\d+)/
+
+const allPatterns = [
+  coreNotationPattern,
+  dropHighPattern,
+  dropLowPattern,
+  dropConstraintsPattern,
+  explodePattern,
+  uniquePattern,
+  replacePattern,
+  rerollPattern,
+  capPattern,
+  plusPattern,
+  minusPattern,
+]
+export const completeRollPattern = new RegExp(`${allPatterns.map(pattern => pattern.source).join('|')}`, 'g')
