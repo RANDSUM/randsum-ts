@@ -8,6 +8,14 @@ Add `randsum` to your package.json, or copy and paste one of these:
 
 `yarn add randsum -D`
 
+Then require it in your project!
+
+```js
+import randsum from 'randsum'
+
+const randsum = require('randsum').default
+```
+
 ## using `randsum`
 
 `randsum` exports a default function, which can be imported normally:
