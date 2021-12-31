@@ -1,11 +1,11 @@
-import { NewRollParameters } from '../types'
+import { RollParameters } from '../types'
 import { modifyRolls } from './modify-rolls'
 
 const mockRandomizer = (): number => 200
 
 describe('modifyRolls', () => {
   const rolls = [1, 2, 3, 4]
-  const baseParameters: NewRollParameters = { sides: 6, quantity: rolls.length }
+  const baseParameters: RollParameters = { sides: 6, quantity: rolls.length }
 
   describe('when given roll totals with no modifiers', () => {
     test('it returns the sum total of the quantity and the roll totals', () => {
@@ -15,7 +15,7 @@ describe('modifyRolls', () => {
 
   describe('when given roll totals with a "unique" modifier', () => {
     const duplicateRollTotals = [1, 1, 2, 3]
-    const uniqueParameters: NewRollParameters = {
+    const uniqueParameters: RollParameters = {
       sides: 4,
       quantity: duplicateRollTotals.length,
       rollModifiers: [{ unique: true }],
@@ -26,7 +26,7 @@ describe('modifyRolls', () => {
     })
 
     describe('when given a "notUnique" array', () => {
-      const notUniqueParameters: NewRollParameters = {
+      const notUniqueParameters: RollParameters = {
         ...uniqueParameters,
         rollModifiers: [{ unique: { notUnique: [1] } }],
       }
@@ -38,7 +38,7 @@ describe('modifyRolls', () => {
 
     describe('and the # of quantity is greater than the sides of the die', () => {
       const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
-      const overflowParameters: NewRollParameters = { ...uniqueParameters, quantity: overflowRollTotals.length }
+      const overflowParameters: RollParameters = { ...uniqueParameters, quantity: overflowRollTotals.length }
 
       test('it throws an error', () => {
         expect(() => modifyRolls(overflowRollTotals, overflowParameters, mockRandomizer)).toThrow(
@@ -50,7 +50,7 @@ describe('modifyRolls', () => {
 
   describe('when given roll totals with a "drop" modifier', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    const dropParameters: NewRollParameters = {
+    const dropParameters: RollParameters = {
       sides: 10,
       quantity: longerRollTotals.length,
       rollModifiers: [
@@ -73,7 +73,7 @@ describe('modifyRolls', () => {
 
   describe('when given roll totals with a "replace" modifier', () => {
     describe('that is a single replace modifiers', () => {
-      const dropParameters: NewRollParameters = {
+      const dropParameters: RollParameters = {
         ...baseParameters,
         rollModifiers: [{ replace: { from: 1, to: 2 } }],
       }
@@ -84,7 +84,7 @@ describe('modifyRolls', () => {
     })
 
     describe('that is an array of replace modifiers', () => {
-      const dropParameters: NewRollParameters = {
+      const dropParameters: RollParameters = {
         ...baseParameters,
         rollModifiers: [
           {
@@ -104,7 +104,7 @@ describe('modifyRolls', () => {
 
   describe('when given roll totals with an "explode" modifier', () => {
     const explodeRollTotals = [1, 2, 3, 6]
-    const explodeParameters: NewRollParameters = { ...baseParameters, rollModifiers: [{ explode: true }] }
+    const explodeParameters: RollParameters = { ...baseParameters, rollModifiers: [{ explode: true }] }
 
     test('it returns the total with all values matching the queries rerolled', () => {
       expect(modifyRolls(explodeRollTotals, explodeParameters, mockRandomizer)).toEqual([212, [1, 2, 3, 6, 200]])
@@ -113,7 +113,7 @@ describe('modifyRolls', () => {
 
   describe('when given roll totals with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
-      const rerollParameters: NewRollParameters = { ...baseParameters, rollModifiers: [{ reroll: { greaterThan: 3 } }] }
+      const rerollParameters: RollParameters = { ...baseParameters, rollModifiers: [{ reroll: { greaterThan: 3 } }] }
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toEqual([206, [1, 2, 3, 200]])
@@ -121,7 +121,7 @@ describe('modifyRolls', () => {
     })
 
     describe('that is a single reroll modifier', () => {
-      const rerollParameters: NewRollParameters = {
+      const rerollParameters: RollParameters = {
         ...baseParameters,
         rollModifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }],
       }
@@ -132,7 +132,7 @@ describe('modifyRolls', () => {
     })
 
     describe('that is an array of reroll modifiers', () => {
-      const rerollParameters: NewRollParameters = {
+      const rerollParameters: RollParameters = {
         ...baseParameters,
         rollModifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }],
       }
@@ -144,7 +144,7 @@ describe('modifyRolls', () => {
   })
 
   describe('when given roll totals with a "cap" modifier', () => {
-    const dropParameters: NewRollParameters = {
+    const dropParameters: RollParameters = {
       ...baseParameters,
       rollModifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }],
     }
@@ -155,7 +155,7 @@ describe('modifyRolls', () => {
   })
 
   describe('when given roll totals with a "plus" modifier', () => {
-    const dropParameters: NewRollParameters = { ...baseParameters, totalModifiers: [{ plus: 2 }] }
+    const dropParameters: RollParameters = { ...baseParameters, totalModifiers: [{ plus: 2 }] }
 
     test('it returns the total plus the "plus" modifier, and the roll totals', () => {
       expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([12, [1, 2, 3, 4]])
@@ -163,7 +163,7 @@ describe('modifyRolls', () => {
   })
 
   describe('when given roll totals with a "minus" modifier', () => {
-    const dropParameters: NewRollParameters = { ...baseParameters, totalModifiers: [{ minus: 2 }] }
+    const dropParameters: RollParameters = { ...baseParameters, totalModifiers: [{ minus: 2 }] }
 
     test('it returns the total minust the "minus" modifier, and the roll totals', () => {
       expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([8, [1, 2, 3, 4]])

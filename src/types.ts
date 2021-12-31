@@ -37,6 +37,15 @@ export interface DropOptions<T extends number | 'inclusive' = 'inclusive'> {
 }
 
 /**
+ * An object to hold options for `Drop` modifiers.
+ *
+ * {@link DropOptions}
+ */
+export interface DropModifier<T extends number | 'inclusive' = 'inclusive'> {
+  drop: DropOptions<T>
+}
+
+/**
  * Options for `Cap` modifiers.
  *
  * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more.
@@ -46,6 +55,15 @@ export interface CapOptions<T extends number | 'inclusive' = 'inclusive'> {
   greaterThan?: NumberString<T>
   /** A {@link NumberString}, representing the minimum number allowed to be rolled on this die (all rolls lessThan will be increased to this value) */
   lessThan?: NumberString<T>
+}
+
+/**
+ * An object to hold options for `Cap` modifiers.
+ *
+ * {@link CapOptions}
+ */
+export interface CapModifier<T extends number | 'inclusive' = 'inclusive'> {
+  cap: CapOptions<T>
 }
 
 /**
@@ -61,6 +79,15 @@ export interface RerollOptions<T extends number | 'inclusive' = 'inclusive'> ext
 }
 
 /**
+ * An object to hold options for `Reroll` modifiers.
+ *
+ * {@link RerollOptions}
+ */
+export interface RerollModifier<T extends number | 'inclusive' = 'inclusive'> {
+  reroll: RerollOptions<T> | Array<RerollOptions<T>>
+}
+
+/**
  * Options for `Replace` modifiers.
  *
  * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more.
@@ -73,6 +100,15 @@ export interface ReplaceOptions<T extends number | 'inclusive' = 'inclusive'> {
 }
 
 /**
+ * An object to hold options for `Replace` modifiers.
+ *
+ * {@link ReplaceOptions}
+ */
+export interface ReplaceModifier<T extends number | 'inclusive' = 'inclusive'> {
+  replace: ReplaceOptions<T> | Array<ReplaceOptions<T>>
+}
+
+/**
  * Options for `Unique` modifiers.
  *
  * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more.
@@ -80,6 +116,15 @@ export interface ReplaceOptions<T extends number | 'inclusive' = 'inclusive'> {
 export interface UniqueOptions<T extends number | 'inclusive' = 'inclusive'> {
   /** An array of {@link NumberString}, representing numbers that are allowed to repeat in the roll. */
   notUnique: Array<NumberString<T>>
+}
+
+/**
+ * An object to hold options for `Unique` modifiers.
+ *
+ * {@link UniqueOptions}
+ */
+export interface UniqueModifier<T extends number | 'inclusive' = 'inclusive'> {
+  unique: boolean | UniqueOptions<T>
 }
 
 /**
@@ -98,8 +143,7 @@ export interface UserOptions<D extends boolean = boolean> {
  * All Options available to be passed to {@link randsum}.
  *
  */
-export interface RandsumOptions<D extends boolean = boolean, T extends number | 'inclusive' = 'inclusive'>
-  extends UserOptions<D> {
+export type RandsumOptions<D extends boolean = boolean, T extends number | 'inclusive' = 'inclusive'> = {
   /** The amount of dice rolled */
   quantity?: NumberString<T>
   /** The number of sides of the dice (the max # able to be rolled) */
@@ -108,43 +152,29 @@ export interface RandsumOptions<D extends boolean = boolean, T extends number | 
   plus?: NumberString<T>
   /** Number to be subtracted to final result of roll */
   minus?: NumberString<T>
-  /** Options related to the "Cap" modifier {@link CapOptions} */
-  cap?: CapOptions<T>
-  /** Options related to the "Drop" modifier {@link DropOptions} */
-  drop?: DropOptions<T>
-  /** Options related to the "Replace" modifier {@link ReplaceOptions} */
-  replace?: ReplaceOptions<T> | Array<ReplaceOptions<T>>
-  /** Options related to the "Reroll" modifier {@link RerollOptions} */
-  reroll?: RerollOptions<T> | Array<RerollOptions<T>>
-  /** Options related to the "Unique" modifier {@link UniqueOptions} */
-  unique?: boolean | UniqueOptions<T>
   /** Options related to the "Explode" modifier */
   explode?: boolean
-}
-
-/**
- * The Parameters used to calculate the final total of the roll.
- * The result of processing the arguments
- */
-export interface RollParameters extends Omit<RandsumOptions<boolean, number>, 'detailed' | 'randomizer'> {
-  /** The amount of dice rolled */
-  quantity: number
-}
+} & UserOptions<D> &
+  Partial<UniqueModifier<T>> &
+  Partial<RerollModifier<T>> &
+  Partial<CapModifier<T>> &
+  Partial<ReplaceModifier<T>> &
+  Partial<DropModifier<T>>
 
 export type RollParameterKeys = keyof Omit<RandsumOptions<boolean, number>, 'detailed' | 'randomizer'>
 
-export interface NewRollParameters extends Pick<RandsumOptions, 'sides'> {
+export interface RollParameters extends Pick<RandsumOptions, 'sides'> {
   quantity: number
   sides: number
   rollModifiers?: Array<
     | { quantity: NumberString<number> }
     | { sides: NumberString<number> }
-    | { cap: CapOptions<number> }
-    | { drop: DropOptions<number> }
-    | { replace: ReplaceOptions<number> | Array<ReplaceOptions<number>> }
-    | { reroll: RerollOptions<number> | Array<RerollOptions<number>> }
+    | CapModifier<number>
+    | DropModifier<number>
+    | ReplaceModifier<number>
+    | RerollModifier<number>
     | { explode: boolean }
-    | { unique: boolean | UniqueOptions<number> }
+    | UniqueModifier<number>
   >
   totalModifiers?: Array<{ plus: NumberString<number> } | { minus: NumberString<number> }>
 }

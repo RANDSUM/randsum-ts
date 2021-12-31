@@ -1,5 +1,5 @@
 import { UserOptions } from '../..'
-import { NewRollParameters, RandsumOptions } from '../../types'
+import { RandsumOptions, RollParameters } from '../../types'
 import { mergeModifier } from '../utils'
 import { convertCapOptionsToParameters } from './convert-cap-options-to-parameters'
 import { convertDropOptionsToParameters } from './convert-drop-options-to-parameters'
@@ -18,8 +18,8 @@ export function convertOptionsToParameters({
   unique,
   explode,
   ...restOptions
-}: Partial<RandsumOptions>): Partial<NewRollParameters> & UserOptions {
-  let rollParameters: NewRollParameters = { sides: 1, quantity: 1, ...restOptions }
+}: Partial<RandsumOptions>): Partial<RollParameters> & UserOptions {
+  let rollParameters: RollParameters = { sides: 1, quantity: 1, ...restOptions }
 
   if (quantity !== undefined) {
     rollParameters = { ...rollParameters, quantity: Number(quantity) }

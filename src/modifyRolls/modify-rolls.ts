@@ -1,9 +1,9 @@
-import { NewRollParameters } from '../types'
+import { RollParameters } from '../types'
 import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, applyUnique } from './applicators'
 
 export function modifyRolls(
   rolls: number[],
-  rollParameters: NewRollParameters,
+  rollParameters: RollParameters,
   rollOne: () => number,
 ): [number, number[]] {
   let modifiedRollTotals = [...rolls]

@@ -1,6 +1,6 @@
-import { RollParameters } from '../../../types'
+import { CapModifier } from '../../../types'
 
-export function parseCapNotation(notationString: string): Pick<RollParameters, 'cap'> {
+export function parseCapNotation(notationString: string): CapModifier<number> {
   let capParameters = {}
   const capString = notationString.split('c')[1].split(/(?!\d)/)
   for (const note of capString) {
