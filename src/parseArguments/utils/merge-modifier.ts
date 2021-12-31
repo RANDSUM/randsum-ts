@@ -1,15 +1,12 @@
-import { RollParameters } from '../../types'
+import { Modifier, RollParameters } from '../../types'
 
-export function mergeModifier<T extends string>(
-  modifier: Record<T, unknown>,
-  rollParameters: RollParameters,
-  type: 'roll' | 'total' = 'roll',
-): RollParameters {
-  const modifiersKey: 'rollModifiers' | 'totalModifiers' = `${type}Modifiers`
-  const existingModifiers = rollParameters[modifiersKey]
+export function mergeModifier(modifier: Modifier<number>, rollParameters: RollParameters): RollParameters {
+  const existingModifiers = rollParameters?.modifiers !== undefined ? rollParameters.modifiers : []
 
-  if (existingModifiers !== undefined) {
-    return { ...rollParameters, [modifiersKey]: [...existingModifiers, modifier] }
+  const newModifiers = [...existingModifiers, modifier]
+
+  return {
+    ...rollParameters,
+    modifiers: newModifiers,
   }
-  return { ...rollParameters, [modifiersKey]: [modifier] }
 }

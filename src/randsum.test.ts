@@ -18,7 +18,7 @@ describe('Randsum', () => {
   })
 
   describe('with a modifier object', () => {
-    const result = randsum({ sides: 20, quantity: 2, drop: { highest: 1 } })
+    const result = randsum({ sides: 20, quantity: 2, modifiers: [{ drop: { highest: 1 } }] })
 
     test('returns a number as total', () => {
       expect(Number.isInteger(result)).toBe(true)

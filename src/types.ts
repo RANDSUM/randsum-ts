@@ -128,6 +128,33 @@ export interface UniqueModifier<T extends number | 'inclusive' = 'inclusive'> {
 }
 
 /**
+ * An object to hold options for `Explode` modifiers.
+ *
+ * {@link ExplodeOptions}
+ */
+export interface ExplodeModifier {
+  explode: boolean
+}
+
+/**
+ * An object to hold options for `Plus` modifiers.
+ *
+ * {@link PlusOptions}
+ */
+export interface PlusModifier<T extends number | 'inclusive' = 'inclusive'> {
+  plus: NumberString<T>
+}
+
+/**
+ * An object to hold options for `Minus` modifiers.
+ *
+ * {@link MinusOptions}
+ */
+export interface MinusModifier<T extends number | 'inclusive' = 'inclusive'> {
+  minus: NumberString<T>
+}
+
+/**
  * Options provided to the user not directly related to the dice roll:
  *
  * @typeParam D Making overloading a breeze, always a Boolean.
@@ -140,41 +167,38 @@ export interface UserOptions<D extends boolean = boolean> {
 }
 
 /**
+ * All Possible modifiers used to modify the roll results
+ *
+ */
+export type Modifier<T extends number | 'inclusive' = 'inclusive'> =
+  | CapModifier<T>
+  | DropModifier<T>
+  | ReplaceModifier<T>
+  | RerollModifier<T>
+  | ExplodeModifier
+  | UniqueModifier<T>
+  | PlusModifier<T>
+  | MinusModifier<T>
+
+/**
  * All Options available to be passed to {@link randsum}.
  *
  */
-export type RandsumOptions<D extends boolean = boolean, T extends number | 'inclusive' = 'inclusive'> = {
-  /** The amount of dice rolled */
+export interface RandsumOptions<D extends boolean = boolean, T extends number | 'inclusive' = 'inclusive'>
+  extends UserOptions<D> {
   quantity?: NumberString<T>
-  /** The number of sides of the dice (the max # able to be rolled) */
   sides: NumberString<T>
-  /** Options related to the "Explode" modifier */
-  explode?: boolean
-  /** Number to be added to final result of roll */
-  plus?: NumberString<T>
-  /** Number to be subtracted to final result of roll */
-  minus?: NumberString<T>
-} & UserOptions<D> &
-  Partial<UniqueModifier<T>> &
-  Partial<RerollModifier<T>> &
-  Partial<CapModifier<T>> &
-  Partial<ReplaceModifier<T>> &
-  Partial<DropModifier<T>>
+  modifiers?: Array<Modifier<T>>
+}
 
-export interface RollParameters extends Pick<RandsumOptions, 'sides'> {
-  quantity: number
-  sides: number
-  rollModifiers?: Array<
-    | { quantity: NumberString<number> }
-    | { sides: NumberString<number> }
-    | CapModifier<number>
-    | DropModifier<number>
-    | ReplaceModifier<number>
-    | RerollModifier<number>
-    | { explode: boolean }
-    | UniqueModifier<number>
-  >
-  totalModifiers?: Array<{ plus: NumberString<number> } | { minus: NumberString<number> }>
+/**
+ * All parameters used to calculate a roll.
+ *
+ * Returned in {@link RollResult}
+ *
+ */
+export interface RollParameters extends Omit<RandsumOptions<boolean, number>, keyof UserOptions> {
+  quantity: NumberString<number>
 }
 
 /**

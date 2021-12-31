@@ -6,13 +6,11 @@ export function convertRerollOptionsToParameters({
   maxReroll,
   ...restOptions
 }: RerollOptions): RerollOptions<number> {
+  const convertedExact =
+    exact !== undefined ? { exact: Array.isArray(exact) ? exact.map(number => Number(number)) : [Number(exact)] } : {}
   return {
     ...convertCapOptionsToParameters(restOptions),
-    ...(exact !== undefined
-      ? Array.isArray(exact)
-        ? { exact: exact.map(number => Number(number)) }
-        : { exact: [Number(exact)] }
-      : {}),
+    ...convertedExact,
     maxReroll: maxReroll !== undefined ? Number(maxReroll) : undefined,
   }
 }

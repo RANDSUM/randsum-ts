@@ -8,15 +8,8 @@ import { convertRerollOptionsToParameters } from './convert-reroll-options-to-pa
 
 export function convertOptionsToParameters({
   quantity,
-  plus,
-  minus,
   sides,
-  cap,
-  drop,
-  replace,
-  reroll,
-  unique,
-  explode,
+  modifiers = [],
   ...restOptions
 }: Partial<RandsumOptions>): Partial<RollParameters> & UserOptions {
   let rollParameters: RollParameters = { sides: 1, quantity: 1, ...restOptions }
@@ -29,53 +22,58 @@ export function convertOptionsToParameters({
     rollParameters = { ...rollParameters, sides: Number(sides) }
   }
 
-  if (cap !== undefined) {
-    rollParameters = mergeModifier({ cap: convertCapOptionsToParameters(cap) }, rollParameters)
-  }
+  for (const modifier of modifiers) {
+    const [key] = Object.keys(modifier)
+    const [value] = Object.values(modifier)
 
-  if (explode !== undefined) {
-    rollParameters = mergeModifier({ explode }, rollParameters)
-  }
-
-  if (drop !== undefined) {
-    rollParameters = mergeModifier({ drop: convertDropOptionsToParameters(drop) }, rollParameters)
-  }
-
-  if (replace !== undefined) {
-    rollParameters = mergeModifier(
-      {
-        replace: Array.isArray(replace)
-          ? replace.map(option => convertReplaceOptionsToParameters(option))
-          : convertReplaceOptionsToParameters(replace),
-      },
-      rollParameters,
-    )
-  }
-
-  if (reroll !== undefined) {
-    rollParameters = mergeModifier(
-      {
-        reroll: Array.isArray(reroll)
-          ? reroll.map(option => convertRerollOptionsToParameters(option))
-          : convertRerollOptionsToParameters(reroll),
-      },
-      rollParameters,
-    )
-  }
-
-  if (unique !== undefined) {
-    rollParameters = mergeModifier(
-      { unique: typeof unique === 'object' ? { notUnique: unique.notUnique.map(number => Number(number)) } : unique },
-      rollParameters,
-    )
-  }
-
-  if (plus !== undefined) {
-    rollParameters = mergeModifier({ plus: Number(plus) }, rollParameters, 'total')
-  }
-
-  if (minus !== undefined) {
-    rollParameters = mergeModifier({ minus: Number(minus) }, rollParameters, 'total')
+    switch (key) {
+      case 'cap':
+        rollParameters = mergeModifier({ cap: convertCapOptionsToParameters(value) }, rollParameters)
+        break
+      case 'drop':
+        rollParameters = mergeModifier({ drop: convertDropOptionsToParameters(value) }, rollParameters)
+        break
+      case 'reroll':
+        rollParameters = mergeModifier(
+          {
+            reroll: Array.isArray(value)
+              ? value.map(option => convertRerollOptionsToParameters(option))
+              : convertRerollOptionsToParameters(value),
+          },
+          rollParameters,
+        )
+        break
+      case 'unique':
+        rollParameters = mergeModifier(
+          {
+            unique:
+              typeof value === 'object'
+                ? { notUnique: value.notUnique.map((number: number) => Number(number)) }
+                : value,
+          },
+          rollParameters,
+        )
+        break
+      case 'replace':
+        rollParameters = mergeModifier(
+          {
+            replace: Array.isArray(value)
+              ? value.map(option => convertReplaceOptionsToParameters(option))
+              : convertReplaceOptionsToParameters(value),
+          },
+          rollParameters,
+        )
+        break
+      case 'explode':
+        rollParameters = mergeModifier({ explode: value }, rollParameters)
+        break
+      case 'plus':
+        rollParameters = mergeModifier({ plus: Number(value) }, rollParameters)
+        break
+      case 'minus':
+        rollParameters = mergeModifier({ minus: Number(value) }, rollParameters)
+        break
+    }
   }
 
   return rollParameters

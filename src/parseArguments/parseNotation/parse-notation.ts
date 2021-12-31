@@ -86,11 +86,11 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   }
 
   if (plusMatch !== undefined) {
-    rollParameters = mergeModifier({ plus: Number(plusMatch.split('+')[1]) }, rollParameters, 'total')
+    rollParameters = mergeModifier({ plus: Number(plusMatch.split('+')[1]) }, rollParameters)
   }
 
   if (minusMatch !== undefined) {
-    rollParameters = mergeModifier({ minus: Number(minusMatch.split('-')[1]) }, rollParameters, 'total')
+    rollParameters = mergeModifier({ minus: Number(minusMatch.split('-')[1]) }, rollParameters)
   }
 
   return rollParameters

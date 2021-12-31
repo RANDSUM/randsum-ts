@@ -1,16 +1,14 @@
+import { RollResult } from '..'
 import { RollParameters } from '../types'
 import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, applyUnique } from './applicators'
 
-export function modifyRolls(
-  rolls: number[],
-  rollParameters: RollParameters,
-  rollOne: () => number,
-): [number, number[]] {
+export function modifyRolls(rolls: number[], rollParameters: RollParameters, rollOne: () => number): RollResult {
   let modifiedRollTotals = [...rolls]
+  let simpleMathModifier = 0
 
-  const { sides, quantity, rollModifiers = [], totalModifiers = [] } = rollParameters
+  const { sides, quantity, modifiers = [] } = rollParameters
 
-  for (const modifier of rollModifiers) {
+  for (const modifier of modifiers) {
     const [key] = Object.keys(modifier)
     const [value] = Object.values(modifier)
 
@@ -33,24 +31,21 @@ export function modifyRolls(
       case 'explode':
         modifiedRollTotals = applyExplode(modifiedRollTotals, { sides }, rollOne)
         break
-    }
-  }
-
-  let modifiedTotal = Number([...modifiedRollTotals].reduce((total, roll) => total + roll, 0))
-
-  for (const modifier of totalModifiers) {
-    const [key] = Object.keys(modifier)
-    const [value] = Object.values(modifier)
-
-    switch (key) {
       case 'plus':
-        modifiedTotal = modifiedTotal + value
+        simpleMathModifier = simpleMathModifier + Number(value)
         break
       case 'minus':
-        modifiedTotal = modifiedTotal - Math.abs(value)
+        simpleMathModifier = simpleMathModifier - Math.abs(Number(value))
         break
     }
   }
 
-  return [modifiedTotal, modifiedRollTotals.map(number => Number(number))]
+  const total = Number([...modifiedRollTotals].reduce((total, roll) => total + roll, 0)) + simpleMathModifier
+
+  return {
+    total,
+    rolls: modifiedRollTotals,
+    rollParameters,
+    initialRolls: rolls,
+  }
 }
