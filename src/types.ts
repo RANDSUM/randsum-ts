@@ -148,20 +148,18 @@ export type RandsumOptions<D extends boolean = boolean, T extends number | 'incl
   quantity?: NumberString<T>
   /** The number of sides of the dice (the max # able to be rolled) */
   sides: NumberString<T>
+  /** Options related to the "Explode" modifier */
+  explode?: boolean
   /** Number to be added to final result of roll */
   plus?: NumberString<T>
   /** Number to be subtracted to final result of roll */
   minus?: NumberString<T>
-  /** Options related to the "Explode" modifier */
-  explode?: boolean
 } & UserOptions<D> &
   Partial<UniqueModifier<T>> &
   Partial<RerollModifier<T>> &
   Partial<CapModifier<T>> &
   Partial<ReplaceModifier<T>> &
   Partial<DropModifier<T>>
-
-export type RollParameterKeys = keyof Omit<RandsumOptions<boolean, number>, 'detailed' | 'randomizer'>
 
 export interface RollParameters extends Pick<RandsumOptions, 'sides'> {
   quantity: number
