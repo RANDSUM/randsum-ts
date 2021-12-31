@@ -73,10 +73,18 @@ You can pass in a `RandsumOptions` as the first argument. The only required key 
 randsum({ sides: 20 }) // Roll a single 20 sided die
 ```
 
-You can use any keys of `RandsumOptions` to further modify your roll:
+You can use the `modifier` key of `RandsumOptions` to further modify your roll. `modifiers` is an array that you can fill with Modifier objects. For instance:
 
 ```ts
-randsum({ sides: 20, quantity: 4, drop: { highest: true }, plus: 2, randomizer: ... }) // Roll 4 20 sided die, drop highest, plus 2, using a custom randomizer function
+randsum({
+  sides: 20,
+  quantity: 4,
+  modifiers: [
+    { drop: { highest: true } },
+    { plus: 2 }
+  ],
+  randomizer: ...
+}) // Roll 4 20 sided die, drop highest, plus 2, using a custom randomizer function
 ```
 
 ### returning a `RollResult`
@@ -103,9 +111,6 @@ With a `RollResult`, you can look at the specific details of your roll.
 const result = randsum(20, { quantity: 4, detailed: true}) // Roll 4 20 sided die, returns a RollResult
 
 result.rolls =
-
-Check out the Typedocs RollResult page for more information.
-
-#### Regarding order
-`randsum` will attempt to resolve modifiers in a particular order. Check out [Regarding Order](/ORDER.md) for more.
 ```
+
+Check out the [TypeDoc RollResult Page](https://alxjrvs.github.io/randsum/interfaces/RollResult.html) for more information.

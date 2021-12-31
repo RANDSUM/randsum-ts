@@ -31,14 +31,12 @@ describe('parseArguments', () => {
           parseArguments({
             quantity: 4,
             sides: '6',
-            reroll: { exact: ['2', 1] },
-            replace: { from: '6', to: '1' },
-            unique: true,
+            modifiers: [{ reroll: { exact: ['2', 1] } }, { replace: { from: '6', to: '1' } }, { unique: true }],
           }),
         ).toMatchObject({
           quantity: 4,
           sides: 6,
-          rollModifiers: expect.arrayContaining([
+          modifiers: expect.arrayContaining([
             { reroll: { exact: [2, 1] } },
             { replace: { from: 6, to: 1 } },
             { unique: true },
@@ -51,29 +49,32 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(
           parseArguments({
-            plus: 2,
-            minus: 1,
             quantity: 4,
             sides: '6',
-            drop: { highest: '5', greaterThan: '2', lessThan: '6', lowest: '1', exact: [2, '3'] },
-            reroll: [{ exact: ['2', 1] }],
-            cap: { greaterThan: '2', lessThan: 1 },
-            replace: [{ from: '6', to: '1' }],
-            unique: { notUnique: ['1', 2] },
-            explode: true,
+            modifiers: [
+              { plus: 2 },
+              { minus: 1 },
+              { drop: { highest: '5', greaterThan: '2', lessThan: '6', lowest: '1', exact: [2, '3'] } },
+              { reroll: [{ exact: ['2', 1] }] },
+              { cap: { greaterThan: '2', lessThan: 1 } },
+              { replace: [{ from: '6', to: '1' }] },
+              { unique: { notUnique: ['1', 2] } },
+              { explode: true },
+            ],
           }),
         ).toMatchObject({
           quantity: 4,
           sides: 6,
-          rollModifiers: expect.arrayContaining([
+          modifiers: expect.arrayContaining([
             { drop: { highest: 5, greaterThan: 2, lessThan: 6, lowest: 1, exact: [2, 3] } },
             { reroll: [{ exact: [2, 1] }] },
             { cap: { greaterThan: 2, lessThan: 1 } },
             { replace: [{ from: 6, to: 1 }] },
             { unique: { notUnique: [1, 2] } },
             { explode: true },
+            { plus: 2 },
+            { minus: 1 },
           ]),
-          totalModifiers: expect.arrayContaining([{ plus: 2 }, { minus: 1 }]),
         })
       })
     })
@@ -96,7 +97,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([{ drop: { highest: 1 } }]),
+            modifiers: expect.arrayContaining([{ drop: { highest: 1 } }]),
           })
         })
       })
@@ -107,7 +108,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([{ drop: { highest: 2 } }]),
+            modifiers: expect.arrayContaining([{ drop: { highest: 2 } }]),
           })
         })
       })
@@ -120,7 +121,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([{ drop: { lowest: 1 } }]),
+            modifiers: expect.arrayContaining([{ drop: { lowest: 1 } }]),
           })
         })
       })
@@ -131,7 +132,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([{ drop: { lowest: 2 } }]),
+            modifiers: expect.arrayContaining([{ drop: { lowest: 2 } }]),
           })
         })
       })
@@ -144,7 +145,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([{ drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }]),
+            modifiers: expect.arrayContaining([{ drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }]),
           })
         })
       })
@@ -156,7 +157,7 @@ describe('parseArguments', () => {
           expect(parseArguments(testString)).toMatchObject({
             quantity: 400,
             sides: 20,
-            rollModifiers: expect.arrayContaining([{ drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }]),
+            modifiers: expect.arrayContaining([{ drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }]),
           })
         })
       })
@@ -168,7 +169,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           ...baseRollParameters,
-          rollModifiers: expect.arrayContaining([{ cap: { lessThan: 2, greaterThan: 5 } }]),
+          modifiers: expect.arrayContaining([{ cap: { lessThan: 2, greaterThan: 5 } }]),
         })
       })
     })
@@ -179,7 +180,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           ...baseRollParameters,
-          totalModifiers: expect.arrayContaining([{ minus: 2 }]),
+          modifiers: expect.arrayContaining([{ minus: 2 }]),
         })
       })
     })
@@ -190,7 +191,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           ...baseRollParameters,
-          totalModifiers: expect.arrayContaining([{ plus: 2 }]),
+          modifiers: expect.arrayContaining([{ plus: 2 }]),
         })
       })
     })
@@ -202,7 +203,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([{ reroll: { greaterThan: 6 } }]),
+            modifiers: expect.arrayContaining([{ reroll: { greaterThan: 6 } }]),
           })
         })
       })
@@ -213,7 +214,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([{ reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } }]),
+            modifiers: expect.arrayContaining([{ reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } }]),
           })
         })
       })
@@ -226,7 +227,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([{ unique: { notUnique: [5, 6] } }]),
+            modifiers: expect.arrayContaining([{ unique: { notUnique: [5, 6] } }]),
           })
         })
       })
@@ -237,7 +238,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([{ unique: true }]),
+            modifiers: expect.arrayContaining([{ unique: true }]),
           })
         })
       })
@@ -249,7 +250,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           ...baseRollParameters,
-          rollModifiers: expect.arrayContaining([{ explode: true }]),
+          modifiers: expect.arrayContaining([{ explode: true }]),
         })
       })
     })
@@ -261,7 +262,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([
+            modifiers: expect.arrayContaining([
               {
                 replace: [
                   { from: 1, to: 2 },
@@ -279,21 +280,23 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             ...baseRollParameters,
-            rollModifiers: expect.arrayContaining([{ replace: { from: { lessThan: 2 }, to: 6 } }]),
+            modifiers: expect.arrayContaining([{ replace: { from: { lessThan: 2 }, to: 6 } }]),
           })
         })
       })
     })
 
     describe('With a complicated dice notation', () => {
-      const testString: DiceNotation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2,<6}3 U{5} ! +2 -5`
+      const testString: DiceNotation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2,<6}3 U{5} ! +2 -5 +3`
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           quantity: 10,
           sides: 20,
-          totalModifiers: expect.arrayContaining([{ plus: 2 }, { minus: 5 }]),
-          rollModifiers: expect.arrayContaining([
+          modifiers: expect.arrayContaining([
+            { plus: 2 },
+            { plus: 3 },
+            { minus: 5 },
             {
               drop: {
                 highest: 2,

@@ -7,32 +7,38 @@ describe('modifyRolls', () => {
   const rolls = [1, 2, 3, 4]
   const baseParameters: RollParameters = { sides: 6, quantity: rolls.length }
 
-  describe('when given roll totals with no modifiers', () => {
-    test('it returns the sum total of the quantity and the roll totals', () => {
-      expect(modifyRolls(rolls, baseParameters, mockRandomizer)).toEqual([10, [1, 2, 3, 4]])
+  describe('when given roll total with no modifiers', () => {
+    test('it returns the sum total of the quantity and the roll total', () => {
+      expect(modifyRolls(rolls, baseParameters, mockRandomizer)).toMatchObject({ total: 10, rolls: [1, 2, 3, 4] })
     })
   })
 
-  describe('when given roll totals with a "unique" modifier', () => {
+  describe('when given roll total with a "unique" modifier', () => {
     const duplicateRollTotals = [1, 1, 2, 3]
     const uniqueParameters: RollParameters = {
       sides: 4,
       quantity: duplicateRollTotals.length,
-      rollModifiers: [{ unique: true }],
+      modifiers: [{ unique: true }],
     }
 
     test('it re-quantity non-unique modifiers', () => {
-      expect(modifyRolls(duplicateRollTotals, uniqueParameters, mockRandomizer)).toEqual([206, [1, 200, 2, 3]])
+      expect(modifyRolls(duplicateRollTotals, uniqueParameters, mockRandomizer)).toMatchObject({
+        total: 206,
+        rolls: [1, 200, 2, 3],
+      })
     })
 
     describe('when given a "notUnique" array', () => {
       const notUniqueParameters: RollParameters = {
         ...uniqueParameters,
-        rollModifiers: [{ unique: { notUnique: [1] } }],
+        modifiers: [{ unique: { notUnique: [1] } }],
       }
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
-        expect(modifyRolls(duplicateRollTotals, notUniqueParameters, mockRandomizer)).toEqual([7, [1, 1, 2, 3]])
+        expect(modifyRolls(duplicateRollTotals, notUniqueParameters, mockRandomizer)).toMatchObject({
+          total: 7,
+          rolls: [1, 1, 2, 3],
+        })
       })
     })
 
@@ -48,12 +54,12 @@ describe('modifyRolls', () => {
     })
   })
 
-  describe('when given roll totals with a "drop" modifier', () => {
+  describe('when given roll total with a "drop" modifier', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     const dropParameters: RollParameters = {
       sides: 10,
       quantity: longerRollTotals.length,
-      rollModifiers: [
+      modifiers: [
         {
           drop: {
             highest: 1,
@@ -67,26 +73,29 @@ describe('modifyRolls', () => {
     }
 
     test('it returns the total without the provided values', () => {
-      expect(modifyRolls(longerRollTotals, dropParameters, mockRandomizer)).toEqual([17, [4, 6, 7]])
+      expect(modifyRolls(longerRollTotals, dropParameters, mockRandomizer)).toMatchObject({
+        total: 17,
+        rolls: [4, 6, 7],
+      })
     })
   })
 
-  describe('when given roll totals with a "replace" modifier', () => {
+  describe('when given roll total with a "replace" modifier', () => {
     describe('that is a single replace modifiers', () => {
       const dropParameters: RollParameters = {
         ...baseParameters,
-        rollModifiers: [{ replace: { from: 1, to: 2 } }],
+        modifiers: [{ replace: { from: 1, to: 2 } }],
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([11, [2, 2, 3, 4]])
+        expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toMatchObject({ total: 11, rolls: [2, 2, 3, 4] })
       })
     })
 
     describe('that is an array of replace modifiers', () => {
       const dropParameters: RollParameters = {
         ...baseParameters,
-        rollModifiers: [
+        modifiers: [
           {
             replace: [
               { from: 1, to: 2 },
@@ -97,76 +106,88 @@ describe('modifyRolls', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([13, [2, 2, 3, 6]])
+        expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toMatchObject({ total: 13, rolls: [2, 2, 3, 6] })
       })
     })
   })
 
-  describe('when given roll totals with an "explode" modifier', () => {
+  describe('when given roll total with an "explode" modifier', () => {
     const explodeRollTotals = [1, 2, 3, 6]
-    const explodeParameters: RollParameters = { ...baseParameters, rollModifiers: [{ explode: true }] }
+    const explodeParameters: RollParameters = { ...baseParameters, modifiers: [{ explode: true }] }
 
     test('it returns the total with all values matching the queries rerolled', () => {
-      expect(modifyRolls(explodeRollTotals, explodeParameters, mockRandomizer)).toEqual([212, [1, 2, 3, 6, 200]])
+      expect(modifyRolls(explodeRollTotals, explodeParameters, mockRandomizer)).toMatchObject({
+        total: 212,
+        rolls: [1, 2, 3, 6, 200],
+      })
     })
   })
 
-  describe('when given roll totals with a "reroll" modifier', () => {
+  describe('when given roll total with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
-      const rerollParameters: RollParameters = { ...baseParameters, rollModifiers: [{ reroll: { greaterThan: 3 } }] }
+      const rerollParameters: RollParameters = { ...baseParameters, modifiers: [{ reroll: { greaterThan: 3 } }] }
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
-        expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toEqual([206, [1, 2, 3, 200]])
+        expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toMatchObject({
+          total: 206,
+          rolls: [1, 2, 3, 200],
+        })
       })
     })
 
     describe('that is a single reroll modifier', () => {
       const rerollParameters: RollParameters = {
         ...baseParameters,
-        rollModifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }],
+        modifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }],
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
-        expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toEqual([404, [1, 200, 3, 200]])
+        expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toMatchObject({
+          total: 404,
+          rolls: [1, 200, 3, 200],
+        })
       })
     })
 
     describe('that is an array of reroll modifiers', () => {
       const rerollParameters: RollParameters = {
         ...baseParameters,
-        rollModifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }],
+        modifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }],
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
-        expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toEqual([406, [200, 2, 200, 4]])
+        expect(modifyRolls(rolls, rerollParameters, mockRandomizer)).toMatchObject({
+          total: 406,
+          rolls: [200, 2, 200, 4],
+        })
       })
     })
   })
 
-  describe('when given roll totals with a "cap" modifier', () => {
+  describe('when given roll total with a "cap" modifier', () => {
     const dropParameters: RollParameters = {
       ...baseParameters,
-      rollModifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }],
+      modifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }],
     }
 
-    test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll totals', () => {
-      expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([10, [2, 2, 3, 3]])
+    test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll total', () => {
+      expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toMatchObject({ total: 10, rolls: [2, 2, 3, 3] })
     })
   })
 
-  describe('when given roll totals with a "plus" modifier', () => {
-    const dropParameters: RollParameters = { ...baseParameters, totalModifiers: [{ plus: 2 }] }
+  describe('when given roll total with a "plus" modifier', () => {
+    const dropParameters: RollParameters = { ...baseParameters, modifiers: [{ plus: 2 }] }
 
-    test('it returns the total plus the "plus" modifier, and the roll totals', () => {
-      expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([12, [1, 2, 3, 4]])
+    test('it returns the total plus the "plus" modifier, and the roll total', () => {
+      expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toMatchObject({ total: 12, rolls: [1, 2, 3, 4] })
     })
   })
 
-  describe('when given roll totals with a "minus" modifier', () => {
-    const dropParameters: RollParameters = { ...baseParameters, totalModifiers: [{ minus: 2 }] }
+  describe('when given roll total with a "minus" modifier', () => {
+    const dropParameters: RollParameters = { ...baseParameters, modifiers: [{ minus: 2 }] }
 
-    test('it returns the total minust the "minus" modifier, and the roll totals', () => {
-      expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toEqual([8, [1, 2, 3, 4]])
+    test('it returns the total minust the "minus" modifier, and the roll total', () => {
+      expect(modifyRolls(rolls, dropParameters, mockRandomizer)).toMatchObject({ total: 8, rolls: [1, 2, 3, 4] })
     })
   })
 })

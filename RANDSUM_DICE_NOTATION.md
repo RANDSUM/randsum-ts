@@ -14,10 +14,6 @@ I looked high and wide for a consensus on a sort "Extended Standard Dice Notatio
 
 Thanks, [Sophie](https://www.patreon.com/SophieHoulden)! Your examples were invaluable. Consider buying their [games](https://sophieh.itch.io/)!
 
-### Regarding order
-
-`randsum` will attempt to resolve modifiers in a particular order, _regardless of the order they appear in the Dice Notation_. Check out [Regarding Order](/ORDER.md) for more.
-
 ## Dice Notation
 
 Dice Notation in `randsum` is**case-insensitive**. `2d8` and `2D8` both work equally well.
@@ -73,12 +69,12 @@ In `randsum` :
 randsum('6d20+5')
 randsum(20, {
   quantity: 6,
-  plus: 5,
+  modifiers: [{ plus: 5 }],
 })
 randsum({
   sides: 20,
   quantity: 6,
-  plus: 5,
+  modifiers: [{ plus: 5 }],
 })
 ```
 
@@ -102,12 +98,12 @@ In `randsum` :
 randsum('6d20-5')
 randsum(20, {
   quantity: 6,
-  minus: 5,
+  modifiers: [{ minus: 5 }],
 })
 randsum({
   sides: 20,
   quantity: 6,
-  minus: 5,
+  modifiers: [{ minus: 5 }],
 })
 ```
 
@@ -141,16 +137,25 @@ In `randsum` :
 randsum('6d20H')
 randsum(20, {
   quantity: 6,
-  drop: {
-    highest: true,
-  },
+  modifiers: [
+    {
+      drop: {
+        highest: true,
+      },
+    }
+  ]
 })
+
 randsum({
   sides: 20,
   quantity: 6,
-  drop: {
-    highest: true,
-  },
+  modifiers: [
+    {
+      drop: {
+        highest: true,
+      },
+    }
+  ]
 })
 
 // Roll 6 twenty-sided die, drop highest 3
@@ -158,16 +163,24 @@ randsum({
 randsum('6d20H3')
 randsum(20, {
   quantity: 6,
-  drop: {
-    highest: 3,
-  },
+  modifiers: [
+    {
+      drop: {
+        highest: 3,
+      },
+    }
+  ]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  drop: {
-    highest: 3,
-  },
+  modifiers: [
+    {
+      drop: {
+        highest: 3,
+      },
+    }
+  ]
 })
 ```
 
@@ -195,16 +208,24 @@ In `randsum` :
 randsum('6d20L')
 randsum(20, {
   quantity: 6,
-  drop: {
-    lowest: true,
-  },
+  modifiers: [
+    {
+      drop: {
+        lowest: true,
+      },
+    }
+  ]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  drop: {
-    lowest: true,
-  },
+  modifiers: [
+    {
+      drop: {
+        lowest: true,
+      },
+    }
+  ]
 })
 
 // Roll 6 twenty-sided die, drop lowest 3
@@ -212,16 +233,24 @@ randsum({
 randsum('6d20L3')
 randsum(20, {
   quantity: 6,
-  drop: {
-    lowest: 3,
-  },
+  modifiers: [
+    {
+      drop: {
+        lowest: 3,
+      },
+    }
+  ]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  drop: {
-    lowest: 3,
-  },
+  modifiers: [
+    {
+      drop: {
+        lowest: 3,
+      },
+    }
+  ]
 })
 ```
 
@@ -257,20 +286,28 @@ In `randsum` :
 randsum('6d20D{<5,>15,10')
 randsum(20, {
   quantity: 6,
-  drop: {
-    greaterThan: 15,
-    lessThan: 5,
-    exactly: [10],
-  },
+  modifiers: [
+    {
+      drop: {
+        greaterThan: 15,
+        lessThan: 5,
+        exactly: [10],
+      }
+    },
+  ]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  drop: {
-    greaterThan: 15,
-    lessThan: 5,
-    exactly: [10],
-  },
+  modifiers: [
+    {
+      drop: {
+        greaterThan: 15,
+        lessThan: 5,
+        exactly: [10],
+      }
+    },
+  ]
 })
 ```
 
@@ -304,18 +341,26 @@ In `randsum` :
 randsum('6d20C<5>15')
 randsum(20, {
   quantity: 6,
-  cap: {
-    greaterThan: 15,
-    lessThan: 5,
-  },
+  modifiers: [
+    {
+      cap: {
+        greaterThan: 15,
+        lessThan: 5,
+      }
+    },
+  ]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  cap: {
-    greaterThan: 15,
-    lessThan: 5,
-  },
+  modifiers: [
+    {
+      cap: {
+        greaterThan: 15,
+        lessThan: 5,
+      }
+    },
+  ]
 })
 ```
 
@@ -357,22 +402,30 @@ In `randsum` :
 randsum('6d20R{<5,>15,10}3')
 randsum(20, {
   quantity: 6,
-  reroll: {
-    above: 15,
-    below: 5,
-    exactly: [10],
-    maxReroll: 3,
-  },
+  modifiers: [
+    {
+      reroll: {
+        above: 15,
+        below: 5,
+        exactly: [10],
+        maxReroll: 3,
+      }
+    },
+  ]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  reroll: {
-    above: 15,
-    below: 5,
-    on: [10],
-    maxReroll: 3,
-  },
+  modifiers: [
+    {
+      reroll: {
+        above: 15,
+        below: 5,
+        exactly: [10],
+        maxReroll: 3,
+      }
+    },
+  ]
 })
 ```
 
@@ -410,46 +463,54 @@ In `randsum` :
 randsum('6d20v{<5=1,>15=20,10=2')
 randsum(20, {
   quantity: 6,
-  replace: [
+  modifiers: [
     {
-      from: {
-        above: 15,
-      },
-      to: 20,
-    },
-    {
-      from: {
-        below: 5,
-      },
-      to: 1,
-    },
-    {
-      from: 10,
-      to: 2,
-    },
-  ],
+      replace: [
+        {
+          from: {
+            above: 15,
+          },
+          to: 20,
+        },
+        {
+          from: {
+            below: 5,
+          },
+          to: 1,
+        },
+        {
+          from: 10,
+          to: 2,
+        },
+      ],
+    }
+  ]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  replace: [
+  modifiers: [
     {
-      from: {
-        above: 15,
-      },
-      to: 20,
-    },
-    {
-      from: {
-        below: 5,
-      },
-      to: 1,
-    },
-    {
-      from: 10,
-      to: 2,
-    },
-  ],
+      replace: [
+        {
+          from: {
+            above: 15,
+          },
+          to: 20,
+        },
+        {
+          from: {
+            below: 5,
+          },
+          to: 1,
+        },
+        {
+          from: 10,
+          to: 2,
+        },
+      ],
+    }
+  ]
 })
 ```
 
@@ -479,12 +540,12 @@ In `randsum` :
 randsum('6d20U')
 randsum(20, {
   quantity: 6,
-  unique: true,
+  modifiers: [{ unique: true }],
 })
 randsum({
   sides: 20,
   quantity: 6,
-  unique: true,
+  modifiers: [{ unique: true }],
 })
 
 // Roll 6 twenty-sided die, make them all unique, allow for repeated 5's and 10's
@@ -492,16 +553,24 @@ randsum({
 randsum('6d20U{5,10}')
 randsum(20, {
   quantity: 6,
-  unique: {
-    notUnique: [5, 10],
-  },
+  modifiers: [
+    {
+      unique: {
+        notUnique: [5, 10],
+      }
+    }
+  ]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  unique: {
-    notUnique: [5, 10],
-  },
+  modifiers: [
+    {
+      unique: {
+        notUnique: [5, 10],
+      }
+    }
+  ]
 })
 ```
 
@@ -524,7 +593,7 @@ In `randsum`:
 // Roll 6 twenty-sided die, explode them
 
 randsum('6d20!')
-randsum(20, { quantity: 6, explode: true })
-randsum({ sides: 20, quantity: 6, explode: true })
+randsum(20, { quantity: 6, modifiers: [{ explode: true }] })
+randsum({ sides: 20, quantity: 6, modifiers: [{ explode: true }] })
 ```
 ````
