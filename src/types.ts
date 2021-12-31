@@ -131,6 +131,24 @@ export interface RollParameters extends Omit<RandsumOptions<boolean, number>, 'd
   quantity: number
 }
 
+export type RollParameterKeys = keyof Omit<RandsumOptions<boolean, number>, 'detailed' | 'randomizer'>
+
+export interface NewRollParameters extends Pick<RandsumOptions, 'sides'> {
+  quantity: number
+  sides: number
+  rollModifiers?: Array<
+    | { quantity: NumberString<number> }
+    | { sides: NumberString<number> }
+    | { cap: CapOptions<number> }
+    | { drop: DropOptions<number> }
+    | { replace: ReplaceOptions<number> | Array<ReplaceOptions<number>> }
+    | { reroll: RerollOptions<number> | Array<RerollOptions<number>> }
+    | { explode: boolean }
+    | { unique: boolean | UniqueOptions<number> }
+  >
+  totalModifiers?: Array<{ plus: NumberString<number> } | { minus: NumberString<number> }>
+}
+
 /**
  *
  * The Return value of a Detailed `randsum` roll.

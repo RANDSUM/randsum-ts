@@ -1,11 +1,11 @@
 import { DiceNotation, RollParameters } from '../../types'
-import { findMatches } from '../utils/find-matches'
+import { findMatches, mergeModifier } from '../utils'
 import {
   parseCapNotation,
   parseDropConstraintsNotation,
   parseReplaceNotation,
   parseRerollNotation,
-  parseUniqeNotation,
+  parseUniqueNotation,
 } from './notationParsers'
 
 export function parseNotation(notationString: DiceNotation): RollParameters {
@@ -33,84 +33,64 @@ export function parseNotation(notationString: DiceNotation): RollParameters {
   if (dropHighMatch !== undefined) {
     const highestCount = dropHighMatch.split('h')[1]
 
-    rollParameters = {
-      ...rollParameters,
-      drop: {
-        ...rollParameters.drop,
-        highest: highestCount !== '' ? Number(highestCount) : 1,
+    rollParameters = mergeModifier(
+      {
+        drop: { highest: highestCount !== '' ? Number(highestCount) : 1 },
       },
-    }
+      rollParameters,
+    )
   }
 
   if (dropLowMatch !== undefined) {
     const lowestCount = dropLowMatch.split('l')[1]
 
-    rollParameters = {
-      ...rollParameters,
-      drop: {
-        ...rollParameters.drop,
-        lowest: lowestCount !== '' ? Number(lowestCount) : 1,
+    rollParameters = mergeModifier(
+      {
+        drop: {
+          lowest: lowestCount !== '' ? Number(lowestCount) : 1,
+        },
       },
-    }
+      rollParameters,
+    )
   }
 
   if (dropConstraintsMatch !== undefined) {
-    rollParameters = {
-      ...rollParameters,
-      drop: {
-        ...rollParameters.drop,
-        ...parseDropConstraintsNotation(dropConstraintsMatch),
+    rollParameters = mergeModifier(
+      {
+        drop: {
+          ...parseDropConstraintsNotation(dropConstraintsMatch),
+        },
       },
-    }
+      rollParameters,
+    )
   }
 
   if (explodeMatch !== undefined) {
-    rollParameters = {
-      ...rollParameters,
-      explode: Boolean(explodeMatch),
-    }
+    rollParameters = mergeModifier({ explode: Boolean(explodeMatch) }, rollParameters)
   }
 
   if (uniqueMatch !== undefined) {
-    rollParameters = {
-      ...rollParameters,
-      ...parseUniqeNotation(uniqueMatch),
-    }
+    rollParameters = mergeModifier(parseUniqueNotation(uniqueMatch), rollParameters)
   }
 
   if (replaceMatch !== undefined) {
-    rollParameters = {
-      ...rollParameters,
-      ...parseReplaceNotation(replaceMatch),
-    }
+    rollParameters = mergeModifier(parseReplaceNotation(replaceMatch), rollParameters)
   }
 
   if (rerollMatch !== undefined) {
-    rollParameters = {
-      ...rollParameters,
-      ...parseRerollNotation(rerollMatch),
-    }
+    rollParameters = mergeModifier(parseRerollNotation(rerollMatch), rollParameters)
   }
 
   if (capMatch !== undefined) {
-    rollParameters = {
-      ...rollParameters,
-      ...parseCapNotation(capMatch),
-    }
+    rollParameters = mergeModifier(parseCapNotation(capMatch), rollParameters)
   }
 
   if (plusMatch !== undefined) {
-    rollParameters = {
-      ...rollParameters,
-      plus: Number(plusMatch.split('+')[1]),
-    }
+    rollParameters = mergeModifier({ plus: Number(plusMatch.split('+')[1]) }, rollParameters, 'total')
   }
 
   if (minusMatch !== undefined) {
-    rollParameters = {
-      ...rollParameters,
-      minus: Number(minusMatch.split('-')[1]),
-    }
+    rollParameters = mergeModifier({ minus: Number(minusMatch.split('-')[1]) }, rollParameters, 'total')
   }
 
   return rollParameters
