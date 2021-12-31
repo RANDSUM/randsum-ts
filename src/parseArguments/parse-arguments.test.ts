@@ -287,7 +287,7 @@ describe('parseArguments', () => {
     })
 
     describe('With a complicated dice notation', () => {
-      const testString: DiceNotation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2,<6}3 U{5} ! +2 -5`
+      const testString: DiceNotation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2,<6}3 U{5} ! +2 -5 +3`
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
@@ -295,6 +295,7 @@ describe('parseArguments', () => {
           sides: 20,
           modifiers: expect.arrayContaining([
             { plus: 2 },
+            { plus: 3 },
             { minus: 5 },
             {
               drop: {

@@ -1,6 +1,5 @@
 import { UserOptions } from '../..'
 import { RandsumOptions, RollParameters } from '../../types'
-import { mergeModifier } from '../utils'
 import { convertCapOptionsToParameters } from './convert-cap-options-to-parameters'
 import { convertDropOptionsToParameters } from './convert-drop-options-to-parameters'
 import { convertReplaceOptionsToParameters } from './convert-replace-options-to-parameters'
@@ -25,53 +24,78 @@ export function convertOptionsToParameters({
   for (const modifier of modifiers) {
     const [key] = Object.keys(modifier)
     const [value] = Object.values(modifier)
+    const { modifiers = [], ...restParameters } = rollParameters
 
     switch (key) {
       case 'cap':
-        rollParameters = mergeModifier({ cap: convertCapOptionsToParameters(value) }, rollParameters)
+        rollParameters = {
+          ...restParameters,
+          modifiers: [...modifiers, { cap: convertCapOptionsToParameters(value) }],
+        }
         break
       case 'drop':
-        rollParameters = mergeModifier({ drop: convertDropOptionsToParameters(value) }, rollParameters)
+        rollParameters = {
+          ...restParameters,
+          modifiers: [...modifiers, { drop: convertDropOptionsToParameters(value) }],
+        }
         break
       case 'reroll':
-        rollParameters = mergeModifier(
-          {
-            reroll: Array.isArray(value)
-              ? value.map(option => convertRerollOptionsToParameters(option))
-              : convertRerollOptionsToParameters(value),
-          },
-          rollParameters,
-        )
-        break
-      case 'unique':
-        rollParameters = mergeModifier(
-          {
-            unique:
-              typeof value === 'object'
-                ? { notUnique: value.notUnique.map((number: number) => Number(number)) }
-                : value,
-          },
-          rollParameters,
-        )
+        rollParameters = {
+          ...restParameters,
+          modifiers: [
+            ...modifiers,
+            {
+              reroll: Array.isArray(value)
+                ? value.map(option => convertRerollOptionsToParameters(option))
+                : convertRerollOptionsToParameters(value),
+            },
+          ],
+        }
         break
       case 'replace':
-        rollParameters = mergeModifier(
-          {
-            replace: Array.isArray(value)
-              ? value.map(option => convertReplaceOptionsToParameters(option))
-              : convertReplaceOptionsToParameters(value),
-          },
-          rollParameters,
-        )
+        rollParameters = {
+          ...restParameters,
+          modifiers: [
+            ...modifiers,
+            {
+              replace: Array.isArray(value)
+                ? value.map(option => convertReplaceOptionsToParameters(option))
+                : convertReplaceOptionsToParameters(value),
+            },
+          ],
+        }
+        break
+      case 'unique':
+        rollParameters = {
+          ...restParameters,
+          modifiers: [
+            ...modifiers,
+            {
+              unique:
+                typeof value === 'object'
+                  ? { notUnique: value.notUnique.map((number: number) => Number(number)) }
+                  : value,
+            },
+          ],
+        }
         break
       case 'explode':
-        rollParameters = mergeModifier({ explode: value }, rollParameters)
+        rollParameters = {
+          ...restParameters,
+          modifiers: [...modifiers, { explode: value }],
+        }
         break
       case 'plus':
-        rollParameters = mergeModifier({ plus: Number(value) }, rollParameters)
+        rollParameters = {
+          ...restParameters,
+          modifiers: [...modifiers, { plus: Number(value) }],
+        }
         break
       case 'minus':
-        rollParameters = mergeModifier({ minus: Number(value) }, rollParameters)
+        rollParameters = {
+          ...restParameters,
+          modifiers: [...modifiers, { minus: Number(value) }],
+        }
         break
     }
   }
