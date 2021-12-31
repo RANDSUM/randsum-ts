@@ -60,6 +60,7 @@ describe('parseArguments', () => {
             cap: { greaterThan: '2', lessThan: 1 },
             replace: [{ from: '6', to: '1' }],
             unique: { notUnique: ['1', 2] },
+            explode: true,
           }),
         ).toMatchObject({
           quantity: 4,
@@ -70,6 +71,7 @@ describe('parseArguments', () => {
             { cap: { greaterThan: 2, lessThan: 1 } },
             { replace: [{ from: 6, to: 1 }] },
             { unique: { notUnique: [1, 2] } },
+            { explode: true },
           ]),
           totalModifiers: expect.arrayContaining([{ plus: 2 }, { minus: 1 }]),
         })
