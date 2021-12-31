@@ -23,5 +23,5 @@ export function parseArguments(
     throw new TypeError(`Bad Argument: ${String(primeArgument)}`)
   }
 
-  return { sides, quantity: 1, ...secondaryParameters }
+  return { quantity: 1, ...secondaryParameters, sides }
 }

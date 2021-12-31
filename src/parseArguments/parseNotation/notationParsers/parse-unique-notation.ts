@@ -1,6 +1,6 @@
-import { RollParameters } from '../../../types'
+import { UniqueModifier } from '../../../types'
 
-export function parseUniqeNotation(notationString: string): Pick<RollParameters, 'unique'> {
+export function parseUniqueNotation(notationString: string): UniqueModifier<number> {
   if (notationString === 'u') {
     return { unique: true }
   }
