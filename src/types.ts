@@ -1,7 +1,7 @@
 /**
  * `DiceNotation` is a [Template Literal](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html)
 patterned ater the basic dice notation (with room for extensions).
- * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more.
+ * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more.
  */
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
@@ -21,7 +21,7 @@ export type NumberString<T extends number | 'inclusive' = 'inclusive'> = T exten
 /**
  * Options for `Drop` modifiers.
  *
- * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more.
+ * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more.
  */
 export interface DropOptions<T extends number | 'inclusive' = 'inclusive'> {
   /** A {@link NumberString}, representing the amount of high rolls that will be dropped from this result. */
@@ -48,7 +48,7 @@ export interface DropModifier<T extends number | 'inclusive' = 'inclusive'> {
 /**
  * Options for `Cap` modifiers.
  *
- * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more.
+ * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more.
  */
 export interface CapOptions<T extends number | 'inclusive' = 'inclusive'> {
   /** A {@link NumberString}, representing the maximum number allowed to be rolled on this die (all rolls greater will be reduced to this value) */
@@ -69,7 +69,7 @@ export interface CapModifier<T extends number | 'inclusive' = 'inclusive'> {
 /**
  * Options for `Reroll` modifiers.
  *
- * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more.
+ * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more.
  */
 export interface RerollOptions<T extends number | 'inclusive' = 'inclusive'> extends CapOptions<T> {
   /** A single instance or array of {@link NumberString}, representing what numbers will be rerolled. */
@@ -90,7 +90,7 @@ export interface RerollModifier<T extends number | 'inclusive' = 'inclusive'> {
 /**
  * Options for `Replace` modifiers.
  *
- * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more.
+ * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more.
  */
 export interface ReplaceOptions<T extends number | 'inclusive' = 'inclusive'> {
   /** A {@link CapOptions} or {@link NumberString}, representing what numbers or kind of numbers are to be replaced */
@@ -111,7 +111,7 @@ export interface ReplaceModifier<T extends number | 'inclusive' = 'inclusive'> {
 /**
  * Options for `Unique` modifiers.
  *
- * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more.
+ * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more.
  */
 export interface UniqueOptions<T extends number | 'inclusive' = 'inclusive'> {
   /** An array of {@link NumberString}, representing numbers that are allowed to repeat in the roll. */

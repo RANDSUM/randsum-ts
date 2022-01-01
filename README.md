@@ -2,9 +2,9 @@
 
 `rand` for the rest of us
 
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/alxjrvs/randsum/blob/main/LICENSE.md)
-[![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/master/graph/badge.svg)](https://codecov.io/gh/alxjrvs/randsum)
-[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/alxjrvs/randsum-ts/blob/main/LICENSE.md)
+[![codecov](https://codecov.io/gh/alxjrvs/randsum-ts/branch/master/graph/badge.svg)](https://codecov.io/gh/alxjrvs/randsum-ts)
+[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum-ts/blob/main/CODE_OF_CONDUCT.md)
 
 [![NPM](https://nodei.co/npm/randsum.png?downloads=true)](https://www.npmjs.com/package/randsum)
 
@@ -18,13 +18,13 @@ Check out the docs below for more info!
 
 ## Further Reading
 
-[Getting Started](https://github.com/alxjrvs/randsum/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
+[Getting Started](https://github.com/alxjrvs/randsum-ts/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
-[Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
+[Randsum Dice Notation](https://github.com/alxjrvs/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
 
 [TypeDoc Types](https://alxjrvs.github.io/randsum) - Generated Type Documentation, helpful for debugging
 
-[Contributing](https://github.com/alxjrvs/randsum/blob/main/CONTRIBUTING.md) - help make `randsum` better!
+[Contributing](https://github.com/alxjrvs/randsum-ts/blob/main/CONTRIBUTING.md) - help make `randsum` better!
 
 [Sophie's Dice Notation](https://sophiehoulden.com/dice/documentation/notation.html) - a great dice notation guide that helped me along the way
 
