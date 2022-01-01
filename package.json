@@ -3,10 +3,10 @@
   "description": "rand for the rest of us",
   "license": "MIT",
   "author": "Alex Jarvis",
-  "homepage": "https://alxjrvs.github.io/randsum/",
+  "homepage": "https://alxjrvs.github.io/randsum-ts/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alxjrvs/randsum.git"
+    "url": "https://github.com/alxjrvs/randsum-ts.git"
   },
   "version": "1.2.0",
   "private": false,
