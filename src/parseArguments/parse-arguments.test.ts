@@ -286,45 +286,66 @@ describe('parseArguments', () => {
       })
     })
 
-    describe('With a complicated dice notation', () => {
-      const testString: DiceNotation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2,<6}3 U{5} ! +2 -5 +3`
+    describe('With a corner case dice notation', () => {
+      describe('like an ordered dice notation', () => {
+        test('it produces proper organized parameters', () => {
+          const explodeFirstString: DiceNotation = '4d6!H'
+          const dropFirstString: DiceNotation = '4d6H!'
 
-      test('returns a RollParameter matching the notation', () => {
-        expect(parseArguments(testString)).toMatchObject({
-          quantity: 10,
-          sides: 20,
-          modifiers: expect.arrayContaining([
-            { plus: 2 },
-            { plus: 3 },
-            { minus: 5 },
-            {
-              drop: {
-                highest: 2,
+          expect(parseArguments(explodeFirstString)).toMatchObject({
+            quantity: 4,
+            sides: 6,
+            modifiers: [{ explode: true }, { drop: { highest: 1 } }],
+          })
+
+          expect(parseArguments(dropFirstString)).toMatchObject({
+            quantity: 4,
+            sides: 6,
+            modifiers: [{ drop: { highest: 1 } }, { explode: true }],
+          })
+        })
+      })
+
+      describe('like a complicated dice notation', () => {
+        const testString: DiceNotation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2,<6}3 U{5} ! +2 -5 +3`
+
+        test('returns a RollParameter matching the notation', () => {
+          expect(parseArguments(testString)).toMatchObject({
+            quantity: 10,
+            sides: 20,
+            modifiers: expect.arrayContaining([
+              { plus: 2 },
+              { plus: 3 },
+              { minus: 5 },
+              {
+                drop: {
+                  highest: 2,
+                },
               },
-            },
-            {
-              drop: {
-                lowest: 1,
+              {
+                drop: {
+                  lowest: 1,
+                },
               },
-            },
-            {
-              drop: {
-                exact: [2, 4],
-                greaterThan: 5,
-                lessThan: 2,
+              {
+                drop: {
+                  exact: [2, 4],
+                  greaterThan: 5,
+                  lessThan: 2,
+                },
               },
-            },
-            { cap: { greaterThan: 18, lessThan: 2 } },
-            { reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } },
-            { explode: true },
-            { unique: { notUnique: [5] } },
-            {
-              replace: [
-                { from: 1, to: 2 },
-                { from: { greaterThan: 2 }, to: 6 },
-              ],
-            },
-          ]),
+              { cap: { greaterThan: 18, lessThan: 2 } },
+              { reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } },
+              { explode: true },
+              { unique: { notUnique: [5] } },
+              {
+                replace: [
+                  { from: 1, to: 2 },
+                  { from: { greaterThan: 2 }, to: 6 },
+                ],
+              },
+            ]),
+          })
         })
       })
     })
