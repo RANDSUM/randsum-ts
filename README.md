@@ -22,7 +22,7 @@ Check out the docs below for more info!
 
 [Randsum Dice Notation](https://github.com/alxjrvs/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
 
-[TypeDoc Types](https://alxjrvs.github.io/randsum) - Generated Type Documentation, helpful for debugging
+[TypeDoc Types](https://alxjrvs.github.io/randsum-ts) - Generated Type Documentation, helpful for debugging
 
 [Contributing](https://github.com/alxjrvs/randsum-ts/blob/main/CONTRIBUTING.md) - help make `randsum` better!
 
