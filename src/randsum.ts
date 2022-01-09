@@ -23,7 +23,9 @@ export function randsum(
 ) {
   const { detailed, ...rollParameters } = parseArguments(primeArgument, randsumOptions)
 
-  const result = generateResult(rollParameters)
+  if (detailed === true) {
+    return generateResult(rollParameters)
+  }
 
-  return detailed === true ? result : result.total
+  return rollParameters.rollOne()
 }

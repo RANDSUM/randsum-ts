@@ -1,12 +1,12 @@
-import { DiceNotation, NumberString, RandsumOptions, RollParameters, UserOptions } from '../types'
+import { DiceNotation, NumberString, RandsumOptions, RandsumOptionsWithoutSides } from '../types'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 import { parseNotation } from './parseNotation'
 import { isDiceNotation, isOptions, makeRolls, rollOneFactory } from './utils'
 
 export function parseArguments(
   primeArgument: NumberString | RandsumOptions | DiceNotation,
-  secondArgument: Omit<RandsumOptions, 'sides'> = {},
-): RollParameters & Pick<UserOptions, 'detailed'> {
+  secondArgument: RandsumOptionsWithoutSides = {},
+) {
   if (isOptions(primeArgument)) {
     const { detailed, randomizer, ...rollParameters } = convertOptionsToParameters(primeArgument)
     const rollOne = rollOneFactory(rollParameters.sides, randomizer)
