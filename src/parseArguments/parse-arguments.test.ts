@@ -1,4 +1,4 @@
-import { DiceNotation, RollParameters } from '../types'
+import { DiceNotation } from '../types'
 import { parseArguments } from './parse-arguments'
 
 describe('parseArguments', () => {
@@ -82,7 +82,7 @@ describe('parseArguments', () => {
 
   describe('given DiceNotation', () => {
     const baseTestString: DiceNotation = '4d6'
-    const baseRollParameters: RollParameters = { sides: 6, quantity: 4 }
+    const baseRollParameters = { sides: 6, quantity: 4 }
 
     describe('given a basic notation', () => {
       test('returns a RollParameter matching the notation', () => {

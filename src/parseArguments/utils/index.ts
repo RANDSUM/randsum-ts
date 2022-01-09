@@ -1,4 +1,6 @@
 export * from './find-matches'
 export * from './is-dice-notation'
 export * from './is-options'
+export * from './make-rolls'
 export * from './patterns'
+export * from './roll-one-factory'

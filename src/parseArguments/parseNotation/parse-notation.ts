@@ -11,8 +11,8 @@ import {
   parseUniqueNotation,
 } from './notationParsers'
 
-export function parseNotation(notationString: DiceNotation): RollParameters {
-  let rollParameters: RollParameters = { sides: 1, quantity: 1 }
+export function parseNotation(notationString: DiceNotation) {
+  let rollParameters: Omit<RollParameters, 'rollOne' | 'initialRolls'> = { sides: 1, quantity: 1 }
 
   for (const match of findMatches(notationString.toLowerCase().replace(' ', ''))) {
     const [key] = Object.keys(match)

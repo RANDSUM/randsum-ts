@@ -1,27 +1,33 @@
-import { DiceNotation, NumberString, RandsumOptions, RollParameters, UserOptions } from '../types'
+import { DiceNotation, NumberString, RandsumOptions, RandsumOptionsWithoutSides } from '../types'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 import { parseNotation } from './parseNotation'
-import { isDiceNotation, isOptions } from './utils'
+import { isDiceNotation, isOptions, makeRolls, rollOneFactory } from './utils'
 
 export function parseArguments(
   primeArgument: NumberString | RandsumOptions | DiceNotation,
-  secondArgument: Omit<RandsumOptions, 'sides'> = {},
-): RollParameters & UserOptions {
-  const secondaryParameters = convertOptionsToParameters(secondArgument)
+  secondArgument: RandsumOptionsWithoutSides = {},
+) {
+  if (isOptions(primeArgument)) {
+    const { detailed, randomizer, ...rollParameters } = convertOptionsToParameters(primeArgument)
+    const rollOne = rollOneFactory(rollParameters.sides, randomizer)
+    const initialRolls = makeRolls(rollParameters.quantity, rollOne)
 
-  if (isDiceNotation(primeArgument)) {
-    return { ...secondaryParameters, ...parseNotation(primeArgument) }
+    return { rollOne, initialRolls, ...rollParameters, detailed }
   }
 
-  if (isOptions(primeArgument)) {
-    return { sides: 0, quantity: 1, ...secondaryParameters, ...convertOptionsToParameters(primeArgument) }
+  const { detailed, randomizer } = convertOptionsToParameters(secondArgument)
+
+  if (isDiceNotation(primeArgument)) {
+    const rollParameters = parseNotation(primeArgument)
+    const rollOne = rollOneFactory(rollParameters.sides, randomizer)
+    const initialRolls = makeRolls(rollParameters.quantity, rollOne)
+    return { rollOne, initialRolls, ...rollParameters, detailed }
   }
 
   const sides = Number(primeArgument)
 
-  if (Number.isNaN(Number(sides))) {
-    throw new TypeError(`Bad Argument: ${String(primeArgument)}`)
-  }
+  const rollOne = rollOneFactory(sides, randomizer)
+  const initialRolls = makeRolls(1, rollOne)
 
-  return { quantity: 1, ...secondaryParameters, sides }
+  return { quantity: 1, sides, rollOne, initialRolls, detailed }
 }

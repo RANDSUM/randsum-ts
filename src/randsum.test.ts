@@ -63,26 +63,4 @@ describe('Randsum', () => {
       expect(result.rollParameters.quantity).toBe(2)
     })
   })
-
-  describe('with bad parameters', () => {
-    describe('like a random string', () => {
-      test('it throws an error', () => {
-        expect(() => {
-          // @ts-expect-error - Bad Argument Test
-          const result = randsum('GENDER HAS NO BEARING ON ABILITY')
-          return result
-        }).toThrow()
-      })
-    })
-
-    describe('like an almost dice notation string', () => {
-      test('it throws an error', () => {
-        expect(() => {
-          // @ts-expect-error - Bad Argument Test
-          const result = randsum('4b20')
-          return result
-        }).toThrow()
-      })
-    })
-  })
 })
