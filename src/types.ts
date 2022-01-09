@@ -11,7 +11,7 @@ export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
  *
  * When `NumberString<number>`, NumberString resolves to `number`.
  *
- * This allows us to use `RandsumOptions<number>` as the base for RollParameters, while
+ * This allows us to use `RollOptions<number>` as the base for RollParameters, while
  still benefitting from strong types.
  */
 export type NumberString<T extends number | 'inclusive' = 'inclusive'> = T extends 'inclusive'
@@ -184,8 +184,7 @@ export type Modifier<T extends number | 'inclusive' = 'inclusive'> =
  * All Options available to be passed to {@link randsum}.
  *
  */
-export interface RandsumOptions<D extends boolean = boolean, T extends number | 'inclusive' = 'inclusive'>
-  extends UserOptions<D> {
+export interface RollOptions<T extends number | 'inclusive' = 'inclusive'> {
   quantity?: NumberString<T>
   sides: NumberString<T>
   modifiers?: Array<Modifier<T>>
@@ -197,9 +196,14 @@ export interface RandsumOptions<D extends boolean = boolean, T extends number | 
  * Returned in {@link RollResult}
  *
  */
-export interface RollParameters extends Omit<RandsumOptions<boolean, number>, keyof UserOptions> {
-  quantity: NumberString<number>
+export interface RollParameters extends RollOptions<number> {
+  quantity: number
+  initialRolls: number[]
+  rollOne: () => number
 }
+
+export type RandsumOptions<D extends boolean = boolean> = RollOptions & UserOptions<D>
+export type RandsumOptionsWithoutSides<D extends boolean = boolean> = Omit<RandsumOptions<D>, 'sides'>
 
 /**
  *
@@ -210,8 +214,6 @@ export interface RollResult {
   total: number
   /** An array of the numbers of each individual die rolled, after modifiers have been applied */
   rolls: number[]
-  /** An array of the numbers of each individual die rolled, before modifiers have been applied */
-  initialRolls: number[]
   /** The object used the calculate the total and rolls */
   rollParameters: RollParameters
 }
