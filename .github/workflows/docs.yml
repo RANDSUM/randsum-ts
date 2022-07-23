@@ -12,8 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        #ensure CI always runs
-        token: ${{ secrets.PERSONALACCESSTOKEN }}
+        token: ${{ secrets.PERSONALACCESSTOKEN }} #ensure CI always runs
 
       - uses: actions/setup-node@v3
         with:
