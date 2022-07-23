@@ -29,7 +29,7 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create Release and Upload Binary Asset
+      - name: Create Release
         if: steps.publish.outputs.type != 'none'
         id: release
         uses: softprops/action-gh-release@HEAD
