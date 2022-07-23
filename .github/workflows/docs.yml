@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        token: ${{ secrets.PERSONALACCESSTOKEN }}
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -23,7 +25,7 @@ jobs:
         run: yarn docs
 
       - name: Commit Docs
-        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        uses: EndBug/add-and-commit@v9
         with:
           add: 'docs'
           message: '📄 Updating Docs 📄'
