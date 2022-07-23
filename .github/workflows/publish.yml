@@ -20,8 +20,6 @@ jobs:
 
       - run: yarn install --ignore-engines --ignore-scripts
 
-      - run: yarn test:ci
-
       - run: yarn build
 
       - uses: JS-DevTools/npm-publish@v1
