@@ -3,5 +3,5 @@
 
 yarn docs
 git add docs
-git diff-index --quiet HEAD || git commit --no-verify -m "Updating Docs"
+git diff-index --quiet HEAD || git commit --no-verify -m "🤖 Updating Docs 🤖"
 yarn test || exit 1

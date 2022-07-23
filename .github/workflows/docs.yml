@@ -27,11 +27,11 @@ jobs:
         with:
           token: ${{ secrets.GNARBOT_TOKEN }}
           add-paths: 'docs/*'
-          commit-message: '📄 Updating Docs 📄'
+          commit-message: '🤖 Updating Docs 🤖'
           delete-branch: true
           labels: |
             docs
             automated
-          title: 'Updating Docs 📄'
+          title: '🤖 Updating Docs'
           body: |
             Updating Docs from recent Merge
