@@ -17,6 +17,8 @@ jobs:
           node-version: 18
           cache: 'yarn'
 
+      - run: yarn install
+
       - name: Build Docs
         run: yarn docs
 

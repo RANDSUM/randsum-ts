@@ -15,6 +15,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'yarn'
+
+      - run: yarn install
 
       - name: Check Bundle Size
         uses: jackyef/bundlewatch-gh-action@0.2.0
