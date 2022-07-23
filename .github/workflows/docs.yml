@@ -20,11 +20,18 @@ jobs:
       - name: Build Docs
         run: yarn docs
 
-      - name: Commit Docs
-        uses: EndBug/add-and-commit@v9
+      - run: sudo chown -R $USER:$USER .
+
+      - name: Create PR (if required)
+        uses: peter-evans/create-pull-request@v4
         with:
-          add: 'docs'
-          message: '📄 Updating Docs 📄'
-          pull: 'NO-PULL'
-          push: '--no-verify'
-          default_author: github_actions
+          token: ${{ secrets.GNARBOT_TOKEN }}
+          add-paths: 'docs/*'
+          commit-message: '📄 Updating Docs 📄'
+          delete-branch: true
+          labels: |
+            docs
+            automated
+          title: 'Updating Docs 📄'
+          body: |
+            Updating Docs from recent Merge
