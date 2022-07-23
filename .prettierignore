@@ -1,0 +1,6 @@
+dist
+docs
+src/coverage
+node_modules
+
+*.html
