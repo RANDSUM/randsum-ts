@@ -11,21 +11,17 @@ jobs:
     name: Run CI
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PERSONALACCESSTOKEN }}
+      - uses: actions/checkout@v3
 
-      - uses: c-hive/gha-yarn-cache@v2
-
-      - name: Install Yarn Dependencies
-        uses: borales/actions-yarn@v2.3.0
+      - uses: actions/setup-node@v3
         with:
-          cmd: "install --ignore-engines --ignore-scripts"
+          node-version: 18
+          cache: 'yarn'
+
+      - run: yarn install
 
       - name: Run Tests
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: "test:ci"
+        run: yarn test:ci
 
       - name: Code Cov
         uses: codecov/codecov-action@v2.1.0

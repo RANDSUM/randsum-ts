@@ -17,7 +17,6 @@
     "docs": "typedoc --options ./typedoc.json -gitRevision $npm_package_version",
     "test": "jest",
     "test:ci": "jest --runInBand",
-    "test:debug": "node --inspect-brk node_modules/.bin/jest -o --runInBand",
     "lint": "eslint . -c .eslintrc.json",
     "watch-build": "tsc -w -p .",
     "postinstall": "husky install",

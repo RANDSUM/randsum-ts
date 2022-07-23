@@ -3,32 +3,25 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 jobs:
   build:
     name: Build Docs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PERSONALACCESSTOKEN }}
+      - uses: actions/checkout@v3
 
-      - uses: c-hive/gha-yarn-cache@v2
-
-      - name: Install Yarn Dependencies
-        uses: borales/actions-yarn@v2.3.0
+      - uses: actions/setup-node@v3
         with:
-          cmd: "install --ignore-engines --ignore-scripts"
+          node-version: 18
+          cache: 'yarn'
+
+      - run: yarn install
 
       - name: Build Docs
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: docs
+        run: yarn docs
 
       - name: Commit Docs
-        uses: EndBug/add-and-commit@v7 # You can change this to use a specific version.
+        uses: EndBug/add-and-commit@v9
         with:
           add: 'docs'
           message: '📄 Updating Docs 📄'
