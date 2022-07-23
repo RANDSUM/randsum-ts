@@ -1,7 +1,7 @@
 name: Publish + Release on Version Bump
 on:
   workflow_run:
-    workflows: [CI]
+    workflows: [Tests]
     types: [completed]
     branches: [main]
 
