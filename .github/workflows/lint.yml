@@ -11,18 +11,12 @@ jobs:
     name: Lint Code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PERSONALACCESSTOKEN }}
+      - uses: actions/checkout@v3
 
-      - uses: c-hive/gha-yarn-cache@v2
-
-      - name: Install Yarn Dependencies
-        uses: borales/actions-yarn@v3.0.0
+      - uses: actions/setup-node@v3
         with:
-          cmd: "install --ignore-engines --ignore-scripts"
+          node-version: 18
+          cache: 'yarn'
 
       - name: Run Linters
-        uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: lint
+        run: yarn lint

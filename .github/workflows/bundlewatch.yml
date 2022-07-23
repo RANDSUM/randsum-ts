@@ -11,16 +11,10 @@ jobs:
     name: Check Bundle Size w/BundleWatch
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          token: ${{ secrets.PERSONALACCESSTOKEN }}
-
-      - uses: c-hive/gha-yarn-cache@v2
-
-      - name: Install Yarn Dependencies
-        uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: "install --ignore-engines --ignore-scripts"
+          node-version: 18
 
       - name: Check Bundle Size
         uses: jackyef/bundlewatch-gh-action@0.2.0
