@@ -1,7 +1,9 @@
-name: Publish
+name: Publish + Release on Version Bump
 on:
-  release:
-    types: [published]
+  workflow_run:
+    workflows: [Tests]
+    types: [completed]
+    branches: [main]
 
 jobs:
   publish:
@@ -10,15 +12,26 @@ jobs:
       INPUT_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'yarn'
 
-      - name: Build
-        run: yarn build
+      - run: yarn install --ignore-engines --ignore-scripts
+
+      - run: yarn build
 
       - uses: JS-DevTools/npm-publish@v1
         id: publish
         with:
           token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create Release
+        if: steps.publish.outputs.type != 'none'
+        id: release
+        uses: softprops/action-gh-release@HEAD
+        with:
+          tag_name: v${{ steps.publish.outputs.version }}
+          append_body: true
+          generate_release_notes: true
