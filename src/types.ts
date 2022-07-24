@@ -1,4 +1,29 @@
 /**
+ * Options for configuring every option of a Randsum roll.
+ *
+ * @typeParam D Making overloading a breeze, always a Boolean.
+ */
+export type RandsumOptions<D extends boolean = boolean> = RollOptions & UserOptions<D>
+
+/**
+ * Options for configuring the Dice Roll, without the sides parameter.
+ *
+ * @typeParam D Making overloading a breeze, always a Boolean.
+ */
+export type RandsumOptionsWithoutSides<D extends boolean = boolean> = Omit<RandsumOptions<D>, 'sides'>
+
+/**
+ * Options provided to the user not directly related to the dice roll:
+ *
+ * @typeParam D Making overloading a breeze, always a Boolean.
+ */
+export interface UserOptions<D extends boolean = boolean> {
+  /** Whether or not to display a {@link RollResult} (true) or a `number` (false) */
+  detailed?: D
+  /** A custom functtion that replaces the default randomizer function */
+  randomizer?: (sides: NumberString) => number
+}
+/**
  * `DiceNotation` is a [Template Literal](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html)
 patterned ater the basic dice notation (with room for extensions).
  * See [Randsum Dice Notation](https://github.com/alxjrvs/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more.
@@ -155,18 +180,6 @@ export interface MinusModifier<T extends number | 'inclusive' = 'inclusive'> {
 }
 
 /**
- * Options provided to the user not directly related to the dice roll:
- *
- * @typeParam D Making overloading a breeze, always a Boolean.
- */
-export interface UserOptions<D extends boolean = boolean> {
-  /** Whether or not to display a {@link RollResult} (true) or a `number` (false) */
-  detailed?: D
-  /** A custom functtion that replaces the default randomizer function */
-  randomizer?: (sides: NumberString) => number
-}
-
-/**
  * All Possible modifiers used to modify the roll results
  *
  */
@@ -197,17 +210,16 @@ export interface RollOptions<T extends number | 'inclusive' = 'inclusive'> {
  *
  */
 
-export interface InternalRollParameters extends RollOptions<number>, Partial<UserOptions> {
+export interface InternalRollParameters extends RollOptions<number>, UserOptions {
   quantity: number
+  detailed: boolean
+  modifiers: Array<Modifier<number>>
 }
 
 export interface RollParameters extends InternalRollParameters {
   initialRolls: number[]
   rollOne: () => number
 }
-
-export type RandsumOptions<D extends boolean = boolean> = RollOptions & UserOptions<D>
-export type RandsumOptionsWithoutSides<D extends boolean = boolean> = Omit<RandsumOptions<D>, 'sides'>
 
 /**
  *
