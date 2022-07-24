@@ -21,9 +21,8 @@ export function randsum(
   primeArgument: NumberString | RandsumOptions | DiceNotation,
   randsumOptions?: RandsumOptionsWithoutSides | UserOptions,
 ) {
-  const { detailed, ...rollParameters } = parseArguments(primeArgument, randsumOptions)
-
+  const rollParameters = parseArguments(primeArgument, randsumOptions)
   const result = generateResult(rollParameters)
 
-  return detailed === true ? result : result.total
+  return rollParameters.detailed ? result : result.total
 }

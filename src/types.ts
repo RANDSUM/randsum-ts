@@ -197,8 +197,10 @@ export interface RollOptions<T extends number | 'inclusive' = 'inclusive'> {
  *
  */
 
-export interface InternalRollParameters extends RollOptions<number>, Partial<UserOptions> {
+export interface InternalRollParameters extends RollOptions<number>, UserOptions {
   quantity: number
+  detailed: boolean
+  modifiers: Array<Modifier<number>>
 }
 
 export interface RollParameters extends InternalRollParameters {
