@@ -3,7 +3,7 @@
 `rand` for the rest of us
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/alxjrvs/randsum-ts/blob/main/LICENSE.md)
-[![codecov](https://codecov.io/gh/alxjrvs/randsum-ts/branch/master/graph/badge.svg)](https://codecov.io/gh/alxjrvs/randsum-ts)
+[![codecov](https://codecov.io/gh/alxjrvs/randsum-ts/branch/main/graph/badge.svg?token=uww6E0o1ob)](https://codecov.io/gh/alxjrvs/randsum-ts)
 [![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum-ts/blob/main/CODE_OF_CONDUCT.md)
 
 [![NPM](https://nodei.co/npm/randsum.png?downloads=true)](https://www.npmjs.com/package/randsum)
