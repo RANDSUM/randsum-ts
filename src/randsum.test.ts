@@ -1,46 +1,64 @@
 import { randsum } from './randsum'
 
 describe('Randsum', () => {
-  describe('with a string', () => {
-    const result = randsum('20')
+  describe('Simple results', () => {
+    describe('with a string', () => {
+      const result = randsum('20')
 
-    test('returns a number as total', () => {
-      expect(Number.isInteger(result)).toBe(true)
+      test('returns a number as total', () => {
+        expect(Number.isInteger(result)).toBe(true)
+      })
     })
-  })
 
-  describe('with a number', () => {
-    const result = randsum(20)
+    describe('with a number', () => {
+      const result = randsum(20)
 
-    test('returns a number as total', () => {
-      expect(Number.isInteger(result)).toBe(true)
+      test('returns a number as total', () => {
+        expect(Number.isInteger(result)).toBe(true)
+      })
+
+      describe('and a RandsumOptionsWithoutSides object', () => {
+        const result = randsum(20, { quantity: 21 })
+
+        test('returns a number as total', () => {
+          expect(Number.isInteger(result)).toBe(true)
+        })
+      })
     })
-  })
 
-  describe('with a modifier object', () => {
-    const result = randsum({ sides: 20, quantity: 2, modifiers: [{ drop: { highest: 1 } }] })
+    describe('with a RandsumOptions object', () => {
+      const result = randsum({ sides: 20, quantity: 2, modifiers: [{ drop: { highest: 1 } }] })
 
-    test('returns a number as total', () => {
-      expect(Number.isInteger(result)).toBe(true)
+      test('returns a number as total', () => {
+        expect(Number.isInteger(result)).toBe(true)
+      })
     })
-  })
 
-  describe('with basic dice notation', () => {
-    const result = randsum('2d20')
+    describe('with basic dice notation', () => {
+      const result = randsum('2d20')
 
-    test('returns a number as total', () => {
-      expect(Number.isInteger(result)).toBe(true)
+      test('returns a number as total', () => {
+        expect(Number.isInteger(result)).toBe(true)
+      })
+
+      describe('and a UserOption object', () => {
+        const result = randsum('2d20', { randomizer: () => 1 })
+
+        test('returns a number as total', () => {
+          expect(Number.isInteger(result)).toBe(true)
+        })
+      })
     })
-  })
 
-  const mockRandomizerRoll = 420
-  const mockRandomizer = (): number => mockRandomizerRoll
+    const mockRandomizerRoll = 420
+    const mockRandomizer = (): number => mockRandomizerRoll
 
-  describe('with a custom randomizer', () => {
-    const result = randsum('2d20', { randomizer: mockRandomizer })
+    describe('with a custom randomizer', () => {
+      const result = randsum('2d20', { randomizer: mockRandomizer })
 
-    test('expects total to be correct', () => {
-      expect(result).toEqual(2 * mockRandomizerRoll)
+      test('expects total to be correct', () => {
+        expect(result).toEqual(2 * mockRandomizerRoll)
+      })
     })
   })
 

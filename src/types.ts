@@ -196,8 +196,12 @@ export interface RollOptions<T extends number | 'inclusive' = 'inclusive'> {
  * Returned in {@link RollResult}
  *
  */
-export interface RollParameters extends RollOptions<number> {
+
+export interface InternalRollParameters extends RollOptions<number>, Partial<UserOptions> {
   quantity: number
+}
+
+export interface RollParameters extends InternalRollParameters {
   initialRolls: number[]
   rollOne: () => number
 }
