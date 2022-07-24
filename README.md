@@ -2,14 +2,14 @@
 
 `rand` for the rest of us
 
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/alxjrvs/randsum-ts/blob/main/LICENSE.md)
-[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum-ts/blob/main/CODE_OF_CONDUCT.md)
+[![NPM](https://nodei.co/npm/randsum.png?downloads=true)](https://www.npmjs.com/package/randsum)
 <br/>
 [![codecov](https://codecov.io/gh/alxjrvs/randsum-ts/branch/main/graph/badge.svg?token=uww6E0o1ob)](https://codecov.io/gh/alxjrvs/randsum-ts)
 [![Tests](https://github.com/alxjrvs/randsum-ts/actions/workflows/tests.yml/badge.svg)](https://github.com/alxjrvs/randsum-ts/actions/workflows/tests.yml)
 [![Lint](https://github.com/alxjrvs/randsum-ts/actions/workflows/lint.yml/badge.svg)](https://github.com/alxjrvs/randsum-ts/actions/workflows/lint.yml)
 <br/>
-[![NPM](https://nodei.co/npm/randsum.png?downloads=true)](https://www.npmjs.com/package/randsum)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/alxjrvs/randsum-ts/blob/main/LICENSE.md)
+[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum-ts/blob/main/CODE_OF_CONDUCT.md)
 ## What is this?
 
 It's a dice roller! Specifically, it's a random number generator that generates numbers from 1-N, rather than traditional random number generators, which work from 0-(N-1).
