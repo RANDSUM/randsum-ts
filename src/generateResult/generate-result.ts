@@ -6,7 +6,7 @@ export function generateResult({ initialRolls, rollOne, ...rollParameters }: Rol
   let modifiedRollTotals = [...initialRolls]
   let simpleMathModifier = 0
 
-  const { sides, quantity, modifiers = [] } = rollParameters
+  const { sides, quantity, modifiers } = rollParameters
 
   for (const modifier of modifiers) {
     const [key] = Object.keys(modifier)

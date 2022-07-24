@@ -10,6 +10,8 @@ describe('generateResult', () => {
     rollOne: mockRandomizer,
     sides: 6,
     quantity: rolls.length,
+    detailed: false,
+    modifiers: [],
   }
 
   describe('when given roll total with no modifiers', () => {
