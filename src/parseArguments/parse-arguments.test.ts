@@ -7,10 +7,10 @@ describe('parseArguments', () => {
       expect(parseArguments('2')).toMatchObject({ quantity: 1, sides: 2 })
     })
 
-    describe('and a complex RandsumOption', () => {
+    describe('and a complex RandsumOptionsWithoutSides object', () => {
       test('returns a RollParameter matching the notation', () => {
-        expect(parseArguments('2', { detailed: true })).toMatchObject({
-          quantity: 1,
+        expect(parseArguments('2', { quantity: 3, detailed: true })).toMatchObject({
+          quantity: 3,
           sides: 2,
           detailed: true,
         })
@@ -21,6 +21,16 @@ describe('parseArguments', () => {
   describe('given a number', () => {
     test('returns a RollParameter matching the notation', () => {
       expect(parseArguments(2)).toMatchObject({ quantity: 1, sides: 2 })
+    })
+
+    describe('and a complex RandsumOptionWithoutSides', () => {
+      test('returns a RollParameter matching the notation', () => {
+        expect(parseArguments(2, { quantity: 3, detailed: true })).toMatchObject({
+          quantity: 3,
+          sides: 2,
+          detailed: true,
+        })
+      })
     })
   })
 
@@ -87,6 +97,17 @@ describe('parseArguments', () => {
     describe('given a basic notation', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(baseTestString)).toMatchObject(baseRollParameters)
+      })
+
+      describe('and a UserOptions object', () => {
+        const userOptions = { detailed: false, randomizer: () => 1 }
+
+        test('returns a RollParameter matching the notation and detailed options', () => {
+          expect(parseArguments(baseTestString, userOptions)).toMatchObject({
+            ...baseRollParameters,
+            detailed: userOptions.detailed,
+          })
+        })
       })
     })
 
