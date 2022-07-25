@@ -1,5 +1,5 @@
 import { Match } from '../types'
-import { completeRollPattern } from '../utils'
+import { completeRollPattern } from './patterns'
 
 export function findMatches(notations: string): Match[] {
   let m

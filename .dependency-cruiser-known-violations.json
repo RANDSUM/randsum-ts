@@ -1,0 +1,29 @@
+[
+  {
+    "type": "module",
+    "from": "src/coverage/lcov-report/block-navigation.js",
+    "to": "src/coverage/lcov-report/block-navigation.js",
+    "rule": {
+      "severity": "warn",
+      "name": "no-orphans"
+    }
+  },
+  {
+    "type": "module",
+    "from": "src/coverage/lcov-report/prettify.js",
+    "to": "src/coverage/lcov-report/prettify.js",
+    "rule": {
+      "severity": "warn",
+      "name": "no-orphans"
+    }
+  },
+  {
+    "type": "module",
+    "from": "src/coverage/lcov-report/sorter.js",
+    "to": "src/coverage/lcov-report/sorter.js",
+    "rule": {
+      "severity": "warn",
+      "name": "no-orphans"
+    }
+  }
+]

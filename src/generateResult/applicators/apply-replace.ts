@@ -1,5 +1,5 @@
 import { ReplaceOptions } from '../../types'
-import { applySingleCap } from '.'
+import { applySingleCap } from './apply-single-cap'
 
 export function applyReplace(
   rolls: number[],

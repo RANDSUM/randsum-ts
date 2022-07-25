@@ -1,5 +1,4 @@
-import { UniqueModifier } from '../..'
-import { RollParameters } from '../../types'
+import { RollParameters, UniqueModifier } from '../../types'
 
 export function applyUnique(
   rolls: number[],
