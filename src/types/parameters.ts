@@ -7,10 +7,9 @@ import { RollOptions, UserOptions } from './options'
  * Returned in {@link RollResult}
  *
  */
-export interface InternalRollParameters extends RollOptions<number>, UserOptions {
-  quantity: number
-  detailed: boolean
+export interface InternalRollParameters extends RollOptions<number>, Pick<UserOptions<false>, 'randomizer'> {
   modifiers: Array<Modifier<number>>
+  quantity: number
 }
 
 export interface RollParameters extends InternalRollParameters {

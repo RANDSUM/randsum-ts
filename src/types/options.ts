@@ -6,21 +6,21 @@ import { NumberString } from './primitives'
  *
  * @typeParam D Making overloading a breeze, always a Boolean.
  */
-export type RandsumOptions<D extends boolean = boolean> = RollOptions & UserOptions<D>
+export type RandsumOptions<D extends boolean> = RollOptions & UserOptions<D>
 
 /**
  * Options for configuring the Dice Roll, without the sides parameter.
  *
  * @typeParam D Making overloading a breeze, always a Boolean.
  */
-export type RandsumOptionsWithoutSides<D extends boolean = boolean> = Omit<RandsumOptions<D>, 'sides'>
+export type RandsumOptionsWithoutSides<D extends boolean> = Omit<RandsumOptions<D>, 'sides'>
 
 /**
  * Options provided to the user not directly related to the dice roll:
  *
  * @typeParam D Making overloading a breeze, always a Boolean.
  */
-export interface UserOptions<D extends boolean = boolean> {
+export interface UserOptions<D extends boolean> {
   /** Whether or not to display a {@link RollResult} (true) or a `number` (false) */
   detailed?: D
   /** A custom functtion that replaces the default randomizer function */
