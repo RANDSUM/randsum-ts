@@ -17,12 +17,12 @@ export function randsum(notation: DiceNotation, userOptions: UserOptions<false>)
 export function randsum(notation: DiceNotation, userOptions: UserOptions<true>): RollResult
 export function randsum(rollOptions: RandsumOptions<false>): number
 export function randsum(rollOptions: RandsumOptions<true>): RollResult
-export function randsum(
-  primeArgument: NumberString | RandsumOptions | DiceNotation,
-  randsumOptions?: RandsumOptionsWithoutSides | UserOptions,
-) {
-  const rollParameters = parseArguments(primeArgument, randsumOptions)
+export function randsum<D extends boolean>(
+  primeArgument: NumberString | RandsumOptions<D> | DiceNotation,
+  randsumOptions?: RandsumOptionsWithoutSides<D> | UserOptions<D>,
+): RollResult | number {
+  const { detailed, ...rollParameters } = parseArguments<D>(primeArgument, randsumOptions)
   const result = generateResult(rollParameters)
 
-  return rollParameters.detailed ? result : result.total
+  return detailed ? result : result.total
 }

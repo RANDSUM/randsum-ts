@@ -1,5 +1,7 @@
 import { DiceNotation, NumberString, RandsumOptions } from '../../types'
 
-export function isRandsumOptions(argument: NumberString | RandsumOptions | DiceNotation): argument is RandsumOptions {
+export function isRandsumOptions<D extends boolean>(
+  argument: NumberString | RandsumOptions<D> | DiceNotation,
+): argument is RandsumOptions<D> {
   return typeof argument === 'object'
 }

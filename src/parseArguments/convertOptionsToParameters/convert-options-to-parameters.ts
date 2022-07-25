@@ -5,23 +5,30 @@ import { normalizeModifiers } from './normalize-modifiers'
 const defaultRollParameters: InternalRollParameters = {
   quantity: 1,
   sides: 20,
-  detailed: false,
   modifiers: [],
   randomizer: undefined,
 }
 
-export function convertOptionsToParameters(
-  options: RandsumOptions | RandsumOptionsWithoutSides | UserOptions,
-): InternalRollParameters {
-  const { quantity, sides, modifiers, ...restOptions } = {
+export function convertOptionsToParameters<D extends boolean>({
+  detailed,
+  ...restOptions
+}: RandsumOptions<D> | RandsumOptionsWithoutSides<D> | UserOptions<D>): [D, InternalRollParameters] {
+  const { quantity, sides, modifiers, ...restParsedOptions } = {
     ...defaultRollParameters,
-    ...options,
-  }
-
-  return {
-    sides: Number(sides),
-    quantity: Number(quantity),
-    modifiers: normalizeModifiers(modifiers),
     ...restOptions,
   }
+
+  if (detailed === undefined) {
+    detailed = false
+  }
+
+  return [
+    detailed,
+    {
+      sides: Number(sides),
+      quantity: Number(quantity),
+      modifiers: normalizeModifiers(modifiers),
+      ...restParsedOptions,
+    },
+  ]
 }
