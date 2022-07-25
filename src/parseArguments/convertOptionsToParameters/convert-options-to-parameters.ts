@@ -19,7 +19,7 @@ export function convertOptionsToParameters<D extends boolean>({
   }
 
   if (detailed === undefined) {
-    detailed = false
+    detailed = false as D
   }
 
   return [
