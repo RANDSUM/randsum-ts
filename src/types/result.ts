@@ -1,4 +1,4 @@
-import { RollParameters } from './roll-parameters'
+import { RollParameters } from './parameters'
 
 /**
  *
