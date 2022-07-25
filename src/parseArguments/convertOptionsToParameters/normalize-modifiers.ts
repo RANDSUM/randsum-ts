@@ -33,8 +33,7 @@ export function normalizeModifiers(modifiers: Array<Modifier<'inclusive' | numbe
         break
       case 'unique':
         newModifiers.push({
-          unique:
-            typeof value === 'object' ? { notUnique: value.notUnique.map((number: number) => Number(number)) } : value,
+          unique: typeof value === 'object' ? { notUnique: value.notUnique.map(Number) } : value,
         })
         break
       case 'explode':

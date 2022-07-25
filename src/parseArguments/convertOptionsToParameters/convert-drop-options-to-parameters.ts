@@ -12,6 +12,6 @@ export function convertDropOptionsToParameters({
     lowest: lowest !== undefined ? Number(lowest) : undefined,
     greaterThan: greaterThan !== undefined ? Number(greaterThan) : undefined,
     lessThan: lessThan !== undefined ? Number(lessThan) : undefined,
-    exact: exact !== undefined ? exact.map(number => Number(number)) : undefined,
+    exact: exact !== undefined ? exact.map(Number) : undefined,
   }
 }
