@@ -7,7 +7,7 @@ export function convertRerollOptionsToParameters({
   ...restOptions
 }: RerollOptions): RerollOptions<number> {
   const convertedExact =
-    exact !== undefined ? { exact: Array.isArray(exact) ? exact.map(number => Number(number)) : [Number(exact)] } : {}
+    exact !== undefined ? { exact: Array.isArray(exact) ? exact.map(Number) : [Number(exact)] } : {}
   return {
     ...convertCapOptionsToParameters(restOptions),
     ...convertedExact,

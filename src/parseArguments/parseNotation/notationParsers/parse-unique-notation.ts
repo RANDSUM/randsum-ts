@@ -9,7 +9,7 @@ export function parseUniqueNotation(notationString: string): UniqueModifier<numb
 
   return {
     unique: {
-      notUnique: notUnique.map(number => Number(number)),
+      notUnique: notUnique.map(Number),
     },
   }
 }
