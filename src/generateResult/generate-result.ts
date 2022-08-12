@@ -11,31 +11,29 @@ export function generateResult({ initialRolls, rollOne, ...rollParameters }: Rol
     const [key] = Object.keys(modifier)
     const [value] = Object.values(modifier)
 
-    switch (key) {
-      case 'reroll':
-        modifiedRollTotals = applyReroll(modifiedRollTotals, value, rollOne)
-        break
-      case 'unique':
-        modifiedRollTotals = applyUnique(modifiedRollTotals, { sides, quantity, unique: value }, rollOne)
-        break
-      case 'replace':
-        modifiedRollTotals = applyReplace(modifiedRollTotals, value)
-        break
-      case 'cap':
-        modifiedRollTotals = modifiedRollTotals.map(applySingleCap(value))
-        break
-      case 'drop':
-        modifiedRollTotals = applyDrop(modifiedRollTotals, value)
-        break
-      case 'explode':
-        modifiedRollTotals = applyExplode(modifiedRollTotals, { sides }, rollOne)
-        break
-      case 'plus':
-        simpleMathModifier = simpleMathModifier + Number(value)
-        break
-      case 'minus':
-        simpleMathModifier = simpleMathModifier - Math.abs(Number(value))
-        break
+    if (key === 'reroll') {
+      modifiedRollTotals = applyReroll(modifiedRollTotals, value, rollOne)
+    }
+    if (key === 'unique') {
+      modifiedRollTotals = applyUnique(modifiedRollTotals, { sides, quantity, unique: value }, rollOne)
+    }
+    if (key === 'replace') {
+      modifiedRollTotals = applyReplace(modifiedRollTotals, value)
+    }
+    if (key === 'cap') {
+      modifiedRollTotals = modifiedRollTotals.map(applySingleCap(value))
+    }
+    if (key === 'drop') {
+      modifiedRollTotals = applyDrop(modifiedRollTotals, value)
+    }
+    if (key === 'explode') {
+      modifiedRollTotals = applyExplode(modifiedRollTotals, { sides }, rollOne)
+    }
+    if (key === 'plus') {
+      simpleMathModifier = simpleMathModifier + Number(value)
+    }
+    if (key === 'minus') {
+      simpleMathModifier = simpleMathModifier - Math.abs(Number(value))
     }
   }
 

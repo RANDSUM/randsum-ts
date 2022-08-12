@@ -15,14 +15,14 @@ export function applyDrop(
 ): number[] {
   const sortedResults = rolls
     .filter(roll => {
-      switch (true) {
-        case greaterThan !== undefined && roll > greaterThan:
-        case lessThan !== undefined && roll < lessThan:
-        case exact?.map(number => number).includes(roll):
-          return false
-        default:
-          return true
+      if (
+        (greaterThan !== undefined && roll > greaterThan) ||
+        (lessThan !== undefined && roll < lessThan) ||
+        exact?.map(number => number).includes(roll) === true
+      ) {
+        return false
       }
+      return true
     })
     .sort((a, b) => a - b)
 
