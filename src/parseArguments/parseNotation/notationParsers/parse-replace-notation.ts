@@ -11,10 +11,10 @@ export function parseReplaceNotation(notationString: string): ReplaceModifier<nu
 
       const baseReplacement = { to: Number(noteTo) }
       if (noteFrom.includes('>')) {
-        return { ...baseReplacement, from: { greaterThan: Number(noteFrom.replace('>', '')) } }
+        return { ...baseReplacement, from: { greaterThan: Number(noteFrom.replace(/>/g, '')) } }
       }
       if (noteFrom.includes('<')) {
-        return { ...baseReplacement, from: { lessThan: Number(noteFrom.replace('<', '')) } }
+        return { ...baseReplacement, from: { lessThan: Number(noteFrom.replace(/</g, '')) } }
       }
       return { ...baseReplacement, from: Number(noteFrom) }
     })
