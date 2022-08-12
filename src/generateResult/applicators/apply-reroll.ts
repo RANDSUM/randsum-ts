@@ -14,14 +14,11 @@ function rerollRoll(
     return roll
   }
 
-  switch (true) {
-    case greaterThan !== undefined && roll > greaterThan:
-    case lessThan !== undefined && roll < lessThan:
-    case exact !== undefined && Array.isArray(exact) ? exact.includes(roll) : exact === roll:
-      return rerollRoll(rollOne(), { greaterThan, lessThan, exact, maxReroll }, rollOne, index + 1)
-    default:
-      return roll
+  const exactValue = exact !== undefined && Array.isArray(exact) ? exact.includes(roll) : exact === roll
+  if ((greaterThan !== undefined && roll > greaterThan) || (lessThan !== undefined && roll < lessThan) || exactValue) {
+    return rerollRoll(rollOne(), { greaterThan, lessThan, exact, maxReroll }, rollOne, index + 1)
   }
+  return roll
 }
 
 export function applyReroll(

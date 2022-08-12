@@ -19,70 +19,71 @@ export function parseNotation(notationString: DiceNotation): RollOptions<number>
     const [value] = Object.values(match)
     const { modifiers = [], ...restParameters } = rollParameters
 
-    switch (key) {
-      case 'coreNotationMatch':
-        rollParameters = { ...rollParameters, ...parseCoreNotation(value) }
-        break
-      case 'dropHighMatch':
-        rollParameters = {
-          ...restParameters,
-          modifiers: [...modifiers, parseDropHighNotation(value)],
-        }
-        break
-      case 'dropLowMatch':
-        rollParameters = {
-          ...restParameters,
-          modifiers: [...modifiers, parseDropLowNotation(value)],
-        }
-        break
-      case 'dropConstraintsMatch':
-        rollParameters = {
-          ...restParameters,
-          modifiers: [...modifiers, parseDropConstraintsNotation(value)],
-        }
-        break
-      case 'explodeMatch':
-        rollParameters = {
-          ...restParameters,
-          modifiers: [...modifiers, { explode: Boolean(value) }],
-        }
-        break
-      case 'uniqueMatch':
-        rollParameters = {
-          ...restParameters,
-          modifiers: [...modifiers, parseUniqueNotation(value)],
-        }
-        break
-      case 'replaceMatch':
-        rollParameters = {
-          ...restParameters,
-          modifiers: [...modifiers, parseReplaceNotation(value)],
-        }
-        break
-      case 'rerollMatch':
-        rollParameters = {
-          ...restParameters,
-          modifiers: [...modifiers, parseRerollNotation(value)],
-        }
-        break
-      case 'capMatch':
-        rollParameters = {
-          ...restParameters,
-          modifiers: [...modifiers, parseCapNotation(value)],
-        }
-        break
-      case 'plusMatch':
-        rollParameters = {
-          ...restParameters,
-          modifiers: [...modifiers, { plus: Number(value.split('+')[1]) }],
-        }
-        break
-      case 'minusMatch':
-        rollParameters = {
-          ...restParameters,
-          modifiers: [...modifiers, { minus: Number(value.split('-')[1]) }],
-        }
-        break
+    if (key === 'coreNotationMatch') {
+      rollParameters = { ...rollParameters, ...parseCoreNotation(value) }
+    }
+    if (key === 'dropHighMatch') {
+      rollParameters = {
+        ...restParameters,
+        modifiers: [...modifiers, parseDropHighNotation(value)],
+      }
+    }
+    if (key === 'dropLowMatch') {
+      rollParameters = {
+        ...restParameters,
+        modifiers: [...modifiers, parseDropLowNotation(value)],
+      }
+    }
+
+    if (key === 'dropConstraintsMatch') {
+      rollParameters = {
+        ...restParameters,
+        modifiers: [...modifiers, parseDropConstraintsNotation(value)],
+      }
+    }
+
+    if (key === 'explodeMatch') {
+      rollParameters = {
+        ...restParameters,
+        modifiers: [...modifiers, { explode: Boolean(value) }],
+      }
+    }
+    if (key === 'uniqueMatch') {
+      rollParameters = {
+        ...restParameters,
+        modifiers: [...modifiers, parseUniqueNotation(value)],
+      }
+    }
+
+    if (key === 'replaceMatch') {
+      rollParameters = {
+        ...restParameters,
+        modifiers: [...modifiers, parseReplaceNotation(value)],
+      }
+    }
+    if (key === 'rerollMatch') {
+      rollParameters = {
+        ...restParameters,
+        modifiers: [...modifiers, parseRerollNotation(value)],
+      }
+    }
+    if (key === 'capMatch') {
+      rollParameters = {
+        ...restParameters,
+        modifiers: [...modifiers, parseCapNotation(value)],
+      }
+    }
+    if (key === 'plusMatch') {
+      rollParameters = {
+        ...restParameters,
+        modifiers: [...modifiers, { plus: Number(value.split('+')[1]) }],
+      }
+    }
+    if (key === 'minusMatch') {
+      rollParameters = {
+        ...restParameters,
+        modifiers: [...modifiers, { minus: Number(value.split('-')[1]) }],
+      }
     }
   }
 
