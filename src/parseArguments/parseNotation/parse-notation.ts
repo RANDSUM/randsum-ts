@@ -34,14 +34,12 @@ export function parseNotation(notationString: DiceNotation): RollOptions<number>
         modifiers: [...modifiers, parseDropLowNotation(value)],
       }
     }
-
     if (key === 'dropConstraintsMatch') {
       rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, parseDropConstraintsNotation(value)],
       }
     }
-
     if (key === 'explodeMatch') {
       rollParameters = {
         ...restParameters,
@@ -54,7 +52,6 @@ export function parseNotation(notationString: DiceNotation): RollOptions<number>
         modifiers: [...modifiers, parseUniqueNotation(value)],
       }
     }
-
     if (key === 'replaceMatch') {
       rollParameters = {
         ...restParameters,

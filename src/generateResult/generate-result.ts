@@ -14,22 +14,18 @@ export function generateResult({ initialRolls, rollOne, ...rollParameters }: Rol
     if (key === 'reroll') {
       modifiedRollTotals = applyReroll(modifiedRollTotals, value, rollOne)
     }
-
     if (key === 'unique') {
       modifiedRollTotals = applyUnique(modifiedRollTotals, { sides, quantity, unique: value }, rollOne)
     }
-
     if (key === 'replace') {
       modifiedRollTotals = applyReplace(modifiedRollTotals, value)
     }
     if (key === 'cap') {
       modifiedRollTotals = modifiedRollTotals.map(applySingleCap(value))
     }
-
     if (key === 'drop') {
       modifiedRollTotals = applyDrop(modifiedRollTotals, value)
     }
-
     if (key === 'explode') {
       modifiedRollTotals = applyExplode(modifiedRollTotals, { sides }, rollOne)
     }
