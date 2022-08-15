@@ -27,9 +27,9 @@ jobs:
 
       - name: Run Benchmark
         id: benchmark
-        run: echo "::set-output benchmarks= yarn benchmark"
+        run: echo "::set-output benchmarks=$(yarn benchmark)"
 
       - uses: mshick/add-pr-comment@v1
         with:
-          message:  ${{steps.benchmark.outputs.benchmarks}}
+          message:  ${{ steps.benchmark.outputs.benchmarks }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
