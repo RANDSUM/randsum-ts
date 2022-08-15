@@ -3,6 +3,14 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  deployments: write
+  contents: write
+
 jobs:
   benchmark:
     name: Benchmark
