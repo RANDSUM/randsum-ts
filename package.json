@@ -14,6 +14,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p .",
+    "benchmark": "yarn build && node benchmark.js",
     "docs": "typedoc --options ./typedoc.json -gitRevision $npm_package_version",
     "test": "jest",
     "test:ci": "jest --runInBand",
@@ -33,6 +34,7 @@
     "@types/jest": "^28.1.6",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
+    "benchmark": "^2.1.4",
     "bundlewatch": "^0.3.2",
     "codecov": "^3.8.3",
     "dependency-cruiser": "^11.12.0",

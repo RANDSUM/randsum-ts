@@ -62,4 +62,7 @@ typings/
 
 .DS_Store
 
+# Benchmark
+benchmark/
+
 # End of https://www.gitignore.io/api/node

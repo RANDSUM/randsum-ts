@@ -2,3 +2,5 @@ node_modules
 dist
 src/coverage
 docs
+benchmark.js
+benchmark/
