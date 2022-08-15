@@ -27,15 +27,15 @@ jobs:
       - name: Run benchmark
         run: yarn benchmark | tee output.txt
 
-      - name: Extract branch name
+      - name: Get branch name (merge)
         if: github.event_name != 'pull_request'
         shell: bash
-        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
 
-      - name: Extract Branch Name on PR
+      - name: Get branch name (pull request)
         if: github.event_name == 'pull_request'
-        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_HEAD_REF})"
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1
