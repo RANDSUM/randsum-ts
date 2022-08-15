@@ -24,20 +24,10 @@ jobs:
       - name: Run benchmark
         run: yarn benchmark | tee output.txt
 
-      - name: Get branch name (merge)
-        if: github.event_name != 'pull_request'
-        shell: bash
-        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
-
-      - name: Get branch name (pull request)
-        if: github.event_name == 'pull_request'
-        shell: bash
-        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
-
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          gh-pages-branch: ${{ env.BRANCH_NAME }}
+          gh-pages-branch: main
           benchmark-data-dir-path: docs
           name: Benchmark.js Benchmark
           tool: 'benchmarkjs'
