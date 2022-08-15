@@ -1,0 +1,37 @@
+name: Benchmark
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  deployments: write
+  contents: write
+
+jobs:
+  benchmark:
+    name: Benchmark
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - run: yarn install --ignore-engines --ignore-scripts
+      - name: Run benchmark
+        run: yarn benchmark
+
+      - name: Run Benchmark
+        id: benchmark
+        run: echo "::set-output benchmarks= yarn benchmark"
+
+      - uses: mshick/add-pr-comment@v1
+        with:
+          message:  ${{steps.benchmark.outputs.benchmarks}}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
