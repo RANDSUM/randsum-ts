@@ -30,7 +30,7 @@ jobs:
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          gh-pages-branch: main
+          gh-pages-branch: ${{ github.ref_name }}
           benchmark-data-dir-path: docs
           name: Benchmark.js Benchmark
           tool: 'benchmarkjs'
