@@ -1,0 +1,41 @@
+name: Benchmark
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  deployments: write
+  contents: write
+
+jobs:
+  benchmark:
+    name: Benchmark
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - run: yarn install --ignore-engines --ignore-scripts
+      - name: Run benchmark
+        run: yarn benchmark | tee output.txt
+
+      - name: Store benchmark result
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          gh-pages-branch: main
+          benchmark-data-dir-path: docs
+          name: Benchmark.js Benchmark
+          tool: 'benchmarkjs'
+          output-file-path: output.txt
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          # Show alert with commit comment on detecting possible performance regression
+          alert-threshold: '200%'
+          comment-on-alert: true
+          fail-on-alert: true
+          alert-comment-cc-users: '@alxjrvs'
