@@ -4,7 +4,6 @@
   "description": "rand for the rest of us",
   "license": "MIT",
   "author": "Alex Jarvis",
-  "source": "src/index.ts",
   "homepage": "https://alxjrvs.github.io/randsum/",
   "repository": {
     "type": "git",
@@ -12,7 +11,9 @@
   },
   "version": "1.4.4",
   "private": false,
-  "main": "dist/index.js",
+  "source": "src/index.ts",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.modern.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "microbundle",
