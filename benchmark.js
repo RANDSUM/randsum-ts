@@ -1,6 +1,5 @@
-const randsum = require('./dist').default
-const package = require('./package.json')
-const Benchmark = require('benchmark')
+import { randsum } from './dist/index.modern.js'
+import Benchmark from 'benchmark'
 
 const suite = new Benchmark.Suite
 
