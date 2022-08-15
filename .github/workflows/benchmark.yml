@@ -27,10 +27,20 @@ jobs:
       - name: Run benchmark
         run: yarn benchmark | tee output.txt
 
+      - name: Extract branch name
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Extract Branch Name on PR
+        if: github.event_name == 'pull_request'
+        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_HEAD_REF})"
+
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          gh-pages-branch: ${{ github.ref_name }}
+          gh-pages-branch: $BRANCH_NAME
           benchmark-data-dir-path: docs
           name: Benchmark.js Benchmark
           tool: 'benchmarkjs'
