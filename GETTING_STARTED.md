@@ -23,7 +23,7 @@ const randsum = require('randsum').default
 ```ts
 import randsum from 'randsum'
 // or
-const randsum = require('randsum').default
+const randsum = require('randsum')
 
 const foo = randsum(20)
 
