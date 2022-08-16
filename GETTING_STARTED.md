@@ -13,7 +13,7 @@ Then require it in your project!
 ```js
 import randsum from 'randsum'
 
-const randsum = require('randsum').default
+const randsum = require('randsum')
 ```
 
 ## using `randsum`
