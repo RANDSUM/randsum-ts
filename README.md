@@ -2,10 +2,10 @@
 
 `rand` for the rest of us
 
-[![npm version](https://badge.fury.io/js/randsum.svg)](https://badge.fury.io/js/randsum)
+[![npm version](https://img.shields.io/npm/v/randsum)](https://img.shields.io/npm/v/randsum)
+[![bundle size](https://img.shields.io/bundlephobia/min/randsum)](https://img.shields.io/bundlephobia/min/randsum)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/alxjrvs/randsum/blob/main/LICENSE.md)
 [![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md)
-<br/>
 [![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob)](https://codecov.io/gh/alxjrvs/randsum)
 [![Tests](https://github.com/alxjrvs/randsum/actions/workflows/tests.yml/badge.svg)](https://github.com/alxjrvs/randsum/actions/workflows/tests.yml)
 [![Lint](https://github.com/alxjrvs/randsum/actions/workflows/lint.yml/badge.svg)](https://github.com/alxjrvs/randsum/actions/workflows/lint.yml)
@@ -35,6 +35,6 @@ Check out the docs below for more info!
 
 Sometime around 2012, I decided I wanted to learn to program. I had installed ruby on the best laptop six-hundred dollars could buy, set to make a dice roller as an easy first project.
 
-I spent an easy 30 minutes trying to figure out how to make `rand(n)` return `1-n` instead of `0-(n-1)`.
+I spent an easy 30 minutes trying to figure out how to make `rand(n)` return `1...n` instead of `0...(n-1)`.
 
 When I found the answer, I laughed and laughed. I've been chasing that high ever since.
