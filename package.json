@@ -21,8 +21,9 @@
   "unpkg": "./dist/index.umd.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist/* && microbundle",
-    "build::watch": "microbundle watch",
+    "build": "yarn build:clean && microbundle --tsconfig ./tsconfig.build.json",
+    "build:clean": "rm -rf dist/*",
+    "build:watch": "yarn build:clean && microbundle watch --tsconfig ./tsconfig.build.json",
     "benchmark": "yarn build && node benchmark.js",
     "docs": "typedoc --options ./typedoc.json -gitRevision $npm_package_version",
     "test": "jest",
@@ -102,7 +103,7 @@
     }
   },
   "jest": {
-    "coverageDirectory": "./coverage/",
+    "coverageDirectory": "../coverage/",
     "collectCoverage": true,
     "transform": {
       "^.+\\.tsx?$": "ts-jest"

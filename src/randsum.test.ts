@@ -1,16 +1,27 @@
 import { randsum } from './randsum'
 
 describe('Randsum', () => {
+  describe('Stress Test', () => {
+    const loops = 9999
+    const array = new Array(loops)
+    for (let index = 0; index < loops; index += 1) {
+      array[index] = randsum(20)
+    }
+
+    test('it never goes outside of the bounds of the roll', () => {
+      for (const roll of array) {
+        expect(roll).toBeLessThanOrEqual(20)
+        expect(roll).toBeGreaterThan(0)
+      }
+    })
+  })
+
   describe('Simple results', () => {
     describe('with a string', () => {
       const result = randsum('20')
 
       test('returns a number as total', () => {
         expect(Number.isInteger(result)).toBe(true)
-      })
-
-      test('returns a non-zero number', () => {
-        expect(result).not.toBe(0)
       })
     })
 
