@@ -582,10 +582,11 @@ randsum({
 
 Roll additional dice whenever a die in the pool rolls its maximum value
 
-````markdown
+```markdown
 Roll an additional die every time you roll maximum value of a die
 
 4d20!
+```
 
 In `randsum`:
 
