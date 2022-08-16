@@ -4,6 +4,9 @@ const Benchmark = require('benchmark')
 const suite = new Benchmark.Suite
 
 suite
+  .add('Sanity', () => {
+    console.log(randsum(20))
+  })
   .add('Sides Num', () => {
     randsum(20)
   })
