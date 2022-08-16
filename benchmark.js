@@ -1,5 +1,5 @@
-import { randsum } from './dist/index.modern.js'
-import Benchmark from 'benchmark'
+const randsum = require('./dist/index.js').randsum
+const Benchmark = require('benchmark')
 
 const suite = new Benchmark.Suite
 

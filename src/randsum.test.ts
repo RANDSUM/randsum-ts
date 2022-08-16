@@ -8,6 +8,10 @@ describe('Randsum', () => {
       test('returns a number as total', () => {
         expect(Number.isInteger(result)).toBe(true)
       })
+
+      test('returns a non-zero number', () => {
+        expect(result).not.toBe(0)
+      })
     })
 
     describe('with a number', () => {
