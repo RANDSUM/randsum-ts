@@ -1,4 +1,4 @@
-import { DropModifier, DropOptions } from '../../../types'
+import { DropModifier, DropOptions } from '../../../../types'
 
 export function parseDropConstraintsNotation(notationString: string): DropModifier<number> {
   let dropConstraintParameters: Pick<DropOptions<number>, 'exact' | 'greaterThan' | 'lessThan'> = { exact: [] }

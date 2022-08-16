@@ -1,5 +1,5 @@
-import { DiceNotation, RollOptions } from '../../types'
-import { findMatches } from '../utils'
+import { DiceNotation, RollOptions } from '../../../types'
+import { findMatches } from '../../utils'
 import {
   parseCapNotation,
   parseCoreNotation,

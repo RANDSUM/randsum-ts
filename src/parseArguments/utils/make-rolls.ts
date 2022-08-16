@@ -1,3 +1,7 @@
 export function makeRolls(quantity: number, rollOne: () => number) {
-  return Array.from({ length: quantity }).map(() => rollOne())
+  const rolls = new Array(quantity)
+  for (let index = 0; index < quantity; index += 1) {
+    rolls[index] = rollOne()
+  }
+  return rolls
 }
