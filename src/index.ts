@@ -1,2 +1,2 @@
-export { randsum } from './randsum'
+export { randsum as default, randsum } from './randsum'
 export * from './types'

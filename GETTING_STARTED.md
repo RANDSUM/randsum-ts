@@ -30,6 +30,18 @@ const foo = randsum(20)
 console.log(foo) // a random number between 1 and 20
 ```
 
+It also exports a named function, if you prefer that:
+
+```ts
+import { randsum } from 'randsum'
+// or
+const randsum = require('randsum').randsum
+
+const foo = randsum(20)
+
+console.log(foo) // a random number between 1 and 20
+```
+
 ### Passing a `number` (or number-like `string`)
 
 ---
