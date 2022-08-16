@@ -1,5 +1,5 @@
-const randsum = require('./dist/index.js').randsum
-const Benchmark = require('benchmark')
+import { randsum } from './dist/index.cjs'
+import Benchmark from 'benchmark'
 
 const suite = new Benchmark.Suite
 

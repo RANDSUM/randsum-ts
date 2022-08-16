@@ -21,7 +21,7 @@
   "unpkg": "./dist/index.umd.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "microbundle",
+    "build": "rm -rf dist/* && microbundle",
     "build::watch": "microbundle watch",
     "benchmark": "yarn build && node benchmark.js",
     "docs": "typedoc --options ./typedoc.json -gitRevision $npm_package_version",

@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
-    "lib": [
-      "es2017"
-    ],
-    "module": "commonjs",
-    "target": "es2017",
+    "module": "es6",
+    "target": "es5",
+    "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "declaration": true,
@@ -23,7 +21,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
 
-    "moduleResolution": "node",
     "allowSyntheticDefaultImports": false,
     "esModuleInterop": true
   },
@@ -33,6 +30,6 @@
     "src/coverage/**",
     "dist",
     "docs",
-    "esbuild.config.js"
+    "src/**/*.test.ts"
   ]
 }
