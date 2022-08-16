@@ -1,3 +1,4 @@
+import { makeRolls } from '../../parseArguments/utils'
 import { RollParameters } from '../../types'
 
 export function applyExplode(
@@ -5,7 +6,7 @@ export function applyExplode(
   { sides }: Pick<RollParameters, 'sides'>,
   rollOne: () => number,
 ): number[] {
-  const explodeCount = rolls.filter(roll => roll === sides)
-  const explodeResults = [...new Array(explodeCount)].map(() => rollOne())
+  const explodeCount = rolls.filter(roll => roll === sides).length
+  const explodeResults = makeRolls(explodeCount, rollOne)
   return [...rolls, ...explodeResults]
 }
