@@ -1,7 +1,6 @@
 {
   "name": "randsum",
-  "version": "1.5.1",
-  "type": "module",
+  "version": "1.5.2",
   "description": "rand for the rest of us",
   "license": "MIT",
   "author": "Alex Jarvis",
@@ -12,11 +11,10 @@
   },
   "private": false,
   "source": "src/index.ts",
-  "main": "dist/index.cjs",
-  "module": "dist/index.modern.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "microbundle",
+    "build": "tsc -p .",
     "benchmark": "yarn build && node benchmark.js",
     "docs": "typedoc --options ./typedoc.json -gitRevision $npm_package_version",
     "test": "jest",
