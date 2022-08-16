@@ -597,4 +597,3 @@ randsum('6d20!')
 randsum(20, { quantity: 6, modifiers: [{ explode: true }] })
 randsum({ sides: 20, quantity: 6, modifiers: [{ explode: true }] })
 ```
-````
