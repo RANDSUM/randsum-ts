@@ -1,5 +1,7 @@
-const randsum = require('./dist/index.js').randsum
-const Benchmark = require('benchmark')
+// import randsum from './dist/index.module.js'
+import randsum from './dist/index.modern.js'
+// import randsum from './dist/index.cjs'
+import Benchmark from 'benchmark'
 
 const suite = new Benchmark.Suite
 
@@ -20,7 +22,7 @@ suite
     randsum(20, { quantity: 4 })
   })
   .add('Notation', () => {
-    randsum('4d20')
+    randsum('1d20')
   })
   .add('Complicated Options', () => {
     randsum({

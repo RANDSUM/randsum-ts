@@ -113,7 +113,6 @@ export interface UniqueModifier<T extends number | 'inclusive' = 'inclusive'> {
 /**
  * An object to hold options for `Explode` modifiers.
  *
- * {@link ExplodeOptions}
  */
 export interface ExplodeModifier {
   explode: boolean
@@ -122,7 +121,6 @@ export interface ExplodeModifier {
 /**
  * An object to hold options for `Plus` modifiers.
  *
- * {@link PlusOptions}
  */
 export interface PlusModifier<T extends number | 'inclusive' = 'inclusive'> {
   plus: NumberString<T>
@@ -131,7 +129,6 @@ export interface PlusModifier<T extends number | 'inclusive' = 'inclusive'> {
 /**
  * An object to hold options for `Minus` modifiers.
  *
- * {@link MinusOptions}
  */
 export interface MinusModifier<T extends number | 'inclusive' = 'inclusive'> {
   minus: NumberString<T>

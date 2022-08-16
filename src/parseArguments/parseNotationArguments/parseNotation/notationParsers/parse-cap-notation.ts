@@ -1,4 +1,4 @@
-import { CapModifier } from '../../../types'
+import { CapModifier } from '../../../../types'
 
 export function parseCapNotation(notationString: string): CapModifier<number> {
   let capParameters = {}

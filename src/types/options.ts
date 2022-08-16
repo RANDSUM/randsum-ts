@@ -15,6 +15,11 @@ export type RandsumOptions<D extends boolean> = RollOptions & UserOptions<D>
  */
 export type RandsumOptionsWithoutSides<D extends boolean> = Omit<RandsumOptions<D>, 'sides'>
 
+/** Randomizer
+ */
+
+export type Randomizer = (sides: NumberString) => number
+
 /**
  * Options provided to the user not directly related to the dice roll:
  *
@@ -24,7 +29,7 @@ export interface UserOptions<D extends boolean> {
   /** Whether or not to display a {@link RollResult} (true) or a `number` (false) */
   detailed?: D
   /** A custom functtion that replaces the default randomizer function */
-  randomizer?: (sides: NumberString) => number
+  randomizer?: Randomizer
 }
 
 /**

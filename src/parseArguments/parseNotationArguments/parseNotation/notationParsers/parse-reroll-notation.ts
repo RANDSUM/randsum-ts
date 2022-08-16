@@ -1,4 +1,4 @@
-import { RerollModifier, RerollOptions } from '../../../types'
+import { RerollModifier, RerollOptions } from '../../../../types'
 
 export function parseRerollNotation(notationString: string): RerollModifier<number> {
   const parsedString = notationString.split('r')[1].replace(/{/g, '').replace(/}/g, ',!').split(',')
