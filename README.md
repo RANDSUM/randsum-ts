@@ -35,6 +35,6 @@ Check out the docs below for more info!
 
 Sometime around 2012, I decided I wanted to learn to program. I had installed ruby on the best laptop six-hundred dollars could buy, set to make a dice roller as an easy first project.
 
-I spent an easy 30 minutes trying to figure out how to make `rand(n)` return `1-n` instead of `0-(n-1)`.
+I spent an easy 30 minutes trying to figure out how to make `rand(n)` return `1...n` instead of `0...(n-1)`.
 
 When I found the answer, I laughed and laughed. I've been chasing that high ever since.
