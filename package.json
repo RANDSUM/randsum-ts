@@ -78,9 +78,6 @@
   "engines": {
     "node": ">=6.2.2"
   },
-  "lint-staged": {
-    "./src/**": "bin/lint --cache --fix"
-  },
   "bundlewatch": {
     "files": [
       {
