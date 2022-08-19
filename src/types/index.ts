@@ -1,3 +1,4 @@
+export * from './matches'
 export * from './modifiers'
 export * from './options'
 export * from './parameters'

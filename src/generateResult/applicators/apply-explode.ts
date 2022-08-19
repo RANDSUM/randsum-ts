@@ -1,5 +1,5 @@
-import { makeRolls } from '../../parseArguments/utils'
-import { RollParameters } from '../../types'
+import { RollParameters } from 'types'
+import { makeRolls } from 'utils'
 
 export function applyExplode (
   rolls: number[],

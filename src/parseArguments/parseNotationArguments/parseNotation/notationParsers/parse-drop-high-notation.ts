@@ -1,4 +1,4 @@
-import { DropModifier } from '../../../../types'
+import { DropModifier } from 'types'
 
 export function parseDropHighNotation (notationString: string): DropModifier<number> {
   const highestCount = notationString.split('h')[1]

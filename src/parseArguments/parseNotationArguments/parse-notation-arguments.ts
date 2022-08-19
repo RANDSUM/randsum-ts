@@ -1,6 +1,7 @@
-import { DiceNotation, RandsumOptionsWithoutSides, UserOptions } from '../../types'
+import { DiceNotation, RandsumOptionsWithoutSides, UserOptions } from 'types'
+import { makeRolls, rollOneFactory } from 'utils'
+
 import { convertOptionsToParameters } from '../convertOptionsToParameters'
-import { makeRolls, rollOneFactory } from '../utils'
 import { parseNotation } from './parseNotation'
 
 export function parseNotationArguments<D extends boolean> (

@@ -1,4 +1,5 @@
-import { Modifier } from '../../types'
+import { Modifier } from 'types'
+
 import { convertCapOptionsToParameters } from './convert-cap-options-to-parameters'
 import { convertDropOptionsToParameters } from './convert-drop-options-to-parameters'
 import { convertReplaceOptionsToParameters } from './convert-replace-options-to-parameters'

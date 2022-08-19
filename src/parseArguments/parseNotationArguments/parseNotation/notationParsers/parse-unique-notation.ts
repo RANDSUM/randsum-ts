@@ -1,4 +1,4 @@
-import { UniqueModifier } from '../../../../types'
+import { UniqueModifier } from 'types'
 
 export function parseUniqueNotation (notationString: string): UniqueModifier<number> {
   if (notationString === 'u') {

@@ -1,4 +1,4 @@
-import { CapOptions } from '../../types'
+import { CapOptions } from 'types'
 
 export function applySingleCap ({ greaterThan, lessThan }: CapOptions<number>, value?: number) {
   return (roll: number) => {

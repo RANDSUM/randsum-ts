@@ -1,4 +1,6 @@
-import { Match } from '../types'
+
+import { Match } from 'types'
+
 import { completeRollPattern } from './patterns'
 
 export function findMatches (notations: string): Match[] {

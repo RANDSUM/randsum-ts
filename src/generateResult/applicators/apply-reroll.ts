@@ -1,4 +1,4 @@
-import { RerollOptions } from '../../types'
+import { RerollOptions } from 'types'
 
 function rerollRoll (
   roll: number,

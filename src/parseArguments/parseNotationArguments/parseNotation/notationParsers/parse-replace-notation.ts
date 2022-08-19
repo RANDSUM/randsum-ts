@@ -1,4 +1,4 @@
-import { ReplaceModifier } from '../../../../types'
+import { ReplaceModifier } from 'types'
 
 export function parseReplaceNotation (notationString: string): ReplaceModifier<number> {
   const replaceOptions = notationString

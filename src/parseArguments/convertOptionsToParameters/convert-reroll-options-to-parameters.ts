@@ -1,4 +1,5 @@
-import { RerollOptions } from '../../types'
+import { RerollOptions } from 'types'
+
 import { convertCapOptionsToParameters } from './convert-cap-options-to-parameters'
 
 export function convertRerollOptionsToParameters ({
