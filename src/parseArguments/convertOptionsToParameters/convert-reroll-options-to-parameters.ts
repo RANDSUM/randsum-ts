@@ -1,7 +1,7 @@
 import { RerollOptions } from '../../types'
 import { convertCapOptionsToParameters } from './convert-cap-options-to-parameters'
 
-export function convertRerollOptionsToParameters({
+export function convertRerollOptionsToParameters ({
   exact,
   maxReroll,
   ...restOptions
@@ -11,6 +11,6 @@ export function convertRerollOptionsToParameters({
   return {
     ...convertCapOptionsToParameters(restOptions),
     ...convertedExact,
-    maxReroll: maxReroll !== undefined ? Number(maxReroll) : undefined,
+    maxReroll: maxReroll !== undefined ? Number(maxReroll) : undefined
   }
 }

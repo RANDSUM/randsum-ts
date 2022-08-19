@@ -1,7 +1,7 @@
 import { RollParameters, RollResult } from '../types'
 import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, applyUnique } from './applicators'
 
-export function generateResult({ initialRolls, rollOne, ...rollParameters }: RollParameters): RollResult {
+export function generateResult ({ initialRolls, rollOne, ...rollParameters }: RollParameters): RollResult {
   let modifiedRollTotals = [...initialRolls]
   let simpleMathModifier = 0
 
@@ -45,7 +45,7 @@ export function generateResult({ initialRolls, rollOne, ...rollParameters }: Rol
     rollParameters: {
       ...rollParameters,
       rollOne,
-      initialRolls,
-    },
+      initialRolls
+    }
   }
 }

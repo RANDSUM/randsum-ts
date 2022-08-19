@@ -4,16 +4,16 @@ import {
   RandsumOptions,
   RandsumOptionsWithoutSides,
   RollParameters,
-  UserOptions,
+  UserOptions
 } from '../types'
 import { parseNotationArguments } from './parseNotationArguments'
 import { parseNumber } from './parseNumber'
 import { parseOptionArguments } from './parseOptionArguments'
 import { isDiceNotation, isRandsumOptions } from './utils'
 
-export function parseArguments<D extends boolean>(
+export function parseArguments<D extends boolean> (
   primeArgument: RandsumOptions<D> | DiceNotation | NumberString,
-  secondArgument: RandsumOptionsWithoutSides<D> | UserOptions<D> = {},
+  secondArgument: RandsumOptionsWithoutSides<D> | UserOptions<D> = {}
 ): { detailed: D } & RollParameters {
   if (isRandsumOptions(primeArgument)) {
     return parseOptionArguments(primeArgument)

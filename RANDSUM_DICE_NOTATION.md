@@ -142,8 +142,8 @@ randsum(20, {
       drop: {
         highest: true,
       },
-    }
-  ]
+    },
+  ],
 })
 
 randsum({
@@ -154,8 +154,8 @@ randsum({
       drop: {
         highest: true,
       },
-    }
-  ]
+    },
+  ],
 })
 
 // Roll 6 twenty-sided die, drop highest 3
@@ -168,8 +168,8 @@ randsum(20, {
       drop: {
         highest: 3,
       },
-    }
-  ]
+    },
+  ],
 })
 randsum({
   sides: 20,
@@ -179,8 +179,8 @@ randsum({
       drop: {
         highest: 3,
       },
-    }
-  ]
+    },
+  ],
 })
 ```
 
@@ -213,8 +213,8 @@ randsum(20, {
       drop: {
         lowest: true,
       },
-    }
-  ]
+    },
+  ],
 })
 randsum({
   sides: 20,
@@ -224,8 +224,8 @@ randsum({
       drop: {
         lowest: true,
       },
-    }
-  ]
+    },
+  ],
 })
 
 // Roll 6 twenty-sided die, drop lowest 3
@@ -238,8 +238,8 @@ randsum(20, {
       drop: {
         lowest: 3,
       },
-    }
-  ]
+    },
+  ],
 })
 randsum({
   sides: 20,
@@ -249,8 +249,8 @@ randsum({
       drop: {
         lowest: 3,
       },
-    }
-  ]
+    },
+  ],
 })
 ```
 
@@ -292,9 +292,9 @@ randsum(20, {
         greaterThan: 15,
         lessThan: 5,
         exactly: [10],
-      }
+      },
     },
-  ]
+  ],
 })
 randsum({
   sides: 20,
@@ -305,9 +305,9 @@ randsum({
         greaterThan: 15,
         lessThan: 5,
         exactly: [10],
-      }
+      },
     },
-  ]
+  ],
 })
 ```
 
@@ -346,9 +346,9 @@ randsum(20, {
       cap: {
         greaterThan: 15,
         lessThan: 5,
-      }
+      },
     },
-  ]
+  ],
 })
 randsum({
   sides: 20,
@@ -358,9 +358,9 @@ randsum({
       cap: {
         greaterThan: 15,
         lessThan: 5,
-      }
+      },
     },
-  ]
+  ],
 })
 ```
 
@@ -409,9 +409,9 @@ randsum(20, {
         below: 5,
         exactly: [10],
         maxReroll: 3,
-      }
+      },
     },
-  ]
+  ],
 })
 randsum({
   sides: 20,
@@ -423,9 +423,9 @@ randsum({
         below: 5,
         exactly: [10],
         maxReroll: 3,
-      }
+      },
     },
-  ]
+  ],
 })
 ```
 
@@ -483,8 +483,8 @@ randsum(20, {
           to: 2,
         },
       ],
-    }
-  ]
+    },
+  ],
 })
 randsum({
   sides: 20,
@@ -509,8 +509,8 @@ randsum({
           to: 2,
         },
       ],
-    }
-  ]
+    },
+  ],
 })
 ```
 
@@ -557,9 +557,9 @@ randsum(20, {
     {
       unique: {
         notUnique: [5, 10],
-      }
-    }
-  ]
+      },
+    },
+  ],
 })
 randsum({
   sides: 20,
@@ -568,9 +568,9 @@ randsum({
     {
       unique: {
         notUnique: [5, 10],
-      }
-    }
-  ]
+      },
+    },
+  ],
 })
 ```
 

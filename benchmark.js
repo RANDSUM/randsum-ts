@@ -3,7 +3,7 @@ import randsum from './dist/index.modern.js'
 // import randsum from './dist/index.cjs'
 import Benchmark from 'benchmark'
 
-const suite = new Benchmark.Suite
+const suite = new Benchmark.Suite()
 
 suite
   .add('Sanity', () => {
@@ -40,4 +40,4 @@ suite
   .on('complete', function () {
     console.log('Fastest is ' + this.filter('fastest').map('name'))
   })
-  .run({ 'async': true })
+  .run({ async: true })

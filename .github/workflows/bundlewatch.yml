@@ -22,5 +22,5 @@ jobs:
       - name: Check Bundle Size
         uses: jackyef/bundlewatch-gh-action@0.2.0
         with:
-          build-script: yarn build
+          build-script: bin/build
           bundlewatch-github-token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}

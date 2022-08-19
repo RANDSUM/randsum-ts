@@ -10,7 +10,7 @@ describe('generateResult', () => {
     rollOne: mockRandomizer,
     sides: 6,
     quantity: rolls.length,
-    modifiers: [],
+    modifiers: []
   }
 
   describe('when given roll total with no modifiers', () => {
@@ -26,26 +26,26 @@ describe('generateResult', () => {
       initialRolls: duplicateRollTotals,
       sides: 4,
       quantity: duplicateRollTotals.length,
-      modifiers: [{ unique: true }],
+      modifiers: [{ unique: true }]
     }
 
     test('it re-quantity non-unique modifiers', () => {
       expect(generateResult(uniqueParameters)).toMatchObject({
         total: 206,
-        rolls: [1, 200, 2, 3],
+        rolls: [1, 200, 2, 3]
       })
     })
 
     describe('when given a "notUnique" array', () => {
       const notUniqueParameters: RollParameters = {
         ...uniqueParameters,
-        modifiers: [{ unique: { notUnique: [1] } }],
+        modifiers: [{ unique: { notUnique: [1] } }]
       }
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
         expect(generateResult(notUniqueParameters)).toMatchObject({
           total: 7,
-          rolls: [1, 1, 2, 3],
+          rolls: [1, 1, 2, 3]
         })
       })
     })
@@ -55,12 +55,12 @@ describe('generateResult', () => {
       const overflowParameters: RollParameters = {
         ...uniqueParameters,
         initialRolls: overflowRollTotals,
-        quantity: overflowRollTotals.length,
+        quantity: overflowRollTotals.length
       }
 
       test('it throws an error', () => {
         expect(() => generateResult(overflowParameters)).toThrow(
-          'You cannot have unique rolls when there are more rolls than sides of die.',
+          'You cannot have unique rolls when there are more rolls than sides of die.'
         )
       })
     })
@@ -80,16 +80,16 @@ describe('generateResult', () => {
             lowest: 2,
             greaterThan: 8,
             lessThan: 2,
-            exact: [5],
-          },
-        },
-      ],
+            exact: [5]
+          }
+        }
+      ]
     }
 
     test('it returns the total without the provided values', () => {
       expect(generateResult(dropParameters)).toMatchObject({
         total: 17,
-        rolls: [4, 6, 7],
+        rolls: [4, 6, 7]
       })
     })
   })
@@ -98,7 +98,7 @@ describe('generateResult', () => {
     describe('that is a single replace modifiers', () => {
       const dropParameters: RollParameters = {
         ...baseParameters,
-        modifiers: [{ replace: { from: 1, to: 2 } }],
+        modifiers: [{ replace: { from: 1, to: 2 } }]
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
@@ -113,10 +113,10 @@ describe('generateResult', () => {
           {
             replace: [
               { from: 1, to: 2 },
-              { from: { greaterThan: 3 }, to: 6 },
-            ],
-          },
-        ],
+              { from: { greaterThan: 3 }, to: 6 }
+            ]
+          }
+        ]
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
@@ -130,13 +130,13 @@ describe('generateResult', () => {
     const explodeParameters: RollParameters = {
       ...baseParameters,
       initialRolls: explodeRollTotals,
-      modifiers: [{ explode: true }],
+      modifiers: [{ explode: true }]
     }
 
     test('it returns the total with all values matching the queries rerolled', () => {
       expect(generateResult(explodeParameters)).toMatchObject({
         total: 212,
-        rolls: [1, 2, 3, 6, 200],
+        rolls: [1, 2, 3, 6, 200]
       })
     })
   })
@@ -148,7 +148,7 @@ describe('generateResult', () => {
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         expect(generateResult(rerollParameters)).toMatchObject({
           total: 206,
-          rolls: [1, 2, 3, 200],
+          rolls: [1, 2, 3, 200]
         })
       })
     })
@@ -156,13 +156,13 @@ describe('generateResult', () => {
     describe('that is a single reroll modifier', () => {
       const rerollParameters: RollParameters = {
         ...baseParameters,
-        modifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }],
+        modifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }]
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
         expect(generateResult(rerollParameters)).toMatchObject({
           total: 404,
-          rolls: [1, 200, 3, 200],
+          rolls: [1, 200, 3, 200]
         })
       })
     })
@@ -170,13 +170,13 @@ describe('generateResult', () => {
     describe('that is an array of reroll modifiers', () => {
       const rerollParameters: RollParameters = {
         ...baseParameters,
-        modifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }],
+        modifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }]
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
         expect(generateResult(rerollParameters)).toMatchObject({
           total: 406,
-          rolls: [200, 2, 200, 4],
+          rolls: [200, 2, 200, 4]
         })
       })
     })
@@ -185,7 +185,7 @@ describe('generateResult', () => {
   describe('when given roll total with a "cap" modifier', () => {
     const dropParameters: RollParameters = {
       ...baseParameters,
-      modifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }],
+      modifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }]
     }
 
     test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll total', () => {

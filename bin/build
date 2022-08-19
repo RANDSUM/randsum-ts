@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -rf ./dist
+npx microbundle --tsconfig ./tsconfig.build.json

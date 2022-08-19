@@ -9,6 +9,7 @@
 [![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob)](https://codecov.io/gh/alxjrvs/randsum)
 [![Tests](https://github.com/alxjrvs/randsum/actions/workflows/tests.yml/badge.svg)](https://github.com/alxjrvs/randsum/actions/workflows/tests.yml)
 [![Lint](https://github.com/alxjrvs/randsum/actions/workflows/lint.yml/badge.svg)](https://github.com/alxjrvs/randsum/actions/workflows/lint.yml)
+
 ## What is this?
 
 It's a dice roller! Specifically, it's a random number generator that generates numbers from 1-N, rather than traditional random number generators, which work from 0-(N-1).
