@@ -1,9 +1,9 @@
 import { ReplaceOptions } from '../../types'
 import { applySingleCap } from './apply-single-cap'
 
-export function applyReplace(
+export function applyReplace (
   rolls: number[],
-  replace: ReplaceOptions<number> | Array<ReplaceOptions<number>>,
+  replace: ReplaceOptions<number> | Array<ReplaceOptions<number>>
 ): number[] {
   const parameters = Array.isArray(replace) ? replace : [replace]
 

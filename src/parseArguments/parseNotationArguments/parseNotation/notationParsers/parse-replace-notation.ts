@@ -1,6 +1,6 @@
 import { ReplaceModifier } from '../../../../types'
 
-export function parseReplaceNotation(notationString: string): ReplaceModifier<number> {
+export function parseReplaceNotation (notationString: string): ReplaceModifier<number> {
   const replaceOptions = notationString
     .split('v')[1]
     .replace(/{/g, '')

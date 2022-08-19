@@ -2,9 +2,9 @@ import { NumberString, RandsumOptionsWithoutSides, UserOptions } from '../../typ
 import { convertOptionsToParameters } from '../convertOptionsToParameters'
 import { makeRolls, rollOneFactory } from '../utils'
 
-export function parseNumber<D extends boolean>(
+export function parseNumber<D extends boolean> (
   number: NumberString,
-  options: UserOptions<D> | RandsumOptionsWithoutSides<D>,
+  options: UserOptions<D> | RandsumOptionsWithoutSides<D>
 ) {
   const [detailed, { randomizer, quantity, ...restRollParameters }] = convertOptionsToParameters<D>(options)
   const sides = Number(number)

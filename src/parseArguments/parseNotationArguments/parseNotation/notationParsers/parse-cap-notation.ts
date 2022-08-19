@@ -1,6 +1,6 @@
 import { CapModifier } from '../../../../types'
 
-export function parseCapNotation(notationString: string): CapModifier<number> {
+export function parseCapNotation (notationString: string): CapModifier<number> {
   let capParameters = {}
   const capString = notationString.split('c')[1].split(/(?!\d)/)
   for (const note of capString) {

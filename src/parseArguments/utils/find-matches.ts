@@ -1,7 +1,7 @@
 import { Match } from '../types'
 import { completeRollPattern } from './patterns'
 
-export function findMatches(notations: string): Match[] {
+export function findMatches (notations: string): Match[] {
   let m
   let matches: Match[] = []
   while ((m = completeRollPattern.exec(notations)) !== null) {

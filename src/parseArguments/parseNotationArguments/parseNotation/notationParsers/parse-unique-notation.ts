@@ -1,6 +1,6 @@
 import { UniqueModifier } from '../../../../types'
 
-export function parseUniqueNotation(notationString: string): UniqueModifier<number> {
+export function parseUniqueNotation (notationString: string): UniqueModifier<number> {
   if (notationString === 'u') {
     return { unique: true }
   }
@@ -9,7 +9,7 @@ export function parseUniqueNotation(notationString: string): UniqueModifier<numb
 
   return {
     unique: {
-      notUnique: notUnique.map(Number),
-    },
+      notUnique: notUnique.map(Number)
+    }
   }
 }
