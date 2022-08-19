@@ -22,7 +22,8 @@
     "noFallthroughCasesInSwitch": true,
 
     "allowSyntheticDefaultImports": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
   },
   "include": ["src"],
   "exclude": [
