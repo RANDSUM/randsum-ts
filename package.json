@@ -22,13 +22,10 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "bin/build",
-    "benchmark": "bin/benchmark",
-    "docs": "bin/docs",
     "test": "jest",
     "test:ci": "jest --runInBand",
-    "lint": "eslint . -c .eslintrc.json",
     "postinstall": "husky install",
-    "prepublish": "yarn build",
+    "prepublish": "bin/build",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
     "postversion": "git push --no-verify && git push --tags --no-verify"
@@ -82,7 +79,7 @@
     "node": ">=6.2.2"
   },
   "lint-staged": {
-    "./src/**": "yarn lint --cache --fix"
+    "./src/**": "bin/lint --cache --fix"
   },
   "bundlewatch": {
     "files": [
