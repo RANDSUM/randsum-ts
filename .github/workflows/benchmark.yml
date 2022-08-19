@@ -7,10 +7,6 @@ on:
     branches:
       - main
 
-permissions:
-  deployments: write
-  contents: write
-
 jobs:
   benchmark:
     name: Benchmark
@@ -26,14 +22,4 @@ jobs:
       - run: yarn install --ignore-engines --ignore-scripts
 
       - name: Run benchmark
-        run: yarn benchmark | tee output.txt
-
-
-      - name: Store benchmark result
-        uses: benchmark-action/github-action-benchmark@v1
-        with:
-          name: Performance Regression Check
-          benchmark-data-dir-path: docs/dev/bench
-          tool: benchmarkjs
-          output-file-path: output.txt
-          gh-pages-branch: main
+        run: yarn benchmark
