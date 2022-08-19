@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -rf ./docs
+npx typedoc --options ./typedoc.json -gitRevision `npm show . version`
