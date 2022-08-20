@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "module": "es6",
-    "target": "es5",
+    "module": "esnext",
+    "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "declaration": true,
-    "baseUrl": "./src",
+    "baseUrl": "src",
 
     /* Strict Type-Checking Options */
     "strict": true,
@@ -21,8 +21,8 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-
     "allowSyntheticDefaultImports": false,
+    "importHelpers": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
