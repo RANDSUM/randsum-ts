@@ -1,4 +1,4 @@
-import { DropOptions } from '../../types'
+import { DropOptions } from 'types'
 
 export function convertDropOptionsToParameters ({
   highest,

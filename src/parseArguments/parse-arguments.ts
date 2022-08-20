@@ -1,3 +1,5 @@
+import { isDiceNotation, isRandsumOptions } from 'utils'
+
 import {
   DiceNotation,
   NumberString,
@@ -9,7 +11,6 @@ import {
 import { parseNotationArguments } from './parseNotationArguments'
 import { parseNumber } from './parseNumber'
 import { parseOptionArguments } from './parseOptionArguments'
-import { isDiceNotation, isRandsumOptions } from './utils'
 
 export function parseArguments<D extends boolean> (
   primeArgument: RandsumOptions<D> | DiceNotation | NumberString,

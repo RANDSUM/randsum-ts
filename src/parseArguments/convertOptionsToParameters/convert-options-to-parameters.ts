@@ -1,4 +1,5 @@
-import { InternalRollParameters, RandsumOptions, RandsumOptionsWithoutSides, UserOptions } from '../../types'
+import { InternalRollParameters, RandsumOptions, RandsumOptionsWithoutSides, UserOptions } from 'types'
+
 import { normalizeModifiers } from './normalize-modifiers'
 
 const defaultRollParameters: InternalRollParameters = {

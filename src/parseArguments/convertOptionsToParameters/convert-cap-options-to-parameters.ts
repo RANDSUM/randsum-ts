@@ -1,4 +1,4 @@
-import { CapOptions } from '../../types'
+import { CapOptions } from 'types'
 
 export function convertCapOptionsToParameters ({ greaterThan, lessThan }: CapOptions): CapOptions<number> {
   return {

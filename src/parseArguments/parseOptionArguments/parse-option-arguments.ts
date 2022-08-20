@@ -1,6 +1,7 @@
-import { RandsumOptions } from '../../types'
+import { RandsumOptions } from 'types'
+import { makeRolls, rollOneFactory } from 'utils'
+
 import { convertOptionsToParameters } from '../convertOptionsToParameters'
-import { makeRolls, rollOneFactory } from '../utils'
 
 export function parseOptionArguments<D extends boolean> (options: RandsumOptions<D>) {
   const [detailed, { randomizer, ...rollParameters }] = convertOptionsToParameters<D>(options)

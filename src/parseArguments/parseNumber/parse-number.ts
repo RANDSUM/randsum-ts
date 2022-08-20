@@ -1,6 +1,7 @@
-import { NumberString, RandsumOptionsWithoutSides, UserOptions } from '../../types'
+import { NumberString, RandsumOptionsWithoutSides, UserOptions } from 'types'
+import { makeRolls, rollOneFactory } from 'utils'
+
 import { convertOptionsToParameters } from '../convertOptionsToParameters'
-import { makeRolls, rollOneFactory } from '../utils'
 
 export function parseNumber<D extends boolean> (
   number: NumberString,

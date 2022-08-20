@@ -1,4 +1,4 @@
-import { DiceNotation, NumberString, RandsumOptions } from '../../types'
+import { DiceNotation, NumberString, RandsumOptions } from 'types'
 
 export function isRandsumOptions<D extends boolean> (
   argument: NumberString | RandsumOptions<D> | DiceNotation

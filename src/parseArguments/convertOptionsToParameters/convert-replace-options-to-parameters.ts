@@ -1,4 +1,5 @@
-import { ReplaceOptions } from '../../types'
+import { ReplaceOptions } from 'types'
+
 import { convertCapOptionsToParameters } from './convert-cap-options-to-parameters'
 
 export function convertReplaceOptionsToParameters ({ from, to }: ReplaceOptions): ReplaceOptions<number> {
