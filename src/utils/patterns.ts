@@ -1,14 +1,14 @@
-export const coreNotationPattern = /(?<coreNotationMatch>^\d{1,99}[Dd]\d{1,99})/
-const dropHighPattern = /(?<dropHighMatch>[Hh]\d{0,99})/
-const dropLowPattern = /(?<dropLowMatch>[Ll]\d{0,99})/
-const dropConstraintsPattern = /(?<dropConstraintsMatch>[Dd]{?([<>|]?\d{1,99},?)*}?)/
-const explodePattern = /(?<explodeMatch>!+{?([<>|]?\d{1,99},?)*}?)/
-const uniquePattern = /(?<uniqueMatch>[Uu]({(\d{0,99},?)+})?)/
-const replacePattern = /(?<replaceMatch>[Vv]{?([<>|]?\d{0,99}=?\d+,?)*}?)/
-const rerollPattern = /(?<rerollMatch>[Rr]{?([<>|]?\d{1,99},?)*}\d*)/
-const capPattern = /(?<capMatch>[Cc]([<>|]?\d{1,99})*)/
-const plusPattern = /(?<plusMatch>\+\d{1,99})/
-const minusPattern = /(?<minusMatch>-\d{1,99})/
+export const coreNotationPattern = /(?<coreNotationMatch>\d+[Dd]\d+)/
+const dropHighPattern = /(?<dropHighMatch>[Hh]\d*)/
+const dropLowPattern = /(?<dropLowMatch>[Ll]\d*)/
+const dropConstraintsPattern = /(?<dropConstraintsMatch>[Dd]{?([<>|]?\d+,?)*}?)/
+const explodePattern = /(?<explodeMatch>!+{?([<>|]?\d+,?)*}?)/
+const uniquePattern = /(?<uniqueMatch>[Uu]({(\d+,?)+})?)/
+const replacePattern = /(?<replaceMatch>[Vv]{?([<>|]?\d+=?\d+,?)*}?)/
+const rerollPattern = /(?<rerollMatch>[Rr]{?([<>|]?\d,?)*}\d*)/
+const capPattern = /(?<capMatch>[Cc]([<>|]?\d+)*)/
+const plusPattern = /(?<plusMatch>\+\d+)/
+const minusPattern = /(?<minusMatch>-\d+)/
 
 const allPatterns = [
   coreNotationPattern,
