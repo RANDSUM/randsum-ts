@@ -22,8 +22,10 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "bin/build",
-    "test": "jest",
-    "test:ci": "jest --runInBand",
+    "test": "bin/test",
+    "test:ci": "bin/test --runInBand",
+    "lint": "bin/lint",
+    "lint:fix": "bin/lint --fix",
     "postinstall": "husky install",
     "prepublish": "bin/build",
     "prepublishOnly": "pinst --disable",
