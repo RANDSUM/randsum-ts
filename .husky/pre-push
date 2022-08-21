@@ -1,7 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-bin/docs
-git add docs
-git diff-index --quiet HEAD || git commit --no-verify -m "🤖 Updating Docs 🤖"
 yarn test || exit 1

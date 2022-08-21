@@ -16,7 +16,7 @@ It's a dice roller! Specifically, it's a random number generator that generates 
 
 It accepts basic number and number strings, as well as dice notation for more complicated dice operations.
 
-Check out the docs below for more info!
+Check out the links below for more info!
 
 ## Further Reading
 
