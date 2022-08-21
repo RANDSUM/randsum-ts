@@ -1,10 +1,10 @@
 import { ReplaceOptions } from 'types'
 
-import { convertCapOptionsToParameters } from './convert-cap-options-to-parameters'
+import { convertGreaterLessOptionsToParameters } from './convert-greater-less-options-to-parameters'
 
 export function convertReplaceOptionsToParameters ({ from, to }: ReplaceOptions): ReplaceOptions<number> {
   return {
-    from: typeof from === 'object' ? convertCapOptionsToParameters(from) : Number(from),
+    from: typeof from === 'object' ? convertGreaterLessOptionsToParameters(from) : Number(from),
     to: Number(to)
   }
 }

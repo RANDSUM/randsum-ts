@@ -1,7 +1,7 @@
 import { Modifier } from 'types'
 
-import { convertCapOptionsToParameters } from './convert-cap-options-to-parameters'
 import { convertDropOptionsToParameters } from './convert-drop-options-to-parameters'
+import { convertGreaterLessOptionsToParameters } from './convert-greater-less-options-to-parameters'
 import { convertReplaceOptionsToParameters } from './convert-replace-options-to-parameters'
 import { convertRerollOptionsToParameters } from './convert-reroll-options-to-parameters'
 
@@ -12,7 +12,7 @@ export function normalizeModifiers (modifiers: Array<Modifier<'inclusive' | numb
     const [value] = Object.values(modifier)
 
     if (key === 'cap') {
-      newModifiers.push({ cap: convertCapOptionsToParameters(value) })
+      newModifiers.push({ cap: convertGreaterLessOptionsToParameters(value) })
     }
     if (key === 'drop') {
       newModifiers.push({ drop: convertDropOptionsToParameters(value) })

@@ -1,7 +1,0 @@
-{
-  "entryPoints": ["./src/index.ts", "src/types/index.ts"],
-  "sort": ["source-order"],
-  "out": "docs",
-  "name": "randsum",
-  "includeVersion": true
-}

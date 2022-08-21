@@ -16,15 +16,13 @@ It's a dice roller! Specifically, it's a random number generator that generates 
 
 It accepts basic number and number strings, as well as dice notation for more complicated dice operations.
 
-Check out the docs below for more info!
+Check out the links below for more info!
 
 ## Further Reading
 
 [Getting Started](https://github.com/alxjrvs/randsum/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
 [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
-
-[TypeDoc Types](https://alxjrvs.github.io/randsum) - Generated Type Documentation, helpful for debugging
 
 [Contributing](https://github.com/alxjrvs/randsum/blob/main/CONTRIBUTING.md) - help make `randsum` better!
 
