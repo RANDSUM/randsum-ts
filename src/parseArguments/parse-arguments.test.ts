@@ -47,7 +47,7 @@ describe('parseArguments', () => {
             sides: '6',
             modifiers: [
               { reroll: { exact: ['2', 1] } },
-              { replace: { from: '6', to: '1' } },
+              { replace: { from: { greaterThan: 5 }, to: '1' } },
               { unique: true },
             ],
           })
@@ -56,7 +56,7 @@ describe('parseArguments', () => {
           sides: 6,
           modifiers: expect.arrayContaining([
             { reroll: { exact: [2, 1] } },
-            { replace: { from: 6, to: 1 } },
+            { replace: { from: { greaterThan: 5 }, to: 1 } },
             { unique: true },
           ]),
         })
