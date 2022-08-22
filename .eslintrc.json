@@ -8,13 +8,13 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
 
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": [ "@typescript-eslint" ],
-  "rules": { }
+  "plugins": ["@typescript-eslint"],
+  "rules": {}
 }
