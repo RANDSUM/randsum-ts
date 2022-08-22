@@ -20,8 +20,8 @@ export function parseArguments<D extends boolean> (
   }
 
   if (isDiceNotation(primeArgument)) {
-    const restRollParameters = convertOptionsToParameters<D>(secondArgument)
-    return { ...restRollParameters, ...parseNotation(primeArgument) }
+    return { ...convertOptionsToParameters<D>(secondArgument), ...parseNotation(primeArgument) }
   }
+
   return { ...convertOptionsToParameters<D>(secondArgument), sides: Number(primeArgument) }
 }
