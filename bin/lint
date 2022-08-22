@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm exec --package=prettier-eslint-cli -c "prettier-eslint $@ \"./**/*.*\" --list-different"
+npx eslint . "$@"
