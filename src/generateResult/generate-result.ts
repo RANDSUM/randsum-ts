@@ -1,51 +1,55 @@
-import { RollParameters, RollResult } from '../types'
+
+import { InternalRollParameters, RollResult } from '../types'
 import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, applyUnique } from './applicators'
+import { generateRolls } from './generate-rolls'
 
-export function generateResult ({ initialRolls, rollOne, ...rollParameters }: RollParameters): RollResult {
-  let modifiedRollTotals = [...initialRolls]
+export function generateResult ({ sides, quantity, modifiers, randomizer }: InternalRollParameters, rollGenerator = generateRolls): RollResult {
+  const [rollOne, initialRolls] = rollGenerator(sides, quantity, randomizer)
+
+  let rolls = [...initialRolls]
   let simpleMathModifier = 0
-
-  const { sides, quantity, modifiers } = rollParameters
 
   for (const modifier of modifiers) {
     const [key] = Object.keys(modifier)
     const [value] = Object.values(modifier)
 
     if (key === 'reroll') {
-      modifiedRollTotals = applyReroll(modifiedRollTotals, value, rollOne)
+      rolls = applyReroll(rolls, value, rollOne)
     }
     if (key === 'unique') {
-      modifiedRollTotals = applyUnique(modifiedRollTotals, { sides, quantity, unique: value }, rollOne)
+      rolls = applyUnique(rolls, { sides, quantity, unique: value }, rollOne)
     }
     if (key === 'replace') {
-      modifiedRollTotals = applyReplace(modifiedRollTotals, value)
+      rolls = applyReplace(rolls, value)
     }
     if (key === 'cap') {
-      modifiedRollTotals = modifiedRollTotals.map(applySingleCap(value))
+      rolls = rolls.map(applySingleCap(value))
     }
     if (key === 'drop') {
-      modifiedRollTotals = applyDrop(modifiedRollTotals, value)
+      rolls = applyDrop(rolls, value)
     }
     if (key === 'explode') {
-      modifiedRollTotals = applyExplode(modifiedRollTotals, { sides }, rollOne)
+      rolls = applyExplode(rolls, { sides }, rollOne)
     }
     if (key === 'plus') {
-      simpleMathModifier = simpleMathModifier + Number(value)
+      simpleMathModifier += Number(value)
     }
     if (key === 'minus') {
-      simpleMathModifier = simpleMathModifier - Math.abs(Number(value))
+      simpleMathModifier -= Math.abs(Number(value))
     }
   }
 
-  const total = Number([...modifiedRollTotals].reduce((total, roll) => total + roll, 0)) + simpleMathModifier
+  const total = Number([...rolls].reduce((total, roll) => total + roll, 0)) + simpleMathModifier
 
   return {
     total,
-    rolls: modifiedRollTotals,
+    rolls,
     rollParameters: {
-      ...rollParameters,
-      rollOne,
-      initialRolls
+      sides,
+      quantity,
+      modifiers,
+      initialRolls,
+      rollOne
     }
   }
 }
