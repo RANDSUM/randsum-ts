@@ -19,9 +19,8 @@ export function parseArguments<D extends boolean> (
     return convertOptionsToParameters<D>(primeArgument)
   }
 
-  if (isDiceNotation(primeArgument)) {
-    return { ...convertOptionsToParameters<D>(secondArgument), ...parseNotation(primeArgument) }
+  return {
+    ...convertOptionsToParameters<D>(secondArgument),
+    ...(isDiceNotation(primeArgument) ? parseNotation(primeArgument) : { sides: Number(primeArgument) })
   }
-
-  return { ...convertOptionsToParameters<D>(secondArgument), sides: Number(primeArgument) }
 }
