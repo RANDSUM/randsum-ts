@@ -1,49 +1,61 @@
-import { RollParameters } from '../types'
+import { InternalRollParameters } from '../types'
 import { generateResult } from './generate-result'
-
-const mockRandomizer = (): number => 200
 
 describe('generateResult', () => {
   const rolls = [1, 2, 3, 4]
-  const baseParameters: RollParameters = {
-    initialRolls: rolls,
-    rollOne: mockRandomizer,
+  const baseParameters: InternalRollParameters = {
     sides: 6,
     quantity: rolls.length,
     modifiers: []
   }
+  const baseRollGenerator = () => ({
+    initialRolls: rolls,
+    rollOne: () => 200
+  })
 
   describe('when given roll total with no modifiers', () => {
     test('it returns the sum total of the quantity and the roll total', () => {
-      expect(generateResult(baseParameters)).toMatchObject({ total: 10, rolls: [1, 2, 3, 4] })
+      expect(generateResult(baseParameters, baseRollGenerator)).toMatchObject({ total: 10, rolls: [1, 2, 3, 4] })
+    })
+
+    test('it passes size, quantity, and randomizer from RollParameters to the Roll Generator', () => {
+      const mockRandomizer = jest.fn()
+      const mockRollGenerator = jest.fn().mockReturnValue({ rollOnce: () => 200, initialRolls: [200] })
+
+      generateResult({ ...baseParameters, randomizer: mockRandomizer }, mockRollGenerator)
+
+      expect(mockRollGenerator).toHaveBeenCalledWith(baseParameters.sides, baseParameters.quantity, mockRandomizer)
     })
   })
 
   describe('when given roll total with a "unique" modifier', () => {
     const duplicateRollTotals = [1, 1, 2, 3]
-    const uniqueParameters: RollParameters = {
+    const uniqueParameters: InternalRollParameters = {
       ...baseParameters,
-      initialRolls: duplicateRollTotals,
       sides: 4,
       quantity: duplicateRollTotals.length,
       modifiers: [{ unique: true }]
     }
+    const uniqueRollGenerator = () => ({
+      ...baseRollGenerator(),
+      initialRolls: duplicateRollTotals
+    })
 
     test('it re-quantity non-unique modifiers', () => {
-      expect(generateResult(uniqueParameters)).toMatchObject({
+      expect(generateResult(uniqueParameters, uniqueRollGenerator)).toMatchObject({
         total: 206,
         rolls: [1, 200, 2, 3]
       })
     })
 
     describe('when given a "notUnique" array', () => {
-      const notUniqueParameters: RollParameters = {
+      const notUniqueParameters: InternalRollParameters = {
         ...uniqueParameters,
         modifiers: [{ unique: { notUnique: [1] } }]
       }
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
-        expect(generateResult(notUniqueParameters)).toMatchObject({
+        expect(generateResult(notUniqueParameters, uniqueRollGenerator)).toMatchObject({
           total: 7,
           rolls: [1, 1, 2, 3]
         })
@@ -52,14 +64,17 @@ describe('generateResult', () => {
 
     describe('and the # of quantity is greater than the sides of the die', () => {
       const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
-      const overflowParameters: RollParameters = {
+      const overflowParameters: InternalRollParameters = {
         ...uniqueParameters,
-        initialRolls: overflowRollTotals,
         quantity: overflowRollTotals.length
       }
+      const overflowRollGenerator = () => ({
+        ...baseRollGenerator(),
+        initialRolls: overflowRollTotals
+      })
 
       test('it throws an error', () => {
-        expect(() => generateResult(overflowParameters)).toThrow(
+        expect(() => generateResult(overflowParameters, overflowRollGenerator)).toThrow(
           'You cannot have unique rolls when there are more rolls than sides of die.'
         )
       })
@@ -68,9 +83,8 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "drop" modifier', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    const dropParameters: RollParameters = {
+    const dropParameters: InternalRollParameters = {
       ...baseParameters,
-      initialRolls: longerRollTotals,
       sides: 10,
       quantity: longerRollTotals.length,
       modifiers: [
@@ -85,9 +99,13 @@ describe('generateResult', () => {
         }
       ]
     }
+    const overflowRollGenerator = () => ({
+      ...baseRollGenerator(),
+      initialRolls: longerRollTotals
+    })
 
     test('it returns the total without the provided values', () => {
-      expect(generateResult(dropParameters)).toMatchObject({
+      expect(generateResult(dropParameters, overflowRollGenerator)).toMatchObject({
         total: 17,
         rolls: [4, 6, 7]
       })
@@ -96,18 +114,18 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "replace" modifier', () => {
     describe('that is a single replace modifiers', () => {
-      const dropParameters: RollParameters = {
+      const dropParameters: InternalRollParameters = {
         ...baseParameters,
         modifiers: [{ replace: { from: 1, to: 2 } }]
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(generateResult(dropParameters)).toMatchObject({ total: 11, rolls: [2, 2, 3, 4] })
+        expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({ total: 11, rolls: [2, 2, 3, 4] })
       })
     })
 
     describe('that is an array of replace modifiers', () => {
-      const dropParameters: RollParameters = {
+      const dropParameters: InternalRollParameters = {
         ...baseParameters,
         modifiers: [
           {
@@ -120,21 +138,25 @@ describe('generateResult', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(generateResult(dropParameters)).toMatchObject({ total: 13, rolls: [2, 2, 3, 6] })
+        expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({ total: 13, rolls: [2, 2, 3, 6] })
       })
     })
   })
 
   describe('when given roll total with an "explode" modifier', () => {
     const explodeRollTotals = [1, 2, 3, 6]
-    const explodeParameters: RollParameters = {
+    const explodeParameters: InternalRollParameters = {
       ...baseParameters,
-      initialRolls: explodeRollTotals,
       modifiers: [{ explode: true }]
     }
 
+    const explodeRollGenerator = () => ({
+      ...baseRollGenerator(),
+      initialRolls: explodeRollTotals
+    })
+
     test('it returns the total with all values matching the queries rerolled', () => {
-      expect(generateResult(explodeParameters)).toMatchObject({
+      expect(generateResult(explodeParameters, explodeRollGenerator)).toMatchObject({
         total: 212,
         rolls: [1, 2, 3, 6, 200]
       })
@@ -143,10 +165,10 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
-      const rerollParameters: RollParameters = { ...baseParameters, modifiers: [{ reroll: { greaterThan: 3 } }] }
+      const rerollParameters: InternalRollParameters = { ...baseParameters, modifiers: [{ reroll: { greaterThan: 3 } }] }
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
-        expect(generateResult(rerollParameters)).toMatchObject({
+        expect(generateResult(rerollParameters, baseRollGenerator)).toMatchObject({
           total: 206,
           rolls: [1, 2, 3, 200]
         })
@@ -154,13 +176,13 @@ describe('generateResult', () => {
     })
 
     describe('that is a single reroll modifier', () => {
-      const rerollParameters: RollParameters = {
+      const rerollParameters: InternalRollParameters = {
         ...baseParameters,
         modifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }]
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
-        expect(generateResult(rerollParameters)).toMatchObject({
+        expect(generateResult(rerollParameters, baseRollGenerator)).toMatchObject({
           total: 404,
           rolls: [1, 200, 3, 200]
         })
@@ -168,13 +190,13 @@ describe('generateResult', () => {
     })
 
     describe('that is an array of reroll modifiers', () => {
-      const rerollParameters: RollParameters = {
+      const rerollParameters: InternalRollParameters = {
         ...baseParameters,
         modifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }]
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
-        expect(generateResult(rerollParameters)).toMatchObject({
+        expect(generateResult(rerollParameters, baseRollGenerator)).toMatchObject({
           total: 406,
           rolls: [200, 2, 200, 4]
         })
@@ -183,29 +205,29 @@ describe('generateResult', () => {
   })
 
   describe('when given roll total with a "cap" modifier', () => {
-    const dropParameters: RollParameters = {
+    const dropParameters: InternalRollParameters = {
       ...baseParameters,
       modifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }]
     }
 
     test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll total', () => {
-      expect(generateResult(dropParameters)).toMatchObject({ total: 10, rolls: [2, 2, 3, 3] })
+      expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({ total: 10, rolls: [2, 2, 3, 3] })
     })
   })
 
   describe('when given roll total with a "plus" modifier', () => {
-    const dropParameters: RollParameters = { ...baseParameters, modifiers: [{ plus: 2 }] }
+    const dropParameters: InternalRollParameters = { ...baseParameters, modifiers: [{ plus: 2 }] }
 
     test('it returns the total plus the "plus" modifier, and the roll total', () => {
-      expect(generateResult(dropParameters)).toMatchObject({ total: 12, rolls: [1, 2, 3, 4] })
+      expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({ total: 12, rolls: [1, 2, 3, 4] })
     })
   })
 
   describe('when given roll total with a "minus" modifier', () => {
-    const dropParameters: RollParameters = { ...baseParameters, modifiers: [{ minus: 2 }] }
+    const dropParameters: InternalRollParameters = { ...baseParameters, modifiers: [{ minus: 2 }] }
 
     test('it returns the total minust the "minus" modifier, and the roll total', () => {
-      expect(generateResult(dropParameters)).toMatchObject({ total: 8, rolls: [1, 2, 3, 4] })
+      expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({ total: 8, rolls: [1, 2, 3, 4] })
     })
   })
 })
