@@ -11,12 +11,9 @@ export function convertRerollOptionsToParameters({
     exact !== undefined
       ? { exact: Array.isArray(exact) ? exact.map(Number) : [Number(exact)] }
       : {}
-  const rerollOptions = {
+  return {
     ...convertGreaterLessOptionsToParameters(restOptions),
     ...convertedExact,
     maxReroll: maxReroll !== undefined ? Number(maxReroll) : undefined
   }
-  return Object.fromEntries(
-    Object.entries(rerollOptions).filter(([, v]) => v != null)
-  )
 }
