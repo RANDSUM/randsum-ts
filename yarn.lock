@@ -2652,9 +2652,9 @@ eslint-plugin-promise@^6.0.0:
   integrity sha512-7GPezalm5Bfi/E22PnQxDWH2iW9GTvAlUNTztemeHb6c1BniSyoeTrM87JkC0wYdi6aQrZX9p2qEiAno8aTcbw==
 
 eslint-plugin-regexp@^1.5.1:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-regexp/-/eslint-plugin-regexp-1.8.0.tgz#8a3c08ec0a3ad0b2776bf74cde22009dde30dab8"
-  integrity sha512-zRtG5OpWF+istPsjdZYGH23s2ONuN+EDzioGH81WUPehvwlW/l2sh2EBYdnf58UL9nF4oPQXktaABSOpfeQJ9g==
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-regexp/-/eslint-plugin-regexp-1.9.0.tgz#692476a4f620e16634f747bf5c4bfbcd480ff6d9"
+  integrity sha512-Che49IZ07w9KcKvrMiqfwBYv44VBunA4NqUo+UTLluYbCos9Du3+pnhkPTLTAx6ZoZ1Rmz7u7o2iC6g6qCuvxw==
   dependencies:
     comment-parser "^1.1.2"
     eslint-utils "^3.0.0"
