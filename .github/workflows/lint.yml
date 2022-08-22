@@ -20,5 +20,8 @@ jobs:
 
       - run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
 
+      - name: check Formatters
+        run: yarn format:check
+
       - name: Run Linters
-        run: bin/lint
+        run: yarn lint

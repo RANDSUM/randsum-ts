@@ -26,8 +26,8 @@
     "test:ci": "jest --runInBand",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier .",
-    "format:fix": "prettier --write .",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "postinstall": "husky install",
     "prepublish": "bin/build",
     "prepublishOnly": "pinst --disable",
@@ -100,7 +100,10 @@
     "rootDir": "src"
   },
   "lint-staged": {
-    "*.ts": ["eslint", "prettier --write"]
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {}
 }
