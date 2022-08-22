@@ -3,7 +3,10 @@ import { NumberString, NumberStringArgument } from './primitives'
 
 export type RandsumOptions<D extends boolean> = RollOptions & UserOptions<D>
 
-export type RandsumOptionsWithoutSides<D extends boolean> = Omit<RandsumOptions<D>, 'sides'>
+export type RandsumOptionsWithoutSides<D extends boolean> = Omit<
+  RandsumOptions<D>,
+  'sides'
+>
 
 export type Randomizer = (sides: NumberString) => number
 

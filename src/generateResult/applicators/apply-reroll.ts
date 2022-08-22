@@ -1,10 +1,10 @@
 import { RerollOptions } from 'types'
 
-function rerollRoll (
+function rerollRoll(
   roll: number,
   { greaterThan, lessThan, exact, maxReroll }: RerollOptions<number>,
   rollOne: () => number,
-  index = 0
+  index = 0,
 ): number {
   if (maxReroll === index) {
     return roll
@@ -14,23 +14,35 @@ function rerollRoll (
     return roll
   }
 
-  const exactValue = exact !== undefined && Array.isArray(exact) ? exact.includes(roll) : exact === roll
-  if ((greaterThan !== undefined && roll > greaterThan) || (lessThan !== undefined && roll < lessThan) || exactValue) {
-    return rerollRoll(rollOne(), { greaterThan, lessThan, exact, maxReroll }, rollOne, index + 1)
+  const exactValue =
+    exact !== undefined && Array.isArray(exact)
+      ? exact.includes(roll)
+      : exact === roll
+  if (
+    (greaterThan !== undefined && roll > greaterThan) ||
+    (lessThan !== undefined && roll < lessThan) ||
+    exactValue
+  ) {
+    return rerollRoll(
+      rollOne(),
+      { greaterThan, lessThan, exact, maxReroll },
+      rollOne,
+      index + 1,
+    )
   }
   return roll
 }
 
-export function applyReroll (
+export function applyReroll(
   rolls: number[],
   reroll: RerollOptions<number> | Array<RerollOptions<number>>,
-  rollOne: () => number
+  rollOne: () => number,
 ): number[] {
   const parameters = Array.isArray(reroll) ? reroll : [reroll]
 
   let rerollRolls = rolls
   for (const rerollModifier of parameters) {
-    rerollRolls = rerollRolls.map(roll => {
+    rerollRolls = rerollRolls.map((roll) => {
       return rerollRoll(roll, rerollModifier, rollOne)
     })
   }

@@ -1,6 +1,6 @@
 import { DropOptions } from 'types'
 
-function times (iterator: number) {
+function times(iterator: number) {
   return (callback: (index?: number) => void) => {
     if (iterator > 0) {
       callback(iterator)
@@ -9,16 +9,16 @@ function times (iterator: number) {
   }
 }
 
-export function applyDrop (
+export function applyDrop(
   rolls: number[],
-  { highest, lowest, greaterThan, lessThan, exact }: DropOptions<number>
+  { highest, lowest, greaterThan, lessThan, exact }: DropOptions<number>,
 ): number[] {
   const sortedResults = rolls
-    .filter(roll => {
+    .filter((roll) => {
       if (
         (greaterThan !== undefined && roll > greaterThan) ||
         (lessThan !== undefined && roll < lessThan) ||
-        exact?.map(number => number).includes(roll) === true
+        exact?.map((number) => number).includes(roll) === true
       ) {
         return false
       }

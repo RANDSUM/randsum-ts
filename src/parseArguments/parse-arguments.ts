@@ -6,14 +6,14 @@ import {
   NumberString,
   RandsumOptions,
   RandsumOptionsWithoutSides,
-  UserOptions
+  UserOptions,
 } from '../types'
 import { parseNotation } from '../utils/parseNotation'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 
-export function parseArguments<D extends boolean> (
+export function parseArguments<D extends boolean>(
   primeArgument: RandsumOptions<D> | DiceNotation | NumberString,
-  secondArgument: RandsumOptionsWithoutSides<D> | UserOptions<D> = {}
+  secondArgument: RandsumOptionsWithoutSides<D> | UserOptions<D> = {},
 ): { detailed: D } & InternalRollParameters {
   if (isRandsumOptions(primeArgument)) {
     return convertOptionsToParameters<D>(primeArgument)
@@ -21,6 +21,8 @@ export function parseArguments<D extends boolean> (
 
   return {
     ...convertOptionsToParameters<D>(secondArgument),
-    ...(isDiceNotation(primeArgument) ? parseNotation(primeArgument) : { sides: Number(primeArgument) })
+    ...(isDiceNotation(primeArgument)
+      ? parseNotation(primeArgument)
+      : { sides: Number(primeArgument) }),
   }
 }
