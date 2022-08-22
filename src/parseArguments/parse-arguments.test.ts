@@ -46,7 +46,7 @@ describe('parseArguments', () => {
             quantity: 4,
             sides: '6',
             modifiers: [
-              { reroll: { exact: ['2', 1] } },
+              { reroll: [{ exact: ['2', 1] }, { exact: 4 }] },
               { replace: { from: { greaterThan: 5 }, to: '1' } },
               { unique: true }
             ]
@@ -55,7 +55,7 @@ describe('parseArguments', () => {
           quantity: 4,
           sides: 6,
           modifiers: expect.arrayContaining([
-            { reroll: { exact: [2, 1] } },
+            { reroll: [{ exact: [2, 1] }, { exact: [4] }] },
             { replace: { from: { greaterThan: 5 }, to: 1 } },
             { unique: true }
           ])
