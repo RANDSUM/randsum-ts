@@ -7,11 +7,11 @@ export function applyUnique(
     quantity,
     sides,
   }: Pick<RollParameters, 'quantity' | 'sides'> & UniqueModifier,
-  rollOne: () => number,
+  rollOne: () => number
 ): number[] {
   if (quantity > sides) {
     throw new Error(
-      'You cannot have unique rolls when there are more rolls than sides of die.',
+      'You cannot have unique rolls when there are more rolls than sides of die.'
     )
   }
   const notUnique =
@@ -20,7 +20,7 @@ export function applyUnique(
       : unique.notUnique.map(Number)
 
   const filteredArray = new Set(
-    rolls.filter((n) => !notUnique.includes(Number(n))),
+    rolls.filter((n) => !notUnique.includes(Number(n)))
   )
   const fixedRollTotals = rolls.map(Number).map((roll, index, array) => {
     let newRoll: number

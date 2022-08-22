@@ -13,7 +13,7 @@ import {
 } from './notationParsers'
 
 export function parseNotation(
-  notationString: DiceNotation,
+  notationString: DiceNotation
 ): RollOptions<number> & { quantity: number } {
   let rollParameters: RollOptions<number> & { quantity: number } = {
     sides: 1,
@@ -21,7 +21,7 @@ export function parseNotation(
   }
 
   for (const match of findMatches(
-    notationString.toLowerCase().replace(' ', ''),
+    notationString.toLowerCase().replace(' ', '')
   )) {
     const [key] = Object.keys(match)
     const [value] = Object.values(match)

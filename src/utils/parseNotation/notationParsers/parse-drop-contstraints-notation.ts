@@ -1,7 +1,7 @@
 import { DropModifier, DropOptions } from 'types'
 
 export function parseDropConstraintsNotation(
-  notationString: string,
+  notationString: string
 ): DropModifier<number> {
   let dropConstraintParameters: Pick<
     DropOptions<number>,

@@ -1,7 +1,7 @@
 import { ReplaceModifier } from 'types'
 
 export function parseReplaceNotation(
-  notationString: string,
+  notationString: string
 ): ReplaceModifier<number> {
   const replaceOptions = notationString
     .split('v')[1]

@@ -25,5 +25,5 @@ const allPatterns = [
 ]
 export const completeRollPattern = new RegExp(
   `${allPatterns.map((pattern) => pattern.source).join('|')}`,
-  'g',
+  'g'
 )

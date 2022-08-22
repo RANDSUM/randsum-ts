@@ -10,7 +10,7 @@ describe('parseArguments', () => {
     describe('and a complex RandsumOptionsWithoutSides object', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(
-          parseArguments('2', { quantity: 3, detailed: true }),
+          parseArguments('2', { quantity: 3, detailed: true })
         ).toMatchObject({
           quantity: 3,
           sides: 2,
@@ -28,7 +28,7 @@ describe('parseArguments', () => {
     describe('and a complex RandsumOptionWithoutSides', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(
-          parseArguments(2, { quantity: 3, detailed: true }),
+          parseArguments(2, { quantity: 3, detailed: true })
         ).toMatchObject({
           quantity: 3,
           sides: 2,
@@ -50,7 +50,7 @@ describe('parseArguments', () => {
               { replace: { from: '6', to: '1' } },
               { unique: true },
             ],
-          }),
+          })
         ).toMatchObject({
           quantity: 4,
           sides: 6,
@@ -87,7 +87,7 @@ describe('parseArguments', () => {
               { unique: { notUnique: ['1', 2] } },
               { explode: true },
             ],
-          }),
+          })
         ).toMatchObject({
           quantity: 4,
           sides: 6,

@@ -18,7 +18,7 @@ export interface DropOptions<T extends NumberStringArgument = 'inclusive'> {
 }
 
 export interface GreaterLessOptions<
-  T extends NumberStringArgument = 'inclusive',
+  T extends NumberStringArgument = 'inclusive'
 > {
   greaterThan?: NumberString<T>
   lessThan?: NumberString<T>

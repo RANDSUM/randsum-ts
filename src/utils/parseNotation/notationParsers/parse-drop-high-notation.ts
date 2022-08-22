@@ -1,7 +1,7 @@
 import { DropModifier } from 'types'
 
 export function parseDropHighNotation(
-  notationString: string,
+  notationString: string
 ): DropModifier<number> {
   const highestCount = notationString.split('h')[1]
 

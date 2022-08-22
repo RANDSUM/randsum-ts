@@ -29,13 +29,13 @@ describe('generateResult', () => {
 
       generateResult(
         { ...baseParameters, randomizer: mockRandomizer },
-        mockRollGenerator,
+        mockRollGenerator
       )
 
       expect(mockRollGenerator).toHaveBeenCalledWith(
         baseParameters.sides,
         baseParameters.quantity,
-        mockRandomizer,
+        mockRandomizer
       )
     })
   })
@@ -55,7 +55,7 @@ describe('generateResult', () => {
 
     test('it re-quantity non-unique modifiers', () => {
       expect(
-        generateResult(uniqueParameters, uniqueRollGenerator),
+        generateResult(uniqueParameters, uniqueRollGenerator)
       ).toMatchObject({
         total: 206,
         rolls: [1, 200, 2, 3],
@@ -70,7 +70,7 @@ describe('generateResult', () => {
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
         expect(
-          generateResult(notUniqueParameters, uniqueRollGenerator),
+          generateResult(notUniqueParameters, uniqueRollGenerator)
         ).toMatchObject({
           total: 7,
           rolls: [1, 1, 2, 3],
@@ -91,9 +91,9 @@ describe('generateResult', () => {
 
       test('it throws an error', () => {
         expect(() =>
-          generateResult(overflowParameters, overflowRollGenerator),
+          generateResult(overflowParameters, overflowRollGenerator)
         ).toThrow(
-          'You cannot have unique rolls when there are more rolls than sides of die.',
+          'You cannot have unique rolls when there are more rolls than sides of die.'
         )
       })
     })
@@ -124,7 +124,7 @@ describe('generateResult', () => {
 
     test('it returns the total without the provided values', () => {
       expect(
-        generateResult(dropParameters, overflowRollGenerator),
+        generateResult(dropParameters, overflowRollGenerator)
       ).toMatchObject({
         total: 17,
         rolls: [4, 6, 7],
@@ -141,7 +141,7 @@ describe('generateResult', () => {
 
       test('it returns the total with all values replaced according to the provided rules', () => {
         expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject(
-          { total: 11, rolls: [2, 2, 3, 4] },
+          { total: 11, rolls: [2, 2, 3, 4] }
         )
       })
     })
@@ -161,7 +161,7 @@ describe('generateResult', () => {
 
       test('it returns the total with all values replaced according to the provided rules', () => {
         expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject(
-          { total: 13, rolls: [2, 2, 3, 6] },
+          { total: 13, rolls: [2, 2, 3, 6] }
         )
       })
     })
@@ -181,7 +181,7 @@ describe('generateResult', () => {
 
     test('it returns the total with all values matching the queries rerolled', () => {
       expect(
-        generateResult(explodeParameters, explodeRollGenerator),
+        generateResult(explodeParameters, explodeRollGenerator)
       ).toMatchObject({
         total: 212,
         rolls: [1, 2, 3, 6, 200],
@@ -198,7 +198,7 @@ describe('generateResult', () => {
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         expect(
-          generateResult(rerollParameters, baseRollGenerator),
+          generateResult(rerollParameters, baseRollGenerator)
         ).toMatchObject({
           total: 206,
           rolls: [1, 2, 3, 200],
@@ -214,7 +214,7 @@ describe('generateResult', () => {
 
       test('it returns the total with all values matching the queries rerolled', () => {
         expect(
-          generateResult(rerollParameters, baseRollGenerator),
+          generateResult(rerollParameters, baseRollGenerator)
         ).toMatchObject({
           total: 404,
           rolls: [1, 200, 3, 200],
@@ -232,7 +232,7 @@ describe('generateResult', () => {
 
       test('it returns the total with all values matching the queries rerolled', () => {
         expect(
-          generateResult(rerollParameters, baseRollGenerator),
+          generateResult(rerollParameters, baseRollGenerator)
         ).toMatchObject({
           total: 406,
           rolls: [200, 2, 200, 4],

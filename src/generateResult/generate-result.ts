@@ -11,7 +11,7 @@ import { generateRolls } from './generate-rolls'
 
 export function generateResult(
   { sides, quantity, modifiers, randomizer }: InternalRollParameters,
-  rollGenerator = generateRolls,
+  rollGenerator = generateRolls
 ): RollResult {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 

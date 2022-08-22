@@ -4,7 +4,7 @@ function rerollRoll(
   roll: number,
   { greaterThan, lessThan, exact, maxReroll }: RerollOptions<number>,
   rollOne: () => number,
-  index = 0,
+  index = 0
 ): number {
   if (maxReroll === index) {
     return roll
@@ -27,7 +27,7 @@ function rerollRoll(
       rollOne(),
       { greaterThan, lessThan, exact, maxReroll },
       rollOne,
-      index + 1,
+      index + 1
     )
   }
   return roll
@@ -36,7 +36,7 @@ function rerollRoll(
 export function applyReroll(
   rolls: number[],
   reroll: RerollOptions<number> | Array<RerollOptions<number>>,
-  rollOne: () => number,
+  rollOne: () => number
 ): number[] {
   const parameters = Array.isArray(reroll) ? reroll : [reroll]
 

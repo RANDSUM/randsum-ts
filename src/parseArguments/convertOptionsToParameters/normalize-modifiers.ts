@@ -6,7 +6,7 @@ import { convertReplaceOptionsToParameters } from './convert-replace-options-to-
 import { convertRerollOptionsToParameters } from './convert-reroll-options-to-parameters'
 
 export function normalizeModifiers(
-  modifiers: Array<Modifier<'inclusive' | number>> = [],
+  modifiers: Array<Modifier<'inclusive' | number>> = []
 ): Array<Modifier<number>> {
   const newModifiers: Array<Modifier<number>> = []
   for (const modifier of modifiers) {

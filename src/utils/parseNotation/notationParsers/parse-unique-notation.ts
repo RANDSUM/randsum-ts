@@ -1,7 +1,7 @@
 import { UniqueModifier } from 'types'
 
 export function parseUniqueNotation(
-  notationString: string,
+  notationString: string
 ): UniqueModifier<number> {
   if (notationString === 'u') {
     return { unique: true }

@@ -1,7 +1,7 @@
 import { RerollModifier, RerollOptions } from 'types'
 
 export function parseRerollNotation(
-  notationString: string,
+  notationString: string
 ): RerollModifier<number> {
   const parsedString = notationString
     .split('r')[1]
