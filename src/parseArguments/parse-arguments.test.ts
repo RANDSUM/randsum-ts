@@ -81,7 +81,7 @@ describe('parseArguments', () => {
                   exact: [2, '3']
                 }
               },
-              { reroll: [{ exact: undefined }] },
+              { reroll: { exact: undefined } },
               { cap: { greaterThan: '2', lessThan: 1 } },
               { replace: [{ from: '6', to: '1' }] },
               { unique: { notUnique: ['1', 2] } },
@@ -101,7 +101,7 @@ describe('parseArguments', () => {
                 exact: [2, 3]
               }
             },
-            { reroll: [{}] },
+            { reroll: {} },
             { cap: { greaterThan: 2, lessThan: 1 } },
             { replace: [{ from: 6, to: 1 }] },
             { unique: { notUnique: [1, 2] } },
