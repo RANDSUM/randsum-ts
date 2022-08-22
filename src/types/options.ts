@@ -1,8 +1,7 @@
-import { Modifier } from './modifiers'
 import { NumberString, NumberStringArgument } from './primitives'
+import { Modifier } from './modifiers'
 
 export type RandsumOptions<D extends boolean> = RollOptions & UserOptions<D>
-
 export type RandsumOptionsWithoutSides<D extends boolean> = Omit<
   RandsumOptions<D>,
   'sides'
