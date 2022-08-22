@@ -1,5 +1,4 @@
 {
-  "files": "*.ts",
   "trailingComma": "all",
   "semi": false,
   "singleQuote": true,
