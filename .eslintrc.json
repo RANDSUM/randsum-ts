@@ -3,39 +3,13 @@
     "browser": true,
     "es2021": true
   },
-  "plugins": ["@typescript-eslint", "regexp", "simple-import-sort", "jest", "jest-formatting", "unused-imports"],
-  "extends": [
-    "standard-with-typescript",
-    "plugin:unicorn/recommended",
-    "plugin:jest/recommended",
-    "plugin:jest/style",
-    "plugin:jest-formatting/strict"
-  ],
+  "plugins": [],
+  "extends": [],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "rules": {
-    "unused-imports/no-unused-imports": "error",
-
-    "unused-imports/no-unused-vars": [
-      "warn",
-      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
-    ],
-    "unicorn/no-new-array": "off",
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "arrow-parens": ["error", "as-needed"],
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/quotes": [
-      "error",
-      "single",
-      {
-        "avoidEscape": true,
-        "allowTemplateLiterals": true
-      }
-    ]
-  }
+  "rules": {}
 }
