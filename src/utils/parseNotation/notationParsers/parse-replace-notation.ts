@@ -15,19 +15,19 @@ export function parseReplaceNotation(
       if (noteFrom.includes('>')) {
         return {
           ...baseReplacement,
-          from: { greaterThan: Number(noteFrom.replace(/>/g, '')) },
+          from: { greaterThan: Number(noteFrom.replace(/>/g, '')) }
         }
       }
       if (noteFrom.includes('<')) {
         return {
           ...baseReplacement,
-          from: { lessThan: Number(noteFrom.replace(/</g, '')) },
+          from: { lessThan: Number(noteFrom.replace(/</g, '')) }
         }
       }
       return { ...baseReplacement, from: Number(noteFrom) }
     })
 
   return {
-    replace: replaceOptions.length === 1 ? replaceOptions[0] : replaceOptions,
+    replace: replaceOptions.length === 1 ? replaceOptions[0] : replaceOptions
   }
 }

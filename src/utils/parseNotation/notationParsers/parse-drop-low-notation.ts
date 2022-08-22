@@ -7,7 +7,7 @@ export function parseDropLowNotation(
 
   return {
     drop: {
-      lowest: lowestCount !== '' ? Number(lowestCount) : 1,
-    },
+      lowest: lowestCount !== '' ? Number(lowestCount) : 1
+    }
   }
 }

@@ -7,13 +7,13 @@ export function parseCapNotation(notationString: string): CapModifier<number> {
     if (note.includes('<')) {
       capParameters = {
         ...capParameters,
-        lessThan: Number(note.replace('<', '')),
+        lessThan: Number(note.replace('<', ''))
       }
       continue
     }
     capParameters = {
       ...capParameters,
-      greaterThan: Number(note.replace('>', '')),
+      greaterThan: Number(note.replace('>', ''))
     }
   }
   return { cap: capParameters }

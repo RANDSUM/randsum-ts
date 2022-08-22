@@ -6,7 +6,7 @@ import {
   RandsumOptions,
   RandsumOptionsWithoutSides,
   RollResult,
-  UserOptions,
+  UserOptions
 } from './types'
 
 export function randsum(sides: NumberString): number

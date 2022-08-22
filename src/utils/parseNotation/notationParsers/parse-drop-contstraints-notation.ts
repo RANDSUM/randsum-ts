@@ -16,21 +16,21 @@ export function parseDropConstraintsNotation(
     if (constraint.includes('<')) {
       dropConstraintParameters = {
         ...dropConstraintParameters,
-        lessThan: Number(constraint.split('<')[1]),
+        lessThan: Number(constraint.split('<')[1])
       }
       continue
     }
     if (constraint.includes('>')) {
       dropConstraintParameters = {
         ...dropConstraintParameters,
-        greaterThan: Number(constraint.split('>')[1]),
+        greaterThan: Number(constraint.split('>')[1])
       }
       continue
     }
     dropConstraintParameters = {
       ...dropConstraintParameters,
 
-      exact: [...(dropConstraintParameters?.exact || []), Number(constraint)],
+      exact: [...(dropConstraintParameters?.exact || []), Number(constraint)]
     }
   }
   return { drop: dropConstraintParameters }

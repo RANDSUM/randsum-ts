@@ -6,7 +6,7 @@ import {
   NumberString,
   RandsumOptions,
   RandsumOptionsWithoutSides,
-  UserOptions,
+  UserOptions
 } from '../types'
 import { parseNotation } from '../utils/parseNotation'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
@@ -23,6 +23,6 @@ export function parseArguments<D extends boolean>(
     ...convertOptionsToParameters<D>(secondArgument),
     ...(isDiceNotation(primeArgument)
       ? parseNotation(primeArgument)
-      : { sides: Number(primeArgument) }),
+      : { sides: Number(primeArgument) })
   }
 }

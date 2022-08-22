@@ -5,7 +5,7 @@ export function applyUnique(
   {
     unique,
     quantity,
-    sides,
+    sides
   }: Pick<RollParameters, 'quantity' | 'sides'> & UniqueModifier,
   rollOne: () => number
 ): number[] {

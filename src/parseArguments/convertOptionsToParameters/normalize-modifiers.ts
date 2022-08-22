@@ -23,14 +23,14 @@ export function normalizeModifiers(
       newModifiers.push({
         reroll: Array.isArray(value)
           ? value.map((option) => convertRerollOptionsToParameters(option))
-          : convertRerollOptionsToParameters(value),
+          : convertRerollOptionsToParameters(value)
       })
     }
     if (key === 'replace') {
       newModifiers.push({
         replace: Array.isArray(value)
           ? value.map((option) => convertReplaceOptionsToParameters(option))
-          : convertReplaceOptionsToParameters(value),
+          : convertReplaceOptionsToParameters(value)
       })
     }
     if (key === 'unique') {
@@ -38,7 +38,7 @@ export function normalizeModifiers(
         unique:
           typeof value === 'object'
             ? { notUnique: value.notUnique.map(Number) }
-            : value,
+            : value
       })
     }
     if (key === 'explode') {

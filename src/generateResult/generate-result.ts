@@ -5,7 +5,7 @@ import {
   applyReplace,
   applyReroll,
   applySingleCap,
-  applyUnique,
+  applyUnique
 } from './applicators'
 import { generateRolls } from './generate-rolls'
 
@@ -60,7 +60,7 @@ export function generateResult(
       quantity,
       modifiers,
       initialRolls,
-      rollOne,
-    },
+      rollOne
+    }
   }
 }

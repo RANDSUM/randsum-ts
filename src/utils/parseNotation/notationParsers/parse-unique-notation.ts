@@ -14,7 +14,7 @@ export function parseUniqueNotation(
 
   return {
     unique: {
-      notUnique: notUnique.map(Number),
-    },
+      notUnique: notUnique.map(Number)
+    }
   }
 }

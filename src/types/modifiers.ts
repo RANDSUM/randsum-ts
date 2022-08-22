@@ -1,7 +1,7 @@
 import {
   NumberString,
   NumberStringArgument,
-  TypeOrArrayOfType,
+  TypeOrArrayOfType
 } from './primitives'
 
 export interface DropModifier<T extends NumberStringArgument = 'inclusive'>

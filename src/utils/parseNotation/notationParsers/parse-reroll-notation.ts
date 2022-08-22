@@ -16,21 +16,21 @@ export function parseRerollNotation(
     if (notation.includes('<')) {
       rerollParameters = {
         ...rerollParameters,
-        lessThan: Number(notation.split('<')[1]),
+        lessThan: Number(notation.split('<')[1])
       }
       continue
     }
     if (notation.includes('>')) {
       rerollParameters = {
         ...rerollParameters,
-        greaterThan: Number(notation.split('>')[1]),
+        greaterThan: Number(notation.split('>')[1])
       }
       continue
     }
     if (notation.includes('!')) {
       rerollParameters = {
         ...rerollParameters,
-        maxReroll: Number(notation.split('!')[1]),
+        maxReroll: Number(notation.split('!')[1])
       }
       continue
     }
@@ -40,8 +40,8 @@ export function parseRerollNotation(
         ...(Array.isArray(rerollParameters?.exact)
           ? rerollParameters.exact
           : ([] as number[])),
-        Number(notation),
-      ],
+        Number(notation)
+      ]
     }
   }
 

@@ -45,7 +45,7 @@ describe('Randsum', () => {
       const result = randsum({
         sides: 20,
         quantity: 2,
-        modifiers: [{ drop: { highest: 1 } }],
+        modifiers: [{ drop: { highest: 1 } }]
       })
 
       test('returns a number as total', () => {

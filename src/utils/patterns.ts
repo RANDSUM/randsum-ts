@@ -21,7 +21,7 @@ const allPatterns = [
   rerollPattern,
   capPattern,
   plusPattern,
-  minusPattern,
+  minusPattern
 ]
 export const completeRollPattern = new RegExp(
   `${allPatterns.map((pattern) => pattern.source).join('|')}`,

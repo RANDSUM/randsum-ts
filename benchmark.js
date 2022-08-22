@@ -31,8 +31,8 @@ suite
       modifiers: [
         { reroll: { exact: ['2', 1] } },
         { replace: { from: '6', to: '1' } },
-        { unique: true },
-      ],
+        { unique: true }
+      ]
     })
   })
   .add('Complicated Notation', () => {
