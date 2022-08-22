@@ -30,12 +30,7 @@ export function parseDropConstraintsNotation(
     dropConstraintParameters = {
       ...dropConstraintParameters,
 
-      exact: [
-        ...(Array.isArray(dropConstraintParameters?.exact)
-          ? dropConstraintParameters.exact
-          : []),
-        Number(constraint),
-      ],
+      exact: [...(dropConstraintParameters?.exact || []), Number(constraint)],
     }
   }
   return { drop: dropConstraintParameters }
