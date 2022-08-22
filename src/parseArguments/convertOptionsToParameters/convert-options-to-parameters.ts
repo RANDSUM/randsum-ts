@@ -1,4 +1,9 @@
-import { InternalRollParameters, RandsumOptions, RandsumOptionsWithoutSides, UserOptions } from 'types'
+import {
+  InternalRollParameters,
+  RandsumOptions,
+  RandsumOptionsWithoutSides,
+  UserOptions
+} from 'types'
 
 import { normalizeModifiers } from './normalize-modifiers'
 
@@ -9,10 +14,12 @@ const defaultRollParameters: InternalRollParameters = {
   randomizer: undefined
 }
 
-export function convertOptionsToParameters<D extends boolean> ({
+export function convertOptionsToParameters<D extends boolean>({
   detailed,
   ...restOptions
-}: RandsumOptions<D> | RandsumOptionsWithoutSides<D> | UserOptions<D>): { detailed: D } & InternalRollParameters {
+}: RandsumOptions<D> | RandsumOptionsWithoutSides<D> | UserOptions<D>): {
+  detailed: D
+} & InternalRollParameters {
   const { quantity, sides, modifiers, ...restParsedOptions } = {
     ...defaultRollParameters,
     ...restOptions

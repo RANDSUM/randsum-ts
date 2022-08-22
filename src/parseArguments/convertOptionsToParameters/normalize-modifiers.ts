@@ -5,7 +5,9 @@ import { convertGreaterLessOptionsToParameters } from './convert-greater-less-op
 import { convertReplaceOptionsToParameters } from './convert-replace-options-to-parameters'
 import { convertRerollOptionsToParameters } from './convert-reroll-options-to-parameters'
 
-export function normalizeModifiers (modifiers: Array<Modifier<'inclusive' | number>> = []): Array<Modifier<number>> {
+export function normalizeModifiers(
+  modifiers: Array<Modifier<'inclusive' | number>> = []
+): Array<Modifier<number>> {
   const newModifiers: Array<Modifier<number>> = []
   for (const modifier of modifiers) {
     const [key] = Object.keys(modifier)
@@ -20,20 +22,23 @@ export function normalizeModifiers (modifiers: Array<Modifier<'inclusive' | numb
     if (key === 'reroll') {
       newModifiers.push({
         reroll: Array.isArray(value)
-          ? value.map(option => convertRerollOptionsToParameters(option))
+          ? value.map((option) => convertRerollOptionsToParameters(option))
           : convertRerollOptionsToParameters(value)
       })
     }
     if (key === 'replace') {
       newModifiers.push({
         replace: Array.isArray(value)
-          ? value.map(option => convertReplaceOptionsToParameters(option))
+          ? value.map((option) => convertReplaceOptionsToParameters(option))
           : convertReplaceOptionsToParameters(value)
       })
     }
     if (key === 'unique') {
       newModifiers.push({
-        unique: typeof value === 'object' ? { notUnique: value.notUnique.map(Number) } : value
+        unique:
+          typeof value === 'object'
+            ? { notUnique: value.notUnique.map(Number) }
+            : value
       })
     }
     if (key === 'explode') {

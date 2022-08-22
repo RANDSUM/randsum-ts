@@ -1,6 +1,6 @@
 import { DropOptions } from 'types'
 
-export function convertDropOptionsToParameters ({
+export function convertDropOptionsToParameters({
   highest,
   lowest,
   greaterThan,

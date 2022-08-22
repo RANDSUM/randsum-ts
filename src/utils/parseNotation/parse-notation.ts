@@ -12,10 +12,17 @@ import {
   parseUniqueNotation
 } from './notationParsers'
 
-export function parseNotation (notationString: DiceNotation): RollOptions<number> & { quantity: number } {
-  let rollParameters: RollOptions<number> & { quantity: number } = { sides: 1, quantity: 1 }
+export function parseNotation(
+  notationString: DiceNotation
+): RollOptions<number> & { quantity: number } {
+  let rollParameters: RollOptions<number> & { quantity: number } = {
+    sides: 1,
+    quantity: 1
+  }
 
-  for (const match of findMatches(notationString.toLowerCase().replace(' ', ''))) {
+  for (const match of findMatches(
+    notationString.toLowerCase().replace(' ', '')
+  )) {
     const [key] = Object.keys(match)
     const [value] = Object.values(match)
     const { modifiers = [], ...restParameters } = rollParameters

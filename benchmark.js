@@ -28,13 +28,17 @@ suite
     randsum({
       quantity: 4,
       sides: '6',
-      modifiers: [{ reroll: { exact: ['2', 1] } }, { replace: { from: '6', to: '1' } }, { unique: true }],
+      modifiers: [
+        { reroll: { exact: ['2', 1] } },
+        { replace: { from: '6', to: '1' } },
+        { unique: true }
+      ]
     })
   })
   .add('Complicated Notation', () => {
     randsum(`10d20H2LV{1=2,>2=6}D{<2,>5,2,4}C<2>18R{5,2,<6}3U{5}!+2-5+3`)
   })
-  .on('cycle', event => {
+  .on('cycle', (event) => {
     console.log(String(event.target))
   })
   .on('complete', function () {

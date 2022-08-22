@@ -1,7 +1,9 @@
 import { Modifier } from './modifiers'
 import { RollOptions, UserOptions } from './options'
 
-export interface InternalRollParameters extends RollOptions<number>, Pick<UserOptions<false>, 'randomizer'> {
+export interface InternalRollParameters
+  extends RollOptions<number>,
+    Pick<UserOptions<false>, 'randomizer'> {
   modifiers: Array<Modifier<number>>
   quantity: number
 }

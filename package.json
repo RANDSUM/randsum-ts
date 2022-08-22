@@ -2,9 +2,9 @@
   "name": "randsum",
   "version": "1.5.5",
   "private": false,
+  "author": "Alex Jarvis",
   "description": "rand for the rest of us",
   "license": "MIT",
-  "author": "Alex Jarvis",
   "homepage": "https://alxjrvs.github.io/randsum/",
   "repository": {
     "type": "git",
@@ -22,10 +22,12 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "bin/build",
-    "test": "bin/test",
-    "test:ci": "bin/test --runInBand",
-    "lint": "bin/lint",
-    "lint:fix": "bin/lint --fix",
+    "test": "jest",
+    "test:ci": "jest --runInBand",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "postinstall": "husky install",
     "prepublish": "bin/build",
     "prepublishOnly": "pinst --disable",
@@ -37,28 +39,18 @@
   ],
   "devDependencies": {
     "@types/jest": "^28.1.6",
-    "@typescript-eslint/eslint-plugin": "^5.7.0",
-    "@typescript-eslint/parser": "^5.7.0",
+    "@typescript-eslint/eslint-plugin": "^5.33.1",
+    "@typescript-eslint/parser": "^5.33.1",
     "benchmark": "^2.1.4",
-    "eslint": "^8.5.0",
-    "eslint-config-standard-with-typescript": "^22.0.0",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jest": "^26.6.0",
-    "eslint-plugin-jest-formatting": "^3.1.0",
-    "eslint-plugin-n": "^15.2.4",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-regexp": "^1.5.1",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-unicorn": "^43.0.2",
-    "eslint-plugin-unused-imports": "^2.0.0",
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
     "husky": "^8.0.1",
     "jest": "^28.1.3",
     "lint-staged": "^13.0.3",
     "microbundle": "^0.15.1",
     "pinst": "^3.0.0",
+    "prettier": "^2.7.1",
     "ts-jest": "^28.0.7",
-    "tslib": "^2.4.0",
     "typescript": "~4.7.4",
     "yarn": "^1.22.0"
   },
@@ -106,6 +98,12 @@
       "js"
     ],
     "rootDir": "src"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {}
 }

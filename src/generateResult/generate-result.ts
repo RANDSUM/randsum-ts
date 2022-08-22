@@ -1,9 +1,18 @@
-
 import { InternalRollParameters, RollResult } from '../types'
-import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, applyUnique } from './applicators'
+import {
+  applyDrop,
+  applyExplode,
+  applyReplace,
+  applyReroll,
+  applySingleCap,
+  applyUnique
+} from './applicators'
 import { generateRolls } from './generate-rolls'
 
-export function generateResult ({ sides, quantity, modifiers, randomizer }: InternalRollParameters, rollGenerator = generateRolls): RollResult {
+export function generateResult(
+  { sides, quantity, modifiers, randomizer }: InternalRollParameters,
+  rollGenerator = generateRolls
+): RollResult {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
   let rolls = [...initialRolls]
@@ -39,7 +48,9 @@ export function generateResult ({ sides, quantity, modifiers, randomizer }: Inte
     }
   }
 
-  const total = Number([...rolls].reduce((total, roll) => total + roll, 0)) + simpleMathModifier
+  const total =
+    Number([...rolls].reduce((total, roll) => total + roll, 0)) +
+    simpleMathModifier
 
   return {
     total,

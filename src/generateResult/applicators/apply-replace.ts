@@ -2,7 +2,7 @@ import { ReplaceOptions } from 'types'
 
 import { applySingleCap } from './apply-single-cap'
 
-export function applyReplace (
+export function applyReplace(
   rolls: number[],
   replace: ReplaceOptions<number> | Array<ReplaceOptions<number>>
 ): number[] {
@@ -10,7 +10,7 @@ export function applyReplace (
 
   let replaceRolls = rolls
   for (const { from, to } of parameters) {
-    replaceRolls = replaceRolls.map(roll => {
+    replaceRolls = replaceRolls.map((roll) => {
       if (from !== undefined) {
         if (typeof from === 'object') {
           return applySingleCap(from, to)(roll)

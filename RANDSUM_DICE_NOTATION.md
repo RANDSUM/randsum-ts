@@ -39,11 +39,11 @@ In `randsum` :
 
 randsum('6d20')
 randsum(20, {
-  quantity: 6,
+  quantity: 6
 })
 randsum({
   sides: 20,
-  quantity: 6,
+  quantity: 6
 })
 ```
 
@@ -69,12 +69,12 @@ In `randsum` :
 randsum('6d20+5')
 randsum(20, {
   quantity: 6,
-  modifiers: [{ plus: 5 }],
+  modifiers: [{ plus: 5 }]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  modifiers: [{ plus: 5 }],
+  modifiers: [{ plus: 5 }]
 })
 ```
 
@@ -98,12 +98,12 @@ In `randsum` :
 randsum('6d20-5')
 randsum(20, {
   quantity: 6,
-  modifiers: [{ minus: 5 }],
+  modifiers: [{ minus: 5 }]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  modifiers: [{ minus: 5 }],
+  modifiers: [{ minus: 5 }]
 })
 ```
 
@@ -140,10 +140,10 @@ randsum(20, {
   modifiers: [
     {
       drop: {
-        highest: true,
-      },
-    },
-  ],
+        highest: true
+      }
+    }
+  ]
 })
 
 randsum({
@@ -152,10 +152,10 @@ randsum({
   modifiers: [
     {
       drop: {
-        highest: true,
-      },
-    },
-  ],
+        highest: true
+      }
+    }
+  ]
 })
 
 // Roll 6 twenty-sided die, drop highest 3
@@ -166,10 +166,10 @@ randsum(20, {
   modifiers: [
     {
       drop: {
-        highest: 3,
-      },
-    },
-  ],
+        highest: 3
+      }
+    }
+  ]
 })
 randsum({
   sides: 20,
@@ -177,10 +177,10 @@ randsum({
   modifiers: [
     {
       drop: {
-        highest: 3,
-      },
-    },
-  ],
+        highest: 3
+      }
+    }
+  ]
 })
 ```
 
@@ -211,10 +211,10 @@ randsum(20, {
   modifiers: [
     {
       drop: {
-        lowest: true,
-      },
-    },
-  ],
+        lowest: true
+      }
+    }
+  ]
 })
 randsum({
   sides: 20,
@@ -222,10 +222,10 @@ randsum({
   modifiers: [
     {
       drop: {
-        lowest: true,
-      },
-    },
-  ],
+        lowest: true
+      }
+    }
+  ]
 })
 
 // Roll 6 twenty-sided die, drop lowest 3
@@ -236,10 +236,10 @@ randsum(20, {
   modifiers: [
     {
       drop: {
-        lowest: 3,
-      },
-    },
-  ],
+        lowest: 3
+      }
+    }
+  ]
 })
 randsum({
   sides: 20,
@@ -247,10 +247,10 @@ randsum({
   modifiers: [
     {
       drop: {
-        lowest: 3,
-      },
-    },
-  ],
+        lowest: 3
+      }
+    }
+  ]
 })
 ```
 
@@ -291,10 +291,10 @@ randsum(20, {
       drop: {
         greaterThan: 15,
         lessThan: 5,
-        exactly: [10],
-      },
-    },
-  ],
+        exactly: [10]
+      }
+    }
+  ]
 })
 randsum({
   sides: 20,
@@ -304,10 +304,10 @@ randsum({
       drop: {
         greaterThan: 15,
         lessThan: 5,
-        exactly: [10],
-      },
-    },
-  ],
+        exactly: [10]
+      }
+    }
+  ]
 })
 ```
 
@@ -345,10 +345,10 @@ randsum(20, {
     {
       cap: {
         greaterThan: 15,
-        lessThan: 5,
-      },
-    },
-  ],
+        lessThan: 5
+      }
+    }
+  ]
 })
 randsum({
   sides: 20,
@@ -357,10 +357,10 @@ randsum({
     {
       cap: {
         greaterThan: 15,
-        lessThan: 5,
-      },
-    },
-  ],
+        lessThan: 5
+      }
+    }
+  ]
 })
 ```
 
@@ -408,10 +408,10 @@ randsum(20, {
         above: 15,
         below: 5,
         exactly: [10],
-        maxReroll: 3,
-      },
-    },
-  ],
+        maxReroll: 3
+      }
+    }
+  ]
 })
 randsum({
   sides: 20,
@@ -422,10 +422,10 @@ randsum({
         above: 15,
         below: 5,
         exactly: [10],
-        maxReroll: 3,
-      },
-    },
-  ],
+        maxReroll: 3
+      }
+    }
+  ]
 })
 ```
 
@@ -468,23 +468,23 @@ randsum(20, {
       replace: [
         {
           from: {
-            above: 15,
+            above: 15
           },
-          to: 20,
+          to: 20
         },
         {
           from: {
-            below: 5,
+            below: 5
           },
-          to: 1,
+          to: 1
         },
         {
           from: 10,
-          to: 2,
-        },
-      ],
-    },
-  ],
+          to: 2
+        }
+      ]
+    }
+  ]
 })
 randsum({
   sides: 20,
@@ -494,23 +494,23 @@ randsum({
       replace: [
         {
           from: {
-            above: 15,
+            above: 15
           },
-          to: 20,
+          to: 20
         },
         {
           from: {
-            below: 5,
+            below: 5
           },
-          to: 1,
+          to: 1
         },
         {
           from: 10,
-          to: 2,
-        },
-      ],
-    },
-  ],
+          to: 2
+        }
+      ]
+    }
+  ]
 })
 ```
 
@@ -540,12 +540,12 @@ In `randsum` :
 randsum('6d20U')
 randsum(20, {
   quantity: 6,
-  modifiers: [{ unique: true }],
+  modifiers: [{ unique: true }]
 })
 randsum({
   sides: 20,
   quantity: 6,
-  modifiers: [{ unique: true }],
+  modifiers: [{ unique: true }]
 })
 
 // Roll 6 twenty-sided die, make them all unique, allow for repeated 5's and 10's
@@ -556,10 +556,10 @@ randsum(20, {
   modifiers: [
     {
       unique: {
-        notUnique: [5, 10],
-      },
-    },
-  ],
+        notUnique: [5, 10]
+      }
+    }
+  ]
 })
 randsum({
   sides: 20,
@@ -567,10 +567,10 @@ randsum({
   modifiers: [
     {
       unique: {
-        notUnique: [5, 10],
-      },
-    },
-  ],
+        notUnique: [5, 10]
+      }
+    }
+  ]
 })
 ```
 
