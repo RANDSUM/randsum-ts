@@ -4,7 +4,7 @@ import { applyDrop, applyExplode, applyReplace, applyReroll, applySingleCap, app
 import { generateRolls } from './generate-rolls'
 
 export function generateResult ({ sides, quantity, modifiers, randomizer }: InternalRollParameters, rollGenerator = generateRolls): RollResult {
-  const [rollOne, initialRolls] = rollGenerator(sides, quantity, randomizer)
+  const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
   let rolls = [...initialRolls]
   let simpleMathModifier = 0
