@@ -20,6 +20,7 @@
   "module": "dist/index.module.js",
   "unpkg": "dist/index.umd.js",
   "types": "dist/index.d.ts",
+  "sideEffects": "false",
   "scripts": {
     "build": "bin/build",
     "test": "jest",
