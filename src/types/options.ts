@@ -1,4 +1,4 @@
-import { NumberString, NumberStringArgument } from './primitives'
+import { Detailed, NumberString, NumberStringArgument } from './primitives'
 import { Modifier } from './modifiers'
 
 export type RandsumOptions<D extends boolean> = RollOptions & UserOptions<D>
@@ -10,7 +10,7 @@ export type RandsumOptionsWithoutSides<D extends boolean> = Omit<
 export type Randomizer = (sides: NumberString) => number
 
 export interface UserOptions<D extends boolean> {
-  detailed?: D
+  detailed?: Detailed<D>
   randomizer?: Randomizer
 }
 

@@ -1,4 +1,5 @@
 import {
+  Detailed,
   InternalRollParameters,
   RandsumOptions,
   RandsumOptionsWithoutSides,
@@ -18,7 +19,7 @@ export function convertOptionsToParameters<D extends boolean>({
   detailed,
   ...restOptions
 }: RandsumOptions<D> | RandsumOptionsWithoutSides<D> | UserOptions<D>): {
-  detailed: D
+  detailed: Detailed<D>
 } & InternalRollParameters {
   const { quantity, sides, modifiers, ...restParsedOptions } = {
     ...defaultRollParameters,
@@ -26,11 +27,11 @@ export function convertOptionsToParameters<D extends boolean>({
   }
 
   if (detailed === undefined) {
-    detailed = false as D
+    detailed = false as Detailed<D>
   }
 
   return {
-    detailed,
+    detailed: detailed === undefined ? (false as Detailed<D>) : detailed,
     sides: Number(sides),
     quantity: Number(quantity),
     modifiers: normalizeModifiers(modifiers),
