@@ -3,9 +3,11 @@ import { parseArguments } from './parseArguments'
 import {
   DiceNotation,
   NumberString,
+  PrimeArgument,
   RandsumOptions,
   RandsumOptionsWithoutSides,
   RollResult,
+  SecondArgument,
   UserOptions
 } from './types'
 
@@ -30,10 +32,10 @@ export function randsum(
 export function randsum(rollOptions: RandsumOptions<false>): number
 export function randsum(rollOptions: RandsumOptions<true>): RollResult
 export function randsum<D extends boolean>(
-  primeArgument: NumberString | RandsumOptions<D> | DiceNotation,
-  randsumOptions?: RandsumOptionsWithoutSides<D> | UserOptions<D>
+  primeArgument: PrimeArgument<D>,
+  randsumOptions?: SecondArgument<D>
 ): RollResult | number {
-  const { detailed, ...rollParameters } = parseArguments<D>(
+  const { detailed, ...rollParameters } = parseArguments(
     primeArgument,
     randsumOptions
   )

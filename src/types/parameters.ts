@@ -3,7 +3,7 @@ import { RollOptions, UserOptions } from './options'
 
 export interface InternalRollParameters
   extends RollOptions<number>,
-    Pick<UserOptions<false>, 'randomizer'> {
+    Pick<UserOptions<boolean>, 'randomizer'> {
   modifiers: Array<Modifier<number>>
   quantity: number
 }
