@@ -10,7 +10,7 @@ export type RandsumOptionsWithoutSides<D extends boolean> = Omit<
 export type Randomizer = (sides: NumberString) => number
 
 export interface UserOptions<D extends boolean> {
-  detailed?: Detailed<D>
+  detailed?: D extends true ? true : false | undefined
   randomizer?: Randomizer
 }
 
