@@ -1,6 +1,7 @@
 import { isDiceNotation, isRandsumOptions } from 'utils'
 
 import {
+  Detailed,
   DiceNotation,
   InternalRollParameters,
   NumberString,
@@ -14,7 +15,7 @@ import { convertOptionsToParameters } from './convertOptionsToParameters'
 export function parseArguments<D extends boolean>(
   primeArgument: RandsumOptions<D> | DiceNotation | NumberString,
   secondArgument: RandsumOptionsWithoutSides<D> | UserOptions<D> = {}
-): { detailed: D } & InternalRollParameters {
+): { detailed: Detailed<D> } & InternalRollParameters {
   if (isRandsumOptions(primeArgument)) {
     return convertOptionsToParameters<D>(primeArgument)
   }
