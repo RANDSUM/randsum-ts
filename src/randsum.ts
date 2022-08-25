@@ -3,43 +3,39 @@ import { parseArguments } from './parseArguments'
 import {
   DiceNotation,
   NumberString,
-  PrimeArgument,
   RandsumOptions,
   RandsumOptionsWithoutSides,
   RollResult,
-  SecondArgument,
   UserOptions
 } from './types'
 
 export function randsum(sides: NumberString): number
 export function randsum(
   sides: NumberString,
-  randsumOptions: RandsumOptionsWithoutSides<false>
+  randsumOptions: RandsumOptionsWithoutSides
 ): number
 export function randsum(
   sides: NumberString,
   randsumOptions: RandsumOptionsWithoutSides<true>
-): RollResult
+): RollResult<true>
 export function randsum(notation: DiceNotation): number
 export function randsum(
   notation: DiceNotation,
-  userOptions: UserOptions<false>
+  userOptions: UserOptions
 ): number
 export function randsum(
   notation: DiceNotation,
   userOptions: UserOptions<true>
-): RollResult
+): RollResult<true>
 export function randsum(rollOptions: RandsumOptions<false>): number
-export function randsum(rollOptions: RandsumOptions<true>): RollResult
-export function randsum<D extends boolean>(
-  primeArgument: PrimeArgument<D>,
-  randsumOptions?: SecondArgument<D>
-): RollResult | number {
-  const { detailed, ...rollParameters } = parseArguments(
-    primeArgument,
-    randsumOptions
+export function randsum(rollOptions: RandsumOptions<true>): RollResult<true>
+export function randsum<D extends boolean | undefined>(
+  primeArgument: RandsumOptions<D> | DiceNotation | NumberString,
+  randsumOptions?: RandsumOptionsWithoutSides<D> | UserOptions<D>
+): RollResult<D> | number {
+  const result = generateResult<D>(
+    parseArguments<D>(primeArgument, randsumOptions)
   )
-  const result = generateResult(rollParameters)
 
-  return detailed ? result : result.total
+  return result.rollParameters.detailed ? result : result.total
 }

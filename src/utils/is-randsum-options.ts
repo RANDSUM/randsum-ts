@@ -1,7 +1,10 @@
-import { PrimeArgument, RandsumOptions } from 'types'
+import { RandsumOptions, RandsumOptionsWithoutSides } from 'types'
 
-export function isRandsumOptions<D extends boolean>(
-  argument: PrimeArgument<D>
+export function isRandsumOptions<D extends boolean | undefined>(
+  argument: unknown
 ): argument is RandsumOptions<D> {
-  return typeof argument === 'object'
+  return (
+    typeof argument === 'object' &&
+    typeof (argument as RandsumOptions<D>).sides === 'number'
+  )
 }

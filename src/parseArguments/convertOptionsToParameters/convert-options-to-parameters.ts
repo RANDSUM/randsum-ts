@@ -1,29 +1,24 @@
-import { InternalRollParameters, SecondArgument, UserOptions } from 'types'
+import { InternalRollParameters } from 'types'
+import {
+  RandsumOptions,
+  RandsumOptionsWithoutSides,
+  UserOptions
+} from 'types/options'
+import { isRandsumOptions } from 'utils'
+import { defaultRandomizer } from 'utils/default-randomizer'
 
-import { normalizeModifiers } from './normalize-modifiers'
+import { normalizeModifiers } from '../normalizeModifiers'
 
-const defaultRollParameters: InternalRollParameters = {
-  quantity: 1,
-  sides: 20,
-  modifiers: [],
-  randomizer: undefined
-}
-
-export function convertOptionsToParameters<D extends boolean>({
-  detailed,
-  ...restOptions
-}: SecondArgument<D>): Pick<UserOptions<D>, 'detailed'> &
-  InternalRollParameters {
-  const { quantity, sides, modifiers, ...restParsedOptions } = {
-    ...defaultRollParameters,
-    ...restOptions
-  }
-
+export function convertOptionsToParameters<D extends boolean | undefined>(
+  options: RandsumOptions<D> | RandsumOptionsWithoutSides<D> | UserOptions<D>
+): InternalRollParameters<D> {
+  const { sides, quantity, modifiers, randomizer } =
+    options as RandsumOptions<D>
   return {
-    detailed,
+    ...options,
+    randomizer: randomizer || defaultRandomizer,
     sides: Number(sides),
-    quantity: Number(quantity),
-    modifiers: normalizeModifiers(modifiers),
-    ...restParsedOptions
+    quantity: Number(quantity || 1),
+    modifiers: normalizeModifiers(modifiers || [])
   }
 }

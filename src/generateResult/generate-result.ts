@@ -9,10 +9,16 @@ import {
 } from './applicators'
 import { generateRolls } from './generate-rolls'
 
-export function generateResult(
-  { sides, quantity, modifiers, randomizer }: InternalRollParameters,
+export function generateResult<D extends boolean | undefined>(
+  {
+    sides,
+    quantity,
+    modifiers,
+    randomizer,
+    detailed
+  }: InternalRollParameters<D>,
   rollGenerator = generateRolls
-): RollResult {
+): RollResult<D> {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
   let rolls = [...initialRolls]
@@ -60,7 +66,9 @@ export function generateResult(
       quantity,
       modifiers,
       initialRolls,
-      rollOne
+      rollOne,
+      randomizer,
+      detailed
     }
   }
 }
