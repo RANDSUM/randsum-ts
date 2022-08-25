@@ -7,13 +7,18 @@ import {
   RandsumOptions,
   RandsumOptionsWithoutSides,
   UserOptions,
-  Detailed
+  Detailed,
+  RandsumOptionsWithCustomSides
 } from 'types'
 import { parseNotation } from './parseNotation'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 
 export function parseArguments(
-  primeArgument: RandsumOptions<Detailed> | DiceNotation | NumberString,
+  primeArgument:
+    | RandsumOptions<Detailed>
+    | RandsumOptionsWithCustomSides<Detailed>
+    | DiceNotation
+    | NumberString,
   secondArgument:
     | RandsumOptionsWithoutSides<Detailed>
     | UserOptions<Detailed> = {}

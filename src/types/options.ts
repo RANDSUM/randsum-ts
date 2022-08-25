@@ -20,5 +20,11 @@ export interface RollOptions<T extends NumberStringArgument = 'inclusive'> {
 export type RandsumOptions<D extends Detailed = false | never> = RollOptions &
   UserOptions<D>
 
+export type RandsumOptionsWithCustomSides<D extends Detailed = false | never> =
+  Omit<RollOptions, 'sides'> &
+    UserOptions<D> & {
+      sides: Array<number | string>
+    }
+
 export type RandsumOptionsWithoutSides<D extends Detailed = false | never> =
   Omit<RandsumOptions<D>, 'sides'>

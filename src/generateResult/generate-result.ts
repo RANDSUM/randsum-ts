@@ -1,4 +1,8 @@
-import { InternalRollParameters, RollResult } from 'types'
+import {
+  InternalRollParameters,
+  RollResult,
+  RollResultWithCustomSides
+} from 'types'
 import {
   applyDrop,
   applyExplode,
@@ -10,9 +14,9 @@ import {
 import { generateRolls } from './generate-rolls'
 
 export function generateResult(
-  { sides, quantity, modifiers, randomizer }: InternalRollParameters,
+  { sides, quantity, modifiers, randomizer, faces }: InternalRollParameters,
   rollGenerator = generateRolls
-): RollResult {
+): RollResult | RollResultWithCustomSides {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
   let rolls = [...initialRolls]
@@ -48,19 +52,32 @@ export function generateResult(
     }
   }
 
-  const total =
-    Number([...rolls].reduce((total, roll) => total + roll, 0)) +
-    simpleMathModifier
+  const rollParameters = {
+    sides,
+    quantity,
+    modifiers,
+    initialRolls,
+    faces,
+    rollOne
+  }
+  if (faces == undefined) {
+    const total =
+      Number([...rolls].reduce((total, roll) => total + roll, 0)) +
+      simpleMathModifier
+
+    return {
+      total,
+      rolls,
+      rollParameters
+    }
+  }
+  const newInitialRolls = initialRolls.map((roll) => faces[roll - 1])
+  const newRolls = rolls.map((roll) => faces[roll - 1])
+  const total = newRolls.join(', ')
 
   return {
     total,
-    rolls,
-    rollParameters: {
-      sides,
-      quantity,
-      modifiers,
-      initialRolls,
-      rollOne
-    }
+    rolls: newRolls,
+    rollParameters: { ...rollParameters, initialRolls: newInitialRolls }
   }
 }

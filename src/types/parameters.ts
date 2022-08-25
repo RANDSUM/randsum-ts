@@ -7,6 +7,7 @@ export interface InternalRollParameters extends RollOptions<number> {
   quantity: number
   detailed?: Detailed
   randomizer: Randomizer
+  faces: Array<string | number> | undefined
 }
 
 export interface RollParameters
