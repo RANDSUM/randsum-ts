@@ -5,6 +5,6 @@ export function isRandsumOptions<D extends Detailed>(
 ): argument is RandsumOptions<D> {
   return (
     typeof argument === 'object' &&
-    typeof (argument as RandsumOptions<D>).sides === 'number'
+    typeof (argument as RandsumOptions<D>).sides !== undefined
   )
 }
