@@ -54,9 +54,13 @@ export function generateResult(
     ? generateCustomFacesTotal({ faces, initialRolls })
     : generateNumericTotal({ rolls, simpleMathModifier })
 
+  const finalRolls = Array.isArray(faces)
+    ? rolls.map((roll) => String(faces[roll - 1]))
+    : rolls
+
   return {
     total,
-    rolls,
+    rolls: finalRolls,
     rollParameters: {
       sides,
       quantity,
