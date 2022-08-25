@@ -21,7 +21,7 @@ export type RandsumOptions<D extends Detailed = false | never> = RollOptions &
   UserOptions<D>
 
 export type RandsumOptionsWithCustomSides<D extends Detailed = false | never> =
-  Omit<RollOptions, 'sides'> &
+  Omit<RollOptions, 'sides' | 'modifiers'> &
     UserOptions<D> & {
       sides: Array<number | string>
     }

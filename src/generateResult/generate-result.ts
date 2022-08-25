@@ -12,6 +12,7 @@ import {
   applyUnique
 } from './applicators'
 import { generateRolls } from './generate-rolls'
+import { generateTotalAndResult } from './generate-total-and-result'
 
 export function generateResult(
   { sides, quantity, modifiers, randomizer, faces }: InternalRollParameters,
@@ -58,26 +59,12 @@ export function generateResult(
     modifiers,
     initialRolls,
     faces,
+    randomizer,
     rollOne
   }
-  if (faces == undefined) {
-    const total =
-      Number([...rolls].reduce((total, roll) => total + roll, 0)) +
-      simpleMathModifier
-
-    return {
-      total,
-      rolls,
-      rollParameters
-    }
-  }
-  const newInitialRolls = initialRolls.map((roll) => faces[roll - 1])
-  const newRolls = rolls.map((roll) => faces[roll - 1])
-  const total = newRolls.join(', ')
 
   return {
-    total,
-    rolls: newRolls,
-    rollParameters: { ...rollParameters, initialRolls: newInitialRolls }
+    ...generateTotalAndResult({ faces, rolls, simpleMathModifier }),
+    rollParameters
   }
 }

@@ -116,10 +116,7 @@ describe('generateResult', () => {
         generateResult(customSidesParameters, baseRollGenerator)
       ).toMatchObject({
         total: 'r, a, n, d',
-        rolls: ['r', 'a', 'n', 'd'],
-        rollParameters: {
-          initialRolls: ['r', 'a', 'n', 'd']
-        }
+        rolls: ['r', 'a', 'n', 'd']
       })
     })
   })

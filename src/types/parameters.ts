@@ -11,7 +11,7 @@ export interface InternalRollParameters extends RollOptions<number> {
 }
 
 export interface RollParameters
-  extends Omit<InternalRollParameters, 'detailed' | 'randomizer'> {
+  extends Omit<InternalRollParameters, 'detailed'> {
   initialRolls: number[]
   rollOne: () => number
 }

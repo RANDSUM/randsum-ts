@@ -6,10 +6,8 @@ export interface RollResult {
   rollParameters: RollParameters
 }
 
-export interface RollResultWithCustomSides {
+export interface RollResultWithCustomSides
+  extends Omit<RollResult, 'total' | 'rolls'> {
   total: string
   rolls: Array<string | number>
-  rollParameters: Omit<RollParameters, 'initialRolls'> & {
-    initialRolls: Array<string | number>
-  }
 }

@@ -67,7 +67,7 @@ randsum('4d20H+2', { randomizer: ... }) // Roll 4 20 sided die, drop highest, ad
 
 ---
 
-You can pass in a `RandsumOptions` as the first argument. The only required key is `sides`, representing the number of distinct sides of the die.
+You can pass in a `RandsumOptions` as the first argument. While rolling standard numerical die, `sides` is the only required value, representing the number of distinct sides of the die.
 
 ```ts
 randsum({ sides: 20 }) // Roll a single 20 sided die
@@ -104,6 +104,21 @@ randsum({
 }) // Roll 4 20 sided die, drop highest, plus 2, using a custom randomizer function
 ```
 
+### Custom Sides
+
+As of [1.6.0](https://github.com/alxjrvs/randsum/releases/tag/v1.6.0), `randsum` now supports rolling die and getting results with _custom sides_.
+
+By providing the `sides` key with an array, `randsum` will automagically assign those to the sides of the virtual die. It will take the `length` of the array as the number of sides on the die, and then return a `string` containing the results of the roll.
+
+```ts
+randsum({
+  sides: ['+', '+', '-', '-', '_', '_'], // fudge dice!
+  quantity: 4
+}) // Roll 4 fudge dice, return a string result like `+, -, _, _`
+```
+
+Please note: When you supply `sides`, you _can not_ supply any modifiers. If you do, they will be ignored by the program.
+
 ### returning a `RollResult`
 
 ---
@@ -127,3 +142,14 @@ With a `RollResult`, you can look at the specific details of your roll.
 ```ts
 const result = randsum(20, { quantity: 4, detailed: true }) // Roll 4 20 sided die, returns a RollResult
 ```
+
+A `RollResult` contains three parameters:
+
+- `total`: The `numeric` total of the rolls. This is what is returned in a `detailed: false | undefined` roll.
+- `rolls`: An array of individual rolls, summed to make the `total`.
+- `rollParameters`: an object containing the properties used to calculate the roll.
+
+If you provided an array to the `sides` parameter using `RandsumOptions`, the values are slightly different:
+
+- `total`: A formatted string of return values.
+- `rolls`: An array of individual rolls, joined together to make the totals.
