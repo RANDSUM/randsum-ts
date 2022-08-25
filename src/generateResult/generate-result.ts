@@ -1,4 +1,4 @@
-import { InternalRollParameters, RollResult } from '../types'
+import { Detailed, InternalRollParameters, RollResult } from 'types'
 import {
   applyDrop,
   applyExplode,
@@ -9,7 +9,7 @@ import {
 } from './applicators'
 import { generateRolls } from './generate-rolls'
 
-export function generateResult<D extends boolean | undefined>(
+export function generateResult<D extends Detailed>(
   {
     sides,
     quantity,

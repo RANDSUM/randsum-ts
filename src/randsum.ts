@@ -1,6 +1,7 @@
 import { generateResult } from './generateResult'
 import { parseArguments } from './parseArguments'
 import {
+  Detailed,
   DiceNotation,
   NumberString,
   RandsumOptions,
@@ -29,7 +30,7 @@ export function randsum(
 ): RollResult<true>
 export function randsum(rollOptions: RandsumOptions<false>): number
 export function randsum(rollOptions: RandsumOptions<true>): RollResult<true>
-export function randsum<D extends boolean | undefined>(
+export function randsum<D extends Detailed>(
   primeArgument: RandsumOptions<D> | DiceNotation | NumberString,
   randsumOptions?: RandsumOptionsWithoutSides<D> | UserOptions<D>
 ): RollResult<D> | number {

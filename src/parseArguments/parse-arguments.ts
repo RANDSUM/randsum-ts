@@ -6,12 +6,13 @@ import {
   NumberString,
   RandsumOptions,
   RandsumOptionsWithoutSides,
-  UserOptions
-} from '../types'
-import { parseNotation } from '../utils/parseNotation'
+  UserOptions,
+  Detailed
+} from 'types'
+import { parseNotation } from 'utils/parseNotation'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 
-export function parseArguments<D extends boolean | undefined>(
+export function parseArguments<D extends Detailed>(
   primeArgument: RandsumOptions<D> | DiceNotation | NumberString,
   secondArgument: RandsumOptionsWithoutSides<D> | UserOptions<D> = {}
 ): InternalRollParameters<D> {

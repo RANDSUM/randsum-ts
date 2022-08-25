@@ -1,6 +1,6 @@
-import { RandsumOptions, RandsumOptionsWithoutSides } from 'types'
+import { Detailed, RandsumOptions } from 'types'
 
-export function isRandsumOptions<D extends boolean | undefined>(
+export function isRandsumOptions<D extends Detailed>(
   argument: unknown
 ): argument is RandsumOptions<D> {
   return (
