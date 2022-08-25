@@ -53,18 +53,16 @@ export function generateResult(
     }
   }
 
-  const rollParameters = {
-    sides,
-    quantity,
-    modifiers,
-    initialRolls,
-    faces,
-    randomizer,
-    rollOne
-  }
-
   return {
     ...generateTotalAndResult({ faces, rolls, simpleMathModifier }),
-    rollParameters
+    rollParameters: {
+      sides,
+      quantity,
+      modifiers,
+      initialRolls,
+      faces,
+      randomizer,
+      rollOne
+    }
   }
 }
