@@ -28,5 +28,4 @@ export interface RollOptionsWithCustomSides<
   T extends NumberStringArgument = 'inclusive'
 > extends Omit<RollOptions<T>, 'sides'> {
   faces: Array<number | string>
-  sides?: NumberString<T>
 }
