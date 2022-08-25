@@ -26,6 +26,7 @@ export interface RollOptions<T extends NumberStringArgument = 'inclusive'> {
 
 export interface RollOptionsWithCustomSides<
   T extends NumberStringArgument = 'inclusive'
-> extends RollOptions<T> {
+> extends Omit<RollOptions<T>, 'sides'> {
   faces: Array<number | string>
+  sides?: NumberString<T>
 }

@@ -1,8 +1,14 @@
-import { InternalRollParameters, SecondArgument, UserOptions } from 'types'
+import {
+  InternalRollParameters,
+  RandsumOptions,
+  RandsumOptionsWithCustomSides,
+  SecondArgument,
+  UserOptions
+} from 'types'
 
 import { normalizeModifiers } from './normalize-modifiers'
 
-const defaultRollParameters: InternalRollParameters = {
+const defaultRollParameters = {
   quantity: 1,
   sides: 20,
   modifiers: [],
@@ -13,18 +19,22 @@ const defaultRollParameters: InternalRollParameters = {
 export function convertOptionsToParameters<D extends boolean>({
   detailed,
   ...restOptions
-}: SecondArgument<D>): Pick<UserOptions<D>, 'detailed'> &
+}:
+  | RandsumOptions<D>
+  | RandsumOptionsWithCustomSides<D>
+  | SecondArgument<D>): Pick<UserOptions<D>, 'detailed'> &
   InternalRollParameters {
-  const { quantity, sides, modifiers, ...restParsedOptions } = {
+  const { quantity, sides, modifiers, faces, ...restParsedOptions } = {
     ...defaultRollParameters,
     ...restOptions
   }
 
   return {
     detailed,
-    sides: Number(sides),
+    sides: Array.isArray(faces) ? faces.length : Number(sides),
     quantity: Number(quantity),
     modifiers: normalizeModifiers(modifiers),
+    faces,
     ...restParsedOptions
   }
 }
