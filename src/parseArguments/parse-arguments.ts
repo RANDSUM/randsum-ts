@@ -9,7 +9,7 @@ import {
   UserOptions,
   Detailed
 } from 'types'
-import { parseNotation } from 'utils/parseNotation'
+import { parseNotation } from './parseNotation'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 
 export function parseArguments<D extends Detailed>(
