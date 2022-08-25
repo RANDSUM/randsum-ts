@@ -613,5 +613,5 @@ In `randsum`:
 ```js
 // Roll 4 6 sided die with the following sides: "+", "+", "-", "-", " ", " "
 
-randsum({ quantity: 4, faces: ["+", "+", "-", "-", " ", " "] })
+randsum({ quantity: 4, faces: ['+', '+', '-', '-', ' ', ' '] })
 ```
