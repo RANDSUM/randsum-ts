@@ -9,6 +9,7 @@ describe('generateResult', () => {
     sides: 6,
     quantity: rolls.length,
     modifiers: [],
+    faces: undefined,
     randomizer: mockRandomizer
   }
   const baseRollGenerator = () => ({
@@ -98,6 +99,27 @@ describe('generateResult', () => {
         ).toThrow(
           'You cannot have unique rolls when there are more rolls than sides of die.'
         )
+      })
+    })
+  })
+
+  describe('when given custom sides', () => {
+    const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
+    const customSidesParameters: InternalRollParameters = {
+      ...baseParameters,
+      faces,
+      sides: faces.length,
+      quantity: 2
+    }
+    test('it returns the expected result as a string', () => {
+      expect(
+        generateResult(customSidesParameters, baseRollGenerator)
+      ).toMatchObject({
+        total: 'r, a, n, d',
+        rolls: ['r', 'a', 'n', 'd'],
+        rollParameters: {
+          initialRolls: ['r', 'a', 'n', 'd']
+        }
       })
     })
   })

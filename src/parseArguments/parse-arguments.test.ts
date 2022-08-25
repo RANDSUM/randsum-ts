@@ -68,7 +68,7 @@ describe('parseArguments', () => {
         expect(
           parseArguments({
             quantity: 4,
-            sides: '6',
+            sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'],
             modifiers: [
               { plus: 2 },
               { minus: 1 },
@@ -90,7 +90,8 @@ describe('parseArguments', () => {
           })
         ).toMatchObject({
           quantity: 4,
-          sides: 6,
+          sides: 7,
+          faces: ['r', 'a', 'n', 'd', 's', 'u', 'm'],
           modifiers: expect.arrayContaining([
             {
               drop: {
