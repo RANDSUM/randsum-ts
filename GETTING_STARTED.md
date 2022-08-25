@@ -67,10 +67,27 @@ randsum('4d20H+2', { randomizer: ... }) // Roll 4 20 sided die, drop highest, ad
 
 ---
 
-You can pass in a `RandsumOptions` as the first argument. The only required key is `sides`, which represents the number of sides on the die.
+You can pass in a `RandsumOptions` as the first argument. The only required key is `sides`, representing the number of distinct sides of the die.
 
 ```ts
 randsum({ sides: 20 }) // Roll a single 20 sided die
+```
+
+The other commonly used key will be `quantity`, which tells you how many dice to roll.
+
+```ts
+randsum({ sides: 20, quantity: 4 }) // Roll 4 distinct 20 sided die, and give me the total.
+```
+
+You can also pass in a custom `randomizer` that will be used to generate the results of your rolls. By default, randsum uses our old friend, `Math.floor(Math.random() * Number(max)) + 1` - but if you want to use some custom function, feel free! A `randomizer` function takes a single argument - the `max` roll - and returns a number. Get funky with it!
+
+```ts
+const defaultRandom = (max: number) => Math.floor(Math.random() * Number(max)) + 1
+randsum({
+  sides: 20,
+  quantity: 4
+  randomizer: (max: number) => defaultRandom(max) * 2,
+}) // Roll 4 distinct 20 sided die, multiply the result by 2, and give me the total.
 ```
 
 You can use the `modifier` key of `RandsumOptions` to further modify your roll. `modifiers` is an array that you can fill with Modifier objects. For instance:
@@ -108,9 +125,5 @@ If you are using typescript, the types should be helpful here, as `randsum` will
 With a `RollResult`, you can look at the specific details of your roll.
 
 ```ts
-const result = randsum(20, { quantity: 4, detailed: true}) // Roll 4 20 sided die, returns a RollResult
-
-result.rolls =
+const result = randsum(20, { quantity: 4, detailed: true }) // Roll 4 20 sided die, returns a RollResult
 ```
-
-Check out the [TypeDoc RollResult Page](https://alxjrvs.github.io/randsum/interfaces/RollResult.html) for more information.
