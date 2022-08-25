@@ -8,11 +8,13 @@ import {
   applyUnique
 } from './applicators'
 import { generateRolls } from './generate-rolls'
+import { generateNumericTotal } from './generate-numeric-total'
+import { generateCustomFacesTotal } from './generate-custom-faces-total'
 
 export function generateResult(
-  { sides, quantity, modifiers, randomizer }: InternalRollParameters,
+  { sides, quantity, modifiers, randomizer, faces }: InternalRollParameters,
   rollGenerator = generateRolls
-): RollResult {
+): RollResult<string | number> {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
   let rolls = [...initialRolls]
@@ -48,9 +50,9 @@ export function generateResult(
     }
   }
 
-  const total =
-    Number([...rolls].reduce((total, roll) => total + roll, 0)) +
-    simpleMathModifier
+  const total = Array.isArray(faces)
+    ? generateCustomFacesTotal({ faces, initialRolls })
+    : generateNumericTotal({ rolls, simpleMathModifier })
 
   return {
     total,

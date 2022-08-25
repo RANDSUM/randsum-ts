@@ -5,6 +5,7 @@ import {
   NumberString,
   PrimeArgument,
   RandsumOptions,
+  RandsumOptionsWithCustomSides,
   RandsumOptionsWithoutSides,
   RollResult,
   SecondArgument,
@@ -30,11 +31,17 @@ export function randsum(
   userOptions: UserOptions<true>
 ): RollResult
 export function randsum(rollOptions: RandsumOptions<false>): number
+export function randsum(
+  rollOptions: RandsumOptionsWithCustomSides<false>
+): string
 export function randsum(rollOptions: RandsumOptions<true>): RollResult
+export function randsum(
+  rollOptions: RandsumOptionsWithCustomSides<true>
+): RollResult<string>
 export function randsum<D extends boolean>(
   primeArgument: PrimeArgument<D>,
   randsumOptions?: SecondArgument<D>
-): RollResult | number {
+): RollResult<string | number> | number | string {
   const { detailed, ...rollParameters } = parseArguments(
     primeArgument,
     randsumOptions

@@ -6,6 +6,7 @@ const defaultRollParameters: InternalRollParameters = {
   quantity: 1,
   sides: 20,
   modifiers: [],
+  faces: undefined,
   randomizer: undefined
 }
 
