@@ -1,10 +1,10 @@
 import { Detailed, RandsumOptions } from 'types'
 
-export function isRandsumOptions<D extends Detailed>(
+export function isRandsumOptions(
   argument: unknown
-): argument is RandsumOptions<D> {
+): argument is RandsumOptions<Detailed> {
   return (
     typeof argument === 'object' &&
-    typeof (argument as RandsumOptions<D>).sides !== undefined
+    typeof (argument as RandsumOptions<Detailed>).sides !== undefined
   )
 }

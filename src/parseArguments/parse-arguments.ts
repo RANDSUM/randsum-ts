@@ -12,10 +12,12 @@ import {
 import { parseNotation } from './parseNotation'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 
-export function parseArguments<D extends Detailed>(
-  primeArgument: RandsumOptions<D> | DiceNotation | NumberString,
-  secondArgument: RandsumOptionsWithoutSides<D> | UserOptions<D> = {}
-): InternalRollParameters<D> {
+export function parseArguments(
+  primeArgument: RandsumOptions<Detailed> | DiceNotation | NumberString,
+  secondArgument:
+    | RandsumOptionsWithoutSides<Detailed>
+    | UserOptions<Detailed> = {}
+): InternalRollParameters {
   if (isRandsumOptions(primeArgument)) {
     return convertOptionsToParameters(primeArgument)
   }

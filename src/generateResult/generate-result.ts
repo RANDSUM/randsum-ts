@@ -1,4 +1,4 @@
-import { Detailed, InternalRollParameters, RollResult } from 'types'
+import { InternalRollParameters, RollResult } from 'types'
 import {
   applyDrop,
   applyExplode,
@@ -9,16 +9,10 @@ import {
 } from './applicators'
 import { generateRolls } from './generate-rolls'
 
-export function generateResult<D extends Detailed>(
-  {
-    sides,
-    quantity,
-    modifiers,
-    randomizer,
-    detailed
-  }: InternalRollParameters<D>,
+export function generateResult(
+  { sides, quantity, modifiers, randomizer }: InternalRollParameters,
   rollGenerator = generateRolls
-): RollResult<D> {
+): RollResult {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
   let rolls = [...initialRolls]
@@ -66,9 +60,7 @@ export function generateResult<D extends Detailed>(
       quantity,
       modifiers,
       initialRolls,
-      rollOne,
-      randomizer,
-      detailed
+      rollOne
     }
   }
 }

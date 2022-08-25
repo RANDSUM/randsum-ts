@@ -8,11 +8,14 @@ import {
 import { defaultRandomizer } from 'utils'
 import { normalizeModifiers } from './normalizeModifiers'
 
-export function convertOptionsToParameters<D extends Detailed>(
-  options: RandsumOptions<D> | RandsumOptionsWithoutSides<D> | UserOptions<D>
-): InternalRollParameters<D> {
+export function convertOptionsToParameters(
+  options:
+    | RandsumOptions<Detailed>
+    | RandsumOptionsWithoutSides<Detailed>
+    | UserOptions<Detailed>
+): InternalRollParameters {
   const { sides, quantity, modifiers, randomizer } =
-    options as RandsumOptions<D>
+    options as RandsumOptions<Detailed>
   return {
     ...options,
     randomizer: randomizer || defaultRandomizer,
