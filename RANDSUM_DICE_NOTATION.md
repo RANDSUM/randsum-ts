@@ -611,7 +611,7 @@ Note: When supplying the `faces` key, the `sides` key is irrelevant and not requ
 In `randsum`:
 
 ```js
-// Roll A 6 sided die with the following sides: "+", "+", "-", "-", " ", " "
+// Roll 4 6 sided die with the following sides: "+", "+", "-", "-", " ", " "
 
-randsum({ faces: ["+", "+", "-", "-", " ", " "] })
+randsum({ quantity: 4, faces: ["+", "+", "-", "-", " ", " "] })
 ```
