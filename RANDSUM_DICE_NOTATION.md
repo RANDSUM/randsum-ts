@@ -597,3 +597,21 @@ randsum('6d20!')
 randsum(20, { quantity: 6, modifiers: [{ explode: true }] })
 randsum({ sides: 20, quantity: 6, modifiers: [{ explode: true }] })
 ```
+
+### Custom Faces
+
+** Not Supported in Custom Dice Notation **
+
+Custom Faces are a new feature, supported as of version 1.6.0.
+
+Currently, you can only supply Custom Faces via the configuration object argument. By supplying an array of `Strings` or `Numbers` to the `faces` key, you will be able to get non-numerical results from your rolls. Under the hood, the dice roller is rolling the die as normal numbers (using the order of the `faces` array as if they were sides of the die), applying modifiers as it normally would. At the end of the process, it returns the results mapped to the array provided, giving custom face results.
+
+Note: When supplying the `faces` key, the `sides` key is irrelevant and not required. If you are using typescript, it is not allowed at all!
+
+In `randsum`:
+
+```js
+// Roll A 6 sided die with the following sides: "+", "+", "-", "-", " ", " "
+
+randsum({ faces: ["+", "+", "-", "-", " ", " "] })
+```
