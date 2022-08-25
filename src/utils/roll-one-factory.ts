@@ -1,8 +1,6 @@
-function defaultRandomizer(max: number): number {
-  return Math.floor(Math.random() * Number(max)) + 1
-}
+import { Randomizer } from 'types'
 
-export function rollOneFactory(sides: number, randomizer = defaultRandomizer) {
+export function rollOneFactory(sides: number, randomizer: Randomizer) {
   return function rollOne() {
     return randomizer(sides)
   }

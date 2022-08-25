@@ -1,14 +1,16 @@
 import { Modifier } from './modifiers'
-import { RollOptions, UserOptions } from './options'
+import { RollOptions } from './options'
+import { Detailed, Randomizer } from './primitives'
 
-export interface InternalRollParameters
-  extends RollOptions<number>,
-    Pick<UserOptions<boolean>, 'randomizer'> {
+export interface InternalRollParameters extends RollOptions<number> {
   modifiers: Array<Modifier<number>>
   quantity: number
+  detailed?: Detailed
+  randomizer: Randomizer
 }
 
-export interface RollParameters extends InternalRollParameters {
+export interface RollParameters
+  extends Omit<InternalRollParameters, 'detailed' | 'randomizer'> {
   initialRolls: number[]
   rollOne: () => number
 }

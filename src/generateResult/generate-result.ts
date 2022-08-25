@@ -1,4 +1,4 @@
-import { InternalRollParameters, RollResult } from '../types'
+import { InternalRollParameters, RollResult } from 'types'
 import {
   applyDrop,
   applyExplode,

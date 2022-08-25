@@ -1,12 +1,15 @@
-import { InternalRollParameters } from '../types'
+import { InternalRollParameters } from 'types'
 import { generateResult } from './generate-result'
+
+const mockRandomizer = () => 5
 
 describe('generateResult', () => {
   const rolls = [1, 2, 3, 4]
   const baseParameters: InternalRollParameters = {
     sides: 6,
     quantity: rolls.length,
-    modifiers: []
+    modifiers: [],
+    randomizer: mockRandomizer
   }
   const baseRollGenerator = () => ({
     initialRolls: rolls,

@@ -1,4 +1,4 @@
-import { DiceNotation } from '../types'
+import { DiceNotation } from 'types'
 import { parseArguments } from './parse-arguments'
 
 describe('parseArguments', () => {
