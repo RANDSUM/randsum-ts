@@ -5,9 +5,7 @@ import {
   UserOptions,
   Detailed
 } from 'types'
-import { defaultRandomizer } from 'utils/default-randomizer'
-
-import { normalizeModifiers } from '../normalizeModifiers'
+import { defaultRandomizer, normalizeModifiers } from 'utils'
 
 export function convertOptionsToParameters<D extends Detailed>(
   options: RandsumOptions<D> | RandsumOptionsWithoutSides<D> | UserOptions<D>

@@ -34,9 +34,7 @@ export function randsum<D extends Detailed>(
   primeArgument: RandsumOptions<D> | DiceNotation | NumberString,
   randsumOptions?: RandsumOptionsWithoutSides<D> | UserOptions<D>
 ): RollResult<D> | number {
-  const result = generateResult<D>(
-    parseArguments<D>(primeArgument, randsumOptions)
-  )
+  const result = generateResult(parseArguments(primeArgument, randsumOptions))
 
   return result.rollParameters.detailed ? result : result.total
 }

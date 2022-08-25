@@ -6,7 +6,7 @@ import {
 } from './primitives'
 import { Modifier } from './modifiers'
 
-export interface UserOptions<D extends Detailed = false | undefined> {
+export interface UserOptions<D extends Detailed = false | never> {
   detailed?: D
   randomizer?: Randomizer
 }
@@ -17,8 +17,8 @@ export interface RollOptions<T extends NumberStringArgument = 'inclusive'> {
   modifiers?: Array<Modifier<T>>
 }
 
-export type RandsumOptions<D extends Detailed = false | undefined> =
-  RollOptions & UserOptions<D>
+export type RandsumOptions<D extends Detailed = false | never> = RollOptions &
+  UserOptions<D>
 
-export type RandsumOptionsWithoutSides<D extends Detailed = false | undefined> =
+export type RandsumOptionsWithoutSides<D extends Detailed = false | never> =
   Omit<RandsumOptions<D>, 'sides'>

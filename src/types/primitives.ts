@@ -9,4 +9,4 @@ export type NumberString<T extends NumberStringArgument = 'inclusive'> =
 
 export type Randomizer = (sides: number) => number
 
-export type Detailed = boolean | undefined
+export type Detailed = boolean | never
