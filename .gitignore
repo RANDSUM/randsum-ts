@@ -62,6 +62,9 @@ typings/
 
 .DS_Store
 
+# Editor Settings
+.vscode
+
 # Benchmark
 benchmark/
 
