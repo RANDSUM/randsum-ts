@@ -5,8 +5,10 @@ import {
   DiceNotation,
   NumberString,
   RandsumOptions,
+  RandsumOptionsWithCustomSides,
   RandsumOptionsWithoutSides,
   RollResult,
+  RollResultWithCustomSides,
   UserOptions
 } from './types'
 
@@ -29,11 +31,21 @@ export function randsum(
   userOptions: UserOptions<true>
 ): RollResult
 export function randsum(rollOptions: RandsumOptions<false>): number
+export function randsum(
+  rollOptions: RandsumOptionsWithCustomSides<false>
+): string
 export function randsum(rollOptions: RandsumOptions<true>): RollResult
 export function randsum(
-  primeArgument: RandsumOptions<Detailed> | DiceNotation | NumberString,
+  rollOptions: RandsumOptionsWithCustomSides<true>
+): RollResultWithCustomSides
+export function randsum(
+  primeArgument:
+    | RandsumOptions<Detailed>
+    | RandsumOptionsWithCustomSides<Detailed>
+    | DiceNotation
+    | NumberString,
   randsumOptions?: RandsumOptionsWithoutSides<Detailed> | UserOptions<Detailed>
-): RollResult | number {
+): RollResult | RollResultWithCustomSides | number | string {
   const { detailed, ...parameters } = parseArguments(
     primeArgument,
     randsumOptions

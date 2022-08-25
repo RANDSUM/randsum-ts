@@ -5,3 +5,9 @@ export interface RollResult {
   rolls: number[]
   rollParameters: RollParameters
 }
+
+export interface RollResultWithCustomSides
+  extends Omit<RollResult, 'total' | 'rolls'> {
+  total: string
+  rolls: Array<string | number>
+}

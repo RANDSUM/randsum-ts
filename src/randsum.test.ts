@@ -100,4 +100,23 @@ describe('Randsum', () => {
       expect(result.rollParameters.quantity).toBe(2)
     })
   })
+
+  describe('with custom sides', () => {
+    const result = randsum({ sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'] })
+
+    it('returns a string', () => {
+      expect(typeof result == 'string').toBe(true)
+    })
+
+    describe('with a detailed result', () => {
+      const { total } = randsum({
+        sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'],
+        detailed: true
+      })
+
+      it('returns a string for total', () => {
+        expect(typeof total == 'string').toBe(true)
+      })
+    })
+  })
 })

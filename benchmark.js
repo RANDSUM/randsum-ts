@@ -7,7 +7,9 @@ const suite = new Benchmark.Suite()
 
 suite
   .add('Sanity', () => {
-    console.log(randsum(20))
+    console.log(
+      randsum({ quantity: 20, sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'] })
+    )
   })
   .add('Sides Num', () => {
     randsum(20)
@@ -27,7 +29,7 @@ suite
   .add('Complicated Options', () => {
     randsum({
       quantity: 4,
-      sides: '6',
+      sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'],
       modifiers: [
         { reroll: { exact: ['2', 1] } },
         { replace: { from: '6', to: '1' } },

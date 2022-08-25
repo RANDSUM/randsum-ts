@@ -63,12 +63,28 @@ describe('parseArguments', () => {
       })
     })
 
+    describe('custom sides', () => {
+      test('returns a RollParameter matching the notation', () => {
+        expect(
+          parseArguments({
+            quantity: 4,
+            sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'],
+            modifiers: [{ plus: 2 }]
+          })
+        ).toMatchObject({
+          quantity: 4,
+          sides: 7,
+          faces: ['r', 'a', 'n', 'd', 's', 'u', 'm'],
+          modifiers: []
+        })
+      })
+    })
     describe('complex', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(
           parseArguments({
             quantity: 4,
-            sides: '6',
+            sides: 6,
             modifiers: [
               { plus: 2 },
               { minus: 1 },
