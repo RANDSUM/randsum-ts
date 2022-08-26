@@ -109,6 +109,9 @@
     "rootDir": "src"
   },
   "lint-staged": {
+    "*.js": [
+      "prettier --write"
+    ],
     "*.ts": [
       "eslint --fix",
       "prettier --write"
