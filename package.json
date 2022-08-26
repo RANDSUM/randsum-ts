@@ -14,7 +14,7 @@
   "source": "src/index.ts",
   "exports": {
     "require": "./dist/index.cjs",
-    "default": "./dist/index.modern.js"
+    "default": "./dist/index.module.js"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.module.js",
@@ -60,7 +60,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^28.0.7",
     "tslib": "^2.4.0",
-    "typescript": "~4.7.4",
+    "typescript": "~4.8.0",
     "yarn": "^1.22.0"
   },
   "keywords": [
