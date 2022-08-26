@@ -17,6 +17,23 @@ const banner = `
    * Released under the ${pkg.license} license.
    */
 `
+const plugins = [
+  pluginTypescript({
+    tsconfig: './tsconfig.build.json'
+  }),
+  pluginCommonjs({
+    extensions: ['.js', '.ts']
+  }),
+  babel({
+    babelHelpers: 'bundled',
+    configFile: path.resolve(__dirname, '.babelrc.js')
+  })
+]
+
+const external = [
+  ...Object.keys(pkg.dependencies || {}),
+  ...Object.keys(pkg.devDependencies || {})
+]
 
 export default [
   {
@@ -39,16 +56,7 @@ export default [
       }
     ],
     plugins: [
-      pluginTypescript({
-        tsconfig: './tsconfig.build.json'
-      }),
-      pluginCommonjs({
-        extensions: ['.js', '.ts']
-      }),
-      babel({
-        babelHelpers: 'bundled',
-        configFile: path.resolve(__dirname, '.babelrc.js')
-      }),
+      ...plugins,
       pluginNodeResolve({
         browser: true
       })
@@ -67,21 +75,9 @@ export default [
         exports: 'named'
       }
     ],
-    external: [
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.devDependencies || {})
-    ],
+    external,
     plugins: [
-      pluginTypescript({
-        tsconfig: './tsconfig.build.json'
-      }),
-      pluginCommonjs({
-        extensions: ['.js', '.ts']
-      }),
-      babel({
-        babelHelpers: 'bundled',
-        configFile: path.resolve(__dirname, '.babelrc.js')
-      }),
+      ...plugins,
       pluginNodeResolve({
         browser: false
       })
@@ -100,21 +96,9 @@ export default [
         exports: 'default'
       }
     ],
-    external: [
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.devDependencies || {})
-    ],
+    external,
     plugins: [
-      pluginTypescript({
-        tsconfig: './tsconfig.build.json'
-      }),
-      pluginCommonjs({
-        extensions: ['.js', '.ts']
-      }),
-      babel({
-        babelHelpers: 'bundled',
-        configFile: path.resolve(__dirname, '.babelrc.js')
-      }),
+      ...plugins,
       pluginNodeResolve({
         browser: false
       })
