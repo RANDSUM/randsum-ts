@@ -16,7 +16,7 @@ Thanks, [Sophie](https://www.patreon.com/SophieHoulden)! Your examples were inva
 
 ## Dice Notation
 
-Dice Notation in `randsum` is**case-insensitive**. `2d8` and `2D8` both work equally well.
+Dice Notation in `randsum` is **case-insensitive**. `2d8` and `2D8` both work equally well.
 
 ### Sides And Quantity
 
