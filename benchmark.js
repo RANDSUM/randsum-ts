@@ -1,5 +1,4 @@
-// import randsum from './dist/index.module.js'
-import randsum from './dist/index.modern.js'
+import randsum from './dist/index.module.js'
 // import randsum from './dist/index.cjs'
 import Benchmark from 'benchmark'
 
