@@ -4,11 +4,6 @@ import Benchmark from 'benchmark'
 const suite = new Benchmark.Suite()
 
 suite
-  .add('Sanity', () => {
-    console.log(randsum({ sides: 20 }))
-    console.log(randsum('1d20'))
-    console.log(randsum(20))
-  })
   .add('Sides Num', () => {
     randsum(20)
   })
@@ -24,10 +19,16 @@ suite
   .add('Notation', () => {
     randsum('1d20')
   })
+  .add('Custom Sides Options', () => {
+    randsum({
+      quantity: 4,
+      sides: ['r', 'a', 'n', 'd', 's', 'u', 'm']
+    })
+  })
   .add('Complicated Options', () => {
     randsum({
       quantity: 4,
-      sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'],
+      sides: 6,
       modifiers: [
         { reroll: { exact: ['2', 1] } },
         { replace: { from: '6', to: '1' } },
@@ -35,8 +36,13 @@ suite
       ]
     })
   })
+  .add('Custom Sides Notation', () => {
+    randsum(`10d{++--  }`)
+  })
   .add('Complicated Notation', () => {
-    randsum(`10d20H2LV{1=2,>2=6}D{<2,>5,2,4}C<2>18R{5,2,<6}3U{5}!+2-5+3`)
+    randsum(
+      `10d20H2LV{ 1= 2,> 2=6}D{< 2,> 5, 2, 4}C < 2 > 18R{ 5, 2,< 6}3U{ 5}! + 2 - 5 + 3`
+    )
   })
   .on('cycle', (event) => {
     console.log(String(event.target))

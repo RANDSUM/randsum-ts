@@ -51,7 +51,7 @@ randsum('20', { quantity: 4, randomizer: ... }) // Roll 4 20 sided die, using a 
 
 ---
 
-See the Randsum Dice Notation syntax document for more info.
+See the [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) syntax document for more info.
 
 ```ts
 randsum('4d20H+2') // Roll 4 20 sided die, drop highest, add 2
@@ -106,9 +106,7 @@ randsum({
 
 ### Custom Sides
 
-As of [1.6.0](https://github.com/alxjrvs/randsum/releases/tag/v1.6.0), `randsum` now supports rolling die and getting results with _custom sides_.
-
-By providing the `sides` key with an array, `randsum` will automagically assign those to the sides of the virtual die. It will take the `length` of the array as the number of sides on the die, and then return a `string` containing the results of the roll.
+As of [1.7.0](https://github.com/alxjrvs/randsum/releases/tag/v1.7.0), `randsum` now supports rolling die and getting results with _custom sides_.
 
 ```ts
 randsum({
@@ -117,7 +115,7 @@ randsum({
 }) // Roll 4 fudge dice, return a string result like `+, -, _, _`
 ```
 
-Please note: When you supply `sides`, you _can not_ supply any modifiers. If you do, they will be ignored by the program.
+See the [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more usage information.
 
 ### returning a `RollResult`
 
