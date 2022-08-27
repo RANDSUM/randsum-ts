@@ -1,4 +1,4 @@
-import { DieType, InternalRollParameters, RollResult } from 'types'
+import { InternalRollParameters, RollResult } from 'types'
 
 export function generateTotalAndResult({
   faces,
@@ -7,7 +7,7 @@ export function generateTotalAndResult({
 }: Pick<InternalRollParameters, 'faces'> & {
   rolls: number[]
   simpleMathModifier: number
-}): Pick<RollResult<DieType>, 'total' | 'rolls'> {
+}): Pick<RollResult, 'total' | 'rolls'> {
   if (faces == undefined) {
     return {
       total:

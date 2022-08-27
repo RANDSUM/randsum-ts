@@ -1,4 +1,4 @@
-import { InternalRollParameters, RollResult } from 'types'
+import { InternalRollParameters, RollParameters, RollResult } from 'types'
 import {
   applyDrop,
   applyExplode,
@@ -16,6 +16,15 @@ export function generateResult(
   rollGenerator = generateRolls
 ): RollResult {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
+  const rollParameters: RollParameters = {
+    sides,
+    quantity,
+    modifiers,
+    initialRolls,
+    faces,
+    randomizer,
+    rollOne
+  }
 
   let rolls = [...initialRolls]
   let simpleMathModifier = 0
@@ -53,14 +62,6 @@ export function generateResult(
   return {
     ...generateTotalAndResult({ faces, rolls, simpleMathModifier }),
     arguments: randsumArguments,
-    rollParameters: {
-      sides,
-      quantity,
-      modifiers,
-      initialRolls,
-      faces,
-      randomizer,
-      rollOne
-    }
+    rollParameters
   } as RollResult
 }
