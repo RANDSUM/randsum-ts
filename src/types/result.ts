@@ -1,14 +1,14 @@
 import { RollParameters } from './parameters'
-import { CustomSides } from './primitives'
+import { CustomSides, DieType, StandardDie } from './primitives'
 
-export interface RollResult {
-  total: number
-  rolls: number[]
+export type RollResult<N extends DieType = DieType> = (N extends StandardDie
+  ? {
+      total: number
+      rolls: number[]
+    }
+  : {
+      total: string
+      rolls: CustomSides
+    }) & {
   rollParameters: RollParameters
-}
-
-export interface RollResultWithCustomSides
-  extends Omit<RollResult, 'total' | 'rolls'> {
-  total: string
-  rolls: CustomSides
 }

@@ -29,6 +29,10 @@ export function parseNotation(
 
     if (key === 'coreNotationMatch') {
       rollParameters = { ...rollParameters, ...parseCoreNotation(value) }
+      if (rollParameters.faces !== undefined) {
+        rollParameters = { ...rollParameters, modifiers: [] }
+        break
+      }
     }
     if (key === 'dropHighMatch') {
       rollParameters = {

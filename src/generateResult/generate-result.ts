@@ -1,8 +1,4 @@
-import {
-  InternalRollParameters,
-  RollResult,
-  RollResultWithCustomSides
-} from 'types'
+import { DieType, InternalRollParameters, RollResult } from 'types'
 import {
   applyDrop,
   applyExplode,
@@ -17,7 +13,7 @@ import { generateTotalAndResult } from './generate-total-and-result'
 export function generateResult(
   { sides, quantity, modifiers, randomizer, faces }: InternalRollParameters,
   rollGenerator = generateRolls
-): RollResult | RollResultWithCustomSides {
+): RollResult<DieType> {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
   let rolls = [...initialRolls]
@@ -64,5 +60,5 @@ export function generateResult(
       randomizer,
       rollOne
     }
-  }
+  } as RollResult<DieType>
 }

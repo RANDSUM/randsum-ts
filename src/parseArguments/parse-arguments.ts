@@ -5,23 +5,22 @@ import {
   InternalRollParameters,
   NumberString,
   RandsumOptions,
-  RandsumOptionsWithoutSides,
+  SecondaryRandsumOptions,
   UserOptions,
-  Detailed,
-  RandsumOptionsWithCustomSides
+  DetailedType,
+  DieType
 } from 'types'
 import { parseNotation } from './parseNotation'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 
 export function parseArguments(
   primeArgument:
-    | RandsumOptions<Detailed>
-    | RandsumOptionsWithCustomSides<Detailed>
-    | DiceNotation
+    | RandsumOptions<DieType, DetailedType>
+    | DiceNotation<DieType>
     | NumberString,
   secondArgument:
-    | RandsumOptionsWithoutSides<Detailed>
-    | UserOptions<Detailed> = {}
+    | SecondaryRandsumOptions<DieType, DetailedType>
+    | UserOptions<DetailedType> = {}
 ): InternalRollParameters {
   if (isRandsumOptions(primeArgument)) {
     return convertOptionsToParameters(primeArgument)

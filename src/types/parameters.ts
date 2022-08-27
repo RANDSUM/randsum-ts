@@ -1,11 +1,11 @@
 import { Modifier } from './modifiers'
 import { RollOptions } from './options'
-import { CustomSides, Detailed, Randomizer } from './primitives'
+import { CustomSides, DetailedType, Randomizer } from './primitives'
 
 export interface InternalRollParameters extends RollOptions<number> {
   modifiers: Array<Modifier<number>>
   quantity: number
-  detailed?: Detailed
+  detailed?: DetailedType
   randomizer: Randomizer
   faces: CustomSides | undefined
 }

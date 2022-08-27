@@ -1,4 +1,4 @@
-import { DiceNotation, RandsumOptions, Detailed } from 'types'
+import { DiceNotation, RandsumOptions, DetailedType, DieType } from 'types'
 import { coreNotationPattern } from './matchers'
 
 export function isDiceNotation(argument: unknown): argument is DiceNotation {
@@ -7,9 +7,10 @@ export function isDiceNotation(argument: unknown): argument is DiceNotation {
 
 export function isRandsumOptions(
   argument: unknown
-): argument is RandsumOptions<Detailed> {
+): argument is RandsumOptions<DieType, DetailedType> {
   return (
     typeof argument === 'object' &&
-    typeof (argument as RandsumOptions<Detailed>).sides !== undefined
+    typeof (argument as RandsumOptions<DieType, DetailedType>).sides !==
+      undefined
   )
 }
