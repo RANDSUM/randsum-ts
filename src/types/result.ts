@@ -2,24 +2,21 @@ import { RandsumArguments } from './arguments'
 import { RollParameters } from './parameters'
 import { CustomSides, DieType, StandardDie } from './primitives'
 
-type StandardRollResult = {
-  total: number
-  rolls: number[]
+type BaseRollResult = {
   rollParameters: RollParameters
   arguments: [
     RandsumArguments['primeArgument'],
     RandsumArguments['secondArgument']
   ]
 }
+type StandardRollResult = BaseRollResult & {
+  total: number
+  rolls: number[]
+}
 
-type CustomSidesRollResult = {
+type CustomSidesRollResult = BaseRollResult & {
   total: string
   rolls: CustomSides
-  rollParameters: RollParameters
-  arguments: [
-    RandsumArguments['primeArgument'],
-    RandsumArguments['secondArgument']
-  ]
 }
 
 export type RollResult<N extends DieType = DieType> = N extends StandardDie

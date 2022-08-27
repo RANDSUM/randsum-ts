@@ -67,7 +67,7 @@ export function randsum<N extends DieType = CustomSidesDie>(
 export function randsum(
   primeArgument: RandsumArguments['primeArgument'],
   randsumOptions?: RandsumArguments['secondArgument']
-): RollResult | number | string {
+): RollResult<StandardDie> | RollResult<CustomSidesDie> | number | string {
   const { detailed, ...parameters } = parseArguments(
     primeArgument,
     randsumOptions
