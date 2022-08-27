@@ -51,7 +51,7 @@ randsum({
 
 ---
 
-```markdown
+```
 Roll X number of a die with the sides "y", "z", " "
 
 Xd{yx }
@@ -66,14 +66,14 @@ In `randsum` :
 ```js
 // Roll 6 two-sided die with the sides "H" and "T"
 
-randsum('6d{HT})
+randsum('6d{HT}')
 randsum(2, {
   quantity: 6,
-  faces: ["H", "T"]
+  faces: ['H', 'T']
 })
 randsum({
-  sides: ["H", "T"],
-  quantity: 6,
+  sides: ['H', 'T'],
+  quantity: 6
 })
 ```
 
