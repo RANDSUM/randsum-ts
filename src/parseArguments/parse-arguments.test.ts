@@ -151,6 +151,19 @@ describe('parseArguments', () => {
       })
     })
 
+    describe('given a notation that uses custom faces', () => {
+      describe('with a simple notation', () => {
+        const testString: DiceNotation = '4d{++--  }'
+
+        test('returns a RollParameter matching the notation', () => {
+          expect(parseArguments(testString)).toMatchObject({
+            ...baseRollParameters,
+            faces: ['+', '+', '-', '-', ' ', ' ']
+          })
+        })
+      })
+    })
+
     describe('given a notation that contains a drop highest modifier', () => {
       describe('with a simple notation', () => {
         const testString: DiceNotation = `${baseTestString}H`

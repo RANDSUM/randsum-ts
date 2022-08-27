@@ -9,5 +9,5 @@ export interface RollResult {
 export interface RollResultWithCustomSides
   extends Omit<RollResult, 'total' | 'rolls'> {
   total: string
-  rolls: Array<string | number>
+  rolls: CustomSides
 }

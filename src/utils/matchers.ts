@@ -37,10 +37,14 @@ export function findMatches(notations: string): Match[] {
     if (m.groups !== null && m.groups !== undefined) {
       for (const key of Object.keys(m.groups)) {
         if (m.groups[key] !== undefined) {
+          const value = m.groups[key]
           matches = [
             ...matches,
             {
-              [key]: key === m.groups[key]
+              [key]:
+                key === 'coreNotationMatch'
+                  ? value
+                  : value.toLowerCase().replace(' ', '')
             }
           ]
         }

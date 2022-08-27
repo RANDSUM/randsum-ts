@@ -26,14 +26,6 @@ export function parseNotation(
     const [key] = Object.keys(match)
     const [value] = Object.values(match)
     const { modifiers = [], ...restParameters } = rollParameters
-    console.log(key)
-    console.log(key)
-    console.log(key)
-    console.log(key)
-    console.log(value)
-    console.log(value)
-    console.log(value)
-    console.log(value)
 
     if (key === 'coreNotationMatch') {
       rollParameters = { ...rollParameters, ...parseCoreNotation(value) }

@@ -1,4 +1,5 @@
 import {
+  CustomSides,
   Detailed,
   NumberString,
   NumberStringArgument,
@@ -23,8 +24,8 @@ export type RandsumOptions<D extends Detailed = false | never> = RollOptions &
 export type RandsumOptionsWithCustomSides<D extends Detailed = false | never> =
   Omit<RollOptions, 'sides' | 'modifiers'> &
     UserOptions<D> & {
-      sides: Array<number | string>
+      sides: CustomSides
     }
 
 export type RandsumOptionsWithoutSides<D extends Detailed = false | never> =
-  Omit<RandsumOptions<D>, 'sides'>
+  Omit<RandsumOptions<D>, 'sides'> & { faces?: CustomSides }

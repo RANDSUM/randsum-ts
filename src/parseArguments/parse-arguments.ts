@@ -27,12 +27,10 @@ export function parseArguments(
     return convertOptionsToParameters(primeArgument)
   }
 
-  const rollData = isDiceNotation(primeArgument)
-    ? parseNotation(primeArgument)
-    : { sides: Number(primeArgument) }
-
   return {
     ...convertOptionsToParameters(secondArgument),
-    ...rollData
+    ...(isDiceNotation(primeArgument)
+      ? parseNotation(primeArgument)
+      : { sides: Number(primeArgument) })
   }
 }

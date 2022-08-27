@@ -12,4 +12,6 @@ export type NumberString<T extends NumberStringArgument = 'inclusive'> =
 
 export type Randomizer = (sides: number) => number
 
+export type CustomSides = Array<number | string>
+
 export type Detailed = boolean | never
