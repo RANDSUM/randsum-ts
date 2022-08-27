@@ -49,6 +49,8 @@ randsum({
 
 ### Custom Sides
 
+---
+
 ```markdown
 Roll X number of a die with the sides "y", "z", " "
 
