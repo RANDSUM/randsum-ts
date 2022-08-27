@@ -18,7 +18,7 @@ export function parseNotation(
   let rollParameters: Omit<InternalRollParameters, 'randomizer'> = {
     sides: 1,
     quantity: 1,
-    faces: [],
+    faces: undefined,
     modifiers: []
   }
 

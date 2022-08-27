@@ -19,6 +19,6 @@ export function parseCoreNotation(
     quantity: Number(quantity),
     ...(sides.includes('{')
       ? parseCoreNotationCustomSides(sides)
-      : { sides: Number(sides), faces: [] })
+      : { sides: Number(sides), faces: undefined })
   }
 }
