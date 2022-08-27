@@ -14,7 +14,7 @@ describe('generateResult', () => {
   }
   const baseRollGenerator = () => ({
     initialRolls: rolls,
-    rollOne: () => 20
+    rollOne: () => 200
   })
 
   const baseArguments: RollResult['arguments'] = [20, undefined]
