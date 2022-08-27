@@ -239,6 +239,10 @@ describe('generateResult', () => {
         modifiers: [{ reroll: { greaterThan: 3 } }]
       }
 
+      beforeEach(() => {
+        jest.spyOn(console, 'warn').mockImplementationOnce(() => true)
+      })
+
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         expect(
           generateResult(rerollParameters, baseArguments, baseRollGenerator)
