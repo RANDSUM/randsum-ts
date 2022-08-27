@@ -1,7 +1,6 @@
 import { generateResult } from './generateResult'
 import { parseArguments } from './parseArguments'
 import {
-  DetailedType,
   DiceNotation,
   NumberString,
   RandsumOptions,
@@ -11,7 +10,8 @@ import {
   CustomSidesDie,
   DieType,
   StandardDie,
-  Detailed
+  Detailed,
+  RandsumArguments
 } from './types'
 
 // Sides Arguments
@@ -65,19 +65,14 @@ export function randsum(
 
 // Implementation
 export function randsum(
-  primeArgument:
-    | RandsumOptions<DieType, DetailedType>
-    | DiceNotation<DieType>
-    | NumberString,
-  randsumOptions?:
-    | SecondaryRandsumOptions<DieType, DetailedType>
-    | UserOptions<DetailedType>
+  primeArgument: RandsumArguments['primeArgument'],
+  randsumOptions?: RandsumArguments['secondArgument']
 ): RollResult<DieType> | number | string {
   const { detailed, ...parameters } = parseArguments(
     primeArgument,
     randsumOptions
   )
-  const result = generateResult(parameters)
+  const result = generateResult(parameters, primeArgument, randsumOptions)
 
   return detailed ? result : result.total
 }

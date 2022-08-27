@@ -146,6 +146,7 @@ A `RollResult` contains three parameters:
 - `total`: The `numeric` total of the rolls. This is what is returned in a `detailed: false | undefined` roll.
 - `rolls`: An array of individual rolls, summed to make the `total`.
 - `rollParameters`: an object containing the properties used to calculate the roll.
+- `arguments`: an array containing the arguments passed to
 
 If you provided an array to the `sides` parameter using `RandsumOptions`, the values are slightly different:
 
