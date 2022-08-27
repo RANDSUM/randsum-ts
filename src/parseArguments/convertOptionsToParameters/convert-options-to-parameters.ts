@@ -15,11 +15,11 @@ export function convertOptionsToParameters(
     | SecondaryRandsumOptions<DieType, DetailedType>
     | UserOptions<DetailedType>
 ): InternalRollParameters {
-  const { sides, quantity, modifiers, randomizer, faces } = options as
-    | RandsumOptions<DieType, DetailedType> & {
-        faces?: CustomSides
-        modifiers: RandsumOptions<StandardDie, DetailedType>['modifiers']
-      }
+  const { sides, quantity, modifiers, randomizer, faces } =
+    options as RandsumOptions<DieType, DetailedType> & {
+      faces?: CustomSides
+      modifiers: RandsumOptions<StandardDie, DetailedType>['modifiers']
+    }
 
   const isCustomSides = Array.isArray(sides)
   const providedFaces = faces !== undefined
