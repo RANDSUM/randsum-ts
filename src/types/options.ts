@@ -20,19 +20,33 @@ export interface RollOptions<T extends NumberStringArgument = 'inclusive'> {
   modifiers?: Array<Modifier<T>>
 }
 
+type StandardRandsumOptions<D extends DetailedType> = RollOptions &
+  UserOptions<D>
+type CustomSidesRandsumOptions<D extends DetailedType> = Omit<
+  StandardRandsumOptions<D>,
+  'sides' | 'modifiers'
+> & {
+  sides: CustomSides
+}
 export type RandsumOptions<
   N extends DieType = StandardDie,
   D extends DetailedType = false | never
 > = N extends StandardDie
-  ? RollOptions & UserOptions<D>
-  : Omit<RollOptions, 'sides' | 'modifiers'> &
-      UserOptions<D> & {
-        sides: CustomSides
-      }
+  ? StandardRandsumOptions<D>
+  : CustomSidesRandsumOptions<D>
+
+type SecondaryStandardRandsumOptions<D extends DetailedType> = Omit<
+  StandardRandsumOptions<D>,
+  'sides'
+>
+type SecondaryCustomSidesRandsumOptions<D extends DetailedType> = Omit<
+  CustomSidesRandsumOptions<D>,
+  'sides' | 'modifiers '
+> & { faces: CustomSides }
 
 export type SecondaryRandsumOptions<
   N extends DieType = StandardDie,
   D extends DetailedType = false | never
 > = N extends StandardDie
-  ? Omit<RandsumOptions<N, D>, 'sides'>
-  : Omit<RandsumOptions<N, D>, 'sides' | 'modifiers '> & { faces: CustomSides }
+  ? SecondaryStandardRandsumOptions<D>
+  : SecondaryCustomSidesRandsumOptions<D>
