@@ -6,9 +6,7 @@ const suite = new Benchmark.Suite()
 
 suite
   .add('Sanity', () => {
-    console.log(
-      randsum({ quantity: 20, sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'] })
-    )
+    console.log(randsum('1d20'))
   })
   .add('Sides Num', () => {
     randsum(20)

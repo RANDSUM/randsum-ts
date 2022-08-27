@@ -1,4 +1,7 @@
-export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
+export type CustomDiceSidesNotation = `{${string}}`
+export type DiceNotation = `${number}${'d' | 'D'}${
+  | number
+  | CustomDiceSidesNotation}${string}`
 
 export type NumberStringArgument = number | 'inclusive'
 

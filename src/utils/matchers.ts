@@ -1,6 +1,6 @@
 import { Match } from 'types'
 
-export const coreNotationPattern = /(?<coreNotationMatch>\d+[Dd]\d+)/
+export const coreNotationPattern = /(?<coreNotationMatch>^\d+[Dd](\d+|{.*}))/
 const dropHighPattern = /(?<dropHighMatch>[Hh]\d*)/
 const dropLowPattern = /(?<dropLowMatch>[Ll]\d*)/
 const dropConstraintsPattern = /(?<dropConstraintsMatch>[Dd]{?([<>|]?\d+,?)*}?)/
@@ -37,7 +37,12 @@ export function findMatches(notations: string): Match[] {
     if (m.groups !== null && m.groups !== undefined) {
       for (const key of Object.keys(m.groups)) {
         if (m.groups[key] !== undefined) {
-          matches = [...matches, { [key]: m.groups[key] }]
+          matches = [
+            ...matches,
+            {
+              [key]: key === m.groups[key]
+            }
+          ]
         }
       }
     }

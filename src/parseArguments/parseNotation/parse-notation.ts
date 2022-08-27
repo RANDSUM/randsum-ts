@@ -1,4 +1,4 @@
-import { DiceNotation, RollOptions } from 'types'
+import { DiceNotation, InternalRollParameters } from 'types'
 import { findMatches } from 'utils'
 
 import {
@@ -14,18 +14,26 @@ import {
 
 export function parseNotation(
   notationString: DiceNotation
-): RollOptions<number> & { quantity: number } {
-  let rollParameters: RollOptions<number> & { quantity: number } = {
+): Omit<InternalRollParameters, 'randomizer'> {
+  let rollParameters: Omit<InternalRollParameters, 'randomizer'> = {
     sides: 1,
-    quantity: 1
+    quantity: 1,
+    faces: [],
+    modifiers: []
   }
 
-  for (const match of findMatches(
-    notationString.toLowerCase().replace(' ', '')
-  )) {
+  for (const match of findMatches(notationString)) {
     const [key] = Object.keys(match)
     const [value] = Object.values(match)
     const { modifiers = [], ...restParameters } = rollParameters
+    console.log(key)
+    console.log(key)
+    console.log(key)
+    console.log(key)
+    console.log(value)
+    console.log(value)
+    console.log(value)
+    console.log(value)
 
     if (key === 'coreNotationMatch') {
       rollParameters = { ...rollParameters, ...parseCoreNotation(value) }
