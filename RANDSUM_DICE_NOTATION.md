@@ -58,7 +58,7 @@ Xd{yx }
 
 Roll 4 number of a die with the sides "+", "+", "-", "-", " ", " "
 
-4d{++-- }
+4d{++--  }
 ```
 
 In `randsum` :
