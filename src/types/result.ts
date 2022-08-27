@@ -1,4 +1,5 @@
 import { RollParameters } from './parameters'
+import { CustomSides } from './primitives'
 
 export interface RollResult {
   total: number

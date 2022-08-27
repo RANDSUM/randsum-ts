@@ -1,4 +1,4 @@
 #!/bin/bash
 
 bin/build
-node benchmark.js
+node bin/benchmark.js

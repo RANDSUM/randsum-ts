@@ -19,7 +19,7 @@ export function convertOptionsToParameters(
     | RandsumOptionsWithoutSides<Detailed>
     | UserOptions<Detailed>
 ): InternalRollParameters {
-  const { sides, quantity, modifiers, randomizer, faces } = options as
+  const { sides, quantity, modifiers, randomizer } = options as
     | (RandsumOptions<Detailed> & { faces?: CustomSides })
     | (RandsumOptionsWithCustomSides<Detailed> & {
         modifiers: RandsumOptions<Detailed>['modifiers']
@@ -33,6 +33,6 @@ export function convertOptionsToParameters(
     sides: isCustomSides ? sides.length : Number(sides),
     quantity: Number(quantity || 1),
     modifiers: isCustomSides ? [] : normalizeModifiers(modifiers || []),
-    faces: faces ? faces : isCustomSides ? sides : undefined
+    faces: isCustomSides ? sides : undefined
   }
 }

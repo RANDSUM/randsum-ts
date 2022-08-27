@@ -1,12 +1,11 @@
-import randsum from './dist/index.module.js'
-// import randsum from './dist/index.cjs'
+import randsum from '../dist/index.module.js'
 import Benchmark from 'benchmark'
 
 const suite = new Benchmark.Suite()
 
 suite
   .add('Sanity', () => {
-    console.log(randsum('1d20'))
+    console.log(randsum({ sides: 20 }))
   })
   .add('Sides Num', () => {
     randsum(20)
