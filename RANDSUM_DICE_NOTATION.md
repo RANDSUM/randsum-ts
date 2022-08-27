@@ -22,7 +22,7 @@ Dice Notation in `randsum` is **case-insensitive**. `2d8` and `2D8` both work eq
 
 ---
 
-```markdown
+```
 Roll X number of Y sided die
 
 XdY
@@ -51,14 +51,14 @@ randsum({
 
 ---
 
-```markdown
+```
 Roll X number of a die with the sides "y", "z", " "
 
 Xd{yx }
 
 Roll 4 number of a die with the sides "+", "+", "-", "-", " ", " "
 
-4d{++-- }
+4d{++--  }
 ```
 
 In `randsum` :
@@ -66,14 +66,14 @@ In `randsum` :
 ```js
 // Roll 6 two-sided die with the sides "H" and "T"
 
-randsum('6d{HT})
+randsum('6d{HT}')
 randsum(2, {
   quantity: 6,
-  faces: ["H", "T"]
+  faces: ['H', 'T']
 })
 randsum({
-  sides: ["H", "T"],
-  quantity: 6,
+  sides: ['H', 'T'],
+  quantity: 6
 })
 ```
 
@@ -93,7 +93,7 @@ randsum({
 
 Add values to the sum total of the rolled dice.
 
-```markdown
+```
 Add 2 to the final result
 
 4d20+2
@@ -122,7 +122,7 @@ randsum({
 
 Subtract values to the sum total of the rolled dice
 
-```markdown
+```
 Subtract 2 from the final result
 
 4d20-2
@@ -157,7 +157,7 @@ Remove values from the pool of rolled dice
 
 Remove the highest value(s)
 
-```markdown
+```
 Drop Highest Die
 
 4d20H
@@ -228,7 +228,7 @@ randsum({
 
 Remove the lowest value(s)
 
-```markdown
+```
 Drop Lowest Die
 
 4d20L
@@ -298,7 +298,7 @@ randsum({
 
 Remove Dice greater than, lesser than, or equal to value(s)
 
-```markdown
+```
 Drop rolls greater than 17
 
 4d20D{>17}
@@ -357,7 +357,7 @@ randsum({
 
 Reduce all values above a certain value or increase all values below a certain value
 
-```markdown
+```
 Cap rolls greater than 18 to be 18
 
 4d20C>17
@@ -410,7 +410,7 @@ randsum({
 
 Reroll all values above, below, or equal to certain values
 
-```markdown
+```
 Reroll rolls greater than 17
 
 4d20R{>17}
@@ -475,7 +475,7 @@ randsum({
 
 Replace all values above, below, or equal to certain values with other values
 
-```markdown
+```
 Replace any die that rolls a 8 with a 12
 
 4d20V{8=12}
@@ -560,7 +560,7 @@ randsum({
 
 Enforce all rolls in a given pool to be unique**Note: Rolls whose quantitiy of dice exceed the number of sides will fail!**
 
-```markdown
+```
 Force all rolls to be unique
 
 4d20U
@@ -620,7 +620,7 @@ randsum({
 
 Roll additional dice whenever a die in the pool rolls its maximum value
 
-```markdown
+```
 Roll an additional die every time you roll maximum value of a die
 
 4d20!
