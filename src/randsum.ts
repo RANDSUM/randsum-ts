@@ -1,56 +1,78 @@
 import { generateResult } from './generateResult'
 import { parseArguments } from './parseArguments'
 import {
-  Detailed,
   DiceNotation,
   NumberString,
   RandsumOptions,
-  RandsumOptionsWithCustomSides,
-  RandsumOptionsWithoutSides,
+  SecondaryRandsumOptions,
   RollResult,
-  RollResultWithCustomSides,
-  UserOptions
+  UserOptions,
+  CustomSidesDie,
+  DieType,
+  StandardDie,
+  Detailed,
+  RandsumArguments
 } from './types'
 
+// Sides Arguments
 export function randsum(sides: NumberString): number
 export function randsum(
   sides: NumberString,
-  randsumOptions: RandsumOptionsWithoutSides
+  randsumOptions: SecondaryRandsumOptions
 ): number
+export function randsum<N extends StandardDie>(
+  sides: NumberString,
+  randsumOptions: SecondaryRandsumOptions<N, Detailed>
+): RollResult<N>
 export function randsum(
   sides: NumberString,
-  randsumOptions: RandsumOptionsWithoutSides<true>
-): RollResult
+  randsumOptions: SecondaryRandsumOptions<CustomSidesDie>
+): string
+export function randsum<N extends CustomSidesDie>(
+  sides: NumberString,
+  randsumOptions: SecondaryRandsumOptions<N, Detailed>
+): RollResult<N>
+
+// Notation arguments
 export function randsum(notation: DiceNotation): number
+export function randsum(notation: DiceNotation<CustomSidesDie>): string
 export function randsum(
   notation: DiceNotation,
   userOptions: UserOptions
 ): number
-export function randsum(
+export function randsum<N extends DieType = StandardDie>(
   notation: DiceNotation,
-  userOptions: UserOptions<true>
-): RollResult
-export function randsum(rollOptions: RandsumOptions<false>): number
+  userOptions: UserOptions<Detailed>
+): RollResult<N>
 export function randsum(
-  rollOptions: RandsumOptionsWithCustomSides<false>
+  notation: DiceNotation<CustomSidesDie>,
+  userOptions: UserOptions
 ): string
-export function randsum(rollOptions: RandsumOptions<true>): RollResult
+export function randsum<N extends CustomSidesDie>(
+  notation: DiceNotation<N>,
+  userOptions: UserOptions<Detailed>
+): RollResult<N>
+
+// Option argument
+export function randsum(rollOptions: RandsumOptions<StandardDie>): number
+export function randsum(rollOptions: RandsumOptions<CustomSidesDie>): string
+export function randsum<N extends StandardDie>(
+  rollOptions: RandsumOptions<N, Detailed>
+): RollResult<N>
+export function randsum<N extends DieType = CustomSidesDie>(
+  rollOptions: RandsumOptions<N, Detailed>
+): RollResult<N>
+
+// Implementation
 export function randsum(
-  rollOptions: RandsumOptionsWithCustomSides<true>
-): RollResultWithCustomSides
-export function randsum(
-  primeArgument:
-    | RandsumOptions<Detailed>
-    | RandsumOptionsWithCustomSides<Detailed>
-    | DiceNotation
-    | NumberString,
-  randsumOptions?: RandsumOptionsWithoutSides<Detailed> | UserOptions<Detailed>
-): RollResult | RollResultWithCustomSides | number | string {
+  primeArgument: RandsumArguments['primeArgument'],
+  randsumOptions?: RandsumArguments['secondArgument']
+): RollResult<StandardDie> | RollResult<CustomSidesDie> | number | string {
   const { detailed, ...parameters } = parseArguments(
     primeArgument,
     randsumOptions
   )
-  const result = generateResult(parameters)
+  const result = generateResult(parameters, [primeArgument, randsumOptions])
 
   return detailed ? result : result.total
 }

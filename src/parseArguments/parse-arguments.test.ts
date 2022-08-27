@@ -1,4 +1,4 @@
-import { DiceNotation } from 'types'
+import { CustomSidesDie, DiceNotation } from 'types'
 import { parseArguments } from './parse-arguments'
 
 describe('parseArguments', () => {
@@ -7,14 +7,38 @@ describe('parseArguments', () => {
       expect(parseArguments('2')).toMatchObject({ quantity: 1, sides: 2 })
     })
 
-    describe('and a complex RandsumOptionsWithoutSides object', () => {
+    describe('and a complex SecondaryRandsumOptions object', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(
-          parseArguments('2', { quantity: 3, detailed: true })
+          parseArguments('2', {
+            modifiers: [{ explode: true }],
+            quantity: 3,
+            detailed: true
+          })
         ).toMatchObject({
           quantity: 3,
           sides: 2,
-          detailed: true
+          detailed: true,
+          modifiers: [{ explode: true }]
+        })
+      })
+
+      describe('with custom faces', () => {
+        test('returns a RollParameter matching the notation, without modifiers', () => {
+          expect(
+            parseArguments('2', {
+              modifiers: [{ explode: true }],
+              quantity: 3,
+              faces: ['true', 'false'],
+              detailed: true
+            })
+          ).toMatchObject({
+            quantity: 3,
+            sides: 2,
+            detailed: true,
+            faces: ['true', 'false'],
+            modifiers: []
+          })
         })
       })
     })
@@ -33,6 +57,25 @@ describe('parseArguments', () => {
           quantity: 3,
           sides: 2,
           detailed: true
+        })
+      })
+
+      describe('with custom faces', () => {
+        test('returns a RollParameter matching the notation, without modifiers', () => {
+          expect(
+            parseArguments(2, {
+              modifiers: [{ explode: true }],
+              quantity: 3,
+              faces: ['true', 'false'],
+              detailed: true
+            })
+          ).toMatchObject({
+            quantity: 3,
+            sides: 2,
+            detailed: true,
+            faces: ['true', 'false'],
+            modifiers: []
+          })
         })
       })
     })
@@ -79,6 +122,7 @@ describe('parseArguments', () => {
         })
       })
     })
+
     describe('complex', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(
@@ -146,6 +190,19 @@ describe('parseArguments', () => {
           expect(parseArguments(baseTestString, userOptions)).toMatchObject({
             ...baseRollParameters,
             detailed: userOptions.detailed
+          })
+        })
+      })
+    })
+
+    describe('given a notation that uses custom faces', () => {
+      describe('with a simple notation', () => {
+        const testString: DiceNotation<CustomSidesDie> = '4d{++--  }'
+
+        test('returns a RollParameter matching the notation', () => {
+          expect(parseArguments(testString)).toMatchObject({
+            ...baseRollParameters,
+            faces: ['+', '+', '-', '-', ' ', ' ']
           })
         })
       })

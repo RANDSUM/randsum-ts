@@ -1,7 +1,8 @@
 import {
+  CustomSidesDie,
   InternalRollParameters,
   RollResult,
-  RollResultWithCustomSides
+  StandardDie
 } from 'types'
 import {
   applyDrop,
@@ -12,12 +13,13 @@ import {
   applyUnique
 } from './applicators'
 import { generateRolls } from './generate-rolls'
-import { generateTotalAndResult } from './generate-total-and-result'
+import { generateTotalAndRolls } from './generate-total-and-rolls'
 
 export function generateResult(
   { sides, quantity, modifiers, randomizer, faces }: InternalRollParameters,
+  randsumArguments: RollResult['arguments'],
   rollGenerator = generateRolls
-): RollResult | RollResultWithCustomSides {
+): RollResult<StandardDie> | RollResult<CustomSidesDie> {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
   let rolls = [...initialRolls]
@@ -54,7 +56,8 @@ export function generateResult(
   }
 
   return {
-    ...generateTotalAndResult({ faces, rolls, simpleMathModifier }),
+    ...generateTotalAndRolls({ faces, rolls, simpleMathModifier }),
+    arguments: randsumArguments,
     rollParameters: {
       sides,
       quantity,

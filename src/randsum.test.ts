@@ -32,7 +32,7 @@ describe('Randsum', () => {
         expect(Number.isInteger(result)).toBe(true)
       })
 
-      describe('and a RandsumOptionsWithoutSides object', () => {
+      describe('and a SecondaryRandsumOptions object', () => {
         const result = randsum(20, { quantity: 21 })
 
         test('returns a number as total', () => {

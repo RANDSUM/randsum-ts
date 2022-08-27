@@ -1,33 +1,38 @@
-import { InternalRollParameters, RandsumOptionsWithCustomSides } from 'types'
 import {
-  RandsumOptions,
-  RandsumOptionsWithoutSides,
-  UserOptions,
-  Detailed
+  CustomSides,
+  DetailedType,
+  DieType,
+  InternalRollParameters,
+  StandardDie
 } from 'types'
+import { RandsumOptions, SecondaryRandsumOptions, UserOptions } from 'types'
 import { defaultRandomizer } from 'utils'
 import { normalizeModifiers } from './normalizeModifiers'
 
 export function convertOptionsToParameters(
   options:
-    | RandsumOptions<Detailed>
-    | RandsumOptionsWithCustomSides<Detailed>
-    | RandsumOptionsWithoutSides<Detailed>
-    | UserOptions<Detailed>
+    | RandsumOptions<DieType, DetailedType>
+    | SecondaryRandsumOptions<DieType, DetailedType>
+    | UserOptions<DetailedType>
 ): InternalRollParameters {
-  const { sides, quantity, modifiers, randomizer } = options as
-    | RandsumOptions<Detailed>
-    | (RandsumOptionsWithCustomSides<Detailed> & {
-        modifiers: RandsumOptions<Detailed>['modifiers']
-      })
+  const { sides, quantity, modifiers, randomizer, faces } =
+    options as RandsumOptions<DieType, DetailedType> & {
+      faces?: CustomSides
+      modifiers: RandsumOptions<StandardDie, DetailedType>['modifiers']
+    }
 
   const isCustomSides = Array.isArray(sides)
+  const providedFaces = faces !== undefined
   return {
     ...options,
     randomizer: randomizer || defaultRandomizer,
     sides: isCustomSides ? sides.length : Number(sides),
     quantity: Number(quantity || 1),
-    modifiers: isCustomSides ? [] : normalizeModifiers(modifiers || []),
-    faces: isCustomSides ? sides : undefined
+    modifiers: providedFaces
+      ? []
+      : isCustomSides
+      ? []
+      : normalizeModifiers(modifiers || []),
+    faces: providedFaces ? faces : isCustomSides ? sides : undefined
   }
 }

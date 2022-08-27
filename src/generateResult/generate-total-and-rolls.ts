@@ -1,10 +1,11 @@
 import {
+  CustomSidesDie,
   InternalRollParameters,
   RollResult,
-  RollResultWithCustomSides
+  StandardDie
 } from 'types'
 
-export function generateTotalAndResult({
+export function generateTotalAndRolls({
   faces,
   rolls,
   simpleMathModifier
@@ -12,8 +13,8 @@ export function generateTotalAndResult({
   rolls: number[]
   simpleMathModifier: number
 }):
-  | Pick<RollResult, 'total' | 'rolls'>
-  | Pick<RollResultWithCustomSides, 'total' | 'rolls'> {
+  | Pick<RollResult<StandardDie>, 'total' | 'rolls'>
+  | Pick<RollResult<CustomSidesDie>, 'total' | 'rolls'> {
   if (faces == undefined) {
     return {
       total:

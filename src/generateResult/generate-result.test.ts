@@ -1,4 +1,4 @@
-import { InternalRollParameters } from 'types'
+import { InternalRollParameters, RollResult } from 'types'
 import { generateResult } from './generate-result'
 
 const mockRandomizer = () => 5
@@ -17,9 +17,21 @@ describe('generateResult', () => {
     rollOne: () => 200
   })
 
+  const baseArguments: RollResult['arguments'] = [20, undefined]
+
   describe('when given roll total with no modifiers', () => {
+    test('it returns the arguments provided in the roll result object', () => {
+      expect(
+        generateResult(baseParameters, baseArguments, baseRollGenerator)
+      ).toMatchObject({
+        arguments: baseArguments
+      })
+    })
+
     test('it returns the sum total of the quantity and the roll total', () => {
-      expect(generateResult(baseParameters, baseRollGenerator)).toMatchObject({
+      expect(
+        generateResult(baseParameters, baseArguments, baseRollGenerator)
+      ).toMatchObject({
         total: 10,
         rolls: [1, 2, 3, 4]
       })
@@ -33,6 +45,7 @@ describe('generateResult', () => {
 
       generateResult(
         { ...baseParameters, randomizer: mockRandomizer },
+        baseArguments,
         mockRollGenerator
       )
 
@@ -59,7 +72,7 @@ describe('generateResult', () => {
 
     test('it re-quantity non-unique modifiers', () => {
       expect(
-        generateResult(uniqueParameters, uniqueRollGenerator)
+        generateResult(uniqueParameters, baseArguments, uniqueRollGenerator)
       ).toMatchObject({
         total: 206,
         rolls: [1, 200, 2, 3]
@@ -74,7 +87,11 @@ describe('generateResult', () => {
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
         expect(
-          generateResult(notUniqueParameters, uniqueRollGenerator)
+          generateResult(
+            notUniqueParameters,
+            baseArguments,
+            uniqueRollGenerator
+          )
         ).toMatchObject({
           total: 7,
           rolls: [1, 1, 2, 3]
@@ -95,7 +112,11 @@ describe('generateResult', () => {
 
       test('it throws an error', () => {
         expect(() =>
-          generateResult(overflowParameters, overflowRollGenerator)
+          generateResult(
+            overflowParameters,
+            baseArguments,
+            overflowRollGenerator
+          )
         ).toThrow(
           'You cannot have unique rolls when there are more rolls than sides of die.'
         )
@@ -113,7 +134,7 @@ describe('generateResult', () => {
     }
     test('it returns the expected result as a string', () => {
       expect(
-        generateResult(customSidesParameters, baseRollGenerator)
+        generateResult(customSidesParameters, baseArguments, baseRollGenerator)
       ).toMatchObject({
         total: 'r, a, n, d',
         rolls: ['r', 'a', 'n', 'd']
@@ -146,7 +167,7 @@ describe('generateResult', () => {
 
     test('it returns the total without the provided values', () => {
       expect(
-        generateResult(dropParameters, overflowRollGenerator)
+        generateResult(dropParameters, baseArguments, overflowRollGenerator)
       ).toMatchObject({
         total: 17,
         rolls: [4, 6, 7]
@@ -162,9 +183,9 @@ describe('generateResult', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject(
-          { total: 11, rolls: [2, 2, 3, 4] }
-        )
+        expect(
+          generateResult(dropParameters, baseArguments, baseRollGenerator)
+        ).toMatchObject({ total: 11, rolls: [2, 2, 3, 4] })
       })
     })
 
@@ -182,9 +203,9 @@ describe('generateResult', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject(
-          { total: 13, rolls: [2, 2, 3, 6] }
-        )
+        expect(
+          generateResult(dropParameters, baseArguments, baseRollGenerator)
+        ).toMatchObject({ total: 13, rolls: [2, 2, 3, 6] })
       })
     })
   })
@@ -203,7 +224,7 @@ describe('generateResult', () => {
 
     test('it returns the total with all values matching the queries rerolled', () => {
       expect(
-        generateResult(explodeParameters, explodeRollGenerator)
+        generateResult(explodeParameters, baseArguments, explodeRollGenerator)
       ).toMatchObject({
         total: 212,
         rolls: [1, 2, 3, 6, 200]
@@ -218,9 +239,13 @@ describe('generateResult', () => {
         modifiers: [{ reroll: { greaterThan: 3 } }]
       }
 
+      beforeEach(() => {
+        jest.spyOn(console, 'warn').mockImplementationOnce(() => true)
+      })
+
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         expect(
-          generateResult(rerollParameters, baseRollGenerator)
+          generateResult(rerollParameters, baseArguments, baseRollGenerator)
         ).toMatchObject({
           total: 206,
           rolls: [1, 2, 3, 200]
@@ -236,7 +261,7 @@ describe('generateResult', () => {
 
       test('it returns the total with all values matching the queries rerolled', () => {
         expect(
-          generateResult(rerollParameters, baseRollGenerator)
+          generateResult(rerollParameters, baseArguments, baseRollGenerator)
         ).toMatchObject({
           total: 404,
           rolls: [1, 200, 3, 200]
@@ -252,7 +277,7 @@ describe('generateResult', () => {
 
       test('it returns the total with all values matching the queries rerolled', () => {
         expect(
-          generateResult(rerollParameters, baseRollGenerator)
+          generateResult(rerollParameters, baseArguments, baseRollGenerator)
         ).toMatchObject({
           total: 406,
           rolls: [200, 2, 200, 4]
@@ -268,7 +293,9 @@ describe('generateResult', () => {
     }
 
     test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll total', () => {
-      expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({
+      expect(
+        generateResult(dropParameters, baseArguments, baseRollGenerator)
+      ).toMatchObject({
         total: 10,
         rolls: [2, 2, 3, 3]
       })
@@ -282,7 +309,9 @@ describe('generateResult', () => {
     }
 
     test('it returns the total plus the "plus" modifier, and the roll total', () => {
-      expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({
+      expect(
+        generateResult(dropParameters, baseArguments, baseRollGenerator)
+      ).toMatchObject({
         total: 12,
         rolls: [1, 2, 3, 4]
       })
@@ -296,7 +325,9 @@ describe('generateResult', () => {
     }
 
     test('it returns the total minust the "minus" modifier, and the roll total', () => {
-      expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({
+      expect(
+        generateResult(dropParameters, baseArguments, baseRollGenerator)
+      ).toMatchObject({
         total: 8,
         rolls: [1, 2, 3, 4]
       })

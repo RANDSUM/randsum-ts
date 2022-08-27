@@ -47,6 +47,44 @@ randsum({
 })
 ```
 
+### Custom Sides
+
+---
+
+```markdown
+Roll X number of a die with the sides "y", "z", " "
+
+Xd{yx }
+
+Roll 4 number of a die with the sides "+", "+", "-", "-", " ", " "
+
+4d{++-- }
+```
+
+In `randsum` :
+
+```js
+// Roll 6 two-sided die with the sides "H" and "T"
+
+randsum('6d{HT})
+randsum(2, {
+  quantity: 6,
+  faces: ["H", "T"]
+})
+randsum({
+  sides: ["H", "T"],
+  quantity: 6,
+})
+```
+
+#### Custom Sides Caveats and Gotchas
+
+- When given custom sides, `randsum` will return a `string` of comma-separated results, not a `number`.
+  - For instance, `randsum('6d{HT})` will return something like `"H, T, T, T, H, T"`
+- Modifiers are not compatible with custom sides. Under-the-hood, `randsum` is still rolling these as if they were numeric dice, then swapping out the numbers for faces at the end. While modifiers are technically feasible, it would be very easy to code yourself into a confusing place with non-obvious results.
+  - for example, given the custom faces argument `[6, 5, 4, 3, 2, 1]`, `1` would be considered the "highest" number, and `6` the "lowest`, which would be silly!
+  - In light of this, modifiers are ignored (if provided in JS) or rejected (in TS) when providing custom sides.
+
 ### Plus
 
 ---

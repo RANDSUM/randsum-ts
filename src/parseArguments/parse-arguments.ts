@@ -1,38 +1,21 @@
 import { isDiceNotation, isRandsumOptions } from 'utils'
 
-import {
-  DiceNotation,
-  InternalRollParameters,
-  NumberString,
-  RandsumOptions,
-  RandsumOptionsWithoutSides,
-  UserOptions,
-  Detailed,
-  RandsumOptionsWithCustomSides
-} from 'types'
+import { InternalRollParameters, RandsumArguments } from 'types'
 import { parseNotation } from './parseNotation'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 
 export function parseArguments(
-  primeArgument:
-    | RandsumOptions<Detailed>
-    | RandsumOptionsWithCustomSides<Detailed>
-    | DiceNotation
-    | NumberString,
-  secondArgument:
-    | RandsumOptionsWithoutSides<Detailed>
-    | UserOptions<Detailed> = {}
+  primeArgument: RandsumArguments['primeArgument'],
+  secondArgument: RandsumArguments['secondArgument'] = {}
 ): InternalRollParameters {
   if (isRandsumOptions(primeArgument)) {
     return convertOptionsToParameters(primeArgument)
   }
 
-  const rollData = isDiceNotation(primeArgument)
-    ? parseNotation(primeArgument)
-    : { sides: Number(primeArgument) }
-
   return {
     ...convertOptionsToParameters(secondArgument),
-    ...rollData
+    ...(isDiceNotation(primeArgument)
+      ? parseNotation(primeArgument)
+      : { sides: Number(primeArgument) })
   }
 }
