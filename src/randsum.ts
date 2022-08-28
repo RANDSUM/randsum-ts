@@ -11,7 +11,6 @@ import {
   StandardDie,
   Detailed,
   RandsumArguments,
-  BaseRollResult,
   Simple
 } from './types'
 
