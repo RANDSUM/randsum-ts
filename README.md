@@ -12,11 +12,9 @@
 
 ## What is this?
 
-It's a dice roller! Specifically, it's a random number generator that generates numbers from 1-N, rather than traditional random number generators, which work from 0-(N-1).
+It's a dice roller, used for generating rolls that you might use in popular Tabletop Role-playing Games. It accepts basic number and number strings, as well as dice notation for more complicated dice operations.
 
-It accepts basic number and number strings, as well as dice notation for more complicated dice operations.
-
-Check out the links below for more info!
+Written in 100% Typescript, with strong overloading and attention to Arguments. You depend on `randsum` to give you what you expect - just not always the roll you want.
 
 ## Further Reading
 

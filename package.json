@@ -3,7 +3,7 @@
   "version": "1.7.2",
   "private": false,
   "author": "Alex Jarvis",
-  "description": "rand for the rest of us",
+  "description": "Ergonomic Dice Rolling with Strong Typescript Support",
   "license": "MIT",
   "homepage": "https://github.com/alxjrvs/randsum ",
   "repository": {
