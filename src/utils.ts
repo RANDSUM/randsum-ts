@@ -1,8 +1,5 @@
 import { DiceNotation, RandsumOptions, DetailedType, DieType } from 'types'
-import { coreNotationPattern } from './matchers'
-
-export * from './matchers'
-export * from './type-guards'
+import { coreNotationPattern } from 'patterns'
 
 export function isDiceNotation(argument: unknown): argument is DiceNotation {
   return !!coreNotationPattern.test(String(argument))

@@ -1,5 +1,5 @@
 import { DiceNotation, InternalRollParameters } from 'types'
-import { findMatches } from 'utils'
+import { findMatches } from 'matchers'
 
 import {
   parseCapNotation,
