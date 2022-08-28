@@ -20,6 +20,6 @@ type CustomSidesRollResult = BaseRollResult & {
   rolls: CustomSides
 }
 
-export type RollResult<N extends DieType = DieType> = N extends StandardDie
+export type RollResult<N extends DieType> = N extends StandardDie
   ? StandardRollResult
   : CustomSidesRollResult

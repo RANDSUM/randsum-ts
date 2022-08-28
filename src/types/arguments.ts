@@ -8,10 +8,3 @@ export type RandsumArguments<
   primeArgument: RandsumOptions<N, D> | DiceNotation<N> | NumberString
   secondArgument?: SecondaryRandsumOptions<N, D> | UserOptions<D>
 }
-
-export type AllArgumentTypes<
-  N extends DieType = DieType,
-  D extends DetailedType = DetailedType
-> =
-  | RandsumArguments<N, D>['primeArgument']
-  | RandsumArguments<N, D>['secondArgument']
