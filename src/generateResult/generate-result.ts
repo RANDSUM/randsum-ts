@@ -17,9 +17,10 @@ import { generateTotalAndRolls } from './generate-total-and-rolls'
 
 export function generateResult(
   { sides, quantity, modifiers, randomizer, faces }: InternalRollParameters,
-  randsumArguments: RollResult['arguments'],
   rollGenerator = generateRolls
-): RollResult<StandardDie> | RollResult<CustomSidesDie> {
+):
+  | Omit<RollResult<StandardDie>, 'arguments'>
+  | Omit<RollResult<CustomSidesDie>, 'arguments'> {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
   let rolls = [...initialRolls]
@@ -42,7 +43,6 @@ export function generateResult(
 
   return {
     ...generateTotalAndRolls({ faces, rolls, simpleMathModifier }),
-    arguments: randsumArguments,
     rollParameters: {
       sides,
       quantity,

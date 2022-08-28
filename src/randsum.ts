@@ -11,7 +11,8 @@ import {
   DieType,
   StandardDie,
   Detailed,
-  RandsumArguments
+  RandsumArguments,
+  BaseRollResult
 } from './types'
 
 // Sides Arguments
@@ -72,7 +73,14 @@ export function randsum(
     primeArgument,
     randsumOptions
   )
-  const result = generateResult(parameters, [primeArgument, randsumOptions])
+  const passedArguments: BaseRollResult['arguments'] = [
+    primeArgument,
+    randsumOptions
+  ]
+  const result: RollResult<StandardDie> | RollResult<CustomSidesDie> = {
+    ...generateResult(parameters),
+    arguments: passedArguments
+  }
 
   return detailed ? result : result.total
 }
