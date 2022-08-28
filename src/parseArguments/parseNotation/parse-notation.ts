@@ -34,66 +34,56 @@ export function parseNotation(
         break
       }
     }
-    if (key === 'dropHighMatch') {
-      rollParameters = {
+    key === 'dropHighMatch' &&
+      (rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, parseDropHighNotation(value)]
-      }
-    }
-    if (key === 'dropLowMatch') {
-      rollParameters = {
+      })
+    key === 'dropLowMatch' &&
+      (rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, parseDropLowNotation(value)]
-      }
-    }
-    if (key === 'dropConstraintsMatch') {
-      rollParameters = {
+      })
+    key === 'dropConstraintsMatch' &&
+      (rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, parseDropConstraintsNotation(value)]
-      }
-    }
-    if (key === 'explodeMatch') {
-      rollParameters = {
+      })
+    key === 'explodeMatch' &&
+      (rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, { explode: Boolean(value) }]
-      }
-    }
-    if (key === 'uniqueMatch') {
-      rollParameters = {
+      })
+    key === 'uniqueMatch' &&
+      (rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, parseUniqueNotation(value)]
-      }
-    }
-    if (key === 'replaceMatch') {
-      rollParameters = {
+      })
+    key === 'replaceMatch' &&
+      (rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, parseReplaceNotation(value)]
-      }
-    }
-    if (key === 'rerollMatch') {
-      rollParameters = {
+      })
+    key === 'rerollMatch' &&
+      (rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, parseRerollNotation(value)]
-      }
-    }
-    if (key === 'capMatch') {
-      rollParameters = {
+      })
+    key === 'capMatch' &&
+      (rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, parseCapNotation(value)]
-      }
-    }
-    if (key === 'plusMatch') {
-      rollParameters = {
+      })
+    key === 'plusMatch' &&
+      (rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, { plus: Number(value.split('+')[1]) }]
-      }
-    }
-    if (key === 'minusMatch') {
-      rollParameters = {
+      })
+    key === 'minusMatch' &&
+      (rollParameters = {
         ...restParameters,
         modifiers: [...modifiers, { minus: Number(value.split('-')[1]) }]
-      }
-    }
+      })
   }
 
   return rollParameters

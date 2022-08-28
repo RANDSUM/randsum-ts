@@ -9,7 +9,7 @@ import {
 } from './primitives'
 import { Modifier } from './modifiers'
 
-export interface UserOptions<D extends DetailedType = false | never> {
+export interface UserOptions<D extends DetailedType> {
   detailed?: D
   randomizer?: Randomizer
 }
@@ -29,8 +29,8 @@ export type CustomSidesRandsumOptions<D extends DetailedType> = Omit<
   sides: CustomSides
 }
 export type RandsumOptions<
-  N extends DieType = StandardDie,
-  D extends DetailedType = false | never
+  N extends DieType,
+  D extends DetailedType
 > = N extends StandardDie
   ? StandardRandsumOptions<D>
   : CustomSidesRandsumOptions<D>
@@ -45,8 +45,8 @@ export type SecondaryCustomSidesRandsumOptions<D extends DetailedType> = Omit<
 > & { faces: CustomSides }
 
 export type SecondaryRandsumOptions<
-  N extends DieType = StandardDie,
-  D extends DetailedType = false | never
+  N extends DieType,
+  D extends DetailedType
 > = N extends StandardDie
   ? SecondaryStandardRandsumOptions<D>
   : SecondaryCustomSidesRandsumOptions<D>

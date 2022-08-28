@@ -11,10 +11,9 @@ export type DiceNotationWithCustomSides = `${number}${
   | 'd'
   | 'D'}${CustomDiceSidesNotation}`
 
-export type DiceNotation<N extends DieType = StandardDie> =
-  N extends StandardDie
-    ? DiceNotationWithNumericSides
-    : DiceNotationWithCustomSides
+export type DiceNotation<N extends DieType = DieType> = N extends StandardDie
+  ? DiceNotationWithNumericSides
+  : DiceNotationWithCustomSides
 
 export type NumberStringArgument = number | 'inclusive'
 
@@ -29,4 +28,4 @@ export type CustomSides = Array<number | string>
 
 export type Detailed = true
 export type Simple = false
-export type DetailedType = Detailed | Simple | never
+export type DetailedType = Detailed | Simple

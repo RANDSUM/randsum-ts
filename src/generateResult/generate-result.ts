@@ -17,9 +17,10 @@ import { generateTotalAndRolls } from './generate-total-and-rolls'
 
 export function generateResult(
   { sides, quantity, modifiers, randomizer, faces }: InternalRollParameters,
-  randsumArguments: RollResult['arguments'],
   rollGenerator = generateRolls
-): RollResult<StandardDie> | RollResult<CustomSidesDie> {
+):
+  | Omit<RollResult<StandardDie>, 'arguments'>
+  | Omit<RollResult<CustomSidesDie>, 'arguments'> {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
   let rolls = [...initialRolls]
@@ -29,35 +30,19 @@ export function generateResult(
     const [key] = Object.keys(modifier)
     const [value] = Object.values(modifier)
 
-    if (key === 'reroll') {
-      rolls = applyReroll(rolls, value, rollOne)
-    }
-    if (key === 'unique') {
-      rolls = applyUnique(rolls, { sides, quantity, unique: value }, rollOne)
-    }
-    if (key === 'replace') {
-      rolls = applyReplace(rolls, value)
-    }
-    if (key === 'cap') {
-      rolls = rolls.map(applySingleCap(value))
-    }
-    if (key === 'drop') {
-      rolls = applyDrop(rolls, value)
-    }
-    if (key === 'explode') {
-      rolls = applyExplode(rolls, { sides }, rollOne)
-    }
-    if (key === 'plus') {
-      simpleMathModifier += Number(value)
-    }
-    if (key === 'minus') {
-      simpleMathModifier -= Math.abs(Number(value))
-    }
+    key === 'reroll' && (rolls = applyReroll(rolls, value, rollOne))
+    key === 'unique' &&
+      (rolls = applyUnique(rolls, { sides, quantity, unique: value }, rollOne))
+    key === 'replace' && (rolls = applyReplace(rolls, value))
+    key === 'cap' && (rolls = rolls.map(applySingleCap(value)))
+    key === 'drop' && (rolls = applyDrop(rolls, value))
+    key === 'explode' && (rolls = applyExplode(rolls, { sides }, rollOne))
+    key === 'plus' && (simpleMathModifier += Number(value))
+    key === 'minus' && (simpleMathModifier -= Math.abs(Number(value)))
   }
 
   return {
     ...generateTotalAndRolls({ faces, rolls, simpleMathModifier }),
-    arguments: randsumArguments,
     rollParameters: {
       sides,
       quantity,
