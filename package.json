@@ -1,6 +1,6 @@
 {
   "name": "randsum",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "private": false,
   "author": "Alex Jarvis",
   "description": "rand for the rest of us",
@@ -65,15 +65,25 @@
     "yarn": "^1.22.0"
   },
   "keywords": [
-    "chance",
     "dice",
-    "dice rolls",
+    "d20",
+    "dice roller",
+    "rpg dice roller",
+    "roll",
+    "d&d",
+    "dnd",
     "rpg",
+    "ttrpg",
     "rpgs",
-    "die",
-    "die rolling",
+    "ttrpgs",
+    "tabletop",
+    "dungeons",
+    "dragons",
+    "roleplaying game",
     "rand",
-    "rolling",
+    "random",
+    "RNG",
+    "notation",
     "typescript"
   ],
   "bundlewatch": {
@@ -107,12 +117,11 @@
     "rootDir": "src"
   },
   "lint-staged": {
-    "*.js": [
+    "*": [
       "prettier --write"
     ],
     "*.ts": [
-      "eslint --fix",
-      "prettier --write"
+      "eslint --fix"
     ]
   },
   "dependencies": {}
