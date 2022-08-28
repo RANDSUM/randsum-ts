@@ -1,4 +1,4 @@
-import { randsum } from './randsum'
+import { randsum } from '.'
 
 describe('Randsum', () => {
   describe('Stress Test', () => {
