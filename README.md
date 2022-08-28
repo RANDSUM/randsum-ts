@@ -1,6 +1,6 @@
 # `randsum`
 
-`rand` for the rest of us
+Ergonomic Dice Rolling with Strong Typescript Support
 
 [![npm version](https://img.shields.io/npm/v/randsum)](https://www.npmjs.com/package/randsum)
 [![bundle size](https://img.shields.io/bundlephobia/min/randsum)](https://bundlephobia.com/package/randsum)
