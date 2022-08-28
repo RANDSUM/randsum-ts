@@ -1,4 +1,15 @@
-import { Match } from 'types'
+export type Match =
+  | { coreNotationMatch: string }
+  | { dropHighMatch?: string }
+  | { dropLowMatch?: string }
+  | { dropConstraintsMatch?: string }
+  | { explodeMatch?: string }
+  | { uniqueMatch?: string }
+  | { replaceMatch?: string }
+  | { rerollMatch?: string }
+  | { capMatch?: string }
+  | { plusMatch?: string }
+  | { minusMatch?: string }
 
 export const coreNotationPattern = /(?<coreNotationMatch>^\d+[Dd](\d+|{.*}))/
 const dropHighPattern = /(?<dropHighMatch>[Hh]\d*)/

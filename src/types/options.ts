@@ -1,6 +1,7 @@
 import {
   CustomSides,
   DetailedType,
+  DiceNotation,
   DieType,
   NumberString,
   NumberStringArgument,
@@ -50,3 +51,11 @@ export type SecondaryRandsumOptions<
 > = N extends StandardDie
   ? SecondaryStandardRandsumOptions<D>
   : SecondaryCustomSidesRandsumOptions<D>
+
+export type RandsumArguments<
+  N extends DieType = DieType,
+  D extends DetailedType = DetailedType
+> = {
+  primeArgument: RandsumOptions<N, D> | DiceNotation<N> | NumberString
+  secondArgument?: SecondaryRandsumOptions<N, D> | UserOptions<D>
+}

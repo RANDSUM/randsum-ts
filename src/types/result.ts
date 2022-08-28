@@ -1,4 +1,4 @@
-import { RandsumArguments } from './arguments'
+import { RandsumArguments } from './options'
 import { RollParameters } from './parameters'
 import { CustomSides, DieType, StandardDie } from './primitives'
 
