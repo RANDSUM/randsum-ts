@@ -69,19 +69,16 @@ export function randsum(
 // Implementation
 export function randsum(
   primeArgument: RandsumArguments['primeArgument'],
-  randsumOptions?: RandsumArguments['secondArgument']
+  secondArgument?: RandsumArguments['secondArgument']
 ): RollResult<StandardDie> | RollResult<CustomSidesDie> | number | string {
   const { detailed, ...parameters } = parseArguments(
     primeArgument,
-    randsumOptions
+    secondArgument
   )
-  const passedArguments: BaseRollResult['arguments'] = [
-    primeArgument,
-    randsumOptions
-  ]
+
   const result: RollResult<StandardDie> | RollResult<CustomSidesDie> = {
     ...generateResult(parameters),
-    arguments: passedArguments
+    arguments: [primeArgument, secondArgument]
   }
 
   return detailed ? result : result.total
