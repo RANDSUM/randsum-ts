@@ -1,5 +1,5 @@
-import { generateResult } from './generateResult'
-import { parseArguments } from './parseArguments'
+import { generateResult } from 'generateResult'
+import { parseArguments } from 'parseArguments'
 import {
   DiceNotation,
   NumberString,
@@ -12,7 +12,7 @@ import {
   Detailed,
   RandsumArguments,
   Simple
-} from './types'
+} from 'types'
 
 // Sides Arguments
 export function randsum(
