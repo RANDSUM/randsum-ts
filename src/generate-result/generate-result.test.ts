@@ -1,5 +1,5 @@
 import { InternalRollParameters } from 'types'
-import { generateResult } from 'generateResult'
+import { generateResult } from 'generate-result'
 
 const mockRandomizer = () => 5
 

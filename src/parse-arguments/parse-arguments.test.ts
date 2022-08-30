@@ -1,5 +1,5 @@
 import { CustomSidesDie, DiceNotation } from 'types'
-import { parseArguments } from 'parseArguments'
+import { parseArguments } from 'parse-arguments'
 
 describe('parseArguments', () => {
   describe('given a number string', () => {

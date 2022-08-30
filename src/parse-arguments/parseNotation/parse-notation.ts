@@ -23,8 +23,7 @@ export function parseNotation(
   }
 
   for (const match of findMatches(notationString)) {
-    const [key] = Object.keys(match)
-    const [value] = Object.values(match)
+    const [key, value] = Object.entries(match)[0]
     const { modifiers = [], ...restParameters } = rollParameters
 
     if (key === 'coreNotationMatch') {

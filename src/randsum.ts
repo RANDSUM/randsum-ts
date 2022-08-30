@@ -1,5 +1,5 @@
-import { generateResult } from 'generateResult'
-import { parseArguments } from 'parseArguments'
+import { generateResult } from 'generate-result'
+import { parseArguments } from 'parse-arguments'
 import {
   DiceNotation,
   NumberString,
@@ -45,7 +45,6 @@ export function randsum(
   notation: DiceNotation<StandardDie>,
   userOptions: UserOptions<Detailed>
 ): RollResult<StandardDie>
-
 export function randsum(
   notation: DiceNotation<CustomSidesDie>,
   userOptions: UserOptions<Detailed>

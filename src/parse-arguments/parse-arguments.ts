@@ -1,5 +1,4 @@
 import { isDiceNotation, isRandsumOptions } from 'utils'
-
 import { InternalRollParameters, RandsumArguments } from 'types'
 import { parseNotation } from './parseNotation'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
