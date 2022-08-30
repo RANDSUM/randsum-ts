@@ -45,7 +45,6 @@ export function randsum(
   notation: DiceNotation<StandardDie>,
   userOptions: UserOptions<Detailed>
 ): RollResult<StandardDie>
-
 export function randsum(
   notation: DiceNotation<CustomSidesDie>,
   userOptions: UserOptions<Detailed>

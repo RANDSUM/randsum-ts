@@ -27,7 +27,7 @@ export function findMatches(notations: string): Match[] {
               [key]:
                 key === 'coreNotationMatch'
                   ? value
-                  : value.toLowerCase().replace(' ', '')
+                  : value.toLowerCase().replace(/s+/, '')
             }
           ]
         }

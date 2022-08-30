@@ -10,8 +10,7 @@ export function normalizeModifiers(
 ): Array<Modifier<number>> {
   const newModifiers: Array<Modifier<number>> = []
   for (const modifier of modifiers) {
-    const [key] = Object.keys(modifier)
-    const [value] = Object.values(modifier)
+    const [key, value] = Object.entries(modifier)[0]
 
     if (key === 'cap') {
       newModifiers.push({ cap: convertGreaterLessOptionsToParameters(value) })

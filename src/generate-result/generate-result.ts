@@ -27,8 +27,7 @@ export function generateResult(
   let simpleMathModifier = 0
 
   for (const modifier of modifiers) {
-    const [key] = Object.keys(modifier)
-    const [value] = Object.values(modifier)
+    const [key, value] = Object.entries(modifier)[0]
 
     key === 'reroll' && (rolls = applyReroll(rolls, value, rollOne))
     key === 'unique' &&
