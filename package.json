@@ -1,6 +1,6 @@
 {
   "name": "randsum",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "private": false,
   "author": "Alex Jarvis",
   "description": "Ergonomic Dice Rolling with Strong Typescript Support",
