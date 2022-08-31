@@ -2,3 +2,6 @@ dist
 coverage
 node_modules
 *.lock
+docs/_media
+docs/.*
+.prettierignore
