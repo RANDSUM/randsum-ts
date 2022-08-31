@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/alxjrvs/randsum">
-    <img alt="randsum" src="./docs/_media/icon.webp">
+    <img alt="randsum" src="./_media/icon.webp">
   </a>
 </p>
 
