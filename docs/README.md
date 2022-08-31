@@ -1,14 +1,22 @@
-# `randsum`
+<p align="center">
+  <a href="https://github.com/alxjrvs/randsum">
+    <img alt="randsum" src="./docs/_media/icon.svg">
+  </a>
+</p>
 
-Ergonomic Dice Rolling with Strong Typescript Support
+<p align="center">
+  Ergonomic Dice Rolling with Strong Typescript Support
+</p>
 
-[![npm version](https://img.shields.io/npm/v/randsum)](https://www.npmjs.com/package/randsum)
-[![bundle size](https://img.shields.io/bundlephobia/min/randsum)](https://bundlephobia.com/package/randsum)
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/alxjrvs/randsum/blob/main/LICENSE.md)
-[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md)
-[![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob)](https://codecov.io/gh/alxjrvs/randsum)
-[![Tests](https://github.com/alxjrvs/randsum/actions/workflows/tests.yml/badge.svg)](https://github.com/alxjrvs/randsum/actions/workflows/tests.yml)
-[![Lint](https://github.com/alxjrvs/randsum/actions/workflows/lint.yml/badge.svg)](https://github.com/alxjrvs/randsum/actions/workflows/lint.yml)
+<div align="center">
+  <a href="https://www.npmjs.com/package/randsum"><img src="https://img.shields.io/npm/v/randsum" alt="npm version"></a>
+  <a href="https://bundlephobia.com/package/randsum"><img src="https://img.shields.io/bundlephobia/min/randsum" alt="bundle size"></a>
+  <a href="https://github.com/alxjrvs/randsum/blob/main/LICENSE.md"><img src="https://img.shields.io/apm/l/atomic-design-ui.svg?" alt="MIT License"></a>
+  <a href="https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat" alt="Code of Conduct"></a>
+  <a href="https://codecov.io/gh/alxjrvs/randsum"><img src="https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob" alt="codecov"></a>
+  <a href="https://github.com/alxjrvs/randsum/actions/workflows/tests.yml"><img src="https://github.com/alxjrvs/randsum/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
+  <a href="https://github.com/alxjrvs/randsum/actions/workflows/lint.yml"><img src="https://github.com/alxjrvs/randsum/actions/workflows/lint.yml/badge.svg" alt="Lint"></a>
+</div>
 
 ## What is this?
 
