@@ -2,6 +2,8 @@
   "name": "randsum",
   "version": "1.7.4",
   "license": "MIT",
+  "description": "Ergonomic Dice Rolling with Strong Typescript Support",
+  "homepage": "https://github.com/alxjrvs/randsum ",
   "author": "alxjrvs@gmail.com",
   "main": "dist/index.js",
   "module": "dist/randsum.esm.js",
@@ -20,6 +22,28 @@
     "test": "dts test",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
+  "keywords": [
+    "dice",
+    "d20",
+    "dice roller",
+    "rpg dice roller",
+    "roll",
+    "d&d",
+    "dnd",
+    "rpg",
+    "ttrpg",
+    "rpgs",
+    "ttrpgs",
+    "tabletop",
+    "dungeons",
+    "dragons",
+    "roleplaying game",
+    "rand",
+    "random",
+    "RNG",
+    "notation",
+    "typescript"
+  ],
   "prettier": {
     "printWidth": 80,
     "semi": false,
@@ -27,7 +51,9 @@
     "trailingComma": "es5"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coverageDirectory": "coverage/",
+    "collectCoverage": true
   },
   "peerDependencies": {},
   "engines": {
