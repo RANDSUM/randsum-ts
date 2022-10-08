@@ -1,4 +1,0 @@
-#!/bin/bash
-
-bin/build
-node bin/benchmark.js

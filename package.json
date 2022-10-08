@@ -14,10 +14,15 @@
     "analyze": "size-limit --why",
     "build": "dts build",
     "lint": "dts lint",
-    "prepare": "dts build",
+    "prepare": "dts build && husky install",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "dts test"
+    "test": "dts test",
+    "postinstall": "husky install",
+    "prepublish": "dts build",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable",
+    "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "prettier": {
     "printWidth": 80,
@@ -46,9 +51,14 @@
     "@size-limit/preset-small-lib": "^8.1.0",
     "@tsconfig/recommended": "^1.0.1",
     "dts-cli": "^1.6.0",
-    "husky": "^8.0.1",
+    "husky": "^8.0.0",
     "size-limit": "^8.1.0",
     "tslib": "^2.4.0",
     "typescript": "^4.8.4"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "dts lint --fix"
+    ]
   }
 }
