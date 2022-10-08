@@ -1,6 +1,6 @@
 {
   "name": "randsum",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "license": "MIT",
   "description": "Ergonomic Dice Rolling with Strong Typescript Support",
   "homepage": "https://github.com/alxjrvs/randsum ",
