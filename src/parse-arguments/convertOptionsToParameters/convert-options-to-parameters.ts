@@ -34,7 +34,7 @@ export function convertOptionsToParameters(
     modifiers: providedFaces
       ? []
       : isCustomSides
-        ? []
-        : normalizeModifiers(modifiers || []),
+      ? []
+      : normalizeModifiers(modifiers || []),
   }
 }
