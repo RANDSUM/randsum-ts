@@ -44,7 +44,6 @@
     }
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^8.1.0",
     "@tsconfig/recommended": "^1.0.1",
     "dts-cli": "^1.6.0",
     "husky": "^8.0.0",
