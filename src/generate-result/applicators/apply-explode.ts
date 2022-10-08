@@ -1,5 +1,5 @@
-import { RollParameters } from 'types'
-import { makeRolls } from 'utils'
+import { RollParameters } from '../../types'
+import { makeRolls } from '../../utils'
 
 export function applyExplode(
   rolls: number[],

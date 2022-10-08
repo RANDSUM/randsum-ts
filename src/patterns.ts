@@ -21,5 +21,5 @@ export const allPatterns = [
   rerollPattern,
   capPattern,
   plusPattern,
-  minusPattern
+  minusPattern,
 ]

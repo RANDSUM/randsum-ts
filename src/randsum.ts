@@ -1,5 +1,5 @@
-import { generateResult } from 'generate-result'
-import { parseArguments } from 'parse-arguments'
+import { generateResult } from './generate-result'
+import { parseArguments } from './parse-arguments'
 import {
   DiceNotation,
   NumberString,
@@ -11,8 +11,8 @@ import {
   StandardDie,
   Detailed,
   RandsumArguments,
-  Simple
-} from 'types'
+  Simple,
+} from './types'
 
 // Sides Arguments
 export function randsum(
@@ -76,7 +76,7 @@ export function randsum(
 
   const result: RollResult<StandardDie> | RollResult<CustomSidesDie> = {
     ...generateResult(parameters),
-    arguments: [primeArgument, secondArgument]
+    arguments: [primeArgument, secondArgument],
   }
 
   return detailed ? result : result.total

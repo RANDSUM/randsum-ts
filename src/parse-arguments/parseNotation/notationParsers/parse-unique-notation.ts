@@ -1,4 +1,4 @@
-import { UniqueModifier } from 'types'
+import { UniqueModifier } from '../../../types'
 
 export function parseUniqueNotation(
   notationString: string
@@ -14,7 +14,7 @@ export function parseUniqueNotation(
 
   return {
     unique: {
-      notUnique: notUnique.map(Number)
-    }
+      notUnique: notUnique.map(Number),
+    },
   }
 }

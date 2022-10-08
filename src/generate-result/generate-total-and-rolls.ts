@@ -2,25 +2,25 @@ import {
   CustomSidesDie,
   InternalRollParameters,
   RollResult,
-  StandardDie
-} from 'types'
+  StandardDie,
+} from '../types'
 
 export function generateTotalAndRolls({
   faces,
   rolls,
-  simpleMathModifier
+  simpleMathModifier,
 }: Pick<InternalRollParameters, 'faces'> & {
   rolls: number[]
   simpleMathModifier: number
 }):
   | Pick<RollResult<StandardDie>, 'total' | 'rolls'>
   | Pick<RollResult<CustomSidesDie>, 'total' | 'rolls'> {
-  if (faces == undefined) {
+  if (faces === undefined) {
     return {
       total:
         Number([...rolls].reduce((total, roll) => total + roll, 0)) +
         simpleMathModifier,
-      rolls
+      rolls,
     }
   }
 

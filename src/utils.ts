@@ -1,12 +1,21 @@
+<<<<<<< HEAD
 import { allPatterns, coreNotationPattern } from 'patterns'
+=======
+import { allPatterns, coreNotationPattern } from './patterns'
+>>>>>>> 44abf35 (Wip)
 import {
   Match,
   Randomizer,
   DiceNotation,
   RandsumOptions,
   DieType,
+<<<<<<< HEAD
   DetailedType
 } from 'types'
+=======
+  DetailedType,
+} from './types'
+>>>>>>> 44abf35 (Wip)
 
 export const completeRollPattern = new RegExp(
   `${allPatterns.map((pattern) => pattern.source).join('|')}`,
@@ -27,8 +36,13 @@ export function findMatches(notations: string): Match[] {
               [key]:
                 key === 'coreNotationMatch'
                   ? value
+<<<<<<< HEAD
                   : value.toLowerCase().replace(/s+/, '')
             }
+=======
+                  : value.toLowerCase().replace(/s+/, ''),
+            },
+>>>>>>> 44abf35 (Wip)
           ]
         }
       }

@@ -1,4 +1,4 @@
-import { GreaterLessOptions } from 'types'
+import { GreaterLessOptions } from '../../types'
 
 export function applySingleCap(
   { greaterThan, lessThan }: GreaterLessOptions<number>,

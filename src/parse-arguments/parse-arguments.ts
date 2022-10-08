@@ -1,5 +1,5 @@
-import { isDiceNotation, isRandsumOptions } from 'utils'
-import { InternalRollParameters, RandsumArguments } from 'types'
+import { isDiceNotation, isRandsumOptions } from '../utils'
+import { InternalRollParameters, RandsumArguments } from '../types'
 import { parseNotation } from './parseNotation'
 import { convertOptionsToParameters } from './convertOptionsToParameters'
 
@@ -15,6 +15,6 @@ export function parseArguments(
     ...convertOptionsToParameters(secondArgument),
     ...(isDiceNotation(primeArgument)
       ? parseNotation(primeArgument)
-      : { sides: Number(primeArgument) })
+      : { sides: Number(primeArgument) }),
   }
 }

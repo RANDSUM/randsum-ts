@@ -1,4 +1,4 @@
-import { CapModifier } from 'types'
+import { CapModifier } from '../../../types'
 
 export function parseCapNotation(notationString: string): CapModifier<number> {
   let capParameters = {}
@@ -7,13 +7,13 @@ export function parseCapNotation(notationString: string): CapModifier<number> {
     if (note.includes('<')) {
       capParameters = {
         ...capParameters,
-        lessThan: Number(note.replace(/</g, ''))
+        lessThan: Number(note.replace(/</g, '')),
       }
       continue
     }
     capParameters = {
       ...capParameters,
-      greaterThan: Number(note.replace(/>/g, ''))
+      greaterThan: Number(note.replace(/>/g, '')),
     }
   }
   return { cap: capParameters }

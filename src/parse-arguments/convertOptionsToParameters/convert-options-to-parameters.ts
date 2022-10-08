@@ -3,10 +3,12 @@ import {
   DetailedType,
   DieType,
   InternalRollParameters,
-  StandardDie
-} from 'types'
-import { RandsumOptions, SecondaryRandsumOptions, UserOptions } from 'types'
-import { defaultRandomizer } from 'utils'
+  StandardDie,
+  RandsumOptions,
+  SecondaryRandsumOptions,
+  UserOptions,
+} from '../../types'
+import { defaultRandomizer } from '../../utils'
 import { normalizeModifiers } from './normalizeModifiers'
 
 export function convertOptionsToParameters(
@@ -32,7 +34,7 @@ export function convertOptionsToParameters(
     modifiers: providedFaces
       ? []
       : isCustomSides
-      ? []
-      : normalizeModifiers(modifiers || [])
+        ? []
+        : normalizeModifiers(modifiers || []),
   }
 }
