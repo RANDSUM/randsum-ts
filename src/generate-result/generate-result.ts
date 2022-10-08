@@ -4,14 +4,7 @@ import {
   RollResult,
   StandardDie,
 } from '../types'
-import {
-  applyDrop,
-  applyExplode,
-  applyReplace,
-  applyReroll,
-  applySingleCap,
-  applyUnique,
-} from './applicators'
+import { applyReroll, applyUnique, applyReplace, applySingleCap, applyDrop, applyExplode } from './applicators'
 import { generateRolls } from './generate-rolls'
 import { generateTotalAndRolls } from './generate-total-and-rolls'
 
