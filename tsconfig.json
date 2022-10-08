@@ -1,32 +1,10 @@
 {
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "include": [
+    "src",
+    "types"
+  ],
   "compilerOptions": {
-    "target": "es2018",
     "module": "esnext",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "declaration": true,
-    "outDir": "dist",
-    "baseUrl": "src",
-    "rootDir": "src",
-    /* Strict Type-Checking Options */
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    /* Additional Checks */
-    "removeComments": true,
-    "experimentalDecorators": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": false,
-    "importHelpers": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  }
 }
