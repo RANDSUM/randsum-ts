@@ -2,15 +2,15 @@ import {
   CustomSidesDie,
   InternalRollParameters,
   RollResult,
-  StandardDie
-} from 'types'
+  StandardDie,
+} from '../types'
 import {
+  applyReroll,
+  applyUnique,
+  applyReplace,
+  applySingleCap,
   applyDrop,
   applyExplode,
-  applyReplace,
-  applyReroll,
-  applySingleCap,
-  applyUnique
 } from './applicators'
 import { generateRolls } from './generate-rolls'
 import { generateTotalAndRolls } from './generate-total-and-rolls'
@@ -49,7 +49,7 @@ export function generateResult(
       initialRolls,
       faces,
       randomizer,
-      rollOne
-    }
+      rollOne,
+    },
   }
 }

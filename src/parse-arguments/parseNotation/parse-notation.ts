@@ -1,5 +1,5 @@
-import { DiceNotation, InternalRollParameters } from 'types'
-import { findMatches } from 'utils'
+import { DiceNotation, InternalRollParameters } from '../../types'
+import { findMatches } from '../../utils'
 
 import {
   parseCapNotation,
@@ -9,7 +9,7 @@ import {
   parseDropLowNotation,
   parseReplaceNotation,
   parseRerollNotation,
-  parseUniqueNotation
+  parseUniqueNotation,
 } from './notationParsers'
 
 export function parseNotation(
@@ -19,11 +19,11 @@ export function parseNotation(
     sides: 1,
     quantity: 1,
     faces: undefined,
-    modifiers: []
+    modifiers: [],
   }
 
   for (const match of findMatches(notationString)) {
-    const [key, value] = Object.entries(match)[0]
+    const [key, value] = Object.entries<string>(match)[0]
     const { modifiers = [], ...restParameters } = rollParameters
 
     if (key === 'coreNotationMatch') {
@@ -36,52 +36,52 @@ export function parseNotation(
     key === 'dropHighMatch' &&
       (rollParameters = {
         ...restParameters,
-        modifiers: [...modifiers, parseDropHighNotation(value)]
+        modifiers: [...modifiers, parseDropHighNotation(value)],
       })
     key === 'dropLowMatch' &&
       (rollParameters = {
         ...restParameters,
-        modifiers: [...modifiers, parseDropLowNotation(value)]
+        modifiers: [...modifiers, parseDropLowNotation(value)],
       })
     key === 'dropConstraintsMatch' &&
       (rollParameters = {
         ...restParameters,
-        modifiers: [...modifiers, parseDropConstraintsNotation(value)]
+        modifiers: [...modifiers, parseDropConstraintsNotation(value)],
       })
     key === 'explodeMatch' &&
       (rollParameters = {
         ...restParameters,
-        modifiers: [...modifiers, { explode: Boolean(value) }]
+        modifiers: [...modifiers, { explode: Boolean(value) }],
       })
     key === 'uniqueMatch' &&
       (rollParameters = {
         ...restParameters,
-        modifiers: [...modifiers, parseUniqueNotation(value)]
+        modifiers: [...modifiers, parseUniqueNotation(value)],
       })
     key === 'replaceMatch' &&
       (rollParameters = {
         ...restParameters,
-        modifiers: [...modifiers, parseReplaceNotation(value)]
+        modifiers: [...modifiers, parseReplaceNotation(value)],
       })
     key === 'rerollMatch' &&
       (rollParameters = {
         ...restParameters,
-        modifiers: [...modifiers, parseRerollNotation(value)]
+        modifiers: [...modifiers, parseRerollNotation(value)],
       })
     key === 'capMatch' &&
       (rollParameters = {
         ...restParameters,
-        modifiers: [...modifiers, parseCapNotation(value)]
+        modifiers: [...modifiers, parseCapNotation(value)],
       })
     key === 'plusMatch' &&
       (rollParameters = {
         ...restParameters,
-        modifiers: [...modifiers, { plus: Number(value.split('+')[1]) }]
+        modifiers: [...modifiers, { plus: Number(value.split('+')[1]) }],
       })
     key === 'minusMatch' &&
       (rollParameters = {
         ...restParameters,
-        modifiers: [...modifiers, { minus: Number(value.split('-')[1]) }]
+        modifiers: [...modifiers, { minus: Number(value.split('-')[1]) }],
       })
   }
 

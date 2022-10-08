@@ -1,12 +1,12 @@
-import { allPatterns, coreNotationPattern } from 'patterns'
+import { allPatterns, coreNotationPattern } from './patterns'
 import {
   Match,
   Randomizer,
   DiceNotation,
   RandsumOptions,
   DieType,
-  DetailedType
-} from 'types'
+  DetailedType,
+} from './types'
 
 export const completeRollPattern = new RegExp(
   `${allPatterns.map((pattern) => pattern.source).join('|')}`,
@@ -27,8 +27,8 @@ export function findMatches(notations: string): Match[] {
               [key]:
                 key === 'coreNotationMatch'
                   ? value
-                  : value.toLowerCase().replace(/s+/, '')
-            }
+                  : value.toLowerCase().replace(/s+/, ''),
+            },
           ]
         }
       }
@@ -65,6 +65,6 @@ export function isRandsumOptions(
   return (
     typeof argument === 'object' &&
     typeof (argument as RandsumOptions<DieType, DetailedType>).sides !==
-      undefined
+      'undefined'
   )
 }

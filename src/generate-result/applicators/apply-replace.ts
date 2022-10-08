@@ -1,4 +1,4 @@
-import { ReplaceOptions } from 'types'
+import { ReplaceOptions } from '../../types'
 
 import { applySingleCap } from './apply-single-cap'
 

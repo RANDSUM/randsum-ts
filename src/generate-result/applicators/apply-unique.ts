@@ -1,11 +1,11 @@
-import { RollParameters, UniqueModifier } from 'types'
+import { RollParameters, UniqueModifier } from '../../types'
 
 export function applyUnique(
   rolls: number[],
   {
     unique,
     quantity,
-    sides
+    sides,
   }: Pick<RollParameters, 'quantity' | 'sides'> & UniqueModifier,
   rollOne: () => number
 ): number[] {

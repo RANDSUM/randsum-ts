@@ -1,4 +1,4 @@
-import { InternalRollParameters } from 'types'
+import { InternalRollParameters } from '../../../types'
 
 function parseCoreNotationCustomSides(
   sides: string
@@ -6,7 +6,7 @@ function parseCoreNotationCustomSides(
   const faces = sides.replace(/{|}/g, '').split('')
   return {
     faces,
-    sides: faces.length
+    sides: faces.length,
   }
 }
 
@@ -19,6 +19,6 @@ export function parseCoreNotation(
     quantity: Number(quantity),
     ...(sides.includes('{')
       ? parseCoreNotationCustomSides(sides)
-      : { sides: Number(sides), faces: undefined })
+      : { sides: Number(sides), faces: undefined }),
   }
 }

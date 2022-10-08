@@ -1,5 +1,5 @@
-import { Randomizer, RollParameters } from 'types'
-import { makeRolls, rollOneFactory } from 'utils'
+import { Randomizer, RollParameters } from '../types'
+import { makeRolls, rollOneFactory } from '../utils'
 
 export function generateRolls(
   sides: number,

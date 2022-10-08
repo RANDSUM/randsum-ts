@@ -45,7 +45,7 @@ describe('Randsum', () => {
       const result = randsum({
         sides: 20,
         quantity: 2,
-        modifiers: [{ drop: { highest: 1 } }]
+        modifiers: [{ drop: { highest: 1 } }],
       })
 
       test('returns a number as total', () => {
@@ -111,7 +111,7 @@ describe('Randsum', () => {
     describe('with a detailed result', () => {
       const { total } = randsum({
         sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'],
-        detailed: true
+        detailed: true,
       })
 
       it('returns a string for total', () => {

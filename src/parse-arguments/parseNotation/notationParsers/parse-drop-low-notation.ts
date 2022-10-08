@@ -1,4 +1,4 @@
-import { DropModifier } from 'types'
+import { DropModifier } from '../../../types'
 
 export function parseDropLowNotation(
   notationString: string
@@ -7,7 +7,7 @@ export function parseDropLowNotation(
 
   return {
     drop: {
-      lowest: lowestCount !== '' ? Number(lowestCount) : 1
-    }
+      lowest: lowestCount !== '' ? Number(lowestCount) : 1,
+    },
   }
 }
