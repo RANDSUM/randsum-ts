@@ -3,9 +3,11 @@ import {
   DetailedType,
   DieType,
   InternalRollParameters,
-  StandardDie
+  StandardDie,
+  RandsumOptions,
+  SecondaryRandsumOptions,
+  UserOptions
 } from 'types'
-import { RandsumOptions, SecondaryRandsumOptions, UserOptions } from 'types'
 import { defaultRandomizer } from 'utils'
 import { normalizeModifiers } from './normalizeModifiers'
 
