@@ -65,6 +65,6 @@ export function isRandsumOptions(
   return (
     typeof argument === 'object' &&
     typeof (argument as RandsumOptions<DieType, DetailedType>).sides !==
-      'undefined'
+      undefined
   )
 }
