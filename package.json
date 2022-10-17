@@ -61,7 +61,7 @@
     "@babel/core": "^7.18.13",
     "@babel/preset-env": "^7.18.10",
     "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-commonjs": "^23.0.0",
     "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-typescript": "^8.4.0",
     "@size-limit/preset-small-lib": "^8.1.0",
