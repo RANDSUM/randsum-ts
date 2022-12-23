@@ -1,18 +1,17 @@
-import { generateResult } from 'generate-result'
-import { parseArguments } from 'parse-arguments'
+import generateResult from 'generate-result'
+import parseArguments from 'parse-arguments'
 import {
+  CustomSidesDie,
+  Detailed,
   DiceNotation,
   NumberString,
-  RandsumOptions,
-  SecondaryRandsumOptions,
-  RollResult,
-  UserOptions,
-  CustomSidesDie,
-  StandardDie,
-  Detailed,
   RandsumArguments,
-  Simple
-} from 'types'
+  RandsumOptions,
+  RollResult,
+  SecondaryRandsumOptions,
+  Simple,
+  StandardDie,
+  UserOptions} from 'types'
 
 // Sides Arguments
 export function randsum(
@@ -65,7 +64,7 @@ export function randsum(
 ): RollResult<CustomSidesDie>
 
 // Implementation
-export function randsum(
+export default function randsum(
   primeArgument: RandsumArguments['primeArgument'],
   secondArgument?: RandsumArguments['secondArgument']
 ): RollResult<StandardDie> | RollResult<CustomSidesDie> | number | string {

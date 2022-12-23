@@ -1,12 +1,11 @@
 import { allPatterns, coreNotationPattern } from 'patterns'
 import {
+  DetailedType,
+  DiceNotation,
+  DieType,
   Match,
   Randomizer,
-  DiceNotation,
-  RandsumOptions,
-  DieType,
-  DetailedType
-} from 'types'
+  RandsumOptions} from 'types'
 
 export const completeRollPattern = new RegExp(
   `${allPatterns.map((pattern) => pattern.source).join('|')}`,
@@ -37,8 +36,8 @@ export function findMatches(notations: string): Match[] {
   return matches
 }
 
-export function makeRolls(quantity: number, rollOne: () => number) {
-  const rolls = new Array<number>(quantity)
+export function makeRolls(quantity: number, rollOne: () => number): unknown[] {
+  const rolls = Array.from({length: quantity})
   for (let index = 0; index < quantity; index += 1) {
     rolls[index] = rollOne()
   }
@@ -64,7 +63,7 @@ export function isRandsumOptions(
 ): argument is RandsumOptions<DieType, DetailedType> {
   return (
     typeof argument === 'object' &&
-    typeof (argument as RandsumOptions<DieType, DetailedType>).sides !==
-      'undefined'
+    (argument as RandsumOptions<DieType, DetailedType>).sides !==
+      undefined
   )
 }

@@ -22,7 +22,7 @@ export function applyUnique(
   const filteredArray = new Set(
     rolls.filter((n) => !notUnique.includes(Number(n)))
   )
-  const fixedRollTotals = rolls.map(Number).map((roll, index, array) => {
+  return rolls.map(Number).map((roll, index, array) => {
     let newRoll: number
     if (array.indexOf(roll) === index || notUnique.includes(roll)) {
       return roll
@@ -32,6 +32,4 @@ export function applyUnique(
     } while (filteredArray.has(newRoll))
     return newRoll
   })
-
-  return fixedRollTotals
 }

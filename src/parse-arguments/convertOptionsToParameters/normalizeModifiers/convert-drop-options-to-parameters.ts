@@ -8,10 +8,10 @@ export function convertDropOptionsToParameters({
   exact
 }: DropOptions): DropOptions<number> {
   return {
-    highest: highest !== undefined ? Number(highest) : undefined,
-    lowest: lowest !== undefined ? Number(lowest) : undefined,
-    greaterThan: greaterThan !== undefined ? Number(greaterThan) : undefined,
-    lessThan: lessThan !== undefined ? Number(lessThan) : undefined,
-    exact: exact !== undefined ? exact.map(Number) : undefined
+    highest: highest === undefined ? undefined : Number(highest),
+    lowest: lowest === undefined ? undefined : Number(lowest),
+    greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
+    lessThan: lessThan === undefined ? undefined : Number(lessThan),
+    exact: exact === undefined ? undefined : exact.map(Number)
   }
 }

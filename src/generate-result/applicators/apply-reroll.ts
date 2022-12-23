@@ -42,9 +42,7 @@ export function applyReroll(
 
   let rerollRolls = rolls
   for (const rerollModifier of parameters) {
-    rerollRolls = rerollRolls.map((roll) => {
-      return rerollRoll(roll, rerollModifier, rollOne)
-    })
+    rerollRolls = rerollRolls.map((roll) => rerollRoll(roll, rerollModifier, rollOne))
   }
   return rerollRolls
 }

@@ -1,7 +1,7 @@
 import { Randomizer, RollParameters } from 'types'
 import { makeRolls, rollOneFactory } from 'utils'
 
-export function generateRolls(
+export default function generateRolls(
   sides: number,
   quantity: number,
   randomizer: Randomizer

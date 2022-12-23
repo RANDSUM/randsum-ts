@@ -5,7 +5,7 @@ export function convertGreaterLessOptionsToParameters({
   lessThan
 }: GreaterLessOptions): GreaterLessOptions<number> {
   return {
-    greaterThan: greaterThan !== undefined ? Number(greaterThan) : undefined,
-    lessThan: lessThan !== undefined ? Number(lessThan) : undefined
+    greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
+    lessThan: lessThan === undefined ? undefined : Number(lessThan)
   }
 }

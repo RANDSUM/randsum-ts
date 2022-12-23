@@ -14,11 +14,11 @@ export function applyReplace(
       if (from !== undefined) {
         if (typeof from === 'object') {
           return applySingleCap(from, to)(roll)
-        } else {
+        } 
           if (roll === from) {
             return to
           }
-        }
+        
       }
       return roll
     })
