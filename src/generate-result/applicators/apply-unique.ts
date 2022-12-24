@@ -1,12 +1,12 @@
 import { RollParameters, UniqueModifier } from 'types'
 
-export function applyUnique(
+export default function applyUnique(
   rolls: number[],
   {
     unique,
     quantity,
     sides
-  }: Pick<RollParameters, 'quantity' | 'sides'> & UniqueModifier,
+  }: Pick<RollParameters, 'quantity' | 'sides'> & UniqueModifier<number>,
   rollOne: () => number
 ): number[] {
   if (quantity > sides) {

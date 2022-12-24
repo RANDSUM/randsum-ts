@@ -1,18 +1,28 @@
 import {
+  isCapModifier,
+  isDropModifier,
+  isExplodeModifier,
+  isMinusModifier,
+  isPlusModifier,
+  isReplaceModifier,
+  isRerollModifier,
+  isUniqueModifier
+} from 'typeguards'
+import {
   CustomSidesDie,
   InternalRollParameters,
   RollResult,
   StandardDie
 } from 'types'
 
-import { applyDrop } from './applicators/apply-drop'
-import { applyExplode } from './applicators/apply-explode'
-import { applyReplace } from './applicators/apply-replace'
-import { applyReroll } from './applicators/apply-reroll'
-import { applySingleCap } from './applicators/apply-single-cap'
-import { applyUnique } from './applicators/apply-unique'
+import applyDrop from './applicators/apply-drop'
+import applyExplode from './applicators/apply-explode'
+import applyReplace from './applicators/apply-replace'
+import applyReroll from './applicators/apply-reroll'
+import applySingleCap from './applicators/apply-single-cap'
+import applyUnique from './applicators/apply-unique'
 import generateRolls from './generate-rolls'
-import { generateTotalAndRolls } from './generate-total-and-rolls'
+import generateTotalAndRolls from './generate-total-and-rolls'
 
 export default function generateResult(
   { sides, quantity, modifiers, randomizer, faces }: InternalRollParameters,
@@ -25,19 +35,43 @@ export default function generateResult(
   let rolls = [...initialRolls]
   let simpleMathModifier = 0
 
-  for (const modifier of modifiers) {
-    const [key, value] = Object.entries(modifier)[0]
+  modifiers.forEach((modifier) => {
+    if (isRerollModifier(modifier)) {
+      rolls = applyReroll(rolls, modifier.reroll, rollOne)
+    }
 
-    key === 'reroll' && (rolls = applyReroll(rolls, value, rollOne))
-    key === 'unique' &&
-      (rolls = applyUnique(rolls, { sides, quantity, unique: value }, rollOne))
-    key === 'replace' && (rolls = applyReplace(rolls, value))
-    key === 'cap' && (rolls = rolls.map(applySingleCap(value)))
-    key === 'drop' && (rolls = applyDrop(rolls, value))
-    key === 'explode' && (rolls = applyExplode(rolls, { sides }, rollOne))
-    key === 'plus' && (simpleMathModifier += Number(value))
-    key === 'minus' && (simpleMathModifier -= Math.abs(Number(value)))
-  }
+    if (isUniqueModifier(modifier)) {
+      rolls = applyUnique(
+        rolls,
+        { sides, quantity, unique: modifier.unique },
+        rollOne
+      )
+    }
+
+    if (isReplaceModifier(modifier)) {
+      rolls = applyReplace(rolls, modifier.replace)
+    }
+
+    if (isCapModifier(modifier)) {
+      rolls = rolls.map(applySingleCap(modifier.cap))
+    }
+
+    if (isDropModifier(modifier)) {
+      rolls = applyDrop(rolls, modifier.drop)
+    }
+
+    if (isExplodeModifier(modifier)) {
+      rolls = applyExplode(rolls, { sides }, rollOne)
+    }
+
+    if (isPlusModifier(modifier)) {
+      simpleMathModifier += Number(modifier.plus)
+    }
+
+    if (isMinusModifier(modifier)) {
+      simpleMathModifier += Number(modifier.minus)
+    }
+  })
 
   return {
     ...generateTotalAndRolls({ faces, rolls, simpleMathModifier }),

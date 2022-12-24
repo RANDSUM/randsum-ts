@@ -9,21 +9,19 @@ function times(iterator: number) {
   }
 }
 
-export function applyDrop(
+export default function applyDrop(
   rolls: number[],
   { highest, lowest, greaterThan, lessThan, exact }: DropOptions<number>
 ): number[] {
   const sortedResults = rolls
-    .filter((roll) => {
-      if (
-        (greaterThan !== undefined && roll > greaterThan) ||
-        (lessThan !== undefined && roll < lessThan) ||
-        exact?.map((number) => number).includes(roll) === true
-      ) {
-        return false
-      }
-      return true
-    })
+    .filter(
+      (roll) =>
+        !(
+          (greaterThan !== undefined && roll > greaterThan) ||
+          (lessThan !== undefined && roll < lessThan) ||
+          exact?.map((number) => number).includes(roll) === true
+        )
+    )
     .sort((a, b) => a - b)
 
   if (highest !== undefined) {

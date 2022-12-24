@@ -10,7 +10,6 @@ function rerollRoll(
     return roll
   }
   if (index === 99) {
-    console.warn('You have rerolled 99 times, stopping reroll.')
     return roll
   }
 
@@ -33,7 +32,7 @@ function rerollRoll(
   return roll
 }
 
-export function applyReroll(
+export default function applyReroll(
   rolls: number[],
   reroll: RerollOptions<number> | Array<RerollOptions<number>>,
   rollOne: () => number
@@ -41,8 +40,10 @@ export function applyReroll(
   const parameters = Array.isArray(reroll) ? reroll : [reroll]
 
   let rerollRolls = rolls
-  for (const rerollModifier of parameters) {
-    rerollRolls = rerollRolls.map((roll) => rerollRoll(roll, rerollModifier, rollOne))
-  }
+  parameters.forEach((rerollModifier) => {
+    rerollRolls = rerollRolls.map((roll) =>
+      rerollRoll(roll, rerollModifier, rollOne)
+    )
+  })
   return rerollRolls
 }

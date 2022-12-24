@@ -1,5 +1,5 @@
 import generateResult from 'generate-result'
-import { InternalRollParameters } from 'types'
+import { InternalRollParameters, RollParamCore } from 'types'
 
 const mockRandomizer = (): number => 5
 
@@ -12,7 +12,7 @@ describe('generateResult', () => {
     faces: undefined,
     randomizer: mockRandomizer
   }
-  const baseRollGenerator = () => ({
+  const baseRollGenerator = (): RollParamCore => ({
     initialRolls: rolls,
     rollOne: () => 200
   })
@@ -26,13 +26,13 @@ describe('generateResult', () => {
     })
 
     test('it passes size, quantity, and randomizer from RollParameters to the Roll Generator', () => {
-      const mockRandomizer = jest.fn()
+      const spyMockRandomizer = jest.fn()
       const mockRollGenerator = jest
         .fn()
         .mockReturnValue({ rollOnce: () => 200, initialRolls: [200] })
 
       generateResult(
-        { ...baseParameters, randomizer: mockRandomizer },
+        { ...baseParameters, randomizer: spyMockRandomizer },
 
         mockRollGenerator
       )
@@ -53,7 +53,7 @@ describe('generateResult', () => {
       quantity: duplicateRollTotals.length,
       modifiers: [{ unique: true }]
     }
-    const uniqueRollGenerator = () => ({
+    const uniqueRollGenerator = (): RollParamCore => ({
       ...baseRollGenerator(),
       initialRolls: duplicateRollTotals
     })
@@ -93,7 +93,7 @@ describe('generateResult', () => {
         ...uniqueParameters,
         quantity: overflowRollTotals.length
       }
-      const overflowRollGenerator = () => ({
+      const overflowRollGenerator = (): RollParamCore => ({
         ...baseRollGenerator(),
         initialRolls: overflowRollTotals
       })
@@ -148,7 +148,7 @@ describe('generateResult', () => {
         }
       ]
     }
-    const overflowRollGenerator = () => ({
+    const overflowRollGenerator = (): RollParamCore => ({
       ...baseRollGenerator(),
       initialRolls: longerRollTotals
     })
@@ -205,7 +205,7 @@ describe('generateResult', () => {
       modifiers: [{ explode: true }]
     }
 
-    const explodeRollGenerator = () => ({
+    const explodeRollGenerator = (): RollParamCore => ({
       ...baseRollGenerator(),
       initialRolls: explodeRollTotals
     })

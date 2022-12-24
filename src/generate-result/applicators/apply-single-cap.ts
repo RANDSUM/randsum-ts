@@ -1,6 +1,6 @@
 import { GreaterLessOptions } from 'types'
 
-export function applySingleCap(
+export default function applySingleCap(
   { greaterThan, lessThan }: GreaterLessOptions<number>,
   value?: number
 ) {

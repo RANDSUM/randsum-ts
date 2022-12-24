@@ -11,7 +11,8 @@ import {
   SecondaryRandsumOptions,
   Simple,
   StandardDie,
-  UserOptions} from 'types'
+  UserOptions
+} from 'types'
 
 // Sides Arguments
 export function randsum(

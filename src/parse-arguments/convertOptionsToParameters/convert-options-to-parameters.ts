@@ -10,14 +10,19 @@ import { defaultRandomizer } from 'utils'
 
 import { normalizeModifiers } from './normalizeModifiers'
 
-export function convertOptionsToParameters(
+export default function convertOptionsToParameters(
   options:
     | RandsumOptions<DieType, DetailedType>
     | SecondaryRandsumOptions<DieType, DetailedType>
     | UserOptions<DetailedType>
 ): InternalRollParameters {
-  const { sides, quantity, modifiers, randomizer, faces } =
-    options
+  const { sides, quantity, modifiers, randomizer, faces } = {
+    sides: 1,
+    quantity: 1,
+    modifiers: [],
+    faces: [],
+    ...options
+  }
 
   const isCustomSides = Array.isArray(sides)
   const providedFaces = faces !== undefined

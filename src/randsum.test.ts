@@ -3,13 +3,13 @@ import { randsum } from './randsum'
 describe('Randsum', () => {
   describe('Stress Test', () => {
     const loops = 9999
-    const dummyArray = Array.from({length: loops})
+    const dummyArray = Array.from({ length: loops })
     for (let index = 0; index < loops; index += 1) {
       dummyArray[index] = randsum(20)
     }
 
     test('it never goes outside of the bounds of the roll', () => {
-      dummyArray.forEach(roll => {
+      dummyArray.forEach((roll) => {
         expect(roll).toBeLessThanOrEqual(20)
         expect(roll).toBeGreaterThan(0)
       })

@@ -30,11 +30,6 @@ export type Detailed = true
 export type Simple = false
 export type DetailedType = Detailed | Simple
 
-export interface DropModifier<T extends NumberStringArgument = 'inclusive'>
-  extends Record<'drop', DropOptions<T>> {
-  drop: DropOptions<T>
-}
-
 export interface DropOptions<T extends NumberStringArgument = 'inclusive'> {
   highest?: NumberString<T>
   lowest?: NumberString<T>
@@ -50,24 +45,27 @@ export interface GreaterLessOptions<
   lessThan?: NumberString<T>
 }
 
-export type CapModifier<T extends NumberStringArgument = 'inclusive'> = Record<
-  'cap',
-  GreaterLessOptions<T>
->
-
 export interface RerollOptions<T extends NumberStringArgument = 'inclusive'>
   extends GreaterLessOptions<T> {
   exact?: TypeOrArrayOfType<NumberString<T>>
   maxReroll?: NumberString<T>
 }
-
-export type RerollModifier<T extends NumberStringArgument = 'inclusive'> =
-  Record<'reroll', TypeOrArrayOfType<RerollOptions<T>>>
-
 export interface ReplaceOptions<T extends NumberStringArgument = 'inclusive'> {
   from: NumberString<T> | GreaterLessOptions<T>
   to: NumberString<T>
 }
+
+export type CapModifier<T extends NumberStringArgument = 'inclusive'> = Record<
+  'cap',
+  GreaterLessOptions<T>
+>
+export interface DropModifier<T extends NumberStringArgument = 'inclusive'>
+  extends Record<'drop', DropOptions<T>> {
+  drop: DropOptions<T>
+}
+
+export type RerollModifier<T extends NumberStringArgument = 'inclusive'> =
+  Record<'reroll', TypeOrArrayOfType<RerollOptions<T>>>
 
 export type ReplaceModifier<T extends NumberStringArgument = 'inclusive'> =
   Record<'replace', TypeOrArrayOfType<ReplaceOptions<T>>>
@@ -169,11 +167,12 @@ export interface InternalRollParameters extends RollOptions<number> {
   faces: CustomSides | undefined
 }
 
-export interface RollParameters
-  extends Omit<InternalRollParameters, 'detailed'> {
+export type RollParamCore = {
   initialRolls: number[]
   rollOne: () => number
 }
+export type RollParameters = Omit<InternalRollParameters, 'detailed'> &
+  RollParamCore
 
 export type BaseRollResult = {
   rollParameters: RollParameters

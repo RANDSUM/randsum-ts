@@ -1,7 +1,7 @@
 import { RollParameters } from 'types'
 import { makeRolls } from 'utils'
 
-export function applyExplode(
+export default function applyExplode(
   rolls: number[],
   { sides }: Pick<RollParameters, 'sides'>,
   rollOne: () => number
