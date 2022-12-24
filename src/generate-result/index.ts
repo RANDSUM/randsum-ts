@@ -69,7 +69,7 @@ export default function generateResult(
     }
 
     if (isMinusModifier(modifier)) {
-      simpleMathModifier += Number(modifier.minus)
+      simpleMathModifier -= Number(modifier.minus)
     }
   })
 

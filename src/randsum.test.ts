@@ -1,11 +1,13 @@
-import { randsum } from './randsum'
+import index from '.'
+
+const randsum = index
 
 describe('Randsum', () => {
   describe('Stress Test', () => {
     const loops = 9999
     const dummyArray = Array.from({ length: loops })
-    for (let index = 0; index < loops; index += 1) {
-      dummyArray[index] = randsum(20)
+    for (let i = 0; i < loops; i += 1) {
+      dummyArray[i] = randsum(20)
     }
 
     test('it never goes outside of the bounds of the roll', () => {

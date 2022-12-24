@@ -40,7 +40,7 @@ describe('generateResult', () => {
       expect(mockRollGenerator).toHaveBeenCalledWith(
         baseParameters.sides,
         baseParameters.quantity,
-        mockRandomizer
+        spyMockRandomizer
       )
     })
   })
@@ -308,7 +308,7 @@ describe('generateResult', () => {
       modifiers: [{ minus: 2 }]
     }
 
-    test('it returns the total minust the "minus" modifier, and the roll total', () => {
+    test('it returns the total minus the "minus" modifier, and the roll total', () => {
       expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({
         total: 8,
         rolls: [1, 2, 3, 4]
