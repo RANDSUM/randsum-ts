@@ -29,7 +29,7 @@ export function isRandsumOptions(
   )
 }
 
-function isModifierType<T extends Modifier<number>>(
+function isModifierType<T extends Modifier<NumberStringArgument>>(
   argument: Modifier<NumberStringArgument>,
   key: keyof T
 ): argument is T {
@@ -37,34 +37,41 @@ function isModifierType<T extends Modifier<number>>(
 }
 
 export const isRerollModifier = (
-  modifier: Modifier<number>
-): modifier is RerollModifier<number> =>
-  isModifierType<RerollModifier<number>>(modifier, 'reroll')
+  modifier: Modifier<NumberStringArgument>
+): modifier is RerollModifier<NumberStringArgument> =>
+  isModifierType<RerollModifier<NumberStringArgument>>(modifier, 'reroll')
+
 export const isUniqueModifier = (
-  modifier: Modifier<number>
-): modifier is UniqueModifier<number> =>
-  isModifierType<UniqueModifier<number>>(modifier, 'unique')
+  modifier: Modifier<NumberStringArgument>
+): modifier is UniqueModifier<NumberStringArgument> =>
+  isModifierType<UniqueModifier<NumberStringArgument>>(modifier, 'unique')
+
 export const isReplaceModifier = (
-  modifier: Modifier<number>
-): modifier is ReplaceModifier<number> =>
-  isModifierType<ReplaceModifier<number>>(modifier, 'replace')
+  modifier: Modifier<NumberStringArgument>
+): modifier is ReplaceModifier<NumberStringArgument> =>
+  isModifierType<ReplaceModifier<NumberStringArgument>>(modifier, 'replace')
+
 export const isCapModifier = (
-  modifier: Modifier<number>
-): modifier is CapModifier<number> =>
-  isModifierType<CapModifier<number>>(modifier, 'cap')
+  modifier: Modifier<NumberStringArgument>
+): modifier is CapModifier<NumberStringArgument> =>
+  isModifierType<CapModifier<NumberStringArgument>>(modifier, 'cap')
+
 export const isDropModifier = (
-  modifier: Modifier<number>
-): modifier is DropModifier<number> =>
-  isModifierType<DropModifier<number>>(modifier, 'drop')
+  modifier: Modifier<NumberStringArgument>
+): modifier is DropModifier<NumberStringArgument> =>
+  isModifierType<DropModifier<NumberStringArgument>>(modifier, 'drop')
+
 export const isExplodeModifier = (
-  modifier: Modifier<number>
+  modifier: Modifier<NumberStringArgument>
 ): modifier is ExplodeModifier =>
   isModifierType<ExplodeModifier>(modifier, 'explode')
+
 export const isPlusModifier = (
-  modifier: Modifier<number>
-): modifier is PlusModifier<number> =>
-  isModifierType<PlusModifier<number>>(modifier, 'plus')
-export const isMinusModifier = (
-  modifier: Modifier<number>
-): modifier is MinusModifier<number> =>
-  isModifierType<MinusModifier<number>>(modifier, 'minus')
+  modifier: Modifier<NumberStringArgument>
+): modifier is PlusModifier<NumberStringArgument> =>
+  isModifierType<PlusModifier<NumberStringArgument>>(modifier, 'plus')
+
+export const isMinusModifier = <T extends NumberStringArgument>(
+  modifier: Modifier<T>
+): modifier is MinusModifier<T> =>
+  isModifierType<MinusModifier<T>>(modifier, 'minus')

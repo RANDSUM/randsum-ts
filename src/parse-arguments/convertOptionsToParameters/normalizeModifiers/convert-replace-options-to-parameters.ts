@@ -1,8 +1,8 @@
 import { ReplaceOptions } from 'types'
 
-import { convertGreaterLessOptionsToParameters } from './convert-greater-less-options-to-parameters'
+import convertGreaterLessOptionsToParameters from './convert-greater-less-options-to-parameters'
 
-export function convertReplaceOptionsToParameters({
+export default function convertReplaceOptionsToParameters({
   from,
   to
 }: ReplaceOptions): ReplaceOptions<number> {

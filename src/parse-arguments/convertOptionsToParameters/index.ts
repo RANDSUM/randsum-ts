@@ -8,7 +8,7 @@ import {
 } from 'types'
 import { defaultRandomizer } from 'utils'
 
-import { normalizeModifiers } from './normalizeModifiers'
+import normalizeModifiers from './normalizeModifiers'
 
 export default function convertOptionsToParameters(
   options:
@@ -17,10 +17,10 @@ export default function convertOptionsToParameters(
     | UserOptions<DetailedType>
 ): InternalRollParameters {
   const { sides, quantity, modifiers, randomizer, faces } = {
-    sides: 1,
-    quantity: 1,
-    modifiers: [],
-    faces: [],
+    sides: undefined,
+    quantity: undefined,
+    modifiers: undefined,
+    faces: undefined,
     ...options
   }
 

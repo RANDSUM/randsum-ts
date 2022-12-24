@@ -1,8 +1,8 @@
 import { RerollOptions } from 'types'
 
-import { convertGreaterLessOptionsToParameters } from './convert-greater-less-options-to-parameters'
+import convertGreaterLessOptionsToParameters from './convert-greater-less-options-to-parameters'
 
-export function convertRerollOptionsToParameters({
+export default function convertRerollOptionsToParameters({
   exact,
   maxReroll,
   ...restOptions

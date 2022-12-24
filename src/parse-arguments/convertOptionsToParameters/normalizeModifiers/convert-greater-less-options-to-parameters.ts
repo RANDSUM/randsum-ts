@@ -1,6 +1,6 @@
 import { GreaterLessOptions } from 'types'
 
-export function convertGreaterLessOptionsToParameters({
+export default function convertGreaterLessOptionsToParameters({
   greaterThan,
   lessThan
 }: GreaterLessOptions): GreaterLessOptions<number> {
