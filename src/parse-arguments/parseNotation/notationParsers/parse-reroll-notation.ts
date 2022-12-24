@@ -1,6 +1,6 @@
 import { RerollModifier, RerollOptions } from 'types'
 
-export function parseRerollNotation(
+export default function parseRerollNotation(
   notationString: string
 ): RerollModifier<number> {
   const parsedString = notationString
@@ -9,30 +9,30 @@ export function parseRerollNotation(
     .replace(/}/g, ',!')
     .split(',')
   let rerollParameters: RerollOptions<number> = {}
-  for (const notation of parsedString) {
+  parsedString.forEach((notation) => {
     if (notation === '!') {
-      continue
+      return
     }
     if (notation.includes('<')) {
       rerollParameters = {
         ...rerollParameters,
         lessThan: Number(notation.split('<')[1])
       }
-      continue
+      return
     }
     if (notation.includes('>')) {
       rerollParameters = {
         ...rerollParameters,
         greaterThan: Number(notation.split('>')[1])
       }
-      continue
+      return
     }
     if (notation.includes('!')) {
       rerollParameters = {
         ...rerollParameters,
         maxReroll: Number(notation.split('!')[1])
       }
-      continue
+      return
     }
     rerollParameters = {
       ...rerollParameters,
@@ -43,7 +43,7 @@ export function parseRerollNotation(
         Number(notation)
       ]
     }
-  }
+  })
 
   return { reroll: rerollParameters }
 }

@@ -1,6 +1,6 @@
 import { DropModifier } from 'types'
 
-export function parseDropLowNotation(
+export default function parseDropLowNotation(
   notationString: string
 ): DropModifier<number> {
   const lowestCount = notationString.split('l')[1]

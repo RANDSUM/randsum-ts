@@ -1,6 +1,6 @@
 import { DropModifier, DropOptions } from 'types'
 
-export function parseDropConstraintsNotation(
+export default function parseDropConstraintsNotation(
   notationString: string
 ): DropModifier<number> {
   let dropConstraintParameters: Pick<
@@ -12,26 +12,26 @@ export function parseDropConstraintsNotation(
     .replace(/{/g, '')
     .replace(/}/g, '')
     .split(',')
-  for (const constraint of constraints) {
+  constraints.forEach((constraint) => {
     if (constraint.includes('<')) {
       dropConstraintParameters = {
         ...dropConstraintParameters,
         lessThan: Number(constraint.split('<')[1])
       }
-      continue
+      return
     }
     if (constraint.includes('>')) {
       dropConstraintParameters = {
         ...dropConstraintParameters,
         greaterThan: Number(constraint.split('>')[1])
       }
-      continue
+      return
     }
     dropConstraintParameters = {
       ...dropConstraintParameters,
 
       exact: [...(dropConstraintParameters?.exact || []), Number(constraint)]
     }
-  }
+  })
   return { drop: dropConstraintParameters }
 }

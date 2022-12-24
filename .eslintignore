@@ -1,4 +1,7 @@
 node_modules
 dist
+bin
 coverage
 benchmark.js
+rollup.config.js
+*.md

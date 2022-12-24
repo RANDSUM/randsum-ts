@@ -1,6 +1,6 @@
 import { ReplaceModifier } from 'types'
 
-export function parseReplaceNotation(
+export default function parseReplaceNotation(
   notationString: string
 ): ReplaceModifier<number> {
   const replaceOptions = notationString

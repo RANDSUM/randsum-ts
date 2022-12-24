@@ -1,6 +1,6 @@
 import { UniqueModifier } from 'types'
 
-export function parseUniqueNotation(
+export default function parseUniqueNotation(
   notationString: string
 ): UniqueModifier<number> {
   if (notationString === 'u') {
