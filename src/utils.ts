@@ -168,11 +168,9 @@ export function walkNotations(notations: string, matches: Match[]): Match[] {
       if (groups[key] !== undefined) {
         const value = groups[key]
         const newMatch = {
-          [key]:
-            // key === 'coreNotationMatch'
-            isCoreNotationMatch({ [key]: value } as Match)
-              ? value
-              : value.toLowerCase().replace(/s+/, '')
+          [key]: isCoreNotationMatch({ [key]: value } as Match)
+            ? value
+            : value.toLowerCase().replace(/s+/, '')
         } as Match
         newMatches = [...matches, newMatch]
       }
