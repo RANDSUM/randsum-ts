@@ -15,12 +15,14 @@ import {
   isUniqueModifier
 } from 'utils'
 
-import applyDrop from './applicators/apply-drop'
-import applyExplode from './applicators/apply-explode'
-import applyReplace from './applicators/apply-replace'
-import applyReroll from './applicators/apply-reroll'
-import applySingleCap from './applicators/apply-single-cap'
-import applyUnique from './applicators/apply-unique'
+import {
+  applyDrop,
+  applyExplode,
+  applyReplace,
+  applyReroll,
+  applySingleCap,
+  applyUnique
+} from './applicators'
 import generateRolls from './generate-rolls'
 import generateTotalAndRolls from './generate-total-and-rolls'
 

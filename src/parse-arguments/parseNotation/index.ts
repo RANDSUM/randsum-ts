@@ -1,8 +1,7 @@
 import { DiceNotation, InternalRollParameters } from 'types'
 import { findMatches, isCoreNotationMatch } from 'utils'
 
-import parseCoreNotation from './notationParsers/parse-core-notation'
-import parseModifiers from './notationParsers/parse-modifiers'
+import parseModifiers, { parseCoreNotation } from './parsers'
 
 export default function parseNotation(
   notationString: DiceNotation

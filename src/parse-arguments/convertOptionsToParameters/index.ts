@@ -8,7 +8,7 @@ import {
 } from 'types'
 import { defaultRandomizer } from 'utils'
 
-import normalizeModifiers from './normalizeModifiers'
+import normalizeModifiers from './normalize-modifiers'
 
 export default function convertOptionsToParameters(
   options:

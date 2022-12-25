@@ -1,4 +1,10 @@
-import { Modifier } from 'types'
+import {
+  DropOptions,
+  GreaterLessOptions,
+  Modifier,
+  ReplaceOptions,
+  RerollOptions
+} from 'types'
 import {
   isCapModifier,
   isDropModifier,
@@ -10,10 +16,60 @@ import {
   isUniqueModifier
 } from 'utils'
 
-import convertDropOptionsToParameters from './convert-drop-options-to-parameters'
-import convertGreaterLessOptionsToParameters from './convert-greater-less-options-to-parameters'
-import convertReplaceOptionsToParameters from './convert-replace-options-to-parameters'
-import convertRerollOptionsToParameters from './convert-reroll-options-to-parameters'
+export function convertDropOptionsToParameters({
+  highest,
+  lowest,
+  greaterThan,
+  lessThan,
+  exact
+}: DropOptions): DropOptions<number> {
+  return {
+    highest: highest === undefined ? undefined : Number(highest),
+    lowest: lowest === undefined ? undefined : Number(lowest),
+    greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
+    lessThan: lessThan === undefined ? undefined : Number(lessThan),
+    exact: exact === undefined ? undefined : exact.map(Number)
+  }
+}
+
+export function convertGreaterLessOptionsToParameters({
+  greaterThan,
+  lessThan
+}: GreaterLessOptions): GreaterLessOptions<number> {
+  return {
+    greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
+    lessThan: lessThan === undefined ? undefined : Number(lessThan)
+  }
+}
+
+export function convertReplaceOptionsToParameters({
+  from,
+  to
+}: ReplaceOptions): ReplaceOptions<number> {
+  return {
+    from:
+      typeof from === 'object'
+        ? convertGreaterLessOptionsToParameters(from)
+        : Number(from),
+    to: Number(to)
+  }
+}
+
+export function convertRerollOptionsToParameters({
+  exact,
+  maxReroll,
+  ...restOptions
+}: RerollOptions): RerollOptions<number> {
+  const convertedExact =
+    exact === undefined
+      ? {}
+      : { exact: Array.isArray(exact) ? exact.map(Number) : [Number(exact)] }
+  return {
+    ...convertGreaterLessOptionsToParameters(restOptions),
+    ...convertedExact,
+    maxReroll: maxReroll === undefined ? undefined : Number(maxReroll)
+  }
+}
 
 export default function normalizeModifiers(
   modifiers: Array<Modifier<'inclusive' | number>> = []
