@@ -4,7 +4,7 @@ export default function parseRerollNotation({
   rerollMatch: notationString
 }: RerollMatch): RerollModifier<number> {
   const parsedString = notationString
-    .split('r')[1]
+    .split(/[Rr]/)[1]
     .replace(/{/g, '')
     .replace(/}/g, ',!')
     .split(',')

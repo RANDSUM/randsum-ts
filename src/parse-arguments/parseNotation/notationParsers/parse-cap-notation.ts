@@ -4,7 +4,7 @@ export default function parseCapNotation({
   capMatch: notationString
 }: CapMatch): CapModifier<number> {
   let capParameters = {}
-  const capString = notationString.split('c')[1].split(/(?!\d)/)
+  const capString = notationString.split(/[Cc]/)[1].split(/(?!\d)/)
   capString.forEach((note) => {
     if (note.includes('<')) {
       capParameters = {

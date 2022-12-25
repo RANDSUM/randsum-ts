@@ -8,7 +8,7 @@ export default function parseDropConstraintsNotation({
     'exact' | 'greaterThan' | 'lessThan'
   > = { exact: [] }
   const constraints = notationString
-    .split('d')[1]
+    .split(/[Dd]/)[1]
     .replace(/{/g, '')
     .replace(/}/g, '')
     .split(',')

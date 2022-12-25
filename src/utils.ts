@@ -1,4 +1,3 @@
-import { allPatterns, coreNotationPattern } from 'patterns'
 import {
   CapMatch,
   CapModifier,
@@ -29,17 +28,8 @@ import {
   UniqueModifier
 } from 'types'
 
-export const completeRollPattern = new RegExp(
-  `${allPatterns.map((pattern) => pattern.source).join('|')}`,
-  'g'
-)
-
 export function makeRolls(quantity: number, rollOne: () => number): number[] {
-  const rolls: number[] = Array.from({ length: quantity })
-  for (let index = 0; index < quantity; index += 1) {
-    rolls[index] = rollOne()
-  }
-  return rolls
+  return Array.from({ length: quantity }, rollOne)
 }
 
 export function defaultRandomizer(max: number): number {
@@ -52,10 +42,6 @@ export function rollOneFactory(sides: number, randomizer: Randomizer) {
   }
 }
 
-export function isDiceNotation(argument: unknown): argument is DiceNotation {
-  return !!coreNotationPattern.test(String(argument))
-}
-
 export function isRandsumOptions(
   argument: unknown
 ): argument is RandsumOptions<DieType, DetailedType> {
@@ -66,7 +52,6 @@ export function isRandsumOptions(
 }
 
 // Modifiers
-
 function isModifierType<T extends Modifier<NumberStringArgument>>(
   argument: Modifier<NumberStringArgument>,
   key: keyof T
@@ -122,7 +107,6 @@ function isMatcherType<T extends Match>(
 }
 
 // Matches
-
 export const isCoreNotationMatch = (match: Match): match is CoreNotationMatch =>
   isMatcherType<CoreNotationMatch>(match, 'coreNotationMatch')
 
@@ -158,28 +142,20 @@ export const isPlusMatch = (match: Match): match is PlusMatch =>
 export const isMinusMatch = (match: Match): match is MinusMatch =>
   isMatcherType<MinusMatch>(match, 'minusMatch')
 
-export function walkNotations(notations: string, matches: Match[]): Match[] {
-  const m = completeRollPattern.exec(notations)
-  if (m !== null && m.groups !== null && m.groups !== undefined) {
-    let newMatches = matches
-    const { groups } = m
+const coreNotationPattern = /(?<coreNotationMatch>^\d+[Dd](\d+|{.*}))/
+const modifierRollPatterns =
+  /(?<dropHighMatch>[Hh]\d*)|(?<dropLowMatch>[Ll]\d*)|(?<dropConstraintsMatch>[Dd]{?([<>|]?\d+,?)*}?)|(?<explodeMatch>!+{?([<>|]?\d+,?)*}?)|(?<uniqueMatch>[Uu]({(\d+,?)+})?)|(?<replaceMatch>[Vv]{?([<>|]?\d+=?\d+,?)*}?)|(?<rerollMatch>[Rr]{?([<>|]?\d,?)*}\d*)|(?<capMatch>[Cc]([<>|]?\d+)*)|(?<plusMatch>\+\d+)|(?<minusMatch>-\d+)/
+export const completeRollPattern = new RegExp(
+  `${coreNotationPattern.source}|${modifierRollPatterns.source}`,
+  'g'
+)
 
-    Object.keys(groups).forEach((key) => {
-      if (groups[key] !== undefined) {
-        const value = groups[key]
-        const newMatch = {
-          [key]: isCoreNotationMatch({ [key]: value } as Match)
-            ? value
-            : value.toLowerCase().replace(/s+/, '')
-        } as Match
-        newMatches = [...matches, newMatch]
-      }
-    })
-    return walkNotations(notations, newMatches)
-  }
-  return matches
+export function isDiceNotation(argument: unknown): argument is DiceNotation {
+  return !!coreNotationPattern.test(String(argument))
 }
 
 export function findMatches(notations: string): Match[] {
-  return walkNotations(notations, [])
+  return [...notations.matchAll(completeRollPattern)].map<Match>(
+    ({ groups: match }) => match as Match
+  )
 }

@@ -4,7 +4,7 @@ export default function parseReplaceNotation({
   replaceMatch: notationString
 }: ReplaceMatch): ReplaceModifier<number> {
   const replaceOptions = notationString
-    .split('v')[1]
+    .split(/[Vv]/)[1]
     .replace(/{/g, '')
     .replace(/}/g, '')
     .split(',')
