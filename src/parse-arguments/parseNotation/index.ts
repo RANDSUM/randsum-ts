@@ -13,85 +13,85 @@ import parseUniqueNotation from './notationParsers/parse-unique-notation'
 export default function parseNotation(
   notationString: DiceNotation
 ): Omit<InternalRollParameters, 'randomizer'> {
-  let rollParameters: Omit<InternalRollParameters, 'randomizer'> = {
+  const rollParameters: Omit<InternalRollParameters, 'randomizer'> = {
     sides: 1,
     quantity: 1,
     faces: undefined,
     modifiers: []
   }
 
-  findMatches(notationString).forEach((match) => {
+  // eslint-disable-next-line unicorn/no-array-reduce
+  return findMatches(notationString).reduce((accumulator, match) => {
     const [key, value] = Object.entries(match)[0]
-    const { modifiers = [], ...restParameters } = rollParameters
+    const { modifiers = [], ...restParameters } = accumulator
 
     if (key === 'coreNotationMatch') {
-      rollParameters = { ...rollParameters, ...parseCoreNotation(value) }
-      if (rollParameters.faces !== undefined) {
-        rollParameters = { ...rollParameters, modifiers: [] }
-        return
+      const newRollParameters = { ...accumulator, ...parseCoreNotation(value) }
+      if (newRollParameters.faces !== undefined) {
+        return { ...newRollParameters, modifiers: [] }
       }
+      return newRollParameters
     }
     if (key === 'dropHighMatch') {
-      rollParameters = {
-        ...restParameters,
+      return {
+        ...accumulator,
         modifiers: [...modifiers, parseDropHighNotation(value)]
       }
     }
     if (key === 'dropLowMatch') {
-      rollParameters = {
-        ...restParameters,
+      return {
+        ...accumulator,
         modifiers: [...modifiers, parseDropLowNotation(value)]
       }
     }
     if (key === 'dropConstraintsMatch') {
-      rollParameters = {
+      return {
         ...restParameters,
         modifiers: [...modifiers, parseDropConstraintsNotation(value)]
       }
     }
     if (key === 'explodeMatch') {
-      rollParameters = {
+      return {
         ...restParameters,
         modifiers: [...modifiers, { explode: Boolean(value) }]
       }
     }
     if (key === 'uniqueMatch') {
-      rollParameters = {
+      return {
         ...restParameters,
         modifiers: [...modifiers, parseUniqueNotation(value)]
       }
     }
     if (key === 'replaceMatch') {
-      rollParameters = {
+      return {
         ...restParameters,
         modifiers: [...modifiers, parseReplaceNotation(value)]
       }
     }
     if (key === 'rerollMatch') {
-      rollParameters = {
+      return {
         ...restParameters,
         modifiers: [...modifiers, parseRerollNotation(value)]
       }
     }
     if (key === 'capMatch') {
-      rollParameters = {
+      return {
         ...restParameters,
         modifiers: [...modifiers, parseCapNotation(value)]
       }
     }
     if (key === 'plusMatch') {
-      rollParameters = {
+      return {
         ...restParameters,
         modifiers: [...modifiers, { plus: Number(value.split('+')[1]) }]
       }
     }
     if (key === 'minusMatch') {
-      rollParameters = {
+      return {
         ...restParameters,
         modifiers: [...modifiers, { minus: Number(value.split('-')[1]) }]
       }
     }
-  })
-
-  return rollParameters
+    throw new Error('Unrecognized Match')
+  }, rollParameters)
 }

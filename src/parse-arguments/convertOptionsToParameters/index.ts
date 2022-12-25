@@ -26,16 +26,18 @@ export default function convertOptionsToParameters(
 
   const isCustomSides = Array.isArray(sides)
   const providedFaces = faces !== undefined
+  const normalizedModifiers = providedFaces
+    ? []
+    : isCustomSides
+    ? []
+    : normalizeModifiers(modifiers || [])
+
   return {
     ...options,
     randomizer: randomizer || defaultRandomizer,
     faces: providedFaces ? faces : isCustomSides ? sides : undefined,
     sides: isCustomSides ? sides.length : Number(sides),
     quantity: Number(quantity || 1),
-    modifiers: providedFaces
-      ? []
-      : isCustomSides
-      ? []
-      : normalizeModifiers(modifiers || [])
+    modifiers: normalizedModifiers
   }
 }

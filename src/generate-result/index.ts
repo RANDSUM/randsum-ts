@@ -1,4 +1,10 @@
 import {
+  CustomSidesDie,
+  InternalRollParameters,
+  RollResult,
+  StandardDie
+} from 'types'
+import {
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
@@ -7,13 +13,7 @@ import {
   isReplaceModifier,
   isRerollModifier,
   isUniqueModifier
-} from 'typeguards'
-import {
-  CustomSidesDie,
-  InternalRollParameters,
-  RollResult,
-  StandardDie
-} from 'types'
+} from 'utils'
 
 import applyDrop from './applicators/apply-drop'
 import applyExplode from './applicators/apply-explode'
@@ -32,49 +32,79 @@ export default function generateResult(
   | Omit<RollResult<CustomSidesDie>, 'arguments'> {
   const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
 
-  let rolls = [...initialRolls]
-  let simpleMathModifier = 0
+  const rollBonuses = {
+    simpleMathModifier: 0,
+    rolls: initialRolls
+  }
 
-  modifiers.forEach((modifier) => {
+  // eslint-disable-next-line unicorn/no-array-reduce
+  const modifiedRollBonuses = modifiers.reduce((accumulator, modifier) => {
     if (isRerollModifier(modifier)) {
-      rolls = applyReroll(rolls, modifier.reroll, rollOne)
+      return {
+        ...accumulator,
+        rolls: applyReroll(accumulator.rolls, modifier.reroll, rollOne)
+      }
     }
 
     if (isUniqueModifier(modifier)) {
-      rolls = applyUnique(
-        rolls,
-        { sides, quantity, unique: modifier.unique },
-        rollOne
-      )
+      return {
+        ...accumulator,
+        rolls: applyUnique(
+          accumulator.rolls,
+          { sides, quantity, unique: modifier.unique },
+          rollOne
+        )
+      }
     }
 
     if (isReplaceModifier(modifier)) {
-      rolls = applyReplace(rolls, modifier.replace)
+      return {
+        ...accumulator,
+        rolls: applyReplace(accumulator.rolls, modifier.replace)
+      }
     }
 
     if (isCapModifier(modifier)) {
-      rolls = rolls.map(applySingleCap(modifier.cap))
+      return {
+        ...accumulator,
+        rolls: accumulator.rolls.map(applySingleCap(modifier.cap))
+      }
     }
 
     if (isDropModifier(modifier)) {
-      rolls = applyDrop(rolls, modifier.drop)
+      return {
+        ...accumulator,
+        rolls: applyDrop(accumulator.rolls, modifier.drop)
+      }
     }
 
     if (isExplodeModifier(modifier)) {
-      rolls = applyExplode(rolls, { sides }, rollOne)
+      return {
+        ...accumulator,
+        rolls: applyExplode(accumulator.rolls, { sides }, rollOne)
+      }
     }
 
     if (isPlusModifier(modifier)) {
-      simpleMathModifier += Number(modifier.plus)
+      return {
+        ...accumulator,
+        simpleMathModifier:
+          accumulator.simpleMathModifier + Number(modifier.plus)
+      }
     }
 
     if (isMinusModifier(modifier)) {
-      simpleMathModifier -= Number(modifier.minus)
+      return {
+        ...accumulator,
+        simpleMathModifier:
+          accumulator.simpleMathModifier - Number(modifier.minus)
+      }
     }
-  })
+    throw new Error('Unrecognized Modifier')
+  }, rollBonuses)
 
   return {
-    ...generateTotalAndRolls({ faces, rolls, simpleMathModifier }),
+    ...generateTotalAndRolls({ faces, ...modifiedRollBonuses }),
     rollParameters: {
       sides,
       quantity,
