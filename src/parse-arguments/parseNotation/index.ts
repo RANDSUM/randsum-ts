@@ -34,13 +34,13 @@ export default function parseNotation(
     }
     if (key === 'dropHighMatch') {
       return {
-        ...accumulator,
+        ...restParameters,
         modifiers: [...modifiers, parseDropHighNotation(value)]
       }
     }
     if (key === 'dropLowMatch') {
       return {
-        ...accumulator,
+        ...restParameters,
         modifiers: [...modifiers, parseDropLowNotation(value)]
       }
     }
