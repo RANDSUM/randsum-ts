@@ -1,8 +1,8 @@
-import { DropModifier, DropOptions } from 'types'
+import { DropConstraintsMatch, DropModifier, DropOptions } from 'types'
 
-export default function parseDropConstraintsNotation(
-  notationString: string
-): DropModifier<number> {
+export default function parseDropConstraintsNotation({
+  dropConstraintsMatch: notationString
+}: DropConstraintsMatch): DropModifier<number> {
   let dropConstraintParameters: Pick<
     DropOptions<number>,
     'exact' | 'greaterThan' | 'lessThan'

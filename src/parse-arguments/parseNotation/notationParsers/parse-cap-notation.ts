@@ -1,8 +1,8 @@
-import { CapModifier } from 'types'
+import { CapMatch, CapModifier } from 'types'
 
-export default function parseCapNotation(
-  notationString: string
-): CapModifier<number> {
+export default function parseCapNotation({
+  capMatch: notationString
+}: CapMatch): CapModifier<number> {
   let capParameters = {}
   const capString = notationString.split('c')[1].split(/(?!\d)/)
   capString.forEach((note) => {

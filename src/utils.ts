@@ -138,7 +138,7 @@ export const isDropConstraintsMatch = (
   isMatcherType<DropConstraintsMatch>(match, 'dropConstraintsMatch')
 
 export const isExplodeMatch = (match: Match): match is ExplodeMatch =>
-  isMatcherType<DropConstraintsMatch>(match, 'dropConstraintsMatch')
+  isMatcherType<ExplodeMatch>(match, 'explodeMatch')
 
 export const isUniqueMatch = (match: Match): match is UniqueMatch =>
   isMatcherType<UniqueMatch>(match, 'uniqueMatch')

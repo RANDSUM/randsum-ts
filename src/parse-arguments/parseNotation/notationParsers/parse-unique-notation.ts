@@ -1,8 +1,8 @@
-import { UniqueModifier } from 'types'
+import { UniqueMatch, UniqueModifier } from 'types'
 
-export default function parseUniqueNotation(
-  notationString: string
-): UniqueModifier<number> {
+export default function parseUniqueNotation({
+  uniqueMatch: notationString
+}: UniqueMatch): UniqueModifier<number> {
   if (notationString === 'u') {
     return { unique: true }
   }

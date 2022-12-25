@@ -1,4 +1,4 @@
-import { InternalRollParameters } from 'types'
+import { CoreNotationMatch, InternalRollParameters } from 'types'
 
 function parseCoreNotationCustomSides(
   sides: string
@@ -10,9 +10,12 @@ function parseCoreNotationCustomSides(
   }
 }
 
-export default function parseCoreNotation(
-  notationString: string
-): Pick<InternalRollParameters, 'sides' | 'quantity' | 'faces'> {
+export default function parseCoreNotation({
+  coreNotationMatch: notationString
+}: CoreNotationMatch): Pick<
+  InternalRollParameters,
+  'sides' | 'quantity' | 'faces'
+> {
   const [quantity, sides] = notationString.split(/[Dd]/)
 
   return {

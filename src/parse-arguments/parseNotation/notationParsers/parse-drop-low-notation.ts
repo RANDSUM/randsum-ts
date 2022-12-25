@@ -1,8 +1,8 @@
-import { DropModifier } from 'types'
+import { DropLowMatch, DropModifier } from 'types'
 
-export default function parseDropLowNotation(
-  notationString: string
-): DropModifier<number> {
+export default function parseDropLowNotation({
+  dropLowMatch: notationString
+}: DropLowMatch): DropModifier<number> {
   const lowestCount = notationString.split('l')[1]
 
   return {

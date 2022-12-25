@@ -1,8 +1,8 @@
-import { ReplaceModifier } from 'types'
+import { ReplaceMatch, ReplaceModifier } from 'types'
 
-export default function parseReplaceNotation(
-  notationString: string
-): ReplaceModifier<number> {
+export default function parseReplaceNotation({
+  replaceMatch: notationString
+}: ReplaceMatch): ReplaceModifier<number> {
   const replaceOptions = notationString
     .split('v')[1]
     .replace(/{/g, '')

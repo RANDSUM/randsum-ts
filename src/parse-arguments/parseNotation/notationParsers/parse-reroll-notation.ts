@@ -1,8 +1,8 @@
-import { RerollModifier, RerollOptions } from 'types'
+import { RerollMatch, RerollModifier, RerollOptions } from 'types'
 
-export default function parseRerollNotation(
-  notationString: string
-): RerollModifier<number> {
+export default function parseRerollNotation({
+  rerollMatch: notationString
+}: RerollMatch): RerollModifier<number> {
   const parsedString = notationString
     .split('r')[1]
     .replace(/{/g, '')
