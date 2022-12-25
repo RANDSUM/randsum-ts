@@ -1,5 +1,18 @@
 import { DiceNotation, InternalRollParameters } from 'types'
-import { findMatches } from 'utils'
+import {
+  findMatches,
+  isCapMatch,
+  isCoreNotationMatch,
+  isDropConstraintsMatch,
+  isDropHighMatch,
+  isDropLowMatch,
+  isExplodeMatch,
+  isMinusMatch,
+  isPlusMatch,
+  isReplaceMatch,
+  isRerollMatch,
+  isUniqueMatch
+} from 'utils'
 
 import parseCapNotation from './notationParsers/parse-cap-notation'
 import parseCoreNotation from './notationParsers/parse-core-notation'
@@ -22,74 +35,86 @@ export default function parseNotation(
 
   // eslint-disable-next-line unicorn/no-array-reduce
   return findMatches(notationString).reduce((accumulator, match) => {
-    const [key, value] = Object.entries(match)[0]
     const { modifiers = [], ...restParameters } = accumulator
 
-    if (key === 'coreNotationMatch') {
-      const newRollParameters = { ...accumulator, ...parseCoreNotation(value) }
+    // if (key === 'coreNotationMatch') {
+    if (isCoreNotationMatch(match)) {
+      const newRollParameters = {
+        ...accumulator,
+        ...parseCoreNotation(match.coreNotationMatch)
+      }
       if (newRollParameters.faces !== undefined) {
         return { ...newRollParameters, modifiers: [] }
       }
       return newRollParameters
     }
-    if (key === 'dropHighMatch') {
+    if (isDropHighMatch(match)) {
       return {
         ...restParameters,
-        modifiers: [...modifiers, parseDropHighNotation(value)]
+        modifiers: [...modifiers, parseDropHighNotation(match.dropHighMatch)]
       }
     }
-    if (key === 'dropLowMatch') {
+    if (isDropLowMatch(match)) {
       return {
         ...restParameters,
-        modifiers: [...modifiers, parseDropLowNotation(value)]
+        modifiers: [...modifiers, parseDropLowNotation(match.dropLowMatch)]
       }
     }
-    if (key === 'dropConstraintsMatch') {
+    if (isDropConstraintsMatch(match)) {
       return {
         ...restParameters,
-        modifiers: [...modifiers, parseDropConstraintsNotation(value)]
+        modifiers: [
+          ...modifiers,
+          parseDropConstraintsNotation(match.dropConstraintsMatch)
+        ]
       }
     }
-    if (key === 'explodeMatch') {
+    if (isExplodeMatch(match)) {
       return {
         ...restParameters,
-        modifiers: [...modifiers, { explode: Boolean(value) }]
+        modifiers: [...modifiers, { explode: Boolean(match.explodeMatch) }]
       }
     }
-    if (key === 'uniqueMatch') {
+    if (isUniqueMatch(match)) {
       return {
         ...restParameters,
-        modifiers: [...modifiers, parseUniqueNotation(value)]
+        modifiers: [...modifiers, parseUniqueNotation(match.uniqueMatch)]
       }
     }
-    if (key === 'replaceMatch') {
+    if (isReplaceMatch(match)) {
       return {
         ...restParameters,
-        modifiers: [...modifiers, parseReplaceNotation(value)]
+        modifiers: [...modifiers, parseReplaceNotation(match.replaceMatch)]
       }
     }
-    if (key === 'rerollMatch') {
+    if (isRerollMatch(match)) {
       return {
         ...restParameters,
-        modifiers: [...modifiers, parseRerollNotation(value)]
+        modifiers: [...modifiers, parseRerollNotation(match.rerollMatch)]
       }
     }
-    if (key === 'capMatch') {
+    if (isCapMatch(match)) {
       return {
         ...restParameters,
-        modifiers: [...modifiers, parseCapNotation(value)]
+        modifiers: [...modifiers, parseCapNotation(match.capMatch)]
       }
     }
-    if (key === 'plusMatch') {
+    if (isPlusMatch(match)) {
       return {
         ...restParameters,
-        modifiers: [...modifiers, { plus: Number(value.split('+')[1]) }]
+        modifiers: [
+          ...modifiers,
+          { plus: Number(match.plusMatch.split('+')[1]) }
+        ]
       }
     }
-    if (key === 'minusMatch') {
+    if (isMinusMatch(match)) {
       return {
         ...restParameters,
-        modifiers: [...modifiers, { minus: Number(value.split('-')[1]) }]
+        modifiers: [
+          ...modifiers,
+          { minus: Number(match.minusMatch.split('-')[1]) }
+        ]
       }
     }
     throw new Error('Unrecognized Match')

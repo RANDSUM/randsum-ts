@@ -2,11 +2,13 @@ export type StandardDie = 'standard'
 export type CustomSidesDie = 'customSides'
 export type DieType = StandardDie | CustomSidesDie
 
-export type DiceNotationWithNumericSides = `${number}${| 'd'
+export type DiceNotationWithNumericSides = `${number}${
+  | 'd'
   | 'D'}${number}${string}`
 
 export type CustomDiceSidesNotation = `{${string}}`
-export type DiceNotationWithCustomSides = `${number}${| 'd'
+export type DiceNotationWithCustomSides = `${number}${
+  | 'd'
   | 'D'}${CustomDiceSidesNotation}`
 
 export type DiceNotation<N extends DieType = DieType> = N extends StandardDie
@@ -144,18 +146,29 @@ export type RandsumArguments<
   secondArgument?: SecondaryRandsumOptions<N, D> | UserOptions<D>
 }
 
+export type CoreNotationMatch = { coreNotationMatch: string }
+export type DropHighMatch = { dropHighMatch: string }
+export type DropLowMatch = { dropLowMatch: string }
+export type DropConstraintsMatch = { dropConstraintsMatch: string }
+export type ExplodeMatch = { explodeMatch: string }
+export type UniqueMatch = { uniqueMatch: string }
+export type ReplaceMatch = { replaceMatch: string }
+export type RerollMatch = { rerollMatch: string }
+export type CapMatch = { capMatch: string }
+export type PlusMatch = { plusMatch: string }
+export type MinusMatch = { minusMatch: string }
 export type Match =
-  | { coreNotationMatch: string }
-  | { dropHighMatch?: string }
-  | { dropLowMatch?: string }
-  | { dropConstraintsMatch?: string }
-  | { explodeMatch?: string }
-  | { uniqueMatch?: string }
-  | { replaceMatch?: string }
-  | { rerollMatch?: string }
-  | { capMatch?: string }
-  | { plusMatch?: string }
-  | { minusMatch?: string }
+  | CoreNotationMatch
+  | DropHighMatch
+  | DropLowMatch
+  | DropConstraintsMatch
+  | ExplodeMatch
+  | UniqueMatch
+  | ReplaceMatch
+  | RerollMatch
+  | CapMatch
+  | PlusMatch
+  | MinusMatch
 
 export interface InternalRollParameters extends RollOptions<number> {
   modifiers: Array<Modifier<number>>

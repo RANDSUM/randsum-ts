@@ -1,20 +1,31 @@
 import { allPatterns, coreNotationPattern } from 'patterns'
 import {
+  CapMatch,
   CapModifier,
+  CoreNotationMatch,
   DetailedType,
   DiceNotation,
   DieType,
+  DropConstraintsMatch,
+  DropHighMatch,
+  DropLowMatch,
   DropModifier,
+  ExplodeMatch,
   ExplodeModifier,
   Match,
+  MinusMatch,
   MinusModifier,
   Modifier,
   NumberStringArgument,
+  PlusMatch,
   PlusModifier,
   Randomizer,
   RandsumOptions,
+  ReplaceMatch,
   ReplaceModifier,
+  RerollMatch,
   RerollModifier,
+  UniqueMatch,
   UniqueModifier
 } from 'types'
 
@@ -22,35 +33,6 @@ export const completeRollPattern = new RegExp(
   `${allPatterns.map((pattern) => pattern.source).join('|')}`,
   'g'
 )
-
-export function walkNotations(notations: string, matches: Match[]): Match[] {
-  const m = completeRollPattern.exec(notations)
-  if (m !== null && m.groups !== null && m.groups !== undefined) {
-    let newMatches = matches
-    const { groups } = m
-
-    Object.keys(groups).forEach((key) => {
-      if (groups[key] !== undefined) {
-        const value = groups[key]
-        newMatches = [
-          ...matches,
-          {
-            [key]:
-              key === 'coreNotationMatch'
-                ? value
-                : value.toLowerCase().replace(/s+/, '')
-          }
-        ]
-      }
-    })
-    return walkNotations(notations, newMatches)
-  }
-  return matches
-}
-
-export function findMatches(notations: string): Match[] {
-  return walkNotations(notations, [])
-}
 
 export function makeRolls(quantity: number, rollOne: () => number): number[] {
   const rolls: number[] = Array.from({ length: quantity })
@@ -82,6 +64,8 @@ export function isRandsumOptions(
     (argument as RandsumOptions<DieType, DetailedType>).sides !== undefined
   )
 }
+
+// Modifiers
 
 function isModifierType<T extends Modifier<NumberStringArgument>>(
   argument: Modifier<NumberStringArgument>,
@@ -129,3 +113,75 @@ export const isMinusModifier = <T extends NumberStringArgument>(
   modifier: Modifier<T>
 ): modifier is MinusModifier<T> =>
   isModifierType<MinusModifier<T>>(modifier, 'minus')
+
+function isMatcherType<T extends Match>(
+  argument: Match,
+  key: keyof T
+): argument is T {
+  return (argument as T)[key] !== undefined
+}
+
+// Matches
+
+export const isCoreNotationMatch = (match: Match): match is CoreNotationMatch =>
+  isMatcherType<CoreNotationMatch>(match, 'coreNotationMatch')
+
+export const isDropHighMatch = (match: Match): match is DropHighMatch =>
+  isMatcherType<DropHighMatch>(match, 'dropHighMatch')
+
+export const isDropLowMatch = (match: Match): match is DropLowMatch =>
+  isMatcherType<DropLowMatch>(match, 'dropLowMatch')
+
+export const isDropConstraintsMatch = (
+  match: Match
+): match is DropConstraintsMatch =>
+  isMatcherType<DropConstraintsMatch>(match, 'dropConstraintsMatch')
+
+export const isExplodeMatch = (match: Match): match is ExplodeMatch =>
+  isMatcherType<DropConstraintsMatch>(match, 'dropConstraintsMatch')
+
+export const isUniqueMatch = (match: Match): match is UniqueMatch =>
+  isMatcherType<UniqueMatch>(match, 'uniqueMatch')
+
+export const isReplaceMatch = (match: Match): match is ReplaceMatch =>
+  isMatcherType<ReplaceMatch>(match, 'replaceMatch')
+
+export const isRerollMatch = (match: Match): match is RerollMatch =>
+  isMatcherType<RerollMatch>(match, 'rerollMatch')
+
+export const isCapMatch = (match: Match): match is CapMatch =>
+  isMatcherType<CapMatch>(match, 'capMatch')
+
+export const isPlusMatch = (match: Match): match is PlusMatch =>
+  isMatcherType<PlusMatch>(match, 'plusMatch')
+
+export const isMinusMatch = (match: Match): match is MinusMatch =>
+  isMatcherType<MinusMatch>(match, 'minusMatch')
+
+export function walkNotations(notations: string, matches: Match[]): Match[] {
+  const m = completeRollPattern.exec(notations)
+  if (m !== null && m.groups !== null && m.groups !== undefined) {
+    let newMatches = matches
+    const { groups } = m
+
+    Object.keys(groups).forEach((key) => {
+      if (groups[key] !== undefined) {
+        const value = groups[key]
+        const newMatch = {
+          [key]:
+            // key === 'coreNotationMatch'
+            isCoreNotationMatch({ [key]: value } as Match)
+              ? value
+              : value.toLowerCase().replace(/s+/, '')
+        } as Match
+        newMatches = [...matches, newMatch]
+      }
+    })
+    return walkNotations(notations, newMatches)
+  }
+  return matches
+}
+
+export function findMatches(notations: string): Match[] {
+  return walkNotations(notations, [])
+}
