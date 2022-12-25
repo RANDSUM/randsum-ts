@@ -1,3 +1,4 @@
+import { InvalidUniqueError } from 'errors'
 import generateResult from 'generate-result'
 import { InternalRollParameters, RollParamCore } from 'types'
 
@@ -105,9 +106,7 @@ describe('generateResult', () => {
 
             overflowRollGenerator
           )
-        ).toThrow(
-          'You cannot have unique rolls when there are more rolls than sides of die.'
-        )
+        ).toThrow(InvalidUniqueError)
       })
     })
   })
@@ -303,6 +302,20 @@ describe('generateResult', () => {
   })
 
   describe('when given roll total with a "minus" modifier', () => {
+    const dropParameters: InternalRollParameters = {
+      ...baseParameters,
+      modifiers: [{ minus: 2 }]
+    }
+
+    test('it returns the total minus the "minus" modifier, and the roll total', () => {
+      expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({
+        total: 8,
+        rolls: [1, 2, 3, 4]
+      })
+    })
+  })
+
+  describe('when given roll total with an unrecognized modifier', () => {
     const dropParameters: InternalRollParameters = {
       ...baseParameters,
       modifiers: [{ minus: 2 }]

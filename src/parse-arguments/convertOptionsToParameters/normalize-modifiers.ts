@@ -1,3 +1,4 @@
+import { UnidentifiedModifierError } from 'errors'
 import {
   DropOptions,
   GreaterLessOptions,
@@ -119,6 +120,6 @@ export default function normalizeModifiers(
     if (isMinusModifier(modifier)) {
       return { minus: Number(modifier.minus) }
     }
-    throw new Error('Unknown Modifier')
+    throw new UnidentifiedModifierError(modifier)
   })
 }

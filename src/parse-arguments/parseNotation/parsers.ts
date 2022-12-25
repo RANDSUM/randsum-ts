@@ -1,3 +1,4 @@
+import { UnidentifiedMatchError } from 'errors'
 import {
   CapMatch,
   CapModifier,
@@ -290,5 +291,5 @@ export default function parseModifiers(match: Match): Modifier<number> {
   if (isMinusMatch(match)) {
     return parseMinusNotation(match)
   }
-  throw new Error('Unrecognized Match')
+  throw new UnidentifiedMatchError(match)
 }

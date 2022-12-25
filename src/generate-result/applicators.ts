@@ -1,3 +1,4 @@
+import { InvalidUniqueError } from 'errors'
 import {
   DropOptions,
   GreaterLessOptions,
@@ -18,9 +19,7 @@ export function applyUnique(
   rollOne: () => number
 ): number[] {
   if (quantity > sides) {
-    throw new Error(
-      'You cannot have unique rolls when there are more rolls than sides of die.'
-    )
+    throw new InvalidUniqueError()
   }
   const notUnique =
     unique === undefined || typeof unique === 'boolean'

@@ -1,3 +1,4 @@
+import { UnidentifiedModifierError } from 'errors'
 import {
   CustomSidesDie,
   InternalRollParameters,
@@ -102,7 +103,7 @@ export default function generateResult(
           accumulator.simpleMathModifier - Number(modifier.minus)
       }
     }
-    throw new Error('Unrecognized Modifier')
+    throw new UnidentifiedModifierError(modifier)
   }, rollBonuses)
 
   return {
