@@ -7,8 +7,6 @@ Ergonomic Dice Rolling with Strong Typescript Support
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/alxjrvs/randsum/blob/main/LICENSE.md)
 [![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md)
 [![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob)](https://codecov.io/gh/alxjrvs/randsum)
-[![Tests](https://github.com/alxjrvs/randsum/actions/workflows/tests.yml/badge.svg)](https://github.com/alxjrvs/randsum/actions/workflows/tests.yml)
-[![Lint](https://github.com/alxjrvs/randsum/actions/workflows/lint.yml/badge.svg)](https://github.com/alxjrvs/randsum/actions/workflows/lint.yml)
 
 ## What is this?
 
