@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import randsum from '../dist/index.module'
+// eslint-disable-next-line import/extensions
+import randsum from '../dist/index.module.js'
 
 function times(iterator) {
   return (callback) => {

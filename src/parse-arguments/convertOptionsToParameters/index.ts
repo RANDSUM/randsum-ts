@@ -6,9 +6,12 @@ import {
   SecondaryRandsumOptions,
   UserOptions
 } from 'types'
-import { defaultRandomizer } from 'utils'
 
 import normalizeModifiers from './normalize-modifiers'
+
+function defaultRandomizer(max: number): number {
+  return Math.floor(Math.random() * Number(max)) + 1
+}
 
 export default function convertOptionsToParameters(
   options:
