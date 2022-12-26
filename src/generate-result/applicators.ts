@@ -1,4 +1,3 @@
-import { InvalidUniqueError } from 'errors'
 import {
   DropOptions,
   GreaterLessOptions,
@@ -8,6 +7,14 @@ import {
   UniqueModifier
 } from 'types'
 import { makeRolls } from 'utils'
+
+export class InvalidUniqueError extends Error {
+  constructor() {
+    super(
+      'You cannot have unique rolls when there are more rolls than sides of die.'
+    )
+  }
+}
 
 export function applyUnique(
   rolls: number[],

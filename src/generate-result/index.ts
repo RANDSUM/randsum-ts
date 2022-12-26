@@ -1,4 +1,3 @@
-import { UnidentifiedModifierError } from 'errors'
 import {
   CustomSidesDie,
   InternalRollParameters,
@@ -9,7 +8,6 @@ import {
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
-  isMinusModifier,
   isPlusModifier,
   isReplaceModifier,
   isRerollModifier,
@@ -96,14 +94,11 @@ export default function generateResult(
       }
     }
 
-    if (isMinusModifier(modifier)) {
-      return {
-        ...accumulator,
-        simpleMathModifier:
-          accumulator.simpleMathModifier - Number(modifier.minus)
-      }
+    return {
+      ...accumulator,
+      simpleMathModifier:
+        accumulator.simpleMathModifier - Number(modifier.minus)
     }
-    throw new UnidentifiedModifierError(modifier)
   }, rollBonuses)
 
   return {

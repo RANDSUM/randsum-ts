@@ -1,4 +1,3 @@
-import { UnidentifiedMatchError } from 'errors'
 import {
   CapMatch,
   CapModifier,
@@ -31,7 +30,6 @@ import {
   isDropHighMatch,
   isDropLowMatch,
   isExplodeMatch,
-  isMinusMatch,
   isPlusMatch,
   isReplaceMatch,
   isRerollMatch,
@@ -260,7 +258,9 @@ function parseReplaceNotation({
   }
 }
 
-export default function parseModifiers(match: Match): Modifier<number> {
+export default function parseModifiers(
+  match: Exclude<Match, CoreNotationMatch>
+): Modifier<number> {
   if (isDropHighMatch(match)) {
     return parseDropHighNotation(match)
   }
@@ -288,8 +288,5 @@ export default function parseModifiers(match: Match): Modifier<number> {
   if (isPlusMatch(match)) {
     return parsePlusNotation(match)
   }
-  if (isMinusMatch(match)) {
-    return parseMinusNotation(match)
-  }
-  throw new UnidentifiedMatchError(match)
+  return parseMinusNotation(match)
 }

@@ -1,4 +1,3 @@
-import { UnidentifiedModifierError } from 'errors'
 import {
   DropOptions,
   GreaterLessOptions,
@@ -10,7 +9,6 @@ import {
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
-  isMinusModifier,
   isPlusModifier,
   isReplaceModifier,
   isRerollModifier,
@@ -117,9 +115,6 @@ export default function normalizeModifiers(
     if (isPlusModifier(modifier)) {
       return { plus: Number(modifier.plus) }
     }
-    if (isMinusModifier(modifier)) {
-      return { minus: Number(modifier.minus) }
-    }
-    throw new UnidentifiedModifierError(modifier)
+    return { minus: Number(modifier.minus) }
   })
 }
