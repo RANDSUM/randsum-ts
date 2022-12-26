@@ -8,7 +8,7 @@ import {
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
-  isMinusModifier,
+  isPlusModifier,
   isReplaceModifier,
   isRerollModifier,
   isUniqueModifier
@@ -86,17 +86,18 @@ export default function generateResult(
       }
     }
 
-    if (isMinusModifier(modifier)) {
+    if (isPlusModifier(modifier)) {
       return {
         ...accumulator,
         simpleMathModifier:
-          accumulator.simpleMathModifier + Number(modifier.minus)
+          accumulator.simpleMathModifier + Number(modifier.plus)
       }
     }
 
     return {
       ...accumulator,
-      simpleMathModifier: accumulator.simpleMathModifier + Number(modifier.plus)
+      simpleMathModifier:
+        accumulator.simpleMathModifier - Number(modifier.minus)
     }
   }, rollBonuses)
 
