@@ -4,7 +4,7 @@ Ergonomic Dice Rolling with Strong Typescript Support
 
 [![npm version](https://img.shields.io/npm/v/randsum)](https://www.npmjs.com/package/randsum)
 [![bundle size](https://img.shields.io/bundlephobia/min/randsum)](https://bundlephobia.com/package/randsum)
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/alxjrvs/randsum/blob/main/LICENSE)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://raw.githubusercontent.com/alxjrvs/randsum/main/LICENSE)
 [![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md)
 [![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob)](https://codecov.io/gh/alxjrvs/randsum)
 
