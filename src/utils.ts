@@ -12,8 +12,6 @@ import {
   ExplodeMatch,
   ExplodeModifier,
   Match,
-  MinusMatch,
-  MinusModifier,
   Modifier,
   NumberStringArgument,
   PlusMatch,
@@ -94,11 +92,6 @@ export const isPlusModifier = (
 ): modifier is PlusModifier<NumberStringArgument> =>
   isModifierType<PlusModifier<NumberStringArgument>>(modifier, 'plus')
 
-export const isMinusModifier = <T extends NumberStringArgument>(
-  modifier: Modifier<T>
-): modifier is MinusModifier<T> =>
-  isModifierType<MinusModifier<T>>(modifier, 'minus')
-
 function isMatcherType<T extends Match>(
   argument: Match,
   key: keyof T
@@ -138,9 +131,6 @@ export const isCapMatch = (match: Match): match is CapMatch =>
 
 export const isPlusMatch = (match: Match): match is PlusMatch =>
   isMatcherType<PlusMatch>(match, 'plusMatch')
-
-export const isMinusMatch = (match: Match): match is MinusMatch =>
-  isMatcherType<MinusMatch>(match, 'minusMatch')
 
 const coreNotationPattern = /(?<coreNotationMatch>^\d+[Dd](\d+|{.*}))/
 const modifierRollPatterns =
