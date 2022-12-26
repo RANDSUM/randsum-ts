@@ -1,19 +1,17 @@
 import {
   DropOptions,
   GreaterLessOptions,
-  Modifier,
-  ReplaceOptions,
-  RerollOptions
-} from 'types'
-import {
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
   isPlusModifier,
   isReplaceModifier,
   isRerollModifier,
-  isUniqueModifier
-} from 'utils'
+  isUniqueModifier,
+  Modifier,
+  ReplaceOptions,
+  RerollOptions
+} from 'types'
 
 export function convertDropOptionsToParameters({
   highest,

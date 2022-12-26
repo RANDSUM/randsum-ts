@@ -1,12 +1,6 @@
 import {
   CustomSidesDie,
   InternalRollParameters,
-  Randomizer,
-  RollParameters,
-  RollResult,
-  StandardDie
-} from 'types'
-import {
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
@@ -14,8 +8,12 @@ import {
   isReplaceModifier,
   isRerollModifier,
   isUniqueModifier,
-  makeRolls
-} from 'utils'
+  Randomizer,
+  RollParameters,
+  RollResult,
+  StandardDie
+} from 'types'
+import { makeRolls } from 'utils'
 
 import {
   applyDrop,

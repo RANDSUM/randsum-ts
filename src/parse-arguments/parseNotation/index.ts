@@ -1,5 +1,10 @@
-import { DiceNotation, InternalRollParameters, Match } from 'types'
-import { coreNotationPattern, isCoreNotationMatch } from 'utils'
+import {
+  coreNotationPattern,
+  DiceNotation,
+  InternalRollParameters,
+  isCoreNotationMatch,
+  Match
+} from 'types'
 
 import parseModifiers, { parseCoreNotation } from './parsers'
 

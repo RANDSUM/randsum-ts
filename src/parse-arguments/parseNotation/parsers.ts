@@ -10,6 +10,15 @@ import {
   ExplodeMatch,
   ExplodeModifier,
   InternalRollParameters,
+  isCapMatch,
+  isDropConstraintsMatch,
+  isDropHighMatch,
+  isDropLowMatch,
+  isExplodeMatch,
+  isPlusMatch,
+  isReplaceMatch,
+  isRerollMatch,
+  isUniqueMatch,
   Match,
   MinusMatch,
   MinusModifier,
@@ -24,17 +33,6 @@ import {
   UniqueMatch,
   UniqueModifier
 } from 'types'
-import {
-  isCapMatch,
-  isDropConstraintsMatch,
-  isDropHighMatch,
-  isDropLowMatch,
-  isExplodeMatch,
-  isPlusMatch,
-  isReplaceMatch,
-  isRerollMatch,
-  isUniqueMatch
-} from 'utils'
 
 function parseCoreNotationCustomSides(
   sides: string
