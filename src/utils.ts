@@ -16,7 +16,6 @@ import {
   NumberStringArgument,
   PlusMatch,
   PlusModifier,
-  Randomizer,
   RandsumOptions,
   ReplaceMatch,
   ReplaceModifier,
@@ -28,16 +27,6 @@ import {
 
 export function makeRolls(quantity: number, rollOne: () => number): number[] {
   return Array.from({ length: quantity }, rollOne)
-}
-
-export function defaultRandomizer(max: number): number {
-  return Math.floor(Math.random() * Number(max)) + 1
-}
-
-export function rollOneFactory(sides: number, randomizer: Randomizer) {
-  return function rollOne() {
-    return randomizer(sides)
-  }
 }
 
 export function isRandsumOptions(
@@ -132,20 +121,8 @@ export const isCapMatch = (match: Match): match is CapMatch =>
 export const isPlusMatch = (match: Match): match is PlusMatch =>
   isMatcherType<PlusMatch>(match, 'plusMatch')
 
-const coreNotationPattern = /(?<coreNotationMatch>^\d+[Dd](\d+|{.*}))/
-const modifierRollPatterns =
-  /(?<dropHighMatch>[Hh]\d*)|(?<dropLowMatch>[Ll]\d*)|(?<dropConstraintsMatch>[Dd]{?([<>|]?\d+,?)*}?)|(?<explodeMatch>!+{?([<>|]?\d+,?)*}?)|(?<uniqueMatch>[Uu]({(\d+,?)+})?)|(?<replaceMatch>[Vv]{?([<>|]?\d+=?\d+,?)*}?)|(?<rerollMatch>[Rr]{?([<>|]?\d,?)*}\d*)|(?<capMatch>[Cc]([<>|]?\d+)*)|(?<plusMatch>\+\d+)|(?<minusMatch>-\d+)/
-export const completeRollPattern = new RegExp(
-  `${coreNotationPattern.source}|${modifierRollPatterns.source}`,
-  'g'
-)
+export const coreNotationPattern = /(?<coreNotationMatch>^\d+[Dd](\d+|{.*}))/
 
 export function isDiceNotation(argument: unknown): argument is DiceNotation {
   return !!coreNotationPattern.test(String(argument))
-}
-
-export function findMatches(notations: string): Match[] {
-  return [...notations.matchAll(completeRollPattern)].map<Match>(
-    ({ groups: match }) => match as Match
-  )
 }
