@@ -1,14 +1,16 @@
-import { terser } from 'rollup-plugin-terser'
-import pluginTypescript from '@rollup/plugin-typescript'
+import * as path from 'node:path'
+
+import { babel } from '@rollup/plugin-babel'
 import pluginCommonjs from '@rollup/plugin-commonjs'
 import pluginNodeResolve from '@rollup/plugin-node-resolve'
-import { babel } from '@rollup/plugin-babel'
-import * as path from 'path'
+import pluginTypescript from '@rollup/plugin-typescript'
+import { terser } from 'rollup-plugin-terser'
+
 import pkg from './package.json'
 
 const moduleName = pkg.name.replace(/^@.*\//, '')
 const inputFileName = 'src/index.ts'
-const author = pkg.author
+const { author } = pkg
 const banner = `
   /**
    * @license

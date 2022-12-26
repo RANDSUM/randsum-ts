@@ -1,4 +1,5 @@
 node_modules
 dist
 coverage
-benchmark.js
+rollup.config.js
+*.md

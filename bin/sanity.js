@@ -1,4 +1,5 @@
-import randsum from '../dist/index.module.js'
+/* eslint-disable no-console */
+import randsum from '../dist/index.module'
 
 function times(iterator) {
   return (callback) => {
@@ -43,3 +44,4 @@ const complexNotation = () =>
     )
   )
 times(3)(complexNotation)
+/* eslint-enable no-console */

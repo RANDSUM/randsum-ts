@@ -1,18 +1,20 @@
-import { randsum } from './randsum'
+import index from '.'
+
+const randsum = index
 
 describe('Randsum', () => {
   describe('Stress Test', () => {
     const loops = 9999
-    const array = new Array(loops)
-    for (let index = 0; index < loops; index += 1) {
-      array[index] = randsum(20)
+    const dummyArray = Array.from({ length: loops })
+    for (let i = 0; i < loops; i += 1) {
+      dummyArray[i] = randsum(20)
     }
 
     test('it never goes outside of the bounds of the roll', () => {
-      for (const roll of array) {
+      dummyArray.forEach((roll) => {
         expect(roll).toBeLessThanOrEqual(20)
         expect(roll).toBeGreaterThan(0)
-      }
+      })
     })
   })
 
@@ -33,10 +35,10 @@ describe('Randsum', () => {
       })
 
       describe('and a SecondaryRandsumOptions object', () => {
-        const result = randsum(20, { quantity: 21 })
+        const secondaryResult = randsum(20, { quantity: 21 })
 
         test('returns a number as total', () => {
-          expect(Number.isInteger(result)).toBe(true)
+          expect(Number.isInteger(secondaryResult)).toBe(true)
         })
       })
     })
@@ -61,10 +63,10 @@ describe('Randsum', () => {
       })
 
       describe('and a UserOption object', () => {
-        const result = randsum('2d20', { randomizer: () => 1 })
+        const secondaryResult = randsum('2d20', { randomizer: () => 1 })
 
         test('returns a number as total', () => {
-          expect(Number.isInteger(result)).toBe(true)
+          expect(Number.isInteger(secondaryResult)).toBe(true)
         })
       })
     })
@@ -87,9 +89,9 @@ describe('Randsum', () => {
     test('result.rolls returns an array of results as rolls', () => {
       expect(result.rolls).toHaveLength(2)
 
-      for (const roll of result.rolls) {
+      result.rolls.forEach((roll) => {
         expect(Number.isInteger(roll)).toBe(true)
-      }
+      })
     })
 
     test('result.sides returns the number of sides of the dice rolled', () => {
@@ -105,7 +107,7 @@ describe('Randsum', () => {
     const result = randsum({ sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'] })
 
     it('returns a string', () => {
-      expect(typeof result == 'string').toBe(true)
+      expect(typeof result === 'string').toBe(true)
     })
 
     describe('with a detailed result', () => {
@@ -115,7 +117,7 @@ describe('Randsum', () => {
       })
 
       it('returns a string for total', () => {
-        expect(typeof total == 'string').toBe(true)
+        expect(typeof total === 'string').toBe(true)
       })
     })
   })

@@ -1,7 +1,9 @@
-import { InternalRollParameters } from 'types'
-import { generateResult } from 'generate-result'
+import generateResult from 'generate-result'
+import { InternalRollParameters, RollParamCore } from 'types'
 
-const mockRandomizer = () => 5
+import { InvalidUniqueError } from './applicators'
+
+const mockRandomizer = (): number => 5
 
 describe('generateResult', () => {
   const rolls = [1, 2, 3, 4]
@@ -12,7 +14,7 @@ describe('generateResult', () => {
     faces: undefined,
     randomizer: mockRandomizer
   }
-  const baseRollGenerator = () => ({
+  const baseRollGenerator = (): RollParamCore => ({
     initialRolls: rolls,
     rollOne: () => 200
   })
@@ -26,13 +28,13 @@ describe('generateResult', () => {
     })
 
     test('it passes size, quantity, and randomizer from RollParameters to the Roll Generator', () => {
-      const mockRandomizer = jest.fn()
+      const spyMockRandomizer = jest.fn()
       const mockRollGenerator = jest
         .fn()
         .mockReturnValue({ rollOnce: () => 200, initialRolls: [200] })
 
       generateResult(
-        { ...baseParameters, randomizer: mockRandomizer },
+        { ...baseParameters, randomizer: spyMockRandomizer },
 
         mockRollGenerator
       )
@@ -40,7 +42,7 @@ describe('generateResult', () => {
       expect(mockRollGenerator).toHaveBeenCalledWith(
         baseParameters.sides,
         baseParameters.quantity,
-        mockRandomizer
+        spyMockRandomizer
       )
     })
   })
@@ -53,7 +55,7 @@ describe('generateResult', () => {
       quantity: duplicateRollTotals.length,
       modifiers: [{ unique: true }]
     }
-    const uniqueRollGenerator = () => ({
+    const uniqueRollGenerator = (): RollParamCore => ({
       ...baseRollGenerator(),
       initialRolls: duplicateRollTotals
     })
@@ -93,7 +95,7 @@ describe('generateResult', () => {
         ...uniqueParameters,
         quantity: overflowRollTotals.length
       }
-      const overflowRollGenerator = () => ({
+      const overflowRollGenerator = (): RollParamCore => ({
         ...baseRollGenerator(),
         initialRolls: overflowRollTotals
       })
@@ -105,9 +107,7 @@ describe('generateResult', () => {
 
             overflowRollGenerator
           )
-        ).toThrow(
-          'You cannot have unique rolls when there are more rolls than sides of die.'
-        )
+        ).toThrow(InvalidUniqueError)
       })
     })
   })
@@ -148,7 +148,7 @@ describe('generateResult', () => {
         }
       ]
     }
-    const overflowRollGenerator = () => ({
+    const overflowRollGenerator = (): RollParamCore => ({
       ...baseRollGenerator(),
       initialRolls: longerRollTotals
     })
@@ -205,7 +205,7 @@ describe('generateResult', () => {
       modifiers: [{ explode: true }]
     }
 
-    const explodeRollGenerator = () => ({
+    const explodeRollGenerator = (): RollParamCore => ({
       ...baseRollGenerator(),
       initialRolls: explodeRollTotals
     })
@@ -308,7 +308,7 @@ describe('generateResult', () => {
       modifiers: [{ minus: 2 }]
     }
 
-    test('it returns the total minust the "minus" modifier, and the roll total', () => {
+    test('it returns the total minus the "minus" modifier, and the roll total', () => {
       expect(generateResult(dropParameters, baseRollGenerator)).toMatchObject({
         total: 8,
         rolls: [1, 2, 3, 4]
