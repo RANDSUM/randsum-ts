@@ -15,11 +15,11 @@ Written in 100% Typescript, with strong overloading and attention to Arguments. 
 
 ## Further Reading
 
-[Getting Started](https://github.com/alxjrvs/randsum/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
+[Getting Started](https://github.com/alxjrvs/randsum/blob/main/docs/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
-[Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
+[Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/docs/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
 
-[Contributing](https://github.com/alxjrvs/randsum/blob/main/CONTRIBUTING.md) - help make `randsum` better!
+[Contributing](https://github.com/alxjrvs/randsum/blob/main/docs/CONTRIBUTING.md) - help make `randsum` better!
 
 [Sophie's Dice Notation](https://sophiehoulden.com/dice/documentation/notation.html) - a great dice notation guide that helped me along the way
 
