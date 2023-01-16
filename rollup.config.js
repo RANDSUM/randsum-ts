@@ -1,10 +1,9 @@
 import * as path from 'node:path'
 
-import { babel } from '@rollup/plugin-babel'
 import pluginCommonjs from '@rollup/plugin-commonjs'
 import pluginNodeResolve from '@rollup/plugin-node-resolve'
 import pluginTypescript from '@rollup/plugin-typescript'
-import { terser } from 'rollup-plugin-terser'
+import terser from '@rollup/plugin-terser'
 
 import pkg from './package.json'
 
@@ -25,10 +24,6 @@ const plugins = [
   }),
   pluginCommonjs({
     extensions: ['.js', '.ts']
-  }),
-  babel({
-    babelHelpers: 'bundled',
-    configFile: path.resolve(__dirname, '.babelrc.js')
   })
 ]
 
@@ -54,7 +49,7 @@ export default [
         format: 'iife',
         sourcemap: 'inline',
         banner,
-        plugins: [terser()]
+        plugins: [terser({ sourceMap: true })]
       }
     ],
     plugins: [

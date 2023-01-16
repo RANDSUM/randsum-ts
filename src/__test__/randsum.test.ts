@@ -1,4 +1,4 @@
-import index from '.'
+import index from '../index'
 
 const randsum = index
 

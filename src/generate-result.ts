@@ -1,12 +1,33 @@
 import {
+  CustomSidesDie,
   DropOptions,
   GreaterLessOptions,
+  InternalRollParameters,
+  isCapModifier,
+  isDropModifier,
+  isExplodeModifier,
+  isPlusModifier,
+  isReplaceModifier,
+  isRerollModifier,
+  isUniqueModifier,
+  Randomizer,
   ReplaceOptions,
   RerollOptions,
   RollParameters,
+  RollResult,
+  StandardDie,
   UniqueModifier
 } from 'types'
-import { makeRolls } from 'utils'
+
+function makeRolls(quantity: number, rollOne: () => number): number[] {
+  return Array.from({ length: quantity }, rollOne)
+}
+
+function rollOneFactory(sides: number, randomizer: Randomizer) {
+  return function rollOne() {
+    return randomizer(sides)
+  }
+}
 
 export class InvalidUniqueError extends Error {
   constructor() {
@@ -16,7 +37,7 @@ export class InvalidUniqueError extends Error {
   }
 }
 
-export function applyUnique(
+function applyUnique(
   rolls: number[],
   {
     unique,
@@ -48,7 +69,7 @@ export function applyUnique(
   })
 }
 
-export function applySingleCap(
+function applySingleCap(
   { greaterThan, lessThan }: GreaterLessOptions<number>,
   value?: number
 ) {
@@ -95,7 +116,7 @@ function rerollRoll(
   return roll
 }
 
-export function applyReroll(
+function applyReroll(
   rolls: number[],
   reroll: RerollOptions<number> | Array<RerollOptions<number>>,
   rollOne: () => number
@@ -111,7 +132,7 @@ export function applyReroll(
   return rerollRolls
 }
 
-export function applyReplace(
+function applyReplace(
   rolls: number[],
   replace: ReplaceOptions<number> | Array<ReplaceOptions<number>>
 ): number[] {
@@ -136,7 +157,7 @@ export function applyReplace(
   return replaceRolls
 }
 
-export function applyExplode(
+function applyExplode(
   rolls: number[],
   { sides }: Pick<RollParameters, 'sides'>,
   rollOne: () => number
@@ -155,7 +176,7 @@ function times(iterator: number) {
   }
 }
 
-export function applyDrop(
+function applyDrop(
   rolls: number[],
   { highest, lowest, greaterThan, lessThan, exact }: DropOptions<number>
 ): number[] {
@@ -179,4 +200,127 @@ export function applyDrop(
   }
 
   return sortedResults
+}
+
+function generateRolls(
+  sides: number,
+  quantity: number,
+  randomizer: Randomizer
+): Pick<RollParameters, 'rollOne' | 'initialRolls'> {
+  const rollOne = rollOneFactory(sides, randomizer)
+  const initialRolls = makeRolls(quantity, rollOne)
+  return { rollOne, initialRolls }
+}
+
+function generateTotalAndRolls({
+  faces,
+  rolls,
+  simpleMathModifier
+}: Pick<InternalRollParameters, 'faces'> & {
+  rolls: number[]
+  simpleMathModifier: number
+}):
+  | Pick<RollResult<StandardDie>, 'total' | 'rolls'>
+  | Pick<RollResult<CustomSidesDie>, 'total' | 'rolls'> {
+  if (faces === undefined) {
+    return {
+      total:
+        Number([...rolls].reduce((total, roll) => total + roll, 0)) +
+        simpleMathModifier,
+      rolls
+    }
+  }
+
+  const newRolls = rolls.map((roll) => faces[roll - 1] || ' ')
+  return { total: newRolls.join(', '), rolls: newRolls }
+}
+
+export default function generateResult(
+  { sides, quantity, modifiers, randomizer, faces }: InternalRollParameters,
+  rollGenerator = generateRolls
+):
+  | Omit<RollResult<StandardDie>, 'arguments'>
+  | Omit<RollResult<CustomSidesDie>, 'arguments'> {
+  const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
+
+  const rollBonuses = {
+    simpleMathModifier: 0,
+    rolls: initialRolls
+  }
+
+  // eslint-disable-next-line unicorn/no-array-reduce
+  const modifiedRollBonuses = modifiers.reduce((accumulator, modifier) => {
+    if (isRerollModifier(modifier)) {
+      return {
+        ...accumulator,
+        rolls: applyReroll(accumulator.rolls, modifier.reroll, rollOne)
+      }
+    }
+
+    if (isUniqueModifier(modifier)) {
+      return {
+        ...accumulator,
+        rolls: applyUnique(
+          accumulator.rolls,
+          { sides, quantity, unique: modifier.unique },
+          rollOne
+        )
+      }
+    }
+
+    if (isReplaceModifier(modifier)) {
+      return {
+        ...accumulator,
+        rolls: applyReplace(accumulator.rolls, modifier.replace)
+      }
+    }
+
+    if (isCapModifier(modifier)) {
+      return {
+        ...accumulator,
+        rolls: accumulator.rolls.map(applySingleCap(modifier.cap))
+      }
+    }
+
+    if (isDropModifier(modifier)) {
+      return {
+        ...accumulator,
+        rolls: applyDrop(accumulator.rolls, modifier.drop)
+      }
+    }
+
+    if (isExplodeModifier(modifier)) {
+      return {
+        ...accumulator,
+        rolls: applyExplode(accumulator.rolls, { sides }, rollOne)
+      }
+    }
+
+    if (isPlusModifier(modifier)) {
+      return {
+        ...accumulator,
+        simpleMathModifier:
+          accumulator.simpleMathModifier + Number(modifier.plus)
+      }
+    }
+
+    return {
+      ...accumulator,
+      simpleMathModifier:
+        accumulator.simpleMathModifier - Number(modifier.minus)
+    }
+  }, rollBonuses)
+
+  return {
+    ...generateTotalAndRolls({ faces, ...modifiedRollBonuses }),
+    rollParameters: {
+      sides,
+      quantity,
+      modifiers,
+      initialRolls,
+      faces,
+      randomizer,
+      rollOne
+    }
+  }
 }

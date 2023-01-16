@@ -2,12 +2,10 @@ export type StandardDie = 'standard'
 export type CustomSidesDie = 'customSides'
 export type DieType = StandardDie | CustomSidesDie
 
-export type DiceNotationWithNumericSides = `${number}${
-  | 'd'
-  | 'D'}${number}${string}`
+type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
 
-export type CustomDiceSidesNotation = `{${string}}`
-export type DiceNotationWithCustomSides = `${number}${
+type CustomDiceSidesNotation = `{${string}}`
+type DiceNotationWithCustomSides = `${number}${
   | 'd'
   | 'D'}${CustomDiceSidesNotation}`
 
@@ -23,14 +21,14 @@ export function isDiceNotation(argument: unknown): argument is DiceNotation {
 
 export type NumberStringArgument = number | 'inclusive'
 
-export type TypeOrArrayOfType<T> = T | T[]
+type TypeOrArrayOfType<T> = T | T[]
 
 export type NumberString<T extends NumberStringArgument = 'inclusive'> =
   T extends 'inclusive' ? number | `${number}` : number
 
 export type Randomizer = (sides: number) => number
 
-export type CustomSides = Array<number | string>
+type CustomSides = Array<number | string>
 
 export type Detailed = true
 export type Simple = false
@@ -265,7 +263,7 @@ export type RollParamCore = {
 export type RollParameters = Omit<InternalRollParameters, 'detailed'> &
   RollParamCore
 
-export type BaseRollResult = {
+type BaseRollResult = {
   rollParameters: RollParameters
   arguments: [
     RandsumArguments['primeArgument'],
@@ -286,8 +284,6 @@ type CustomSidesRollResult = BaseRollResult & {
 export type RollResult<N extends DieType> = N extends StandardDie
   ? StandardRollResult
   : CustomSidesRollResult
-
-// Modifiers
 
 export function isRandsumOptions(
   argument: unknown

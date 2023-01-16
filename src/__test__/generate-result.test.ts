@@ -1,7 +1,5 @@
-import generateResult from 'generate-result'
+import generateResult, { InvalidUniqueError } from 'generate-result'
 import { InternalRollParameters, RollParamCore } from 'types'
-
-import { InvalidUniqueError } from './applicators'
 
 const mockRandomizer = (): number => 5
 
