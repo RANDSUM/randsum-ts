@@ -1,5 +1,5 @@
-import parseArguments from '__test__/parse-arguments'
 import generateResult from 'generate-result'
+import parseArguments from 'parse-arguments'
 import {
   CustomSidesDie,
   Detailed,

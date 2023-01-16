@@ -1,4 +1,4 @@
-import parseArguments from '__test__/parse-arguments'
+import parseArguments from 'parse-arguments'
 import { CustomSidesDie, DiceNotation } from 'types'
 
 describe('parseArguments', () => {
