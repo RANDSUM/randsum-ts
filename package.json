@@ -42,15 +42,15 @@
   "size-limit": [
     {
       "path": "dist/index.cjs",
-      "limit": "10 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.module.js",
-      "limit": "10 KB"
+      "limit": "3 KB"
     },
     {
       "path": "dist/index.min.js",
-      "limit": "10 KB"
+      "limit": "3 KB"
     }
   ],
   "files": [
@@ -58,27 +58,22 @@
     "src"
   ],
   "devDependencies": {
-    "@babel/core": "^7.18.13",
-    "@babel/preset-env": "^7.18.10",
-    "@rollup/plugin-babel": "^6.0.0",
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-terser": "^0.2.1",
     "@rollup/plugin-typescript": "^10.0.1",
     "@size-limit/preset-small-lib": "^8.1.0",
     "@types/jest": "^28.1.6",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
-    "babel-eslint": "^10.1.0",
     "benchmark": "^2.1.4",
     "eslint": "^8.23.0",
     "eslint-config-adjunct": "^4.11.2",
-    "eslint-config-airbnb-babel": "^0.2.2",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-auto": "^0.7.3",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-array-func": "^3.1.7",
-    "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-import": "^2.26.0",
@@ -105,10 +100,9 @@
     "pinst": "^3.0.0",
     "prettier": "^2.7.1",
     "rollup": "^2.78.1",
-    "rollup-plugin-terser": "^7.0.2",
     "size-limit": "^8.1.0",
     "ts-jest": "^28.0.7",
-    "tslib": "^2.4.0",
+    "tslib": "^2.4.1",
     "typescript": ">=4.9.4",
     "yarn": "^1.22.0"
   },

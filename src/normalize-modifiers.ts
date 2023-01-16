@@ -13,22 +13,6 @@ import {
   RerollOptions
 } from 'types'
 
-export function convertDropOptionsToParameters({
-  highest,
-  lowest,
-  greaterThan,
-  lessThan,
-  exact
-}: DropOptions): DropOptions<number> {
-  return {
-    highest: highest === undefined ? undefined : Number(highest),
-    lowest: lowest === undefined ? undefined : Number(lowest),
-    greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
-    lessThan: lessThan === undefined ? undefined : Number(lessThan),
-    exact: exact === undefined ? undefined : exact.map(Number)
-  }
-}
-
 export function convertGreaterLessOptionsToParameters({
   greaterThan,
   lessThan
@@ -36,6 +20,20 @@ export function convertGreaterLessOptionsToParameters({
   return {
     greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
     lessThan: lessThan === undefined ? undefined : Number(lessThan)
+  }
+}
+
+export function convertDropOptionsToParameters({
+  highest,
+  lowest,
+  exact,
+  ...greaterThanLessThan
+}: DropOptions): DropOptions<number> {
+  return {
+    ...convertGreaterLessOptionsToParameters(greaterThanLessThan),
+    highest: highest === undefined ? undefined : Number(highest),
+    lowest: lowest === undefined ? undefined : Number(lowest),
+    exact: exact === undefined ? undefined : exact.map(Number)
   }
 }
 

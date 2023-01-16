@@ -14,6 +14,7 @@ import {
   UserOptions
 } from 'types'
 
+// Number Or String Overloads
 function randsum(
   sides: NumberString,
   randsumOptions?: SecondaryRandsumOptions<StandardDie, Simple>
@@ -30,6 +31,8 @@ function randsum(
   sides: NumberString,
   randsumOptions: SecondaryRandsumOptions<CustomSidesDie, Detailed>
 ): RollResult<CustomSidesDie>
+
+// Dice Notation Overloads
 function randsum(
   notation: DiceNotation<StandardDie>,
   userOptions?: UserOptions<Simple>
@@ -46,18 +49,18 @@ function randsum(
   notation: DiceNotation<CustomSidesDie>,
   userOptions: UserOptions<Detailed>
 ): RollResult<CustomSidesDie>
-function randsum(
-  rollOptions: RandsumOptions<StandardDie, Simple>
-): number
-function randsum(
-  rollOptions: RandsumOptions<CustomSidesDie, Simple>
-): string
+
+// Roll Options Overrides
+function randsum(rollOptions: RandsumOptions<StandardDie, Simple>): number
+function randsum(rollOptions: RandsumOptions<CustomSidesDie, Simple>): string
 function randsum(
   rollOptions: RandsumOptions<StandardDie, Detailed>
 ): RollResult<StandardDie>
 function randsum(
   rollOptions: RandsumOptions<CustomSidesDie, Detailed>
 ): RollResult<CustomSidesDie>
+
+// Base Implementation
 function randsum(
   primeArgument: RandsumArguments['primeArgument'],
   secondArgument?: RandsumArguments['secondArgument']
