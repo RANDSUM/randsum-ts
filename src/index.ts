@@ -64,7 +64,7 @@ function randsum(
 function randsum(
   primeArgument: RandsumArguments['primeArgument'],
   secondArgument?: RandsumArguments['secondArgument']
-): RollResult<StandardDie> | RollResult<CustomSidesDie> | number | string {
+): unknown {
   const { detailed, ...parameters } = parseArguments(
     primeArgument,
     secondArgument
