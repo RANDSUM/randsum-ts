@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 18",
   "compilerOptions": {
     "target": "es2018",
     "module": "esnext",
@@ -15,6 +17,7 @@
     "strictFunctionTypes": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
+    "skipLibCheck": true,
     /* Additional Checks */
     "removeComments": true,
     "experimentalDecorators": true,
