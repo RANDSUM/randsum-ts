@@ -5,7 +5,7 @@ import pluginNodeResolve from '@rollup/plugin-node-resolve'
 import pluginTypescript from '@rollup/plugin-typescript'
 import terser from '@rollup/plugin-terser'
 
-import pkg from './package.json'
+import pkg from './package.json' assert { type: 'json' }
 
 const moduleName = pkg.name.replace(/^@.*\//, '')
 const inputFileName = 'src/index.ts'
