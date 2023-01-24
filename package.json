@@ -54,7 +54,10 @@
     }
   ],
   "files": [
-    "/dist"
+    "dist",
+    "docs",
+    "README.md",
+    "package.json"
   ],
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.0",
