@@ -4,8 +4,12 @@ import pluginCommonjs from '@rollup/plugin-commonjs'
 import pluginNodeResolve from '@rollup/plugin-node-resolve'
 import pluginTypescript from '@rollup/plugin-typescript'
 import terser from '@rollup/plugin-terser'
+import { readFileSync } from 'node:fs'
 
-import pkg from './package.json'
+// Use import.meta.url to make the path relative to the current source
+// file instead of process.cwd(). For more information:
+// https://nodejs.org/docs/latest-v16.x/api/esm.html#importmetaurl
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url)))
 
 const moduleName = pkg.name.replace(/^@.*\//, '')
 const inputFileName = 'src/index.ts'

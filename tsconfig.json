@@ -1,7 +1,10 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 18",
   "compilerOptions": {
-    "target": "es2018",
-    "module": "esnext",
+    "lib": ["es2022"],
+    "module": "commonjs",
+    "target": "es2022",
     "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
@@ -15,6 +18,7 @@
     "strictFunctionTypes": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
+    "skipLibCheck": true,
     /* Additional Checks */
     "removeComments": true,
     "experimentalDecorators": true,
