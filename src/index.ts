@@ -9,21 +9,18 @@ import {
   StandardDie
 } from './types'
 
-function randsum(): RollResult<StandardDie>
-function randsum(sides: NumberString): RollResult<StandardDie>
-function randsum(notation: DiceNotation<StandardDie>): RollResult<StandardDie>
 function randsum(
-  notation: DiceNotation<CustomSidesDie>
-): RollResult<CustomSidesDie>
-function randsum(
-  rollOptions: RandsumOptions<StandardDie>
+  firstArg?:
+    | NumberString
+    | RandsumOptions<StandardDie>
+    | DiceNotation<StandardDie>
 ): RollResult<StandardDie>
 function randsum(
-  rollOptions: RandsumOptions<CustomSidesDie>
+  firstArg: RandsumOptions<CustomSidesDie> | DiceNotation<CustomSidesDie>
 ): RollResult<CustomSidesDie>
 function randsum(
   primeArgument?: RandsumOptions | DiceNotation | NumberString
-): RollResult<CustomSidesDie> | RollResult<StandardDie> {
+): RollResult {
   const internalRollParameters = parseArguments(primeArgument)
   const rollResult = generateResult(internalRollParameters)
   return {

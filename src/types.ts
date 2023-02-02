@@ -4,8 +4,7 @@ export type DieType = StandardDie | CustomSidesDie
 
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
 type CustomDiceSidesNotation = `{${string}}`
-type DiceNotationWithCustomSides = `${number}${
-  | 'd'
+type DiceNotationWithCustomSides = `${number}${| 'd'
   | 'D'}${CustomDiceSidesNotation}`
 
 export type DiceNotation<N extends DieType = DieType> = N extends StandardDie
@@ -188,66 +187,3 @@ export type Modifier<T extends NumberStringArgument = 'inclusive'> =
   | UniqueModifier<T>
   | PlusModifier<T>
   | MinusModifier<T>
-
-function isMatcherType<T extends Match>(
-  argument: Match,
-  key: keyof T
-): argument is T {
-  return (argument as T)[key] !== undefined
-}
-
-export type CoreNotationMatch = { coreNotationMatch: string }
-export const isCoreNotationMatch = (match: Match): match is CoreNotationMatch =>
-  isMatcherType<CoreNotationMatch>(match, 'coreNotationMatch')
-
-export type DropHighMatch = { dropHighMatch: string }
-export const isDropHighMatch = (match: Match): match is DropHighMatch =>
-  isMatcherType<DropHighMatch>(match, 'dropHighMatch')
-
-export type DropLowMatch = { dropLowMatch: string }
-export const isDropLowMatch = (match: Match): match is DropLowMatch =>
-  isMatcherType<DropLowMatch>(match, 'dropLowMatch')
-
-export type DropConstraintsMatch = { dropConstraintsMatch: string }
-export const isDropConstraintsMatch = (
-  match: Match
-): match is DropConstraintsMatch =>
-  isMatcherType<DropConstraintsMatch>(match, 'dropConstraintsMatch')
-
-export type ExplodeMatch = { explodeMatch: string }
-export const isExplodeMatch = (match: Match): match is ExplodeMatch =>
-  isMatcherType<ExplodeMatch>(match, 'explodeMatch')
-
-export type UniqueMatch = { uniqueMatch: string }
-export const isUniqueMatch = (match: Match): match is UniqueMatch =>
-  isMatcherType<UniqueMatch>(match, 'uniqueMatch')
-
-export type ReplaceMatch = { replaceMatch: string }
-export const isReplaceMatch = (match: Match): match is ReplaceMatch =>
-  isMatcherType<ReplaceMatch>(match, 'replaceMatch')
-
-export type RerollMatch = { rerollMatch: string }
-export const isRerollMatch = (match: Match): match is RerollMatch =>
-  isMatcherType<RerollMatch>(match, 'rerollMatch')
-
-export type CapMatch = { capMatch: string }
-export const isCapMatch = (match: Match): match is CapMatch =>
-  isMatcherType<CapMatch>(match, 'capMatch')
-
-export type PlusMatch = { plusMatch: string }
-export const isPlusMatch = (match: Match): match is PlusMatch =>
-  isMatcherType<PlusMatch>(match, 'plusMatch')
-
-export type MinusMatch = { minusMatch: string }
-export type Match =
-  | CoreNotationMatch
-  | DropHighMatch
-  | DropLowMatch
-  | DropConstraintsMatch
-  | ExplodeMatch
-  | UniqueMatch
-  | ReplaceMatch
-  | RerollMatch
-  | CapMatch
-  | PlusMatch
-  | MinusMatch

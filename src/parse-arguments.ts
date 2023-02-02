@@ -1,13 +1,11 @@
 import normalizeModifiers from './normalize-modifiers'
-import parseModifiers, { parseCoreNotation } from './parsers'
+import parseModifiers, { isCoreNotationMatch, Match, parseCoreNotation } from './parsers'
 import {
   coreNotationPattern,
   DiceNotation,
   InternalRollParameters,
-  isCoreNotationMatch,
   isDiceNotation,
   isRandsumOptions,
-  Match,
   NumberString,
   RandsumOptions
 } from './types'
