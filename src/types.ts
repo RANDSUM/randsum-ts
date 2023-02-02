@@ -3,7 +3,6 @@ export type CustomSidesDie = 'customSides'
 export type DieType = StandardDie | CustomSidesDie
 
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
-
 type CustomDiceSidesNotation = `{${string}}`
 type DiceNotationWithCustomSides = `${number}${
   | 'd'
@@ -21,18 +20,10 @@ export function isDiceNotation(argument: unknown): argument is DiceNotation {
 
 export type NumberStringArgument = number | 'inclusive'
 
-type TypeOrArrayOfType<T> = T | T[]
-
 export type NumberString<T extends NumberStringArgument = 'inclusive'> =
   T extends 'inclusive' ? number | `${number}` : number
 
-export type Randomizer = (sides: number) => number
-
 type CustomSides = Array<number | string>
-
-export type Detailed = true
-export type Simple = false
-export type DetailedType = Detailed | Simple
 
 export interface DropOptions<T extends NumberStringArgument = 'inclusive'> {
   highest?: NumberString<T>
@@ -49,6 +40,7 @@ export interface GreaterLessOptions<
   lessThan?: NumberString<T>
 }
 
+type TypeOrArrayOfType<T> = T | T[]
 export interface RerollOptions<T extends NumberStringArgument = 'inclusive'>
   extends GreaterLessOptions<T> {
   exact?: TypeOrArrayOfType<NumberString<T>>
@@ -58,54 +50,61 @@ export interface ReplaceOptions<T extends NumberStringArgument = 'inclusive'> {
   from: NumberString<T> | GreaterLessOptions<T>
   to: NumberString<T>
 }
-export interface UserOptions<D extends DetailedType> {
-  detailed?: D
-  randomizer?: Randomizer
-}
-
-export interface RollOptions<T extends NumberStringArgument = 'inclusive'> {
+export interface StandardRandsumOptions<
+  T extends NumberStringArgument = 'inclusive'
+> {
   quantity?: NumberString<T>
   sides: NumberString<T>
   modifiers?: Array<Modifier<T>>
 }
 
-export type StandardRandsumOptions<D extends DetailedType> = RollOptions &
-  UserOptions<D>
-export type CustomSidesRandsumOptions<D extends DetailedType> = Omit<
-  StandardRandsumOptions<D>,
+export type InternalRollParameters = StandardRandsumOptions<number> & {
+  modifiers: Array<Modifier<number>>
+  quantity: number
+  faces?: CustomSides
+}
+
+export type RollParameters = InternalRollParameters & {
+  initialRolls: number[]
+  rollOne: () => number
+}
+
+type BaseRollResult = {
+  rollParameters: RollParameters
+  arguments: [RandsumOptions | DiceNotation | NumberString | undefined]
+}
+
+type StandardRollResult = BaseRollResult & {
+  total: number
+  rolls: number[]
+}
+
+type CustomSidesRollResult = BaseRollResult & {
+  total: string
+  rolls: CustomSides
+}
+
+export type RollResult<N extends DieType = DieType> = N extends StandardDie
+  ? StandardRollResult
+  : CustomSidesRollResult
+
+export type CustomSidesRandsumOptions = Omit<
+  StandardRandsumOptions,
   'sides' | 'modifiers'
 > & {
   sides: CustomSides
 }
-export type RandsumOptions<
-  N extends DieType,
-  D extends DetailedType
-> = N extends StandardDie
-  ? StandardRandsumOptions<D>
-  : CustomSidesRandsumOptions<D>
+export type RandsumOptions<N extends DieType = DieType> = N extends StandardDie
+  ? StandardRandsumOptions
+  : CustomSidesRandsumOptions
 
-export type SecondaryStandardRandsumOptions<D extends DetailedType> = Omit<
-  StandardRandsumOptions<D>,
-  'sides'
->
-export type SecondaryCustomSidesRandsumOptions<D extends DetailedType> = Omit<
-  CustomSidesRandsumOptions<D>,
-  'sides' | 'modifiers '
-> & { faces: CustomSides }
-
-export type SecondaryRandsumOptions<
-  N extends DieType,
-  D extends DetailedType
-> = N extends StandardDie
-  ? SecondaryStandardRandsumOptions<D>
-  : SecondaryCustomSidesRandsumOptions<D>
-
-export type RandsumArguments<
-  N extends DieType = DieType,
-  D extends DetailedType = DetailedType
-> = {
-  primeArgument: RandsumOptions<N, D> | DiceNotation<N> | NumberString
-  secondArgument?: SecondaryRandsumOptions<N, D> | UserOptions<D>
+export function isRandsumOptions(
+  argument: unknown
+): argument is RandsumOptions<DieType> {
+  return (
+    typeof argument === 'object' &&
+    (argument as RandsumOptions<DieType>).sides !== undefined
+  )
 }
 
 function isModifierType<T extends Modifier<NumberStringArgument>>(
@@ -174,6 +173,11 @@ export const isPlusModifier = (
 
 export type MinusModifier<T extends NumberStringArgument = 'inclusive'> =
   Record<'minus', NumberString<T>>
+
+export const isMinusModifier = (
+  modifier: Modifier<NumberStringArgument>
+): modifier is MinusModifier<NumberStringArgument> =>
+  isModifierType<MinusModifier<NumberStringArgument>>(modifier, 'minus')
 
 export type Modifier<T extends NumberStringArgument = 'inclusive'> =
   | CapModifier<T>
@@ -247,49 +251,3 @@ export type Match =
   | CapMatch
   | PlusMatch
   | MinusMatch
-
-export interface InternalRollParameters extends RollOptions<number> {
-  modifiers: Array<Modifier<number>>
-  quantity: number
-  detailed?: DetailedType
-  randomizer: Randomizer
-  faces: CustomSides | undefined
-}
-
-export type RollParamCore = {
-  initialRolls: number[]
-  rollOne: () => number
-}
-export type RollParameters = Omit<InternalRollParameters, 'detailed'> &
-  RollParamCore
-
-type BaseRollResult = {
-  rollParameters: RollParameters
-  arguments: [
-    RandsumArguments['primeArgument'],
-    RandsumArguments['secondArgument']
-  ]
-}
-
-type StandardRollResult = BaseRollResult & {
-  total: number
-  rolls: number[]
-}
-
-type CustomSidesRollResult = BaseRollResult & {
-  total: string
-  rolls: CustomSides
-}
-
-export type RollResult<N extends DieType> = N extends StandardDie
-  ? StandardRollResult
-  : CustomSidesRollResult
-
-export function isRandsumOptions(
-  argument: unknown
-): argument is RandsumOptions<DieType, DetailedType> {
-  return (
-    typeof argument === 'object' &&
-    (argument as RandsumOptions<DieType, DetailedType>).sides !== undefined
-  )
-}

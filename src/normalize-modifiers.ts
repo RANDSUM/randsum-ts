@@ -11,7 +11,7 @@ import {
   Modifier,
   ReplaceOptions,
   RerollOptions
-} from 'types'
+} from './types'
 
 export function convertGreaterLessOptionsToParameters({
   greaterThan,

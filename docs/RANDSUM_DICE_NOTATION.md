@@ -8,12 +8,6 @@
 
 However, more complex operations - "Drop highest, reroll 3's, and make sure the rolls are unique" - do not always have a well-understood spec. This document describes the more complicated syntax that `randsum` will recognize.
 
-### Attribution
-
-I looked high and wide for a consensus on a sort "Extended Standard Dice Notation", and could not find anything. The most extensive and thought-out documentation I found was for the game's [Sophie's Dice](https://sophiehoulden.com/dice/documentation/notation.html#keep). Much of that syntax has been mirrored here.
-
-Thanks, [Sophie](https://www.patreon.com/SophieHoulden)! Your examples were invaluable. Consider buying their [games](https://sophieh.itch.io/)!
-
 ## Dice Notation
 
 Dice Notation in `randsum` is **case-insensitive**. `2d8` and `2D8` both work equally well.
@@ -35,12 +29,32 @@ Roll 4 twenty sided dice
 In `randsum` :
 
 ```js
+// Roll 1 twenty-sided die
+
+randsum()
+randsum(20)
+randsum('1d20')
+randsum({
+  sides: 20,
+  quantity: 1
+})
+```
+
+```js
+// Roll 1 one-hundred-sided die
+
+randsum(100)
+randsum('1d100')
+randsum({
+  sides: 100,
+  quantity: 1
+})
+```
+
+```js
 // Roll 6 twenty-sided die
 
 randsum('6d20')
-randsum(20, {
-  quantity: 6
-})
 randsum({
   sides: 20,
   quantity: 6
@@ -635,3 +649,9 @@ randsum('6d20!')
 randsum(20, { quantity: 6, modifiers: [{ explode: true }] })
 randsum({ sides: 20, quantity: 6, modifiers: [{ explode: true }] })
 ```
+
+### Attribution
+
+I looked high and wide for a consensus on a sort "Extended Standard Dice Notation", and could not find anything. The most extensive and thought-out documentation I found was for the game's [Sophie's Dice](https://sophiehoulden.com/dice/documentation/notation.html#keep). Much of that syntax has been mirrored here.
+
+Thanks, [Sophie](https://www.patreon.com/SophieHoulden)! Your examples were invaluable. Consider buying their [games](https://sophieh.itch.io/)!

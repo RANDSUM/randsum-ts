@@ -6,26 +6,27 @@ import {
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
+  isMinusModifier,
   isPlusModifier,
   isReplaceModifier,
   isRerollModifier,
   isUniqueModifier,
-  Randomizer,
+  Modifier,
   ReplaceOptions,
   RerollOptions,
   RollParameters,
   RollResult,
   StandardDie,
   UniqueModifier
-} from 'types'
+} from './types'
 
 function makeRolls(quantity: number, rollOne: () => number): number[] {
   return Array.from({ length: quantity }, rollOne)
 }
 
-function rollOneFactory(sides: number, randomizer: Randomizer) {
+export function rollOneFactory(sides: number) {
   return function rollOne() {
-    return randomizer(sides)
+    return Math.floor(Math.random() * Number(sides)) + 1
   }
 }
 
@@ -202,24 +203,25 @@ function applyDrop(
   return sortedResults
 }
 
-function generateRolls(
+export function generateRolls(
   sides: number,
-  quantity: number,
-  randomizer: Randomizer
+  quantity: number
 ): Pick<RollParameters, 'rollOne' | 'initialRolls'> {
-  const rollOne = rollOneFactory(sides, randomizer)
+  const rollOne = rollOneFactory(sides)
   const initialRolls = makeRolls(quantity, rollOne)
   return { rollOne, initialRolls }
+}
+
+type RollBonuses = {
+  rolls: number[]
+  simpleMathModifier: number
 }
 
 function generateTotalAndRolls({
   faces,
   rolls,
   simpleMathModifier
-}: Pick<InternalRollParameters, 'faces'> & {
-  rolls: number[]
-  simpleMathModifier: number
-}):
+}: Pick<InternalRollParameters, 'faces'> & RollBonuses):
   | Pick<RollResult<StandardDie>, 'total' | 'rolls'>
   | Pick<RollResult<CustomSidesDie>, 'total' | 'rolls'> {
   if (faces === undefined) {
@@ -235,33 +237,31 @@ function generateTotalAndRolls({
   return { total: newRolls.join(', '), rolls: newRolls }
 }
 
-export default function generateResult(
-  { sides, quantity, modifiers, randomizer, faces }: InternalRollParameters,
-  rollGenerator = generateRolls
-):
-  | Omit<RollResult<StandardDie>, 'arguments'>
-  | Omit<RollResult<CustomSidesDie>, 'arguments'> {
-  const { rollOne, initialRolls } = rollGenerator(sides, quantity, randomizer)
-
-  const rollBonuses = {
+const applyModifiers = (
+  modifiers: Modifier<number>[],
+  initialRolls: number[],
+  rollOne: () => number,
+  sides: number,
+  quantity: number
+): RollBonuses => {
+  let rollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls
   }
 
-  // eslint-disable-next-line unicorn/no-array-reduce
-  const modifiedRollBonuses = modifiers.reduce((accumulator, modifier) => {
+  modifiers.forEach((modifier) => {
     if (isRerollModifier(modifier)) {
-      return {
-        ...accumulator,
-        rolls: applyReroll(accumulator.rolls, modifier.reroll, rollOne)
+      rollBonuses = {
+        ...rollBonuses,
+        rolls: applyReroll(rollBonuses.rolls, modifier.reroll, rollOne)
       }
     }
 
     if (isUniqueModifier(modifier)) {
-      return {
-        ...accumulator,
+      rollBonuses = {
+        ...rollBonuses,
         rolls: applyUnique(
-          accumulator.rolls,
+          rollBonuses.rolls,
           { sides, quantity, unique: modifier.unique },
           rollOne
         )
@@ -269,57 +269,75 @@ export default function generateResult(
     }
 
     if (isReplaceModifier(modifier)) {
-      return {
-        ...accumulator,
-        rolls: applyReplace(accumulator.rolls, modifier.replace)
+      rollBonuses = {
+        ...rollBonuses,
+        rolls: applyReplace(rollBonuses.rolls, modifier.replace)
       }
     }
 
     if (isCapModifier(modifier)) {
-      return {
-        ...accumulator,
-        rolls: accumulator.rolls.map(applySingleCap(modifier.cap))
+      rollBonuses = {
+        ...rollBonuses,
+        rolls: rollBonuses.rolls.map(applySingleCap(modifier.cap))
       }
     }
 
     if (isDropModifier(modifier)) {
-      return {
-        ...accumulator,
-        rolls: applyDrop(accumulator.rolls, modifier.drop)
+      rollBonuses = {
+        ...rollBonuses,
+        rolls: applyDrop(rollBonuses.rolls, modifier.drop)
       }
     }
 
     if (isExplodeModifier(modifier)) {
-      return {
-        ...accumulator,
-        rolls: applyExplode(accumulator.rolls, { sides }, rollOne)
+      rollBonuses = {
+        ...rollBonuses,
+        rolls: applyExplode(rollBonuses.rolls, { sides }, rollOne)
       }
     }
 
     if (isPlusModifier(modifier)) {
-      return {
-        ...accumulator,
+      rollBonuses = {
+        ...rollBonuses,
         simpleMathModifier:
-          accumulator.simpleMathModifier + Number(modifier.plus)
+          rollBonuses.simpleMathModifier + Number(modifier.plus)
       }
     }
 
-    return {
-      ...accumulator,
-      simpleMathModifier:
-        accumulator.simpleMathModifier - Number(modifier.minus)
+    if (isMinusModifier(modifier)) {
+      rollBonuses = {
+        ...rollBonuses,
+        simpleMathModifier:
+          rollBonuses.simpleMathModifier - Number(modifier.minus)
+      }
     }
-  }, rollBonuses)
+  })
+  return rollBonuses
+}
+
+export default function generateResult(
+  { sides, quantity, modifiers, faces }: InternalRollParameters,
+  rollGenerator = generateRolls
+):
+  | Omit<RollResult<CustomSidesDie>, 'arguments'>
+  | Omit<RollResult<StandardDie>, 'arguments'> {
+  const { rollOne, initialRolls } = rollGenerator(sides, quantity)
+  const rollBonuses = applyModifiers(
+    modifiers,
+    initialRolls,
+    rollOne,
+    sides,
+    quantity
+  )
 
   return {
-    ...generateTotalAndRolls({ faces, ...modifiedRollBonuses }),
+    ...generateTotalAndRolls({ faces, ...rollBonuses }),
     rollParameters: {
       sides,
       quantity,
       modifiers,
       initialRolls,
       faces,
-      randomizer,
       rollOne
     }
   }

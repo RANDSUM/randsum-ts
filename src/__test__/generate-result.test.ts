@@ -1,18 +1,17 @@
-import generateResult, { InvalidUniqueError } from 'generate-result'
-import { InternalRollParameters, RollParamCore } from 'types'
+import generateResult, { InvalidUniqueError } from '../generate-result'
+import { RollParameters } from '../types'
 
-const mockRandomizer = (): number => 5
+type BaseParameters = Omit<RollParameters, 'initialRolls' | 'rollOne'>
+type BaseRolls = Pick<RollParameters, 'initialRolls' | 'rollOne'>
 
 describe('generateResult', () => {
   const rolls = [1, 2, 3, 4]
-  const baseParameters: InternalRollParameters = {
+  const baseParameters: BaseParameters = {
     sides: 6,
     quantity: rolls.length,
-    modifiers: [],
-    faces: undefined,
-    randomizer: mockRandomizer
+    modifiers: []
   }
-  const baseRollGenerator = (): RollParamCore => ({
+  const baseRollGenerator = (): BaseRolls => ({
     initialRolls: rolls,
     rollOne: () => 200
   })
@@ -25,35 +24,29 @@ describe('generateResult', () => {
       })
     })
 
-    test('it passes size, quantity, and randomizer from RollParameters to the Roll Generator', () => {
-      const spyMockRandomizer = jest.fn()
+    test('it passes size and quantity from RollParameters to the Roll Generator', () => {
       const mockRollGenerator = jest
         .fn()
         .mockReturnValue({ rollOnce: () => 200, initialRolls: [200] })
 
-      generateResult(
-        { ...baseParameters, randomizer: spyMockRandomizer },
-
-        mockRollGenerator
-      )
+      generateResult(baseParameters, mockRollGenerator)
 
       expect(mockRollGenerator).toHaveBeenCalledWith(
         baseParameters.sides,
-        baseParameters.quantity,
-        spyMockRandomizer
+        baseParameters.quantity
       )
     })
   })
 
   describe('when given roll total with a "unique" modifier', () => {
     const duplicateRollTotals = [1, 1, 2, 3]
-    const uniqueParameters: InternalRollParameters = {
+    const uniqueParameters: BaseParameters = {
       ...baseParameters,
       sides: 4,
       quantity: duplicateRollTotals.length,
       modifiers: [{ unique: true }]
     }
-    const uniqueRollGenerator = (): RollParamCore => ({
+    const uniqueRollGenerator = (): BaseRolls => ({
       ...baseRollGenerator(),
       initialRolls: duplicateRollTotals
     })
@@ -68,7 +61,7 @@ describe('generateResult', () => {
     })
 
     describe('when given a "notUnique" array', () => {
-      const notUniqueParameters: InternalRollParameters = {
+      const notUniqueParameters: BaseParameters = {
         ...uniqueParameters,
         modifiers: [{ unique: { notUnique: [1] } }]
       }
@@ -89,11 +82,11 @@ describe('generateResult', () => {
 
     describe('and the # of quantity is greater than the sides of the die', () => {
       const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
-      const overflowParameters: InternalRollParameters = {
+      const overflowParameters: BaseParameters = {
         ...uniqueParameters,
         quantity: overflowRollTotals.length
       }
-      const overflowRollGenerator = (): RollParamCore => ({
+      const overflowRollGenerator = (): BaseRolls => ({
         ...baseRollGenerator(),
         initialRolls: overflowRollTotals
       })
@@ -112,7 +105,7 @@ describe('generateResult', () => {
 
   describe('when given custom sides', () => {
     const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
-    const customSidesParameters: InternalRollParameters = {
+    const customSidesParameters: BaseParameters = {
       ...baseParameters,
       faces,
       sides: faces.length,
@@ -130,7 +123,7 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "drop" modifier', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    const dropParameters: InternalRollParameters = {
+    const dropParameters: BaseParameters = {
       ...baseParameters,
       sides: 10,
       quantity: longerRollTotals.length,
@@ -146,7 +139,7 @@ describe('generateResult', () => {
         }
       ]
     }
-    const overflowRollGenerator = (): RollParamCore => ({
+    const overflowRollGenerator = (): BaseRolls => ({
       ...baseRollGenerator(),
       initialRolls: longerRollTotals
     })
@@ -163,7 +156,7 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "replace" modifier', () => {
     describe('that is a single replace modifiers', () => {
-      const dropParameters: InternalRollParameters = {
+      const dropParameters: BaseParameters = {
         ...baseParameters,
         modifiers: [{ replace: { from: 1, to: 2 } }]
       }
@@ -176,7 +169,7 @@ describe('generateResult', () => {
     })
 
     describe('that is an array of replace modifiers', () => {
-      const dropParameters: InternalRollParameters = {
+      const dropParameters: BaseParameters = {
         ...baseParameters,
         modifiers: [
           {
@@ -198,12 +191,12 @@ describe('generateResult', () => {
 
   describe('when given roll total with an "explode" modifier', () => {
     const explodeRollTotals = [1, 2, 3, 6]
-    const explodeParameters: InternalRollParameters = {
+    const explodeParameters: BaseParameters = {
       ...baseParameters,
       modifiers: [{ explode: true }]
     }
 
-    const explodeRollGenerator = (): RollParamCore => ({
+    const explodeRollGenerator = (): BaseRolls => ({
       ...baseRollGenerator(),
       initialRolls: explodeRollTotals
     })
@@ -220,7 +213,7 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
-      const rerollParameters: InternalRollParameters = {
+      const rerollParameters: BaseParameters = {
         ...baseParameters,
         modifiers: [{ reroll: { greaterThan: 3 } }]
       }
@@ -240,7 +233,7 @@ describe('generateResult', () => {
     })
 
     describe('that is a single reroll modifier', () => {
-      const rerollParameters: InternalRollParameters = {
+      const rerollParameters: BaseParameters = {
         ...baseParameters,
         modifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }]
       }
@@ -256,7 +249,7 @@ describe('generateResult', () => {
     })
 
     describe('that is an array of reroll modifiers', () => {
-      const rerollParameters: InternalRollParameters = {
+      const rerollParameters: BaseParameters = {
         ...baseParameters,
         modifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }]
       }
@@ -273,7 +266,7 @@ describe('generateResult', () => {
   })
 
   describe('when given roll total with a "cap" modifier', () => {
-    const dropParameters: InternalRollParameters = {
+    const dropParameters: BaseParameters = {
       ...baseParameters,
       modifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }]
     }
@@ -287,7 +280,7 @@ describe('generateResult', () => {
   })
 
   describe('when given roll total with a "plus" modifier', () => {
-    const dropParameters: InternalRollParameters = {
+    const dropParameters: BaseParameters = {
       ...baseParameters,
       modifiers: [{ plus: 2 }]
     }
@@ -301,7 +294,7 @@ describe('generateResult', () => {
   })
 
   describe('when given roll total with a "minus" modifier', () => {
-    const dropParameters: InternalRollParameters = {
+    const dropParameters: BaseParameters = {
       ...baseParameters,
       modifiers: [{ minus: 2 }]
     }

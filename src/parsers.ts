@@ -32,7 +32,7 @@ import {
   RerollOptions,
   UniqueMatch,
   UniqueModifier
-} from 'types'
+} from './types'
 
 function parseCoreNotationCustomSides(
   sides: string
