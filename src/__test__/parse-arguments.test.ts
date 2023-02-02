@@ -1,83 +1,23 @@
-import parseArguments from 'parse-arguments'
-import { CustomSidesDie, DiceNotation } from 'types'
+import parseArguments from '../parse-arguments'
+import { CustomSidesDie, DiceNotation } from '../types'
 
 describe('parseArguments', () => {
+  describe('given undefined', () => {
+    const arg = undefined
+    test('returns a RollParameter matching the notation', () => {
+      expect(parseArguments(arg)).toMatchObject({ quantity: 1, sides: 20 })
+    })
+  })
+
   describe('given a number string', () => {
     test('returns a RollParameter matching the notation', () => {
       expect(parseArguments('2')).toMatchObject({ quantity: 1, sides: 2 })
-    })
-
-    describe('and a complex SecondaryRandsumOptions object', () => {
-      test('returns a RollParameter matching the notation', () => {
-        expect(
-          parseArguments('2', {
-            modifiers: [{ explode: true }],
-            quantity: 3,
-            detailed: true
-          })
-        ).toMatchObject({
-          quantity: 3,
-          sides: 2,
-          detailed: true,
-          modifiers: [{ explode: true }]
-        })
-      })
-
-      describe('with custom faces', () => {
-        test('returns a RollParameter matching the notation, without modifiers', () => {
-          expect(
-            parseArguments('2', {
-              modifiers: [{ explode: true }],
-              quantity: 3,
-              faces: ['true', 'false'],
-              detailed: true
-            })
-          ).toMatchObject({
-            quantity: 3,
-            sides: 2,
-            detailed: true,
-            faces: ['true', 'false'],
-            modifiers: []
-          })
-        })
-      })
     })
   })
 
   describe('given a number', () => {
     test('returns a RollParameter matching the notation', () => {
       expect(parseArguments(2)).toMatchObject({ quantity: 1, sides: 2 })
-    })
-
-    describe('and a complex RandsumOptionWithoutSides', () => {
-      test('returns a RollParameter matching the notation', () => {
-        expect(
-          parseArguments(2, { quantity: 3, detailed: true })
-        ).toMatchObject({
-          quantity: 3,
-          sides: 2,
-          detailed: true
-        })
-      })
-
-      describe('with custom faces', () => {
-        test('returns a RollParameter matching the notation, without modifiers', () => {
-          expect(
-            parseArguments(2, {
-              modifiers: [{ explode: true }],
-              quantity: 3,
-              faces: ['true', 'false'],
-              detailed: true
-            })
-          ).toMatchObject({
-            quantity: 3,
-            sides: 2,
-            detailed: true,
-            faces: ['true', 'false'],
-            modifiers: []
-          })
-        })
-      })
     })
   })
 
@@ -183,17 +123,6 @@ describe('parseArguments', () => {
     describe('given a basic notation', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(baseTestString)).toMatchObject(baseRollParameters)
-      })
-
-      describe('and a UserOptions object', () => {
-        const userOptions = { detailed: false, randomizer: () => 1 }
-
-        test('returns a RollParameter matching the notation and detailed options', () => {
-          expect(parseArguments(baseTestString, userOptions)).toMatchObject({
-            ...baseRollParameters,
-            detailed: userOptions.detailed
-          })
-        })
       })
     })
 
