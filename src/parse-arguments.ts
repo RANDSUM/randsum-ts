@@ -1,5 +1,9 @@
 import normalizeModifiers from './normalize-modifiers'
-import parseModifiers, { isCoreNotationMatch, Match, parseCoreNotation } from './parsers'
+import parseModifiers, {
+  isCoreNotationMatch,
+  Match,
+  parseCoreNotation
+} from './parsers'
 import {
   coreNotationPattern,
   DiceNotation,

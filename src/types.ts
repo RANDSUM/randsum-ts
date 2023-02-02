@@ -4,7 +4,8 @@ export type DieType = StandardDie | CustomSidesDie
 
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
 type CustomDiceSidesNotation = `{${string}}`
-type DiceNotationWithCustomSides = `${number}${| 'd'
+type DiceNotationWithCustomSides = `${number}${
+  | 'd'
   | 'D'}${CustomDiceSidesNotation}`
 
 export type DiceNotation<N extends DieType = DieType> = N extends StandardDie

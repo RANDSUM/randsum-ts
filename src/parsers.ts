@@ -110,13 +110,13 @@ function parseCapNotation({
   capString.forEach((note) => {
     capParameters = note.includes('<')
       ? {
-        ...capParameters,
-        lessThan: Number(note.replace(/</g, ''))
-      }
+          ...capParameters,
+          lessThan: Number(note.replace(/</g, ''))
+        }
       : {
-        ...capParameters,
-        greaterThan: Number(note.replace(/>/g, ''))
-      }
+          ...capParameters,
+          greaterThan: Number(note.replace(/>/g, ''))
+        }
   })
   return { cap: capParameters }
 }
