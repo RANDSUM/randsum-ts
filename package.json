@@ -52,6 +52,7 @@
     "prepublish": "yarn run build",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
+  "sideEffects": false,
   "engines": {
     "node": ">=12"
   },
