@@ -126,22 +126,23 @@ export const isDropModifier = (
 export type RerollModifier<T extends NumberStringArgument = 'inclusive'> =
   Record<'reroll', TypeOrArrayOfType<RerollOptions<T>>>
 
-export const isRerollModifier = (
-  modifier: Modifier<NumberStringArgument>
-): modifier is RerollModifier<NumberStringArgument> =>
-  isModifierType<RerollModifier<NumberStringArgument>>(modifier, 'reroll')
+export const isRerollModifier = <T extends NumberStringArgument>(
+  modifier: Modifier<T>
+): modifier is RerollModifier<T> =>
+  isModifierType<RerollModifier<T>>(modifier, 'reroll')
 
 export type ReplaceModifier<T extends NumberStringArgument = 'inclusive'> =
   Record<'replace', TypeOrArrayOfType<ReplaceOptions<T>>>
-export const isReplaceModifier = (
-  modifier: Modifier<NumberStringArgument>
-): modifier is ReplaceModifier<NumberStringArgument> =>
-  isModifierType<ReplaceModifier<NumberStringArgument>>(modifier, 'replace')
 
-export const isUniqueModifier = (
-  modifier: Modifier<NumberStringArgument>
-): modifier is UniqueModifier<NumberStringArgument> =>
-  isModifierType<UniqueModifier<NumberStringArgument>>(modifier, 'unique')
+export const isReplaceModifier = <T extends NumberStringArgument>(
+  modifier: Modifier<T>
+): modifier is ReplaceModifier<T> =>
+  isModifierType<ReplaceModifier<T>>(modifier, 'replace')
+
+export const isUniqueModifier = <T extends NumberStringArgument>(
+  modifier: Modifier<T>
+): modifier is UniqueModifier<T> =>
+  isModifierType<UniqueModifier<T>>(modifier, 'unique')
 
 export type UniqueModifier<T extends NumberStringArgument = 'inclusive'> =
   Record<'unique', boolean | UniqueOptions<T>>
@@ -156,18 +157,18 @@ export type PlusModifier<T extends NumberStringArgument = 'inclusive'> = Record<
   'plus',
   NumberString<T>
 >
-export const isPlusModifier = (
-  modifier: Modifier<NumberStringArgument>
-): modifier is PlusModifier<NumberStringArgument> =>
-  isModifierType<PlusModifier<NumberStringArgument>>(modifier, 'plus')
+export const isPlusModifier = <T extends NumberStringArgument>(
+  modifier: Modifier<T>
+): modifier is PlusModifier<T> =>
+  isModifierType<PlusModifier<T>>(modifier, 'plus')
 
 export type MinusModifier<T extends NumberStringArgument = 'inclusive'> =
   Record<'minus', NumberString<T>>
 
-export const isMinusModifier = (
-  modifier: Modifier<NumberStringArgument>
-): modifier is MinusModifier<NumberStringArgument> =>
-  isModifierType<MinusModifier<NumberStringArgument>>(modifier, 'minus')
+export const isMinusModifier = <T extends NumberStringArgument>(
+  modifier: Modifier<T>
+): modifier is MinusModifier<T> =>
+  isModifierType<MinusModifier<T>>(modifier, 'minus')
 
 export type Modifier<T extends NumberStringArgument = 'inclusive'> =
   | CapModifier<T>
