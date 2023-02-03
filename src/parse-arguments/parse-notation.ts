@@ -32,7 +32,7 @@ export default function parseNotation(
   }
 
   findMatches(notationString).forEach((match) => {
-    const { modifiers = [], ...restParameters } = rollParameters
+    const { modifiers, ...restParameters } = rollParameters
 
     if (isCoreNotationMatch(match)) {
       const newRollParameters = {

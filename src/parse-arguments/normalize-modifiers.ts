@@ -67,7 +67,7 @@ export function convertRerollOptionsToParameters({
 }
 
 export default function normalizeModifiers(
-  modifiers: Array<Modifier<'inclusive' | number>> = []
+  modifiers: Array<Modifier<'inclusive' | number>>
 ): Array<Modifier<number>> {
   return modifiers.map((modifier) => {
     if (isCapModifier(modifier)) {

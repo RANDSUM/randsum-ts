@@ -145,8 +145,8 @@ function parseDropConstraintsNotation({
 }: DropConstraintsMatch): DropModifier<number> {
   let dropConstraintParameters: Pick<
     DropOptions<number>,
-    'exact' | 'greaterThan' | 'lessThan'
-  > = { exact: [] }
+    'greaterThan' | 'lessThan'
+  > & { exact: number[] } = { exact: [] }
   const constraints = notationString
     .split(/[Dd]/)[1]
     .replace(/{/g, '')
@@ -160,6 +160,7 @@ function parseDropConstraintsNotation({
       }
       return
     }
+
     if (constraint.includes('>')) {
       dropConstraintParameters = {
         ...dropConstraintParameters,
@@ -167,10 +168,10 @@ function parseDropConstraintsNotation({
       }
       return
     }
+
     dropConstraintParameters = {
       ...dropConstraintParameters,
-
-      exact: [...(dropConstraintParameters?.exact || []), Number(constraint)]
+      exact: [...dropConstraintParameters.exact, Number(constraint)]
     }
   })
   return { drop: dropConstraintParameters }

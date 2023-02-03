@@ -6,14 +6,12 @@ export default function parseOptions(
 ): InternalRollParameters {
   const { sides, quantity, modifiers } = {
     quantity: undefined,
-    modifiers: undefined,
+    modifiers: [],
     ...options
   }
 
   const isCustomSides = Array.isArray(sides)
-  const normalizedModifiers = isCustomSides
-    ? []
-    : normalizeModifiers(modifiers || [])
+  const normalizedModifiers = isCustomSides ? [] : normalizeModifiers(modifiers)
 
   return {
     ...options,

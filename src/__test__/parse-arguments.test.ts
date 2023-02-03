@@ -29,7 +29,9 @@ describe('parseArguments', () => {
             quantity: 4,
             sides: '6',
             modifiers: [
-              { reroll: [{ exact: ['2', 1] }, { exact: 4 }] },
+              {
+                reroll: [{ exact: ['2', 1] }, { exact: 4 }, { maxReroll: 3 }]
+              },
               { replace: { from: { greaterThan: 5 }, to: '1' } },
               { unique: true }
             ]
@@ -39,7 +41,9 @@ describe('parseArguments', () => {
           sides: 6,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([
-            { reroll: [{ exact: [2, 1] }, { exact: [4] }] },
+            {
+              reroll: [{ exact: [2, 1] }, { exact: [4] }, { maxReroll: 3 }]
+            },
             { replace: { from: { greaterThan: 5 }, to: 1 } },
             { unique: true }
           ])
@@ -75,7 +79,7 @@ describe('parseArguments', () => {
               { minus: 1 },
               {
                 drop: {
-                  highest: '5',
+                  highest: undefined,
                   greaterThan: '2',
                   lessThan: '6',
                   lowest: '1',
@@ -96,7 +100,7 @@ describe('parseArguments', () => {
           modifiers: expect.arrayContaining([
             {
               drop: {
-                highest: 5,
+                highest: undefined,
                 greaterThan: 2,
                 lessThan: 6,
                 lowest: 1,

@@ -22,6 +22,6 @@ export default function generateTotalAndRolls({
     }
   }
 
-  const newRolls = rolls.map((roll) => faces[roll - 1] || ' ')
+  const newRolls = rolls.map((roll) => faces[roll - 1])
   return { total: newRolls.join(', '), rolls: newRolls }
 }

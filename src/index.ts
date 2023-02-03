@@ -18,6 +18,7 @@ function randsum(
 function randsum(
   firstArg: RandsumOptions<CustomSidesDie> | DiceNotation<CustomSidesDie>
 ): RollResult<CustomSidesDie>
+
 function randsum(
   primeArgument?: RandsumOptions | DiceNotation | NumberString
 ): RollResult {
