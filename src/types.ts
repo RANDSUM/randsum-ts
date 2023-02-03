@@ -12,12 +12,6 @@ export type DiceNotation<N extends DieType = DieType> = N extends StandardDie
   ? DiceNotationWithNumericSides
   : DiceNotationWithCustomSides
 
-export const coreNotationPattern = /(?<coreNotationMatch>^\d+[Dd](\d+|{.*}))/
-
-export function isDiceNotation(argument: unknown): argument is DiceNotation {
-  return !!coreNotationPattern.test(String(argument))
-}
-
 export type NumberStringArgument = number | 'inclusive'
 
 export type NumberString<T extends NumberStringArgument = 'inclusive'> =
@@ -97,15 +91,6 @@ export type CustomSidesRandsumOptions = Omit<
 export type RandsumOptions<N extends DieType = DieType> = N extends StandardDie
   ? StandardRandsumOptions
   : CustomSidesRandsumOptions
-
-export function isRandsumOptions(
-  argument: unknown
-): argument is RandsumOptions<DieType> {
-  return (
-    typeof argument === 'object' &&
-    (argument as RandsumOptions<DieType>).sides !== undefined
-  )
-}
 
 function isModifierType<T extends Modifier<NumberStringArgument>>(
   argument: Modifier<NumberStringArgument>,

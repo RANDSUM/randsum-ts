@@ -11,7 +11,7 @@ import {
   RerollModifier,
   RerollOptions,
   UniqueModifier
-} from './types'
+} from '../types'
 
 function isMatcherType<T extends Match>(
   argument: Match,

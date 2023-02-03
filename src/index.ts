@@ -1,4 +1,4 @@
-import generateResult from './generate-result'
+import generateResult from './generate-results'
 import parseArguments from './parse-arguments'
 import {
   CustomSidesDie,

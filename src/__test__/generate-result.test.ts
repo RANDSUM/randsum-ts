@@ -1,4 +1,5 @@
-import generateResult, { InvalidUniqueError } from '../generate-result'
+import generateResult from '../generate-results'
+import { InvalidUniqueError } from '../generate-results/applicators'
 import { RollParameters } from '../types'
 
 type BaseParameters = Omit<RollParameters, 'initialRolls' | 'rollOne'>

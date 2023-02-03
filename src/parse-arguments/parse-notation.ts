@@ -1,18 +1,10 @@
-import normalizeModifiers from './normalize-modifiers'
+import { DiceNotation, InternalRollParameters } from '../types'
+import { coreNotationPattern } from './is-dice-notation'
 import parseModifiers, {
   isCoreNotationMatch,
   Match,
   parseCoreNotation
 } from './parsers'
-import {
-  coreNotationPattern,
-  DiceNotation,
-  InternalRollParameters,
-  isDiceNotation,
-  isRandsumOptions,
-  NumberString,
-  RandsumOptions
-} from './types'
 
 const modifierRollPatterns =
   // eslint-disable-next-line security/detect-unsafe-regex
@@ -23,34 +15,13 @@ const completeRollPattern = new RegExp(
   'g'
 )
 
-export function parseOptions(options: RandsumOptions): InternalRollParameters {
-  const { sides, quantity, modifiers } = {
-    quantity: undefined,
-    modifiers: undefined,
-    ...options
-  }
-
-  const isCustomSides = Array.isArray(sides)
-  const normalizedModifiers = isCustomSides
-    ? []
-    : normalizeModifiers(modifiers || [])
-
-  return {
-    ...options,
-    faces: isCustomSides ? sides : undefined,
-    sides: isCustomSides ? sides.length : Number(sides),
-    quantity: Number(quantity || 1),
-    modifiers: normalizedModifiers
-  }
-}
-
 function findMatches(notations: string): Match[] {
   return [...notations.matchAll(completeRollPattern)].map<Match>(
     ({ groups: match }) => match as Match
   )
 }
 
-export function parseNotation(
+export default function parseNotation(
   notationString: DiceNotation
 ): InternalRollParameters {
   let rollParameters: InternalRollParameters = {
@@ -82,22 +53,4 @@ export function parseNotation(
   })
 
   return rollParameters
-}
-
-export default function parseArguments(
-  primeArgument: RandsumOptions | DiceNotation | NumberString | undefined
-): InternalRollParameters {
-  if (isRandsumOptions(primeArgument)) {
-    return parseOptions(primeArgument)
-  }
-
-  if (isDiceNotation(primeArgument)) {
-    return { ...parseNotation(primeArgument) }
-  }
-
-  return {
-    sides: primeArgument === undefined ? 20 : Number(primeArgument),
-    modifiers: [],
-    quantity: 1
-  }
 }

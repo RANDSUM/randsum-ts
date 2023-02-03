@@ -16,7 +16,31 @@
     "type": "git",
     "url": "https://github.com/alxjrvs/randsum.git"
   },
-  "keywords": [
+  "sideEffects": false,
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "analyze": "size-limit",
+    "build": "yarn clean && node bin/build.js",
+    "clean": "rm -rf ./dist/",
+    "test": "jest",
+    "test:ci": "jest --runInBand",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format:fix": "prettier . --write",
+    "format": "prettier . --check",
+    "typeCheck": "tsc --noEmit",
+    "prepublish": "yarn run build",
+    "postversion": "git push --no-verify && git push --tags --no-verify"
+  },
+  "size-limit": [
+    {
+      "path": "dist/index.js",
+      "limit": "4 KB"
+    }
+  ],
+  "keyword": [
     "dice",
     "d20",
     "dice roller",
@@ -37,30 +61,6 @@
     "RNG",
     "notation",
     "typescript"
-  ],
-  "scripts": {
-    "analyze": "size-limit",
-    "build": "yarn clean && node bin/build.js",
-    "clean": "rm -rf ./dist/",
-    "test": "jest",
-    "test:ci": "jest --runInBand",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format:fix": "prettier . --write",
-    "format": "prettier . --check",
-    "typeCheck": "tsc --noEmit",
-    "prepublish": "yarn run build",
-    "postversion": "git push --no-verify && git push --tags --no-verify"
-  },
-  "sideEffects": false,
-  "engines": {
-    "node": ">=12"
-  },
-  "size-limit": [
-    {
-      "path": "dist/index.js",
-      "limit": "4 KB"
-    }
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
@@ -106,21 +106,5 @@
     "tslib": "^2.4.1",
     "typescript": ">=4.9.4",
     "yarn": "^1.22.0"
-  },
-  "jest": {
-    "coverageDirectory": "../coverage/",
-    "collectCoverage": true,
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$",
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ]
   }
 }

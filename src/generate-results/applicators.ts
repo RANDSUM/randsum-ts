@@ -1,8 +1,6 @@
 import {
-  CustomSidesDie,
   DropOptions,
   GreaterLessOptions,
-  InternalRollParameters,
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
@@ -15,20 +13,10 @@ import {
   ReplaceOptions,
   RerollOptions,
   RollParameters,
-  RollResult,
-  StandardDie,
   UniqueModifier
-} from './types'
-
-function makeRolls(quantity: number, rollOne: () => number): number[] {
-  return Array.from({ length: quantity }, rollOne)
-}
-
-export function rollOneFactory(sides: number) {
-  return function rollOne() {
-    return Math.floor(Math.random() * Number(sides)) + 1
-  }
-}
+} from '../types'
+import makeRolls from './make-rolls'
+import { RollBonuses } from './types'
 
 export class InvalidUniqueError extends Error {
   constructor() {
@@ -203,47 +191,13 @@ function applyDrop(
   return sortedResults
 }
 
-export function generateRolls(
-  sides: number,
-  quantity: number
-): Pick<RollParameters, 'rollOne' | 'initialRolls'> {
-  const rollOne = rollOneFactory(sides)
-  const initialRolls = makeRolls(quantity, rollOne)
-  return { rollOne, initialRolls }
-}
-
-type RollBonuses = {
-  rolls: number[]
-  simpleMathModifier: number
-}
-
-function generateTotalAndRolls({
-  faces,
-  rolls,
-  simpleMathModifier
-}: Pick<InternalRollParameters, 'faces'> & RollBonuses):
-  | Pick<RollResult<StandardDie>, 'total' | 'rolls'>
-  | Pick<RollResult<CustomSidesDie>, 'total' | 'rolls'> {
-  if (faces === undefined) {
-    return {
-      total:
-        Number([...rolls].reduce((total, roll) => total + roll, 0)) +
-        simpleMathModifier,
-      rolls
-    }
-  }
-
-  const newRolls = rolls.map((roll) => faces[roll - 1] || ' ')
-  return { total: newRolls.join(', '), rolls: newRolls }
-}
-
-const applyModifiers = (
+export default function applyModifiers(
   modifiers: Modifier<number>[],
   initialRolls: number[],
   rollOne: () => number,
   sides: number,
   quantity: number
-): RollBonuses => {
+): RollBonuses {
   let rollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls
@@ -313,32 +267,4 @@ const applyModifiers = (
     }
   })
   return rollBonuses
-}
-
-export default function generateResult(
-  { sides, quantity, modifiers, faces }: InternalRollParameters,
-  rollGenerator = generateRolls
-):
-  | Omit<RollResult<CustomSidesDie>, 'arguments'>
-  | Omit<RollResult<StandardDie>, 'arguments'> {
-  const { rollOne, initialRolls } = rollGenerator(sides, quantity)
-  const rollBonuses = applyModifiers(
-    modifiers,
-    initialRolls,
-    rollOne,
-    sides,
-    quantity
-  )
-
-  return {
-    ...generateTotalAndRolls({ faces, ...rollBonuses }),
-    rollParameters: {
-      sides,
-      quantity,
-      modifiers,
-      initialRolls,
-      faces,
-      rollOne
-    }
-  }
 }
