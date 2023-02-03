@@ -1,98 +1,8 @@
-export type StandardDie = 'standard'
-export type CustomSidesDie = 'customSides'
-export type DieType = StandardDie | CustomSidesDie
-
-type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
-type CustomDiceSidesNotation = `{${string}}`
-type DiceNotationWithCustomSides = `${number}${
-  | 'd'
-  | 'D'}${CustomDiceSidesNotation}`
-
-export type DiceNotation<N extends DieType = DieType> = N extends StandardDie
-  ? DiceNotationWithNumericSides
-  : DiceNotationWithCustomSides
-
-type NumberStringArgument = number | 'inclusive'
-
-export type NumberString<T extends NumberStringArgument = 'inclusive'> =
-  T extends 'inclusive' ? number | `${number}` : number
-
-type CustomSides = Array<number | string>
-
-export type DropOptions<T extends NumberStringArgument = 'inclusive'> = {
-  highest?: NumberString<T>
-  lowest?: NumberString<T>
-  greaterThan?: NumberString<T>
-  lessThan?: NumberString<T>
-  exact?: Array<NumberString<T>>
-}
-
-export type GreaterLessOptions<T extends NumberStringArgument = 'inclusive'> = {
-  greaterThan?: NumberString<T>
-  lessThan?: NumberString<T>
-}
-
-type TypeOrArrayOfType<T> = T | T[]
-export type RerollOptions<T extends NumberStringArgument = 'inclusive'> =
-  GreaterLessOptions<T> & {
-    exact?: TypeOrArrayOfType<NumberString<T>>
-    maxReroll?: NumberString<T>
-  }
-
-export type ReplaceOptions<T extends NumberStringArgument = 'inclusive'> = {
-  from: NumberString<T> | GreaterLessOptions<T>
-  to: NumberString<T>
-}
-
-export type UniqueOptions<T extends NumberStringArgument = 'inclusive'> =
-  Record<'notUnique', Array<NumberString<T>>>
-
-type StandardRandsumOptions<T extends NumberStringArgument = 'inclusive'> = {
-  quantity?: NumberString<T>
-  sides: NumberString<T>
-  modifiers?: Array<Modifier<T>>
-}
-
-export type InternalRollParameters = StandardRandsumOptions<number> & {
-  modifiers: Array<Modifier<number>>
-  quantity: number
-  faces?: CustomSides
-}
-
-export type RollParameters = InternalRollParameters & {
-  initialRolls: number[]
-  rollOne: () => number
-}
-
-type BaseRollResult = {
-  rollParameters: RollParameters
-  arguments: [RandsumOptions | DiceNotation | NumberString | undefined]
-}
-
-type StandardRollResult = BaseRollResult & {
-  total: number
-  rolls: number[]
-}
-
-type CustomSidesRollResult = BaseRollResult & {
-  total: string
-  rolls: CustomSides
-}
-
-export type RollResult<N extends DieType = DieType> = N extends StandardDie
-  ? StandardRollResult
-  : CustomSidesRollResult
-
-type CustomSidesRandsumOptions = Omit<
-  StandardRandsumOptions,
-  'sides' | 'modifiers'
-> & {
-  sides: CustomSides
-}
-
-export type RandsumOptions<N extends DieType = DieType> = N extends StandardDie
-  ? StandardRandsumOptions
-  : CustomSidesRandsumOptions
+import {
+  NumberString,
+  NumberStringArgument,
+  TypeOrArrayOfType
+} from './primitives'
 
 function isModifierType<T extends Modifier<NumberStringArgument>>(
   argument: Modifier<NumberStringArgument>,
@@ -179,3 +89,30 @@ export type Modifier<T extends NumberStringArgument = 'inclusive'> =
   | UniqueModifier<T>
   | PlusModifier<T>
   | MinusModifier<T>
+
+export type DropOptions<T extends NumberStringArgument = 'inclusive'> = {
+  highest?: NumberString<T>
+  lowest?: NumberString<T>
+  greaterThan?: NumberString<T>
+  lessThan?: NumberString<T>
+  exact?: Array<NumberString<T>>
+}
+
+export type GreaterLessOptions<T extends NumberStringArgument = 'inclusive'> = {
+  greaterThan?: NumberString<T>
+  lessThan?: NumberString<T>
+}
+
+export type RerollOptions<T extends NumberStringArgument = 'inclusive'> =
+  GreaterLessOptions<T> & {
+    exact?: TypeOrArrayOfType<NumberString<T>>
+    maxReroll?: NumberString<T>
+  }
+
+export type ReplaceOptions<T extends NumberStringArgument = 'inclusive'> = {
+  from: NumberString<T> | GreaterLessOptions<T>
+  to: NumberString<T>
+}
+
+export type UniqueOptions<T extends NumberStringArgument = 'inclusive'> =
+  Record<'notUnique', Array<NumberString<T>>>
