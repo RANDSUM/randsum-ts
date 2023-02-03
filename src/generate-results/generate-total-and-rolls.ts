@@ -6,13 +6,13 @@ import {
 } from '../types'
 import { RollBonuses } from './types'
 
-export default function generateTotalAndRolls({
+const generateTotalAndRolls = ({
   faces,
   rolls,
   simpleMathModifier
 }: Pick<InternalRollParameters, 'faces'> & RollBonuses):
   | Pick<RollResult<StandardDie>, 'total' | 'rolls'>
-  | Pick<RollResult<CustomSidesDie>, 'total' | 'rolls'> {
+  | Pick<RollResult<CustomSidesDie>, 'total' | 'rolls'> => {
   if (faces === undefined) {
     return {
       total:
@@ -25,3 +25,5 @@ export default function generateTotalAndRolls({
   const newRolls = rolls.map((roll) => faces[roll - 1])
   return { total: newRolls.join(', '), rolls: newRolls }
 }
+
+export default generateTotalAndRolls

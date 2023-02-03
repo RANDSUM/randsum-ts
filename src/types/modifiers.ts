@@ -4,12 +4,10 @@ import {
   TypeOrArrayOfType
 } from './primitives'
 
-function isModifierType<T extends Modifier<NumberStringArgument>>(
+const isModifierType = <T extends Modifier<NumberStringArgument>>(
   argument: Modifier<NumberStringArgument>,
   key: keyof T
-): argument is T {
-  return (argument as T)[key] !== undefined
-}
+): argument is T => (argument as T)[key] !== undefined
 
 export type CapModifier<T extends NumberStringArgument = 'inclusive'> = Record<
   'cap',

@@ -1,10 +1,9 @@
 import { DieType, RandsumOptions } from '../types'
 
-export default function isRandsumOptions(
+const isRandsumOptions = (
   argument: unknown
-): argument is RandsumOptions<DieType> {
-  return (
-    typeof argument === 'object' &&
-    (argument as RandsumOptions<DieType>).sides !== undefined
-  )
-}
+): argument is RandsumOptions<DieType> =>
+  typeof argument === 'object' &&
+  (argument as RandsumOptions<DieType>).sides !== undefined
+
+export default isRandsumOptions

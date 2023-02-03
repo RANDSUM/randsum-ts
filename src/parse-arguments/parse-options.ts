@@ -1,9 +1,7 @@
 import { InternalRollParameters, RandsumOptions } from '../types'
 import normalizeModifiers from './normalize-modifiers'
 
-export default function parseOptions(
-  options: RandsumOptions
-): InternalRollParameters {
+const parseOptions = (options: RandsumOptions): InternalRollParameters => {
   const { sides, quantity, modifiers } = {
     quantity: undefined,
     modifiers: [],
@@ -21,3 +19,5 @@ export default function parseOptions(
     modifiers: normalizedModifiers
   }
 }
+
+export default parseOptions

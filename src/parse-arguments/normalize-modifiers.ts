@@ -13,48 +13,42 @@ import {
   RerollOptions
 } from '../types'
 
-export function convertGreaterLessOptionsToParameters({
+export const convertGreaterLessOptionsToParameters = ({
   greaterThan,
   lessThan
-}: GreaterLessOptions): GreaterLessOptions<number> {
-  return {
-    greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
-    lessThan: lessThan === undefined ? undefined : Number(lessThan)
-  }
-}
+}: GreaterLessOptions): GreaterLessOptions<number> => ({
+  greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
+  lessThan: lessThan === undefined ? undefined : Number(lessThan)
+})
 
-export function convertDropOptionsToParameters({
+export const convertDropOptionsToParameters = ({
   highest,
   lowest,
   exact,
   ...greaterThanLessThan
-}: DropOptions): DropOptions<number> {
-  return {
-    ...convertGreaterLessOptionsToParameters(greaterThanLessThan),
-    highest: highest === undefined ? undefined : Number(highest),
-    lowest: lowest === undefined ? undefined : Number(lowest),
-    exact: exact === undefined ? undefined : exact.map(Number)
-  }
-}
+}: DropOptions): DropOptions<number> => ({
+  ...convertGreaterLessOptionsToParameters(greaterThanLessThan),
+  highest: highest === undefined ? undefined : Number(highest),
+  lowest: lowest === undefined ? undefined : Number(lowest),
+  exact: exact === undefined ? undefined : exact.map(Number)
+})
 
-export function convertReplaceOptionsToParameters({
+export const convertReplaceOptionsToParameters = ({
   from,
   to
-}: ReplaceOptions): ReplaceOptions<number> {
-  return {
-    from:
-      typeof from === 'object'
-        ? convertGreaterLessOptionsToParameters(from)
-        : Number(from),
-    to: Number(to)
-  }
-}
+}: ReplaceOptions): ReplaceOptions<number> => ({
+  from:
+    typeof from === 'object'
+      ? convertGreaterLessOptionsToParameters(from)
+      : Number(from),
+  to: Number(to)
+})
 
-export function convertRerollOptionsToParameters({
+export const convertRerollOptionsToParameters = ({
   exact,
   maxReroll,
   ...restOptions
-}: RerollOptions): RerollOptions<number> {
+}: RerollOptions): RerollOptions<number> => {
   const convertedExact =
     exact === undefined
       ? {}
@@ -66,10 +60,10 @@ export function convertRerollOptionsToParameters({
   }
 }
 
-export default function normalizeModifiers(
+const normalizeModifiers = (
   modifiers: Array<Modifier<'inclusive' | number>>
-): Array<Modifier<number>> {
-  return modifiers.map((modifier) => {
+): Array<Modifier<number>> =>
+  modifiers.map((modifier) => {
     if (isCapModifier(modifier)) {
       return {
         cap: convertGreaterLessOptionsToParameters(modifier.cap)
@@ -113,4 +107,5 @@ export default function normalizeModifiers(
     }
     return { minus: Number(modifier.minus) }
   })
-}
+
+export default normalizeModifiers

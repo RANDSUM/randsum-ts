@@ -26,7 +26,7 @@ export class InvalidUniqueError extends Error {
   }
 }
 
-function applyUnique(
+const applyUnique = (
   rolls: number[],
   {
     unique,
@@ -34,7 +34,7 @@ function applyUnique(
     sides
   }: Pick<RollParameters, 'quantity' | 'sides'> & UniqueModifier<number>,
   rollOne: () => number
-): number[] {
+): number[] => {
   if (quantity > sides) {
     throw new InvalidUniqueError()
   }
@@ -58,11 +58,9 @@ function applyUnique(
   })
 }
 
-function applySingleCap(
-  { greaterThan, lessThan }: GreaterLessOptions<number>,
-  value?: number
-) {
-  return (roll: number) => {
+const applySingleCap =
+  ({ greaterThan, lessThan }: GreaterLessOptions<number>, value?: number) =>
+  (roll: number) => {
     if (greaterThan !== undefined && roll > greaterThan) {
       return value ?? greaterThan
     }
@@ -71,14 +69,13 @@ function applySingleCap(
     }
     return roll
   }
-}
 
-function rerollRoll(
+const rerollRoll = (
   roll: number,
   { greaterThan, lessThan, exact, maxReroll }: RerollOptions<number>,
   rollOne: () => number,
   index = 0
-): number {
+): number => {
   if (maxReroll === index) {
     return roll
   }
@@ -105,11 +102,11 @@ function rerollRoll(
   return roll
 }
 
-function applyReroll(
+const applyReroll = (
   rolls: number[],
   reroll: RerollOptions<number> | Array<RerollOptions<number>>,
   rollOne: () => number
-): number[] {
+): number[] => {
   const parameters = Array.isArray(reroll) ? reroll : [reroll]
 
   let rerollRolls = rolls
@@ -121,10 +118,10 @@ function applyReroll(
   return rerollRolls
 }
 
-function applyReplace(
+const applyReplace = (
   rolls: number[],
   replace: ReplaceOptions<number> | Array<ReplaceOptions<number>>
-): number[] {
+): number[] => {
   const parameters = Array.isArray(replace) ? replace : [replace]
 
   let replaceRolls = rolls
@@ -146,29 +143,27 @@ function applyReplace(
   return replaceRolls
 }
 
-function applyExplode(
+const applyExplode = (
   rolls: number[],
   { sides }: Pick<RollParameters, 'sides'>,
   rollOne: () => number
-): number[] {
+): number[] => {
   const explodeCount = rolls.filter((roll) => roll === sides).length
   const explodeResults = makeRolls(explodeCount, rollOne)
   return [...rolls, ...explodeResults]
 }
 
-function times(iterator: number) {
-  return (callback: (index?: number) => void) => {
-    if (iterator > 0) {
-      callback(iterator)
-      times(iterator - 1)(callback)
-    }
+const times = (iterator: number) => (callback: (index?: number) => void) => {
+  if (iterator > 0) {
+    callback(iterator)
+    times(iterator - 1)(callback)
   }
 }
 
-function applyDrop(
+const applyDrop = (
   rolls: number[],
   { highest, lowest, greaterThan, lessThan, exact }: DropOptions<number>
-): number[] {
+): number[] => {
   const sortedResults = rolls
     .filter(
       (roll) =>
@@ -191,13 +186,13 @@ function applyDrop(
   return sortedResults
 }
 
-export default function applyModifiers(
+const applyModifiers = (
   modifiers: Modifier<number>[],
   initialRolls: number[],
   rollOne: () => number,
   sides: number,
   quantity: number
-): RollBonuses {
+): RollBonuses => {
   let rollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls
@@ -268,3 +263,5 @@ export default function applyModifiers(
   })
   return rollBonuses
 }
+
+export default applyModifiers

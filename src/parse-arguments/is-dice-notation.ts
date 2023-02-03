@@ -2,8 +2,7 @@ import { DiceNotation } from '../types'
 
 export const coreNotationPattern = /(?<coreNotationMatch>^\d+[Dd](\d+|{.*}))/
 
-export default function isDiceNotation(
-  argument: unknown
-): argument is DiceNotation {
-  return !!coreNotationPattern.test(String(argument))
-}
+const isDiceNotation = (argument: unknown): argument is DiceNotation =>
+  !!coreNotationPattern.test(String(argument))
+
+export default isDiceNotation

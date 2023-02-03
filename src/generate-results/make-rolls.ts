@@ -1,6 +1,4 @@
-export default function makeRolls(
-  quantity: number,
-  rollOne: () => number
-): number[] {
-  return Array.from({ length: quantity }, rollOne)
-}
+const makeRolls = (quantity: number, rollOne: () => number): number[] =>
+  Array.from({ length: quantity }, rollOne)
+
+export default makeRolls

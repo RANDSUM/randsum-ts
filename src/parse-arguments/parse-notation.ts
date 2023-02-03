@@ -15,15 +15,14 @@ const completeRollPattern = new RegExp(
   'g'
 )
 
-function findMatches(notations: string): Match[] {
-  return [...notations.matchAll(completeRollPattern)].map<Match>(
+const findMatches = (notations: string): Match[] =>
+  [...notations.matchAll(completeRollPattern)].map<Match>(
     ({ groups: match }) => match as Match
   )
-}
 
-export default function parseNotation(
+const parseNotation = (
   notationString: DiceNotation
-): InternalRollParameters {
+): InternalRollParameters => {
   let rollParameters: InternalRollParameters = {
     sides: 1,
     quantity: 1,
@@ -54,3 +53,5 @@ export default function parseNotation(
 
   return rollParameters
 }
+
+export default parseNotation

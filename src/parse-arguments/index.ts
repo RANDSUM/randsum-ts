@@ -9,9 +9,9 @@ import isRandsumOptions from './is-randsum-option'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
 
-export default function parseArguments(
+const parseArguments = (
   primeArgument: RandsumOptions | DiceNotation | NumberString | undefined
-): InternalRollParameters {
+): InternalRollParameters => {
   if (isRandsumOptions(primeArgument)) {
     return parseOptions(primeArgument)
   }
@@ -26,3 +26,4 @@ export default function parseArguments(
     quantity: 1
   }
 }
+export default parseArguments
