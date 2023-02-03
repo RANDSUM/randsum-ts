@@ -12,14 +12,14 @@ export type DiceNotation<N extends DieType = DieType> = N extends StandardDie
   ? DiceNotationWithNumericSides
   : DiceNotationWithCustomSides
 
-export type NumberStringArgument = number | 'inclusive'
+type NumberStringArgument = number | 'inclusive'
 
 export type NumberString<T extends NumberStringArgument = 'inclusive'> =
   T extends 'inclusive' ? number | `${number}` : number
 
 type CustomSides = Array<number | string>
 
-export interface DropOptions<T extends NumberStringArgument = 'inclusive'> {
+export type DropOptions<T extends NumberStringArgument = 'inclusive'> = {
   highest?: NumberString<T>
   lowest?: NumberString<T>
   greaterThan?: NumberString<T>
@@ -27,26 +27,27 @@ export interface DropOptions<T extends NumberStringArgument = 'inclusive'> {
   exact?: Array<NumberString<T>>
 }
 
-export interface GreaterLessOptions<
-  T extends NumberStringArgument = 'inclusive'
-> {
+export type GreaterLessOptions<T extends NumberStringArgument = 'inclusive'> = {
   greaterThan?: NumberString<T>
   lessThan?: NumberString<T>
 }
 
 type TypeOrArrayOfType<T> = T | T[]
-export interface RerollOptions<T extends NumberStringArgument = 'inclusive'>
-  extends GreaterLessOptions<T> {
-  exact?: TypeOrArrayOfType<NumberString<T>>
-  maxReroll?: NumberString<T>
-}
-export interface ReplaceOptions<T extends NumberStringArgument = 'inclusive'> {
+export type RerollOptions<T extends NumberStringArgument = 'inclusive'> =
+  GreaterLessOptions<T> & {
+    exact?: TypeOrArrayOfType<NumberString<T>>
+    maxReroll?: NumberString<T>
+  }
+
+export type ReplaceOptions<T extends NumberStringArgument = 'inclusive'> = {
   from: NumberString<T> | GreaterLessOptions<T>
   to: NumberString<T>
 }
-export interface StandardRandsumOptions<
-  T extends NumberStringArgument = 'inclusive'
-> {
+
+export type UniqueOptions<T extends NumberStringArgument = 'inclusive'> =
+  Record<'notUnique', Array<NumberString<T>>>
+
+type StandardRandsumOptions<T extends NumberStringArgument = 'inclusive'> = {
   quantity?: NumberString<T>
   sides: NumberString<T>
   modifiers?: Array<Modifier<T>>
@@ -82,12 +83,13 @@ export type RollResult<N extends DieType = DieType> = N extends StandardDie
   ? StandardRollResult
   : CustomSidesRollResult
 
-export type CustomSidesRandsumOptions = Omit<
+type CustomSidesRandsumOptions = Omit<
   StandardRandsumOptions,
   'sides' | 'modifiers'
 > & {
   sides: CustomSides
 }
+
 export type RandsumOptions<N extends DieType = DieType> = N extends StandardDie
   ? StandardRandsumOptions
   : CustomSidesRandsumOptions
@@ -103,15 +105,19 @@ export type CapModifier<T extends NumberStringArgument = 'inclusive'> = Record<
   'cap',
   GreaterLessOptions<T>
 >
+
 export const isCapModifier = (
   modifier: Modifier<NumberStringArgument>
 ): modifier is CapModifier<NumberStringArgument> =>
   isModifierType<CapModifier<NumberStringArgument>>(modifier, 'cap')
 
-export interface DropModifier<T extends NumberStringArgument = 'inclusive'>
-  extends Record<'drop', DropOptions<T>> {
+export type DropModifier<T extends NumberStringArgument = 'inclusive'> = Record<
+  'drop',
+  DropOptions<T>
+> & {
   drop: DropOptions<T>
 }
+
 export const isDropModifier = (
   modifier: Modifier<NumberStringArgument>
 ): modifier is DropModifier<NumberStringArgument> =>
@@ -119,6 +125,7 @@ export const isDropModifier = (
 
 export type RerollModifier<T extends NumberStringArgument = 'inclusive'> =
   Record<'reroll', TypeOrArrayOfType<RerollOptions<T>>>
+
 export const isRerollModifier = (
   modifier: Modifier<NumberStringArgument>
 ): modifier is RerollModifier<NumberStringArgument> =>
@@ -131,8 +138,6 @@ export const isReplaceModifier = (
 ): modifier is ReplaceModifier<NumberStringArgument> =>
   isModifierType<ReplaceModifier<NumberStringArgument>>(modifier, 'replace')
 
-export type UniqueOptions<T extends NumberStringArgument = 'inclusive'> =
-  Record<'notUnique', Array<NumberString<T>>>
 export const isUniqueModifier = (
   modifier: Modifier<NumberStringArgument>
 ): modifier is UniqueModifier<NumberStringArgument> =>
