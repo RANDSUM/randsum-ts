@@ -16,10 +16,9 @@ export type CapModifier<T extends NumberStringArgument = 'inclusive'> = Record<
   GreaterLessOptions<T>
 >
 
-export const isCapModifier = (
-  modifier: Modifier<NumberStringArgument>
-): modifier is CapModifier<NumberStringArgument> =>
-  isModifierType<CapModifier<NumberStringArgument>>(modifier, 'cap')
+export const isCapModifier = <T extends NumberStringArgument>(
+  modifier: Modifier<T>
+): modifier is CapModifier<T> => isModifierType<CapModifier<T>>(modifier, 'cap')
 
 export type DropModifier<T extends NumberStringArgument = 'inclusive'> = Record<
   'drop',
@@ -28,10 +27,10 @@ export type DropModifier<T extends NumberStringArgument = 'inclusive'> = Record<
   drop: DropOptions<T>
 }
 
-export const isDropModifier = (
-  modifier: Modifier<NumberStringArgument>
-): modifier is DropModifier<NumberStringArgument> =>
-  isModifierType<DropModifier<NumberStringArgument>>(modifier, 'drop')
+export const isDropModifier = <T extends NumberStringArgument>(
+  modifier: Modifier<T>
+): modifier is DropModifier<T> =>
+  isModifierType<DropModifier<T>>(modifier, 'drop')
 
 export type RerollModifier<T extends NumberStringArgument = 'inclusive'> =
   Record<'reroll', TypeOrArrayOfType<RerollOptions<T>>>

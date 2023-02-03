@@ -5,7 +5,7 @@ const { dependencies, peerDependencies } = require('../package.json')
 const { Generator } = require('npm-dts')
 
 new Generator({
-  entry: 'src/index.ts',
+  entry: 'src/index',
   output: 'dist/index.d.ts',
   tsc: '-p ./tsconfig.build.json',
 }).generate()
