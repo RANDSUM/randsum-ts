@@ -12,9 +12,9 @@ import {
   Modifier,
   ReplaceOptions,
   RerollOptions,
-  RollParameters,
   UniqueModifier
-} from '../types'
+} from '../parse-arguments/types'
+import { RollParameters } from '../types'
 import makeRolls from './make-rolls'
 import { RollBonuses } from './types'
 

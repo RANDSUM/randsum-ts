@@ -1,19 +1,10 @@
 import { DiceNotation, InternalRollParameters } from '../types'
-import { coreNotationPattern } from './is-dice-notation'
 import parseModifiers, {
   isCoreNotationMatch,
   Match,
   parseCoreNotation
 } from './parsers'
-
-const modifierRollPatterns =
-  // eslint-disable-next-line security/detect-unsafe-regex
-  /(?<dropHighMatch>[Hh]\d*)|(?<dropLowMatch>[Ll]\d*)|(?<dropConstraintsMatch>[Dd]{?([<>|]?\d+,?)*}?)|(?<explodeMatch>!+{?([<>|]?\d+,?)*}?)|(?<uniqueMatch>[Uu]({(\d+,?)+})?)|(?<replaceMatch>[Vv]{?([<>|]?\d+=?\d+,?)*}?)|(?<rerollMatch>[Rr]{?([<>|]?\d,?)*}\d*)|(?<capMatch>[Cc]([<>|]?\d+)*)|(?<plusMatch>\+\d+)|(?<minusMatch>-\d+)/
-// eslint-disable-next-line security/detect-non-literal-regexp
-const completeRollPattern = new RegExp(
-  `${coreNotationPattern.source}|${modifierRollPatterns.source}`,
-  'g'
-)
+import { completeRollPattern } from './regexp'
 
 const findMatches = (notations: string): Match[] =>
   [...notations.matchAll(completeRollPattern)].map<Match>(

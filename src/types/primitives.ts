@@ -18,4 +18,3 @@ export type NumberString<T extends NumberStringArgument = 'inclusive'> =
   T extends 'inclusive' ? number | `${number}` : number
 
 export type CustomSides = Array<number | string>
-export type TypeOrArrayOfType<T> = T | T[]

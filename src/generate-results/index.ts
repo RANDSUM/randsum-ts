@@ -10,11 +10,11 @@ import generateTotalAndRolls from './generate-total-and-rolls'
 
 const generateResult = (
   { sides, quantity, modifiers, faces }: InternalRollParameters,
-  rollGenerator = generateInitialRolls
+  initialRollGenerator = generateInitialRolls
 ):
   | Omit<RollResult<CustomSidesDie>, 'arguments'>
   | Omit<RollResult<StandardDie>, 'arguments'> => {
-  const { rollOne, initialRolls } = rollGenerator(sides, quantity)
+  const { rollOne, initialRolls } = initialRollGenerator(sides, quantity)
 
   const totalAndRolls = generateTotalAndRolls({
     ...applyModifiers(modifiers, initialRolls, rollOne, sides, quantity),

@@ -1,4 +1,4 @@
-import { Modifier } from './modifiers'
+import { Modifier } from '../parse-arguments/types'
 import { StandardRandsumOptions } from './options'
 import { CustomSides } from './primitives'
 

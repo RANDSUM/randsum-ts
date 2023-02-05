@@ -1,9 +1,9 @@
+import { InternalRollParameters } from '../types'
 import {
   CapModifier,
   DropModifier,
   DropOptions,
   ExplodeModifier,
-  InternalRollParameters,
   MinusModifier,
   Modifier,
   PlusModifier,
@@ -11,7 +11,7 @@ import {
   RerollModifier,
   RerollOptions,
   UniqueModifier
-} from '../types'
+} from './types'
 
 const isMatcherType = <T extends Match>(
   argument: Match,
