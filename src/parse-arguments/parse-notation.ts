@@ -3,7 +3,7 @@ import parseModifiers, {
   isCoreNotationMatch,
   Match,
   parseCoreNotation
-} from './parsers'
+} from './parse-modifiers'
 import { completeRollPattern } from './regexp'
 
 const findMatches = (notations: string): Match[] =>
