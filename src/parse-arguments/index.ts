@@ -4,10 +4,9 @@ import {
   RandsumOptions,
   RollParameters
 } from '../types'
-import isDiceNotation from './is-dice-notation'
-import isRandsumOptions from './is-randsum-option'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
+import { isDiceNotation, isRandsumOptions } from './utils'
 
 const parseArguments = (
   primeArgument: RandsumOptions | DiceNotation | NumberString | undefined

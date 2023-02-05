@@ -5,8 +5,7 @@ import {
   StandardDie
 } from '../types'
 import applyModifiers from './apply-modifiers'
-import coreRandomFactory from './core-random-factory'
-import makeRolls from './make-rolls'
+import { coreRandomFactory, makeRolls } from './utils'
 
 const generateResult = ({
   faces,
