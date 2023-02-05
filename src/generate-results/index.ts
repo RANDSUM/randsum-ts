@@ -4,7 +4,7 @@ import {
   RollResult,
   StandardDie
 } from '../types'
-import applyModifiers from './applicators'
+import applyModifiers from './apply-modifiers'
 import coreRandomFactory from './core-random-factory'
 import makeRolls from './make-rolls'
 

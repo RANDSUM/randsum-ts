@@ -1,5 +1,5 @@
 import generateResult from '../generate-results'
-import { InvalidUniqueError } from '../generate-results/applicators'
+import { InvalidUniqueError } from '../generate-results/apply-modifiers'
 import * as CoreRandomFactory from '../generate-results/core-random-factory'
 import * as MakeRolls from '../generate-results/make-rolls'
 import { Modifier } from '../parse-arguments/types'
