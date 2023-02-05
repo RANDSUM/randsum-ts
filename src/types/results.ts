@@ -8,17 +8,17 @@ import {
   StandardDie
 } from './primitives'
 
-type BaseRollResult = {
+type CoreRollResult = {
   rollParameters: RollParameters
   arguments: [RandsumOptions | DiceNotation | NumberString | undefined]
 }
 
-type StandardRollResult = BaseRollResult & {
+type StandardRollResult = CoreRollResult & {
   total: number
   rolls: number[]
 }
 
-type CustomSidesRollResult = BaseRollResult & {
+type CustomSidesRollResult = CoreRollResult & {
   total: string
   rolls: CustomSides
 }

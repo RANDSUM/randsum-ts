@@ -10,7 +10,7 @@ describe('generateResult', () => {
   })
 
   const testRollSet = [1, 2, 3, 4]
-  const baseParameters = {
+  const coreParameters = {
     sides: 6,
     quantity: testRollSet.length,
     modifiers: [] as Modifier<number>[],
@@ -21,7 +21,7 @@ describe('generateResult', () => {
     test('it returns the sum total of the quantity and the roll total', () => {
       jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
 
-      expect(generateResult(baseParameters)).toMatchObject({
+      expect(generateResult(coreParameters)).toMatchObject({
         total: 10,
         rolls: [1, 2, 3, 4]
       })
@@ -31,7 +31,7 @@ describe('generateResult', () => {
   describe('when given roll total with a "unique" modifier', () => {
     const uniqueRolls = [1, 1, 2, 3]
     const uniqueParameters = {
-      ...baseParameters,
+      ...coreParameters,
       sides: 4,
       modifiers: [{ unique: true }]
     }
@@ -81,7 +81,7 @@ describe('generateResult', () => {
   describe('when given custom sides', () => {
     const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
     const customSidesParameters = {
-      ...baseParameters,
+      ...coreParameters,
       faces,
       sides: faces.length
     }
@@ -99,7 +99,7 @@ describe('generateResult', () => {
   describe('when given roll total with a "drop" modifier', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     const dropParameters = {
-      ...baseParameters,
+      ...coreParameters,
       sides: 10,
       quantity: longerRollTotals.length,
       modifiers: [
@@ -128,7 +128,7 @@ describe('generateResult', () => {
   describe('when given roll total with a "replace" modifier', () => {
     describe('that is a single replace modifiers', () => {
       const dropParameters = {
-        ...baseParameters,
+        ...coreParameters,
         modifiers: [{ replace: { from: 1, to: 2 } }]
       }
 
@@ -144,7 +144,7 @@ describe('generateResult', () => {
 
     describe('that is an array of replace modifiers', () => {
       const dropParameters = {
-        ...baseParameters,
+        ...coreParameters,
         modifiers: [
           {
             replace: [
@@ -169,7 +169,7 @@ describe('generateResult', () => {
   describe('when given roll total with an "explode" modifier', () => {
     const explodeRollTotals = [1, 2, 3, 6]
     const explodeParameters = {
-      ...baseParameters,
+      ...coreParameters,
       modifiers: [{ explode: true }]
     }
 
@@ -186,7 +186,7 @@ describe('generateResult', () => {
   describe('when given roll total with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
       const rerollParameters = {
-        ...baseParameters,
+        ...coreParameters,
         modifiers: [{ reroll: { greaterThan: 3 } }]
       }
 
@@ -206,7 +206,7 @@ describe('generateResult', () => {
 
     describe('that is a single reroll modifier', () => {
       const rerollParameters = {
-        ...baseParameters,
+        ...coreParameters,
         modifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }]
       }
 
@@ -222,7 +222,7 @@ describe('generateResult', () => {
 
     describe('that is an array of reroll modifiers', () => {
       const rerollParameters = {
-        ...baseParameters,
+        ...coreParameters,
         modifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }]
       }
 
@@ -239,7 +239,7 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "cap" modifier', () => {
     const dropParameters = {
-      ...baseParameters,
+      ...coreParameters,
       modifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }]
     }
 
@@ -255,7 +255,7 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "plus" modifier', () => {
     const dropParameters = {
-      ...baseParameters,
+      ...coreParameters,
       modifiers: [{ plus: 2 }]
     }
 
@@ -271,7 +271,7 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "minus" modifier', () => {
     const dropParameters = {
-      ...baseParameters,
+      ...coreParameters,
       modifiers: [{ minus: 2 }]
     }
 

@@ -269,20 +269,20 @@ const parseReplaceNotation = ({
     .map((replacement) => {
       const [noteFrom, noteTo] = replacement.split('=')
 
-      const baseReplacement = { to: Number(noteTo) }
+      const coreReplacement = { to: Number(noteTo) }
       if (noteFrom.includes('>')) {
         return {
-          ...baseReplacement,
+          ...coreReplacement,
           from: { greaterThan: Number(noteFrom.replace(/>/g, '')) }
         }
       }
       if (noteFrom.includes('<')) {
         return {
-          ...baseReplacement,
+          ...coreReplacement,
           from: { lessThan: Number(noteFrom.replace(/</g, '')) }
         }
       }
-      return { ...baseReplacement, from: Number(noteFrom) }
+      return { ...coreReplacement, from: Number(noteFrom) }
     })
 
   return {

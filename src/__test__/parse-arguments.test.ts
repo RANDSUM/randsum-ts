@@ -121,12 +121,12 @@ describe('parseArguments', () => {
   })
 
   describe('given DiceNotation', () => {
-    const baseTestString: DiceNotation = '4d6'
-    const baseRollParameters = { sides: 6, quantity: 4 }
+    const coreTestString: DiceNotation = '4d6'
+    const coreRollParameters = { sides: 6, quantity: 4 }
 
     describe('given a basic notation', () => {
       test('returns a RollParameter matching the notation', () => {
-        expect(parseArguments(baseTestString)).toMatchObject(baseRollParameters)
+        expect(parseArguments(coreTestString)).toMatchObject(coreRollParameters)
       })
     })
 
@@ -136,7 +136,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             faces: ['+', '+', '-', '-', ' ', ' ']
           })
         })
@@ -145,11 +145,11 @@ describe('parseArguments', () => {
 
     describe('given a notation that contains a drop highest modifier', () => {
       describe('with a simple notation', () => {
-        const testString: DiceNotation = `${baseTestString}H`
+        const testString: DiceNotation = `${coreTestString}H`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ drop: { highest: 1 } }])
           })
@@ -157,11 +157,11 @@ describe('parseArguments', () => {
       })
 
       describe('with a complex notation', () => {
-        const testString: DiceNotation = `${baseTestString}H2`
+        const testString: DiceNotation = `${coreTestString}H2`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ drop: { highest: 2 } }])
           })
@@ -171,11 +171,11 @@ describe('parseArguments', () => {
 
     describe('given a notation that contains a drop lowest modifier', () => {
       describe('with a simple notation', () => {
-        const testString: DiceNotation = `${baseTestString}L`
+        const testString: DiceNotation = `${coreTestString}L`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ drop: { lowest: 1 } }])
           })
@@ -183,11 +183,11 @@ describe('parseArguments', () => {
       })
 
       describe('with a complex notation', () => {
-        const testString: DiceNotation = `${baseTestString}L2`
+        const testString: DiceNotation = `${coreTestString}L2`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ drop: { lowest: 2 } }])
           })
@@ -197,11 +197,11 @@ describe('parseArguments', () => {
 
     describe('given a notation that contains a drop less than, greater than, and exact', () => {
       describe('simple', () => {
-        const testString: DiceNotation = `${baseTestString}D{<2,>5,2,4}`
+        const testString: DiceNotation = `${coreTestString}D{<2,>5,2,4}`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               { drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }
@@ -227,11 +227,11 @@ describe('parseArguments', () => {
     })
 
     describe('given a notation that contains a cap before and lessThan', () => {
-      const testString: DiceNotation = `${baseTestString}C<2>5`
+      const testString: DiceNotation = `${coreTestString}C<2>5`
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
-          ...baseRollParameters,
+          ...coreRollParameters,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([
             { cap: { lessThan: 2, greaterThan: 5 } }
@@ -241,11 +241,11 @@ describe('parseArguments', () => {
     })
 
     describe('given a notation that contains a minus modifier', () => {
-      const testString: DiceNotation = `${baseTestString}-2`
+      const testString: DiceNotation = `${coreTestString}-2`
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
-          ...baseRollParameters,
+          ...coreRollParameters,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([{ minus: 2 }])
         })
@@ -253,11 +253,11 @@ describe('parseArguments', () => {
     })
 
     describe('given a notation that contains a plus modifier', () => {
-      const testString: DiceNotation = `${baseTestString}+2`
+      const testString: DiceNotation = `${coreTestString}+2`
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
-          ...baseRollParameters,
+          ...coreRollParameters,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([{ plus: 2 }])
         })
@@ -266,11 +266,11 @@ describe('parseArguments', () => {
 
     describe('given a notation that contains a reroll modifier', () => {
       describe('with a simple value', () => {
-        const testString: DiceNotation = `${baseTestString}R{>6}`
+        const testString: DiceNotation = `${coreTestString}R{>6}`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ reroll: { greaterThan: 6 } }])
           })
@@ -278,11 +278,11 @@ describe('parseArguments', () => {
       })
 
       describe('with a complex value', () => {
-        const testString: DiceNotation = `${baseTestString}R{5,2,<6}3`
+        const testString: DiceNotation = `${coreTestString}R{5,2,<6}3`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               { reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } }
@@ -294,11 +294,11 @@ describe('parseArguments', () => {
 
     describe('given a notation that contains a unique notation', () => {
       describe('with a unique notation', () => {
-        const testString: DiceNotation = `${baseTestString}U{5,6}`
+        const testString: DiceNotation = `${coreTestString}U{5,6}`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               { unique: { notUnique: [5, 6] } }
@@ -308,11 +308,11 @@ describe('parseArguments', () => {
       })
 
       describe('with a simple unique notation', () => {
-        const testString: DiceNotation = `${baseTestString}U`
+        const testString: DiceNotation = `${coreTestString}U`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ unique: true }])
           })
@@ -321,11 +321,11 @@ describe('parseArguments', () => {
     })
 
     describe('given a notation that contains an explode modifier', () => {
-      const testString: DiceNotation = `${baseTestString}!`
+      const testString: DiceNotation = `${coreTestString}!`
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
-          ...baseRollParameters,
+          ...coreRollParameters,
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([{ explode: true }])
         })
@@ -334,11 +334,11 @@ describe('parseArguments', () => {
 
     describe('given a notation that contains a replace modifier', () => {
       describe('with multiple replacements', () => {
-        const testString: DiceNotation = `${baseTestString}V{1=2,>2=6}`
+        const testString: DiceNotation = `${coreTestString}V{1=2,>2=6}`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               {
@@ -353,11 +353,11 @@ describe('parseArguments', () => {
       })
 
       describe('with a single replaceent', () => {
-        const testString: DiceNotation = `${baseTestString}V{<2=6}`
+        const testString: DiceNotation = `${coreTestString}V{<2=6}`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...baseRollParameters,
+            ...coreRollParameters,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               { replace: { from: { lessThan: 2 }, to: 6 } }
