@@ -2,29 +2,24 @@ import generateResult from '../generate-results'
 import { InvalidUniqueError } from '../generate-results/applicators'
 import * as CoreRandomFactory from '../generate-results/core-random-factory'
 import * as MakeRolls from '../generate-results/make-rolls'
-import { RollParameters } from '../types'
-
-type BaseParameters = Omit<RollParameters, 'initialRolls' | 'rollOne'>
-// type BaseRolls = Pick<RollParameters, 'initialRolls' | 'rollOne'>
+import { Modifier } from '../parse-arguments/types'
 
 describe('generateResult', () => {
   beforeEach(() => {
     jest.spyOn(CoreRandomFactory, 'default').mockReturnValueOnce(() => 200)
   })
 
-  const rolls = [1, 2, 3, 4]
-  const baseParameters: BaseParameters = {
+  const testRollSet = [1, 2, 3, 4]
+  const baseParameters = {
     sides: 6,
-    quantity: rolls.length,
-    modifiers: []
+    quantity: testRollSet.length,
+    modifiers: [] as Modifier<number>[]
   }
 
   describe('when given roll total with no modifiers', () => {
-    beforeEach(() => {
-      jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(rolls)
-    })
-
     test('it returns the sum total of the quantity and the roll total', () => {
+      jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
+
       expect(generateResult(baseParameters)).toMatchObject({
         total: 10,
         rolls: [1, 2, 3, 4]
@@ -33,19 +28,16 @@ describe('generateResult', () => {
   })
 
   describe('when given roll total with a "unique" modifier', () => {
-    const duplicateRollTotals = [1, 1, 2, 3]
-    const uniqueParameters: BaseParameters = {
+    const uniqueRolls = [1, 1, 2, 3]
+    const uniqueParameters = {
       ...baseParameters,
       sides: 4,
-      quantity: duplicateRollTotals.length,
       modifiers: [{ unique: true }]
     }
 
-    beforeEach(() => {
-      jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(duplicateRollTotals)
-    })
-
     test('it re-quantity non-unique modifiers', () => {
+      jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(uniqueRolls)
+
       expect(generateResult(uniqueParameters)).toMatchObject({
         total: 206,
         rolls: [1, 200, 2, 3]
@@ -53,12 +45,14 @@ describe('generateResult', () => {
     })
 
     describe('when given a "notUnique" array', () => {
-      const notUniqueParameters: BaseParameters = {
+      const notUniqueParameters = {
         ...uniqueParameters,
         modifiers: [{ unique: { notUnique: [1] } }]
       }
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
+        jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(uniqueRolls)
+
         expect(generateResult(notUniqueParameters)).toMatchObject({
           total: 7,
           rolls: [1, 1, 2, 3]
@@ -68,225 +62,225 @@ describe('generateResult', () => {
 
     describe('and the # of quantity is greater than the sides of the die', () => {
       const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
-      const overflowParameters: BaseParameters = {
+      const overflowParameters = {
         ...uniqueParameters,
         quantity: overflowRollTotals.length
       }
 
-      beforeEach(() => {
-        jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(overflowRollTotals)
-      })
-
       test('it throws an error', () => {
+        jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(overflowRollTotals)
+
         expect(() => generateResult(overflowParameters)).toThrow(
           InvalidUniqueError
         )
       })
     })
+  })
 
-    describe('when given custom sides', () => {
-      const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
-      const customSidesParameters: BaseParameters = {
+  describe('when given custom sides', () => {
+    const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
+    const customSidesParameters = {
+      ...baseParameters,
+      faces,
+      sides: faces.length
+    }
+
+    test('it returns the expected result as a string', () => {
+      jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
+
+      expect(generateResult(customSidesParameters)).toMatchObject({
+        total: 'r, a, n, d',
+        rolls: ['r', 'a', 'n', 'd']
+      })
+    })
+  })
+
+  describe('when given roll total with a "drop" modifier', () => {
+    const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    const dropParameters = {
+      ...baseParameters,
+      sides: 10,
+      quantity: longerRollTotals.length,
+      modifiers: [
+        {
+          drop: {
+            highest: 1,
+            lowest: 2,
+            greaterThan: 8,
+            lessThan: 2,
+            exact: [5]
+          }
+        }
+      ]
+    }
+
+    test('it returns the total without the provided values', () => {
+      jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(longerRollTotals)
+
+      expect(generateResult(dropParameters)).toMatchObject({
+        total: 17,
+        rolls: [4, 6, 7]
+      })
+    })
+  })
+
+  describe('when given roll total with a "replace" modifier', () => {
+    describe('that is a single replace modifiers', () => {
+      const dropParameters = {
         ...baseParameters,
-        faces,
-        sides: faces.length
+        modifiers: [{ replace: { from: 1, to: 2 } }]
       }
 
-      beforeEach(() => {
-        jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(rolls)
-      })
+      test('it returns the total with all values replaced according to the provided rules', () => {
+        jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
 
-      test('it returns the expected result as a string', () => {
-        console.log('FOO')
-        console.log('FOO')
-        console.log(JSON.stringify(rolls))
-        console.log(JSON.stringify(MakeRolls.default(4, () => 4)))
-        console.log('FOO')
-        expect(generateResult(customSidesParameters)).toMatchObject({
-          total: 'r, a, n, d',
-          rolls: ['r', 'a', 'n', 'd']
+        expect(generateResult(dropParameters)).toMatchObject({
+          total: 11,
+          rolls: [2, 2, 3, 4]
+        })
+      })
+    })
+
+    describe('that is an array of replace modifiers', () => {
+      const dropParameters = {
+        ...baseParameters,
+        modifiers: [
+          {
+            replace: [
+              { from: 1, to: 2 },
+              { from: { greaterThan: 3 }, to: 6 }
+            ]
+          }
+        ]
+      }
+
+      test('it returns the total with all values replaced according to the provided rules', () => {
+        jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
+
+        expect(generateResult(dropParameters)).toMatchObject({
+          total: 13,
+          rolls: [2, 2, 3, 6]
         })
       })
     })
   })
 
-  // describe('when given roll total with a "drop" modifier', () => {
-  //   const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  //   const dropParameters: BaseParameters = {
-  //     ...baseParameters,
-  //     sides: 10,
-  //     quantity: longerRollTotals.length,
-  //     modifiers: [
-  //       {
-  //         drop: {
-  //           highest: 1,
-  //           lowest: 2,
-  //           greaterThan: 8,
-  //           lessThan: 2,
-  //           exact: [5]
-  //         }
-  //       }
-  //     ]
-  //   }
-  //   const overflowRollGenerator = (): BaseRolls => ({
-  //     ...baseRollGenerator(),
-  //     initialRolls: longerRollTotals
-  //   })
+  describe('when given roll total with an "explode" modifier', () => {
+    const explodeRollTotals = [1, 2, 3, 6]
+    const explodeParameters = {
+      ...baseParameters,
+      modifiers: [{ explode: true }]
+    }
 
-  //   test('it returns the total without the provided values', () => {
-  //     expect(
-  //       generateResult(dropParameters, overflowRollGenerator)
-  //     ).toMatchObject({
-  //       total: 17,
-  //       rolls: [4, 6, 7]
-  //     })
-  //   })
-  // })
+    test('it returns the total with all values matching the queries rerolled', () => {
+      jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(explodeRollTotals)
 
-  // describe('when given roll total with a "replace" modifier', () => {
-  //   describe('that is a single replace modifiers', () => {
-  //     const dropParameters: BaseParameters = {
-  //       ...baseParameters,
-  //       modifiers: [{ replace: { from: 1, to: 2 } }]
-  //     }
+      expect(generateResult(explodeParameters)).toMatchObject({
+        total: 212,
+        rolls: [1, 2, 3, 6, 200]
+      })
+    })
+  })
 
-  //     test('it returns the total with all values replaced according to the provided rules', () => {
-  //       expect(generateResult(dropParameters)).toMatchObject({
-  //         total: 11,
-  //         rolls: [2, 2, 3, 4]
-  //       })
-  //     })
-  //   })
+  describe('when given roll total with a "reroll" modifier', () => {
+    describe('when given an impossible roll', () => {
+      const rerollParameters = {
+        ...baseParameters,
+        modifiers: [{ reroll: { greaterThan: 3 } }]
+      }
 
-  //   describe('that is an array of replace modifiers', () => {
-  //     const dropParameters: BaseParameters = {
-  //       ...baseParameters,
-  //       modifiers: [
-  //         {
-  //           replace: [
-  //             { from: 1, to: 2 },
-  //             { from: { greaterThan: 3 }, to: 6 }
-  //           ]
-  //         }
-  //       ]
-  //     }
+      beforeEach(() => {
+        jest.spyOn(console, 'warn').mockImplementationOnce(() => true)
+      })
 
-  //     test('it returns the total with all values replaced according to the provided rules', () => {
-  //       expect(generateResult(dropParameters)).toMatchObject({
-  //         total: 13,
-  //         rolls: [2, 2, 3, 6]
-  //       })
-  //     })
-  //   })
-  // })
+      test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
+        jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
 
-  // describe('when given roll total with an "explode" modifier', () => {
-  //   const explodeRollTotals = [1, 2, 3, 6]
-  //   const explodeParameters: BaseParameters = {
-  //     ...baseParameters,
-  //     modifiers: [{ explode: true }]
-  //   }
+        expect(generateResult(rerollParameters)).toMatchObject({
+          total: 206,
+          rolls: [1, 2, 3, 200]
+        })
+      })
+    })
 
-  //   const explodeRollGenerator = (): BaseRolls => ({
-  //     ...baseRollGenerator(),
-  //     initialRolls: explodeRollTotals
-  //   })
+    describe('that is a single reroll modifier', () => {
+      const rerollParameters = {
+        ...baseParameters,
+        modifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }]
+      }
 
-  //   test('it returns the total with all values matching the queries rerolled', () => {
-  //     expect(generateResult(explodeParameters)).toMatchObject({
-  //       total: 212,
-  //       rolls: [1, 2, 3, 6, 200]
-  //     })
-  //   })
-  // })
+      test('it returns the total with all values matching the queries rerolled', () => {
+        jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
 
-  // describe('when given roll total with a "reroll" modifier', () => {
-  //   describe('when given an impossible roll', () => {
-  //     const rerollParameters: BaseParameters = {
-  //       ...baseParameters,
-  //       modifiers: [{ reroll: { greaterThan: 3 } }]
-  //     }
+        expect(generateResult(rerollParameters)).toMatchObject({
+          total: 404,
+          rolls: [1, 200, 3, 200]
+        })
+      })
+    })
 
-  //     beforeEach(() => {
-  //       jest.spyOn(console, 'warn').mockImplementationOnce(() => true)
-  //     })
+    describe('that is an array of reroll modifiers', () => {
+      const rerollParameters = {
+        ...baseParameters,
+        modifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }]
+      }
 
-  //     test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
-  //       expect(generateResult(rerollParameters)).toMatchObject({
-  //         total: 206,
-  //         rolls: [1, 2, 3, 200]
-  //       })
-  //     })
-  //   })
+      test('it returns the total with all values matching the queries rerolled', () => {
+        jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
 
-  //   describe('that is a single reroll modifier', () => {
-  //     const rerollParameters: BaseParameters = {
-  //       ...baseParameters,
-  //       modifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }]
-  //     }
+        expect(generateResult(rerollParameters)).toMatchObject({
+          total: 406,
+          rolls: [200, 2, 200, 4]
+        })
+      })
+    })
+  })
 
-  //     test('it returns the total with all values matching the queries rerolled', () => {
-  //       expect(generateResult(rerollParameters)).toMatchObject({
-  //         total: 404,
-  //         rolls: [1, 200, 3, 200]
-  //       })
-  //     })
-  //   })
+  describe('when given roll total with a "cap" modifier', () => {
+    const dropParameters = {
+      ...baseParameters,
+      modifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }]
+    }
 
-  //   describe('that is an array of reroll modifiers', () => {
-  //     const rerollParameters: BaseParameters = {
-  //       ...baseParameters,
-  //       modifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }]
-  //     }
+    test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll total', () => {
+      jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
 
-  //     test('it returns the total with all values matching the queries rerolled', () => {
-  //       expect(generateResult(rerollParameters)).toMatchObject({
-  //         total: 406,
-  //         rolls: [200, 2, 200, 4]
-  //       })
-  //     })
-  //   })
-  // })
+      expect(generateResult(dropParameters)).toMatchObject({
+        total: 10,
+        rolls: [2, 2, 3, 3]
+      })
+    })
+  })
 
-  // describe('when given roll total with a "cap" modifier', () => {
-  //   const dropParameters: BaseParameters = {
-  //     ...baseParameters,
-  //     modifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }]
-  //   }
+  describe('when given roll total with a "plus" modifier', () => {
+    const dropParameters = {
+      ...baseParameters,
+      modifiers: [{ plus: 2 }]
+    }
 
-  //   test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll total', () => {
-  //     expect(generateResult(dropParameters)).toMatchObject({
-  //       total: 10,
-  //       rolls: [2, 2, 3, 3]
-  //     })
-  //   })
-  // })
+    test('it returns the total plus the "plus" modifier, and the roll total', () => {
+      jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
 
-  // describe('when given roll total with a "plus" modifier', () => {
-  //   const dropParameters: BaseParameters = {
-  //     ...baseParameters,
-  //     modifiers: [{ plus: 2 }]
-  //   }
+      expect(generateResult(dropParameters)).toMatchObject({
+        total: 12,
+        rolls: [1, 2, 3, 4]
+      })
+    })
+  })
 
-  //   test('it returns the total plus the "plus" modifier, and the roll total', () => {
-  //     expect(generateResult(dropParameters)).toMatchObject({
-  //       total: 12,
-  //       rolls: [1, 2, 3, 4]
-  //     })
-  //   })
-  // })
+  describe('when given roll total with a "minus" modifier', () => {
+    const dropParameters = {
+      ...baseParameters,
+      modifiers: [{ minus: 2 }]
+    }
 
-  // describe('when given roll total with a "minus" modifier', () => {
-  //   const dropParameters: BaseParameters = {
-  //     ...baseParameters,
-  //     modifiers: [{ minus: 2 }]
-  //   }
+    test('it returns the total minus the "minus" modifier, and the roll total', () => {
+      jest.spyOn(MakeRolls, 'default').mockReturnValueOnce(testRollSet)
 
-  //   test('it returns the total minus the "minus" modifier, and the roll total', () => {
-  //     expect(generateResult(dropParameters)).toMatchObject({
-  //       total: 8,
-  //       rolls: [1, 2, 3, 4]
-  //     })
-  //   })
-  // })
+      expect(generateResult(dropParameters)).toMatchObject({
+        total: 8,
+        rolls: [1, 2, 3, 4]
+      })
+    })
+  })
 })
