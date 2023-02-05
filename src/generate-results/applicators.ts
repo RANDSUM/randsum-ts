@@ -9,7 +9,6 @@ import {
   isReplaceModifier,
   isRerollModifier,
   isUniqueModifier,
-  Modifier,
   ReplaceOptions,
   RerollOptions,
   UniqueModifier
@@ -187,11 +186,8 @@ const applyDrop = (
 }
 
 const applyModifiers = (
-  modifiers: Modifier<number>[],
-  initialRolls: number[],
-  rollOne: () => number,
-  sides: number,
-  quantity: number
+  { modifiers, initialRolls, sides, quantity }: RollParameters,
+  rollOne: () => number
 ): RollBonuses => {
   let rollBonuses = {
     simpleMathModifier: 0,

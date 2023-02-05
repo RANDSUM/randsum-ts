@@ -10,5 +10,4 @@ export type InternalRollParameters = StandardRandsumOptions<number> & {
 
 export type RollParameters = InternalRollParameters & {
   initialRolls: number[]
-  rollOne: () => number
 }
