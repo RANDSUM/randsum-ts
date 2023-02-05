@@ -1,4 +1,4 @@
-import { DiceNotation, InternalRollParameters } from '../types'
+import { DiceNotation, RollParameters } from '../types'
 import parseModifiers, {
   isCoreNotationMatch,
   Match,
@@ -11,14 +11,13 @@ const findMatches = (notations: string): Match[] =>
     ({ groups: match }) => match as Match
   )
 
-const parseNotation = (
-  notationString: DiceNotation
-): InternalRollParameters => {
-  let rollParameters: InternalRollParameters = {
+const parseNotation = (notationString: DiceNotation): RollParameters => {
+  let rollParameters: RollParameters = {
     sides: 1,
     quantity: 1,
     faces: undefined,
-    modifiers: []
+    modifiers: [],
+    initialRolls: []
   }
 
   findMatches(notationString).forEach((match) => {

@@ -22,8 +22,8 @@ function randsum(
 function randsum(
   primeArgument?: RandsumOptions | DiceNotation | NumberString
 ): RollResult {
-  const internalRollParameters = parseArguments(primeArgument)
-  const rollResult = generateResult(internalRollParameters)
+  const rollParameters = parseArguments(primeArgument)
+  const rollResult = generateResult(rollParameters)
   return {
     ...rollResult,
     arguments: [primeArgument]

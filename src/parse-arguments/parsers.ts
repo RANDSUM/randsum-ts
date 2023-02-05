@@ -1,4 +1,4 @@
-import { InternalRollParameters } from '../types'
+import { RollParameters } from '../types'
 import {
   CapModifier,
   DropModifier,
@@ -76,7 +76,7 @@ export type Match =
 
 const parseCoreNotationCustomSides = (
   sides: string
-): Pick<InternalRollParameters, 'sides' | 'faces'> => {
+): Pick<RollParameters, 'sides' | 'faces'> => {
   const faces = [...sides.replace(/{|}/g, '')]
   return {
     faces,
@@ -86,10 +86,7 @@ const parseCoreNotationCustomSides = (
 
 export const parseCoreNotation = ({
   coreNotationMatch: notationString
-}: CoreNotationMatch): Pick<
-  InternalRollParameters,
-  'sides' | 'quantity' | 'faces'
-> => {
+}: CoreNotationMatch): Pick<RollParameters, 'sides' | 'quantity' | 'faces'> => {
   const [quantity, sides] = notationString.split(/[Dd]/)
 
   return {

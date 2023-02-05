@@ -1,6 +1,6 @@
 import {
   CustomSidesDie,
-  InternalRollParameters,
+  RollParameters,
   RollResult,
   StandardDie
 } from '../types'
@@ -13,13 +13,13 @@ const generateResult = ({
   sides,
   quantity,
   ...restParams
-}: InternalRollParameters):
+}: RollParameters):
   | Omit<RollResult<CustomSidesDie>, 'arguments'>
   | Omit<RollResult<StandardDie>, 'arguments'> => {
   const rollOne = coreRandomFactory(sides)
 
   const initialRolls = makeRolls(quantity, rollOne)
-  const rollParameters = { faces, sides, quantity, ...restParams, initialRolls }
+  const rollParameters = { ...restParams, faces, sides, quantity, initialRolls }
   const { rolls, simpleMathModifier } = applyModifiers(rollParameters, rollOne)
 
   if (faces === undefined) {

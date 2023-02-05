@@ -2,12 +2,9 @@ import { Modifier } from '../parse-arguments/types'
 import { StandardRandsumOptions } from './options'
 import { CustomSides } from './primitives'
 
-export type InternalRollParameters = StandardRandsumOptions<number> & {
+export type RollParameters = StandardRandsumOptions<number> & {
+  initialRolls: number[]
   modifiers: Array<Modifier<number>>
   quantity: number
   faces?: CustomSides
-}
-
-export type RollParameters = InternalRollParameters & {
-  initialRolls: number[]
 }

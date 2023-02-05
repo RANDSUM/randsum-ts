@@ -1,7 +1,7 @@
-import { InternalRollParameters, RandsumOptions } from '../types'
+import { RandsumOptions, RollParameters } from '../types'
 import normalizeModifiers from './normalize-modifiers'
 
-const parseOptions = (options: RandsumOptions): InternalRollParameters => {
+const parseOptions = (options: RandsumOptions): RollParameters => {
   const { sides, quantity, modifiers } = {
     quantity: undefined,
     modifiers: [],
@@ -16,7 +16,8 @@ const parseOptions = (options: RandsumOptions): InternalRollParameters => {
     faces: isCustomSides ? sides : undefined,
     sides: isCustomSides ? sides.length : Number(sides),
     quantity: Number(quantity || 1),
-    modifiers: normalizedModifiers
+    modifiers: normalizedModifiers,
+    initialRolls: []
   }
 }
 

@@ -13,7 +13,8 @@ describe('generateResult', () => {
   const baseParameters = {
     sides: 6,
     quantity: testRollSet.length,
-    modifiers: [] as Modifier<number>[]
+    modifiers: [] as Modifier<number>[],
+    initialRolls: [] as number[]
   }
 
   describe('when given roll total with no modifiers', () => {

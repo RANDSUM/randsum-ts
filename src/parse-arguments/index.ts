@@ -1,8 +1,8 @@
 import {
   DiceNotation,
-  InternalRollParameters,
   NumberString,
-  RandsumOptions
+  RandsumOptions,
+  RollParameters
 } from '../types'
 import isDiceNotation from './is-dice-notation'
 import isRandsumOptions from './is-randsum-option'
@@ -11,7 +11,7 @@ import parseOptions from './parse-options'
 
 const parseArguments = (
   primeArgument: RandsumOptions | DiceNotation | NumberString | undefined
-): InternalRollParameters => {
+): RollParameters => {
   if (isRandsumOptions(primeArgument)) {
     return parseOptions(primeArgument)
   }
@@ -23,6 +23,7 @@ const parseArguments = (
   return {
     sides: primeArgument === undefined ? 20 : Number(primeArgument),
     modifiers: [],
+    initialRolls: [],
     quantity: 1
   }
 }
