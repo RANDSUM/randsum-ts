@@ -5,16 +5,20 @@ import {
   StandardDie
 } from '../types'
 import applyModifiers from './applicators'
-import generateInitialRolls from './generate-initial-rolls'
+import coreRandomFactory from './core-random-factory'
 import generateTotalAndRolls from './generate-total-and-rolls'
+import makeRolls from './make-rolls'
 
-const generateResult = (
-  { sides, quantity, modifiers, faces }: InternalRollParameters,
-  initialRollGenerator = generateInitialRolls
-):
+const generateResult = ({
+  sides,
+  quantity,
+  modifiers,
+  faces
+}: InternalRollParameters):
   | Omit<RollResult<CustomSidesDie>, 'arguments'>
   | Omit<RollResult<StandardDie>, 'arguments'> => {
-  const { rollOne, initialRolls } = initialRollGenerator(sides, quantity)
+  const rollOne = coreRandomFactory(sides)
+  const initialRolls = makeRolls(quantity, rollOne)
 
   const totalAndRolls = generateTotalAndRolls({
     ...applyModifiers(modifiers, initialRolls, rollOne, sides, quantity),
