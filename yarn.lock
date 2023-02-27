@@ -762,28 +762,28 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@size-limit/esbuild@8.1.2":
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/@size-limit/esbuild/-/esbuild-8.1.2.tgz#098c37b8d6fd064729e900b57d07ac44d9d02838"
-  integrity sha512-BQZg+8QDVz4qQK4Iok8bjrAmzUPDTQW5ht6IrqLfeinHZQOn05fkxbcQuGoja0r6xoQ9+bM7b4cnqgCl61dXEw==
+"@size-limit/esbuild@8.2.4":
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/@size-limit/esbuild/-/esbuild-8.2.4.tgz#20700c2e4b205c46d32c3a16c8426a219d973eab"
+  integrity sha512-kPgNfpwUvBD98s5axlf1UciFg4Ki4AYSl/cOmSyyYBuzksHiwW7Myeu0w4mTxtV9nwBFbkrrNXqszE7b+OhFLA==
   dependencies:
-    esbuild "^0.17.2"
+    esbuild "^0.17.7"
     nanoid "^3.3.4"
 
-"@size-limit/file@8.1.2":
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/@size-limit/file/-/file-8.1.2.tgz#f733b05acd168ee1ddd467f059d62b30c1667607"
-  integrity sha512-cjtGk1GejrmT+ik3LjXpRe+zrS/U15h+Py3L8sYN0XGat0+Y6pPbli1VuRRRcdXZNegpiW+UcxDxPN1AuZC5qA==
+"@size-limit/file@8.2.4":
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/@size-limit/file/-/file-8.2.4.tgz#3624527cc9644c700697322d533e157b4a809a2b"
+  integrity sha512-xLuF97W7m7lxrRJvqXRlxO/4t7cpXtfxOnjml/t4aRVUCMXLdyvebRr9OM4jjoK8Fmiz8jomCbETUCI3jVhLzA==
   dependencies:
     semver "7.3.8"
 
 "@size-limit/preset-small-lib@^8.1.0":
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/@size-limit/preset-small-lib/-/preset-small-lib-8.1.2.tgz#2c04d6c780f20997c7991260c05c59272ed4727a"
-  integrity sha512-KfczbDq+4qFUXVMdNJlIZycp1WY1aqSfHfz4nRZNVaSxBSixrgBYkV6/M+qwP2axNFIXGzIMolqbTCUxvqikyQ==
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/@size-limit/preset-small-lib/-/preset-small-lib-8.2.4.tgz#66121bc8eb0dadf5b2e3dd72ac7e2708429a2b21"
+  integrity sha512-AL4384oBgMcDPlNblgWHreqFSSOui0J9NbgyHhegB1h8AgRyHbdVGC3yWLpEESYQXHYnKdbNrYeRE/TclsViog==
   dependencies:
-    "@size-limit/esbuild" "8.1.2"
-    "@size-limit/file" "8.1.2"
+    "@size-limit/esbuild" "8.2.4"
+    "@size-limit/file" "8.2.4"
 
 "@types/babel__core@^7.1.14":
   version "7.1.20"
@@ -1768,7 +1768,7 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-esbuild@^0.17.2, esbuild@^0.17.5:
+esbuild@^0.17.5, esbuild@^0.17.7:
   version "0.17.10"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.17.10.tgz#3be050561b34c5dc05b46978f4e1f326d5cc9437"
   integrity sha512-n7V3v29IuZy5qgxx25TKJrEm0FHghAlS6QweUcyIgh/U0zYmQcvogWROitrTyZId1mHSkuhhuyEXtI9OXioq7A==
