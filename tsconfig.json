@@ -2,14 +2,18 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 18",
   "compilerOptions": {
-    "lib": ["es2022"],
-    "module": "commonjs",
+    "lib": [
+      "esnext",
+      "DOM"
+    ],
+    "module": "esnext",
     "target": "es2022",
     "sourceMap": true,
     "declaration": true,
-    "outDir": "dist",
+    "moduleResolution": "nodenext",
     /* Strict Type-Checking Options */
     "strict": true,
+    "isolatedModules": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -27,5 +31,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ]
 }
