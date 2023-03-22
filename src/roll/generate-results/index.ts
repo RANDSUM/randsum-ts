@@ -1,5 +1,5 @@
-import { isCustomSidesRollParameters } from '../parse-arguments/utils'
 import { DieType, RollParameters, RollResult } from '../../types'
+import { isCustomSidesRollParameters } from '../parse-arguments/utils'
 import applyModifiers from './apply-modifiers'
 import { coreRandomFactory, makeRolls } from './utils'
 

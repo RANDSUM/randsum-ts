@@ -1,3 +1,4 @@
+import { RollParameters } from '../../types'
 import {
   DropOptions,
   GreaterLessOptions,
@@ -13,7 +14,6 @@ import {
   RerollOptions,
   UniqueModifier
 } from '../parse-arguments/types'
-import { RollParameters } from '../../types'
 import { RollBonuses } from './types'
 import { makeRolls } from './utils'
 
