@@ -19,7 +19,7 @@ export type CustomSidesRollOptions<
   sides: CustomSides
 }
 
-type NewRollOptions<
+export type RollOptions<
   T extends DieType = DieType,
   N extends NumberStringArgument = 'inclusive'
 > = {
@@ -27,8 +27,6 @@ type NewRollOptions<
   sides: T extends 'standard' ? NumberString<N> : CustomSides
   modifiers?: T extends 'standard' ? Array<Modifier<N>> : never
 }
-
-export type RollOptions<T extends DieType = DieType> = NewRollOptions<T>
 
 // export type RollOptions<N extends DieType = DieType> = N extends 'standard'
 //   ? StandardRollOptions
