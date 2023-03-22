@@ -1,4 +1,4 @@
-import { Modifier } from '../parse-arguments/types'
+import { Modifier } from '../roll/parse-arguments/types'
 import { CustomSidesRollOptions, StandardRollOptions } from './options'
 import { CustomSides, DieType } from './primitives'
 

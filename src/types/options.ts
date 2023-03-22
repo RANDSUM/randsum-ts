@@ -1,4 +1,4 @@
-import { Modifier } from '../parse-arguments/types'
+import { Modifier } from '../roll/parse-arguments/types'
 import {
   CustomSides,
   DieType,
@@ -6,19 +6,30 @@ import {
   NumberStringArgument
 } from './primitives'
 
-export type StandardRollOptions<T extends NumberStringArgument = 'inclusive'> =
+export type StandardRollOptions<N extends NumberStringArgument = 'inclusive'> =
   {
-    quantity?: NumberString<T>
-    sides: NumberString<T>
-    modifiers?: Array<Modifier<T>>
+    quantity?: NumberString<N>
+    sides: NumberString<N>
+    modifiers?: Array<Modifier<N>>
   }
 
 export type CustomSidesRollOptions<
-  T extends NumberStringArgument = 'inclusive'
-> = Omit<StandardRollOptions<T>, 'sides' | 'modifiers'> & {
+  N extends NumberStringArgument = 'inclusive'
+> = Omit<StandardRollOptions<N>, 'sides' | 'modifiers'> & {
   sides: CustomSides
 }
 
-export type RollOptions<N extends DieType = DieType> = N extends 'standard'
-  ? StandardRollOptions
-  : CustomSidesRollOptions
+type NewRollOptions<
+  T extends DieType = DieType,
+  N extends NumberStringArgument = 'inclusive'
+> = {
+  quantity?: NumberString<N>
+  sides: T extends 'standard' ? NumberString<N> : CustomSides
+  modifiers?: T extends 'standard' ? Array<Modifier<N>> : never
+}
+
+export type RollOptions<T extends DieType = DieType> = NewRollOptions<T>
+
+// export type RollOptions<N extends DieType = DieType> = N extends 'standard'
+//   ? StandardRollOptions
+//   : CustomSidesRollOptions

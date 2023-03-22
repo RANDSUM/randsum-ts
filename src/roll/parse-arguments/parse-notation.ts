@@ -1,4 +1,4 @@
-import { DiceNotation, DieType, RollParameters } from '../types'
+import { DiceNotation, DieType, RollParameters } from '../../types'
 import parseModifiers, {
   isCoreNotationMatch,
   Match,

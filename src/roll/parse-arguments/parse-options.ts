@@ -1,4 +1,4 @@
-import { DieType, RollOptions, RollParameters } from '../types'
+import { DieType, RollOptions, RollParameters } from '../../types'
 import normalizeModifiers from './normalize-modifiers'
 import { isCustomSidesRollOptions } from './utils'
 

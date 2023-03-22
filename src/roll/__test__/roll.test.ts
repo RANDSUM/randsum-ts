@@ -1,5 +1,5 @@
-import roll from '../roll'
-import { RollParameters, RollResult } from '../types'
+import { RollParameters, RollResult } from '../../types'
+import roll from '..'
 
 type ExpectedResults = {
   sides: number
@@ -121,7 +121,9 @@ describe(roll, () => {
   })
 
   describe('(objectWithCustomSides)', () => {
-    const firstArg = { sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'] }
+    const firstArg = {
+      sides: ['r', 'a', 'n', 'd', 's', 'u', 'm']
+    }
     const result = roll(firstArg)
 
     testResult(result, {

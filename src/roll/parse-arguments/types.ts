@@ -1,4 +1,4 @@
-import { NumberString, NumberStringArgument } from '../types/primitives'
+import { NumberString, NumberStringArgument } from '../../types/primitives'
 
 type TypeOrArrayOfType<T> = T | T[]
 const isModifierType = <T extends Modifier<NumberStringArgument>>(

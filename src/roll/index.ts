@@ -1,12 +1,12 @@
-import generateResult from './generate-results'
-import parseArguments from './parse-arguments'
 import {
   DiceNotation,
   DieType,
   NumberString,
   RollOptions,
   RollResult
-} from './types'
+} from '../types'
+import generateResult from './generate-results'
+import parseArguments from './parse-arguments'
 
 function roll(
   arg?: NumberString | RollOptions<'standard'> | DiceNotation<'standard'>

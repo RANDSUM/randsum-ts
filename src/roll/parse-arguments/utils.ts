@@ -1,12 +1,17 @@
-import { DiceNotation, RollOptions, RollParameters, RollResult } from '../types'
+import {
+  DiceNotation,
+  DieType,
+  RollOptions,
+  RollParameters,
+  RollResult
+} from '../../types'
 import { coreNotationPattern } from './regexp'
 
-export const isRollOptions = (
+export const isRollOptions = <T extends DieType>(
   argument: unknown
-): argument is RollOptions<'standard'> | RollOptions<'customSides'> =>
+): argument is RollOptions<T> =>
   typeof argument === 'object' &&
-  (argument as RollOptions<'standard'> | RollOptions<'customSides'>).sides !==
-    undefined
+  (argument as RollOptions<T>).sides !== undefined
 
 export const isCustomSidesRollOptions = (
   argument: unknown

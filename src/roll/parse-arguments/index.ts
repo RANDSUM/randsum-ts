@@ -4,7 +4,7 @@ import {
   NumberString,
   RollOptions,
   RollParameters
-} from '../types'
+} from '../../types'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
 import { isDiceNotation, isRollOptions } from './utils'
