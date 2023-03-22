@@ -16,7 +16,7 @@ export const isRollOptions = <T extends DieType>(
 export const isCustomSidesRollOptions = (
   argument: unknown
 ): argument is RollOptions<'customSides'> =>
-  isRollOptions(argument) && Array.isArray(argument.sides)
+  Array.isArray((argument as RollOptions<'customSides'>).sides)
 
 export const isCustomSidesRollParameters = (
   argument: RollParameters
