@@ -1,6 +1,12 @@
 import generateResult from './generate-results'
 import parseArguments from './parse-arguments'
-import { DiceNotation, NumberString, RollOptions, RollResult } from './types'
+import {
+  DiceNotation,
+  DieType,
+  NumberString,
+  RollOptions,
+  RollResult
+} from './types'
 
 function roll(
   arg?: NumberString | RollOptions<'standard'> | DiceNotation<'standard'>
@@ -8,21 +14,15 @@ function roll(
 function roll(
   arg: RollOptions<'customSides'> | DiceNotation<'customSides'>
 ): RollResult<'customSides'>
-
-function roll(
-  arg?:
-    | RollOptions<'standard'>
-    | RollOptions<'customSides'>
-    | DiceNotation<'standard'>
-    | DiceNotation<'customSides'>
-    | NumberString
-): RollResult<'customSides'> | RollResult<'standard'> {
+function roll<T extends DieType>(
+  arg?: RollOptions<T> | DiceNotation<T> | NumberString
+): RollResult<T> {
   const parameters = parseArguments(arg)
-  const result = generateResult(parameters)
-  return {
-    ...result,
-    arguments: [arg]
-  }
+  return generateResult(parameters)
 }
 
 export default roll
+
+const foo = roll({ sides: [1, 2, 3] })
+const bar = roll({ sides: 20 })
+console.log(foo, bar)

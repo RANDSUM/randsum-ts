@@ -5,21 +5,13 @@ type ExpectedResults = {
   sides: number
   quantity: number
   rollLength?: number
-  arguments: RollResult['arguments']
   faces?: RollResult<'customSides'>['rollParameters']['faces']
   modifiers?: RollResult['rollParameters']['modifiers']
 }
 
 const testResult = (
   result: RollResult,
-  {
-    quantity,
-    sides,
-    arguments: args,
-    faces,
-    modifiers = [],
-    rollLength
-  }: ExpectedResults
+  { quantity, sides, faces, modifiers = [], rollLength }: ExpectedResults
 ): void => {
   if (faces) {
     test('result.total returns an string', () => {
@@ -43,10 +35,6 @@ const testResult = (
         expect(Number.isInteger(individualRoll)).toBe(true)
       })
     }
-  })
-
-  test('result.arguments returns arguments provided to `roll`', () => {
-    expect(result.arguments).toEqual(args)
   })
 
   describe('result.rollparameters', () => {
@@ -89,21 +77,21 @@ describe(roll, () => {
   describe('()', () => {
     const result = roll()
 
-    testResult(result, { quantity: 1, sides: 20, arguments: [undefined] })
+    testResult(result, { quantity: 1, sides: 20 })
   })
 
   describe('(string)', () => {
     const firstArg = '20'
     const result = roll(firstArg)
 
-    testResult(result, { quantity: 1, sides: 20, arguments: [firstArg] })
+    testResult(result, { quantity: 1, sides: 20 })
   })
 
   describe('(number)', () => {
     const firstArg = 20
     const result = roll(firstArg)
 
-    testResult(result, { quantity: 1, sides: 20, arguments: [firstArg] })
+    testResult(result, { quantity: 1, sides: 20 })
   })
 
   describe('(rollOptions)', () => {
@@ -118,8 +106,7 @@ describe(roll, () => {
       quantity: 2,
       rollLength: 1,
       sides: 20,
-      modifiers: firstArg.modifiers,
-      arguments: [firstArg]
+      modifiers: firstArg.modifiers
     })
   })
 
@@ -129,8 +116,7 @@ describe(roll, () => {
 
     testResult(result, {
       quantity: 2,
-      sides: 20,
-      arguments: [firstArg]
+      sides: 20
     })
   })
 
@@ -141,7 +127,6 @@ describe(roll, () => {
     testResult(result, {
       quantity: 1,
       sides: firstArg.sides.length,
-      arguments: [firstArg],
       faces: firstArg.sides
     })
   })

@@ -8,6 +8,11 @@ export const isRollOptions = (
   (argument as RollOptions<'standard'> | RollOptions<'customSides'>).sides !==
     undefined
 
+export const isCustomSidesRollOptions = (
+  argument: unknown
+): argument is RollOptions<'customSides'> =>
+  isRollOptions(argument) && Array.isArray(argument.sides)
+
 export const isCustomSidesRollParameters = (
   argument: RollParameters
 ): argument is RollParameters<'customSides'> =>

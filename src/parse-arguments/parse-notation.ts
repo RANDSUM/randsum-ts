@@ -1,4 +1,4 @@
-import { DiceNotation, RollParameters } from '../types'
+import { DiceNotation, DieType, RollParameters } from '../types'
 import parseModifiers, {
   isCoreNotationMatch,
   Match,
@@ -12,11 +12,12 @@ const findMatches = (notations: string): Match[] =>
     ({ groups: match }) => match as Match
   )
 
-const parseNotation = (notationString: DiceNotation): RollParameters => {
+const parseNotation = <T extends DieType>(
+  notationString: DiceNotation<T>
+): RollParameters<T> => {
   let rollParameters: RollParameters = {
     sides: 1,
     quantity: 1,
-    faces: undefined,
     modifiers: [],
     initialRolls: []
   }
@@ -42,7 +43,7 @@ const parseNotation = (notationString: DiceNotation): RollParameters => {
     }
   })
 
-  return rollParameters
+  return rollParameters as RollParameters<T>
 }
 
 export default parseNotation

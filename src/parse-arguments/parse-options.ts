@@ -1,24 +1,36 @@
-import { RollOptions, RollParameters } from '../types'
+import { DieType, RollOptions, RollParameters } from '../types'
 import normalizeModifiers from './normalize-modifiers'
+import { isCustomSidesRollOptions } from './utils'
 
-const parseOptions = (options: RollOptions): RollParameters => {
+const parseOptions = <T extends DieType>(
+  options: RollOptions<T>
+): RollParameters<T> => {
   const { sides, quantity, modifiers } = {
     quantity: undefined,
     modifiers: [],
     ...options
   }
 
-  const isCustomSides = Array.isArray(sides)
-  const normalizedModifiers = isCustomSides ? [] : normalizeModifiers(modifiers)
+  if (isCustomSidesRollOptions(options)) {
+    return {
+      ...options,
+      faces: sides,
+      sides: options.sides.length,
+      quantity: Number(quantity || 1),
+      modifiers: [],
+      initialRolls: []
+    } as RollParameters<'customSides'>
+  }
 
-  return {
+  const standard: RollParameters<'standard'> = {
     ...options,
-    faces: isCustomSides ? sides : undefined,
-    sides: isCustomSides ? sides.length : Number(sides),
+    sides: Number(sides),
     quantity: Number(quantity || 1),
-    modifiers: normalizedModifiers,
+    modifiers: normalizeModifiers(modifiers),
     initialRolls: []
   }
+
+  return standard as RollParameters<T>
 }
 
 export default parseOptions

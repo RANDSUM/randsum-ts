@@ -1,18 +1,14 @@
-import { RollOptions } from './options'
 import { RollParameters } from './parameters'
-import { CustomSides, DiceNotation, DieType, NumberString } from './primitives'
+import { CustomSides, DieType } from './primitives'
 
-type CoreRollResult<N extends DieType> = {
-  rollParameters: RollParameters<N>
-  arguments: [RollOptions | DiceNotation | NumberString | undefined]
-}
-
-type StandardRollResult = CoreRollResult<'standard'> & {
+type StandardRollResult = {
+  rollParameters: RollParameters<'standard'>
   total: number
   rolls: number[]
 }
 
-type CustomSidesRollResult = CoreRollResult<'customSides'> & {
+type CustomSidesRollResult = {
+  rollParameters: RollParameters<'customSides'>
   total: string
   rolls: CustomSides
 }

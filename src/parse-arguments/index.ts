@@ -1,5 +1,6 @@
 import {
   DiceNotation,
+  DieType,
   NumberString,
   RollOptions,
   RollParameters
@@ -8,9 +9,9 @@ import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
 import { isDiceNotation, isRollOptions } from './utils'
 
-function parseArguments(
-  primeArgument: RollOptions | DiceNotation | NumberString | undefined
-): RollParameters {
+function parseArguments<T extends DieType>(
+  primeArgument: RollOptions<T> | DiceNotation<T> | NumberString | undefined
+): RollParameters<T> {
   if (isRollOptions(primeArgument)) {
     return parseOptions(primeArgument)
   }
@@ -19,11 +20,13 @@ function parseArguments(
     return parseNotation(primeArgument)
   }
 
-  return {
+  const standard: RollParameters<'standard'> = {
     sides: primeArgument === undefined ? 20 : Number(primeArgument),
     modifiers: [],
     initialRolls: [],
     quantity: 1
   }
+
+  return standard as RollParameters<T>
 }
 export default parseArguments
