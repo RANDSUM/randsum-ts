@@ -9,7 +9,14 @@ function roll(
   arg: RollOptions<'customSides'> | DiceNotation<'customSides'>
 ): RollResult<'customSides'>
 
-function roll(arg?: RollOptions | DiceNotation | NumberString): RollResult {
+function roll(
+  arg?:
+    | RollOptions<'standard'>
+    | RollOptions<'customSides'>
+    | DiceNotation<'standard'>
+    | DiceNotation<'customSides'>
+    | NumberString
+): RollResult<'customSides'> | RollResult<'standard'> {
   const parameters = parseArguments(arg)
   const result = generateResult(parameters)
   return {

@@ -11,8 +11,12 @@ type CoreRollParameters = {
 export type StandardRollParameters = StandardRollOptions<number> &
   CoreRollParameters
 
-export type CustomSidesRollParameters = CustomSidesRollOptions<number> &
+export type CustomSidesRollParameters = Omit<
+  CustomSidesRollOptions<number>,
+  'sides'
+> &
   CoreRollParameters & {
+    sides: number
     faces: CustomSides
   }
 

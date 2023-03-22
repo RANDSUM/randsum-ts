@@ -1,5 +1,5 @@
 import parseArguments from '../parse-arguments'
-import { 'customSides', DiceNotation } from '../types'
+import { DiceNotation } from '../types'
 
 describe('parseArguments', () => {
   describe('given undefined', () => {

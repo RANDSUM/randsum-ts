@@ -76,7 +76,7 @@ export type Match =
 
 const parseCoreNotationCustomSides = (
   sides: string
-): Pick<RollParameters, 'sides' | 'faces'> => {
+): Pick<RollParameters<'customSides'>, 'sides' | 'faces'> => {
   const faces = [...sides.replace(/{|}/g, '')]
   return {
     faces,
@@ -86,7 +86,9 @@ const parseCoreNotationCustomSides = (
 
 export const parseCoreNotation = ({
   coreNotationMatch: notationString
-}: CoreNotationMatch): Pick<RollParameters, 'sides' | 'quantity' | 'faces'> => {
+}: CoreNotationMatch):
+  | Pick<RollParameters<'standard'>, 'sides' | 'quantity'>
+  | Pick<RollParameters<'customSides'>, 'sides' | 'quantity' | 'faces'> => {
   const [quantity, sides] = notationString.split(/[Dd]/)
 
   return {

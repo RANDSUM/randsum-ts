@@ -1,14 +1,12 @@
-import index from '../index'
+import roll from '../roll'
 import { RollResult } from '../types'
-
-const randsum = index
 
 type ExpectedResults = {
   sides: number
   quantity: number
   rollLength?: number
   arguments: RollResult['arguments']
-  faces?: RollResult['rollParameters']['faces']
+  faces?: RollResult<'customSides'>['rollParameters']['faces']
   modifiers?: RollResult['rollParameters']['modifiers']
 }
 
@@ -47,7 +45,7 @@ const testResult = (
     }
   })
 
-  test('result.arguments returns arguments provided to `randsum`', () => {
+  test('result.arguments returns arguments provided to `roll`', () => {
     expect(result.arguments).toEqual(args)
   })
 
@@ -70,12 +68,12 @@ const testResult = (
   })
 }
 
-describe(randsum, () => {
+describe(roll, () => {
   describe('Stress Test', () => {
     const loops = 9999
     const dummyArray = Array.from({ length: loops })
     for (let i = 0; i < loops; i += 1) {
-      dummyArray[i] = randsum().total
+      dummyArray[i] = roll().total
     }
 
     test('it never goes outside of the bounds of the roll', () => {
@@ -87,32 +85,32 @@ describe(randsum, () => {
   })
 
   describe('()', () => {
-    const result = randsum()
+    const result = roll()
 
     testResult(result, { quantity: 1, sides: 20, arguments: [undefined] })
   })
 
   describe('(string)', () => {
     const firstArg = '20'
-    const result = randsum(firstArg)
+    const result = roll(firstArg)
 
     testResult(result, { quantity: 1, sides: 20, arguments: [firstArg] })
   })
 
   describe('(number)', () => {
     const firstArg = 20
-    const result = randsum(firstArg)
+    const result = roll(firstArg)
 
     testResult(result, { quantity: 1, sides: 20, arguments: [firstArg] })
   })
 
-  describe('(randsumOptions)', () => {
+  describe('(rollOptions)', () => {
     const firstArg = {
       sides: 20,
       quantity: 2,
       modifiers: [{ drop: { highest: 1 } }]
     }
-    const result = randsum(firstArg)
+    const result = roll(firstArg)
 
     testResult(result, {
       quantity: 2,
@@ -125,7 +123,7 @@ describe(randsum, () => {
 
   describe('(diceNotation)', () => {
     const firstArg = '2d20'
-    const result = randsum(firstArg)
+    const result = roll(firstArg)
 
     testResult(result, {
       quantity: 2,
@@ -136,7 +134,7 @@ describe(randsum, () => {
 
   describe('(objectWithCustomSides)', () => {
     const firstArg = { sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'] }
-    const result = randsum(firstArg)
+    const result = roll(firstArg)
 
     testResult(result, {
       quantity: 1,

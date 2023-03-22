@@ -5,6 +5,7 @@ import parseModifiers, {
   parseCoreNotation
 } from './parse-modifiers'
 import { completeRollPattern } from './regexp'
+import { isCustomSidesRollParameters } from './utils'
 
 const findMatches = (notations: string): Match[] =>
   [...notations.matchAll(completeRollPattern)].map<Match>(
@@ -28,7 +29,7 @@ const parseNotation = (notationString: DiceNotation): RollParameters => {
         ...rollParameters,
         ...parseCoreNotation(match)
       }
-      if (newRollParameters.faces !== undefined) {
+      if (isCustomSidesRollParameters(newRollParameters)) {
         rollParameters = { ...newRollParameters, modifiers: [] }
       }
       rollParameters = newRollParameters
