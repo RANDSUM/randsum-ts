@@ -1,5 +1,5 @@
 import roll from '../roll'
-import { RollResult } from '../types'
+import { RollParameters, RollResult } from '../types'
 
 type ExpectedResults = {
   sides: number
@@ -35,12 +35,12 @@ const testResult = (
     expect(result.rolls).toHaveLength(rollLength || quantity)
 
     if (faces) {
-      result.rolls.forEach((roll) => {
-        expect(typeof roll === 'string').toBe(true)
+      result.rolls.forEach((individualRoll) => {
+        expect(typeof individualRoll === 'string').toBe(true)
       })
     } else {
-      result.rolls.forEach((roll) => {
-        expect(Number.isInteger(roll)).toBe(true)
+      result.rolls.forEach((individualRoll) => {
+        expect(Number.isInteger(individualRoll)).toBe(true)
       })
     }
   })
@@ -59,7 +59,9 @@ const testResult = (
     })
 
     test('.faces returns custom faces used in the rolls', () => {
-      expect(result.rollParameters.faces).toEqual(faces)
+      expect(
+        (result.rollParameters as RollParameters<'customSides'>).faces
+      ).toEqual(faces)
     })
 
     test('.modifiers returns modifiers used in the rolls', () => {
@@ -77,9 +79,9 @@ describe(roll, () => {
     }
 
     test('it never goes outside of the bounds of the roll', () => {
-      dummyArray.forEach((roll) => {
-        expect(roll).toBeLessThanOrEqual(20)
-        expect(roll).toBeGreaterThan(0)
+      dummyArray.forEach((individualRoll) => {
+        expect(individualRoll).toBeLessThanOrEqual(20)
+        expect(individualRoll).toBeGreaterThan(0)
       })
     })
   })

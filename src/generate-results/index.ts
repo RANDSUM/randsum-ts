@@ -34,7 +34,7 @@ function generateResult(
     rollParameters: newRollParameters,
     total: customRolls.join(', '),
     rolls: customRolls
-  }
+  } as Omit<RollResult<'customSides'>, 'arguments'>
 }
 
 export default generateResult
