@@ -1,14 +1,9 @@
-import { Modifier } from '../roll/parse-arguments/types'
+import { Modifier } from './options'
 import { CustomSides, DieType } from './primitives'
 
-type CoreRollParameters = {
+export type RollParameters<T extends DieType = DieType> = {
   initialRolls: number[]
   modifiers: Array<Modifier<number>>
   quantity: number
   sides: number
-}
-type NewRollParameters<T extends DieType = DieType> = T extends 'standard'
-  ? CoreRollParameters
-  : CoreRollParameters & { faces: CustomSides }
-
-export type RollParameters<N extends DieType = DieType> = NewRollParameters<N>
+} & (T extends 'standard' ? Record<never, never> : { faces: CustomSides })

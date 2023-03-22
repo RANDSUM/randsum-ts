@@ -1,7 +1,7 @@
+import { Modifier } from '../../types'
 import generateResult from '../generate-results'
 import { InvalidUniqueError } from '../generate-results/apply-modifiers'
 import * as Utils from '../generate-results/utils'
-import { Modifier } from '../parse-arguments/types'
 
 describe('generateResult', () => {
   beforeEach(() => {

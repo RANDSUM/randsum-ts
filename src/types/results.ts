@@ -1,18 +1,8 @@
 import { RollParameters } from './parameters'
 import { CustomSides, DieType } from './primitives'
 
-type StandardRollResult = {
-  rollParameters: RollParameters<'standard'>
-  total: number
-  rolls: number[]
+export type RollResult<T extends DieType = DieType> = {
+  rollParameters: RollParameters<T>
+  total: T extends 'standard' ? number : string
+  rolls: T extends 'standard' ? number[] : CustomSides
 }
-
-type CustomSidesRollResult = {
-  rollParameters: RollParameters<'customSides'>
-  total: string
-  rolls: CustomSides
-}
-
-export type RollResult<N extends DieType = DieType> = N extends 'standard'
-  ? StandardRollResult
-  : CustomSidesRollResult
