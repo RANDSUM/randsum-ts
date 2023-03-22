@@ -3,25 +3,22 @@ import {
   CustomSides,
   DieType,
   NumberString,
-  NumberStringArgument,
-  StandardDie
+  NumberStringArgument
 } from './primitives'
 
-export type StandardRandsumOptions<
-  T extends NumberStringArgument = 'inclusive'
-> = {
-  quantity?: NumberString<T>
-  sides: NumberString<T>
-  modifiers?: Array<Modifier<T>>
-}
+export type StandardRollOptions<T extends NumberStringArgument = 'inclusive'> =
+  {
+    quantity?: NumberString<T>
+    sides: NumberString<T>
+    modifiers?: Array<Modifier<T>>
+  }
 
-type CustomSidesRandsumOptions = Omit<
-  StandardRandsumOptions,
-  'sides' | 'modifiers'
-> & {
+export type CustomSidesRollOptions<
+  T extends NumberStringArgument = 'inclusive'
+> = Omit<StandardRollOptions<T>, 'sides' | 'modifiers'> & {
   sides: CustomSides
 }
 
-export type RandsumOptions<N extends DieType = DieType> = N extends StandardDie
-  ? StandardRandsumOptions
-  : CustomSidesRandsumOptions
+export type RollOptions<N extends DieType = DieType> = N extends 'standard'
+  ? StandardRollOptions
+  : CustomSidesRollOptions

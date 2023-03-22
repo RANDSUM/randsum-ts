@@ -68,7 +68,7 @@ randsum('4d20H+2') // Roll 4 20 sided die, drop highest, add 2
 
 ---
 
-You can pass in a `RandsumOptions` as the first argument. While rolling standard numerical die, `sides` is the only required value, representing the number of distinct sides of the die.
+You can pass in a `RollOptions` as the first argument. While rolling standard numerical die, `sides` is the only required value, representing the number of distinct sides of the die.
 
 ```ts
 randsum({ sides: 20 }) // Roll a single 20 sided die
@@ -80,7 +80,7 @@ The other commonly used key will be `quantity`, which tells you how many dice to
 randsum({ sides: 20, quantity: 4 }) // Roll 4 distinct 20 sided die, and give me the total.
 ```
 
-You can use the `modifier` key of `RandsumOptions` to further modify your roll. `modifiers` is an array that you can fill with Modifier objects. For instance:
+You can use the `modifier` key of `RollOptions` to further modify your roll. `modifiers` is an array that you can fill with Modifier objects. For instance:
 
 ```ts
 randsum({

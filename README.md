@@ -17,7 +17,7 @@ Written in 100% Typescript, with strong overloading and attention to Arguments. 
 
 [Getting Started](https://github.com/alxjrvs/randsum/blob/main/docs/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
-[Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/docs/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
+[Roll Dice Notation](https://github.com/alxjrvs/randsum/blob/main/docs/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
 
 [Contributing](https://github.com/alxjrvs/randsum/blob/main/docs/CONTRIBUTING.md) - help make `randsum` better!
 

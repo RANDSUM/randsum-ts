@@ -1,17 +1,17 @@
 import {
   DiceNotation,
   NumberString,
-  RandsumOptions,
+  RollOptions,
   RollParameters
 } from '../types'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
-import { isDiceNotation, isRandsumOptions } from './utils'
+import { isDiceNotation, isRollOptions } from './utils'
 
-const parseArguments = (
-  primeArgument: RandsumOptions | DiceNotation | NumberString | undefined
-): RollParameters => {
-  if (isRandsumOptions(primeArgument)) {
+function parseArguments(
+  primeArgument: RollOptions | DiceNotation | NumberString | undefined
+): RollParameters {
+  if (isRollOptions(primeArgument)) {
     return parseOptions(primeArgument)
   }
 

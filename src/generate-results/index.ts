@@ -1,9 +1,4 @@
-import {
-  CustomSidesDie,
-  RollParameters,
-  RollResult,
-  StandardDie
-} from '../types'
+import { RollParameters, RollResult } from '../types'
 import applyModifiers from './apply-modifiers'
 import { coreRandomFactory, makeRolls } from './utils'
 
@@ -13,8 +8,8 @@ const generateResult = ({
   quantity,
   ...restParams
 }: RollParameters):
-  | Omit<RollResult<CustomSidesDie>, 'arguments'>
-  | Omit<RollResult<StandardDie>, 'arguments'> => {
+  | Omit<RollResult<'customSides'>, 'arguments'>
+  | Omit<RollResult<'standard'>, 'arguments'> => {
   const rollOne = coreRandomFactory(sides)
 
   const initialRolls = makeRolls(quantity, rollOne)

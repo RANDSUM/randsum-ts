@@ -1,7 +1,7 @@
-import { RandsumOptions, RollParameters } from '../types'
+import { RollOptions, RollParameters } from '../types'
 import normalizeModifiers from './normalize-modifiers'
 
-const parseOptions = (options: RandsumOptions): RollParameters => {
+const parseOptions = (options: RollOptions): RollParameters => {
   const { sides, quantity, modifiers } = {
     quantity: undefined,
     modifiers: [],

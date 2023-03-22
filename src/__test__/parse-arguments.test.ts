@@ -1,5 +1,5 @@
 import parseArguments from '../parse-arguments'
-import { CustomSidesDie, DiceNotation } from '../types'
+import { 'customSides', DiceNotation } from '../types'
 
 describe('parseArguments', () => {
   describe('given undefined', () => {
@@ -132,7 +132,7 @@ describe('parseArguments', () => {
 
     describe('given a notation that uses custom faces', () => {
       describe('with a simple notation', () => {
-        const testString: DiceNotation<CustomSidesDie> = '4d{++--  }'
+        const testString: DiceNotation<'customSides'> = '4d{++--  }'
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({

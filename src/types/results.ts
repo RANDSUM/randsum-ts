@@ -1,16 +1,10 @@
-import { RandsumOptions } from './options'
+import { RollOptions } from './options'
 import { RollParameters } from './parameters'
-import {
-  CustomSides,
-  DiceNotation,
-  DieType,
-  NumberString,
-  StandardDie
-} from './primitives'
+import { CustomSides, DiceNotation, DieType, NumberString } from './primitives'
 
 type CoreRollResult = {
   rollParameters: RollParameters
-  arguments: [RandsumOptions | DiceNotation | NumberString | undefined]
+  arguments: [RollOptions | DiceNotation | NumberString | undefined]
 }
 
 type StandardRollResult = CoreRollResult & {
@@ -23,6 +17,6 @@ type CustomSidesRollResult = CoreRollResult & {
   rolls: CustomSides
 }
 
-export type RollResult<N extends DieType = DieType> = N extends StandardDie
+export type RollResult<N extends DieType = DieType> = N extends 'standard'
   ? StandardRollResult
   : CustomSidesRollResult
