@@ -23,6 +23,9 @@ function roll<T extends DieType>(
 
 export default roll
 
+const customOptions: RollOptions = { sides: [1, 2, 3] }
+const standardOptions: RollOptions = { sides: 20 }
+
 const foo = roll({ sides: [1, 2, 3] })
-const bar = roll({ sides: 20 })
+const bar = roll(standardOptions)
 console.log(foo, bar)
