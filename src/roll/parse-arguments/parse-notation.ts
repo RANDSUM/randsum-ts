@@ -1,4 +1,7 @@
-import { DiceNotation, RollParameters } from '../../types'
+import { CustomSidesDicePool, StandardDicePool } from '../../Die'
+import { Modifier } from '../../types/options'
+import { RollParameters } from '../../types/parameters'
+import { DiceNotation } from '../../types/primitives'
 import parseModifiers, {
   isCoreNotationMatch,
   Match,
@@ -12,11 +15,15 @@ const findMatches = (notations: string): Match[] =>
     ({ groups: match }) => match as Match
   )
 
-const parseNotation = (notationString: DiceNotation): RollParameters => {
-  let rollParameters: RollParameters = {
+const parseNotation = (
+  notationString: DiceNotation | DiceNotation<'customSides'>
+): RollParameters | RollParameters<'customSides'> => {
+  let rollParameters: RollParameters | RollParameters<'customSides'> = {
+    pool: new StandardDicePool([]),
+    argument: notationString,
     sides: 1,
     quantity: 1,
-    modifiers: [],
+    modifiers: [] as Modifier<number>[],
     initialRolls: []
   }
 
@@ -29,9 +36,34 @@ const parseNotation = (notationString: DiceNotation): RollParameters => {
         ...parseCoreNotation(match)
       }
       if (isCustomSidesRollParameters(newRollParameters)) {
-        rollParameters = { ...newRollParameters, modifiers: [] }
+        const pool = new CustomSidesDicePool([
+          {
+            quantity: newRollParameters.quantity,
+            sides: newRollParameters.faces
+          }
+        ])
+        const initialRolls = pool.roll()
+        rollParameters = {
+          ...newRollParameters,
+          pool,
+          initialRolls,
+          modifiers: []
+        }
+      } else {
+        const pool = new StandardDicePool([
+          {
+            quantity: newRollParameters.quantity,
+            sides: newRollParameters.sides
+          }
+        ])
+        const initialRolls = pool.roll()
+
+        rollParameters = {
+          ...newRollParameters,
+          pool,
+          initialRolls
+        }
       }
-      rollParameters = newRollParameters
       return
     }
 

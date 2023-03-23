@@ -1,4 +1,5 @@
-import { RollParameters, RollResult } from '../../types'
+import { RollParameters } from '../../types/parameters'
+import { RollResult } from '../../types/results'
 import roll from '..'
 
 type ExpectedResults = {
@@ -10,7 +11,7 @@ type ExpectedResults = {
 }
 
 const testResult = (
-  result: RollResult,
+  result: RollResult | RollResult<'customSides'>,
   { quantity, sides, faces, modifiers = [], rollLength }: ExpectedResults
 ): void => {
   if (faces) {

@@ -1,2 +1,6 @@
+export * from './Die'
 export { default as roll } from './roll'
-export * from './types'
+export * from './types/options'
+export * from './types/parameters'
+export * from './types/primitives'
+export * from './types/results'

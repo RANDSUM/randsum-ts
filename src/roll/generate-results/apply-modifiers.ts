@@ -11,9 +11,9 @@ import {
   isUniqueModifier,
   ReplaceOptions,
   RerollOptions,
-  RollParameters,
   UniqueModifier
-} from '../../types'
+} from '../../types/options'
+import { RollParameters } from '../../types/parameters'
 import { makeRolls } from './utils'
 
 type RollBonuses = {
@@ -35,7 +35,8 @@ const applyUnique = (
     unique,
     quantity,
     sides
-  }: Pick<RollParameters, 'quantity' | 'sides'> & UniqueModifier<number>,
+  }: Pick<RollParameters<'standard'>, 'quantity' | 'sides'> &
+    UniqueModifier<number>,
   rollOne: () => number
 ): number[] => {
   if (quantity > sides) {
@@ -148,7 +149,7 @@ const applyReplace = (
 
 const applyExplode = (
   rolls: number[],
-  { sides }: Pick<RollParameters, 'sides'>,
+  { sides }: Pick<RollParameters<'standard'>, 'sides'>,
   rollOne: () => number
 ): number[] => {
   const explodeCount = rolls.filter((roll) => roll === sides).length
@@ -189,14 +190,19 @@ const applyDrop = (
   return sortedResults
 }
 
-const applyModifiers = (
-  { modifiers, initialRolls, sides, quantity }: RollParameters,
-  rollOne: () => number
-): RollBonuses => {
+const applyModifiers = ({
+  modifiers,
+  initialRolls,
+  sides,
+  quantity,
+  pool
+}: RollParameters<'standard'>): RollBonuses => {
   let rollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls
   }
+
+  const rollOne: () => number = () => pool.dice[0].roll()
 
   modifiers.forEach((modifier) => {
     if (isRerollModifier(modifier)) {

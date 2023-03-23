@@ -1,25 +1,20 @@
-import { RollParameters, RollResult } from '../../types'
+import { RollParameters } from '../../types/parameters'
+import { RollResult } from '../../types/results'
 import { isCustomSidesRollParameters } from '../parse-arguments/utils'
 import applyModifiers from './apply-modifiers'
-import { coreRandomFactory, makeRolls } from './utils'
 
-function generateResult(incompleteRollParameters: RollParameters): RollResult {
-  const rollOne = coreRandomFactory(incompleteRollParameters.sides)
-  const initialRolls = makeRolls(incompleteRollParameters.quantity, rollOne)
-
-  const rollParameters = { ...incompleteRollParameters, initialRolls }
-  const { rolls, simpleMathModifier } = applyModifiers(rollParameters, rollOne)
-
-  if (isCustomSidesRollParameters(incompleteRollParameters)) {
-    const customRolls = rolls.map(
-      (roll) => incompleteRollParameters.faces[roll - 1]
-    )
+function generateResult(
+  rollParameters: RollParameters | RollParameters<'customSides'>
+): RollResult | RollResult<'customSides'> {
+  if (isCustomSidesRollParameters(rollParameters)) {
     return {
       rollParameters,
-      total: customRolls.join(', '),
-      rolls: customRolls
+      total: rollParameters.initialRolls.join(', '),
+      rolls: rollParameters.initialRolls
     }
   }
+
+  const { rolls, simpleMathModifier } = applyModifiers(rollParameters)
 
   return {
     rollParameters,

@@ -1,3 +1,4 @@
+import { CustomSidesDicePool, StandardDicePool } from '../../Die'
 import {
   CapModifier,
   DropModifier,
@@ -9,9 +10,9 @@ import {
   ReplaceModifier,
   RerollModifier,
   RerollOptions,
-  RollParameters,
   UniqueModifier
-} from '../../types'
+} from '../../types/options'
+import { RollParameters } from '../../types/parameters'
 
 const isMatcherType = <T extends Match>(
   argument: Match,
@@ -87,15 +88,36 @@ const parseCoreNotationCustomSides = (
 export const parseCoreNotation = ({
   coreNotationMatch: notationString
 }: CoreNotationMatch):
-  | Pick<RollParameters<'standard'>, 'sides' | 'quantity'>
-  | Pick<RollParameters<'customSides'>, 'sides' | 'quantity' | 'faces'> => {
+  | Pick<RollParameters, 'sides' | 'quantity' | 'pool'>
+  | Pick<
+      RollParameters<'customSides'>,
+      'sides' | 'quantity' | 'faces' | 'pool'
+    > => {
   const [quantity, sides] = notationString.split(/[Dd]/)
+  const quantityParams = {
+    quantity: Number(quantity)
+  }
+
+  if (sides.includes('{')) {
+    const sidesParams = parseCoreNotationCustomSides(sides)
+    const pool = new CustomSidesDicePool([
+      { sides: sidesParams.faces, ...quantityParams }
+    ])
+
+    return {
+      ...quantityParams,
+      ...sidesParams,
+      pool
+    }
+  }
+
+  const sidesParams = { sides: Number(sides) }
+  const pool = new StandardDicePool([{ ...sidesParams, ...quantityParams }])
 
   return {
-    quantity: Number(quantity),
-    ...(sides.includes('{')
-      ? parseCoreNotationCustomSides(sides)
-      : { sides: Number(sides), faces: undefined })
+    ...quantityParams,
+    ...sidesParams,
+    pool
   }
 }
 

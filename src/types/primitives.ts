@@ -6,7 +6,7 @@ type DiceNotationWithCustomSides = `${number}${
   | 'd'
   | 'D'}${CustomDiceSidesNotation}`
 
-export type DiceNotation<N extends DieType = DieType> = N extends 'standard'
+export type DiceNotation<T extends DieType = 'standard'> = T extends 'standard'
   ? DiceNotationWithNumericSides
   : DiceNotationWithCustomSides
 

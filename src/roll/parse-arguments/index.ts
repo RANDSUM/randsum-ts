@@ -1,29 +1,44 @@
-import {
-  DiceNotation,
-  NumberString,
-  RollOptions,
-  RollParameters
-} from '../../types'
+import { StandardDicePool } from '../../Die'
+import { RollOptions } from '../../types/options'
+import { RollParameters } from '../../types/parameters'
+import { DiceNotation, NumberString } from '../../types/primitives'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
 import { isDiceNotation, isRollOptions } from './utils'
 
 function parseArguments(
-  primeArgument: RollOptions | DiceNotation | NumberString | undefined
-): RollParameters {
-  if (isRollOptions(primeArgument)) {
-    return parseOptions(primeArgument)
+  argument:
+    | RollOptions
+    | RollOptions<'customSides'>
+    | DiceNotation
+    | DiceNotation<'customSides'>
+    | NumberString
+    | undefined
+): RollParameters | RollParameters<'customSides'> {
+  if (isRollOptions(argument)) {
+    return parseOptions(argument)
   }
 
-  if (isDiceNotation(primeArgument)) {
-    return parseNotation(primeArgument)
+  if (isDiceNotation(argument)) {
+    return parseNotation(argument)
   }
+
+  const quantity = 1
+  const sides = argument === undefined ? 20 : Number(argument)
+  const pool = new StandardDicePool([
+    {
+      quantity,
+      sides
+    }
+  ])
 
   return {
-    sides: primeArgument === undefined ? 20 : Number(primeArgument),
+    argument,
+    pool,
+    sides,
     modifiers: [],
-    initialRolls: [],
-    quantity: 1
+    initialRolls: pool.roll(),
+    quantity
   }
 }
 export default parseArguments

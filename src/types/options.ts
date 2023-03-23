@@ -6,12 +6,18 @@ import {
   TypeOrArrayOfType
 } from './primitives'
 
-export type RollOptions<
-  T extends DieType = DieType,
+export type DiceOptions<
+  T extends DieType = 'standard',
   N extends NumberStringArgument = 'inclusive'
 > = {
   quantity?: NumberString<N>
   sides: T extends 'standard' ? NumberString<N> : CustomSides
+}
+
+export type RollOptions<
+  T extends DieType = 'standard',
+  N extends NumberStringArgument = 'inclusive'
+> = DiceOptions<T, N> & {
   modifiers?: T extends 'standard' ? Array<Modifier<N>> : never
 }
 

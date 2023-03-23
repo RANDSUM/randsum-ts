@@ -11,7 +11,7 @@ import {
   Modifier,
   ReplaceOptions,
   RerollOptions
-} from '../../types'
+} from '../../types/options'
 
 export const convertGreaterLessOptionsToParameters = ({
   greaterThan,

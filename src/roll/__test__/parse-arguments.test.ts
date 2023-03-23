@@ -1,4 +1,4 @@
-import { DiceNotation } from '../../types'
+import { DiceNotation } from '../../types/primitives'
 import parseArguments from '../parse-arguments'
 
 describe('parseArguments', () => {
@@ -56,8 +56,7 @@ describe('parseArguments', () => {
         expect(
           parseArguments({
             quantity: 4,
-            sides: ['r', 'a', 'n', 'd', 's', 'u', 'm'],
-            modifiers: [{ plus: 2 }]
+            sides: ['r', 'a', 'n', 'd', 's', 'u', 'm']
           })
         ).toMatchObject({
           quantity: 4,
