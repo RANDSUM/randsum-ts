@@ -1,5 +1,5 @@
 import {
-  CustomSides,
+  CustomSide,
   DieType,
   NumberString,
   NumberStringArgument,
@@ -11,7 +11,7 @@ export type DiceOptions<
   N extends NumberStringArgument = 'inclusive'
 > = {
   quantity?: NumberString<N>
-  sides: T extends 'standard' ? NumberString<N> : CustomSides
+  sides: T extends 'standard' ? NumberString<N> : CustomSide[]
 }
 
 export type RollOptions<

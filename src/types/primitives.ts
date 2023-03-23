@@ -1,3 +1,6 @@
+export type CustomSide = number | string
+export type StandardSide = number
+export type NewDieType = StandardSide | CustomSide
 export type DieType = 'standard' | 'customSides'
 
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
@@ -15,5 +18,4 @@ export type NumberStringArgument = number | 'inclusive'
 export type NumberString<T extends NumberStringArgument = 'inclusive'> =
   T extends 'inclusive' ? number | `${number}` : number
 
-export type CustomSides = Array<number | string>
 export type TypeOrArrayOfType<T> = T | T[]
