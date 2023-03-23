@@ -14,8 +14,12 @@ import {
   RollParameters,
   UniqueModifier
 } from '../../types'
-import { RollBonuses } from './types'
 import { makeRolls } from './utils'
+
+type RollBonuses = {
+  rolls: number[]
+  simpleMathModifier: number
+}
 
 export class InvalidUniqueError extends Error {
   constructor() {

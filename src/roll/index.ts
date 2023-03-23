@@ -14,6 +14,3 @@ function roll(arg?: RollOptions | DiceNotation | NumberString): RollResult {
 }
 
 export default roll
-
-const custom = roll({ sides: [1, 2, 3] })
-const standard = roll({ sides: 20 })
