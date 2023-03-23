@@ -8,6 +8,7 @@ function roll(arg?: NumberString | RollOptions | DiceNotation): RollResult
 function roll(
   arg: RollOptions<'customSides'> | DiceNotation<'customSides'>
 ): RollResult<'customSides'>
+
 function roll(
   arg?:
     | RollOptions
