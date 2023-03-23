@@ -19,7 +19,7 @@ export const isCustomSidesRollOptions = (
   Array.isArray((argument as RollOptions<'customSides'>).sides)
 
 export const isCustomSidesRollParameters = (
-  argument: RollParameters
+  argument: unknown
 ): argument is RollParameters<'customSides'> =>
   (argument as RollParameters<'customSides'>).faces !== undefined
 
