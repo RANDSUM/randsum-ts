@@ -61,6 +61,7 @@ export const isPlusMatch = (match: Match): match is PlusMatch =>
   isMatcherType<PlusMatch>(match, 'plusMatch')
 
 export type MinusMatch = { minusMatch: string }
+
 export type Match =
   | CoreNotationMatch
   | DropHighMatch
