@@ -1,6 +1,5 @@
 import {
   CapModifier,
-  DiceOptions,
   DropModifier,
   DropOptions,
   ExplodeModifier,
@@ -12,6 +11,7 @@ import {
   RerollOptions,
   UniqueModifier
 } from '../../types/options'
+import { DiceParameters } from '../../types/parameters'
 
 const isMatcherType = <T extends Match>(
   argument: Match,
@@ -74,40 +74,19 @@ export type Match =
   | PlusMatch
   | MinusMatch
 
-const parseCoreNotationCustomSides = (sides: string): DiceOptions<string> => {
-  const faces = [...sides.replace(/{|}/g, '')]
-  return {
-    sides: faces
-  }
-}
-
 export const parseCoreNotation = ({
   coreNotationMatch: notationString
-}: CoreNotationMatch): DiceOptions[] | DiceOptions<string>[] => {
+}: CoreNotationMatch): DiceParameters[] | DiceParameters<number>[] => {
   const [quantity, sides] = notationString.split(/[Dd]/)
-  const quantityParams = {
-    quantity: Number(quantity)
-  }
-
-  if (sides.includes('{')) {
-    const sidesParams = parseCoreNotationCustomSides(sides)
-
-    return [
-      {
-        ...quantityParams,
-        ...sidesParams
-      }
-    ]
-  }
-
-  const sidesParams = { sides: Number(sides) }
 
   return [
     {
-      ...quantityParams,
-      ...sidesParams
+      quantity: Number(quantity),
+      sides: sides.includes('{')
+        ? [...sides.replace(/{|}/g, '')]
+        : Number(sides)
     }
-  ]
+  ] as DiceParameters[] | DiceParameters<number>[]
 }
 
 const parseCapNotation = ({

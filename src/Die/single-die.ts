@@ -10,11 +10,8 @@ abstract class SingleDie<T extends DieSides> {
 
   faces: T[]
 
-  custom: boolean
-
   constructor(sides: T extends number ? NumberString : (string | number)[]) {
     const isCustom = isCustomSides(sides)
-    this.custom = isCustom
     this.sides = isCustom ? sides.length : Number(sides)
     this.faces = (isCustom ? sides : generateStandardSides(sides)) as T[]
   }

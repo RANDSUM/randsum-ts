@@ -33,8 +33,7 @@ const parseNotation = (
       const diceOptions = parseCoreNotation(match)
       const newRollParameters = {
         ...rollParameters,
-        diceOptions,
-        ...diceOptions[0]
+        diceOptions
       }
 
       if (isCustomSidesRollParameters(newRollParameters)) {
@@ -49,13 +48,14 @@ const parseNotation = (
         }
       } else {
         const dice = dicePoolFactory(newRollParameters.diceOptions)
-        const initialRolls = dice.map((die) => die.roll()) as number[]
+        const initialRolls = dice.map((die) => die.roll())
 
         rollParameters = {
-          ...newRollParameters,
+          ...rollParameters,
+          diceOptions,
           dice,
           initialRolls
-        } as RollParameters
+        }
       }
       return
     }

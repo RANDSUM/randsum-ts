@@ -1,17 +1,17 @@
 import { coreNotationPattern } from '../constants/regexp'
 import { RollOptions } from './options'
 import { RollParameters } from './parameters'
-import { DiceNotation, DieSides } from './primitives'
+import { DiceNotation } from './primitives'
 import { RollResult } from './results'
 
-export const isRollOptions = <T extends DieSides = number>(
+export const isRollOptions = (
   argument: unknown
-): argument is RollOptions<T> =>
+): argument is RollOptions | RollOptions<string> =>
   typeof argument === 'object' &&
-  (argument as RollOptions<T>).sides !== undefined
+  (argument as RollOptions | RollOptions<number>).sides !== undefined
 
 export const isCustomSidesRollOptions = (
-  argument: RollOptions<DieSides>
+  argument: RollOptions | RollOptions<string>
 ): argument is RollOptions<string> =>
   Array.isArray((argument as RollOptions<string>).sides)
 
@@ -28,5 +28,5 @@ export const isCustomSidesRollResult = (
 
 export const isDiceNotation = (
   argument: unknown
-): argument is DiceNotation<DieSides> =>
+): argument is DiceNotation | DiceNotation<string> =>
   !!coreNotationPattern.test(String(argument))
