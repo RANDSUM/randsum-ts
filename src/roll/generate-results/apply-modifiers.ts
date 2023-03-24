@@ -192,16 +192,16 @@ const applyDrop = (
 const applyModifiers = ({
   modifiers,
   initialRolls,
+  dice,
   sides,
-  quantity,
-  pool
+  quantity
 }: RollParameters<number>): RollBonuses => {
   let rollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls
   }
 
-  const rollOne: () => number = () => pool.dice[0].roll()
+  const rollOne: () => number = () => dice[0].roll()
 
   modifiers.forEach((modifier) => {
     if (isRerollModifier(modifier)) {

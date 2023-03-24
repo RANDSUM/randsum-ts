@@ -7,7 +7,7 @@ export type DiceNotation<T extends DieSides = number> = T extends number
   ? DiceNotationWithNumericSides
   : DiceNotationWithCustomSides
 
-type TypeAndStringType<
+export type TypeAndStringType<
   T extends string | number | bigint | boolean | null | undefined
 > = T | `${T}`
 

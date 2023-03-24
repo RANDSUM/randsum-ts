@@ -1,4 +1,4 @@
-import { StandardDicePool } from '../../Die'
+import { dicePoolFactory } from '../../Die'
 import { isDiceNotation, isRollOptions } from '../../types/guards'
 import { RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
@@ -26,18 +26,18 @@ function parseArguments(
 
   const quantity = 1
   const sides = argument === undefined ? 20 : Number(argument)
-  const diceOptions = [{ quantity, sides }]
-  const pool = new StandardDicePool(diceOptions)
+  const diceOptions = [{ sides }]
   const faces = generateStandardSides(sides)
+  const dice = dicePoolFactory(diceOptions)
 
   return {
     diceOptions,
     faces,
     argument,
-    pool,
+    dice,
     sides,
     modifiers: [],
-    initialRolls: pool.roll(),
+    initialRolls: dice.map((die) => die.roll()),
     quantity
   }
 }

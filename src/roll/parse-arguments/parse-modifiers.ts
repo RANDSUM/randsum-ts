@@ -1,4 +1,3 @@
-import { CustomSidesDicePool, StandardDicePool } from '../../Die'
 import {
   CapModifier,
   DropModifier,
@@ -90,7 +89,7 @@ export const parseCoreNotation = ({
   coreNotationMatch: notationString
 }: CoreNotationMatch): Pick<
   RollParameters | RollParameters<string>,
-  'sides' | 'quantity' | 'faces' | 'pool'
+  'sides' | 'quantity' | 'faces'
 > => {
   const [quantity, sides] = notationString.split(/[Dd]/)
   const quantityParams = {
@@ -99,26 +98,20 @@ export const parseCoreNotation = ({
 
   if (sides.includes('{')) {
     const sidesParams = parseCoreNotationCustomSides(sides)
-    const pool = new CustomSidesDicePool([
-      { sides: sidesParams.faces, ...quantityParams }
-    ])
 
     return {
       ...quantityParams,
-      ...sidesParams,
-      pool
+      ...sidesParams
     }
   }
 
   const sidesParams = { sides: Number(sides) }
-  const pool = new StandardDicePool([{ ...sidesParams, ...quantityParams }])
   const faces = generateStandardSides(sidesParams.sides)
 
   return {
     ...quantityParams,
     ...sidesParams,
-    faces,
-    pool
+    faces
   }
 }
 

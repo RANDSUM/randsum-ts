@@ -1,5 +1,5 @@
 import { completeRollPattern } from '../../constants/regexp'
-import { CustomSidesDicePool, StandardDicePool } from '../../Die'
+import { dicePoolFactory } from '../../Die'
 import { isCustomSidesRollParameters } from '../../types/guards'
 import { Modifier } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
@@ -20,8 +20,8 @@ const parseNotation = (
   notationString: DiceNotation | DiceNotation<string>
 ): RollParameters | RollParameters<string> => {
   let rollParameters: RollParameters | RollParameters<string> = {
-    pool: new StandardDicePool([]),
     argument: notationString,
+    dice: [],
     faces: [],
     diceOptions: [],
     sides: 1,
@@ -45,12 +45,13 @@ const parseNotation = (
             sides: newRollParameters.faces
           }
         ]
-        const pool = new CustomSidesDicePool(diceOptions)
-        const initialRolls = pool.roll()
+        const dice = dicePoolFactory(diceOptions)
+        const initialRolls = dice.map((die) => die.roll())
+
         rollParameters = {
           ...newRollParameters,
           diceOptions,
-          pool,
+          dice,
           initialRolls,
           modifiers: []
         }
@@ -61,13 +62,14 @@ const parseNotation = (
             sides: newRollParameters.sides
           }
         ]
-        const pool = new StandardDicePool(diceOptions)
-        const initialRolls = pool.roll()
+        const dice = dicePoolFactory(diceOptions)
+
+        const initialRolls = dice.map((die) => die.roll())
 
         rollParameters = {
           ...newRollParameters,
           diceOptions,
-          pool,
+          dice,
           faces: generateStandardSides(newRollParameters.sides),
           initialRolls
         }

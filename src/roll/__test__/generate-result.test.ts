@@ -1,4 +1,4 @@
-import { CustomSidesDicePool, StandardDicePool } from '../../Die'
+import { dicePoolFactory, StandardDie } from '../../Die'
 import { Modifier } from '../../types/options'
 import generateResult from '../generate-results'
 import { InvalidUniqueError } from '../generate-results/apply-modifiers'
@@ -13,9 +13,7 @@ describe('generateResult', () => {
     quantity: testRollSet.length,
     modifiers: [] as Modifier<number>[],
     initialRolls: testRollSet,
-    pool: {
-      dice: [{ roll: jest.fn().mockReturnValue(200) }]
-    } as unknown as StandardDicePool
+    dice: [{ roll: jest.fn().mockReturnValue(200) }] as unknown as StandardDie[]
   }
 
   describe('when given roll total with no modifiers', () => {
@@ -75,10 +73,11 @@ describe('generateResult', () => {
 
   describe('when given custom sides', () => {
     const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
+    const diceOptions = [{ sides: faces, quantity: 4 }]
     const customSidesParameters = {
       ...coreParameters,
-      diceOptions: [{ sides: faces, quantity: 4 }],
-      pool: new CustomSidesDicePool([{ quantity: 4, sides: faces }]),
+      diceOptions,
+      dice: dicePoolFactory(diceOptions),
       initialRolls: ['r', 'a', 'n', 'd'],
       faces,
       sides: faces.length

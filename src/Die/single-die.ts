@@ -1,4 +1,6 @@
+import { DiceOptions } from '../types/options'
 import { DieSides, NumberString } from '../types/primitives'
+import { generateStandardSides } from '../utils'
 
 const isCustomSides = (sides: unknown): sides is (number | string)[] =>
   Array.isArray(sides)
@@ -8,20 +10,13 @@ abstract class SingleDie<T extends DieSides> {
 
   faces: T[]
 
-  custom: T extends number ? false : true
+  custom: boolean
 
-  constructor(sides: T extends number ? NumberString : T[]) {
-    if (isCustomSides(sides)) {
-      this.custom = true as T extends number ? false : true
-      this.sides = sides.length
-      this.faces = sides as T[]
-    } else {
-      this.custom = false as T extends number ? false : true
-      this.sides = Number(sides)
-      this.faces = [...Array.from({ length: this.sides }).keys()].map(
-        (i) => i + 1
-      ) as T[]
-    }
+  constructor(sides: T extends number ? NumberString : (string | number)[]) {
+    const isCustom = isCustomSides(sides)
+    this.custom = isCustom
+    this.sides = isCustom ? sides.length : Number(sides)
+    this.faces = (isCustom ? sides : generateStandardSides(sides)) as T[]
   }
 
   roll(): T {
@@ -44,12 +39,26 @@ function dieFactory<T extends DieSides>(
 function dieFactory(
   sides: NumberString | (number | string)[]
 ): SingleDie<string> | SingleDie<number> {
-  if (isCustomSides(sides)) {
-    return new CustomSidesDie(sides.map(String))
-  }
-  return new StandardDie(sides)
+  return isCustomSides(sides)
+    ? new CustomSidesDie(sides.map(String))
+    : new StandardDie(sides)
 }
 
-export { dieFactory }
+function dicePoolFactory(options: DiceOptions[]): StandardDie[]
+function dicePoolFactory(options: DiceOptions<string>[]): CustomSidesDie[]
+function dicePoolFactory<T extends DieSides>(
+  options: T extends number ? DiceOptions[] : DiceOptions<string>[]
+): T extends number ? StandardDie[] : CustomSidesDie[]
+function dicePoolFactory(
+  options: DiceOptions[] | DiceOptions<string>[]
+): StandardDie[] | CustomSidesDie[] {
+  return options.flatMap((die) => {
+    const quantity = Number(die.quantity || 1)
+
+    return [...Array(quantity).keys()].map(() => dieFactory(die.sides))
+  }) as StandardDie[] | CustomSidesDie[]
+}
+
+export { dicePoolFactory, dieFactory }
 
 export default SingleDie

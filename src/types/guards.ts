@@ -18,8 +18,8 @@ export const isCustomSidesRollOptions = (
 export const isCustomSidesRollParameters = (
   argument: unknown
 ): argument is RollParameters<string> =>
-  (argument as RollParameters<string>).faces.every(
-    (face) => typeof face === 'string'
+  (argument as RollParameters<string>).diceOptions.every(({ sides }) =>
+    Array.isArray(sides)
   )
 
 export const isCustomSidesRollResult = (

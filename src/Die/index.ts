@@ -1,6 +1,7 @@
+export { CustomSidesDicePool, StandardDicePool } from './dice-pool'
 export {
-  CustomSidesDicePool,
+  CustomSidesDie,
   dicePoolFactory,
-  StandardDicePool
-} from './dice-pool'
-export { CustomSidesDie, dieFactory, StandardDie } from './single-die'
+  dieFactory,
+  StandardDie
+} from './single-die'

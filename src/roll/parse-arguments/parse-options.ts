@@ -1,4 +1,4 @@
-import { CustomSidesDicePool, StandardDicePool } from '../../Die'
+import { dicePoolFactory } from '../../Die'
 import { isCustomSidesRollOptions } from '../../types/guards'
 import { RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
@@ -9,17 +9,18 @@ const parseOptions = (
   options: RollOptions | RollOptions<string>
 ): RollParameters | RollParameters<string> => {
   const quantity = Number(options.quantity || 1)
+
   if (isCustomSidesRollOptions(options)) {
     const diceOptions = [{ quantity, sides: options.sides }]
-    const pool = new CustomSidesDicePool(diceOptions)
-    const initialRolls = pool.roll()
+    const dice = dicePoolFactory(diceOptions)
+    const initialRolls = dice.map((die) => die.roll())
     return {
       ...options,
       diceOptions,
+      dice,
       argument: options,
       faces: options.sides.map(String),
       sides: options.sides.length,
-      pool,
       quantity,
       modifiers: [],
       initialRolls
@@ -27,17 +28,17 @@ const parseOptions = (
   }
 
   const diceOptions = [{ quantity, sides: Number(options.sides) }]
-  const pool = new StandardDicePool(diceOptions)
-  const initialRolls = pool.roll()
+  const dice = dicePoolFactory(diceOptions)
+  const initialRolls = dice.map((die) => die.roll())
   const faces = generateStandardSides(Number(options.sides))
   return {
     ...options,
     diceOptions,
+    dice,
     faces,
     argument: options,
     sides: Number(options.sides),
     quantity,
-    pool,
     modifiers: normalizeModifiers(options.modifiers || []),
     initialRolls
   }
