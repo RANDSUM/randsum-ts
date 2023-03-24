@@ -2,7 +2,7 @@ import { DiceOptions } from '../types/options'
 import { DieSides } from '../types/primitives'
 import { CustomSidesDie, dieFactory, StandardDie } from './single-die'
 
-abstract class DicePool<T extends DieSides = DieSides> {
+abstract class DicePool<T extends DieSides> {
   public dice: T extends number ? StandardDie[] : CustomSidesDie[]
 
   constructor(

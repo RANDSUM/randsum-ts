@@ -14,7 +14,6 @@ import {
   UniqueModifier
 } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
-import { makeRolls } from './utils'
 
 type RollBonuses = {
   rolls: number[]
@@ -153,7 +152,7 @@ const applyExplode = (
   rollOne: () => number
 ): number[] => {
   const explodeCount = rolls.filter((roll) => roll === sides).length
-  const explodeResults = makeRolls(explodeCount, rollOne)
+  const explodeResults = Array.from({ length: explodeCount }, rollOne)
   return [...rolls, ...explodeResults]
 }
 
