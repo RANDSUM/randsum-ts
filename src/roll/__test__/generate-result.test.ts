@@ -8,6 +8,7 @@ describe('generateResult', () => {
   const coreParameters = {
     argument: undefined,
     sides: 6,
+    dice: [],
     quantity: testRollSet.length,
     modifiers: [] as Modifier<number>[],
     initialRolls: testRollSet,

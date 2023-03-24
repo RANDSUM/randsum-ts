@@ -14,6 +14,7 @@ const parseOptions = (
     const initialRolls = pool.roll()
     return {
       ...options,
+      dice,
       argument: options,
       faces: options.sides,
       sides: options.sides.length,
@@ -24,12 +25,12 @@ const parseOptions = (
     }
   }
 
-  const pool = new StandardDicePool([
-    { quantity, sides: Number(options.sides) }
-  ])
+  const dice = [{ quantity, sides: Number(options.sides) }]
+  const pool = new StandardDicePool(dice)
   const initialRolls = pool.roll()
   return {
     ...options,
+    dice,
     argument: options,
     sides: Number(options.sides),
     quantity,

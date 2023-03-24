@@ -10,9 +10,9 @@ export type DiceNotation<T extends DieSides = number> = T extends number
   ? DiceNotationWithNumericSides
   : DiceNotationWithCustomSides
 
-export type NumberStringArgument = number | 'inclusive'
+type TypeAndStringType<
+  T extends string | number | bigint | boolean | null | undefined
+> = T | `${T}`
 
-export type NumberString<T extends NumberStringArgument = 'inclusive'> =
-  T extends 'inclusive' ? number | `${number}` : number
-
-export type TypeOrArrayOfType<T> = T | T[]
+export type NumberString<N extends number | 'inclusive' = 'inclusive'> =
+  N extends 'inclusive' ? TypeAndStringType<number> : number

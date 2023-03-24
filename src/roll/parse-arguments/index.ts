@@ -25,14 +25,11 @@ function parseArguments(
 
   const quantity = 1
   const sides = argument === undefined ? 20 : Number(argument)
-  const pool = new StandardDicePool([
-    {
-      quantity,
-      sides
-    }
-  ])
+  const dice = [{ quantity, sides }]
+  const pool = new StandardDicePool(dice)
 
   return {
+    dice,
     argument,
     pool,
     sides,
