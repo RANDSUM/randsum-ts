@@ -9,6 +9,7 @@ describe('generateResult', () => {
     argument: undefined,
     sides: 6,
     dice: [],
+    faces: [1, 2, 3, 4, 5, 6],
     quantity: testRollSet.length,
     modifiers: [] as Modifier<number>[],
     initialRolls: testRollSet,

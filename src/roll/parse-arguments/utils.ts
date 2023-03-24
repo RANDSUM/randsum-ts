@@ -18,7 +18,9 @@ export const isCustomSidesRollOptions = (
 export const isCustomSidesRollParameters = (
   argument: unknown
 ): argument is RollParameters<string> =>
-  (argument as RollParameters<string>).faces !== undefined
+  (argument as RollParameters<string>).faces.every(
+    (face) => typeof face === 'string'
+  )
 
 export const isCustomSidesRollResult = (
   argument: RollResult | RollResult<string>

@@ -2,6 +2,7 @@ import { CustomSidesDicePool, StandardDicePool } from '../../Die'
 import { Modifier } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import { DiceNotation } from '../../types/primitives'
+import { generateStandardSides } from '../../utils'
 import parseModifiers, {
   isCoreNotationMatch,
   Match,
@@ -21,6 +22,7 @@ const parseNotation = (
   let rollParameters: RollParameters | RollParameters<string> = {
     pool: new StandardDicePool([]),
     argument: notationString,
+    faces: [],
     dice: [],
     sides: 1,
     quantity: 1,
@@ -66,6 +68,7 @@ const parseNotation = (
           ...newRollParameters,
           dice,
           pool,
+          faces: generateStandardSides(newRollParameters.sides),
           initialRolls
         }
       }

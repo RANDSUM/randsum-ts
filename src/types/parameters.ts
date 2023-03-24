@@ -15,5 +15,6 @@ export type RollParameters<T extends DieSides = number> = {
   modifiers: Array<Modifier<number>>
   quantity: number
   sides: number
+  faces: T[]
   pool: T extends number ? StandardDicePool : CustomSidesDicePool
-} & (T extends number ? Record<never, never> : { faces: string[] })
+}

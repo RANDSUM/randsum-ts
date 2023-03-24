@@ -2,6 +2,7 @@ import { StandardDicePool } from '../../Die'
 import { RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import { DiceNotation, NumberString } from '../../types/primitives'
+import { generateStandardSides } from '../../utils'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
 import { isDiceNotation, isRollOptions } from './utils'
@@ -27,9 +28,11 @@ function parseArguments(
   const sides = argument === undefined ? 20 : Number(argument)
   const dice = [{ quantity, sides }]
   const pool = new StandardDicePool(dice)
+  const faces = generateStandardSides(sides)
 
   return {
     dice,
+    faces,
     argument,
     pool,
     sides,

@@ -13,6 +13,7 @@ import {
   UniqueModifier
 } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
+import { generateStandardSides } from '../../utils'
 
 const isMatcherType = <T extends Match>(
   argument: Match,
@@ -87,9 +88,10 @@ const parseCoreNotationCustomSides = (
 
 export const parseCoreNotation = ({
   coreNotationMatch: notationString
-}: CoreNotationMatch):
-  | Pick<RollParameters, 'sides' | 'quantity' | 'pool'>
-  | Pick<RollParameters<string>, 'sides' | 'quantity' | 'faces' | 'pool'> => {
+}: CoreNotationMatch): Pick<
+  RollParameters | RollParameters<string>,
+  'sides' | 'quantity' | 'faces' | 'pool'
+> => {
   const [quantity, sides] = notationString.split(/[Dd]/)
   const quantityParams = {
     quantity: Number(quantity)
@@ -110,10 +112,12 @@ export const parseCoreNotation = ({
 
   const sidesParams = { sides: Number(sides) }
   const pool = new StandardDicePool([{ ...sidesParams, ...quantityParams }])
+  const faces = generateStandardSides(sidesParams.sides)
 
   return {
     ...quantityParams,
     ...sidesParams,
+    faces,
     pool
   }
 }
