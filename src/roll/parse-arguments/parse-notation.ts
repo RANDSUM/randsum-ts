@@ -22,8 +22,6 @@ const parseNotation = (
     argument: notationString,
     dice: [],
     diceOptions: [],
-    sides: 1,
-    quantity: 1,
     modifiers: [] as Modifier<number>[],
     initialRolls: []
   }

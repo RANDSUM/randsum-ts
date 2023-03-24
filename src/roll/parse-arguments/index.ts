@@ -23,19 +23,16 @@ function parseArguments(
     return parseNotation(argument)
   }
 
-  const quantity = 1
   const sides = argument === undefined ? 20 : Number(argument)
-  const diceOptions = [{ sides }]
+  const diceOptions = [{ quantity: 1, sides }]
   const dice = dicePoolFactory(diceOptions)
 
   return {
     diceOptions,
     argument,
     dice,
-    sides,
     modifiers: [],
-    initialRolls: dice.map((die) => die.roll()),
-    quantity
+    initialRolls: dice.map((die) => die.roll())
   }
 }
 export default parseArguments

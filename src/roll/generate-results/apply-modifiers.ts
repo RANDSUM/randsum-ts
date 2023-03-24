@@ -13,7 +13,7 @@ import {
   RerollOptions,
   UniqueModifier
 } from '../../types/options'
-import { RollParameters } from '../../types/parameters'
+import { DiceParameters, RollParameters } from '../../types/parameters'
 
 type RollBonuses = {
   rolls: number[]
@@ -30,12 +30,7 @@ export class InvalidUniqueError extends Error {
 
 const applyUnique = (
   rolls: number[],
-  {
-    unique,
-    quantity,
-    sides
-  }: Pick<RollParameters<number>, 'quantity' | 'sides'> &
-    UniqueModifier<number>,
+  { unique, sides, quantity }: DiceParameters<number> & UniqueModifier<number>,
   rollOne: () => number
 ): number[] => {
   if (quantity > sides) {
@@ -148,7 +143,7 @@ const applyReplace = (
 
 const applyExplode = (
   rolls: number[],
-  { sides }: Pick<RollParameters<number>, 'sides'>,
+  { sides }: Pick<DiceParameters<number>, 'sides'>,
   rollOne: () => number
 ): number[] => {
   const explodeCount = rolls.filter((roll) => roll === sides).length
@@ -192,16 +187,15 @@ const applyDrop = (
 const applyModifiers = ({
   modifiers,
   initialRolls,
-  dice,
-  sides,
-  quantity
+  dice: [die],
+  diceOptions: [{ sides, quantity }]
 }: RollParameters<number>): RollBonuses => {
   let rollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls
   }
 
-  const rollOne: () => number = () => dice[0].roll()
+  const rollOne: () => number = () => die.roll()
 
   modifiers.forEach((modifier) => {
     if (isRerollModifier(modifier)) {

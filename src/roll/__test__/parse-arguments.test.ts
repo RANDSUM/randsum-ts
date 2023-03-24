@@ -62,8 +62,6 @@ describe('parseArguments', () => {
         }
         expect(parseArguments(options)).toMatchObject({
           diceOptions: [options],
-          quantity: 4,
-          sides: 7,
           modifiers: []
         })
       })

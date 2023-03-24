@@ -5,14 +5,15 @@ import roll from '..'
 
 type ExpectedResults = {
   sides: number
-  quantity: number
+  quantity?: number
   rollLength?: number
+  faces?: string[]
   modifiers?: RollResult<DieSides>['rollParameters']['modifiers']
 }
 
 const testResult = (
   result: RollResult | RollResult<string>,
-  { quantity, sides, modifiers = [], rollLength }: ExpectedResults
+  { quantity, sides, faces, modifiers = [], rollLength }: ExpectedResults
 ): void => {
   if (isCustomSidesRollResult(result)) {
     test('result.total returns an string', () => {
@@ -25,7 +26,7 @@ const testResult = (
   }
 
   test('result.rolls returns an array of results as rolls', () => {
-    expect(result.rolls).toHaveLength(rollLength || quantity)
+    expect(result.rolls).toHaveLength(rollLength || quantity || 1)
 
     if (isCustomSidesRollResult(result)) {
       result.rolls.forEach((individualRoll) => {
@@ -39,12 +40,26 @@ const testResult = (
   })
 
   describe('result.rollparameters', () => {
-    test('.sides returns the number of sides of the dice rolled', () => {
-      expect(result.rollParameters.sides).toEqual(sides)
-    })
+    describe('diceOptions', () => {
+      it('has one options array in it', () => {
+        expect(result.rollParameters.diceOptions).toHaveLength(1)
+      })
 
-    test('.quantity returns the number of dice rolled', () => {
-      expect(result.rollParameters.quantity).toEqual(quantity)
+      it('has the correct value of quantity', () => {
+        expect(result.rollParameters.diceOptions[0].quantity).toEqual(
+          quantity || 1
+        )
+      })
+
+      if (isCustomSidesRollResult(result)) {
+        it('has the correct number of sides', () => {
+          expect(result.rollParameters.diceOptions[0].sides).toEqual(faces)
+        })
+      } else {
+        it('has the correct value of sides', () => {
+          expect(result.rollParameters.diceOptions[0].sides).toEqual(sides)
+        })
+      }
     })
 
     test('.modifiers returns modifiers used in the rolls', () => {
@@ -72,21 +87,21 @@ describe(roll, () => {
   describe('()', () => {
     const result = roll()
 
-    testResult(result, { quantity: 1, sides: 20 })
+    testResult(result, { sides: 20 })
   })
 
   describe('(string)', () => {
     const firstArg = '20'
     const result = roll(firstArg)
 
-    testResult(result, { quantity: 1, sides: 20 })
+    testResult(result, { sides: 20 })
   })
 
   describe('(number)', () => {
     const firstArg = 20
     const result = roll(firstArg)
 
-    testResult(result, { quantity: 1, sides: 20 })
+    testResult(result, { sides: 20 })
   })
 
   describe('(rollOptions)', () => {
@@ -122,7 +137,7 @@ describe(roll, () => {
     const result = roll(firstArg)
 
     testResult(result, {
-      quantity: 1,
+      faces: firstArg.sides,
       sides: firstArg.sides.length
     })
   })

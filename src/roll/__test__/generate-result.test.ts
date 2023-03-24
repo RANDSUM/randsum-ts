@@ -7,10 +7,7 @@ describe('generateResult', () => {
   const testRollSet = [1, 2, 3, 4]
   const coreParameters = {
     argument: undefined,
-    sides: 6,
     diceOptions: [{ sides: 6, quantity: testRollSet.length }],
-    faces: [1, 2, 3, 4, 5, 6],
-    quantity: testRollSet.length,
     modifiers: [] as Modifier<number>[],
     initialRolls: testRollSet,
     dice: [{ roll: jest.fn().mockReturnValue(200) }] as unknown as StandardDie[]
@@ -59,8 +56,8 @@ describe('generateResult', () => {
       const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
       const overflowParameters = {
         ...uniqueParameters,
-        initialRolls: overflowRollTotals,
-        quantity: overflowRollTotals.length
+        diceOptions: [{ sides: 6, quantity: overflowRollTotals.length }],
+        initialRolls: overflowRollTotals
       }
 
       test('it throws an error', () => {
@@ -78,9 +75,7 @@ describe('generateResult', () => {
       ...coreParameters,
       diceOptions,
       dice: dicePoolFactory(diceOptions),
-      initialRolls: ['r', 'a', 'n', 'd'],
-      faces,
-      sides: faces.length
+      initialRolls: ['r', 'a', 'n', 'd']
     }
 
     test('it returns the expected result as a string', () => {
@@ -95,8 +90,7 @@ describe('generateResult', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     const dropParameters = {
       ...coreParameters,
-      sides: 10,
-      quantity: longerRollTotals.length,
+      diceOptions: [{ sides: 10, quantity: longerRollTotals.length }],
       initialRolls: longerRollTotals,
       modifiers: [
         {

@@ -1,6 +1,11 @@
 import { CustomSidesDie, StandardDie } from '../Die'
-import { DiceOptions, Modifier, RollOptions } from './options'
+import { Modifier, RollOptions } from './options'
 import { DiceNotation, DieSides, NumberString } from './primitives'
+
+export type DiceParameters<T extends DieSides = number> = {
+  quantity: number
+  sides: T extends number ? number : string[]
+}
 
 export type RollParameters<T extends DieSides = number> = {
   argument:
@@ -10,11 +15,8 @@ export type RollParameters<T extends DieSides = number> = {
     | undefined
     | RollOptions<string>
     | DiceNotation<string>
-  diceOptions: DiceOptions<T>[]
+  diceOptions: DiceParameters<T>[]
   initialRolls: T[]
   modifiers: Array<Modifier<number>>
   dice: (T extends number ? StandardDie : CustomSidesDie)[]
-
-  quantity: number
-  sides: number
 }

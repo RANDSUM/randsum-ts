@@ -7,19 +7,16 @@ import normalizeModifiers from './normalize-modifiers'
 const parseOptions = (
   options: RollOptions | RollOptions<string>
 ): RollParameters | RollParameters<string> => {
-  const quantity = Number(options.quantity || 1)
+  const quantity = Number(options.quantity) || 1
 
   if (isCustomSidesRollOptions(options)) {
-    const diceOptions = [{ quantity, sides: options.sides }]
+    const diceOptions = [{ quantity, sides: options.sides.map(String) }]
     const dice = dicePoolFactory(diceOptions)
     const initialRolls = dice.map((die) => die.roll())
     return {
-      ...options,
       diceOptions,
       dice,
       argument: options,
-      sides: options.sides.length,
-      quantity,
       modifiers: [],
       initialRolls
     }
@@ -29,12 +26,9 @@ const parseOptions = (
   const dice = dicePoolFactory(diceOptions)
   const initialRolls = dice.map((die) => die.roll())
   return {
-    ...options,
     diceOptions,
     dice,
     argument: options,
-    sides: Number(options.sides),
-    quantity,
     modifiers: normalizeModifiers(options.modifiers || []),
     initialRolls
   }
