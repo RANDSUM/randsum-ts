@@ -23,7 +23,7 @@ const parseNotation = (
     pool: new StandardDicePool([]),
     argument: notationString,
     faces: [],
-    dice: [],
+    diceOptions: [],
     sides: 1,
     quantity: 1,
     modifiers: [] as Modifier<number>[],
@@ -39,34 +39,34 @@ const parseNotation = (
         ...parseCoreNotation(match)
       }
       if (isCustomSidesRollParameters(newRollParameters)) {
-        const dice = [
+        const diceOptions = [
           {
             quantity: newRollParameters.quantity,
             sides: newRollParameters.faces
           }
         ]
-        const pool = new CustomSidesDicePool(dice)
+        const pool = new CustomSidesDicePool(diceOptions)
         const initialRolls = pool.roll()
         rollParameters = {
           ...newRollParameters,
-          dice,
+          diceOptions,
           pool,
           initialRolls,
           modifiers: []
         }
       } else {
-        const dice = [
+        const diceOptions = [
           {
             quantity: newRollParameters.quantity,
             sides: newRollParameters.sides
           }
         ]
-        const pool = new StandardDicePool(dice)
+        const pool = new StandardDicePool(diceOptions)
         const initialRolls = pool.roll()
 
         rollParameters = {
           ...newRollParameters,
-          dice,
+          diceOptions,
           pool,
           faces: generateStandardSides(newRollParameters.sides),
           initialRolls

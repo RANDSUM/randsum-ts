@@ -10,12 +10,12 @@ const parseOptions = (
 ): RollParameters | RollParameters<string> => {
   const quantity = Number(options.quantity || 1)
   if (isCustomSidesRollOptions(options)) {
-    const dice = [{ quantity, sides: options.sides }]
-    const pool = new CustomSidesDicePool(dice)
+    const diceOptions = [{ quantity, sides: options.sides }]
+    const pool = new CustomSidesDicePool(diceOptions)
     const initialRolls = pool.roll()
     return {
       ...options,
-      dice,
+      diceOptions,
       argument: options,
       faces: options.sides.map(String),
       sides: options.sides.length,
@@ -26,13 +26,13 @@ const parseOptions = (
     }
   }
 
-  const dice = [{ quantity, sides: Number(options.sides) }]
-  const pool = new StandardDicePool(dice)
+  const diceOptions = [{ quantity, sides: Number(options.sides) }]
+  const pool = new StandardDicePool(diceOptions)
   const initialRolls = pool.roll()
   const faces = generateStandardSides(Number(options.sides))
   return {
     ...options,
-    dice,
+    diceOptions,
     faces,
     argument: options,
     sides: Number(options.sides),

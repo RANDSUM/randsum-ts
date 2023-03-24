@@ -8,7 +8,7 @@ describe('generateResult', () => {
   const coreParameters = {
     argument: undefined,
     sides: 6,
-    dice: [],
+    diceOptions: [{ sides: 6, quantity: testRollSet.length }],
     faces: [1, 2, 3, 4, 5, 6],
     quantity: testRollSet.length,
     modifiers: [] as Modifier<number>[],
@@ -77,6 +77,7 @@ describe('generateResult', () => {
     const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
     const customSidesParameters = {
       ...coreParameters,
+      diceOptions: [{ sides: faces, quantity: 4 }],
       pool: new CustomSidesDicePool([{ quantity: 4, sides: faces }]),
       initialRolls: ['r', 'a', 'n', 'd'],
       faces,

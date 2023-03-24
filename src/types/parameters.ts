@@ -10,7 +10,7 @@ export type RollParameters<T extends DieSides = number> = {
     | undefined
     | RollOptions<string>
     | DiceNotation<string>
-  dice: DiceOptions<T>[]
+  diceOptions: DiceOptions<T>[]
   initialRolls: T[]
   modifiers: Array<Modifier<number>>
   quantity: number
