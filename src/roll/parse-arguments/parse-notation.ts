@@ -16,9 +16,9 @@ const findMatches = (notations: string): Match[] =>
   )
 
 const parseNotation = (
-  notationString: DiceNotation | DiceNotation<'customSides'>
-): RollParameters | RollParameters<'customSides'> => {
-  let rollParameters: RollParameters | RollParameters<'customSides'> = {
+  notationString: DiceNotation | DiceNotation<string>
+): RollParameters | RollParameters<string> => {
+  let rollParameters: RollParameters | RollParameters<string> = {
     pool: new StandardDicePool([]),
     argument: notationString,
     sides: 1,

@@ -1,18 +1,18 @@
 import { CustomSidesDicePool, StandardDicePool } from '../Die'
 import { Modifier, RollOptions } from './options'
-import { CustomSide, DiceNotation, DieType, NumberString } from './primitives'
+import { DiceNotation, DieSides, NumberString } from './primitives'
 
-export type RollParameters<T extends DieType = 'standard'> = {
+export type RollParameters<T extends DieSides = number> = {
   argument:
-    | RollOptions
+    | RollOptions<number>
     | DiceNotation
     | NumberString
     | undefined
-    | RollOptions<'customSides'>
-    | DiceNotation<'customSides'>
-  initialRolls: T extends 'standard' ? number[] : CustomSide[]
+    | RollOptions<string>
+    | DiceNotation<string>
+  initialRolls: T[]
   modifiers: Array<Modifier<number>>
   quantity: number
   sides: number
-  pool: T extends 'standard' ? StandardDicePool : CustomSidesDicePool
-} & (T extends 'standard' ? Record<never, never> : { faces: CustomSide[] })
+  pool: T extends number ? StandardDicePool : CustomSidesDicePool
+} & (T extends number ? Record<never, never> : { faces: string[] })

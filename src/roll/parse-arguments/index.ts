@@ -9,12 +9,12 @@ import { isDiceNotation, isRollOptions } from './utils'
 function parseArguments(
   argument:
     | RollOptions
-    | RollOptions<'customSides'>
+    | RollOptions<string>
     | DiceNotation
-    | DiceNotation<'customSides'>
+    | DiceNotation<string>
     | NumberString
     | undefined
-): RollParameters | RollParameters<'customSides'> {
+): RollParameters | RollParameters<string> {
   if (isRollOptions(argument)) {
     return parseOptions(argument)
   }

@@ -1,24 +1,23 @@
 import {
-  CustomSide,
-  DieType,
+  DieSides,
   NumberString,
   NumberStringArgument,
   TypeOrArrayOfType
 } from './primitives'
 
 export type DiceOptions<
-  T extends DieType = 'standard',
+  T extends DieSides = number,
   N extends NumberStringArgument = 'inclusive'
 > = {
   quantity?: NumberString<N>
-  sides: T extends 'standard' ? NumberString<N> : CustomSide[]
+  sides: T extends number ? NumberString<N> : string[]
 }
 
 export type RollOptions<
-  T extends DieType = 'standard',
+  T extends DieSides = number,
   N extends NumberStringArgument = 'inclusive'
 > = DiceOptions<T, N> & {
-  modifiers?: T extends 'standard' ? Array<Modifier<N>> : never
+  modifiers?: T extends number ? Array<Modifier<N>> : never
 }
 
 const isModifierType = <T extends Modifier<NumberStringArgument>>(

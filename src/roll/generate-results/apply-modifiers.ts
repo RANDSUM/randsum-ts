@@ -35,7 +35,7 @@ const applyUnique = (
     unique,
     quantity,
     sides
-  }: Pick<RollParameters<'standard'>, 'quantity' | 'sides'> &
+  }: Pick<RollParameters<number>, 'quantity' | 'sides'> &
     UniqueModifier<number>,
   rollOne: () => number
 ): number[] => {
@@ -149,7 +149,7 @@ const applyReplace = (
 
 const applyExplode = (
   rolls: number[],
-  { sides }: Pick<RollParameters<'standard'>, 'sides'>,
+  { sides }: Pick<RollParameters<number>, 'sides'>,
   rollOne: () => number
 ): number[] => {
   const explodeCount = rolls.filter((roll) => roll === sides).length
@@ -196,7 +196,7 @@ const applyModifiers = ({
   sides,
   quantity,
   pool
-}: RollParameters<'standard'>): RollBonuses => {
+}: RollParameters<number>): RollBonuses => {
   let rollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls

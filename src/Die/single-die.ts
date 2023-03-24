@@ -1,30 +1,31 @@
-import { CustomSide, DieType, NumberString } from '../types/primitives'
+import { DieSides, NumberString } from '../types/primitives'
 
-abstract class SingleDie<T extends DieType = never> {
+const isCustomSides = (sides: unknown): sides is string[] =>
+  Array.isArray(sides)
+
+abstract class SingleDie<T extends DieSides> {
   sides: number
 
-  faces: T extends 'standard' ? number[] : CustomSide[]
+  faces: T[]
 
-  custom: T extends 'standard' ? false : true
+  custom: T extends number ? false : true
 
-  constructor(sides: T extends 'standard' ? NumberString : CustomSide[]) {
-    if (Array.isArray(sides)) {
-      this.custom = true as T extends 'standard' ? false : true
+  constructor(sides: T extends number ? NumberString : T[]) {
+    if (isCustomSides(sides)) {
+      this.custom = true as T extends number ? false : true
       this.sides = sides.length
-      this.faces = sides
+      this.faces = sides as T[]
     } else {
-      this.custom = false as T extends 'standard' ? false : true
+      this.custom = false as T extends number ? false : true
       this.sides = Number(sides)
       this.faces = [...Array.from({ length: this.sides }).keys()].map(
         (i) => i + 1
-      )
+      ) as T[]
     }
   }
 
-  roll(): T extends 'standard' ? number : number | string {
-    return this.faces[this.rawRoll()] as T extends 'standard'
-      ? number
-      : number | string
+  roll(): T {
+    return this.faces[this.rawRoll()]
   }
 
   protected rawRoll(): number {
@@ -32,21 +33,17 @@ abstract class SingleDie<T extends DieType = never> {
   }
 }
 
-export class StandardDie extends SingleDie<'standard'> {}
-export class CustomSidesDie extends SingleDie<'customSides'> {}
+export class StandardDie extends SingleDie<number> {}
+export class CustomSidesDie extends SingleDie<string> {}
 
-const isCustomSides = (
-  sides: NumberString | CustomSide[]
-): sides is CustomSide[] => Array.isArray(sides)
-
-function dieFactory(sides: NumberString): SingleDie<'standard'>
-function dieFactory(sides: CustomSide[]): SingleDie<'customSides'>
-function dieFactory<T extends DieType>(
-  sides: T extends 'standard' ? NumberString : CustomSide[]
-): T extends 'standard' ? SingleDie<'customSides'> : SingleDie<'standard'>
+function dieFactory(sides: NumberString): SingleDie<number>
+function dieFactory(sides: string[]): SingleDie<string>
+function dieFactory<T extends DieSides>(
+  sides: T extends number ? NumberString : string[]
+): T extends number ? SingleDie<string> : SingleDie<number>
 function dieFactory(
-  sides: NumberString | CustomSide[]
-): SingleDie<'customSides'> | SingleDie<'standard'> {
+  sides: NumberString | string[]
+): SingleDie<string> | SingleDie<number> {
   if (isCustomSides(sides)) {
     return new CustomSidesDie(sides)
   }

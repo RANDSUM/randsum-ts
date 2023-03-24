@@ -6,17 +6,17 @@ import parseArguments from './parse-arguments'
 
 function roll(arg?: NumberString | RollOptions | DiceNotation): RollResult
 function roll(
-  arg: RollOptions<'customSides'> | DiceNotation<'customSides'>
-): RollResult<'customSides'>
+  arg: RollOptions<string> | DiceNotation<string>
+): RollResult<string>
 
 function roll(
   arg?:
     | RollOptions
-    | RollOptions<'customSides'>
+    | RollOptions<string>
     | DiceNotation
-    | DiceNotation<'customSides'>
+    | DiceNotation<string>
     | NumberString
-): RollResult | RollResult<'customSides'> {
+): RollResult | RollResult<string> {
   const parameters = parseArguments(arg)
   return generateResult(parameters)
 }

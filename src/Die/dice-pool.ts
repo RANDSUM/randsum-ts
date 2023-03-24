@@ -1,14 +1,12 @@
 import { DiceOptions } from '../types/options'
-import { DieType } from '../types/primitives'
+import { DieSides } from '../types/primitives'
 import { CustomSidesDie, dieFactory, StandardDie } from './single-die'
 
-abstract class DicePool<T extends DieType = DieType> {
-  public dice: T extends 'standard' ? StandardDie[] : CustomSidesDie[]
+abstract class DicePool<T extends DieSides = DieSides> {
+  public dice: T extends number ? StandardDie[] : CustomSidesDie[]
 
   constructor(
-    diceOptions: T extends 'standard'
-      ? DiceOptions[]
-      : DiceOptions<'customSides'>[]
+    diceOptions: T extends number ? DiceOptions[] : DiceOptions<string>[]
   ) {
     const dice = diceOptions.flatMap((die) => {
       const quantity = Number(die.quantity || 1)
@@ -16,33 +14,29 @@ abstract class DicePool<T extends DieType = DieType> {
       return [...Array(quantity).keys()].map(() => dieFactory(die.sides))
     })
 
-    this.dice = dice as T extends 'standard' ? StandardDie[] : CustomSidesDie[]
+    this.dice = dice as T extends number ? StandardDie[] : CustomSidesDie[]
   }
 
-  roll(): T extends 'standard' ? number[] : (number | string)[] {
-    return this.dice.map((die) => die.roll()) as T extends 'standard'
-      ? number[]
-      : (number | string)[]
+  roll(): T[] {
+    return this.dice.map((die) => die.roll()) as T[]
   }
 }
 
-export class StandardDicePool extends DicePool<'standard'> {}
-export class CustomSidesDicePool extends DicePool<'customSides'> {}
+export class StandardDicePool extends DicePool<number> {}
+export class CustomSidesDicePool extends DicePool<string> {}
 
 const isCustomSidesDiceOptions = (
-  options: (DiceOptions | DiceOptions<'customSides'>)[]
-): options is DiceOptions<'customSides'>[] =>
+  options: (DiceOptions | DiceOptions<string>)[]
+): options is DiceOptions<string>[] =>
   options.every(({ sides }) => Array.isArray(sides))
 
 function dicePoolFactory(options: DiceOptions[]): StandardDicePool
+function dicePoolFactory(options: DiceOptions<string>[]): CustomSidesDicePool
+function dicePoolFactory<T extends DieSides>(
+  options: T extends number ? DiceOptions[] : DiceOptions<string>[]
+): T extends number ? StandardDicePool : CustomSidesDicePool
 function dicePoolFactory(
-  options: DiceOptions<'customSides'>[]
-): CustomSidesDicePool
-function dicePoolFactory<T extends DieType>(
-  options: T extends 'standard' ? DiceOptions[] : DiceOptions<'customSides'>[]
-): T extends 'standard' ? StandardDicePool : CustomSidesDicePool
-function dicePoolFactory(
-  options: DiceOptions[] | DiceOptions<'customSides'>[]
+  options: DiceOptions[] | DiceOptions<string>[]
 ): StandardDicePool | CustomSidesDicePool {
   if (isCustomSidesDiceOptions(options)) {
     return new CustomSidesDicePool(options)

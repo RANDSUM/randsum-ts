@@ -131,7 +131,7 @@ describe('parseArguments', () => {
 
     describe('given a notation that uses custom faces', () => {
       describe('with a simple notation', () => {
-        const testString: DiceNotation<'customSides'> = '4d{++--  }'
+        const testString: DiceNotation<string> = '4d{++--  }'
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({

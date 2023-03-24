@@ -4,8 +4,8 @@ import { isCustomSidesRollParameters } from '../parse-arguments/utils'
 import applyModifiers from './apply-modifiers'
 
 function generateResult(
-  rollParameters: RollParameters | RollParameters<'customSides'>
-): RollResult | RollResult<'customSides'> {
+  rollParameters: RollParameters | RollParameters<string>
+): RollResult | RollResult<string> {
   if (isCustomSidesRollParameters(rollParameters)) {
     return {
       rollParameters,

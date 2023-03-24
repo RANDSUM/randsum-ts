@@ -6,12 +6,12 @@ type ExpectedResults = {
   sides: number
   quantity: number
   rollLength?: number
-  faces?: RollResult<'customSides'>['rollParameters']['faces']
+  faces?: RollResult<string>['rollParameters']['faces']
   modifiers?: RollResult['rollParameters']['modifiers']
 }
 
 const testResult = (
-  result: RollResult | RollResult<'customSides'>,
+  result: RollResult | RollResult<string>,
   { quantity, sides, faces, modifiers = [], rollLength }: ExpectedResults
 ): void => {
   if (faces) {
@@ -48,9 +48,9 @@ const testResult = (
     })
 
     test('.faces returns custom faces used in the rolls', () => {
-      expect(
-        (result.rollParameters as RollParameters<'customSides'>).faces
-      ).toEqual(faces)
+      expect((result.rollParameters as RollParameters<string>).faces).toEqual(
+        faces
+      )
     })
 
     test('.modifiers returns modifiers used in the rolls', () => {

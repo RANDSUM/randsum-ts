@@ -5,8 +5,8 @@ import normalizeModifiers from './normalize-modifiers'
 import { isCustomSidesRollOptions } from './utils'
 
 const parseOptions = (
-  options: RollOptions | RollOptions<'customSides'>
-): RollParameters | RollParameters<'customSides'> => {
+  options: RollOptions | RollOptions<string>
+): RollParameters | RollParameters<string> => {
   const quantity = Number(options.quantity || 1)
   if (isCustomSidesRollOptions(options)) {
     const dice = [{ quantity, sides: options.sides }]

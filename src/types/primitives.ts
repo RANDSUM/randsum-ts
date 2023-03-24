@@ -1,7 +1,4 @@
-export type CustomSide = number | string
-export type StandardSide = number
-export type NewDieType = StandardSide | CustomSide
-export type DieType = 'standard' | 'customSides'
+export type DieSides = string | number
 
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
 type CustomDiceSidesNotation = `{${string}}`
@@ -9,7 +6,7 @@ type DiceNotationWithCustomSides = `${number}${
   | 'd'
   | 'D'}${CustomDiceSidesNotation}`
 
-export type DiceNotation<T extends DieType = 'standard'> = T extends 'standard'
+export type DiceNotation<T extends DieSides = number> = T extends number
   ? DiceNotationWithNumericSides
   : DiceNotationWithCustomSides
 
