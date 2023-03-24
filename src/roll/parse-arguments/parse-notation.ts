@@ -1,6 +1,5 @@
 import { completeRollPattern } from '../../constants/regexp'
 import { dicePoolFactory } from '../../Die'
-import { isCustomSidesRollParameters } from '../../types/guards'
 import { Modifier } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import { DiceNotation } from '../../types/primitives'
@@ -18,55 +17,40 @@ const findMatches = (notations: string): Match[] =>
 const parseNotation = (
   notationString: DiceNotation | DiceNotation<string>
 ): RollParameters | RollParameters<string> => {
-  let rollParameters: RollParameters | RollParameters<string> = {
+  const coreParams = {
     argument: notationString,
-    dice: [],
-    diceOptions: [],
-    modifiers: [] as Modifier<number>[],
-    initialRolls: []
+    modifiers: [] as Modifier<number>[]
   }
 
-  findMatches(notationString).forEach((match) => {
-    const { modifiers, ...restParameters } = rollParameters
+  const matches = findMatches(notationString)
 
-    if (isCoreNotationMatch(match)) {
-      const diceOptions = parseCoreNotation(match)
-      const newRollParameters = {
-        ...rollParameters,
-        diceOptions
-      }
+  return (
+    matches
+      .map((match) => {
+        if (isCoreNotationMatch(match)) {
+          const diceOptions = parseCoreNotation(match)
+          const dice = dicePoolFactory(diceOptions)
+          const initialRolls = dice.map((die) => die.roll())
 
-      if (isCustomSidesRollParameters(newRollParameters)) {
-        const dice = dicePoolFactory(newRollParameters.diceOptions)
-        const initialRolls = dice.map((die) => die.roll())
-
-        rollParameters = {
-          ...newRollParameters,
-          dice,
-          initialRolls,
-          modifiers: []
+          return {
+            ...coreParams,
+            diceOptions,
+            dice,
+            initialRolls
+          }
         }
-      } else {
-        const dice = dicePoolFactory(newRollParameters.diceOptions)
-        const initialRolls = dice.map((die) => die.roll())
-
-        rollParameters = {
-          ...rollParameters,
-          diceOptions,
-          dice,
-          initialRolls
-        }
-      }
-      return
-    }
-
-    rollParameters = {
-      ...restParameters,
-      modifiers: [...modifiers, parseModifiers(match)]
-    }
-  })
-
-  return rollParameters
+        return { modifiers: [parseModifiers(match)] }
+      })
+      // eslint-disable-next-line unicorn/no-array-reduce
+      .reduce(
+        (acc, slice) => ({
+          ...acc,
+          ...slice,
+          modifiers: [...(acc.modifiers || []), ...(slice.modifiers || [])]
+        }),
+        coreParams
+      ) as RollParameters | RollParameters<string>
+  )
 }
 
 export default parseNotation

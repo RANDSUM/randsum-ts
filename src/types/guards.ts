@@ -1,6 +1,6 @@
 import { coreNotationPattern } from '../constants/regexp'
 import { RollOptions } from './options'
-import { RollParameters } from './parameters'
+import { DiceParameters, RollParameters } from './parameters'
 import { DiceNotation } from './primitives'
 import { RollResult } from './results'
 
@@ -14,6 +14,13 @@ export const isCustomSidesRollOptions = (
   argument: RollOptions | RollOptions<string>
 ): argument is RollOptions<string> =>
   Array.isArray((argument as RollOptions<string>).sides)
+
+export const isCustomSidesDiceParameters = (
+  argument: DiceParameters[] | DiceParameters<string>[]
+): argument is DiceParameters<string>[] =>
+  (argument as DiceParameters<string>[]).every(({ sides }) =>
+    Array.isArray(sides)
+  )
 
 export const isCustomSidesRollParameters = (
   argument: unknown
