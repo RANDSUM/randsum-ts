@@ -16,41 +16,27 @@ const findMatches = (notations: string): Match[] =>
 
 const parseNotation = (
   notationString: DiceNotation | DiceNotation<string>
-): RollParameters | RollParameters<string> => {
-  const coreParams = {
-    argument: notationString,
-    modifiers: [] as Modifier<number>[]
-  }
+): RollParameters | RollParameters<string> =>
+  findMatches(notationString).reduce(
+    (acc, match) => {
+      if (isCoreNotationMatch(match)) {
+        const diceOptions = parseCoreNotation(match)
+        const dice = dicePoolFactory(diceOptions)
+        const initialRolls = dice.map((die) => die.roll())
 
-  const matches = findMatches(notationString)
-
-  return (
-    matches
-      .map((match) => {
-        if (isCoreNotationMatch(match)) {
-          const diceOptions = parseCoreNotation(match)
-          const dice = dicePoolFactory(diceOptions)
-          const initialRolls = dice.map((die) => die.roll())
-
-          return {
-            ...coreParams,
-            diceOptions,
-            dice,
-            initialRolls
-          }
-        }
-        return { modifiers: [parseModifiers(match)] }
-      })
-      // eslint-disable-next-line unicorn/no-array-reduce
-      .reduce(
-        (acc, slice) => ({
+        return {
           ...acc,
-          ...slice,
-          modifiers: [...(acc.modifiers || []), ...(slice.modifiers || [])]
-        }),
-        coreParams
-      ) as RollParameters | RollParameters<string>
-  )
-}
+          diceOptions,
+          dice,
+          initialRolls
+        }
+      }
+      return { ...acc, modifiers: [...acc.modifiers, parseModifiers(match)] }
+    },
+    {
+      argument: notationString,
+      modifiers: [] as Modifier<number>[]
+    }
+  ) as RollParameters | RollParameters<string>
 
 export default parseNotation

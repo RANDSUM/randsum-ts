@@ -22,7 +22,8 @@
       "rules": {
         "no-undef": "off",
         "max-classes-per-file": "off",
-        "unicorn/new-for-builtins": "off"
+        "unicorn/new-for-builtins": "off",
+        "unicorn/no-array-reduce": "off"
       }
     }
   ],
