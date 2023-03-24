@@ -4,7 +4,6 @@ import { isCustomSidesRollParameters } from '../../types/guards'
 import { Modifier } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import { DiceNotation } from '../../types/primitives'
-import { generateStandardSides } from '../../utils'
 import parseModifiers, {
   isCoreNotationMatch,
   Match,
@@ -22,7 +21,6 @@ const parseNotation = (
   let rollParameters: RollParameters | RollParameters<string> = {
     argument: notationString,
     dice: [],
-    faces: [],
     diceOptions: [],
     sides: 1,
     quantity: 1,
@@ -34,45 +32,32 @@ const parseNotation = (
     const { modifiers, ...restParameters } = rollParameters
 
     if (isCoreNotationMatch(match)) {
+      const diceOptions = parseCoreNotation(match)
       const newRollParameters = {
         ...rollParameters,
-        ...parseCoreNotation(match)
+        diceOptions,
+        ...diceOptions[0]
       }
+
       if (isCustomSidesRollParameters(newRollParameters)) {
-        const diceOptions = [
-          {
-            quantity: newRollParameters.quantity,
-            sides: newRollParameters.faces
-          }
-        ]
-        const dice = dicePoolFactory(diceOptions)
+        const dice = dicePoolFactory(newRollParameters.diceOptions)
         const initialRolls = dice.map((die) => die.roll())
 
         rollParameters = {
           ...newRollParameters,
-          diceOptions,
           dice,
           initialRolls,
           modifiers: []
         }
       } else {
-        const diceOptions = [
-          {
-            quantity: newRollParameters.quantity,
-            sides: newRollParameters.sides
-          }
-        ]
-        const dice = dicePoolFactory(diceOptions)
-
-        const initialRolls = dice.map((die) => die.roll())
+        const dice = dicePoolFactory(newRollParameters.diceOptions)
+        const initialRolls = dice.map((die) => die.roll()) as number[]
 
         rollParameters = {
           ...newRollParameters,
-          diceOptions,
           dice,
-          faces: generateStandardSides(newRollParameters.sides),
           initialRolls
-        }
+        } as RollParameters
       }
       return
     }

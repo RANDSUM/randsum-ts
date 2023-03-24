@@ -17,5 +17,4 @@ export type RollParameters<T extends DieSides = number> = {
 
   quantity: number
   sides: number
-  faces: T[]
 }

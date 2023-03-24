@@ -7,17 +7,12 @@ type ExpectedResults = {
   sides: number
   quantity: number
   rollLength?: number
-  faces?: RollResult<DieSides>['rollParameters']['faces']
   modifiers?: RollResult<DieSides>['rollParameters']['modifiers']
 }
 
-const default20Faces = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
-]
-
 const testResult = (
   result: RollResult | RollResult<string>,
-  { quantity, sides, faces, modifiers = [], rollLength }: ExpectedResults
+  { quantity, sides, modifiers = [], rollLength }: ExpectedResults
 ): void => {
   if (isCustomSidesRollResult(result)) {
     test('result.total returns an string', () => {
@@ -52,10 +47,6 @@ const testResult = (
       expect(result.rollParameters.quantity).toEqual(quantity)
     })
 
-    test('.faces returns faces used in the rolls', () => {
-      expect(result.rollParameters.faces).toEqual(faces)
-    })
-
     test('.modifiers returns modifiers used in the rolls', () => {
       expect(result.rollParameters.modifiers).toEqual(modifiers)
     })
@@ -81,21 +72,21 @@ describe(roll, () => {
   describe('()', () => {
     const result = roll()
 
-    testResult(result, { quantity: 1, sides: 20, faces: default20Faces })
+    testResult(result, { quantity: 1, sides: 20 })
   })
 
   describe('(string)', () => {
     const firstArg = '20'
     const result = roll(firstArg)
 
-    testResult(result, { quantity: 1, sides: 20, faces: default20Faces })
+    testResult(result, { quantity: 1, sides: 20 })
   })
 
   describe('(number)', () => {
     const firstArg = 20
     const result = roll(firstArg)
 
-    testResult(result, { quantity: 1, sides: 20, faces: default20Faces })
+    testResult(result, { quantity: 1, sides: 20 })
   })
 
   describe('(rollOptions)', () => {
@@ -110,7 +101,6 @@ describe(roll, () => {
       quantity: 2,
       rollLength: 1,
       sides: 20,
-      faces: default20Faces,
       modifiers: firstArg.modifiers
     })
   })
@@ -121,8 +111,7 @@ describe(roll, () => {
 
     testResult(result, {
       quantity: 2,
-      sides: 20,
-      faces: default20Faces
+      sides: 20
     })
   })
 
@@ -134,8 +123,7 @@ describe(roll, () => {
 
     testResult(result, {
       quantity: 1,
-      sides: firstArg.sides.length,
-      faces: firstArg.sides
+      sides: firstArg.sides.length
     })
   })
 })

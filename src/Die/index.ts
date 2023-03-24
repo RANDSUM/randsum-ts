@@ -1,4 +1,3 @@
-export { CustomSidesDicePool, StandardDicePool } from './dice-pool'
 export {
   CustomSidesDie,
   dicePoolFactory,

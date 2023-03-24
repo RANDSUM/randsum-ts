@@ -1,5 +1,6 @@
 import {
   CapModifier,
+  DiceOptions,
   DropModifier,
   DropOptions,
   ExplodeModifier,
@@ -11,8 +12,6 @@ import {
   RerollOptions,
   UniqueModifier
 } from '../../types/options'
-import { RollParameters } from '../../types/parameters'
-import { generateStandardSides } from '../../utils'
 
 const isMatcherType = <T extends Match>(
   argument: Match,
@@ -75,22 +74,16 @@ export type Match =
   | PlusMatch
   | MinusMatch
 
-const parseCoreNotationCustomSides = (
-  sides: string
-): Pick<RollParameters<string>, 'sides' | 'faces'> => {
+const parseCoreNotationCustomSides = (sides: string): DiceOptions<string> => {
   const faces = [...sides.replace(/{|}/g, '')]
   return {
-    faces,
-    sides: faces.length
+    sides: faces
   }
 }
 
 export const parseCoreNotation = ({
   coreNotationMatch: notationString
-}: CoreNotationMatch): Pick<
-  RollParameters | RollParameters<string>,
-  'sides' | 'quantity' | 'faces'
-> => {
+}: CoreNotationMatch): DiceOptions[] | DiceOptions<string>[] => {
   const [quantity, sides] = notationString.split(/[Dd]/)
   const quantityParams = {
     quantity: Number(quantity)
@@ -99,20 +92,22 @@ export const parseCoreNotation = ({
   if (sides.includes('{')) {
     const sidesParams = parseCoreNotationCustomSides(sides)
 
-    return {
-      ...quantityParams,
-      ...sidesParams
-    }
+    return [
+      {
+        ...quantityParams,
+        ...sidesParams
+      }
+    ]
   }
 
   const sidesParams = { sides: Number(sides) }
-  const faces = generateStandardSides(sidesParams.sides)
 
-  return {
-    ...quantityParams,
-    ...sidesParams,
-    faces
-  }
+  return [
+    {
+      ...quantityParams,
+      ...sidesParams
+    }
+  ]
 }
 
 const parseCapNotation = ({

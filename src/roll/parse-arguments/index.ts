@@ -3,7 +3,6 @@ import { isDiceNotation, isRollOptions } from '../../types/guards'
 import { RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import { DiceNotation, NumberString } from '../../types/primitives'
-import { generateStandardSides } from '../../utils'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
 
@@ -27,12 +26,10 @@ function parseArguments(
   const quantity = 1
   const sides = argument === undefined ? 20 : Number(argument)
   const diceOptions = [{ sides }]
-  const faces = generateStandardSides(sides)
   const dice = dicePoolFactory(diceOptions)
 
   return {
     diceOptions,
-    faces,
     argument,
     dice,
     sides,

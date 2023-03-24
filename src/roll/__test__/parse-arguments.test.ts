@@ -5,19 +5,23 @@ describe('parseArguments', () => {
   describe('given undefined', () => {
     const arg = undefined
     test('returns a RollParameter matching the notation', () => {
-      expect(parseArguments(arg)).toMatchObject({ quantity: 1, sides: 20 })
+      expect(parseArguments(arg)).toMatchObject({
+        diceOptions: [{ sides: 20 }]
+      })
     })
   })
 
   describe('given a number string', () => {
     test('returns a RollParameter matching the notation', () => {
-      expect(parseArguments('2')).toMatchObject({ quantity: 1, sides: 2 })
+      expect(parseArguments('2')).toMatchObject({ diceOptions: [{ sides: 2 }] })
     })
   })
 
   describe('given a number', () => {
     test('returns a RollParameter matching the notation', () => {
-      expect(parseArguments(2)).toMatchObject({ quantity: 1, sides: 2 })
+      expect(parseArguments(2)).toMatchObject({
+        diceOptions: [{ sides: 2 }]
+      })
     })
   })
 
@@ -37,8 +41,7 @@ describe('parseArguments', () => {
             ]
           })
         ).toMatchObject({
-          quantity: 4,
-          sides: 6,
+          diceOptions: [{ sides: 6, quantity: 4 }],
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([
             {
@@ -53,15 +56,14 @@ describe('parseArguments', () => {
 
     describe('custom sides', () => {
       test('returns a RollParameter matching the notation', () => {
-        expect(
-          parseArguments({
-            quantity: 4,
-            sides: ['r', 'a', 'n', 'd', 's', 'u', 'm']
-          })
-        ).toMatchObject({
+        const options = {
+          quantity: 4,
+          sides: ['r', 'a', 'n', 'd', 's', 'u', 'm']
+        }
+        expect(parseArguments(options)).toMatchObject({
+          diceOptions: [options],
           quantity: 4,
           sides: 7,
-          faces: ['r', 'a', 'n', 'd', 's', 'u', 'm'],
           modifiers: []
         })
       })
@@ -93,8 +95,7 @@ describe('parseArguments', () => {
             ]
           })
         ).toMatchObject({
-          quantity: 4,
-          sides: 6,
+          diceOptions: [{ sides: 6, quantity: 4 }],
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([
             {
@@ -125,7 +126,9 @@ describe('parseArguments', () => {
 
     describe('given a basic notation', () => {
       test('returns a RollParameter matching the notation', () => {
-        expect(parseArguments(coreTestString)).toMatchObject(coreRollParameters)
+        expect(parseArguments(coreTestString)).toMatchObject({
+          diceOptions: [coreRollParameters]
+        })
       })
     })
 
@@ -135,8 +138,12 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
-            faces: ['+', '+', '-', '-', ' ', ' ']
+            diceOptions: [
+              {
+                sides: ['+', '+', '-', '-', ' ', ' '],
+                quantity: 4
+              }
+            ]
           })
         })
       })
@@ -148,7 +155,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ drop: { highest: 1 } }])
           })
@@ -160,7 +167,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ drop: { highest: 2 } }])
           })
@@ -174,7 +181,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ drop: { lowest: 1 } }])
           })
@@ -186,7 +193,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ drop: { lowest: 2 } }])
           })
@@ -200,7 +207,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               { drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }
@@ -214,8 +221,12 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            quantity: 400,
-            sides: 20,
+            diceOptions: [
+              {
+                quantity: 400,
+                sides: 20
+              }
+            ],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               { drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }
@@ -230,7 +241,7 @@ describe('parseArguments', () => {
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
-          ...coreRollParameters,
+          diceOptions: [coreRollParameters],
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([
             { cap: { lessThan: 2, greaterThan: 5 } }
@@ -244,7 +255,7 @@ describe('parseArguments', () => {
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
-          ...coreRollParameters,
+          diceOptions: [coreRollParameters],
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([{ minus: 2 }])
         })
@@ -256,7 +267,7 @@ describe('parseArguments', () => {
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
-          ...coreRollParameters,
+          diceOptions: [coreRollParameters],
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([{ plus: 2 }])
         })
@@ -269,7 +280,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ reroll: { greaterThan: 6 } }])
           })
@@ -281,7 +292,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               { reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } }
@@ -297,7 +308,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               { unique: { notUnique: [5, 6] } }
@@ -311,7 +322,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([{ unique: true }])
           })
@@ -324,7 +335,7 @@ describe('parseArguments', () => {
 
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
-          ...coreRollParameters,
+          diceOptions: [coreRollParameters],
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           modifiers: expect.arrayContaining([{ explode: true }])
         })
@@ -337,7 +348,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               {
@@ -356,7 +367,7 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            ...coreRollParameters,
+            diceOptions: [coreRollParameters],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               { replace: { from: { lessThan: 2 }, to: 6 } }
@@ -373,14 +384,22 @@ describe('parseArguments', () => {
           const dropFirstString: DiceNotation = '4d6H!'
 
           expect(parseArguments(explodeFirstString)).toMatchObject({
-            quantity: 4,
-            sides: 6,
+            diceOptions: [
+              {
+                quantity: 4,
+                sides: 6
+              }
+            ],
             modifiers: [{ explode: true }, { drop: { highest: 1 } }]
           })
 
           expect(parseArguments(dropFirstString)).toMatchObject({
-            quantity: 4,
-            sides: 6,
+            diceOptions: [
+              {
+                quantity: 4,
+                sides: 6
+              }
+            ],
             modifiers: [{ drop: { highest: 1 } }, { explode: true }]
           })
         })
@@ -391,8 +410,12 @@ describe('parseArguments', () => {
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
-            quantity: 10,
-            sides: 20,
+            diceOptions: [
+              {
+                quantity: 10,
+                sides: 20
+              }
+            ],
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             modifiers: expect.arrayContaining([
               { plus: 2 },
