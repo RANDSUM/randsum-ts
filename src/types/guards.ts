@@ -1,8 +1,8 @@
-import { RollOptions } from '../../types/options'
-import { RollParameters } from '../../types/parameters'
-import { DiceNotation, DieSides } from '../../types/primitives'
-import { RollResult } from '../../types/results'
-import { coreNotationPattern } from './regexp'
+import { coreNotationPattern } from '../constants/regexp'
+import { RollOptions } from './options'
+import { RollParameters } from './parameters'
+import { DiceNotation, DieSides } from './primitives'
+import { RollResult } from './results'
 
 export const isRollOptions = <T extends DieSides = number>(
   argument: unknown

@@ -1,11 +1,11 @@
 import { StandardDicePool } from '../../Die'
+import { isDiceNotation, isRollOptions } from '../../types/guards'
 import { RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import { DiceNotation, NumberString } from '../../types/primitives'
 import { generateStandardSides } from '../../utils'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
-import { isDiceNotation, isRollOptions } from './utils'
 
 function parseArguments(
   argument:

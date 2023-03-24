@@ -1,4 +1,6 @@
+import { completeRollPattern } from '../../constants/regexp'
 import { CustomSidesDicePool, StandardDicePool } from '../../Die'
+import { isCustomSidesRollParameters } from '../../types/guards'
 import { Modifier } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import { DiceNotation } from '../../types/primitives'
@@ -8,8 +10,6 @@ import parseModifiers, {
   Match,
   parseCoreNotation
 } from './parse-modifiers'
-import { completeRollPattern } from './regexp'
-import { isCustomSidesRollParameters } from './utils'
 
 const findMatches = (notations: string): Match[] =>
   [...notations.matchAll(completeRollPattern)].map<Match>(

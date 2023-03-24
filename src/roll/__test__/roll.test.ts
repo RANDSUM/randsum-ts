@@ -1,7 +1,7 @@
+import { isCustomSidesRollResult } from '../../types/guards'
 import { DieSides } from '../../types/primitives'
 import { RollResult } from '../../types/results'
 import roll from '..'
-import { isCustomSidesRollResult } from '../parse-arguments/utils'
 
 type ExpectedResults = {
   sides: number

@@ -6,7 +6,7 @@ export type DiceOptions<
   N extends number | 'inclusive' = 'inclusive'
 > = {
   quantity?: NumberString<N>
-  sides: T extends number ? NumberString<N> : string[]
+  sides: T extends number ? NumberString<N> : (number | string)[]
 }
 
 export type RollOptions<

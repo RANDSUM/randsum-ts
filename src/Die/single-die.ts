@@ -1,6 +1,6 @@
 import { DieSides, NumberString } from '../types/primitives'
 
-const isCustomSides = (sides: unknown): sides is string[] =>
+const isCustomSides = (sides: unknown): sides is (number | string)[] =>
   Array.isArray(sides)
 
 abstract class SingleDie<T extends DieSides> {
@@ -37,15 +37,15 @@ export class StandardDie extends SingleDie<number> {}
 export class CustomSidesDie extends SingleDie<string> {}
 
 function dieFactory(sides: NumberString): SingleDie<number>
-function dieFactory(sides: string[]): SingleDie<string>
+function dieFactory(sides: (number | string)[]): SingleDie<string>
 function dieFactory<T extends DieSides>(
-  sides: T extends number ? NumberString : string[]
+  sides: T extends number ? NumberString : (number | string)[]
 ): T extends number ? SingleDie<string> : SingleDie<number>
 function dieFactory(
-  sides: NumberString | string[]
+  sides: NumberString | (number | string)[]
 ): SingleDie<string> | SingleDie<number> {
   if (isCustomSides(sides)) {
-    return new CustomSidesDie(sides)
+    return new CustomSidesDie(sides.map(String))
   }
   return new StandardDie(sides)
 }

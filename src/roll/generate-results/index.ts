@@ -1,6 +1,6 @@
+import { isCustomSidesRollParameters } from '../../types/guards'
 import { RollParameters } from '../../types/parameters'
 import { RollResult } from '../../types/results'
-import { isCustomSidesRollParameters } from '../parse-arguments/utils'
 import applyModifiers from './apply-modifiers'
 
 function generateResult(
