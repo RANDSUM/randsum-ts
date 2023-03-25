@@ -16,27 +16,27 @@ const findMatches = (notations: string): Match[] =>
 
 const parseNotation = (
   notationString: DiceNotation | DiceNotation<string>
-): RollParameters | RollParameters<string> =>
-  findMatches(notationString).reduce(
-    (acc, match) => {
-      if (isCoreNotationMatch(match)) {
-        const diceOptions = parseCoreNotation(match)
-        const dice = dicePoolFactory(diceOptions)
-        const initialRolls = dice.map((die) => die.roll())
+): RollParameters | RollParameters<string> => {
+  const initialParams = {
+    argument: notationString,
+    modifiers: [] as Modifier<number>[]
+  } as RollParameters | RollParameters<string>
+  return findMatches(notationString).reduce((acc, match) => {
+    if (isCoreNotationMatch(match)) {
+      const diceOptions = parseCoreNotation(match)
+      const dice = dicePoolFactory(diceOptions)
+      const initialRolls = dice.map((die) => die.roll())
 
-        return {
-          ...acc,
-          diceOptions,
-          dice,
-          initialRolls
-        }
-      }
-      return { ...acc, modifiers: [...acc.modifiers, parseModifiers(match)] }
-    },
-    {
-      argument: notationString,
-      modifiers: [] as Modifier<number>[]
+      return {
+        ...acc,
+        diceOptions,
+        dice,
+        initialRolls,
+        modifiers: acc.modifiers || []
+      } as RollParameters | RollParameters<string>
     }
-  ) as RollParameters | RollParameters<string>
 
+    return { ...acc, modifiers: [...acc.modifiers, parseModifiers(match)] }
+  }, initialParams)
+}
 export default parseNotation
