@@ -2,10 +2,15 @@ import { dicePoolFactory } from '../../Die'
 import { isDiceNotation, isRollOptions } from '../../types/guards'
 import { RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
-import { DiceNotation, NumberString } from '../../types/primitives'
+import { DiceNotation, DieSides, NumberString } from '../../types/primitives'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
 
+function parseArguments<T extends DieSides>(
+  argument: T extends number
+    ? RollOptions | DiceNotation | NumberString | undefined
+    : RollOptions<string> | DiceNotation<string>
+): T extends number ? RollParameters : RollParameters<string>
 function parseArguments(
   argument:
     | RollOptions

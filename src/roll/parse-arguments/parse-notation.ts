@@ -21,6 +21,7 @@ const parseNotation = (
     argument: notationString,
     modifiers: [] as Modifier<number>[]
   } as RollParameters | RollParameters<string>
+
   return findMatches(notationString).reduce((acc, match) => {
     if (isCoreNotationMatch(match)) {
       const diceOptions = parseCoreNotation(match)

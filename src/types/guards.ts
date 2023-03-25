@@ -16,7 +16,7 @@ export const isCustomSidesRollOptions = (
   Array.isArray((argument as RollOptions<string>).sides)
 
 export const isCustomSidesRollParameters = (
-  argument: unknown
+  argument: RollParameters | RollParameters<string>
 ): argument is RollParameters<string> =>
   (argument as RollParameters<string>).diceOptions.every(({ sides }) =>
     Array.isArray(sides)
