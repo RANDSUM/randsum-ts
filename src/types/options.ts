@@ -16,19 +16,10 @@ export type RollOptions<
   modifiers?: T extends number ? Array<Modifier<N>> : never
 }
 
-const isModifierType = <M extends Modifier<number | 'inclusive'>>(
-  argument: Modifier<number | 'inclusive'>,
-  key: keyof M
-): argument is M => (argument as M)[key] !== undefined
-
 export type CapModifier<N extends number | 'inclusive' = 'inclusive'> = Record<
   'cap',
   GreaterLessOptions<N>
 >
-
-export const isCapModifier = <N extends number | 'inclusive'>(
-  modifier: Modifier<N>
-): modifier is CapModifier<N> => isModifierType<CapModifier<N>>(modifier, 'cap')
 
 export type DropModifier<N extends number | 'inclusive' = 'inclusive'> = Record<
   'drop',
@@ -37,57 +28,22 @@ export type DropModifier<N extends number | 'inclusive' = 'inclusive'> = Record<
   drop: DropOptions<N>
 }
 
-export const isDropModifier = <N extends number | 'inclusive'>(
-  modifier: Modifier<N>
-): modifier is DropModifier<N> =>
-  isModifierType<DropModifier<N>>(modifier, 'drop')
-
 export type RerollModifier<N extends number | 'inclusive' = 'inclusive'> =
   Record<'reroll', TypeOrArrayOfType<RerollOptions<N>>>
 
-export const isRerollModifier = <N extends number | 'inclusive'>(
-  modifier: Modifier<N>
-): modifier is RerollModifier<N> =>
-  isModifierType<RerollModifier<N>>(modifier, 'reroll')
-
 export type ReplaceModifier<N extends number | 'inclusive' = 'inclusive'> =
   Record<'replace', TypeOrArrayOfType<ReplaceOptions<N>>>
-
-export const isReplaceModifier = <N extends number | 'inclusive'>(
-  modifier: Modifier<N>
-): modifier is ReplaceModifier<N> =>
-  isModifierType<ReplaceModifier<N>>(modifier, 'replace')
-
-export const isUniqueModifier = <N extends number | 'inclusive'>(
-  modifier: Modifier<N>
-): modifier is UniqueModifier<N> =>
-  isModifierType<UniqueModifier<N>>(modifier, 'unique')
 
 export type UniqueModifier<N extends number | 'inclusive' = 'inclusive'> =
   Record<'unique', boolean | UniqueOptions<N>>
 
 export type ExplodeModifier = Record<'explode', boolean>
-export const isExplodeModifier = (
-  modifier: Modifier<number | 'inclusive'>
-): modifier is ExplodeModifier =>
-  isModifierType<ExplodeModifier>(modifier, 'explode')
-
 export type PlusModifier<N extends number | 'inclusive' = 'inclusive'> = Record<
   'plus',
   NumberString<N>
 >
-export const isPlusModifier = <N extends number | 'inclusive'>(
-  modifier: Modifier<N>
-): modifier is PlusModifier<N> =>
-  isModifierType<PlusModifier<N>>(modifier, 'plus')
-
 export type MinusModifier<N extends number | 'inclusive' = 'inclusive'> =
   Record<'minus', NumberString<N>>
-
-export const isMinusModifier = <N extends number | 'inclusive'>(
-  modifier: Modifier<N>
-): modifier is MinusModifier<N> =>
-  isModifierType<MinusModifier<N>>(modifier, 'minus')
 
 export type Modifier<N extends number | 'inclusive' = 'inclusive'> =
   | CapModifier<N>

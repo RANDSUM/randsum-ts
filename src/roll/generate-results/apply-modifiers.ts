@@ -1,6 +1,4 @@
 import {
-  DropOptions,
-  GreaterLessOptions,
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
@@ -8,7 +6,11 @@ import {
   isPlusModifier,
   isReplaceModifier,
   isRerollModifier,
-  isUniqueModifier,
+  isUniqueModifier
+} from '../../types/guards'
+import {
+  DropOptions,
+  GreaterLessOptions,
   ReplaceOptions,
   RerollOptions,
   UniqueModifier
