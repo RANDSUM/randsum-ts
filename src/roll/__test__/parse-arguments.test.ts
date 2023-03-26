@@ -31,6 +31,19 @@ describe('parseArguments', () => {
         expect(
           parseArguments({
             quantity: 4,
+            sides: '6'
+          })
+        ).toMatchObject({
+          diceOptions: [{ sides: 6, quantity: 4 }]
+        })
+      })
+    })
+
+    describe('simple with modifiers', () => {
+      test('returns a RollParameter matching the notation', () => {
+        expect(
+          parseArguments({
+            quantity: 4,
             sides: '6',
             modifiers: [
               {

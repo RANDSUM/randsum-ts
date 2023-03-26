@@ -71,10 +71,7 @@ describe(dieFactory, () => {
 describe(dicePoolFactory, () => {
   describe('when given dice options', () => {
     const customFaces = ['+', '+', '-', '-', ' ', ' ']
-    const options = [
-      { quantity: 1, sides: 6 },
-      { quantity: 2, sides: customFaces }
-    ]
+    const options = [{ sides: 6 }, { quantity: 2, sides: customFaces }]
 
     test('returns an array of dice equal to the kinds and sizes provided', () => {
       const dice = dicePoolFactory(options)
