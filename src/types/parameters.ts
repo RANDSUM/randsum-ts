@@ -8,13 +8,7 @@ export type DiceParameters<T extends DieSides> = {
 }
 
 export type RollParameters<T extends DieSides> = {
-  argument:
-    | RollOptions<number>
-    | DiceNotation<number>
-    | NumberString
-    | undefined
-    | RollOptions<string>
-    | DiceNotation<string>
+  argument: RollOptions<T> | DiceNotation<T> | NumberString | undefined
   diceOptions: DiceParameters<T>[]
   initialRolls: T[]
   modifiers: Array<Modifier<number>>
