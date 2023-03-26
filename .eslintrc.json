@@ -8,13 +8,13 @@
     "auto"
   ],
   "ignorePatterns": [
+    "scripts",
+    "tsconifg.json",
     "node_modules",
     "dist",
     "coverage",
-    "rollup.config.js",
     "*.md"
   ],
-  "parser": "@typescript-eslint/parser",
   "settings": {
     "import/resolver": {
       "typescript": true,
@@ -27,6 +27,7 @@
         "*.ts"
       ],
       "rules": {
+        "const-case/uppercase": "off",
         "no-undef": "off",
         "max-classes-per-file": "off",
         "unicorn/new-for-builtins": "off",
@@ -36,7 +37,11 @@
   ],
   "parserOptions": {
     "ecmaVersion": 11,
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json",
+    "extraFileExtensions": [
+      ".json"
+    ]
   },
   "plugins": [
     "@typescript-eslint",
