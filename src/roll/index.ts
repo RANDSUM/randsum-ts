@@ -11,8 +11,8 @@ function roll(
   arg: RollOptions<string> | DiceNotation<string>
 ): RollResult<string>
 function roll<D extends DieSides>(
-  arg?: D extends number
-    ? NumberString | RollOptions<number> | DiceNotation<number>
+  arg: D extends number
+    ? NumberString | RollOptions<number> | DiceNotation<number> | undefined
     : DiceNotation<string> | RollOptions<string>
 ): RollResult<D>
 function roll(

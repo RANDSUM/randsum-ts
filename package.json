@@ -83,13 +83,11 @@
       "js"
     ]
   },
-  "eslintConfig": {},
   "devDependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
     "@types/jest": "^29.5.0",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
-    "benchmark": "^2.1.4",
     "eslint": "^8.2.0",
     "eslint-config-adjunct": "^4.12.2",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -122,9 +120,7 @@
     "eslint-plugin-unicorn": "^46.0.0",
     "eslint-plugin-xss": "^0.1.12",
     "jest": "^29.5.0",
-    "lint-staged": "^13.0.3",
     "npm-dts": "^1.3.12",
-    "pinst": "^3.0.0",
     "prettier": "^2.8.7",
     "rollup": "^3.20.2",
     "rollup-plugin-dts": "^5.3.0",
@@ -134,7 +130,6 @@
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
     "tslib": "^2.5.0",
-    "typescript": "^5.0.2",
-    "yarn": "^1.22.0"
+    "typescript": "^5.0.2"
   }
 }

@@ -1,10 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import dts from 'rollup-plugin-dts'
+// eslint-disable-next-line import/no-named-default
+import { default as dts } from 'rollup-plugin-dts'
 import { terser } from 'rollup-plugin-terser'
 import typescript from 'rollup-plugin-typescript2'
-
-// eslint-disable-next-line unicorn/prefer-module
-const pkg = require('../package.json')
 
 export default [
   {
@@ -21,8 +19,7 @@ export default [
         }
       }),
       terser()
-    ],
-    external: Object.keys(pkg.dependencies || [])
+    ]
   },
   {
     input: 'src/index.ts',
@@ -30,5 +27,4 @@ export default [
     plugins: [dts.default()]
   }
 ]
-
 /* eslint-enable import/no-extraneous-dependencies */
