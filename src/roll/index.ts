@@ -22,8 +22,4 @@ function roll(
   return generateResult(parameters)
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const foo = roll(5)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const bar = roll({ sides: [5] })
 export default roll
