@@ -1,5 +1,5 @@
-import { DiceNotation } from '../../types/primitives'
-import parseArguments from '../parse-arguments'
+import parseArguments from '../roll/parse-arguments'
+import { DiceNotation } from '../types/primitives'
 
 describe('parseArguments', () => {
   describe('given undefined', () => {

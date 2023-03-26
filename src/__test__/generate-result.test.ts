@@ -1,7 +1,7 @@
-import { dicePoolFactory, StandardDie } from '../../Die'
-import { Modifier } from '../../types/options'
-import generateResult from '../generate-results'
-import { InvalidUniqueError } from '../generate-results/apply-modifiers'
+import { dicePoolFactory, StandardDie } from '../Die'
+import generateResult from '../roll/generate-results'
+import { InvalidUniqueError } from '../roll/generate-results/apply-modifiers'
+import { Modifier } from '../types/options'
 
 describe('generateResult', () => {
   const testRollSet = [1, 2, 3, 4]

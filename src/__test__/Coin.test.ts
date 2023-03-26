@@ -1,11 +1,12 @@
-import Coin from '../coin'
+import { Coin } from '..'
 
 describe(Coin, () => {
   const sides: [string, string] = ['Chansey', 'Pokeball']
   const coin = new Coin(sides)
 
   beforeEach(() => {
-    jest.spyOn(console, 'warn').mockImplementation(() => {})
+    // eslint-disable-next-line prettier/prettier
+    jest.spyOn(console, 'warn').mockImplementation(() => { })
   })
 
   test('.flip() returns a string included in the contructor', () => {

@@ -1,6 +1,4 @@
-import { DieSides } from '../../types/primitives'
-import { RollResult } from '../../types/results'
-import roll from '..'
+import { DieSides, roll, RollResult } from '..'
 
 const isCustomSidesRollResult = (
   argument: RollResult<number> | RollResult<string>
