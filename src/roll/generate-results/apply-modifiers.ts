@@ -1,4 +1,12 @@
 import {
+  DropOptions,
+  GreaterLessOptions,
+  ReplaceOptions,
+  RerollOptions,
+  UniqueModifier
+} from '../../types/options'
+import { DiceParameters, RollParameters } from '../../types/parameters'
+import {
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
@@ -7,15 +15,7 @@ import {
   isReplaceModifier,
   isRerollModifier,
   isUniqueModifier
-} from '../../types/guards'
-import {
-  DropOptions,
-  GreaterLessOptions,
-  ReplaceOptions,
-  RerollOptions,
-  UniqueModifier
-} from '../../types/options'
-import { DiceParameters, RollParameters } from '../../types/parameters'
+} from '../utils'
 
 type RollBonuses = {
   rolls: number[]

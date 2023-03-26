@@ -1,19 +1,13 @@
 import { DieSides, NumberString } from './primitives'
 
 type TypeOrArrayOfType<T> = T | T[]
-export type DiceOptions<
-  T extends DieSides = number,
-  N extends number | 'inclusive' = 'inclusive'
-> = {
-  quantity?: NumberString<N>
-  sides: T extends number ? NumberString<N> : (number | string)[]
+export type DiceOptions<T extends DieSides = number> = {
+  quantity?: NumberString<'inclusive'>
+  sides: T extends number ? NumberString<'inclusive'> : (number | string)[]
 }
 
-export type RollOptions<
-  T extends DieSides = number,
-  N extends number | 'inclusive' = 'inclusive'
-> = DiceOptions<T, N> & {
-  modifiers?: T extends number ? Array<Modifier<N>> : never
+export type RollOptions<T extends DieSides = number> = DiceOptions<T> & {
+  modifiers?: T extends number ? Array<Modifier<'inclusive'>> : never
 }
 
 export type CapModifier<N extends number | 'inclusive' = 'inclusive'> = Record<

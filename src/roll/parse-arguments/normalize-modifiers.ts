@@ -1,4 +1,11 @@
 import {
+  DropOptions,
+  GreaterLessOptions,
+  Modifier,
+  ReplaceOptions,
+  RerollOptions
+} from '../../types/options'
+import {
   isCapModifier,
   isDropModifier,
   isExplodeModifier,
@@ -6,14 +13,7 @@ import {
   isReplaceModifier,
   isRerollModifier,
   isUniqueModifier
-} from '../../types/guards'
-import {
-  DropOptions,
-  GreaterLessOptions,
-  Modifier,
-  ReplaceOptions,
-  RerollOptions
-} from '../../types/options'
+} from '../utils'
 
 export const convertGreaterLessOptionsToParameters = ({
   greaterThan,

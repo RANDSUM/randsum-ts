@@ -1,8 +1,14 @@
-import { isCustomSidesRollParameters } from '../../types/guards'
 import { RollParameters } from '../../types/parameters'
 import { DieSides } from '../../types/primitives'
 import { RollResult } from '../../types/results'
 import applyModifiers from './apply-modifiers'
+
+const isCustomSidesRollParameters = (
+  argument: RollParameters | RollParameters<string>
+): argument is RollParameters<string> =>
+  (argument as RollParameters<string>).diceOptions.every(({ sides }) =>
+    Array.isArray(sides)
+  )
 
 function generateResult(rollParameters: RollParameters): RollResult
 function generateResult(

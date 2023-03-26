@@ -1,10 +1,21 @@
+import { coreNotationPattern } from '../../constants/regexp'
 import { dicePoolFactory } from '../../Die'
-import { isDiceNotation, isRollOptions } from '../../types/guards'
 import { RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import { DiceNotation, DieSides, NumberString } from '../../types/primitives'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
+
+const isRollOptions = (
+  argument: unknown
+): argument is RollOptions | RollOptions<string> =>
+  typeof argument === 'object' &&
+  (argument as RollOptions | RollOptions<string>).sides !== undefined
+
+export const isDiceNotation = (
+  argument: unknown
+): argument is DiceNotation | DiceNotation<string> =>
+  !!coreNotationPattern.test(String(argument))
 
 function parseArguments<T extends DieSides>(
   argument: T extends number

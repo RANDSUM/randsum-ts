@@ -1,8 +1,12 @@
 import { dicePoolFactory } from '../../Die'
-import { isCustomSidesRollOptions } from '../../types/guards'
 import { RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import normalizeModifiers from './normalize-modifiers'
+
+const isCustomSidesRollOptions = (
+  argument: RollOptions | RollOptions<string>
+): argument is RollOptions<string> =>
+  Array.isArray((argument as RollOptions<string>).sides)
 
 const parseOptions = (
   options: RollOptions | RollOptions<string>

@@ -1,4 +1,3 @@
-import { coreNotationPattern } from '../constants/regexp'
 import {
   CapModifier,
   DropModifier,
@@ -8,39 +7,8 @@ import {
   PlusModifier,
   ReplaceModifier,
   RerollModifier,
-  RollOptions,
   UniqueModifier
-} from './options'
-import { RollParameters } from './parameters'
-import { DiceNotation } from './primitives'
-import { RollResult } from './results'
-
-export const isRollOptions = (
-  argument: unknown
-): argument is RollOptions | RollOptions<string> =>
-  typeof argument === 'object' &&
-  (argument as RollOptions | RollOptions<string>).sides !== undefined
-
-export const isCustomSidesRollOptions = (
-  argument: RollOptions | RollOptions<string>
-): argument is RollOptions<string> =>
-  Array.isArray((argument as RollOptions<string>).sides)
-
-export const isCustomSidesRollParameters = (
-  argument: RollParameters | RollParameters<string>
-): argument is RollParameters<string> =>
-  (argument as RollParameters<string>).diceOptions.every(({ sides }) =>
-    Array.isArray(sides)
-  )
-
-export const isCustomSidesRollResult = (
-  argument: RollResult | RollResult<string>
-): argument is RollResult<string> => typeof argument.total === 'string'
-
-export const isDiceNotation = (
-  argument: unknown
-): argument is DiceNotation | DiceNotation<string> =>
-  !!coreNotationPattern.test(String(argument))
+} from '../types/options'
 
 const isModifierType = <M extends Modifier<number | 'inclusive'>>(
   argument: Modifier<number | 'inclusive'>,

@@ -1,7 +1,10 @@
-import { isCustomSidesRollResult } from '../../types/guards'
 import { DieSides } from '../../types/primitives'
 import { RollResult } from '../../types/results'
 import roll from '..'
+
+const isCustomSidesRollResult = (
+  argument: RollResult | RollResult<string>
+): argument is RollResult<string> => typeof argument.total === 'string'
 
 type ExpectedResults = {
   sides: number
