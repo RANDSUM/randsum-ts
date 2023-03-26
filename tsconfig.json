@@ -2,7 +2,10 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Node 18",
   "compilerOptions": {
-    "lib": ["esnext", "DOM"],
+    "lib": [
+      "esnext",
+      "DOM"
+    ],
     "module": "esnext",
     "target": "es2022",
     "sourceMap": true,
@@ -27,5 +30,9 @@
     "importHelpers": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": [
+    "src/**/*",
+    "jest.config.ts"
+  ]
 }

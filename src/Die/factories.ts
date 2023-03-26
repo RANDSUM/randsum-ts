@@ -6,9 +6,9 @@ import SingleDie from './single-die'
 
 function dieFactory(sides: NumberString): SingleDie<number>
 function dieFactory(sides: (number | string)[]): SingleDie<string>
-function dieFactory<T extends DieSides>(
-  sides: T extends number ? NumberString : (number | string)[]
-): SingleDie<T>
+function dieFactory<D extends DieSides>(
+  sides: D extends number ? NumberString : (number | string)[]
+): D extends number ? SingleDie<number> : SingleDie<string>
 function dieFactory(
   sides: NumberString | (number | string)[]
 ): SingleDie<string> | SingleDie<number> {
@@ -19,17 +19,19 @@ function dieFactory(
 
 function dicePoolFactory(options: DiceOptions<number>[]): StandardDie[]
 function dicePoolFactory(options: DiceOptions<string>[]): CustomSidesDie[]
-function dicePoolFactory<T extends DieSides>(
-  options: DiceOptions<T>[]
-): T extends number ? StandardDie[] : CustomSidesDie[]
+function dicePoolFactory<D extends DieSides>(
+  options: DiceOptions<D>[]
+): D extends number ? SingleDie<number>[] : SingleDie<string>[]
 function dicePoolFactory(
-  options: DiceOptions<number>[] | DiceOptions<string>[]
-): StandardDie[] | CustomSidesDie[] {
+  options: (DiceOptions<number> | DiceOptions<string>)[]
+): (StandardDie | CustomSidesDie)[]
+function dicePoolFactory(
+  options: DiceOptions<DieSides>[]
+): (StandardDie | CustomSidesDie)[] | StandardDie[] | CustomSidesDie[] {
   return options.flatMap((die) => {
     const quantity = Number(die.quantity || 1)
-
     return [...Array(quantity).keys()].map(() => dieFactory(die.sides))
-  }) as StandardDie[] | CustomSidesDie[]
+  })
 }
 
 export { dicePoolFactory, dieFactory }

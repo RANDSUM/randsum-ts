@@ -1,53 +1,47 @@
-import { DieSides, NumberString } from './primitives'
+import { DieSides, InclusiveOrNumber, NumberString } from './primitives'
 
 type TypeOrArrayOfType<T> = T | T[]
-export type DiceOptions<T extends DieSides> = {
+export interface DiceOptions<D extends DieSides> {
   quantity?: NumberString<'inclusive'>
-  sides: T extends number ? NumberString<'inclusive'> : (number | string)[]
+  sides: D extends number ? NumberString<'inclusive'> : (number | string)[]
 }
 
-export type RollOptions<T extends DieSides> = DiceOptions<T> & {
-  modifiers?: T extends number ? Array<Modifier<'inclusive'>> : never
+export interface RollOptions<D extends DieSides> extends DiceOptions<D> {
+  modifiers?: D extends number ? Array<Modifier<'inclusive'>> : never
 }
 
-export type CapModifier<N extends number | 'inclusive'> = Record<
-  'cap',
-  GreaterLessOptions<N>
->
+export interface CapModifier<N extends InclusiveOrNumber> {
+  cap: GreaterLessOptions<N>
+}
 
-export type DropModifier<N extends number | 'inclusive'> = Record<
-  'drop',
-  DropOptions<N>
-> & {
+export interface DropModifier<N extends InclusiveOrNumber> {
   drop: DropOptions<N>
 }
 
-export type RerollModifier<N extends number | 'inclusive'> = Record<
-  'reroll',
-  TypeOrArrayOfType<RerollOptions<N>>
->
+export interface RerollModifier<N extends InclusiveOrNumber> {
+  reroll: TypeOrArrayOfType<RerollOptions<N>>
+}
 
-export type ReplaceModifier<N extends number | 'inclusive'> = Record<
-  'replace',
-  TypeOrArrayOfType<ReplaceOptions<N>>
->
+export interface ReplaceModifier<N extends InclusiveOrNumber> {
+  replace: TypeOrArrayOfType<ReplaceOptions<N>>
+}
 
-export type UniqueModifier<N extends number | 'inclusive'> = Record<
-  'unique',
-  boolean | UniqueOptions<N>
->
+export interface UniqueModifier<N extends InclusiveOrNumber> {
+  unique: boolean | UniqueOptions<N>
+}
 
-export type ExplodeModifier = Record<'explode', boolean>
-export type PlusModifier<N extends number | 'inclusive'> = Record<
-  'plus',
-  NumberString<N>
->
-export type MinusModifier<N extends number | 'inclusive'> = Record<
-  'minus',
-  NumberString<N>
->
+export interface ExplodeModifier {
+  explode: boolean
+}
 
-export type Modifier<N extends number | 'inclusive'> =
+export interface PlusModifier<N extends InclusiveOrNumber> {
+  plus: NumberString<N>
+}
+export interface MinusModifier<N extends InclusiveOrNumber> {
+  minus: NumberString<N>
+}
+
+export type Modifier<N extends InclusiveOrNumber> =
   | CapModifier<N>
   | DropModifier<N>
   | ReplaceModifier<N>
@@ -57,7 +51,7 @@ export type Modifier<N extends number | 'inclusive'> =
   | PlusModifier<N>
   | MinusModifier<N>
 
-export type DropOptions<N extends number | 'inclusive'> = {
+export interface DropOptions<N extends InclusiveOrNumber> {
   highest?: NumberString<N>
   lowest?: NumberString<N>
   greaterThan?: NumberString<N>
@@ -65,23 +59,22 @@ export type DropOptions<N extends number | 'inclusive'> = {
   exact?: Array<NumberString<N>>
 }
 
-export type GreaterLessOptions<N extends number | 'inclusive'> = {
+export interface GreaterLessOptions<N extends InclusiveOrNumber> {
   greaterThan?: NumberString<N>
   lessThan?: NumberString<N>
 }
 
-export type RerollOptions<N extends number | 'inclusive'> =
-  GreaterLessOptions<N> & {
-    exact?: TypeOrArrayOfType<NumberString<N>>
-    maxReroll?: NumberString<N>
-  }
+export interface RerollOptions<N extends InclusiveOrNumber>
+  extends GreaterLessOptions<N> {
+  exact?: TypeOrArrayOfType<NumberString<N>>
+  maxReroll?: NumberString<N>
+}
 
-export type ReplaceOptions<N extends number | 'inclusive'> = {
+export interface ReplaceOptions<N extends InclusiveOrNumber> {
   from: NumberString<N> | GreaterLessOptions<N>
   to: NumberString<N>
 }
 
-export type UniqueOptions<N extends number | 'inclusive'> = Record<
-  'notUnique',
-  Array<NumberString<N>>
->
+export interface UniqueOptions<N extends InclusiveOrNumber> {
+  notUnique: Array<NumberString<N>>
+}

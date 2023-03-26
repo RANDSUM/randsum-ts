@@ -4,18 +4,18 @@ import { isCustomSides } from './guards'
 const generateStandardSides = (sides: NumberString): number[] =>
   Array.from({ length: Number(sides) }, (_, index) => index + 1)
 
-export default abstract class SingleDie<T extends DieSides> {
+export default abstract class SingleDie<D extends DieSides> {
   sides: number
 
-  faces: T[]
+  faces: D[]
 
-  constructor(sides: T extends number ? NumberString : (string | number)[]) {
+  constructor(sides: D extends number ? NumberString : (string | number)[]) {
     const isCustom = isCustomSides(sides)
     this.sides = isCustom ? sides.length : Number(sides)
-    this.faces = (isCustom ? sides : generateStandardSides(sides)) as T[]
+    this.faces = (isCustom ? sides : generateStandardSides(sides)) as D[]
   }
 
-  roll(): T {
+  roll(): D {
     return this.faces[this.rawRoll()]
   }
 

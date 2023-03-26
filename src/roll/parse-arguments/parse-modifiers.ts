@@ -13,10 +13,10 @@ import {
 } from '../../types/options'
 import { DiceParameters } from '../../types/parameters'
 
-const isMatcherType = <T extends Match>(
+const isMatcherType = <M extends Match>(
   argument: Match,
-  key: keyof T
-): argument is T => (argument as T)[key] !== undefined
+  key: keyof M
+): argument is M => (argument as M)[key] !== undefined
 
 export type CoreNotationMatch = { coreNotationMatch: string }
 export const isCoreNotationMatch = (match: Match): match is CoreNotationMatch =>
@@ -226,7 +226,7 @@ const parseRerollNotation = ({
       exact: [
         ...(Array.isArray(rerollParameters?.exact)
           ? rerollParameters.exact
-          : ([] as number[])),
+          : []),
         Number(notation)
       ]
     }

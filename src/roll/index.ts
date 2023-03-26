@@ -1,5 +1,5 @@
 import { RollOptions } from '../types/options'
-import { DiceNotation, NumberString } from '../types/primitives'
+import { DiceNotation, DieSides, NumberString } from '../types/primitives'
 import { RollResult } from '../types/results'
 import generateResult from './generate-results'
 import parseArguments from './parse-arguments'
@@ -10,6 +10,11 @@ function roll(
 function roll(
   arg: RollOptions<string> | DiceNotation<string>
 ): RollResult<string>
+function roll<D extends DieSides>(
+  arg?: D extends number
+    ? NumberString | RollOptions<number> | DiceNotation<number>
+    : DiceNotation<string> | RollOptions<string>
+): RollResult<D>
 function roll(
   arg?:
     | RollOptions<number>

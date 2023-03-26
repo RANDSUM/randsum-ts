@@ -10,7 +10,9 @@ const isCustomSidesRollParameters = (
   )
 
 function generateResult(
-  rollParameters: RollParameters<number> | RollParameters<string>
+  rollParameters:
+    | (RollParameters<number> & { initialRolls: number[] })
+    | (RollParameters<string> & { initialRolls: string[] })
 ): RollResult<number> | RollResult<string> {
   if (isCustomSidesRollParameters(rollParameters)) {
     return {

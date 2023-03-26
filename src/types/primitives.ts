@@ -3,13 +3,10 @@ export type DieSides = string | number
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
 type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
 
-export type DiceNotation<T extends DieSides> = T extends number
+export type DiceNotation<D extends DieSides> = D extends number
   ? DiceNotationWithNumericSides
   : DiceNotationWithCustomSides
 
-export type TypeAndStringType<
-  T extends string | number | bigint | boolean | null | undefined
-> = T | `${T}`
-
-export type NumberString<N extends number | 'inclusive' = 'inclusive'> =
-  N extends 'inclusive' ? TypeAndStringType<number> : number
+export type InclusiveOrNumber = 'inclusive' | number
+export type NumberString<N extends InclusiveOrNumber = 'inclusive'> =
+  N extends 'inclusive' ? number | `${number}` : number

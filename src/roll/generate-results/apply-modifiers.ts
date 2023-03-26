@@ -191,7 +191,7 @@ const applyModifiers = ({
   initialRolls,
   dice: [die],
   diceOptions: [{ sides, quantity }]
-}: RollParameters<number>): RollBonuses => {
+}: RollParameters<number> & { initialRolls: number[] }): RollBonuses => {
   let rollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls
