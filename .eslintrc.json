@@ -1,9 +1,4 @@
 {
-  "env": {
-    "browser": true,
-    "es2020": true,
-    "node": true
-  },
   "extends": [
     "auto"
   ],
@@ -13,12 +8,6 @@
     "coverage",
     "*.md"
   ],
-  "settings": {
-    "import/resolver": {
-      "typescript": true,
-      "node": true
-    }
-  },
   "overrides": [
     {
       "files": [
@@ -34,8 +23,6 @@
     }
   ],
   "parserOptions": {
-    "ecmaVersion": 11,
-    "sourceType": "module",
     "project": "./tsconfig.json",
     "extraFileExtensions": [
       ".json"
