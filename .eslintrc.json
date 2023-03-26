@@ -42,9 +42,5 @@
     "extraFileExtensions": [
       ".json"
     ]
-  },
-  "plugins": [
-    "@typescript-eslint",
-    "jest"
-  ]
+  }
 }
