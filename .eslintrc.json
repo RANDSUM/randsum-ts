@@ -8,8 +8,6 @@
     "auto"
   ],
   "ignorePatterns": [
-    "scripts",
-    "tsconifg.json",
     "node_modules",
     "dist",
     "coverage",
