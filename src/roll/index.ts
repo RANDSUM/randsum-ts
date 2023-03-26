@@ -1,27 +1,29 @@
 import { RollOptions } from '../types/options'
-import { DiceNotation, DieSides, NumberString } from '../types/primitives'
+import { DiceNotation, NumberString } from '../types/primitives'
 import { RollResult } from '../types/results'
 import generateResult from './generate-results'
 import parseArguments from './parse-arguments'
 
-function roll(arg?: NumberString | RollOptions | DiceNotation): RollResult
+function roll(
+  arg?: NumberString | RollOptions<number> | DiceNotation<number>
+): RollResult<number>
 function roll(
   arg: RollOptions<string> | DiceNotation<string>
 ): RollResult<string>
-function roll<T extends DieSides>(
-  arg: T extends number
-    ? RollOptions | DiceNotation | NumberString | undefined
-    : RollOptions<string> | DiceNotation<string>
-): T extends number ? RollResult : RollResult<string>
 function roll(
   arg?:
-    | RollOptions
+    | RollOptions<number>
     | RollOptions<string>
-    | DiceNotation
+    | DiceNotation<number>
     | DiceNotation<string>
     | NumberString
-): RollResult | RollResult<string> {
+): RollResult<number> | RollResult<string> {
   const parameters = parseArguments(arg)
   return generateResult(parameters)
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const foo = roll(5)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const bar = roll({ sides: [5] })
 export default roll

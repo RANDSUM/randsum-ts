@@ -18,7 +18,7 @@ import {
 export const convertGreaterLessOptionsToParameters = ({
   greaterThan,
   lessThan
-}: GreaterLessOptions): GreaterLessOptions<number> => ({
+}: GreaterLessOptions<'inclusive'>): GreaterLessOptions<number> => ({
   greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
   lessThan: lessThan === undefined ? undefined : Number(lessThan)
 })
@@ -28,7 +28,7 @@ export const convertDropOptionsToParameters = ({
   lowest,
   exact,
   ...greaterThanLessThan
-}: DropOptions): DropOptions<number> => ({
+}: DropOptions<'inclusive'>): DropOptions<number> => ({
   ...convertGreaterLessOptionsToParameters(greaterThanLessThan),
   highest: highest === undefined ? undefined : Number(highest),
   lowest: lowest === undefined ? undefined : Number(lowest),
@@ -38,7 +38,7 @@ export const convertDropOptionsToParameters = ({
 export const convertReplaceOptionsToParameters = ({
   from,
   to
-}: ReplaceOptions): ReplaceOptions<number> => ({
+}: ReplaceOptions<'inclusive'>): ReplaceOptions<number> => ({
   from:
     typeof from === 'object'
       ? convertGreaterLessOptionsToParameters(from)
@@ -50,7 +50,7 @@ export const convertRerollOptionsToParameters = ({
   exact,
   maxReroll,
   ...restOptions
-}: RerollOptions): RerollOptions<number> => {
+}: RerollOptions<'inclusive'>): RerollOptions<number> => {
   const convertedExact =
     exact === undefined
       ? {}

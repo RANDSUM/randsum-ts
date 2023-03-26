@@ -77,7 +77,7 @@ export type Match =
 
 export const parseCoreNotation = ({
   coreNotationMatch: notationString
-}: CoreNotationMatch): DiceParameters[] | DiceParameters<string>[] => {
+}: CoreNotationMatch): DiceParameters<number>[] | DiceParameters<string>[] => {
   const [quantity, sides] = notationString.split(/[Dd]/)
 
   return [
@@ -87,7 +87,7 @@ export const parseCoreNotation = ({
         ? [...sides.replace(/{|}/g, '')]
         : Number(sides)
     }
-  ] as DiceParameters[] | DiceParameters<number>[]
+  ] as DiceParameters<number>[] | DiceParameters<string>[]
 }
 
 const parseCapNotation = ({

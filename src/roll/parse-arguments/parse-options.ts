@@ -4,13 +4,13 @@ import { RollParameters } from '../../types/parameters'
 import normalizeModifiers from './normalize-modifiers'
 
 const isCustomSidesRollOptions = (
-  argument: RollOptions | RollOptions<string>
+  argument: RollOptions<number> | RollOptions<string>
 ): argument is RollOptions<string> =>
   Array.isArray((argument as RollOptions<string>).sides)
 
 const parseOptions = (
-  options: RollOptions | RollOptions<string>
-): RollParameters | RollParameters<string> => {
+  options: RollOptions<number> | RollOptions<string>
+): RollParameters<number> | RollParameters<string> => {
   const quantity = Number(options.quantity) || 1
 
   if (isCustomSidesRollOptions(options)) {

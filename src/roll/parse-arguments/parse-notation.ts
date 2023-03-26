@@ -15,12 +15,12 @@ const findMatches = (notations: string): Match[] =>
   )
 
 const parseNotation = (
-  notationString: DiceNotation | DiceNotation<string>
-): RollParameters | RollParameters<string> => {
+  notationString: DiceNotation<number> | DiceNotation<string>
+): RollParameters<number> | RollParameters<string> => {
   const initialParams = {
     argument: notationString,
     modifiers: [] as Modifier<number>[]
-  } as RollParameters | RollParameters<string>
+  } as RollParameters<number> | RollParameters<string>
 
   return findMatches(notationString).reduce((acc, match) => {
     if (isCoreNotationMatch(match)) {
@@ -34,7 +34,7 @@ const parseNotation = (
         dice,
         initialRolls,
         modifiers: acc.modifiers || []
-      } as RollParameters | RollParameters<string>
+      } as RollParameters<number> | RollParameters<string>
     }
 
     return { ...acc, modifiers: [...acc.modifiers, parseModifiers(match)] }

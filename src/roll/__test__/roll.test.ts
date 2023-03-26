@@ -3,7 +3,7 @@ import { RollResult } from '../../types/results'
 import roll from '..'
 
 const isCustomSidesRollResult = (
-  argument: RollResult | RollResult<string>
+  argument: RollResult<number> | RollResult<string>
 ): argument is RollResult<string> => typeof argument.total === 'string'
 
 type ExpectedResults = {
@@ -15,7 +15,7 @@ type ExpectedResults = {
 }
 
 const testResult = (
-  result: RollResult | RollResult<string>,
+  result: RollResult<number> | RollResult<string>,
   { quantity, sides, faces, modifiers = [], rollLength }: ExpectedResults
 ): void => {
   if (isCustomSidesRollResult(result)) {
