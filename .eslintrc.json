@@ -7,6 +7,13 @@
   "extends": [
     "auto"
   ],
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    "coverage",
+    "rollup.config.js",
+    "*.md"
+  ],
   "parser": "@typescript-eslint/parser",
   "settings": {
     "import/resolver": {

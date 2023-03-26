@@ -6,6 +6,28 @@
   "description": "Ergonomic Dice Rolling with Strong Typescript Support",
   "license": "MIT",
   "homepage": "https://github.com/alxjrvs/randsum ",
+  "keyword": [
+    "dice",
+    "d20",
+    "dice roller",
+    "rpg dice roller",
+    "roll",
+    "d&d",
+    "dnd",
+    "rpg",
+    "ttrpg",
+    "rpgs",
+    "ttrpgs",
+    "tabletop",
+    "dungeons",
+    "dragons",
+    "roleplaying game",
+    "rand",
+    "random",
+    "RNG",
+    "notation",
+    "typescript"
+  ],
   "files": [
     "dist"
   ],
@@ -34,34 +56,33 @@
     "prepublish": "yarn run build",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
+  "prettier": {
+    "trailingComma": "none",
+    "semi": false,
+    "singleQuote": true
+  },
   "size-limit": [
     {
       "path": "dist/index.cjs",
       "limit": "4 KB"
     }
   ],
-  "keyword": [
-    "dice",
-    "d20",
-    "dice roller",
-    "rpg dice roller",
-    "roll",
-    "d&d",
-    "dnd",
-    "rpg",
-    "ttrpg",
-    "rpgs",
-    "ttrpgs",
-    "tabletop",
-    "dungeons",
-    "dragons",
-    "roleplaying game",
-    "rand",
-    "random",
-    "RNG",
-    "notation",
-    "typescript"
-  ],
+  "jest": {
+    "coverageDirectory": "../coverage/",
+    "collectCoverage": true,
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$",
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
+  },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
     "@types/jest": "^29.5.0",
