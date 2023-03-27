@@ -1,9 +1,7 @@
 name: Publish + Release on Version Bump
 on:
-  workflow_run:
-    workflows: [CI]
-    types: [completed]
-    branches: [main]
+  release:
+    types: [released]
 
 jobs:
   publish:
@@ -13,25 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Read & Modify of package.json
+        uses: jaywcjlove/github-action-package@v1.3.1
+        id: package
         with:
-          node-version: 18
-          cache: 'yarn'
-
-      - run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
-
-      - run: yarn build
+          version: ${{ github.event.release.tag_name }}
 
       - uses: JS-DevTools/npm-publish@v1
         id: publish
         with:
           token: ${{ secrets.NPM_TOKEN }}
-
-      - name: Create Release
-        if: steps.publish.outputs.type != 'none'
-        id: release
-        uses: softprops/action-gh-release@HEAD
-        with:
-          tag_name: v${{ steps.publish.outputs.version }}
-          append_body: true
-          generate_release_notes: true
+          dry-run: true

@@ -31,10 +31,10 @@ In `randsum` :
 ```js
 // Roll 1 twenty-sided die
 
-randsum()
-randsum(20)
-randsum('1d20')
-randsum({
+roll()
+roll(20)
+roll('1d20')
+roll({
   sides: 20,
   quantity: 1
 })
@@ -43,9 +43,9 @@ randsum({
 ```js
 // Roll 1 one-hundred-sided die
 
-randsum(100)
-randsum('1d100')
-randsum({
+roll(100)
+roll('1d100')
+roll({
   sides: 100,
   quantity: 1
 })
@@ -54,8 +54,8 @@ randsum({
 ```js
 // Roll 6 twenty-sided die
 
-randsum('6d20')
-randsum({
+roll('6d20')
+roll({
   sides: 20,
   quantity: 6
 })
@@ -80,12 +80,12 @@ In `randsum` :
 ```js
 // Roll 6 two-sided die with the sides "H" and "T"
 
-randsum('6d{HT}')
-randsum(2, {
+roll('6d{HT}')
+roll(2, {
   quantity: 6,
   faces: ['H', 'T']
 })
-randsum({
+roll({
   sides: ['H', 'T'],
   quantity: 6
 })
@@ -94,7 +94,7 @@ randsum({
 #### Custom Sides Caveats and Gotchas
 
 - When given custom sides, `randsum` will return a `string` of comma-separated results, not a `number`.
-  - For instance, `randsum('6d{HT})` will return something like `"H, T, T, T, H, T"`
+  - For instance, `roll('6d{HT})` will return something like `"H, T, T, T, H, T"`
 - Modifiers are not compatible with custom sides. Under-the-hood, `randsum` is still rolling these as if they were numeric dice, then swapping out the numbers for faces at the end. While modifiers are technically feasible, it would be very easy to code yourself into a confusing place with non-obvious results.
   - for example, given the custom faces argument `[6, 5, 4, 3, 2, 1]`, `1` would be considered the "highest" number, and `6` the "lowest`, which would be silly!
   - In light of this, modifiers are ignored (if provided in JS) or rejected (in TS) when providing custom sides.
@@ -118,12 +118,12 @@ In `randsum` :
 ```js
 // Roll 6 twenty-sided die, add 5
 
-randsum('6d20+5')
-randsum(20, {
+roll('6d20+5')
+roll(20, {
   quantity: 6,
   modifiers: [{ plus: 5 }]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [{ plus: 5 }]
@@ -147,12 +147,12 @@ In `randsum` :
 ```js
 // Roll 6 twenty-sided die, subtract 5
 
-randsum('6d20-5')
-randsum(20, {
+roll('6d20-5')
+roll(20, {
   quantity: 6,
   modifiers: [{ minus: 5 }]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [{ minus: 5 }]
@@ -186,8 +186,8 @@ In `randsum` :
 ```js
 // Roll 6 twenty-sided die, drop highest
 
-randsum('6d20H')
-randsum(20, {
+roll('6d20H')
+roll(20, {
   quantity: 6,
   modifiers: [
     {
@@ -198,7 +198,7 @@ randsum(20, {
   ]
 })
 
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [
@@ -212,8 +212,8 @@ randsum({
 
 // Roll 6 twenty-sided die, drop highest 3
 
-randsum('6d20H3')
-randsum(20, {
+roll('6d20H3')
+roll(20, {
   quantity: 6,
   modifiers: [
     {
@@ -223,7 +223,7 @@ randsum(20, {
     }
   ]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [
@@ -257,8 +257,8 @@ In `randsum` :
 ```js
 // Roll 6 twenty-sided die, drop lowest
 
-randsum('6d20L')
-randsum(20, {
+roll('6d20L')
+roll(20, {
   quantity: 6,
   modifiers: [
     {
@@ -268,7 +268,7 @@ randsum(20, {
     }
   ]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [
@@ -282,8 +282,8 @@ randsum({
 
 // Roll 6 twenty-sided die, drop lowest 3
 
-randsum('6d20L3')
-randsum(20, {
+roll('6d20L3')
+roll(20, {
   quantity: 6,
   modifiers: [
     {
@@ -293,7 +293,7 @@ randsum(20, {
     }
   ]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [
@@ -335,8 +335,8 @@ In `randsum` :
 ```js
 // Roll 6 twenty-sided die, drop less than 5, greater than 15, and all 10's
 
-randsum('6d20D{<5,>15,10')
-randsum(20, {
+roll('6d20D{<5,>15,10')
+roll(20, {
   quantity: 6,
   modifiers: [
     {
@@ -348,7 +348,7 @@ randsum(20, {
     }
   ]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [
@@ -390,8 +390,8 @@ In `randsum` :
 ```js
 // Roll 6 twenty-sided die, cap less than 5 and greater than 15
 
-randsum('6d20C<5>15')
-randsum(20, {
+roll('6d20C<5>15')
+roll(20, {
   quantity: 6,
   modifiers: [
     {
@@ -402,7 +402,7 @@ randsum(20, {
     }
   ]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [
@@ -451,8 +451,8 @@ In `randsum` :
 ```js
 // Roll 6 twenty-sided die, reroll less than 5, greater than 15, and all 10's, no more than 3 rerolls
 
-randsum('6d20R{<5,>15,10}3')
-randsum(20, {
+roll('6d20R{<5,>15,10}3')
+roll(20, {
   quantity: 6,
   modifiers: [
     {
@@ -465,7 +465,7 @@ randsum(20, {
     }
   ]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [
@@ -512,8 +512,8 @@ In `randsum` :
 ```js
 // Roll 6 twenty-sided die, replace less than 5 with 1, greater than 15 with 20, and all 10's with 2's
 
-randsum('6d20v{<5=1,>15=20,10=2')
-randsum(20, {
+roll('6d20v{<5=1,>15=20,10=2')
+roll(20, {
   quantity: 6,
   modifiers: [
     {
@@ -538,7 +538,7 @@ randsum(20, {
     }
   ]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [
@@ -589,12 +589,12 @@ In `randsum` :
 ```js
 // Roll 6 twenty-sided die, make them all unique
 
-randsum('6d20U')
-randsum(20, {
+roll('6d20U')
+roll(20, {
   quantity: 6,
   modifiers: [{ unique: true }]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [{ unique: true }]
@@ -602,8 +602,8 @@ randsum({
 
 // Roll 6 twenty-sided die, make them all unique, allow for repeated 5's and 10's
 
-randsum('6d20U{5,10}')
-randsum(20, {
+roll('6d20U{5,10}')
+roll(20, {
   quantity: 6,
   modifiers: [
     {
@@ -613,7 +613,7 @@ randsum(20, {
     }
   ]
 })
-randsum({
+roll({
   sides: 20,
   quantity: 6,
   modifiers: [
@@ -645,9 +645,9 @@ In `randsum`:
 ```js
 // Roll 6 twenty-sided die, explode them
 
-randsum('6d20!')
-randsum(20, { quantity: 6, modifiers: [{ explode: true }] })
-randsum({ sides: 20, quantity: 6, modifiers: [{ explode: true }] })
+roll('6d20!')
+roll(20, { quantity: 6, modifiers: [{ explode: true }] })
+roll({ sides: 20, quantity: 6, modifiers: [{ explode: true }] })
 ```
 
 ### Attribution
