@@ -34,6 +34,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           message: "Bump to ${{ github.event.release.tag_name }}"
+          force: true
 
       - uses: JS-DevTools/npm-publish@v1
         id: publish
