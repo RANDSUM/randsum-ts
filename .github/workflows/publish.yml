@@ -11,11 +11,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
+
+      - run: yarn build
+
       - name: Read & Modify of package.json
         uses: jaywcjlove/github-action-package@v1.3.1
         id: package
         with:
           version: ${{ github.event.release.tag_name }}
+
+      - uses: EndBug/add-and-commit@v9
+        with:
+          add: 'package.json'
 
       - uses: JS-DevTools/npm-publish@v1
         id: publish
