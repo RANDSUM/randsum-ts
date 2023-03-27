@@ -10,6 +10,9 @@ jobs:
       INPUT_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - uses: actions/setup-node@v3
         with:
@@ -26,10 +29,11 @@ jobs:
         with:
           version: ${{ github.event.release.tag_name }}
 
-      - uses: EndBug/add-and-commit@v9
+      - name: GitHub Commit & Push
+        uses: actions-js/push@v1.4
         with:
-          add: 'package.json'
-          push: 'origin main'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: "Bump to ${{ github.event.release.tag_name }}"
 
       - uses: JS-DevTools/npm-publish@v1
         id: publish
