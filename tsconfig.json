@@ -5,9 +5,9 @@
     "lib": ["esnext", "DOM"],
     "module": "esnext",
     "target": "es2022",
+    "moduleResolution": "nodenext",
     "sourceMap": true,
     "declaration": true,
-    "moduleResolution": "nodenext",
     /* Strict Type-Checking Options */
     "strict": true,
     "isolatedModules": true,
