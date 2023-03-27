@@ -21,4 +21,3 @@ jobs:
         id: publish
         with:
           token: ${{ secrets.NPM_TOKEN }}
-          dry-run: true
