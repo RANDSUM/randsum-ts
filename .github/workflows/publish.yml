@@ -29,7 +29,7 @@ jobs:
       - uses: EndBug/add-and-commit@v9
         with:
           add: 'package.json'
-          push: 'main'
+          push: 'origin main'
 
       - uses: JS-DevTools/npm-publish@v1
         id: publish
