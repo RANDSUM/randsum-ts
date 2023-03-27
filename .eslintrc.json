@@ -2,12 +2,12 @@
   "extends": [
     "auto"
   ],
-  "ignorePatterns": [
-    "node_modules",
-    "dist",
-    "coverage",
-    "*.md"
-  ],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "extraFileExtensions": [
+      ".json"
+    ]
+  },
   "overrides": [
     {
       "files": [
@@ -22,10 +22,10 @@
       }
     }
   ],
-  "parserOptions": {
-    "project": "./tsconfig.json",
-    "extraFileExtensions": [
-      ".json"
-    ]
-  }
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    "coverage",
+    "*.md"
+  ]
 }

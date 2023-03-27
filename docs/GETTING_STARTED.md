@@ -17,7 +17,7 @@ import { roll } from 'randsum'
 or
 
 ```js
-const roll = require('randsum').roll
+const {roll} = require('randsum')
 ```
 
 ## using `roll`
