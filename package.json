@@ -3,6 +3,7 @@
   "version": "2.0.3",
   "private": false,
   "author": "Alex Jarvis",
+  "icon": "https://raw.githubusercontent.com/alxjrvs/randsum/main/icon.png",
   "description": "Ergonomic Dice Rolling with Strong Typescript Support",
   "license": "MIT",
   "homepage": "https://github.com/alxjrvs/randsum ",
@@ -85,8 +86,8 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
     "@types/jest": "^29.5.0",
-    "@typescript-eslint/eslint-plugin": "^5.56.0",
-    "@typescript-eslint/parser": "^5.56.0",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
     "eslint": "^8.2.0",
     "eslint-config-adjunct": "^4.12.2",
     "eslint-config-airbnb-typescript": "^17.0.0",

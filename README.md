@@ -1,11 +1,23 @@
-# `randsum`
-
-Ergonomic Dice Rolling with Strong Typescript Support
-
-[![npm version](https://img.shields.io/npm/v/randsum)](https://www.npmjs.com/package/randsum)
-[![bundle size](https://img.shields.io/bundlephobia/min/randsum)](https://bundlephobia.com/package/randsum)
-[![Code of Conduct](https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat)](https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md)
-[![codecov](https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob)](https://codecov.io/gh/alxjrvs/randsum)
+<div align="center">
+<a href="https://github.com/alxjrvs/randsum" align="center">
+  <img align="center" src="https://raw.githubusercontent.com/alxjrvs/randsum/main/icon.png">
+</div>
+<h1 align="center">randsum.</h1>
+<h2 align="center">Ergonomic Dice Rolling with Strong Typescript Support</h2>
+<div align="center">
+  <a href="https://www.npmjs.com/package/randsum" align="center">
+    <img src="https://img.shields.io/npm/v/randsum">
+  </a>
+  <a href="https://bundlephobia.com/package/randsum" align="center">
+    <img src="https://img.shields.io/bundlephobia/min/randsum">
+  </a>
+  <a href="https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md" align="center">
+    <img src="https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat">
+  </a>
+  <a href="https://codecov.io/gh/alxjrvs/randsum" align="center">
+    <img src="https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob">
+  </a>
+</div>
 
 ## What is this?
 

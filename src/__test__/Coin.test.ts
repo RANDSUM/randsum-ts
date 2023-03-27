@@ -6,7 +6,7 @@ describe(Coin, () => {
 
   beforeEach(() => {
     // eslint-disable-next-line prettier/prettier
-    jest.spyOn(console, 'warn').mockImplementation(() => { })
+    jest.spyOn(console, 'warn').mockImplementation(() => {})
   })
 
   test('.flip() returns a string included in the contructor', () => {
