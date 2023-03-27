@@ -1,7 +1,9 @@
 name: Publish + Release on Version Bump
 on:
-  release:
-    types: [released]
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
 
 jobs:
   publish:
@@ -10,9 +12,6 @@ jobs:
       INPUT_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-          fetch-depth: 0
 
       - uses: actions/setup-node@v3
         with:
@@ -23,20 +22,16 @@ jobs:
 
       - run: yarn build
 
-      - name: Read & Modify of package.json
-        uses: jaywcjlove/github-action-package@v1.3.1
-        id: package
-        with:
-          version: ${{ github.event.release.tag_name }}
-
-      - name: GitHub Commit & Push
-        uses: actions-js/push@v1.4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: "Bump to ${{ github.event.release.tag_name }}"
-          force: true
-
       - uses: JS-DevTools/npm-publish@v1
         id: publish
         with:
           token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create Release
+        if: steps.publish.outputs.type != 'none'
+        id: release
+        uses: softprops/action-gh-release@HEAD
+        with:
+          tag_name: v${{ steps.publish.outputs.version }}
+          append_body: true
+          generate_release_notes: true
