@@ -14,6 +14,12 @@
   <a href="https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md" align="center">
     <img src="https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat">
   </a>
+  <a href="https://github.com/alxjrvs/randsum/actions/workflows/main.yml" align="center">
+    <img src="https://github.com/alxjrvs/randsum/actions/workflows/main.yml/badge.svg">
+  </a>
+  <a href="https://github.com/alxjrvs/randsum/actions/workflows/github-code-scanning/codeql" align="center">
+    <img src="https://github.com/alxjrvs/randsum/actions/workflows/github-code-scanning/codeql/badge.svg">
+  </a>
   <a href="https://codecov.io/gh/alxjrvs/randsum" align="center">
     <img src="https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob">
   </a>
