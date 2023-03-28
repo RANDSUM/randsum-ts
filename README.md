@@ -21,9 +21,50 @@
 
 ## What is this?
 
-It's a dice roller, used for generating rolls that you might use in popular Tabletop Role-playing Games. It accepts basic number and number strings, as well as dice notation for more complicated dice operations.
+It's a dice roller, used for generating rolls that you might use in popular Tabletop Role-playing Games.
 
-Written in 100% Typescript, with strong overloading and attention to Arguments. You depend on `randsum` to give you what you expect - just not always the roll you want.
+```ts
+import {
+  roll,
+  D20,
+  dieFactory,
+  FairCoin,
+  Coin,
+} from 'randsum'
+
+// Roll a single D20
+roll(20)
+
+ // Roll 4 D20
+roll({quantity: 4, sides: 20})
+
+// Roll 4 D6, drop the lowest
+roll({quantity: 6, sides: , modifiers: [{drop: {lowest: true}}]})
+
+// Roll 4 Fudge dice
+roll({quantity: 6, sides: ['+', '+', '-', '-', ' ', ' ']})
+
+// Roll a single D20
+D20.roll()
+
+// Make a new 120 sided die and roll it
+const D120 = dieFactory(120)
+D120.roll()
+
+//'heads' or 'tails'?
+FairCoin.flip()
+```
+
+Written in 100% Typescript with strong attention paid to return types. You depend on `randsum` to give you what you expect - just not always the roll you want.
+
+```ts
+
+// `standardRollTotal` is `type number`
+const standardRollTotal = roll({sides: 20}).total
+
+// `customSidesRollTotal` is `type string`
+const customSidesRollTotal = roll({sides: ['+', '+', '-'. '-', ' ', ' ']}).total
+```
 
 ## Further Reading
 
