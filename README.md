@@ -3,7 +3,7 @@
   <img width="150" height="150" align="center" src="https://raw.githubusercontent.com/alxjrvs/randsum/main/icon.webp">
 </div>
 <h1 align="center">randsum</h1>
-<h2 align="center">Ergonomic Dice Rolling with Strong Typescript Support</h2>
+<h2 align="center">NodeJS Dice Rolling with Strong Typescript Support</h2>
 <div align="center">
   <a href="https://www.npmjs.com/package/randsum" align="center">
     <img src="https://img.shields.io/npm/v/randsum">
