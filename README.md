@@ -42,7 +42,7 @@ roll({quantity: 4, sides: 20})
 roll({quantity: 6, sides: , modifiers: [{drop: {lowest: true}}]})
 
 // Roll 4 Fudge dice
-roll({quantity: 6, sides: ['+', '+', '-', '-', ' ', ' ']})
+roll({quantity: 4, sides: ['+', '+', '-', '-', ' ', ' ']})
 
 // Roll a single D20
 D20.roll()
