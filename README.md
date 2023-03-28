@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/npm/v/randsum">
   </a>
   <a href="https://bundlephobia.com/package/randsum" align="center">
-    <img src="https://img.shields.io/bundlephobia/min/randsum">
+    <img src="https://img.shields.io/bundlephobia/minzip/randsum">
   </a>
   <a href="https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md" align="center">
     <img src="https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat">
