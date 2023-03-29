@@ -105,6 +105,13 @@ describe(roll, () => {
     testResult(result, { sides: 20 })
   })
 
+  describe('((string | number)[])', () => {
+    const firstArg = [1, '2']
+    const result = roll(firstArg)
+
+    testResult(result, { sides: 2, faces: ['1', '2'] })
+  })
+
   describe('(rollOptions)', () => {
     const firstArg = {
       sides: 20,

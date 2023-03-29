@@ -1,5 +1,5 @@
 import { SingleDie } from '../Die'
-import { Modifier, RollOptions } from './options'
+import { CustomSidesOption, Modifier, RollOptions } from './options'
 import { DiceNotation, DieSides, NumberString } from './primitives'
 
 export interface DiceParameters<D extends DieSides> {
@@ -8,7 +8,12 @@ export interface DiceParameters<D extends DieSides> {
 }
 
 export interface RollParameters<D extends DieSides> {
-  argument: RollOptions<D> | DiceNotation<D> | NumberString | undefined
+  argument:
+    | RollOptions<D>
+    | DiceNotation<D>
+    | NumberString
+    | CustomSidesOption
+    | undefined
   diceOptions: DiceParameters<D>[]
   modifiers: Array<Modifier<number>>
   dice: SingleDie<D>[]

@@ -25,6 +25,14 @@ describe('parseArguments', () => {
     })
   })
 
+  describe('given custom sides', () => {
+    test('returns a RollParameter matching the notation', () => {
+      expect(parseArguments(['h', 't'])).toMatchObject({
+        diceOptions: [{ quantity: 1, sides: ['h', 't'] }]
+      })
+    })
+  })
+
   describe('given Roll Options', () => {
     describe('simple', () => {
       test('returns a RollParameter matching the notation', () => {
