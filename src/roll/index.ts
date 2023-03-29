@@ -1,29 +1,20 @@
-import { CustomSidesOption, RollOptions } from '../types/options'
-import { DiceNotation, DieSides, NumberString } from '../types/primitives'
+import {
+  CustomSidesArguments,
+  RollArguments,
+  StandardSidesArguments
+} from '../types/arguments'
+import { DieSides } from '../types/primitives'
 import { RollResult } from '../types/results'
 import generateResult from './generate-results'
 import parseArguments from './parse-arguments'
 
-function roll(
-  arg?: NumberString | RollOptions<number> | DiceNotation<number>
-): RollResult<number>
-function roll(
-  arg: RollOptions<string> | DiceNotation<string> | CustomSidesOption
-): RollResult<string>
+function roll(arg?: StandardSidesArguments): RollResult<number>
+function roll(arg: CustomSidesArguments): RollResult<string>
+
 function roll<D extends DieSides>(
-  arg: D extends number
-    ? NumberString | RollOptions<number> | DiceNotation<number> | undefined
-    : DiceNotation<string> | RollOptions<string> | CustomSidesOption
+  arg: D extends number ? StandardSidesArguments : CustomSidesArguments
 ): RollResult<D>
-function roll(
-  arg?:
-    | RollOptions<number>
-    | RollOptions<string>
-    | DiceNotation<number>
-    | DiceNotation<string>
-    | NumberString
-    | CustomSidesOption
-): RollResult<number> | RollResult<string> {
+function roll(arg?: RollArguments): RollResult<number> | RollResult<string> {
   const parameters = parseArguments(arg)
   return generateResult(parameters)
 }
