@@ -1,11 +1,11 @@
 import { coreNotationPattern } from '../../constants/regexp'
 import { dicePoolFactory } from '../../Die'
-import { RollOptions } from '../../types/options'
+import { isCustomSidesOptions } from '../../Die/guards'
+import { CustomSidesOption, RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import { DiceNotation, NumberString } from '../../types/primitives'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
-import { generateInitialRolls } from './utils'
 
 const isRollOptions = (
   argument: unknown
@@ -25,6 +25,7 @@ function parseArguments(
     | DiceNotation<number>
     | DiceNotation<string>
     | NumberString
+    | CustomSidesOption
     | undefined
 ): RollParameters<number> | RollParameters<string> {
   if (isRollOptions(argument)) {
@@ -35,6 +36,17 @@ function parseArguments(
     return parseNotation(argument)
   }
 
+  if (isCustomSidesOptions(argument)) {
+    const diceOptions = [{ quantity: 1, sides: argument.map(String) }]
+    const dice = dicePoolFactory(diceOptions)
+    return {
+      diceOptions,
+      argument,
+      dice,
+      modifiers: []
+    }
+  }
+
   const sides = argument === undefined ? 20 : Number(argument)
   const diceOptions = [{ quantity: 1, sides }]
   const dice = dicePoolFactory(diceOptions)
@@ -43,8 +55,7 @@ function parseArguments(
     diceOptions,
     argument,
     dice,
-    modifiers: [],
-    initialRolls: generateInitialRolls(dice)
+    modifiers: []
   }
 }
 export default parseArguments

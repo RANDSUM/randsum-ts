@@ -1,15 +1,20 @@
 import { dicePoolFactory, StandardDie } from '../Die'
 import generateResult from '../roll/generate-results'
-import { InvalidUniqueError } from '../roll/generate-results/apply-modifiers'
+import { InvalidUniqueError } from '../roll/generate-results/generate-standard-results'
+import * as Utils from '../roll/parse-arguments/utils'
 import { Modifier } from '../types/options'
+import { RollParameters } from '../types/parameters'
 
 describe('generateResult', () => {
   const testRollSet = [1, 2, 3, 4]
+  beforeEach(() => {
+    jest.spyOn(Utils, 'generateInitialRolls').mockReturnValue(testRollSet)
+  })
+
   const coreParameters = {
     argument: undefined,
     diceOptions: [{ sides: 6, quantity: testRollSet.length }],
     modifiers: [] as Modifier<number>[],
-    initialRolls: testRollSet,
     dice: [{ roll: jest.fn().mockReturnValue(200) }] as unknown as StandardDie[]
   }
 
@@ -24,10 +29,12 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "unique" modifier', () => {
     const uniqueRolls = [1, 1, 2, 3]
+    beforeEach(() => {
+      jest.spyOn(Utils, 'generateInitialRolls').mockReturnValue(uniqueRolls)
+    })
     const uniqueParameters = {
       ...coreParameters,
       sides: 4,
-      initialRolls: uniqueRolls,
       modifiers: [{ unique: true }]
     }
 
@@ -54,10 +61,14 @@ describe('generateResult', () => {
 
     describe('and the # of quantity is greater than the sides of the die', () => {
       const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
+      beforeEach(() => {
+        jest
+          .spyOn(Utils, 'generateInitialRolls')
+          .mockReturnValue(overflowRollTotals)
+      })
       const overflowParameters = {
         ...uniqueParameters,
-        diceOptions: [{ sides: 6, quantity: overflowRollTotals.length }],
-        initialRolls: overflowRollTotals
+        diceOptions: [{ sides: 6, quantity: overflowRollTotals.length }]
       }
 
       test('it throws an error', () => {
@@ -71,27 +82,35 @@ describe('generateResult', () => {
   describe('when given custom sides', () => {
     const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
     const diceOptions = [{ sides: faces, quantity: 4 }]
+    const customSidesRoll = ['r', 'a', 'n', 'd']
+    beforeEach(() => {
+      jest.spyOn(Utils, 'generateInitialRolls').mockReturnValue(customSidesRoll)
+    })
     const customSidesParameters = {
       ...coreParameters,
       diceOptions,
-      dice: dicePoolFactory(diceOptions),
-      initialRolls: ['r', 'a', 'n', 'd']
+      dice: dicePoolFactory(diceOptions)
     }
 
     test('it returns the expected result as a string', () => {
       expect(generateResult(customSidesParameters)).toMatchObject({
         total: 'r, a, n, d',
-        rolls: ['r', 'a', 'n', 'd']
+        rolls: customSidesRoll
       })
     })
   })
 
   describe('when given roll total with a "drop" modifier', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    beforeEach(() => {
+      jest
+        .spyOn(Utils, 'generateInitialRolls')
+        .mockReturnValue(longerRollTotals)
+    })
+
     const dropParameters = {
       ...coreParameters,
       diceOptions: [{ sides: 10, quantity: longerRollTotals.length }],
-      initialRolls: longerRollTotals,
       modifiers: [
         {
           drop: {
@@ -152,9 +171,13 @@ describe('generateResult', () => {
 
   describe('when given roll total with an "explode" modifier', () => {
     const explodeRollTotals = [1, 2, 3, 6]
+    beforeEach(() => {
+      jest
+        .spyOn(Utils, 'generateInitialRolls')
+        .mockReturnValue(explodeRollTotals)
+    })
     const explodeParameters = {
       ...coreParameters,
-      initialRolls: explodeRollTotals,
       modifiers: [{ explode: true }]
     }
 
@@ -253,6 +276,19 @@ describe('generateResult', () => {
         total: 8,
         rolls: [1, 2, 3, 4]
       })
+    })
+  })
+
+  describe('when given an roll total with an unrecognized modifier', () => {
+    const dropParameters = {
+      ...coreParameters,
+      modifiers: [{ foo: 2 }]
+    } as unknown as RollParameters<number>
+
+    test('Throws an error', () => {
+      expect(() => generateResult(dropParameters)).toThrow(
+        'Unknown modifier: foo'
+      )
     })
   })
 })
