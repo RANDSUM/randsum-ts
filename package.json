@@ -1,9 +1,9 @@
 {
   "name": "randsum",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "private": false,
   "author": "Alex Jarvis",
-  "icon": "https://raw.githubusercontent.com/alxjrvs/randsum/main/icon.png",
+  "icon": "https://raw.githubusercontent.com/alxjrvs/randsum/main/icon.webp",
   "description": "Ergonomic Dice Rolling with Strong Typescript Support",
   "license": "MIT",
   "homepage": "https://github.com/alxjrvs/randsum ",
