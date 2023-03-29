@@ -3,6 +3,7 @@ import { DieSides, InclusiveOrNumber, NumberString } from './primitives'
 type TypeOrArrayOfType<T> = T | T[]
 
 export type CustomSidesOption = (string | number)[]
+
 export interface DiceOptions<D extends DieSides> {
   quantity?: NumberString<'inclusive'>
   sides: D extends number ? NumberString<'inclusive'> : CustomSidesOption
