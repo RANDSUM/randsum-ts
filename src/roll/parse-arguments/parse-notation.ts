@@ -7,7 +7,6 @@ import parseModifiers, {
   Match,
   parseCoreNotation
 } from './parse-modifiers'
-import { generateInitialRolls } from './utils'
 
 const findMatches = (notations: string): Match[] =>
   [...notations.matchAll(completeRollPattern)].map(
@@ -25,13 +24,11 @@ const parseNotation = (
     if (isCoreNotationMatch(match)) {
       const diceOptions = parseCoreNotation(match)
       const dice = dicePoolFactory(diceOptions)
-      const initialRolls = generateInitialRolls(dice)
 
       return {
         ...acc,
         diceOptions,
         dice,
-        initialRolls,
         modifiers: acc.modifiers || []
       }
     }

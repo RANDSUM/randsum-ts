@@ -2,7 +2,6 @@ import { dicePoolFactory } from '../../Die'
 import { RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import normalizeModifiers from './normalize-modifiers'
-import { generateInitialRolls } from './utils'
 
 const isCustomSidesRollOptions = (
   argument: RollOptions<number> | RollOptions<string>
@@ -17,25 +16,21 @@ const parseOptions = (
   if (isCustomSidesRollOptions(options)) {
     const diceOptions = [{ quantity, sides: options.sides.map(String) }]
     const dice = dicePoolFactory(diceOptions)
-    const initialRolls = generateInitialRolls(dice)
     return {
       diceOptions,
       dice,
       argument: options,
-      modifiers: [],
-      initialRolls
+      modifiers: []
     }
   }
 
   const diceOptions = [{ quantity, sides: Number(options.sides) }]
   const dice = dicePoolFactory(diceOptions)
-  const initialRolls = generateInitialRolls(dice)
   return {
     diceOptions,
     dice,
     argument: options,
-    modifiers: normalizeModifiers(options.modifiers || []),
-    initialRolls
+    modifiers: normalizeModifiers(options.modifiers || [])
   }
 }
 

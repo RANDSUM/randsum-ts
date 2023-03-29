@@ -186,12 +186,14 @@ const applyDrop = (
   return sortedResults
 }
 
-const applyModifiers = ({
-  modifiers,
-  initialRolls,
-  dice: [die],
-  diceOptions: [{ sides, quantity }]
-}: RollParameters<number> & { initialRolls: number[] }): RollBonuses => {
+const applyModifiers = (
+  initialRolls: number[],
+  {
+    modifiers,
+    dice: [die],
+    diceOptions: [{ sides, quantity }]
+  }: RollParameters<number>
+): RollBonuses => {
   let rollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls

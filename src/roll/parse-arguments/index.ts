@@ -5,7 +5,6 @@ import { RollParameters } from '../../types/parameters'
 import { DiceNotation, NumberString } from '../../types/primitives'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
-import { generateInitialRolls } from './utils'
 
 const isRollOptions = (
   argument: unknown
@@ -43,8 +42,7 @@ function parseArguments(
     diceOptions,
     argument,
     dice,
-    modifiers: [],
-    initialRolls: generateInitialRolls(dice)
+    modifiers: []
   }
 }
 export default parseArguments

@@ -1,5 +1,6 @@
 import { RollParameters } from '../../types/parameters'
 import { RollResult } from '../../types/results'
+import { generateInitialRolls } from '../parse-arguments/utils'
 import applyModifiers from './apply-modifiers'
 
 const isCustomSidesRollParameters = (
@@ -10,22 +11,27 @@ const isCustomSidesRollParameters = (
   )
 
 function generateResult(
-  rollParameters:
-    | (RollParameters<number> & { initialRolls: number[] })
-    | (RollParameters<string> & { initialRolls: string[] })
+  rollParameters: RollParameters<number> | RollParameters<string>
 ): RollResult<number> | RollResult<string> {
   if (isCustomSidesRollParameters(rollParameters)) {
+    const initialRolls = generateInitialRolls(rollParameters.dice)
     return {
       rollParameters,
-      total: rollParameters.initialRolls.join(', '),
-      rolls: rollParameters.initialRolls
+      initialRolls,
+      total: initialRolls.join(', '),
+      rolls: initialRolls
     }
   }
 
-  const { rolls, simpleMathModifier } = applyModifiers(rollParameters)
+  const initialRolls = generateInitialRolls(rollParameters.dice)
+  const { rolls, simpleMathModifier } = applyModifiers(
+    initialRolls,
+    rollParameters
+  )
 
   return {
     rollParameters,
+    initialRolls,
     total:
       Number([...rolls].reduce((total, roll) => total + roll, 0)) +
       simpleMathModifier,

@@ -10,7 +10,6 @@ export interface DiceParameters<D extends DieSides> {
 export interface RollParameters<D extends DieSides> {
   argument: RollOptions<D> | DiceNotation<D> | NumberString | undefined
   diceOptions: DiceParameters<D>[]
-  initialRolls: D[]
   modifiers: Array<Modifier<number>>
   dice: SingleDie<D>[]
 }
