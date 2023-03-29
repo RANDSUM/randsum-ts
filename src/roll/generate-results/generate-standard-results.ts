@@ -188,33 +188,34 @@ const applyDrop = (
   return sortedResults
 }
 
-const applyModifiers = ({
-  modifiers,
-  dice,
-  diceOptions: [{ sides, quantity }]
-}: RollParameters<number>): Pick<
-  RollResult<number>,
-  'total' | 'rolls' | 'initialRolls'
-> => {
-  const initialRolls = generateInitialRolls(dice)
-  let rollBonuses: RollBonuses = {
+const applyModifiers = (
+  rollParameters: RollParameters<number>,
+  initialRolls: number[]
+): RollBonuses => {
+  const {
+    modifiers,
+    dice,
+    diceOptions: [{ sides, quantity }]
+  } = rollParameters
+
+  const rollBonuses: RollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls
   }
 
   const rollOne: () => number = () => dice[0].roll()
 
-  modifiers.forEach((modifier) => {
+  return modifiers.reduce((bonuses, modifier) => {
     if (isRerollModifier(modifier)) {
-      rollBonuses = {
-        ...rollBonuses,
+      return {
+        ...bonuses,
         rolls: applyReroll(rollBonuses.rolls, modifier.reroll, rollOne)
       }
     }
 
     if (isUniqueModifier(modifier)) {
-      rollBonuses = {
-        ...rollBonuses,
+      return {
+        ...bonuses,
         rolls: applyUnique(
           rollBonuses.rolls,
           { sides, quantity, unique: modifier.unique },
@@ -224,56 +225,67 @@ const applyModifiers = ({
     }
 
     if (isReplaceModifier(modifier)) {
-      rollBonuses = {
-        ...rollBonuses,
+      return {
+        ...bonuses,
         rolls: applyReplace(rollBonuses.rolls, modifier.replace)
       }
     }
 
     if (isCapModifier(modifier)) {
-      rollBonuses = {
-        ...rollBonuses,
+      return {
+        ...bonuses,
         rolls: rollBonuses.rolls.map(applySingleCap(modifier.cap))
       }
     }
 
     if (isDropModifier(modifier)) {
-      rollBonuses = {
-        ...rollBonuses,
+      return {
+        ...bonuses,
         rolls: applyDrop(rollBonuses.rolls, modifier.drop)
       }
     }
 
     if (isExplodeModifier(modifier)) {
-      rollBonuses = {
-        ...rollBonuses,
+      return {
+        ...bonuses,
         rolls: applyExplode(rollBonuses.rolls, { sides }, rollOne)
       }
     }
 
     if (isPlusModifier(modifier)) {
-      rollBonuses = {
-        ...rollBonuses,
+      return {
+        ...bonuses,
         simpleMathModifier:
           rollBonuses.simpleMathModifier + Number(modifier.plus)
       }
     }
 
     if (isMinusModifier(modifier)) {
-      rollBonuses = {
-        ...rollBonuses,
+      return {
+        ...bonuses,
         simpleMathModifier:
           rollBonuses.simpleMathModifier - Number(modifier.minus)
       }
     }
-  })
+
+    throw new Error(`Unknown modifier: ${Object.keys(modifier)[0]}`)
+  }, rollBonuses)
+}
+
+const generateStandardResults = (
+  rollParameters: RollParameters<number>
+): RollResult<number> => {
+  const initialRolls = generateInitialRolls(rollParameters.dice)
+  const modifiedBonuses = applyModifiers(rollParameters, initialRolls)
+
   return {
+    rollParameters,
     initialRolls,
-    rolls: rollBonuses.rolls,
+    rolls: modifiedBonuses.rolls,
     total:
-      rollBonuses.rolls.reduce((a, b) => a + b, 0) +
-      rollBonuses.simpleMathModifier
+      modifiedBonuses.rolls.reduce((a, b) => a + b, 0) +
+      modifiedBonuses.simpleMathModifier
   }
 }
 
-export default applyModifiers
+export default generateStandardResults

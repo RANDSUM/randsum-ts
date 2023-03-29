@@ -1,8 +1,9 @@
 import { dicePoolFactory, StandardDie } from '../Die'
 import generateResult from '../roll/generate-results'
-import { InvalidUniqueError } from '../roll/generate-results/apply-modifiers'
+import { InvalidUniqueError } from '../roll/generate-results/generate-standard-results'
 import * as Utils from '../roll/parse-arguments/utils'
 import { Modifier } from '../types/options'
+import { RollParameters } from '../types/parameters'
 
 describe('generateResult', () => {
   const testRollSet = [1, 2, 3, 4]
@@ -275,6 +276,19 @@ describe('generateResult', () => {
         total: 8,
         rolls: [1, 2, 3, 4]
       })
+    })
+  })
+
+  describe('when given an roll total with an unrecognized modifier', () => {
+    const dropParameters = {
+      ...coreParameters,
+      modifiers: [{ foo: 2 }]
+    } as unknown as RollParameters<number>
+
+    test('Throws an error', () => {
+      expect(() => generateResult(dropParameters)).toThrow(
+        'Unknown modifier: foo'
+      )
     })
   })
 })
