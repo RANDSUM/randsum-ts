@@ -23,19 +23,9 @@ function generateResult(
     }
   }
 
-  const initialRolls = generateInitialRolls(rollParameters.dice)
-  const { rolls, simpleMathModifier } = applyModifiers(
-    initialRolls,
-    rollParameters
-  )
-
   return {
     rollParameters,
-    initialRolls,
-    total:
-      Number([...rolls].reduce((total, roll) => total + roll, 0)) +
-      simpleMathModifier,
-    rolls
+    ...applyModifiers(rollParameters)
   }
 }
 

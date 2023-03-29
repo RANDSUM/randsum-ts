@@ -6,6 +6,8 @@ import {
   UniqueModifier
 } from '../../types/options'
 import { DiceParameters, RollParameters } from '../../types/parameters'
+import { RollResult } from '../../types/results'
+import { generateInitialRolls } from '../parse-arguments/utils'
 import {
   isCapModifier,
   isDropModifier,
@@ -186,20 +188,21 @@ const applyDrop = (
   return sortedResults
 }
 
-const applyModifiers = (
-  initialRolls: number[],
-  {
-    modifiers,
-    dice: [die],
-    diceOptions: [{ sides, quantity }]
-  }: RollParameters<number>
-): RollBonuses => {
-  let rollBonuses = {
+const applyModifiers = ({
+  modifiers,
+  dice,
+  diceOptions: [{ sides, quantity }]
+}: RollParameters<number>): Pick<
+  RollResult<number>,
+  'total' | 'rolls' | 'initialRolls'
+> => {
+  const initialRolls = generateInitialRolls(dice)
+  let rollBonuses: RollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls
   }
 
-  const rollOne: () => number = () => die.roll()
+  const rollOne: () => number = () => dice[0].roll()
 
   modifiers.forEach((modifier) => {
     if (isRerollModifier(modifier)) {
@@ -264,7 +267,13 @@ const applyModifiers = (
       }
     }
   })
-  return rollBonuses
+  return {
+    initialRolls,
+    rolls: rollBonuses.rolls,
+    total:
+      rollBonuses.rolls.reduce((a, b) => a + b, 0) +
+      rollBonuses.simpleMathModifier
+  }
 }
 
 export default applyModifiers
