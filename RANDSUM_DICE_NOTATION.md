@@ -81,10 +81,6 @@ In `randsum` :
 // Roll 6 two-sided die with the sides "H" and "T"
 
 roll('6d{HT}')
-roll(2, {
-  quantity: 6,
-  faces: ['H', 'T']
-})
 roll({
   sides: ['H', 'T'],
   quantity: 6
@@ -119,10 +115,6 @@ In `randsum` :
 // Roll 6 twenty-sided die, add 5
 
 roll('6d20+5')
-roll(20, {
-  quantity: 6,
-  modifiers: [{ plus: 5 }]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -148,10 +140,6 @@ In `randsum` :
 // Roll 6 twenty-sided die, subtract 5
 
 roll('6d20-5')
-roll(20, {
-  quantity: 6,
-  modifiers: [{ minus: 5 }]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -187,17 +175,6 @@ In `randsum` :
 // Roll 6 twenty-sided die, drop highest
 
 roll('6d20H')
-roll(20, {
-  quantity: 6,
-  modifiers: [
-    {
-      drop: {
-        highest: true
-      }
-    }
-  ]
-})
-
 roll({
   sides: 20,
   quantity: 6,
@@ -213,16 +190,6 @@ roll({
 // Roll 6 twenty-sided die, drop highest 3
 
 roll('6d20H3')
-roll(20, {
-  quantity: 6,
-  modifiers: [
-    {
-      drop: {
-        highest: 3
-      }
-    }
-  ]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -258,16 +225,6 @@ In `randsum` :
 // Roll 6 twenty-sided die, drop lowest
 
 roll('6d20L')
-roll(20, {
-  quantity: 6,
-  modifiers: [
-    {
-      drop: {
-        lowest: true
-      }
-    }
-  ]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -283,16 +240,6 @@ roll({
 // Roll 6 twenty-sided die, drop lowest 3
 
 roll('6d20L3')
-roll(20, {
-  quantity: 6,
-  modifiers: [
-    {
-      drop: {
-        lowest: 3
-      }
-    }
-  ]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -336,18 +283,6 @@ In `randsum` :
 // Roll 6 twenty-sided die, drop less than 5, greater than 15, and all 10's
 
 roll('6d20D{<5,>15,10')
-roll(20, {
-  quantity: 6,
-  modifiers: [
-    {
-      drop: {
-        greaterThan: 15,
-        lessThan: 5,
-        exactly: [10]
-      }
-    }
-  ]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -391,17 +326,6 @@ In `randsum` :
 // Roll 6 twenty-sided die, cap less than 5 and greater than 15
 
 roll('6d20C<5>15')
-roll(20, {
-  quantity: 6,
-  modifiers: [
-    {
-      cap: {
-        greaterThan: 15,
-        lessThan: 5
-      }
-    }
-  ]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -452,19 +376,6 @@ In `randsum` :
 // Roll 6 twenty-sided die, reroll less than 5, greater than 15, and all 10's, no more than 3 rerolls
 
 roll('6d20R{<5,>15,10}3')
-roll(20, {
-  quantity: 6,
-  modifiers: [
-    {
-      reroll: {
-        above: 15,
-        below: 5,
-        exactly: [10],
-        maxReroll: 3
-      }
-    }
-  ]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -513,31 +424,6 @@ In `randsum` :
 // Roll 6 twenty-sided die, replace less than 5 with 1, greater than 15 with 20, and all 10's with 2's
 
 roll('6d20v{<5=1,>15=20,10=2')
-roll(20, {
-  quantity: 6,
-  modifiers: [
-    {
-      replace: [
-        {
-          from: {
-            above: 15
-          },
-          to: 20
-        },
-        {
-          from: {
-            below: 5
-          },
-          to: 1
-        },
-        {
-          from: 10,
-          to: 2
-        }
-      ]
-    }
-  ]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -590,10 +476,6 @@ In `randsum` :
 // Roll 6 twenty-sided die, make them all unique
 
 roll('6d20U')
-roll(20, {
-  quantity: 6,
-  modifiers: [{ unique: true }]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -603,16 +485,6 @@ roll({
 // Roll 6 twenty-sided die, make them all unique, allow for repeated 5's and 10's
 
 roll('6d20U{5,10}')
-roll(20, {
-  quantity: 6,
-  modifiers: [
-    {
-      unique: {
-        notUnique: [5, 10]
-      }
-    }
-  ]
-})
 roll({
   sides: 20,
   quantity: 6,
@@ -646,7 +518,6 @@ In `randsum`:
 // Roll 6 twenty-sided die, explode them
 
 roll('6d20!')
-roll(20, { quantity: 6, modifiers: [{ explode: true }] })
 roll({ sides: 20, quantity: 6, modifiers: [{ explode: true }] })
 ```
 

@@ -47,6 +47,9 @@ roll({quantity: 4, sides: 20})
 // Roll 4 D6, drop the lowest
 roll({quantity: 6, sides: , modifiers: [{drop: {lowest: true}}]})
 
+// Do the same, but with dice notation
+roll('4d6L')
+
 // Roll 4 Fudge dice
 roll({quantity: 4, sides: ['+', '+', '-', '-', ' ', ' ']})
 
@@ -74,9 +77,9 @@ const customSidesRollTotal = roll({sides: ['+', '+', '-'. '-', ' ', ' ']}).total
 
 ## Further Reading
 
-[Getting Started](https://github.com/alxjrvs/randsum/blob/main/docs/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
+[Getting Started](https://github.com/alxjrvs/randsum/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
-[Roll Dice Notation](https://github.com/alxjrvs/randsum/blob/main/docs/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
+[Roll Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
 
 [Contributing](https://github.com/alxjrvs/randsum/blob/main/docs/CONTRIBUTING.md) - help make `randsum` better!
 
