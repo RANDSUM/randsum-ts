@@ -58,6 +58,7 @@
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "prettier": {
+    "endOfLine": "auto",
     "trailingComma": "none",
     "semi": false,
     "singleQuote": true
