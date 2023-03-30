@@ -45,7 +45,7 @@ roll(20)
 roll({quantity: 4, sides: 20})
 
 // Roll 4 D6, drop the lowest
-roll({quantity: 6, sides: , modifiers: [{drop: {lowest: true}}]})
+roll({quantity: 4, sides: 6, modifiers: [{drop: {lowest: true}}]})
 
 // Do the same, but with dice notation
 roll('4d6L')
