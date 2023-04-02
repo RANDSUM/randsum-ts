@@ -1,9 +1,9 @@
-export type DieSides = string | number
+export type DiceNotationWithNumericSides = `${number}${
+  | 'd'
+  | 'D'}${number}${string}`
+export type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
 
-type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
-type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
-
-export type DiceNotation<D extends DieSides> = D extends number
+export type DiceNotation<D extends string | number> = D extends number
   ? DiceNotationWithNumericSides
   : DiceNotationWithCustomSides
 

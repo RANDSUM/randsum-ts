@@ -30,28 +30,22 @@
 It's a dice roller, used for generating rolls that you might use in popular Tabletop Role-playing Games.
 
 ```ts
-import {
-  roll,
-  D20,
-  dieFactory,
-  FairCoin,
-  Coin,
-} from 'randsum'
+import { roll, D20, dieFactory, FairCoin, Coin } from 'randsum'
 
 // Roll a single D20
 roll(20)
 
- // Roll 4 D20
-roll({quantity: 4, sides: 20})
+// Roll 4 D20
+roll({ quantity: 4, sides: 20 })
 
 // Roll 4 D6, drop the lowest
-roll({quantity: 4, sides: 6, modifiers: [{drop: {lowest: true}}]})
+roll({ quantity: 4, sides: 6, modifiers: [{ drop: { lowest: true } }] })
 
 // Do the same, but with dice notation
 roll('4d6L')
 
 // Roll 4 Fudge dice
-roll({quantity: 4, sides: ['+', '+', '-', '-', ' ', ' ']})
+roll({ quantity: 4, sides: ['+', '+', '-', '-', ' ', ' '] })
 
 // Roll a single D20
 D20.roll()

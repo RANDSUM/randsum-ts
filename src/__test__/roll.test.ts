@@ -1,4 +1,4 @@
-import { DieSides, roll, RollResult } from '..'
+import { roll, RollResult } from '..'
 
 const isCustomSidesRollResult = (
   argument: RollResult<number> | RollResult<string>
@@ -9,7 +9,7 @@ type ExpectedResults = {
   quantity?: number
   rollLength?: number
   faces?: string[]
-  modifiers?: RollResult<DieSides>['rollParameters']['modifiers']
+  modifiers?: RollResult<string | number>['rollParameters']['modifiers']
 }
 
 const testResult = (
