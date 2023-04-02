@@ -1,7 +1,7 @@
 import { completeRollPattern } from '../../constants/regexp'
 import { dicePoolFactory } from '../../Die'
 import { RollParameters } from '../../types/parameters'
-import { DiceNotation, DieSides } from '../../types/primitives'
+import { DiceNotation } from '../../types/primitives'
 import parseModifiers, {
   isCoreNotationMatch,
   Match,
@@ -18,7 +18,7 @@ const parseNotation = (
 ): RollParameters<number> | RollParameters<string> => {
   const initialParams = {
     argument: notationString
-  } as RollParameters<DieSides>
+  } as RollParameters<string | number>
 
   return findMatches(notationString).reduce((acc, match) => {
     if (isCoreNotationMatch(match)) {

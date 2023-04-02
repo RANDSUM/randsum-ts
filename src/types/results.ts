@@ -1,7 +1,6 @@
 import { RollParameters } from './parameters'
-import { DieSides } from './primitives'
 
-export interface RollResult<D extends DieSides> {
+export interface RollResult<D extends string | number> {
   rollParameters: RollParameters<D>
   total: D
   initialRolls: D[]

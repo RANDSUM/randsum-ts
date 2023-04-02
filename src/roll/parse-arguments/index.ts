@@ -1,10 +1,9 @@
 import { coreNotationPattern } from '../../constants/regexp'
 import { dicePoolFactory } from '../../Die'
 import { isCustomSidesOptions } from '../../Die/guards'
-import { RollArguments } from '../../types/arguments'
-import { RollOptions } from '../../types/options'
+import { CustomSides, RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
-import { DiceNotation } from '../../types/primitives'
+import { DiceNotation, NumberString } from '../../types/primitives'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
 
@@ -20,7 +19,14 @@ export const isDiceNotation = (
   !!coreNotationPattern.test(String(argument))
 
 function parseArguments(
-  argument: RollArguments
+  argument:
+    | NumberString
+    | RollOptions<number>
+    | DiceNotation<number>
+    | undefined
+    | DiceNotation<string>
+    | RollOptions<string>
+    | CustomSides
 ): RollParameters<number> | RollParameters<string> {
   if (isRollOptions(argument)) {
     return parseOptions(argument)
