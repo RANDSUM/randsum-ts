@@ -28,9 +28,5 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "typedocOptions": {
-    "entryPoints": ["src/index.ts"],
-    "out": "docs"
-  },
   "include": ["src/**/*"]
 }
