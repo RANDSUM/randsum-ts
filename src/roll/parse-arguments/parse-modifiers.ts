@@ -84,7 +84,7 @@ export const parseCoreNotation = ({
     {
       quantity: Number(quantity),
       sides: sides.includes('{')
-        ? [...sides.replace(/{|}/g, '')]
+        ? [...sides.replaceAll(/{|}/g, '')]
         : Number(sides)
     }
   ] as DiceParameters<number>[] | DiceParameters<string>[]
@@ -99,11 +99,11 @@ const parseCapNotation = ({
     capParameters = note.includes('<')
       ? {
           ...capParameters,
-          lessThan: Number(note.replace(/</g, ''))
+          lessThan: Number(note.replaceAll('<', ''))
         }
       : {
           ...capParameters,
-          greaterThan: Number(note.replace(/>/g, ''))
+          greaterThan: Number(note.replaceAll('>', ''))
         }
   })
   return { cap: capParameters }
@@ -117,8 +117,8 @@ const parseUniqueNotation = ({
   }
 
   const notUnique = notationString
-    .replace(/[Uu]{/g, '')
-    .replace(/}/g, '')
+    .replaceAll(/[Uu]{/g, '')
+    .replaceAll('}', '')
     .split(',')
 
   return {
@@ -137,8 +137,8 @@ const parseDropConstraintsNotation = ({
   > & { exact: number[] } = { exact: [] }
   const constraints = notationString
     .split(/[Dd]/)[1]
-    .replace(/{/g, '')
-    .replace(/}/g, '')
+    .replaceAll('{', '')
+    .replaceAll('}', '')
     .split(',')
   constraints.forEach((constraint) => {
     if (constraint.includes('<')) {
@@ -192,8 +192,8 @@ const parseRerollNotation = ({
 }: RerollMatch): RerollModifier<number> => {
   const parsedString = notationString
     .split(/[Rr]/)[1]
-    .replace(/{/g, '')
-    .replace(/}/g, ',!')
+    .replaceAll('{', '')
+    .replaceAll('}', ',!')
     .split(',')
   let rerollParameters: RerollOptions<number> = {}
   parsedString.forEach((notation) => {
@@ -256,8 +256,8 @@ const parseReplaceNotation = ({
 }: ReplaceMatch): ReplaceModifier<number> => {
   const replaceOptions = notationString
     .split(/[Vv]/)[1]
-    .replace(/{/g, '')
-    .replace(/}/g, '')
+    .replaceAll('{', '')
+    .replaceAll('}', '')
     .split(',')
     .map((replacement) => {
       const [noteFrom, noteTo] = replacement.split('=')
@@ -266,13 +266,13 @@ const parseReplaceNotation = ({
       if (noteFrom.includes('>')) {
         return {
           ...coreReplacement,
-          from: { greaterThan: Number(noteFrom.replace(/>/g, '')) }
+          from: { greaterThan: Number(noteFrom.replaceAll('>', '')) }
         }
       }
       if (noteFrom.includes('<')) {
         return {
           ...coreReplacement,
-          from: { lessThan: Number(noteFrom.replace(/</g, '')) }
+          from: { lessThan: Number(noteFrom.replaceAll('<', '')) }
         }
       }
       return { ...coreReplacement, from: Number(noteFrom) }
