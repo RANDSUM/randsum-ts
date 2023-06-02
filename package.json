@@ -40,6 +40,9 @@
     "url": "https://github.com/alxjrvs/randsum.git"
   },
   "sideEffects": false,
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "analyze": "size-limit",
     "build": "yarn clean && rollup --bundleConfigAsCjs -c ./scripts/build.js",
