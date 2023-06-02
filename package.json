@@ -41,7 +41,7 @@
   },
   "sideEffects": false,
   "engines": {
-    "node": ">=12.13"
+    "node": ">=16"
   },
   "scripts": {
     "analyze": "size-limit",
