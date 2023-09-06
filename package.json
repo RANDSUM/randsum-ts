@@ -61,7 +61,7 @@
   },
   "size-limit": [
     {
-      "path": "dist/index.cjs",
+      "path": "dist/main.js",
       "limit": "4 KB"
     }
   ],
