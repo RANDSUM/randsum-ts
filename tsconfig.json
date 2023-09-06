@@ -3,9 +3,9 @@
   "display": "Node 18",
   "compilerOptions": {
     "lib": ["esnext", "DOM"],
-    "module": "esnext",
-    "target": "es2022",
+    "module": "nodenext",
     "moduleResolution": "nodenext",
+    "target": "es2022",
     "sourceMap": true,
     "declaration": true,
     /* Strict Type-Checking Options */
