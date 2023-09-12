@@ -23,6 +23,9 @@
   <a href="https://codecov.io/gh/alxjrvs/randsum" align="center">
     <img src="https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob">
   </a>
+  <a href="https://github.com/oven-sh/bun">
+    <img src="https://img.shields.io/badge/Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white">
+  </a>
 </div>
 
 ## What is this?

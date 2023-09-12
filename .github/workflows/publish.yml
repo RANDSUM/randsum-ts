@@ -13,14 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'yarn'
+      - name: Use Bun
+        uses: oven-sh/setup-bun@v1
 
-      - run: yarn install --ignore-engines --ignore-scripts --frozen-lockfile
+      - name: Install deps
+        run: bun install
 
-      - run: yarn build
+      - name: Build
+        run: bun run build
 
       - uses: JS-DevTools/npm-publish@v1
         id: publish

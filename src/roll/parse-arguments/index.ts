@@ -27,7 +27,9 @@ function parseArguments(
     | DiceNotation<string>
     | RollOptions<string>
     | CustomSides
-): RollParameters<number> | RollParameters<string> {
+):
+  | Omit<RollParameters<number>, 'generateInitialRolls'>
+  | Omit<RollParameters<string>, 'generateInitialRolls'> {
   if (isRollOptions(argument)) {
     return parseOptions(argument)
   }

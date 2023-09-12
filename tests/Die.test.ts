@@ -1,13 +1,14 @@
+import { describe, expect, test } from 'bun:test'
+
 import {
   CustomSidesDie,
   dicePoolFactory,
   dieFactory,
-  SingleDie,
   StandardDie
-} from '..'
+} from '../src'
 
-describe(SingleDie, () => {
-  describe(StandardDie, () => {
+describe('SingleDie', () => {
+  describe('StandardDie', () => {
     const sides = 6
     const die = new StandardDie(sides)
 
@@ -24,7 +25,7 @@ describe(SingleDie, () => {
     })
   })
 
-  describe(CustomSidesDie, () => {
+  describe('CustomSidesDie', () => {
     const sides = ['+', '+', '-', '-']
     const die = new CustomSidesDie(sides)
 
@@ -42,7 +43,7 @@ describe(SingleDie, () => {
   })
 })
 
-describe(dieFactory, () => {
+describe('dieFactory', () => {
   describe('when given a number', () => {
     const sides = 6
     const die = dieFactory(sides)
@@ -68,7 +69,7 @@ describe(dieFactory, () => {
   })
 })
 
-describe(dicePoolFactory, () => {
+describe('dicePoolFactory', () => {
   describe('when given dice options', () => {
     const customFaces = ['+', '+', '-', '-', ' ', ' ']
     const options = [{ sides: 6 }, { quantity: 2, sides: customFaces }]

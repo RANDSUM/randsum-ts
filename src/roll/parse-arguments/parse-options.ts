@@ -10,7 +10,9 @@ const isCustomSidesRollOptions = (
 
 const parseOptions = (
   options: RollOptions<number> | RollOptions<string>
-): RollParameters<number> | RollParameters<string> => {
+):
+  | Omit<RollParameters<number>, 'generateInitialRolls'>
+  | Omit<RollParameters<string>, 'generateInitialRolls'> => {
   const quantity = Number(options.quantity) || 1
 
   if (isCustomSidesRollOptions(options)) {
