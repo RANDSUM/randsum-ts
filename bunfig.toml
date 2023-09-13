@@ -2,3 +2,4 @@
 
 # always enable coverage
 coverage = true
+coverageThreshold = 1.0
