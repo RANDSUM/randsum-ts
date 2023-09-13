@@ -11,8 +11,6 @@ function roll(
 function roll(
   arg: DiceNotation<string> | RollOptions<string> | CustomSides
 ): RollResult<string>
-
-/** @hidden */
 function roll<D extends string | number>(
   arg: D extends number
     ? NumberString | RollOptions<number> | DiceNotation<number> | undefined
