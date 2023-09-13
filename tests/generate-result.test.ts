@@ -1,21 +1,20 @@
-import { dicePoolFactory, StandardDie } from '../Die'
-import generateResult from '../roll/generate-results'
-import { InvalidUniqueError } from '../roll/generate-results/generate-standard-results'
-import * as Utils from '../roll/parse-arguments/utils'
-import { Modifier } from '../types/options'
-import { RollParameters } from '../types/parameters'
+import { describe, expect, test } from 'bun:test'
+
+import { dicePoolFactory, StandardDie } from '../src/Die'
+import generateResult from '../src/roll/generate-results'
+import { InvalidUniqueError } from '../src/roll/generate-results/generate-standard-results'
+import { Modifier } from '../src/types/options'
+import { RollParameters } from '../src/types/parameters'
 
 describe('generateResult', () => {
   const testRollSet = [1, 2, 3, 4]
-  beforeEach(() => {
-    jest.spyOn(Utils, 'generateInitialRolls').mockReturnValue(testRollSet)
-  })
 
   const coreParameters = {
     argument: undefined,
     diceOptions: [{ sides: 6, quantity: testRollSet.length }],
     modifiers: [] as Modifier<number>[],
-    dice: [{ roll: jest.fn().mockReturnValue(200) }] as unknown as StandardDie[]
+    generateInitialRolls: () => testRollSet,
+    dice: [{ roll: () => 200 }] as unknown as StandardDie[]
   }
 
   describe('when given roll total with no modifiers', () => {
@@ -29,12 +28,11 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "unique" modifier', () => {
     const uniqueRolls = [1, 1, 2, 3]
-    beforeEach(() => {
-      jest.spyOn(Utils, 'generateInitialRolls').mockReturnValue(uniqueRolls)
-    })
+
     const uniqueParameters = {
       ...coreParameters,
       sides: 4,
+      generateInitialRolls: () => uniqueRolls,
       modifiers: [{ unique: true }]
     }
 
@@ -61,19 +59,15 @@ describe('generateResult', () => {
 
     describe('and the # of quantity is greater than the sides of the die', () => {
       const overflowRollTotals = [1, 1, 1, 2, 3, 4, 3, 3]
-      beforeEach(() => {
-        jest
-          .spyOn(Utils, 'generateInitialRolls')
-          .mockReturnValue(overflowRollTotals)
-      })
       const overflowParameters = {
         ...uniqueParameters,
+        generateInitialRolls: () => overflowRollTotals,
         diceOptions: [{ sides: 6, quantity: overflowRollTotals.length }]
       }
 
       test('it throws an error', () => {
         expect(() => generateResult(overflowParameters)).toThrow(
-          InvalidUniqueError
+          new InvalidUniqueError()
         )
       })
     })
@@ -83,11 +77,9 @@ describe('generateResult', () => {
     const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
     const diceOptions = [{ sides: faces, quantity: 4 }]
     const customSidesRoll = ['r', 'a', 'n', 'd']
-    beforeEach(() => {
-      jest.spyOn(Utils, 'generateInitialRolls').mockReturnValue(customSidesRoll)
-    })
     const customSidesParameters = {
       ...coreParameters,
+      generateInitialRolls: () => customSidesRoll,
       diceOptions,
       dice: dicePoolFactory(diceOptions)
     }
@@ -102,15 +94,11 @@ describe('generateResult', () => {
 
   describe('when given roll total with a "drop" modifier', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    beforeEach(() => {
-      jest
-        .spyOn(Utils, 'generateInitialRolls')
-        .mockReturnValue(longerRollTotals)
-    })
 
     const dropParameters = {
       ...coreParameters,
       diceOptions: [{ sides: 10, quantity: longerRollTotals.length }],
+      generateInitialRolls: () => longerRollTotals,
       modifiers: [
         {
           drop: {
@@ -171,13 +159,9 @@ describe('generateResult', () => {
 
   describe('when given roll total with an "explode" modifier', () => {
     const explodeRollTotals = [1, 2, 3, 6]
-    beforeEach(() => {
-      jest
-        .spyOn(Utils, 'generateInitialRolls')
-        .mockReturnValue(explodeRollTotals)
-    })
     const explodeParameters = {
       ...coreParameters,
+      generateInitialRolls: () => explodeRollTotals,
       modifiers: [{ explode: true }]
     }
 
@@ -195,10 +179,6 @@ describe('generateResult', () => {
         ...coreParameters,
         modifiers: [{ reroll: { greaterThan: 3 } }]
       }
-
-      beforeEach(() => {
-        jest.spyOn(console, 'warn').mockImplementationOnce(() => true)
-      })
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         expect(generateResult(rerollParameters)).toMatchObject({

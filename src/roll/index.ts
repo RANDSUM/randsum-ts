@@ -3,6 +3,7 @@ import { DiceNotation, NumberString } from '../types/primitives'
 import { RollResult } from '../types/results'
 import generateResult from './generate-results'
 import parseArguments from './parse-arguments'
+import { generateInitialRolls } from './utils'
 
 function roll(
   arg?: NumberString | RollOptions<number> | DiceNotation<number> | undefined
@@ -28,7 +29,7 @@ function roll(
     | CustomSides
 ): RollResult<number> | RollResult<string> {
   const parameters = parseArguments(arg)
-  return generateResult(parameters)
+  return generateResult({ ...parameters, generateInitialRolls })
 }
 
 export default roll

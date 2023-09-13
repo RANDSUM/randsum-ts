@@ -7,7 +7,6 @@ import {
 } from '../../types/options'
 import { DiceParameters, RollParameters } from '../../types/parameters'
 import { RollResult } from '../../types/results'
-import { generateInitialRolls } from '../parse-arguments/utils'
 import {
   isCapModifier,
   isDropModifier,
@@ -275,7 +274,7 @@ const applyModifiers = (
 const generateStandardResults = (
   rollParameters: RollParameters<number>
 ): RollResult<number> => {
-  const initialRolls = generateInitialRolls(rollParameters.dice)
+  const initialRolls = rollParameters.generateInitialRolls(rollParameters.dice)
   const modifiedBonuses = applyModifiers(rollParameters, initialRolls)
 
   return {

@@ -51,7 +51,7 @@ The linting here is meticulously engineered to my very specific tastes - though 
 
 `husky` pre-commit hooks should take care of most of it, but if you're ever unsure:
 
-- run `yarn lint --fix`
+- run `bun run lint:fix && bun run format:fix`
 - if you still arent sure, open an issue!
 
 ## License

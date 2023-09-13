@@ -1,4 +1,6 @@
-import { roll, RollResult } from '..'
+import { describe, expect, test } from 'bun:test'
+
+import { roll, RollResult } from '../src'
 
 const isCustomSidesRollResult = (
   argument: RollResult<number> | RollResult<string>
@@ -42,22 +44,22 @@ const testResult = (
 
   describe('result.rollparameters', () => {
     describe('diceOptions', () => {
-      it('has one options array in it', () => {
+      test('has one options array in it', () => {
         expect(result.rollParameters.diceOptions).toHaveLength(1)
       })
 
-      it('has the correct value of quantity', () => {
+      test('has the correct value of quantity', () => {
         expect(result.rollParameters.diceOptions[0].quantity).toEqual(
           quantity || 1
         )
       })
 
       if (isCustomSidesRollResult(result)) {
-        it('has the correct number of sides', () => {
+        test('has the correct number of sides', () => {
           expect(result.rollParameters.diceOptions[0].sides).toEqual(faces)
         })
       } else {
-        it('has the correct value of sides', () => {
+        test('has the correct value of sides', () => {
           expect(result.rollParameters.diceOptions[0].sides).toEqual(sides)
         })
       }
@@ -69,7 +71,7 @@ const testResult = (
   })
 }
 
-describe(roll, () => {
+describe('roll', () => {
   describe('Stress Test', () => {
     const loops = 9999
     const dummyArray = Array.from({ length: loops })

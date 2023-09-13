@@ -1,5 +1,7 @@
-import parseArguments from '../roll/parse-arguments'
-import { DiceNotation } from '../types/primitives'
+import { describe, expect, test } from 'bun:test'
+
+import parseArguments from '../src/roll/parse-arguments'
+import { DiceNotation } from '../src/types/primitives'
 
 describe('parseArguments', () => {
   describe('given undefined', () => {
@@ -63,14 +65,13 @@ describe('parseArguments', () => {
           })
         ).toMatchObject({
           diceOptions: [{ sides: 6, quantity: 4 }],
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          modifiers: expect.arrayContaining([
+          modifiers: [
             {
               reroll: [{ exact: [2, 1] }, { exact: [4] }, { maxReroll: 3 }]
             },
             { replace: { from: { greaterThan: 5 }, to: 1 } },
             { unique: true }
-          ])
+          ]
         })
       })
     })
@@ -115,8 +116,9 @@ describe('parseArguments', () => {
           })
         ).toMatchObject({
           diceOptions: [{ sides: 6, quantity: 4 }],
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          modifiers: expect.arrayContaining([
+          modifiers: [
+            { plus: 2 },
+            { minus: 1 },
             {
               drop: {
                 highest: undefined,
@@ -126,14 +128,18 @@ describe('parseArguments', () => {
                 exact: [2, 3]
               }
             },
-            { reroll: {} },
+            {
+              reroll: {
+                greaterThan: undefined,
+                lessThan: undefined,
+                maxReroll: undefined
+              }
+            },
             { cap: { greaterThan: 2, lessThan: 1 } },
             { replace: [{ from: 6, to: 1 }] },
             { unique: { notUnique: [1, 2] } },
-            { explode: true },
-            { plus: 2 },
-            { minus: 1 }
-          ])
+            { explode: true }
+          ]
         })
       })
     })
@@ -175,8 +181,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([{ drop: { highest: 1 } }])
+            modifiers: [{ drop: { highest: 1 } }]
           })
         })
       })
@@ -187,8 +192,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([{ drop: { highest: 2 } }])
+            modifiers: [{ drop: { highest: 2 } }]
           })
         })
       })
@@ -201,8 +205,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([{ drop: { lowest: 1 } }])
+            modifiers: [{ drop: { lowest: 1 } }]
           })
         })
       })
@@ -213,8 +216,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([{ drop: { lowest: 2 } }])
+            modifiers: [{ drop: { lowest: 2 } }]
           })
         })
       })
@@ -227,10 +229,9 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([
+            modifiers: [
               { drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }
-            ])
+            ]
           })
         })
       })
@@ -246,10 +247,9 @@ describe('parseArguments', () => {
                 sides: 20
               }
             ],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([
+            modifiers: [
               { drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }
-            ])
+            ]
           })
         })
       })
@@ -261,10 +261,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           diceOptions: [coreRollParameters],
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          modifiers: expect.arrayContaining([
-            { cap: { lessThan: 2, greaterThan: 5 } }
-          ])
+          modifiers: [{ cap: { lessThan: 2, greaterThan: 5 } }]
         })
       })
     })
@@ -275,8 +272,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           diceOptions: [coreRollParameters],
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          modifiers: expect.arrayContaining([{ minus: 2 }])
+          modifiers: [{ minus: 2 }]
         })
       })
     })
@@ -287,8 +283,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           diceOptions: [coreRollParameters],
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          modifiers: expect.arrayContaining([{ plus: 2 }])
+          modifiers: [{ plus: 2 }]
         })
       })
     })
@@ -300,8 +295,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([{ reroll: { greaterThan: 6 } }])
+            modifiers: [{ reroll: { greaterThan: 6 } }]
           })
         })
       })
@@ -312,10 +306,9 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([
+            modifiers: [
               { reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } }
-            ])
+            ]
           })
         })
       })
@@ -328,10 +321,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([
-              { unique: { notUnique: [5, 6] } }
-            ])
+            modifiers: [{ unique: { notUnique: [5, 6] } }]
           })
         })
       })
@@ -342,8 +332,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([{ unique: true }])
+            modifiers: [{ unique: true }]
           })
         })
       })
@@ -355,8 +344,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           diceOptions: [coreRollParameters],
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          modifiers: expect.arrayContaining([{ explode: true }])
+          modifiers: [{ explode: true }]
         })
       })
     })
@@ -368,15 +356,14 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([
+            modifiers: [
               {
                 replace: [
                   { from: 1, to: 2 },
                   { from: { greaterThan: 2 }, to: 6 }
                 ]
               }
-            ])
+            ]
           })
         })
       })
@@ -387,10 +374,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([
-              { replace: { from: { lessThan: 2 }, to: 6 } }
-            ])
+            modifiers: [{ replace: { from: { lessThan: 2 }, to: 6 } }]
           })
         })
       })
@@ -435,11 +419,7 @@ describe('parseArguments', () => {
                 sides: 20
               }
             ],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            modifiers: expect.arrayContaining([
-              { plus: 2 },
-              { plus: 3 },
-              { minus: 5 },
+            modifiers: [
               {
                 drop: {
                   highest: 2
@@ -451,6 +431,12 @@ describe('parseArguments', () => {
                 }
               },
               {
+                replace: [
+                  { from: 1, to: 2 },
+                  { from: { greaterThan: 2 }, to: 6 }
+                ]
+              },
+              {
                 drop: {
                   exact: [2, 4],
                   greaterThan: 5,
@@ -459,15 +445,12 @@ describe('parseArguments', () => {
               },
               { cap: { greaterThan: 18, lessThan: 2 } },
               { reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } },
-              { explode: true },
               { unique: { notUnique: [5] } },
-              {
-                replace: [
-                  { from: 1, to: 2 },
-                  { from: { greaterThan: 2 }, to: 6 }
-                ]
-              }
-            ])
+              { explode: true },
+              { plus: 2 },
+              { minus: 5 },
+              { plus: 3 }
+            ]
           })
         })
       })
