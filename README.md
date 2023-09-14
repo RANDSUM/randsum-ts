@@ -1,6 +1,6 @@
 <div align="center">
-<a href="https://github.com/alxjrvs/randsum" align="center">
-  <img width="150" height="150" align="center" src="https://raw.githubusercontent.com/alxjrvs/randsum/main/icon.webp">
+<a href="https://github.com/RANDSUM/randsum-ts" align="center">
+  <img width="150" height="150" align="center" src="https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp">
 </div>
 <h1 align="center">randsum</h1>
 <h2 align="center">NodeJS Dice Rolling with Strong Typescript Support</h2>
@@ -11,17 +11,17 @@
   <a href="https://bundlephobia.com/package/randsum" align="center">
     <img src="https://img.shields.io/bundlephobia/minzip/randsum">
   </a>
-  <a href="https://github.com/alxjrvs/randsum/blob/main/CODE_OF_CONDUCT.md" align="center">
+  <a href="https://github.com/RANDSUM/randsum-ts/blob/main/CODE_OF_CONDUCT.md" align="center">
     <img src="https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat">
   </a>
-  <a href="https://github.com/alxjrvs/randsum/actions/workflows/main.yml" align="center">
-    <img src="https://github.com/alxjrvs/randsum/actions/workflows/main.yml/badge.svg">
+  <a href="https://github.com/RANDSUM/randsum-ts/actions/workflows/main.yml" align="center">
+    <img src="https://github.com/RANDSUM/randsum-ts/actions/workflows/main.yml/badge.svg">
   </a>
-  <a href="https://github.com/alxjrvs/randsum/actions/workflows/github-code-scanning/codeql" align="center">
-    <img src="https://github.com/alxjrvs/randsum/actions/workflows/github-code-scanning/codeql/badge.svg">
+  <a href="https://github.com/RANDSUM/randsum-ts/actions/workflows/github-code-scanning/codeql" align="center">
+    <img src="https://github.com/RANDSUM/randsum-ts/actions/workflows/github-code-scanning/codeql/badge.svg">
   </a>
-  <a href="https://codecov.io/gh/alxjrvs/randsum" align="center">
-    <img src="https://codecov.io/gh/alxjrvs/randsum/branch/main/graph/badge.svg?token=uww6E0o1ob">
+  <a href="https://codecov.io/gh/RANDSUM/randsum-ts" align="center">
+    <img src="https://codecov.io/gh/RANDSUM/randsum-ts/branch/main/graph/badge.svg?token=uww6E0o1ob">
   </a>
   <a href="https://github.com/oven-sh/bun">
     <img src="https://img.shields.io/badge/Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white">
@@ -74,11 +74,11 @@ const customSidesRollTotal = roll({sides: ['+', '+', '-'. '-', ' ', ' ']}).total
 
 ## Further Reading
 
-[Getting Started](https://github.com/alxjrvs/randsum/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
+[Getting Started](https://github.com/RANDSUM/randsum-ts/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
-[Roll Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
+[Roll Dice Notation](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
 
-[Contributing](https://github.com/alxjrvs/randsum/blob/main/docs/CONTRIBUTING.md) - help make `randsum` better!
+[Contributing](https://github.com/RANDSUM/randsum-ts/blob/main/docs/CONTRIBUTING.md) - help make `randsum` better!
 
 [Sophie's Dice Notation](https://sophiehoulden.com/dice/documentation/notation.html) - a great dice notation guide that helped me along the way
 

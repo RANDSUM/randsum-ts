@@ -3,10 +3,10 @@
   "version": "3.2.1",
   "private": false,
   "author": "Alex Jarvis",
-  "icon": "https://raw.githubusercontent.com/alxjrvs/randsum/main/icon.webp",
+  "icon": "https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp",
   "description": "Ergonomic Dice Rolling with Strong Typescript Support",
   "license": "MIT",
-  "homepage": "https://github.com/alxjrvs/randsum ",
+  "homepage": "https://github.com/RANDSUM/randsum-ts ",
   "keywords": [
     "dice",
     "d20",
@@ -35,7 +35,7 @@
   "source": "src/index.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alxjrvs/randsum.git"
+    "url": "https://github.com/RANDSUM/randsum-ts.git"
   },
   "sideEffects": false,
   "scripts": {

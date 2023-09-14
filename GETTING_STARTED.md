@@ -62,7 +62,7 @@ This argument represents the `sides` of the die that we're going to roll.
 
 ---
 
-See the [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) syntax document for more info.
+See the [Randsum Dice Notation](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) syntax document for more info.
 
 ```ts
 roll('4d20H+2') // Roll 4 20 sided die, drop highest, add 2
@@ -96,7 +96,7 @@ roll({
 
 ### Custom Sides
 
-As of [1.7.0](https://github.com/alxjrvs/randsum/releases/tag/v1.7.0), `roll()` now supports rolling die and getting results with _custom sides_.
+As of [1.7.0](https://github.com/RANDSUM/randsum-ts/releases/tag/v1.7.0), `roll()` now supports rolling die and getting results with _custom sides_.
 
 ```ts
 roll({
@@ -105,7 +105,7 @@ roll({
 }) // Roll 4 fudge dice, return a string result like `+, -, _, _`
 ```
 
-See the [Randsum Dice Notation](https://github.com/alxjrvs/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for more usage information.
+See the [Randsum Dice Notation](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more usage information.
 
 Generating Custom Sides changes the typing of `RollResult`. Specifically:
 
