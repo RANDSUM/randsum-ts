@@ -78,7 +78,7 @@ const customSidesRollTotal = roll({sides: ['+', '+', '-'. '-', ' ', ' ']}).total
 
 [Roll Dice Notation](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
 
-[Contributing](https://github.com/RANDSUM/randsum-ts/blob/main/docs/CONTRIBUTING.md) - help make `randsum` better!
+[Contributing](https://github.com/RANDSUM/randsum-ts/blob/main/CONTRIBUTING.md) - help make `randsum` better!
 
 [Sophie's Dice Notation](https://sophiehoulden.com/dice/documentation/notation.html) - a great dice notation guide that helped me along the way
 
