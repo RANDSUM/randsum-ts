@@ -7,6 +7,5 @@ await Bun.build({
   target: 'node',
   splitting: true,
   sourcemap: 'inline',
-  minify: true,
   plugins: [dts()]
 })
