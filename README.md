@@ -20,9 +20,6 @@
   <a href="https://github.com/RANDSUM/randsum-ts/actions/workflows/github-code-scanning/codeql" align="center">
     <img src="https://github.com/RANDSUM/randsum-ts/actions/workflows/github-code-scanning/codeql/badge.svg">
   </a>
-  <a href="https://codecov.io/gh/RANDSUM/randsum-ts" align="center">
-    <img src="https://codecov.io/gh/RANDSUM/randsum-ts/branch/main/graph/badge.svg?token=uww6E0o1ob">
-  </a>
   <a href="https://github.com/oven-sh/bun">
     <img src="https://img.shields.io/badge/Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white">
   </a>
