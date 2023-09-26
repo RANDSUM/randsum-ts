@@ -4,9 +4,11 @@
 
 Add `randsum` to your package.json, or copy and paste one of these:
 
-`npm install randsum --save-dev`
+`npm install randsum`
 
-`yarn add randsum -D`
+`yarn add randsum`
+
+`bun add randsum`
 
 Then require it in your project!
 
