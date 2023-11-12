@@ -1,6 +1,6 @@
 {
   "name": "randsum",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "private": false,
   "author": "Alex Jarvis",
   "icon": "https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp",
@@ -31,7 +31,7 @@
     "bun"
   ],
   "main": "./dist/index.js",
-  "types": "./dist/types.d.ts",
+  "types": "./dist/index.d.ts",
   "source": "./src/index.ts",
   "files": [
     "./dist/index.js",
