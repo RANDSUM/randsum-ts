@@ -101,7 +101,7 @@
     "eslint-plugin-unicorn": "^49.0.0",
     "eslint-plugin-xss": "^0.1.12",
     "prettier": "^3.0.2",
-    "size-limit": "^10.0.3",
+    "size-limit": "^11.0.0",
     "typescript": "^5.2.2"
   },
   "type": "module"
