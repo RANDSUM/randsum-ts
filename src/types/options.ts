@@ -4,12 +4,13 @@ export type TypeOrArrayOfType<T> = T | T[]
 
 export type CustomSides = (string | number)[]
 
-export interface DiceOptions<D extends string | number> {
+export interface DiceOptions<D extends string | number = number> {
   quantity?: NumberString<'inclusive'>
   sides: D extends number ? NumberString<'inclusive'> : CustomSides
 }
 
-export interface RollOptions<D extends string | number> extends DiceOptions<D> {
+export interface RollOptions<D extends string | number = number>
+  extends DiceOptions<D> {
   modifiers?: D extends number ? Array<Modifier<'inclusive'>> : never
 }
 

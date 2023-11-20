@@ -56,7 +56,9 @@ const testResult = (
 
       if (isCustomSidesRollResult(result)) {
         test('has the correct number of sides', () => {
-          expect(result.rollParameters.diceOptions[0].sides).toEqual(faces)
+          expect(result.rollParameters.diceOptions[0].sides).toEqual(
+            faces as string[]
+          )
         })
       } else {
         test('has the correct value of sides', () => {

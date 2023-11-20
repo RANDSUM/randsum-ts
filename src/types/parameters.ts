@@ -3,12 +3,12 @@ import { generateInitialRolls } from '../roll/utils'
 import { CustomSides, Modifier, RollOptions } from './options'
 import { DiceNotation, NumberString } from './primitives'
 
-export interface DiceParameters<D extends string | number> {
+export interface DiceParameters<D extends string | number = number> {
   quantity: number
   sides: D extends number ? number : string[]
 }
 
-export interface RollParameters<D extends string | number> {
+export interface RollParameters<D extends string | number = number> {
   argument:
     | NumberString
     | RollOptions<number>
