@@ -81,7 +81,7 @@
     "eslint-plugin-array-func": "^4.0.0",
     "eslint-plugin-const-case": "^1.2.2",
     "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-html": "^7.1.0",
+    "eslint-plugin-html": "^8.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-markdown": "^3.0.0",
