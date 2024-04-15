@@ -9,49 +9,19 @@ export interface DiceOptions<D extends string | number = number> {
 
 export interface RollOptions<D extends string | number = number>
   extends DiceOptions<D> {
-  modifiers?: D extends number ? Modifier[] : never
+  modifiers?: D extends number ? Modifiers : never
 }
 
-export interface CapModifier {
-  cap: GreaterLessOptions
+export type Modifiers = {
+  cap?: GreaterLessOptions
+  drop?: DropOptions
+  replace?: TypeOrArrayOfType<ReplaceOptions>
+  reroll?: TypeOrArrayOfType<RerollOptions>
+  unique?: boolean | UniqueOptions
+  explode?: boolean
+  plus?: number
+  minus?: number
 }
-
-export interface DropModifier {
-  drop: DropOptions
-}
-
-export interface RerollModifier {
-  reroll: TypeOrArrayOfType<RerollOptions>
-}
-
-export interface ReplaceModifier {
-  replace: TypeOrArrayOfType<ReplaceOptions>
-}
-
-export interface UniqueModifier {
-  unique: boolean | UniqueOptions
-}
-
-export interface ExplodeModifier {
-  explode: boolean
-}
-
-export interface PlusModifier {
-  plus: number
-}
-export interface MinusModifier {
-  minus: number
-}
-
-export type Modifier =
-  | CapModifier
-  | DropModifier
-  | ReplaceModifier
-  | RerollModifier
-  | ExplodeModifier
-  | UniqueModifier
-  | PlusModifier
-  | MinusModifier
 
 export interface DropOptions {
   highest?: number

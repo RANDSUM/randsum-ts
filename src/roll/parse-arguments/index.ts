@@ -45,7 +45,7 @@ function parseArguments(
       diceOptions,
       argument,
       dice,
-      modifiers: []
+      modifiers: {}
     }
   }
 
@@ -57,7 +57,7 @@ function parseArguments(
     diceOptions,
     argument,
     dice,
-    modifiers: []
+    modifiers: {}
   }
 }
 export default parseArguments

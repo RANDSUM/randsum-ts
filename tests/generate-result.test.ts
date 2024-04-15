@@ -3,7 +3,7 @@ import { describe, expect, test } from 'bun:test'
 import { dicePoolFactory, StandardDie } from '../src/Die'
 import generateResult from '../src/roll/generate-results'
 import { InvalidUniqueError } from '../src/roll/generate-results/generate-standard-results'
-import { Modifier } from '../src/types/options'
+import { Modifiers } from '../src/types/options'
 import { RollParameters } from '../src/types/parameters'
 
 describe('generateResult', () => {
@@ -12,7 +12,7 @@ describe('generateResult', () => {
   const coreParameters = {
     argument: undefined,
     diceOptions: [{ sides: 6, quantity: testRollSet.length }],
-    modifiers: [] as Modifier<number>[],
+    modifiers: {} as Modifiers,
     generateInitialRolls: () => testRollSet,
     dice: [{ roll: () => 200 }] as unknown as StandardDie[]
   }
@@ -33,7 +33,7 @@ describe('generateResult', () => {
       ...coreParameters,
       sides: 4,
       generateInitialRolls: () => uniqueRolls,
-      modifiers: [{ unique: true }]
+      modifiers: { unique: true }
     }
 
     test('it re-quantity non-unique modifiers', () => {
@@ -46,7 +46,7 @@ describe('generateResult', () => {
     describe('when given a "notUnique" array', () => {
       const notUniqueParameters = {
         ...uniqueParameters,
-        modifiers: [{ unique: { notUnique: [1] } }]
+        modifiers: { unique: { notUnique: [1] } }
       }
 
       test('it disregards any numbers in that array and makes the rest unique', () => {
@@ -99,17 +99,15 @@ describe('generateResult', () => {
       ...coreParameters,
       diceOptions: [{ sides: 10, quantity: longerRollTotals.length }],
       generateInitialRolls: () => longerRollTotals,
-      modifiers: [
-        {
-          drop: {
-            highest: 1,
-            lowest: 2,
-            greaterThan: 8,
-            lessThan: 2,
-            exact: [5]
-          }
+      modifiers: {
+        drop: {
+          highest: 1,
+          lowest: 2,
+          greaterThan: 8,
+          lessThan: 2,
+          exact: [5]
         }
-      ]
+      }
     }
 
     test('it returns the total without the provided values', () => {
@@ -124,7 +122,7 @@ describe('generateResult', () => {
     describe('that is a single replace modifiers', () => {
       const dropParameters = {
         ...coreParameters,
-        modifiers: [{ replace: { from: 1, to: 2 } }]
+        modifiers: { replace: { from: 1, to: 2 } }
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
@@ -138,14 +136,12 @@ describe('generateResult', () => {
     describe('that is an array of replace modifiers', () => {
       const dropParameters = {
         ...coreParameters,
-        modifiers: [
-          {
-            replace: [
-              { from: 1, to: 2 },
-              { from: { greaterThan: 3 }, to: 6 }
-            ]
-          }
-        ]
+        modifiers: {
+          replace: [
+            { from: 1, to: 2 },
+            { from: { greaterThan: 3 }, to: 6 }
+          ]
+        }
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
@@ -162,7 +158,7 @@ describe('generateResult', () => {
     const explodeParameters = {
       ...coreParameters,
       generateInitialRolls: () => explodeRollTotals,
-      modifiers: [{ explode: true }]
+      modifiers: { explode: true }
     }
 
     test('it returns the total with all values matching the queries rerolled', () => {
@@ -177,7 +173,7 @@ describe('generateResult', () => {
     describe('when given an impossible roll', () => {
       const rerollParameters = {
         ...coreParameters,
-        modifiers: [{ reroll: { greaterThan: 3 } }]
+        modifiers: { reroll: { greaterThan: 3 } }
       }
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
@@ -191,7 +187,7 @@ describe('generateResult', () => {
     describe('that is a single reroll modifier', () => {
       const rerollParameters = {
         ...coreParameters,
-        modifiers: [{ reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }]
+        modifiers: { reroll: { greaterThan: 3, exact: 2, maxReroll: 2 } }
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
@@ -205,7 +201,7 @@ describe('generateResult', () => {
     describe('that is an array of reroll modifiers', () => {
       const rerollParameters = {
         ...coreParameters,
-        modifiers: [{ reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }]
+        modifiers: { reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }] }
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
@@ -220,7 +216,7 @@ describe('generateResult', () => {
   describe('when given roll total with a "cap" modifier', () => {
     const dropParameters = {
       ...coreParameters,
-      modifiers: [{ cap: { greaterThan: 3, lessThan: 2 } }]
+      modifiers: { cap: { greaterThan: 3, lessThan: 2 } }
     }
 
     test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll total', () => {
@@ -234,7 +230,7 @@ describe('generateResult', () => {
   describe('when given roll total with a "plus" modifier', () => {
     const dropParameters = {
       ...coreParameters,
-      modifiers: [{ plus: 2 }]
+      modifiers: { plus: 2 }
     }
 
     test('it returns the total plus the "plus" modifier, and the roll total', () => {
@@ -248,7 +244,7 @@ describe('generateResult', () => {
   describe('when given roll total with a "minus" modifier', () => {
     const dropParameters = {
       ...coreParameters,
-      modifiers: [{ minus: 2 }]
+      modifiers: { minus: 2 }
     }
 
     test('it returns the total minus the "minus" modifier, and the roll total', () => {
@@ -262,7 +258,7 @@ describe('generateResult', () => {
   describe('when given an roll total with an unrecognized modifier', () => {
     const dropParameters = {
       ...coreParameters,
-      modifiers: [{ foo: 2 }]
+      modifiers: { foo: 2 }
     } as unknown as RollParameters<number>
 
     test('Throws an error', () => {

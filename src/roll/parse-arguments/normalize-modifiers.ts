@@ -1,27 +1,26 @@
 import {
   DropOptions,
   GreaterLessOptions,
-  Modifier,
+  Modifiers,
   ReplaceOptions,
   RerollOptions
 } from '../../types/options'
-import {
-  isCapModifier,
-  isDropModifier,
-  isExplodeModifier,
-  isPlusModifier,
-  isReplaceModifier,
-  isRerollModifier,
-  isUniqueModifier
-} from '../utils'
 
 export const convertGreaterLessOptionsToParameters = ({
   greaterThan,
   lessThan
-}: GreaterLessOptions): GreaterLessOptions => ({
-  greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
-  lessThan: lessThan === undefined ? undefined : Number(lessThan)
-})
+}: GreaterLessOptions): GreaterLessOptions => {
+  const converted: GreaterLessOptions = {}
+
+  if (greaterThan !== undefined) {
+    converted.greaterThan = Number(greaterThan)
+  }
+
+  if (lessThan !== undefined) {
+    converted.lessThan = Number(lessThan)
+  }
+  return converted
+}
 
 export const convertDropOptionsToParameters = ({
   highest,
@@ -62,50 +61,31 @@ export const convertRerollOptionsToParameters = ({
   }
 }
 
-const normalizeModifiers = (modifiers: Array<Modifier>): Array<Modifier> =>
-  modifiers.map((modifier) => {
-    if (isCapModifier(modifier)) {
-      return {
-        cap: convertGreaterLessOptionsToParameters(modifier.cap)
-      }
-    }
-
-    if (isDropModifier(modifier)) {
-      return { drop: convertDropOptionsToParameters(modifier.drop) }
-    }
-    if (isRerollModifier(modifier)) {
-      return {
-        reroll: Array.isArray(modifier.reroll)
-          ? modifier.reroll.map((option) =>
-              convertRerollOptionsToParameters(option)
-            )
-          : convertRerollOptionsToParameters(modifier.reroll)
-      }
-    }
-    if (isReplaceModifier(modifier)) {
-      return {
-        replace: Array.isArray(modifier.replace)
-          ? modifier.replace.map((option) =>
-              convertReplaceOptionsToParameters(option)
-            )
-          : convertReplaceOptionsToParameters(modifier.replace)
-      }
-    }
-    if (isUniqueModifier(modifier)) {
-      return {
-        unique:
-          typeof modifier.unique === 'object'
-            ? { notUnique: modifier.unique.notUnique.map(Number) }
-            : modifier.unique
-      }
-    }
-    if (isExplodeModifier(modifier)) {
-      return { explode: modifier.explode }
-    }
-    if (isPlusModifier(modifier)) {
-      return { plus: Number(modifier.plus) }
-    }
-    return { minus: Number(modifier.minus) }
-  })
+const normalizeModifiers = (modifiers: Modifiers): Modifiers => ({
+  cap: modifiers.cap && convertGreaterLessOptionsToParameters(modifiers.cap),
+  drop: modifiers.drop && convertDropOptionsToParameters(modifiers.drop),
+  reroll:
+    modifiers.reroll &&
+    (Array.isArray(modifiers.reroll)
+      ? modifiers.reroll.map((option) =>
+          convertRerollOptionsToParameters(option)
+        )
+      : convertRerollOptionsToParameters(modifiers.reroll)),
+  replace:
+    modifiers.replace &&
+    (Array.isArray(modifiers.replace)
+      ? modifiers.replace.map((option) =>
+          convertReplaceOptionsToParameters(option)
+        )
+      : convertReplaceOptionsToParameters(modifiers.replace)),
+  unique:
+    modifiers.unique &&
+    (typeof modifiers.unique === 'object'
+      ? { notUnique: modifiers.unique.notUnique.map(Number) }
+      : modifiers.unique),
+  explode: !!modifiers.explode,
+  plus: Number(modifiers.plus || 0),
+  minus: Number(modifiers.minus || 0)
+})
 
 export default normalizeModifiers

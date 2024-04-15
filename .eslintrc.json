@@ -18,7 +18,8 @@
         "no-undef": "off",
         "max-classes-per-file": "off",
         "unicorn/new-for-builtins": "off",
-        "unicorn/no-array-reduce": "off"
+        "unicorn/no-array-reduce": "off",
+        "@typescript-eslint/no-non-null-assertion": "off"
       }
     }
   ],
