@@ -10,51 +10,44 @@ import {
   RerollModifier,
   UniqueModifier
 } from '../types/options'
-import { InclusiveOrNumber } from '../types/primitives'
 
-const isModifierType = <M extends Modifier<InclusiveOrNumber>>(
-  argument: Modifier<InclusiveOrNumber>,
+const isModifierType = <M extends Modifier>(
+  argument: Modifier,
   key: keyof M
 ): argument is M => (argument as M)[key] !== undefined
 
-export const isCapModifier = <N extends InclusiveOrNumber>(
-  modifier: Modifier<N>
-): modifier is CapModifier<N> => isModifierType<CapModifier<N>>(modifier, 'cap')
+export const isCapModifier = (modifier: Modifier): modifier is CapModifier =>
+  isModifierType<CapModifier>(modifier, 'cap')
 
-export const isDropModifier = <N extends InclusiveOrNumber>(
-  modifier: Modifier<N>
-): modifier is DropModifier<N> =>
-  isModifierType<DropModifier<N>>(modifier, 'drop')
+export const isDropModifier = (modifier: Modifier): modifier is DropModifier =>
+  isModifierType<DropModifier>(modifier, 'drop')
 
-export const isRerollModifier = <N extends InclusiveOrNumber>(
-  modifier: Modifier<N>
-): modifier is RerollModifier<N> =>
-  isModifierType<RerollModifier<N>>(modifier, 'reroll')
+export const isRerollModifier = (
+  modifier: Modifier
+): modifier is RerollModifier =>
+  isModifierType<RerollModifier>(modifier, 'reroll')
 
-export const isReplaceModifier = <N extends InclusiveOrNumber>(
-  modifier: Modifier<N>
-): modifier is ReplaceModifier<N> =>
-  isModifierType<ReplaceModifier<N>>(modifier, 'replace')
+export const isReplaceModifier = (
+  modifier: Modifier
+): modifier is ReplaceModifier =>
+  isModifierType<ReplaceModifier>(modifier, 'replace')
 
-export const isUniqueModifier = <N extends InclusiveOrNumber>(
-  modifier: Modifier<N>
-): modifier is UniqueModifier<N> =>
-  isModifierType<UniqueModifier<N>>(modifier, 'unique')
+export const isUniqueModifier = (
+  modifier: Modifier
+): modifier is UniqueModifier =>
+  isModifierType<UniqueModifier>(modifier, 'unique')
 
 export const isExplodeModifier = (
-  modifier: Modifier<InclusiveOrNumber>
+  modifier: Modifier
 ): modifier is ExplodeModifier =>
   isModifierType<ExplodeModifier>(modifier, 'explode')
 
-export const isPlusModifier = <N extends InclusiveOrNumber>(
-  modifier: Modifier<N>
-): modifier is PlusModifier<N> =>
-  isModifierType<PlusModifier<N>>(modifier, 'plus')
+export const isPlusModifier = (modifier: Modifier): modifier is PlusModifier =>
+  isModifierType<PlusModifier>(modifier, 'plus')
 
-export const isMinusModifier = <N extends InclusiveOrNumber>(
-  modifier: Modifier<N>
-): modifier is MinusModifier<N> =>
-  isModifierType<MinusModifier<N>>(modifier, 'minus')
+export const isMinusModifier = (
+  modifier: Modifier
+): modifier is MinusModifier => isModifierType<MinusModifier>(modifier, 'minus')
 
 export function generateInitialRolls(dice: StandardDie[]): number[]
 export function generateInitialRolls(dice: CustomSidesDie[]): string[]
