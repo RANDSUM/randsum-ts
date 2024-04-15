@@ -33,7 +33,7 @@ export class InvalidUniqueError extends Error {
 
 const applyUnique = (
   rolls: number[],
-  { unique, sides, quantity }: DiceParameters<number> & UniqueModifier<number>,
+  { unique, sides, quantity }: DiceParameters<number> & UniqueModifier,
   rollOne: () => number
 ): number[] => {
   if (quantity > sides) {
@@ -60,7 +60,7 @@ const applyUnique = (
 }
 
 const applySingleCap =
-  ({ greaterThan, lessThan }: GreaterLessOptions<number>, value?: number) =>
+  ({ greaterThan, lessThan }: GreaterLessOptions, value?: number) =>
   (roll: number) => {
     if (greaterThan !== undefined && roll > greaterThan) {
       return value ?? greaterThan
@@ -73,7 +73,7 @@ const applySingleCap =
 
 const rerollRoll = (
   roll: number,
-  { greaterThan, lessThan, exact, maxReroll }: RerollOptions<number>,
+  { greaterThan, lessThan, exact, maxReroll }: RerollOptions,
   rollOne: () => number,
   index = 0
 ): number => {
@@ -105,7 +105,7 @@ const rerollRoll = (
 
 const applyReroll = (
   rolls: number[],
-  reroll: RerollOptions<number> | Array<RerollOptions<number>>,
+  reroll: RerollOptions | Array<RerollOptions>,
   rollOne: () => number
 ): number[] => {
   const parameters = Array.isArray(reroll) ? reroll : [reroll]
@@ -121,7 +121,7 @@ const applyReroll = (
 
 const applyReplace = (
   rolls: number[],
-  replace: ReplaceOptions<number> | Array<ReplaceOptions<number>>
+  replace: ReplaceOptions | Array<ReplaceOptions>
 ): number[] => {
   const parameters = Array.isArray(replace) ? replace : [replace]
 
@@ -163,7 +163,7 @@ const times = (iterator: number) => (callback: (index?: number) => void) => {
 
 const applyDrop = (
   rolls: number[],
-  { highest, lowest, greaterThan, lessThan, exact }: DropOptions<number>
+  { highest, lowest, greaterThan, lessThan, exact }: DropOptions
 ): number[] => {
   const sortedResults = rolls
     .filter(

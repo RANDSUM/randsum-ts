@@ -18,7 +18,7 @@ import {
 export const convertGreaterLessOptionsToParameters = ({
   greaterThan,
   lessThan
-}: GreaterLessOptions<'inclusive'>): GreaterLessOptions<number> => ({
+}: GreaterLessOptions): GreaterLessOptions => ({
   greaterThan: greaterThan === undefined ? undefined : Number(greaterThan),
   lessThan: lessThan === undefined ? undefined : Number(lessThan)
 })
@@ -28,7 +28,7 @@ export const convertDropOptionsToParameters = ({
   lowest,
   exact,
   ...greaterThanLessThan
-}: DropOptions<'inclusive'>): DropOptions<number> => ({
+}: DropOptions): DropOptions => ({
   ...convertGreaterLessOptionsToParameters(greaterThanLessThan),
   highest: highest === undefined ? undefined : Number(highest),
   lowest: lowest === undefined ? undefined : Number(lowest),
@@ -38,7 +38,7 @@ export const convertDropOptionsToParameters = ({
 export const convertReplaceOptionsToParameters = ({
   from,
   to
-}: ReplaceOptions<'inclusive'>): ReplaceOptions<number> => ({
+}: ReplaceOptions): ReplaceOptions => ({
   from:
     typeof from === 'object'
       ? convertGreaterLessOptionsToParameters(from)
@@ -50,7 +50,7 @@ export const convertRerollOptionsToParameters = ({
   exact,
   maxReroll,
   ...restOptions
-}: RerollOptions<'inclusive'>): RerollOptions<number> => {
+}: RerollOptions): RerollOptions => {
   const convertedExact =
     exact === undefined
       ? {}
@@ -62,9 +62,7 @@ export const convertRerollOptionsToParameters = ({
   }
 }
 
-const normalizeModifiers = (
-  modifiers: Array<Modifier<'inclusive' | number>>
-): Array<Modifier<number>> =>
+const normalizeModifiers = (modifiers: Array<Modifier>): Array<Modifier> =>
   modifiers.map((modifier) => {
     if (isCapModifier(modifier)) {
       return {

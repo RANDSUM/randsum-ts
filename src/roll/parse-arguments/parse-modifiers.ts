@@ -92,7 +92,7 @@ export const parseCoreNotation = ({
 
 const parseCapNotation = ({
   capMatch: notationString
-}: CapMatch): CapModifier<number> => {
+}: CapMatch): CapModifier => {
   let capParameters = {}
   const capString = notationString.split(/[Cc]/)[1].split(/(?!\d)/)
   capString.forEach((note) => {
@@ -111,7 +111,7 @@ const parseCapNotation = ({
 
 const parseUniqueNotation = ({
   uniqueMatch: notationString
-}: UniqueMatch): UniqueModifier<number> => {
+}: UniqueMatch): UniqueModifier => {
   if (notationString === 'u' || notationString === 'U') {
     return { unique: true }
   }
@@ -130,9 +130,9 @@ const parseUniqueNotation = ({
 
 const parseDropConstraintsNotation = ({
   dropConstraintsMatch: notationString
-}: DropConstraintsMatch): DropModifier<number> => {
+}: DropConstraintsMatch): DropModifier => {
   let dropConstraintParameters: Pick<
-    DropOptions<number>,
+    DropOptions,
     'greaterThan' | 'lessThan'
   > & { exact: number[] } = { exact: [] }
   const constraints = notationString
@@ -167,7 +167,7 @@ const parseDropConstraintsNotation = ({
 
 const parseDropHighNotation = ({
   dropHighMatch: notationString
-}: DropHighMatch): DropModifier<number> => {
+}: DropHighMatch): DropModifier => {
   const highestCount = notationString.split(/[Hh]/)[1]
 
   return {
@@ -177,7 +177,7 @@ const parseDropHighNotation = ({
 
 const parseDropLowNotation = ({
   dropLowMatch: notationString
-}: DropLowMatch): DropModifier<number> => {
+}: DropLowMatch): DropModifier => {
   const lowestCount = notationString.split(/[Ll]/)[1]
 
   return {
@@ -189,13 +189,13 @@ const parseDropLowNotation = ({
 
 const parseRerollNotation = ({
   rerollMatch: notationString
-}: RerollMatch): RerollModifier<number> => {
+}: RerollMatch): RerollModifier => {
   const parsedString = notationString
     .split(/[Rr]/)[1]
     .replaceAll('{', '')
     .replaceAll('}', ',!')
     .split(',')
-  let rerollParameters: RerollOptions<number> = {}
+  let rerollParameters: RerollOptions = {}
   parsedString.forEach((notation) => {
     if (notation === '!') {
       return
@@ -241,19 +241,19 @@ const parseExplodeNotation = ({
 
 const parseMinusNotation = ({
   minusMatch: notationString
-}: MinusMatch): MinusModifier<number> => ({
+}: MinusMatch): MinusModifier => ({
   minus: Number(notationString.split('-')[1])
 })
 
 const parsePlusNotation = ({
   plusMatch: notationString
-}: PlusMatch): PlusModifier<number> => ({
+}: PlusMatch): PlusModifier => ({
   plus: Number(notationString.split('+')[1])
 })
 
 const parseReplaceNotation = ({
   replaceMatch: notationString
-}: ReplaceMatch): ReplaceModifier<number> => {
+}: ReplaceMatch): ReplaceModifier => {
   const replaceOptions = notationString
     .split(/[Vv]/)[1]
     .replaceAll('{', '')
@@ -283,9 +283,7 @@ const parseReplaceNotation = ({
   }
 }
 
-const parseModifiers = (
-  match: Exclude<Match, CoreNotationMatch>
-): Modifier<number> => {
+const parseModifiers = (match: Exclude<Match, CoreNotationMatch>): Modifier => {
   if (isDropHighMatch(match)) {
     return parseDropHighNotation(match)
   }

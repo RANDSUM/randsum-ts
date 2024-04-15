@@ -3,7 +3,7 @@ import { dicePoolFactory } from '../../Die'
 import { isCustomSidesOptions } from '../../Die/guards'
 import { CustomSides, RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
-import { DiceNotation, NumberString } from '../../types/primitives'
+import { DiceNotation } from '../../types/primitives'
 import parseNotation from './parse-notation'
 import parseOptions from './parse-options'
 
@@ -20,7 +20,7 @@ export const isDiceNotation = (
 
 function parseArguments(
   argument:
-    | NumberString
+    | number
     | RollOptions<number>
     | DiceNotation<number>
     | undefined
