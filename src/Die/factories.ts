@@ -1,6 +1,6 @@
 import { CustomSides, DiceOptions } from '../types/options'
 import { CustomSidesDie, StandardDie } from './constants'
-import { isCustomSidesOptions } from './guards'
+import { isCustomSides } from './guards'
 import SingleDie from './single-die'
 
 function dieFactory(sides: number): SingleDie<number>
@@ -11,7 +11,7 @@ function dieFactory<D extends string | number>(
 function dieFactory(
   sides: number | CustomSides
 ): SingleDie<string> | SingleDie<number> {
-  return isCustomSidesOptions(sides)
+  return isCustomSides(sides)
     ? new CustomSidesDie(sides.map(String))
     : new StandardDie(sides)
 }

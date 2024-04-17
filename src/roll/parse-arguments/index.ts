@@ -1,6 +1,6 @@
 import { coreNotationPattern } from '../../constants/regexp'
 import { dicePoolFactory } from '../../Die'
-import { isCustomSidesOptions } from '../../Die/guards'
+import { isCustomSides } from '../../Die/guards'
 import { CustomSides, RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
 import { DiceNotation } from '../../types/primitives'
@@ -38,7 +38,7 @@ function parseArguments(
     return parseNotation(argument)
   }
 
-  if (isCustomSidesOptions(argument)) {
+  if (isCustomSides(argument)) {
     const diceOptions = [{ quantity: 1, sides: argument.map(String) }]
     const dice = dicePoolFactory(diceOptions)
     return {

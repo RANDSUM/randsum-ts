@@ -1,5 +1,5 @@
 import { CustomSides } from '../types/options'
-import { isCustomSidesOptions } from './guards'
+import { isCustomSides } from './guards'
 
 const generateStandardSides = (sides: number): number[] =>
   Array.from({ length: Number(sides) }, (_, index) => index + 1)
@@ -10,7 +10,7 @@ export default abstract class SingleDie<D extends string | number> {
   faces: D[]
 
   constructor(sides: D extends number ? number : CustomSides) {
-    const isCustom = isCustomSidesOptions(sides)
+    const isCustom = isCustomSides(sides)
     this.sides = isCustom ? sides.length : Number(sides)
     this.faces = (isCustom ? sides : generateStandardSides(sides)) as D[]
   }

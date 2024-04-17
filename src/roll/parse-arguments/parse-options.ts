@@ -1,7 +1,6 @@
 import { dicePoolFactory } from '../../Die'
 import { RollOptions } from '../../types/options'
 import { RollParameters } from '../../types/parameters'
-import normalizeModifiers from './normalize-modifiers'
 
 const isCustomSidesRollOptions = (
   argument: RollOptions<number> | RollOptions<string>
@@ -32,7 +31,7 @@ const parseOptions = (
     diceOptions,
     dice,
     argument: options,
-    modifiers: normalizeModifiers(options.modifiers || {})
+    modifiers: options.modifiers || {}
   }
 }
 
