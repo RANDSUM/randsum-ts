@@ -92,7 +92,7 @@ You can use the `modifier` key of `RollOptions` to further modify your roll. `mo
 roll({
   sides: 20,
   quantity: 4,
-  modifiers: [{ drop: { highest: true } }, { plus: 2 }]
+  modifiers: { drop: { highest: true } }, { plus: 2 }
 }) // Roll 4 20 sided die, drop highest, plus 2
 ```
 

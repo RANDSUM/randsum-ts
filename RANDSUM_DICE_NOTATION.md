@@ -118,7 +118,7 @@ roll('6d20+5')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [{ plus: 5 }]
+  modifiers: { plus: 5 }
 })
 ```
 
@@ -143,7 +143,7 @@ roll('6d20-5')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [{ minus: 5 }]
+  modifiers: { minus: 5 }
 })
 ```
 
@@ -178,13 +178,11 @@ roll('6d20H')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [
-    {
-      drop: {
-        highest: true
-      }
+  modifiers: {
+    drop: {
+      highest: true
     }
-  ]
+  }
 })
 
 // Roll 6 twenty-sided die, drop highest 3
@@ -193,13 +191,11 @@ roll('6d20H3')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [
-    {
-      drop: {
-        highest: 3
-      }
+  modifiers: {
+    drop: {
+      highest: 3
     }
-  ]
+  }
 })
 ```
 
@@ -228,13 +224,11 @@ roll('6d20L')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [
-    {
-      drop: {
-        lowest: true
-      }
+  modifiers: {
+    drop: {
+      lowest: true
     }
-  ]
+  }
 })
 
 // Roll 6 twenty-sided die, drop lowest 3
@@ -243,13 +237,11 @@ roll('6d20L3')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [
-    {
-      drop: {
-        lowest: 3
-      }
+  modifiers: {
+    drop: {
+      lowest: 3
     }
-  ]
+  }
 })
 ```
 
@@ -286,15 +278,13 @@ roll('6d20D{<5,>15,10')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [
-    {
-      drop: {
-        greaterThan: 15,
-        lessThan: 5,
-        exactly: [10]
-      }
+  modifiers: {
+    drop: {
+      greaterThan: 15,
+      lessThan: 5,
+      exactly: [10]
     }
-  ]
+  }
 })
 ```
 
@@ -329,14 +319,12 @@ roll('6d20C<5>15')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [
-    {
-      cap: {
-        greaterThan: 15,
-        lessThan: 5
-      }
+  modifiers: {
+    cap: {
+      greaterThan: 15,
+      lessThan: 5
     }
-  ]
+  }
 })
 ```
 
@@ -379,16 +367,14 @@ roll('6d20R{<5,>15,10}3')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [
-    {
-      reroll: {
-        above: 15,
-        below: 5,
-        exactly: [10],
-        maxReroll: 3
-      }
+  modifiers: {
+    reroll: {
+      above: 15,
+      below: 5,
+      exactly: [10],
+      maxReroll: 3
     }
-  ]
+  }
 })
 ```
 
@@ -427,28 +413,26 @@ roll('6d20v{<5=1,>15=20,10=2')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [
-    {
-      replace: [
-        {
-          from: {
-            above: 15
-          },
-          to: 20
+  modifiers: {
+    replace: [
+      {
+        from: {
+          above: 15
         },
-        {
-          from: {
-            below: 5
-          },
-          to: 1
+        to: 20
+      },
+      {
+        from: {
+          below: 5
         },
-        {
-          from: 10,
-          to: 2
-        }
-      ]
-    }
-  ]
+        to: 1
+      },
+      {
+        from: 10,
+        to: 2
+      }
+    ]
+  }
 })
 ```
 
@@ -479,7 +463,7 @@ roll('6d20U')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [{ unique: true }]
+  modifiers: { unique: true }
 })
 
 // Roll 6 twenty-sided die, make them all unique, allow for repeated 5's and 10's
@@ -488,13 +472,11 @@ roll('6d20U{5,10}')
 roll({
   sides: 20,
   quantity: 6,
-  modifiers: [
-    {
-      unique: {
-        notUnique: [5, 10]
-      }
+  modifiers: {
+    unique: {
+      notUnique: [5, 10]
     }
-  ]
+  }
 })
 ```
 
@@ -518,7 +500,7 @@ In `randsum`:
 // Roll 6 twenty-sided die, explode them
 
 roll('6d20!')
-roll({ sides: 20, quantity: 6, modifiers: [{ explode: true }] })
+roll({ sides: 20, quantity: 6, modifiers: { explode: true } })
 ```
 
 ### Attribution
