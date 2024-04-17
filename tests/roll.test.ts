@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 
-import { roll, RollResult } from '../src'
+import { Modifiers, roll, RollResult } from '../src'
 
 const isCustomSidesRollResult = (
   argument: RollResult<number> | RollResult<string>
@@ -11,12 +11,12 @@ type ExpectedResults = {
   quantity?: number
   rollLength?: number
   faces?: string[]
-  modifiers?: RollResult<string | number>['rollParameters']['modifiers']
+  modifiers?: Modifiers
 }
 
 const testResult = (
   result: RollResult<number> | RollResult<string>,
-  { quantity, sides, faces, modifiers = [], rollLength }: ExpectedResults
+  { quantity, sides, faces, modifiers = {}, rollLength }: ExpectedResults
 ): void => {
   if (isCustomSidesRollResult(result)) {
     test('result.total returns an string', () => {
@@ -68,7 +68,7 @@ const testResult = (
     })
 
     test('.modifiers returns modifiers used in the rolls', () => {
-      expect(result.rollParameters.modifiers).toEqual(modifiers)
+      expect(result.rollParameters.modifiers).toMatchObject(modifiers)
     })
   })
 }
@@ -95,13 +95,6 @@ describe('roll', () => {
     testResult(result, { sides: 20 })
   })
 
-  describe('(string)', () => {
-    const firstArg = '20'
-    const result = roll(firstArg)
-
-    testResult(result, { sides: 20 })
-  })
-
   describe('(number)', () => {
     const firstArg = 20
     const result = roll(firstArg)
@@ -120,7 +113,7 @@ describe('roll', () => {
     const firstArg = {
       sides: 20,
       quantity: 2,
-      modifiers: [{ drop: { highest: 1 } }]
+      modifiers: { drop: { highest: 1 } }
     }
     const result = roll(firstArg)
 

@@ -1,22 +1,12 @@
 import {
   DropOptions,
   GreaterLessOptions,
+  Modifiers,
   ReplaceOptions,
-  RerollOptions,
-  UniqueModifier
+  RerollOptions
 } from '../../types/options'
 import { DiceParameters, RollParameters } from '../../types/parameters'
 import { RollResult } from '../../types/results'
-import {
-  isCapModifier,
-  isDropModifier,
-  isExplodeModifier,
-  isMinusModifier,
-  isPlusModifier,
-  isReplaceModifier,
-  isRerollModifier,
-  isUniqueModifier
-} from '../utils'
 
 type RollBonuses = {
   rolls: number[]
@@ -33,7 +23,11 @@ export class InvalidUniqueError extends Error {
 
 const applyUnique = (
   rolls: number[],
-  { unique, sides, quantity }: DiceParameters<number> & UniqueModifier,
+  {
+    unique,
+    sides,
+    quantity
+  }: DiceParameters<number> & Pick<Modifiers, 'unique'>,
   rollOne: () => number
 ): number[] => {
   if (quantity > sides) {
@@ -204,70 +198,77 @@ const applyModifiers = (
 
   const rollOne: () => number = () => dice[0].roll()
 
-  return modifiers.reduce((bonuses, modifier) => {
-    if (isRerollModifier(modifier)) {
-      return {
-        ...bonuses,
-        rolls: applyReroll(rollBonuses.rolls, modifier.reroll, rollOne)
-      }
-    }
+  return Object.keys(modifiers).reduce((bonuses, key) => {
+    switch (key) {
+      case 'reroll':
+        return {
+          ...bonuses,
+          rolls: modifiers.reroll
+            ? applyReroll(bonuses.rolls, modifiers.reroll, rollOne)
+            : bonuses.rolls
+        }
 
-    if (isUniqueModifier(modifier)) {
-      return {
-        ...bonuses,
-        rolls: applyUnique(
-          rollBonuses.rolls,
-          { sides, quantity, unique: modifier.unique },
-          rollOne
-        )
-      }
-    }
+      case 'unique':
+        return {
+          ...bonuses,
+          rolls: modifiers.unique
+            ? applyUnique(
+                bonuses.rolls,
+                { sides, quantity, unique: modifiers.unique },
+                rollOne
+              )
+            : bonuses.rolls
+        }
 
-    if (isReplaceModifier(modifier)) {
-      return {
-        ...bonuses,
-        rolls: applyReplace(rollBonuses.rolls, modifier.replace)
-      }
-    }
+      case 'replace':
+        return {
+          ...bonuses,
+          rolls: modifiers.replace
+            ? applyReplace(bonuses.rolls, modifiers.replace)
+            : bonuses.rolls
+        }
 
-    if (isCapModifier(modifier)) {
-      return {
-        ...bonuses,
-        rolls: rollBonuses.rolls.map(applySingleCap(modifier.cap))
-      }
-    }
+      case 'cap':
+        return {
+          ...bonuses,
+          rolls: modifiers.cap
+            ? bonuses.rolls.map(applySingleCap(modifiers.cap))
+            : bonuses.rolls
+        }
 
-    if (isDropModifier(modifier)) {
-      return {
-        ...bonuses,
-        rolls: applyDrop(rollBonuses.rolls, modifier.drop)
-      }
-    }
+      case 'drop':
+        return {
+          ...bonuses,
+          rolls: modifiers.drop
+            ? applyDrop(bonuses.rolls, modifiers.drop)
+            : bonuses.rolls
+        }
 
-    if (isExplodeModifier(modifier)) {
-      return {
-        ...bonuses,
-        rolls: applyExplode(rollBonuses.rolls, { sides }, rollOne)
-      }
-    }
+      case 'explode':
+        return {
+          ...bonuses,
+          rolls: modifiers.explode
+            ? applyExplode(bonuses.rolls, { sides }, rollOne)
+            : bonuses.rolls
+        }
 
-    if (isPlusModifier(modifier)) {
-      return {
-        ...bonuses,
-        simpleMathModifier:
-          rollBonuses.simpleMathModifier + Number(modifier.plus)
-      }
-    }
+      case 'plus':
+        return {
+          ...bonuses,
+          simpleMathModifier:
+            bonuses.simpleMathModifier + Number(modifiers.plus)
+        }
 
-    if (isMinusModifier(modifier)) {
-      return {
-        ...bonuses,
-        simpleMathModifier:
-          rollBonuses.simpleMathModifier - Number(modifier.minus)
-      }
-    }
+      case 'minus':
+        return {
+          ...bonuses,
+          simpleMathModifier:
+            bonuses.simpleMathModifier - Number(modifiers.minus)
+        }
 
-    throw new Error(`Unknown modifier: ${Object.keys(modifier)[0]}`)
+      default:
+        throw new Error(`Unknown modifier: ${key}`)
+    }
   }, rollBonuses)
 }
 

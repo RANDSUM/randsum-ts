@@ -1,6 +1,6 @@
 import { SingleDie } from '../Die'
 import { generateInitialRolls } from '../roll/utils'
-import { CustomSides, Modifier, RollOptions } from './options'
+import { CustomSides, Modifiers, RollOptions } from './options'
 import { DiceNotation } from './primitives'
 
 export interface DiceParameters<D extends string | number = number> {
@@ -19,6 +19,6 @@ export interface RollParameters<D extends string | number = number> {
     | CustomSides
   diceOptions: DiceParameters<D>[]
   generateInitialRolls: typeof generateInitialRolls<D>
-  modifiers: Array<Modifier>
+  modifiers: Modifiers
   dice: SingleDie<D>[]
 }

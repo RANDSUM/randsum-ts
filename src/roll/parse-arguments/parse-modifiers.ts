@@ -1,15 +1,8 @@
 import {
-  CapModifier,
-  DropModifier,
   DropOptions,
-  ExplodeModifier,
-  MinusModifier,
-  Modifier,
-  PlusModifier,
-  ReplaceModifier,
-  RerollModifier,
-  RerollOptions,
-  UniqueModifier
+  Modifiers,
+  ReplaceOptions,
+  RerollOptions
 } from '../../types/options'
 import { DiceParameters } from '../../types/parameters'
 
@@ -92,26 +85,28 @@ export const parseCoreNotation = ({
 
 const parseCapNotation = ({
   capMatch: notationString
-}: CapMatch): CapModifier => {
+}: CapMatch): Pick<Modifiers, 'cap'> => {
   let capParameters = {}
   const capString = notationString.split(/[Cc]/)[1].split(/(?!\d)/)
   capString.forEach((note) => {
-    capParameters = note.includes('<')
-      ? {
-          ...capParameters,
-          lessThan: Number(note.replaceAll('<', ''))
-        }
-      : {
-          ...capParameters,
-          greaterThan: Number(note.replaceAll('>', ''))
-        }
+    if (note.includes('<')) {
+      capParameters = {
+        ...capParameters,
+        lessThan: Number(note.replaceAll('<', ''))
+      }
+      return
+    }
+    capParameters = {
+      ...capParameters,
+      greaterThan: Number(note.replaceAll('>', ''))
+    }
   })
   return { cap: capParameters }
 }
 
 const parseUniqueNotation = ({
   uniqueMatch: notationString
-}: UniqueMatch): UniqueModifier => {
+}: UniqueMatch): Pick<Modifiers, 'unique'> => {
   if (notationString === 'u' || notationString === 'U') {
     return { unique: true }
   }
@@ -130,7 +125,7 @@ const parseUniqueNotation = ({
 
 const parseDropConstraintsNotation = ({
   dropConstraintsMatch: notationString
-}: DropConstraintsMatch): DropModifier => {
+}: DropConstraintsMatch): Pick<Modifiers, 'drop'> => {
   let dropConstraintParameters: Pick<
     DropOptions,
     'greaterThan' | 'lessThan'
@@ -167,7 +162,7 @@ const parseDropConstraintsNotation = ({
 
 const parseDropHighNotation = ({
   dropHighMatch: notationString
-}: DropHighMatch): DropModifier => {
+}: DropHighMatch): Pick<Modifiers, 'drop'> => {
   const highestCount = notationString.split(/[Hh]/)[1]
 
   return {
@@ -177,7 +172,7 @@ const parseDropHighNotation = ({
 
 const parseDropLowNotation = ({
   dropLowMatch: notationString
-}: DropLowMatch): DropModifier => {
+}: DropLowMatch): Pick<Modifiers, 'drop'> => {
   const lowestCount = notationString.split(/[Ll]/)[1]
 
   return {
@@ -189,7 +184,7 @@ const parseDropLowNotation = ({
 
 const parseRerollNotation = ({
   rerollMatch: notationString
-}: RerollMatch): RerollModifier => {
+}: RerollMatch): Pick<Modifiers, 'reroll'> => {
   const parsedString = notationString
     .split(/[Rr]/)[1]
     .replaceAll('{', '')
@@ -237,23 +232,25 @@ const parseRerollNotation = ({
 
 const parseExplodeNotation = ({
   explodeMatch: notationString
-}: ExplodeMatch): ExplodeModifier => ({ explode: Boolean(notationString) })
+}: ExplodeMatch): Pick<Modifiers, 'explode'> => ({
+  explode: Boolean(notationString)
+})
 
 const parseMinusNotation = ({
   minusMatch: notationString
-}: MinusMatch): MinusModifier => ({
+}: MinusMatch): Pick<Modifiers, 'minus'> => ({
   minus: Number(notationString.split('-')[1])
 })
 
 const parsePlusNotation = ({
   plusMatch: notationString
-}: PlusMatch): PlusModifier => ({
+}: PlusMatch): Pick<Modifiers, 'plus'> => ({
   plus: Number(notationString.split('+')[1])
 })
 
 const parseReplaceNotation = ({
   replaceMatch: notationString
-}: ReplaceMatch): ReplaceModifier => {
+}: ReplaceMatch): Pick<Modifiers, 'replace'> => {
   const replaceOptions = notationString
     .split(/[Vv]/)[1]
     .replaceAll('{', '')
@@ -283,7 +280,86 @@ const parseReplaceNotation = ({
   }
 }
 
-const parseModifiers = (match: Exclude<Match, CoreNotationMatch>): Modifier => {
+export const mergeModifiers = (
+  oldModifiers: Modifiers,
+  newModifiers: Modifiers
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+): Modifiers => {
+  const newUniqueArg =
+    typeof newModifiers.unique === 'object'
+      ? {
+          ...(typeof oldModifiers?.unique === 'object'
+            ? oldModifiers?.unique
+            : {}),
+          ...newModifiers.unique
+        }
+      : newModifiers.unique
+
+  const cap =
+    'cap' in newModifiers
+      ? { cap: { ...oldModifiers?.cap, ...newModifiers.cap } }
+      : {}
+  const drop =
+    'drop' in newModifiers
+      ? { drop: { ...oldModifiers?.drop, ...newModifiers.drop } }
+      : {}
+  const explode =
+    'explode' in newModifiers ? { explode: newModifiers.explode } : {}
+  const unique = 'unique' in newModifiers ? { unique: newUniqueArg } : {}
+  const plus =
+    'plus' in newModifiers
+      ? { plus: (newModifiers.plus || 0) + (oldModifiers.plus || 0) }
+      : {}
+  const minus =
+    'minus' in newModifiers
+      ? {
+          minus:
+            Math.abs(newModifiers.minus || 0) -
+            Math.abs(oldModifiers.minus || 0)
+        }
+      : {}
+
+  const reroll =
+    'reroll' in newModifiers
+      ? {
+          reroll: {
+            ...oldModifiers.reroll,
+            ...((newModifiers.reroll || []) as RerollOptions)
+          }
+        }
+      : {}
+  const replace =
+    'replace' in newModifiers
+      ? {
+          replace:
+            Array.isArray(oldModifiers.replace) ||
+            Array.isArray(newModifiers.replace)
+              ? [
+                  ...((oldModifiers.replace || []) as ReplaceOptions[]),
+                  ...((newModifiers.replace || []) as ReplaceOptions[])
+                ]
+              : {
+                  ...oldModifiers.replace,
+                  ...((newModifiers.replace || {}) as ReplaceOptions)
+                }
+        }
+      : {}
+
+  return {
+    ...cap,
+    ...drop,
+    ...explode,
+    ...unique,
+    ...plus,
+    ...minus,
+    ...reroll,
+    ...replace
+  }
+}
+
+export const parseModifiers = (
+  match: Exclude<Match, CoreNotationMatch>
+): Modifiers => {
   if (isDropHighMatch(match)) {
     return parseDropHighNotation(match)
   }
@@ -313,5 +389,3 @@ const parseModifiers = (match: Exclude<Match, CoreNotationMatch>): Modifier => {
   }
   return parseMinusNotation(match)
 }
-
-export default parseModifiers

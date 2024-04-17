@@ -22,7 +22,7 @@ const parseOptions = (
       diceOptions,
       dice,
       argument: options,
-      modifiers: []
+      modifiers: {}
     }
   }
 
@@ -32,7 +32,7 @@ const parseOptions = (
     diceOptions,
     dice,
     argument: options,
-    modifiers: normalizeModifiers(options.modifiers || [])
+    modifiers: normalizeModifiers(options.modifiers || {})
   }
 }
 

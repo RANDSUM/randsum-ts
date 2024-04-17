@@ -19,6 +19,9 @@ jobs:
       - name: Install deps
         run: bun install
 
+      - name: TypeCheck
+        run: bun ts:check
+
       - name: Lint
         run: bun lint && bun format
 

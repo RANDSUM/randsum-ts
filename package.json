@@ -1,6 +1,6 @@
 {
   "name": "randsum",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "private": false,
   "author": "Alex Jarvis",
   "icon": "https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp",
@@ -50,15 +50,9 @@
     "lint:fix": "eslint . --fix",
     "format:fix": "prettier . --write",
     "format": "prettier . --check",
-    "typeCheck": "tsc --noEmit",
+    "ts:check": "tsc --noEmit",
     "prepublish": "bun run build",
     "postversion": "git push --no-verify && git push --tags --no-verify"
-  },
-  "prettier": {
-    "endOfLine": "auto",
-    "trailingComma": "none",
-    "semi": false,
-    "singleQuote": true
   },
   "size-limit": [
     {

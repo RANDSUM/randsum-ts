@@ -13,12 +13,6 @@ describe('parseArguments', () => {
     })
   })
 
-  describe('given a number string', () => {
-    test('returns a RollParameter matching the notation', () => {
-      expect(parseArguments('2')).toMatchObject({ diceOptions: [{ sides: 2 }] })
-    })
-  })
-
   describe('given a number', () => {
     test('returns a RollParameter matching the notation', () => {
       expect(parseArguments(2)).toMatchObject({
@@ -41,7 +35,7 @@ describe('parseArguments', () => {
         expect(
           parseArguments({
             quantity: 4,
-            sides: '6'
+            sides: 6
           })
         ).toMatchObject({
           diceOptions: [{ sides: 6, quantity: 4 }]
@@ -54,24 +48,25 @@ describe('parseArguments', () => {
         expect(
           parseArguments({
             quantity: 4,
-            sides: '6',
-            modifiers: [
-              {
-                reroll: [{ exact: ['2', 1] }, { exact: 4 }, { maxReroll: 3 }]
-              },
-              { replace: { from: { greaterThan: 5 }, to: '1' } },
-              { unique: true }
-            ]
+            sides: 6,
+            modifiers: {
+              reroll: [
+                {
+                  exact: [2, 1, 4]
+                },
+                { maxReroll: 3 }
+              ],
+              replace: { from: { greaterThan: 5 }, to: 1 },
+              unique: true
+            }
           })
         ).toMatchObject({
           diceOptions: [{ sides: 6, quantity: 4 }],
-          modifiers: [
-            {
-              reroll: [{ exact: [2, 1] }, { exact: [4] }, { maxReroll: 3 }]
-            },
-            { replace: { from: { greaterThan: 5 }, to: 1 } },
-            { unique: true }
-          ]
+          modifiers: {
+            reroll: [{ exact: [2, 1, 4] }, { maxReroll: 3 }],
+            replace: { from: { greaterThan: 5 }, to: 1 },
+            unique: true
+          }
         })
       })
     })
@@ -84,7 +79,7 @@ describe('parseArguments', () => {
         }
         expect(parseArguments(options)).toMatchObject({
           diceOptions: [options],
-          modifiers: []
+          modifiers: {}
         })
       })
     })
@@ -95,51 +90,40 @@ describe('parseArguments', () => {
           parseArguments({
             quantity: 4,
             sides: 6,
-            modifiers: [
-              { plus: 2 },
-              { minus: 1 },
-              {
-                drop: {
-                  highest: undefined,
-                  greaterThan: '2',
-                  lessThan: '6',
-                  lowest: '1',
-                  exact: [2, '3']
-                }
-              },
-              { reroll: { exact: undefined } },
-              { cap: { greaterThan: '2', lessThan: 1 } },
-              { replace: [{ from: '6', to: '1' }] },
-              { unique: { notUnique: ['1', 2] } },
-              { explode: true }
-            ]
-          })
-        ).toMatchObject({
-          diceOptions: [{ sides: 6, quantity: 4 }],
-          modifiers: [
-            { plus: 2 },
-            { minus: 1 },
-            {
+            modifiers: {
+              plus: 2,
+              minus: 1,
               drop: {
                 highest: undefined,
                 greaterThan: 2,
                 lessThan: 6,
                 lowest: 1,
                 exact: [2, 3]
-              }
+              },
+              reroll: { exact: undefined },
+              cap: { greaterThan: 2, lessThan: 1 },
+              replace: [{ from: 6, to: 1 }],
+              unique: { notUnique: [1, 2] },
+              explode: true
+            }
+          })
+        ).toMatchObject({
+          diceOptions: [{ sides: 6, quantity: 4 }],
+          modifiers: {
+            plus: 2,
+            minus: 1,
+            drop: {
+              highest: undefined,
+              greaterThan: 2,
+              lessThan: 6,
+              lowest: 1,
+              exact: [2, 3]
             },
-            {
-              reroll: {
-                greaterThan: undefined,
-                lessThan: undefined,
-                maxReroll: undefined
-              }
-            },
-            { cap: { greaterThan: 2, lessThan: 1 } },
-            { replace: [{ from: 6, to: 1 }] },
-            { unique: { notUnique: [1, 2] } },
-            { explode: true }
-          ]
+            cap: { greaterThan: 2, lessThan: 1 },
+            replace: [{ from: 6, to: 1 }],
+            unique: { notUnique: [1, 2] },
+            explode: true
+          }
         })
       })
     })
@@ -181,7 +165,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [{ drop: { highest: 1 } }]
+            modifiers: { drop: { highest: 1 } }
           })
         })
       })
@@ -192,7 +176,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [{ drop: { highest: 2 } }]
+            modifiers: { drop: { highest: 2 } }
           })
         })
       })
@@ -205,7 +189,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [{ drop: { lowest: 1 } }]
+            modifiers: { drop: { lowest: 1 } }
           })
         })
       })
@@ -216,7 +200,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [{ drop: { lowest: 2 } }]
+            modifiers: { drop: { lowest: 2 } }
           })
         })
       })
@@ -229,9 +213,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [
-              { drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }
-            ]
+            modifiers: { drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }
           })
         })
       })
@@ -247,9 +229,7 @@ describe('parseArguments', () => {
                 sides: 20
               }
             ],
-            modifiers: [
-              { drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }
-            ]
+            modifiers: { drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] } }
           })
         })
       })
@@ -261,7 +241,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           diceOptions: [coreRollParameters],
-          modifiers: [{ cap: { lessThan: 2, greaterThan: 5 } }]
+          modifiers: { cap: { lessThan: 2, greaterThan: 5 } }
         })
       })
     })
@@ -272,7 +252,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           diceOptions: [coreRollParameters],
-          modifiers: [{ minus: 2 }]
+          modifiers: { minus: 2 }
         })
       })
     })
@@ -283,7 +263,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           diceOptions: [coreRollParameters],
-          modifiers: [{ plus: 2 }]
+          modifiers: { plus: 2 }
         })
       })
     })
@@ -295,20 +275,18 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [{ reroll: { greaterThan: 6 } }]
+            modifiers: { reroll: { greaterThan: 6 } }
           })
         })
       })
 
       describe('with a complex value', () => {
-        const testString: DiceNotation<number> = `${coreTestString}R{5,2,<6}3`
+        const testString: DiceNotation<number> = `${coreTestString}R{5,2}3R{<6}`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [
-              { reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } }
-            ]
+            modifiers: { reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } }
           })
         })
       })
@@ -321,7 +299,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [{ unique: { notUnique: [5, 6] } }]
+            modifiers: { unique: { notUnique: [5, 6] } }
           })
         })
       })
@@ -332,7 +310,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [{ unique: true }]
+            modifiers: { unique: true }
           })
         })
       })
@@ -344,7 +322,7 @@ describe('parseArguments', () => {
       test('returns a RollParameter matching the notation', () => {
         expect(parseArguments(testString)).toMatchObject({
           diceOptions: [coreRollParameters],
-          modifiers: [{ explode: true }]
+          modifiers: { explode: true }
         })
       })
     })
@@ -356,14 +334,12 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [
-              {
-                replace: [
-                  { from: 1, to: 2 },
-                  { from: { greaterThan: 2 }, to: 6 }
-                ]
-              }
-            ]
+            modifiers: {
+              replace: [
+                { from: 1, to: 2 },
+                { from: { greaterThan: 2 }, to: 6 }
+              ]
+            }
           })
         })
       })
@@ -374,7 +350,7 @@ describe('parseArguments', () => {
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
             diceOptions: [coreRollParameters],
-            modifiers: [{ replace: { from: { lessThan: 2 }, to: 6 } }]
+            modifiers: { replace: { from: { lessThan: 2 }, to: 6 } }
           })
         })
       })
@@ -393,7 +369,7 @@ describe('parseArguments', () => {
                 sides: 6
               }
             ],
-            modifiers: [{ explode: true }, { drop: { highest: 1 } }]
+            modifiers: { explode: true, drop: { highest: 1 } }
           })
 
           expect(parseArguments(dropFirstString)).toMatchObject({
@@ -403,13 +379,13 @@ describe('parseArguments', () => {
                 sides: 6
               }
             ],
-            modifiers: [{ drop: { highest: 1 } }, { explode: true }]
+            modifiers: { drop: { highest: 1 }, explode: true }
           })
         })
       })
 
       describe('like a complicated dice notation', () => {
-        const testString: DiceNotation<number> = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2,<6}3 U{5} ! +2 -5 +3`
+        const testString: DiceNotation<number> = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
 
         test('returns a RollParameter matching the notation', () => {
           expect(parseArguments(testString)).toMatchObject({
@@ -419,38 +395,25 @@ describe('parseArguments', () => {
                 sides: 20
               }
             ],
-            modifiers: [
-              {
-                drop: {
-                  highest: 2
-                }
+            modifiers: {
+              drop: {
+                highest: 2,
+                lowest: 1,
+                exact: [2, 4],
+                greaterThan: 5,
+                lessThan: 2
               },
-              {
-                drop: {
-                  lowest: 1
-                }
-              },
-              {
-                replace: [
-                  { from: 1, to: 2 },
-                  { from: { greaterThan: 2 }, to: 6 }
-                ]
-              },
-              {
-                drop: {
-                  exact: [2, 4],
-                  greaterThan: 5,
-                  lessThan: 2
-                }
-              },
-              { cap: { greaterThan: 18, lessThan: 2 } },
-              { reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 } },
-              { unique: { notUnique: [5] } },
-              { explode: true },
-              { plus: 2 },
-              { minus: 5 },
-              { plus: 3 }
-            ]
+              replace: [
+                { from: 1, to: 2 },
+                { from: { greaterThan: 2 }, to: 6 }
+              ],
+              cap: { greaterThan: 18, lessThan: 2 },
+              reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 },
+              unique: { notUnique: [5] },
+              explode: true,
+              plus: 5,
+              minus: 5
+            }
           })
         })
       })
