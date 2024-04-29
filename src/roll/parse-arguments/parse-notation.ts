@@ -1,6 +1,5 @@
 import { completeRollPattern } from '../../constants/regexp'
-import { dicePoolFactory } from '../../Die'
-import { RollParameters } from '../../types/parameters'
+import { DicePoolOptions } from '../../types/options'
 import { DiceNotation } from '../../types/primitives'
 import {
   isCoreNotationMatch,
@@ -17,32 +16,27 @@ const findMatches = (notations: string): Match[] =>
 
 const parseNotation = (
   notationString: DiceNotation<number> | DiceNotation<string>
-): RollParameters<number> | RollParameters<string> => {
+): DicePoolOptions<number | string> => {
   const initialParams = {
-    argument: notationString
-  } as RollParameters<string | number>
+    modifiers: {}
+  }
 
   return findMatches(notationString).reduce((acc, match) => {
     if (isCoreNotationMatch(match)) {
-      const diceOptions = parseCoreNotation(match)
-      const dice = dicePoolFactory(diceOptions)
-
       return {
         ...acc,
-        diceOptions,
-        dice,
-        modifiers: acc.modifiers || {}
+        ...parseCoreNotation(match)
       }
     }
 
     const newModifiers = parseModifiers(match)
-    const mergedModifiers = mergeModifiers(acc.modifiers, newModifiers)
+    const mergedModifiers = mergeModifiers(acc?.modifiers, newModifiers)
 
     return {
       ...acc,
       modifiers: { ...acc.modifiers, ...mergedModifiers }
     }
-  }, initialParams) as RollParameters<number> | RollParameters<string>
+  }, initialParams) as DicePoolOptions<number> | DicePoolOptions<string>
 }
 
 export default parseNotation

@@ -14,7 +14,7 @@ export interface DicePoolParameters<D extends string | number = number> {
     | DicePoolOptions<number | string>
     | DiceNotation<number | string>
     | CustomSides
-  diceOptions: DiceOptions<D>
+  options: DiceOptions<D>
   die: SingleDie<D>
 }
 
