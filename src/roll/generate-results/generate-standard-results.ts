@@ -275,12 +275,30 @@ const applyModifiers = (
 const generateStandardResults = (
   rollParameters: RollParameters<number>
 ): RollResult<number> => {
-  const initialRolls = rollParameters.generateInitialRolls(rollParameters.dice)
+    const rawRolls = Object.fromEntries(
+    Object.keys(rollParameters.dicePools).map((key) => {
+      const rolls = Array.from(
+        {
+          length: rollParameters.dicePools[key].options.sides.length
+        },
+        () => rollParameters.dicePools[key].die.roll()
+      )
+      return [
+        key,
+        {
+          rolls,
+          total: rolls.join(',')
+        }
+      ]
+    })
+  )
   const modifiedBonuses = applyModifiers(rollParameters, initialRolls)
 
   return {
-    rollParameters,
-    initialRolls,
+    ...rollParameters,
+    rawRolls: {},
+    modifiedRolls: {},
+    total: 0
     rolls: modifiedBonuses.rolls,
     total:
       modifiedBonuses.rolls.reduce((a, b) => a + b, 0) +

@@ -1,19 +1,17 @@
 import { RollParameters } from './parameters'
 
-export interface RollResult<D extends string | number = number> {
-  rollParameters: RollParameters<D>
-  total: D
-  initialRolls: D[]
+export interface DicePoolResult<D extends string | number> {
   rolls: D[]
+  total: D
 }
 
-export interface NewRollResult<D extends string | number = number>
-  extends RollParameters<D> {
-  initialRolls: {
-    [key: string]: D[]
+export interface RollResult extends RollParameters {
+  rawRolls: {
+    [key: string]: DicePoolResult<string | number>
   }
-  rolls: {
-    [key: string]: D[]
+  modifiedRolls: {
+    [key: string]: DicePoolResult<string | number>
   }
-  total: D
+  results: string
+  total: number
 }

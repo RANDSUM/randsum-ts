@@ -36,27 +36,23 @@ function parseDiceOptions(
   }
 }
 
-function parseArgument(
-  argument: RollArgument
-): RollParameters<number | string> {
+function parseArgument(argument: RollArgument): RollParameters['dicePools'] {
   const id = crypto.randomUUID()
   const options = parseDiceOptions(argument)
 
   return {
-    dicePools: {
-      [id]: {
-        options,
-        argument,
-        die: dieFactory(options.sides)
-      }
+    [id]: {
+      options,
+      argument,
+      die: dieFactory(options.sides)
     }
   }
 }
 
-function parseArguments(
-  argument: RollArgument
-): RollParameters<number | string> {
-  return parseArgument(argument)
+function parseArguments(argument: RollArgument): RollParameters {
+  return {
+    dicePools: { ...parseArgument(argument) }
+  }
 }
 
 export default parseArguments
