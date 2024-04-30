@@ -5,7 +5,6 @@ import { Concrete, DiceNotation } from './primitives'
 export type DiceParameters<D extends string | number = number> = Concrete<
   Omit<DiceOptions<D>, 'modifiers'>
 >
-// Refactor
 
 export interface DicePoolParameters<D extends string | number = number> {
   argument:

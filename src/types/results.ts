@@ -1,4 +1,4 @@
-import { NewRollParameters, RollParameters } from './parameters'
+import { RollParameters } from './parameters'
 
 export interface RollResult<D extends string | number = number> {
   rollParameters: RollParameters<D>
@@ -8,7 +8,7 @@ export interface RollResult<D extends string | number = number> {
 }
 
 export interface NewRollResult<D extends string | number = number>
-  extends NewRollParameters<D> {
+  extends RollParameters<D> {
   initialRolls: {
     [key: string]: D[]
   }
