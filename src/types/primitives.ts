@@ -3,7 +3,7 @@ export type DiceNotationWithNumericSides = `${number}${
   | 'D'}${number}${string}`
 export type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
 
-export type DiceNotation<D extends string | number = number> = D extends number
+export type DiceNotation<D = string | number> = D extends number
   ? DiceNotationWithNumericSides
   : DiceNotationWithCustomSides
 

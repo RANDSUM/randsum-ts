@@ -7,7 +7,7 @@ export type DiceOptions<D extends string | number = number> = Pick<
   'quantity' | 'sides'
 >
 
-export interface DicePoolOptions<D extends string | number = number> {
+export interface DicePoolOptions<D = string | number> {
   quantity?: number
   sides: D extends number ? number : CustomSides
   modifiers?: D extends number ? Modifiers : never
