@@ -10,3 +10,9 @@ export type DiceNotation<D = string | number> = D extends number
 export type Concrete<Type> = {
   [Property in keyof Type]-?: Type[Property]
 }
+
+export enum DicePoolType {
+  standard = 'standard',
+  custom = 'custom',
+  mixed = 'mixed'
+}

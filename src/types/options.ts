@@ -2,11 +2,6 @@ export type TypeOrArrayOfType<T> = T | T[]
 
 export type CustomSides = (string | number)[]
 
-export type DiceOptions<D extends string | number = number> = Pick<
-  DicePoolOptions<D>,
-  'quantity' | 'sides'
->
-
 export interface DicePoolOptions<D = string | number> {
   quantity?: number
   sides: D extends number ? number : CustomSides

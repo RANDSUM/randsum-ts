@@ -5,8 +5,7 @@ import {
   ReplaceOptions,
   RerollOptions
 } from '../../types/options'
-import { DiceParameters, RollParameters } from '../../types/parameters'
-import { RollResult } from '../../types/results'
+import { DiceParameters, DicePoolParameters } from '../../types/parameters'
 
 type RollBonuses = {
   rolls: number[]
@@ -181,22 +180,33 @@ const applyDrop = (
   return sortedResults
 }
 
-const applyModifiers = (
-  rollParameters: RollParameters<number>,
-  initialRolls: number[]
-): RollBonuses => {
-  const {
-    modifiers,
-    dice,
-    diceOptions: [{ sides, quantity }]
-  } = rollParameters
+const isCustomParameters = (
+  poolParameters: DicePoolParameters<string> | DicePoolParameters<number>
+): poolParameters is DicePoolParameters<string> =>
+  typeof poolParameters.options.sides === 'string'
+
+// eslint-disable-next-line sonarjs/cognitive-complexity
+export default function applyModifiers(
+  poolParameters: DicePoolParameters<string> | DicePoolParameters<number>,
+  initialRolls: number[] | string[]
+): RollBonuses {
+  if (isCustomParameters(poolParameters)) {
+    return {
+      simpleMathModifier: 0,
+      rolls: []
+    }
+  }
 
   const rollBonuses: RollBonuses = {
     simpleMathModifier: 0,
-    rolls: initialRolls
+    rolls: initialRolls as number[]
   }
 
-  const rollOne: () => number = () => dice[0].roll()
+  const {
+    options: { sides, quantity, modifiers = {} }
+  } = poolParameters
+
+  const rollOne: () => number = () => poolParameters.die.roll()
 
   return Object.keys(modifiers).reduce((bonuses, key) => {
     switch (key) {
@@ -214,7 +224,7 @@ const applyModifiers = (
           rolls: modifiers.unique
             ? applyUnique(
                 bonuses.rolls,
-                { sides, quantity, unique: modifiers.unique },
+                { sides, quantity: quantity || 1, unique: modifiers.unique },
                 rollOne
               )
             : bonuses.rolls
@@ -271,39 +281,3 @@ const applyModifiers = (
     }
   }, rollBonuses)
 }
-
-const generateStandardResults = (
-  rollParameters: RollParameters<number>
-): RollResult<number> => {
-    const rawRolls = Object.fromEntries(
-    Object.keys(rollParameters.dicePools).map((key) => {
-      const rolls = Array.from(
-        {
-          length: rollParameters.dicePools[key].options.sides.length
-        },
-        () => rollParameters.dicePools[key].die.roll()
-      )
-      return [
-        key,
-        {
-          rolls,
-          total: rolls.join(',')
-        }
-      ]
-    })
-  )
-  const modifiedBonuses = applyModifiers(rollParameters, initialRolls)
-
-  return {
-    ...rollParameters,
-    rawRolls: {},
-    modifiedRolls: {},
-    total: 0
-    rolls: modifiedBonuses.rolls,
-    total:
-      modifiedBonuses.rolls.reduce((a, b) => a + b, 0) +
-      modifiedBonuses.simpleMathModifier
-  }
-}
-
-export default generateStandardResults

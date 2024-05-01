@@ -2,7 +2,7 @@ import { describe, expect, test } from 'bun:test'
 
 import { dicePoolFactory, StandardDie } from '../src/Die'
 import generateResult from '../src/roll/generate-results'
-import { InvalidUniqueError } from '../src/roll/generate-results/generate-standard-results'
+import { InvalidUniqueError } from '../src/roll/generate-results/apply-modifiers'
 import { Modifiers } from '../src/types/options'
 import { RollParameters } from '../src/types/parameters'
 

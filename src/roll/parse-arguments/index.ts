@@ -3,7 +3,7 @@ import { dieFactory } from '../../Die'
 import { isCustomSides } from '../../Die/guards'
 import { RollArgument } from '../../types/argument'
 import { DicePoolOptions } from '../../types/options'
-import { RollParameters } from '../../types/parameters'
+import { DicePoolParameters, RollParameters } from '../../types/parameters'
 import { DiceNotation } from '../../types/primitives'
 import parseNotation from './parse-notation'
 
@@ -45,14 +45,17 @@ function parseArgument(argument: RollArgument): RollParameters['dicePools'] {
       options,
       argument,
       die: dieFactory(options.sides)
-    }
+    } as DicePoolParameters<number> | DicePoolParameters<string>
   }
 }
 
 function parseArguments(argument: RollArgument): RollParameters {
-  return {
-    dicePools: { ...parseArgument(argument) }
-  }
+  const args = [argument].flat()
+  const dicePools = args.reduce(
+    (acc, arg) => ({ ...acc, ...parseArgument(arg) }),
+    {}
+  )
+  return { dicePools }
 }
 
 export default parseArguments

@@ -1,4 +1,4 @@
-import { CustomSides, DiceOptions } from '../types/options'
+import { CustomSides } from '../types/options'
 import { CustomSidesDie, StandardDie } from './constants'
 import { isCustomSides } from './guards'
 import SingleDie from './single-die'
@@ -16,18 +16,5 @@ function dieFactory(
     : new StandardDie(sides)
 }
 
-function dicePoolFactory(options: DiceOptions<number>[]): StandardDie[]
-function dicePoolFactory(options: DiceOptions<string>[]): CustomSidesDie[]
-function dicePoolFactory(
-  options: (DiceOptions<number> | DiceOptions<string>)[]
-): (StandardDie | CustomSidesDie)[]
-function dicePoolFactory(
-  options: DiceOptions<string | number>[]
-): (StandardDie | CustomSidesDie)[] | StandardDie[] | CustomSidesDie[] {
-  return options.flatMap((die) => {
-    const quantity = Number(die.quantity || 1)
-    return [...Array(quantity).keys()].map(() => dieFactory(die.sides))
-  })
-}
-
-export { dicePoolFactory, dieFactory }
+// eslint-disable-next-line import/prefer-default-export
+export { dieFactory }
