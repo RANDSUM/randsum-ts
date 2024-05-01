@@ -32,7 +32,7 @@ function parseDiceOptions(
 
   return {
     quantity: 1,
-    sides: isCustomSides(options) ? options.map(String) : Number(options)
+    sides: isCustomSides(options) ? options.map(String) : Number(options || 20)
   }
 }
 

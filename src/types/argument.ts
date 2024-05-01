@@ -10,4 +10,4 @@ export type CoreRollArgument =
   | DiceNotation<string>
   | CustomSides
 
-export type RollArgument = CoreRollArgument | CoreRollArgument[]
+export type RollArgument = CoreRollArgument | CoreRollArgument[] | undefined

@@ -1,129 +1,171 @@
 import { describe, expect, test } from 'bun:test'
 
+import {
+  CustomSidesDie,
+  DicePoolParameters,
+  RollParameters,
+  StandardDie
+} from '../src'
 import parseArguments from '../src/roll/parse-arguments'
 import { DiceNotation } from '../src/types/primitives'
 
+const testableParams = (
+  params: RollParameters
+): {
+  key: string
+  value: DicePoolParameters<string> | DicePoolParameters<number>
+}[] => {
+  const pools = Object.entries(params.dicePools)
+  return pools.map(([key, value]) => ({ key, value }))
+}
+
 describe('parseArguments', () => {
   describe('given undefined', () => {
-    const arg = undefined
-    test('returns a RollParameter matching the notation', () => {
-      expect(parseArguments(arg)).toMatchObject({
-        diceOptions: [{ sides: 20 }]
+    const argument = undefined
+
+    test.only('returns a RollParameter matching the argument', () => {
+      const params = parseArguments(argument)
+      const testParam = testableParams(params)[0]
+
+      expect(typeof testParam.key).toBe('string')
+      expect(testParam.value).toMatchObject({
+        argument,
+        options: { quantity: 1, sides: 20 },
+        die: new StandardDie(20)
       })
     })
   })
 
   describe('given a number', () => {
-    test('returns a RollParameter matching the notation', () => {
-      expect(parseArguments(2)).toMatchObject({
-        diceOptions: [{ sides: 2 }]
+    const argument = 2
+
+    test('returns a RollParameter matching the argument', () => {
+      const params = parseArguments(argument)
+      const testParam = testableParams(params)[0]
+
+      expect(typeof testParam.key).toBe('string')
+      expect(testParam.value).toMatchObject({
+        argument,
+        options: { quantity: 1, sides: argument },
+        die: new StandardDie(argument)
       })
     })
   })
 
   describe('given custom sides', () => {
-    test('returns a RollParameter matching the notation', () => {
-      expect(parseArguments(['h', 't'])).toMatchObject({
-        diceOptions: [{ quantity: 1, sides: ['h', 't'] }]
+    const argument = ['h', 't']
+
+    test('returns a RollParameter matching the argument', () => {
+      const params = parseArguments(argument)
+      const testParam = testableParams(params)[0]
+
+      expect(typeof testParam.key).toBe('string')
+      expect(testParam.value).toMatchObject({
+        argument,
+        options: { quantity: 1, sides: argument },
+        die: new CustomSidesDie(argument)
       })
     })
   })
 
   describe('given Roll Options', () => {
     describe('simple', () => {
-      test('returns a RollParameter matching the notation', () => {
-        expect(
-          parseArguments({
-            quantity: 4,
-            sides: 6
-          })
-        ).toMatchObject({
-          diceOptions: [{ sides: 6, quantity: 4 }]
+      const argument = {
+        quantity: 4,
+        sides: 6
+      }
+
+      test('returns a RollParameter matching the argument', () => {
+        const params = parseArguments(argument)
+        const testParam = testableParams(params)[0]
+
+        expect(typeof testParam.key).toBe('string')
+        expect(testParam.value).toMatchObject({
+          argument,
+          options: argument,
+          die: new StandardDie(argument.sides)
         })
       })
     })
 
     describe('simple with modifiers', () => {
-      test('returns a RollParameter matching the notation', () => {
-        expect(
-          parseArguments({
-            quantity: 4,
-            sides: 6,
-            modifiers: {
-              reroll: [
-                {
-                  exact: [2, 1, 4]
-                },
-                { maxReroll: 3 }
-              ],
-              replace: { from: { greaterThan: 5 }, to: 1 },
-              unique: true
-            }
-          })
-        ).toMatchObject({
-          diceOptions: [{ sides: 6, quantity: 4 }],
-          modifiers: {
-            reroll: [{ exact: [2, 1, 4] }, { maxReroll: 3 }],
-            replace: { from: { greaterThan: 5 }, to: 1 },
-            unique: true
-          }
+      const argument = {
+        quantity: 4,
+        sides: 6,
+        modifiers: {
+          reroll: [
+            {
+              exact: [2, 1, 4]
+            },
+            { maxReroll: 3 }
+          ],
+          replace: { from: { greaterThan: 5 }, to: 1 },
+          unique: true
+        }
+      }
+
+      test('returns a RollParameter matching the argument', () => {
+        const params = parseArguments(argument)
+        const testParam = testableParams(params)[0]
+
+        expect(typeof testParam.key).toBe('string')
+        expect(testParam.value).toMatchObject({
+          argument,
+          options: argument,
+          die: new StandardDie(argument.sides)
         })
       })
     })
 
     describe('custom sides', () => {
-      test('returns a RollParameter matching the notation', () => {
-        const options = {
-          quantity: 4,
-          sides: ['r', 'a', 'n', 'd', 's', 'u', 'm']
-        }
-        expect(parseArguments(options)).toMatchObject({
-          diceOptions: [options],
-          modifiers: {}
+      const argument = {
+        quantity: 4,
+        sides: ['r', 'a', 'n', 'd', 's', 'u', 'm']
+      }
+      test('returns a RollParameter matching the argument', () => {
+        const params = parseArguments(argument)
+        const testParam = testableParams(params)[0]
+
+        expect(typeof testParam.key).toBe('string')
+        expect(testParam.value).toMatchObject({
+          argument,
+          options: argument,
+          die: new CustomSidesDie(argument.sides)
         })
       })
     })
 
     describe('complex', () => {
-      test('returns a RollParameter matching the notation', () => {
-        expect(
-          parseArguments({
-            quantity: 4,
-            sides: 6,
-            modifiers: {
-              plus: 2,
-              minus: 1,
-              drop: {
-                highest: undefined,
-                greaterThan: 2,
-                lessThan: 6,
-                lowest: 1,
-                exact: [2, 3]
-              },
-              reroll: { exact: undefined },
-              cap: { greaterThan: 2, lessThan: 1 },
-              replace: [{ from: 6, to: 1 }],
-              unique: { notUnique: [1, 2] },
-              explode: true
-            }
-          })
-        ).toMatchObject({
-          diceOptions: [{ sides: 6, quantity: 4 }],
-          modifiers: {
-            plus: 2,
-            minus: 1,
-            drop: {
-              highest: undefined,
-              greaterThan: 2,
-              lessThan: 6,
-              lowest: 1,
-              exact: [2, 3]
-            },
-            cap: { greaterThan: 2, lessThan: 1 },
-            replace: [{ from: 6, to: 1 }],
-            unique: { notUnique: [1, 2] },
-            explode: true
-          }
+      const argument = {
+        quantity: 4,
+        sides: 6,
+        modifiers: {
+          plus: 2,
+          minus: 1,
+          drop: {
+            highest: undefined,
+            greaterThan: 2,
+            lessThan: 6,
+            lowest: 1,
+            exact: [2, 3]
+          },
+          reroll: { exact: undefined },
+          cap: { greaterThan: 2, lessThan: 1 },
+          replace: [{ from: 6, to: 1 }],
+          unique: { notUnique: [1, 2] },
+          explode: true
+        }
+      }
+
+      test('returns a RollParameter matching the argument', () => {
+        const params = parseArguments(argument)
+        const testParam = testableParams(params)[0]
+
+        expect(typeof testParam.key).toBe('string')
+        expect(testParam.value).toMatchObject({
+          argument,
+          options: argument,
+          die: new StandardDie(argument.sides)
         })
       })
     })
@@ -134,25 +176,35 @@ describe('parseArguments', () => {
     const coreRollParameters = { sides: 6, quantity: 4 }
 
     describe('given a basic notation', () => {
+      const argument = coreTestString
+
       test('returns a RollParameter matching the notation', () => {
-        expect(parseArguments(coreTestString)).toMatchObject({
-          diceOptions: [coreRollParameters]
+        const params = parseArguments(argument)
+        const testParam = testableParams(params)[0]
+
+        expect(typeof testParam.key).toBe('string')
+        expect(testParam.value).toMatchObject({
+          argument,
+          options: coreRollParameters,
+          die: new StandardDie(coreRollParameters.sides)
         })
       })
     })
 
     describe('given a notation that uses custom faces', () => {
       describe('with a simple notation', () => {
-        const testString: DiceNotation<string> = '4d{++--  }'
+        const argument: DiceNotation<string> = '4d{++--  }'
+        const customSides = ['+', '+', '-', '-', ' ', ' ']
 
         test('returns a RollParameter matching the notation', () => {
-          expect(parseArguments(testString)).toMatchObject({
-            diceOptions: [
-              {
-                sides: ['+', '+', '-', '-', ' ', ' '],
-                quantity: 4
-              }
-            ]
+          const params = parseArguments(argument)
+          const testParam = testableParams(params)[0]
+
+          expect(typeof testParam.key).toBe('string')
+          expect(testParam.value).toMatchObject({
+            argument,
+            options: { quantity: 4, sides: customSides },
+            die: new CustomSidesDie(customSides)
           })
         })
       })
