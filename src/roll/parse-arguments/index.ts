@@ -1,7 +1,7 @@
 import { coreNotationPattern } from '../../constants/regexp'
 import { dieFactory } from '../../Die'
 import { isCustomSides } from '../../Die/guards'
-import { RollArgument } from '../../types/argument'
+import { CoreRollArgument, RollArgument } from '../../types/argument'
 import { DicePoolOptions } from '../../types/options'
 import { DicePoolParameters, RollParameters } from '../../types/parameters'
 import { DiceNotation } from '../../types/primitives'
@@ -20,7 +20,7 @@ export const isDiceNotation = (
   !!coreNotationPattern.test(String(argument))
 
 function parseDiceOptions(
-  options: RollArgument
+  options: CoreRollArgument | undefined
 ): DicePoolOptions<string | number> {
   if (isDicePoolOptions(options)) {
     return options
@@ -36,7 +36,9 @@ function parseDiceOptions(
   }
 }
 
-function parseArgument(argument: RollArgument): RollParameters['dicePools'] {
+function parseArgument(
+  argument: CoreRollArgument | undefined
+): RollParameters['dicePools'] {
   const id = crypto.randomUUID()
   const options = parseDiceOptions(argument)
 
@@ -49,7 +51,7 @@ function parseArgument(argument: RollArgument): RollParameters['dicePools'] {
   }
 }
 
-function parseArguments(argument: RollArgument): RollParameters {
+function parseArguments(argument: RollArgument | undefined): RollParameters {
   const args = [argument].flat()
   const dicePools = args.reduce(
     (acc, arg) => ({ ...acc, ...parseArgument(arg) }),

@@ -1,10 +1,13 @@
 import { CustomSides, DicePoolOptions } from './options'
 import { DiceNotation } from './primitives'
 
-export type RollArgument =
-  | undefined
+export type CoreRollArgument =
   | string
   | number
-  | DicePoolOptions<number | string>
-  | DiceNotation<number | string>
+  | DicePoolOptions<string>
+  | DicePoolOptions<number>
+  | DiceNotation<number>
+  | DiceNotation<string>
   | CustomSides
+
+export type RollArgument = CoreRollArgument | CoreRollArgument[]
