@@ -1,8 +1,7 @@
 import { coreNotationPattern } from '../../constants/regexp'
 import { dieFactory } from '../../Die'
-import { isCustomSides } from '../../Die/guards'
 import { CoreRollArgument, RollArgument } from '../../types/argument'
-import { DicePoolOptions } from '../../types/options'
+import { CustomSides, DicePoolOptions } from '../../types/options'
 import { DicePoolParameters, RollParameters } from '../../types/parameters'
 import { DiceNotation } from '../../types/primitives'
 import parseNotation from './parse-notation'
@@ -32,7 +31,7 @@ function parseDiceOptions(
 
   return {
     quantity: 1,
-    sides: isCustomSides(options) ? options.map(String) : Number(options || 20)
+    sides: Array.isArray(options) ? options.map(String) : Number(options || 20)
   }
 }
 
@@ -51,8 +50,31 @@ function parseArgument(
   }
 }
 
+const isCustomSides = (
+  argument: RollArgument | undefined
+): argument is CustomSides =>
+  Array.isArray(argument) && argument.every((arg) => typeof arg === 'string')
+
+const normalizeArguments = (
+  argument: RollArgument | undefined
+): CoreRollArgument[] | undefined[] => {
+  if (!argument) {
+    return [undefined]
+  }
+
+  if (isCustomSides(argument)) {
+    return [argument]
+  }
+
+  if (Array.isArray(argument)) {
+    return argument
+  }
+
+  return [argument].flat()
+}
+
 function parseArguments(argument: RollArgument | undefined): RollParameters {
-  const args = [argument].flat()
+  const args = normalizeArguments(argument)
   const dicePools = args.reduce(
     (acc, arg) => ({ ...acc, ...parseArgument(arg) }),
     {}
