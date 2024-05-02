@@ -283,7 +283,6 @@ const parseReplaceNotation = ({
 export const mergeModifiers = (
   oldModifiers: Modifiers,
   newModifiers: Modifiers
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): Modifiers => {
   const newUniqueArg =
     typeof newModifiers.unique === 'object'
