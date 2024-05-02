@@ -85,6 +85,8 @@ export interface DicePoolParameters<D extends string | number> {
   argument: RollArgument
   options: DicePoolOptions<D>
   die: SingleDie<D>
+  notation: DiceNotation<D>
+  description: string[]
 }
 
 export interface RollParameters {

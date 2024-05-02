@@ -9,6 +9,8 @@ import {
   RollParameters
 } from '~types'
 import parseNotation from './parse-notation'
+import formatNotation from './format-notation'
+import formatDescription from './format-description.ts'
 
 const isDicePoolOptions = (
   argument: unknown
@@ -44,12 +46,16 @@ function parseArgument(
 ): RollParameters['dicePools'] {
   const id = crypto.randomUUID()
   const options = parseDiceOptions(argument)
+  const notation = formatNotation(options)
+  const description = formatDescription(options)
 
   return {
     [id]: {
       options,
       argument,
-      die: dieFactory(options.sides)
+      die: dieFactory(options.sides),
+      notation,
+      description
     } as DicePoolParameters<number> | DicePoolParameters<string>
   }
 }

@@ -10,9 +10,6 @@
       "~constants": [
         "./src/constants.ts"
       ],
-      "~src/*": [
-        "./src/*"
-      ],
       "~types": [
         "./src/types.ts"
       ]

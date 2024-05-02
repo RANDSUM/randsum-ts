@@ -2,7 +2,7 @@ import { describe, expect, test } from 'bun:test'
 
 import { CustomSidesDie, StandardDie } from '~Die'
 import { DiceNotation, DicePoolParameters, RollParameters } from '~types'
-import parseRollArguments from '~src/roll/parse-roll-arguments'
+import parseRollArguments from '../src/roll/parse-roll-arguments'
 
 const testableParams = (
   params: RollParameters
@@ -26,7 +26,9 @@ describe('parseRollArguments', () => {
       expect(testParam.value).toMatchObject({
         argument,
         options: { quantity: 1, sides: 20 },
-        die: new StandardDie(20)
+        die: new StandardDie(20),
+        notation: '1d20',
+        description: ['Roll 1 20-sided die']
       })
     })
   })
@@ -42,7 +44,9 @@ describe('parseRollArguments', () => {
       expect(testParam.value).toMatchObject({
         argument,
         options: { quantity: 1, sides: argument },
-        die: new StandardDie(argument)
+        die: new StandardDie(argument),
+        notation: '1d2',
+        description: ['Roll 1 2-sided die']
       })
     })
   })
@@ -58,7 +62,9 @@ describe('parseRollArguments', () => {
       expect(testParam.value).toMatchObject({
         argument,
         options: { quantity: 1, sides: argument },
-        die: new CustomSidesDie(argument)
+        die: new CustomSidesDie(argument),
+        notation: '1d{ht}',
+        description: ['Roll 1 Die with the following sides: (h,t)']
       })
     })
   })
@@ -78,7 +84,9 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: argument,
-          die: new StandardDie(argument.sides)
+          die: new StandardDie(argument.sides),
+          notation: '4d6',
+          description: ['Roll 4 6-sided die']
         })
       })
     })
@@ -107,7 +115,13 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: argument,
-          die: new StandardDie(argument.sides)
+          die: new StandardDie(argument.sides),
+          notation: 'BAD',
+          description: [
+            'Replace greater than [5] with [1]',
+            'Reroll [2] [1] [4] and [2,1,4]',
+            'No Duplicate Rolls'
+          ]
         })
       })
     })
@@ -125,7 +139,9 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: argument,
-          die: new CustomSidesDie(argument.sides)
+          die: new CustomSidesDie(argument.sides),
+          notation: '4d{randsum}',
+          description: []
         })
       })
     })
@@ -160,7 +176,9 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: argument,
-          die: new StandardDie(argument.sides)
+          die: new StandardDie(argument.sides),
+          notation: 'bad',
+          description: []
         })
       })
     })
@@ -181,7 +199,9 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: coreRollParameters,
-          die: new StandardDie(coreRollParameters.sides)
+          die: new StandardDie(coreRollParameters.sides),
+          notation: 'bad',
+          description: []
         })
       })
     })
@@ -198,7 +218,9 @@ describe('parseRollArguments', () => {
           expect(testParam.value).toMatchObject({
             argument,
             options: { quantity: 4, sides: customSides },
-            die: new CustomSidesDie(customSides)
+            die: new CustomSidesDie(customSides),
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -218,7 +240,9 @@ describe('parseRollArguments', () => {
               ...coreRollParameters,
               modifiers: { drop: { highest: 1 } }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -236,7 +260,9 @@ describe('parseRollArguments', () => {
               ...coreRollParameters,
               modifiers: { drop: { highest: 2 } }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -256,7 +282,9 @@ describe('parseRollArguments', () => {
               ...coreRollParameters,
               modifiers: { drop: { lowest: 1 } }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -274,7 +302,9 @@ describe('parseRollArguments', () => {
               ...coreRollParameters,
               modifiers: { drop: { lowest: 2 } }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -296,7 +326,10 @@ describe('parseRollArguments', () => {
                 drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] }
               }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -317,7 +350,10 @@ describe('parseRollArguments', () => {
                 drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] }
               }
             },
-            die: new StandardDie(20)
+            die: new StandardDie(20),
+
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -337,7 +373,10 @@ describe('parseRollArguments', () => {
             ...coreRollParameters,
             modifiers: { cap: { lessThan: 2, greaterThan: 5 } }
           },
-          die: new StandardDie(coreRollParameters.sides)
+          die: new StandardDie(coreRollParameters.sides),
+
+          notation: 'bad',
+          description: []
         })
       })
     })
@@ -356,7 +395,10 @@ describe('parseRollArguments', () => {
             ...coreRollParameters,
             modifiers: { minus: 2 }
           },
-          die: new StandardDie(coreRollParameters.sides)
+          die: new StandardDie(coreRollParameters.sides),
+
+          notation: 'bad',
+          description: []
         })
       })
     })
@@ -375,7 +417,10 @@ describe('parseRollArguments', () => {
             ...coreRollParameters,
             modifiers: { plus: 2 }
           },
-          die: new StandardDie(coreRollParameters.sides)
+          die: new StandardDie(coreRollParameters.sides),
+
+          notation: 'bad',
+          description: []
         })
       })
     })
@@ -394,7 +439,10 @@ describe('parseRollArguments', () => {
               ...coreRollParameters,
               modifiers: { reroll: { greaterThan: 6 } }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -414,7 +462,10 @@ describe('parseRollArguments', () => {
                 reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 }
               }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -434,7 +485,10 @@ describe('parseRollArguments', () => {
               ...coreRollParameters,
               modifiers: { unique: { notUnique: [5, 6] } }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -452,7 +506,10 @@ describe('parseRollArguments', () => {
               ...coreRollParameters,
               modifiers: { unique: true }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -472,7 +529,9 @@ describe('parseRollArguments', () => {
             ...coreRollParameters,
             modifiers: { explode: true }
           },
-          die: new StandardDie(coreRollParameters.sides)
+          die: new StandardDie(coreRollParameters.sides),
+          notation: 'bad',
+          description: []
         })
       })
     })
@@ -496,7 +555,10 @@ describe('parseRollArguments', () => {
                 ]
               }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -514,7 +576,10 @@ describe('parseRollArguments', () => {
               ...coreRollParameters,
               modifiers: { replace: { from: { lessThan: 2 }, to: 6 } }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -534,7 +599,10 @@ describe('parseRollArguments', () => {
               ...coreRollParameters,
               modifiers: { explode: true, drop: { highest: 1 } }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+
+            notation: 'bad',
+            description: []
           })
 
           const dropFirstString: DiceNotation<number> = '4d6H!'
@@ -548,7 +616,10 @@ describe('parseRollArguments', () => {
               ...coreRollParameters,
               modifiers: { drop: { highest: 1 }, explode: true }
             },
-            die: new StandardDie(coreRollParameters.sides)
+            die: new StandardDie(coreRollParameters.sides),
+
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -585,7 +656,10 @@ describe('parseRollArguments', () => {
                 minus: 5
               }
             },
-            die: new StandardDie(20)
+            die: new StandardDie(20),
+
+            notation: 'bad',
+            description: []
           })
         })
       })
@@ -607,21 +681,28 @@ describe('parseRollArguments', () => {
       expect(numParams.value).toMatchObject({
         argument: argument[0],
         options: { quantity: 1, sides: 2 },
-        die: new StandardDie(2)
+        die: new StandardDie(2),
+        notation: 'bad',
+        description: []
       })
 
       const noteParams = testables[1]
       expect(noteParams.value).toMatchObject({
         argument: argument[1],
         options: { quantity: 4, sides: 6 },
-        die: new StandardDie(6)
+        die: new StandardDie(6),
+        notation: 'bad',
+        description: []
       })
 
       const customParams = testables[2]
       expect(customParams.value).toMatchObject({
         argument: argument[2],
         options: { quantity: 1, sides: argument[2] },
-        die: new CustomSidesDie(argument[2])
+        die: new CustomSidesDie(argument[2]),
+
+        notation: 'bad',
+        description: []
       })
     })
   })
