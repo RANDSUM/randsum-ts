@@ -66,7 +66,7 @@
     "@typescript-eslint/parser": "^5.57.0",
     "bun-plugin-dts": "^0.2.0",
     "bun-types": "latest",
-    "eslint": "^8.41.0",
+    "eslint": "^9.1.1",
     "eslint-config-adjunct": "^4.12.2",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-auto": "^0.7.3",
