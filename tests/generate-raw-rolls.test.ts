@@ -9,6 +9,8 @@ describe('generateRawRolls', () => {
       dicePools: {
         'first-id': {
           argument: 20,
+          notation: '20d4',
+          description: ['roll 20d4'],
           options: {
             quantity: 4,
             sides: 20
@@ -19,6 +21,8 @@ describe('generateRawRolls', () => {
         },
         'second-id': {
           argument: ['h', 't'],
+          notation: '20d{ht}',
+          description: ['roll 20 dice with sides h and t'],
           options: {
             quantity: 1,
             sides: ['h', 't']

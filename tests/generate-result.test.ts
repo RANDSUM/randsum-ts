@@ -4,7 +4,7 @@ import { CustomSidesDie, StandardDie } from '~Die'
 import generateResult from '../src/roll/generate-result'
 import { InvalidUniqueError } from '../src/roll/generate-result/apply-modifiers'
 import * as GenerateRawRolls from '../src/roll/generate-result/generate-raw-rolls'
-import { DicePoolType, RollParameters } from '~types'
+import { DiceNotation, DicePoolType, RollParameters } from '~types'
 
 describe('generateResult', () => {
   const testRollSet = [1, 2, 3, 4]
@@ -26,7 +26,9 @@ describe('generateResult', () => {
         'test-roll-id': {
           argument: undefined,
           options: { sides: 6, quantity: testRollSet.length },
-          die: mockStandardDie
+          die: mockStandardDie,
+          notation: '6d4',
+          description: ['roll 6d4']
         }
       }
     }
@@ -52,6 +54,8 @@ describe('generateResult', () => {
         'test-roll-id': {
           die: mockStandardDie,
           argument: undefined,
+          notation: '1d1' as DiceNotation<number>,
+          description: ['foo'],
           options: {
             sides: 4,
             quantity: uniqueRolls.length,
@@ -88,6 +92,8 @@ describe('generateResult', () => {
           'test-roll-id': {
             die: mockStandardDie,
             argument: undefined,
+            notation: '1d1' as DiceNotation<number>,
+            description: ['foo'],
             type: DicePoolType.standard,
             options: {
               sides: 4,
@@ -127,6 +133,8 @@ describe('generateResult', () => {
         dicePools: {
           'test-roll-id': {
             die: mockStandardDie,
+            notation: '1d1' as DiceNotation<number>,
+            description: ['foo'],
             argument: undefined,
             type: DicePoolType.standard,
             options: {
@@ -159,6 +167,8 @@ describe('generateResult', () => {
       dicePools: {
         'test-roll-id': {
           die: mockCustomSidesDie,
+          notation: '1d1' as DiceNotation<'string'>,
+          description: ['foo'],
           argument: undefined,
           options: {
             sides: faces,
@@ -196,6 +206,8 @@ describe('generateResult', () => {
     const dropParameters: RollParameters = {
       dicePools: {
         'test-roll-id': {
+          notation: '1d1' as DiceNotation<number>,
+          description: ['foo'],
           argument: undefined,
           die: mockStandardDie,
           options: {
@@ -243,6 +255,8 @@ describe('generateResult', () => {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
+            notation: '1d1' as DiceNotation<number>,
+            description: ['foo'],
             die: mockStandardDie,
             options: {
               sides: 10,
@@ -277,6 +291,8 @@ describe('generateResult', () => {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
+            notation: '1d1' as DiceNotation<number>,
+            description: ['foo'],
             die: mockStandardDie,
             options: {
               sides: 10,
@@ -319,6 +335,8 @@ describe('generateResult', () => {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
+          notation: '1d1' as DiceNotation<number>,
+          description: ['foo'],
           die: mockStandardDie,
           options: {
             sides: 6,
@@ -357,6 +375,8 @@ describe('generateResult', () => {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
+            notation: '1d1' as DiceNotation<number>,
+            description: ['foo'],
             options: {
               sides: 6,
               quantity: testRollSet.length,
@@ -390,6 +410,8 @@ describe('generateResult', () => {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
+            notation: '1d1' as DiceNotation<number>,
+            description: ['foo'],
             options: {
               sides: 6,
               quantity: testRollSet.length,
@@ -423,6 +445,8 @@ describe('generateResult', () => {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
+            notation: '1d1' as DiceNotation<number>,
+            description: ['foo'],
             options: {
               sides: 6,
               quantity: testRollSet.length,
@@ -458,6 +482,8 @@ describe('generateResult', () => {
     const dropParameters: RollParameters = {
       dicePools: {
         'test-roll-id': {
+          notation: '1d1' as DiceNotation<number>,
+          description: ['foo'],
           argument: undefined,
           options: {
             sides: 6,
@@ -492,6 +518,8 @@ describe('generateResult', () => {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
+          notation: '1d1' as DiceNotation<number>,
+          description: ['foo'],
           options: {
             sides: 6,
             quantity: testRollSet.length,
@@ -524,6 +552,8 @@ describe('generateResult', () => {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
+          notation: '1d1' as DiceNotation<number>,
+          description: ['foo'],
           options: {
             sides: 6,
             quantity: testRollSet.length,
@@ -555,11 +585,15 @@ describe('generateResult', () => {
     const parameters: RollParameters = {
       dicePools: {
         'test-roll-id': {
+          notation: '1d1' as DiceNotation<number>,
+          description: ['foo'],
           argument: undefined,
           options: { sides: 6, quantity: testRollSet.length },
           die: mockStandardDie
         },
         'test-roll-id-2': {
+          notation: '1d1' as DiceNotation<number>,
+          description: ['foo'],
           argument: undefined,
           options: { sides: 6, quantity: testRollSet.length },
           die: mockStandardDie

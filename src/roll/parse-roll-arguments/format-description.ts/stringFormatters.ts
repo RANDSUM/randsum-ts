@@ -1,11 +1,11 @@
 import {
-  DropOptions,
   GreaterLessOptions,
+  DropOptions,
+  TypeOrArrayOfType,
   ReplaceOptions,
   RerollOptions,
-  TypeOrArrayOfType,
-  UniqueOptions,
-} from 'randsum'
+  UniqueOptions
+} from '~types'
 
 const formatHumanList = (list: (string | number)[]) => {
   return list

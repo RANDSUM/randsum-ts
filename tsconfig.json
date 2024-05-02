@@ -1,22 +1,12 @@
 {
   "compilerOptions": {
     "paths": {
-      "~roll": [
-        "./src/roll/index.ts"
-      ],
-      "~Die": [
-        "./src/Die/index.ts"
-      ],
-      "~constants": [
-        "./src/constants.ts"
-      ],
-      "~types": [
-        "./src/types.ts"
-      ]
+      "~roll": ["./src/roll/index.ts"],
+      "~Die": ["./src/Die/index.ts"],
+      "~constants": ["./src/constants.ts"],
+      "~types": ["./src/types.ts"]
     },
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["ESNext"],
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "bundler",
@@ -30,8 +20,6 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": false,
-    "types": [
-      "bun-types"
-    ]
+    "types": ["bun-types"]
   }
 }

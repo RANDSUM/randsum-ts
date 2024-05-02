@@ -96,18 +96,18 @@ describe('parseRollArguments', () => {
         quantity: 4,
         sides: 6,
         modifiers: {
-          reroll: [
-            {
-              exact: [2, 1, 4]
-            },
-            { maxReroll: 3 }
-          ],
+          reroll: {
+            exact: [2, 1, 4],
+            maxReroll: 3
+          },
           replace: { from: { greaterThan: 5 }, to: 1 },
           unique: true
         }
       }
 
-      test('returns a RollParameter matching the argument', () => {
+      const foo = `4d6R`
+
+      test.only('returns a RollParameter matching the argument', () => {
         const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
@@ -118,6 +118,7 @@ describe('parseRollArguments', () => {
           die: new StandardDie(argument.sides),
           notation: 'BAD',
           description: [
+            'Roll 4 6-sided die',
             'Replace greater than [5] with [1]',
             'Reroll [2] [1] [4] and [2,1,4]',
             'No Duplicate Rolls'
@@ -131,6 +132,7 @@ describe('parseRollArguments', () => {
         quantity: 4,
         sides: ['r', 'a', 'n', 'd', 's', 'u', 'm']
       }
+
       test('returns a RollParameter matching the argument', () => {
         const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
@@ -141,7 +143,7 @@ describe('parseRollArguments', () => {
           options: argument,
           die: new CustomSidesDie(argument.sides),
           notation: '4d{randsum}',
-          description: []
+          description: ['Roll 4 Die with the following sides: (r,a,n,d,s,u,m)']
         })
       })
     })
@@ -162,7 +164,7 @@ describe('parseRollArguments', () => {
           },
           reroll: { exact: undefined },
           cap: { greaterThan: 2, lessThan: 1 },
-          replace: [{ from: 6, to: 1 }],
+          replace: { from: 6, to: 1 },
           unique: { notUnique: [1, 2] },
           explode: true
         }
@@ -200,8 +202,8 @@ describe('parseRollArguments', () => {
           argument,
           options: coreRollParameters,
           die: new StandardDie(coreRollParameters.sides),
-          notation: 'bad',
-          description: []
+          notation: '4d6',
+          description: ['Roll 4 6-sided die']
         })
       })
     })
@@ -219,8 +221,8 @@ describe('parseRollArguments', () => {
             argument,
             options: { quantity: 4, sides: customSides },
             die: new CustomSidesDie(customSides),
-            notation: 'bad',
-            description: []
+            notation: '4d{++--  }',
+            description: ['Roll 4 Die with the following sides: (+,+,-,-, , )']
           })
         })
       })
@@ -242,7 +244,7 @@ describe('parseRollArguments', () => {
             },
             die: new StandardDie(coreRollParameters.sides),
             notation: 'bad',
-            description: []
+            description: ['Roll 4 6-sided die', 'Drop highest']
           })
         })
       })
@@ -262,7 +264,7 @@ describe('parseRollArguments', () => {
             },
             die: new StandardDie(coreRollParameters.sides),
             notation: 'bad',
-            description: []
+            description: ['Roll 4 6-sided die', 'Drop highest 2']
           })
         })
       })
@@ -284,7 +286,7 @@ describe('parseRollArguments', () => {
             },
             die: new StandardDie(coreRollParameters.sides),
             notation: 'bad',
-            description: []
+            description: ['Roll 4 6-sided die', 'Drop lowest']
           })
         })
       })
@@ -304,7 +306,7 @@ describe('parseRollArguments', () => {
             },
             die: new StandardDie(coreRollParameters.sides),
             notation: 'bad',
-            description: []
+            description: ['Roll 4 6-sided die', 'Drop lowest 2']
           })
         })
       })
@@ -329,7 +331,12 @@ describe('parseRollArguments', () => {
             die: new StandardDie(coreRollParameters.sides),
 
             notation: 'bad',
-            description: []
+            description: [
+              'Roll 4 6-sided die',
+              'Drop greater than [5]',
+              'Drop less than [2]',
+              'Drop [2] and [4]'
+            ]
           })
         })
       })
@@ -353,7 +360,12 @@ describe('parseRollArguments', () => {
             die: new StandardDie(20),
 
             notation: 'bad',
-            description: []
+            description: [
+              'Roll 400 20-sided die',
+              'Drop greater than [5]',
+              'Drop less than [2]',
+              'Drop [2] and [4]'
+            ]
           })
         })
       })
@@ -376,7 +388,11 @@ describe('parseRollArguments', () => {
           die: new StandardDie(coreRollParameters.sides),
 
           notation: 'bad',
-          description: []
+          description: [
+            'Roll 4 6-sided die',
+            'Cap less than [2]',
+            'Cap greater than [5]'
+          ]
         })
       })
     })

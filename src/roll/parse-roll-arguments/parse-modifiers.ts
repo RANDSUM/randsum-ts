@@ -320,9 +320,9 @@ export const mergeModifiers = (
     'reroll' in newModifiers
       ? {
           reroll: {
-            ...oldModifiers.reroll,
-            ...((newModifiers.reroll || []) as RerollOptions)
-          }
+            ...(oldModifiers.reroll || {}),
+            ...(newModifiers.reroll || {})
+          } as RerollOptions
         }
       : {}
   const replace =
@@ -331,10 +331,10 @@ export const mergeModifiers = (
           replace:
             Array.isArray(oldModifiers.replace) ||
             Array.isArray(newModifiers.replace)
-              ? [
-                  ...((oldModifiers.replace || []) as ReplaceOptions[]),
-                  ...((newModifiers.replace || []) as ReplaceOptions[])
-                ]
+              ? ([
+                  ...([oldModifiers.replace].flat() || []),
+                  ...([newModifiers.replace].flat() || [])
+                ] as ReplaceOptions[])
               : {
                   ...oldModifiers.replace,
                   ...((newModifiers.replace || {}) as ReplaceOptions)
