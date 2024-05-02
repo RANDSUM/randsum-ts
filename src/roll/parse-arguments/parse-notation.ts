@@ -1,6 +1,7 @@
 import { completeRollPattern } from '../../constants/regexp'
-import { DicePoolOptions } from '../../types/options'
-import { DiceNotation } from '../../types/primitives'
+
+import { DicePoolOptions, DiceNotation } from '../../types'
+
 import {
   isCoreNotationMatch,
   Match,
