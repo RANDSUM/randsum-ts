@@ -10,7 +10,6 @@ export default class Coin extends SingleDie<string> {
   }
 
   roll(): string {
-    // eslint-disable-next-line no-console
     console.warn(
       "You roll the coin and it falls off the table and onto the ground. Maybe you'll try `.flip()`ping it instead?"
     )
