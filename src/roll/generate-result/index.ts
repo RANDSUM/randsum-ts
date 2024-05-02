@@ -2,6 +2,7 @@ import { RollParameters } from '../../types/parameters'
 import { DicePoolType } from '../../types/primitives'
 import { RollResult } from '../../types/results'
 import applyModifiers from './apply-modifiers'
+import generateRawRolls from './generate-raw-rolls'
 
 function calculateType(dicePools: RollParameters['dicePools']): DicePoolType {
   switch (true) {
@@ -10,8 +11,8 @@ function calculateType(dicePools: RollParameters['dicePools']): DicePoolType {
     ):
       return DicePoolType.standard
 
-    case Object.values(dicePools).every(
-      (pool) => typeof pool.options.sides === 'string'
+    case Object.values(dicePools).every((pool) =>
+      Array.isArray(pool.options.sides)
     ):
       return DicePoolType.custom
 
@@ -31,25 +32,6 @@ function calculateTotal(
     return rolls.reduce((acc, cur) => acc + cur, bonus)
   }
   return 0
-}
-
-function generateRawRolls(
-  dicePools: RollParameters['dicePools']
-): RollResult['rawRolls'] {
-  return Object.fromEntries(
-    Object.keys(dicePools).map((key) => {
-      const rawSides = dicePools[key].options.sides
-      const sides = Array.isArray(rawSides) ? rawSides.length : rawSides
-      const { die } = dicePools[key]
-      const rolls = Array.from(
-        {
-          length: sides
-        },
-        () => die.roll()
-      ) as string[] | number[]
-      return [key, rolls]
-    })
-  )
 }
 
 function generateModifiedRolls(
