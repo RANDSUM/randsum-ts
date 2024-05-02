@@ -1,7 +1,7 @@
 import { RollArgument, RollResult } from '../types'
 import generateResult from './generate-result'
-import parseArguments from './parse-arguments'
+import parseRollArguments from './parse-roll-arguments'
 
 export default function roll(arg?: RollArgument): RollResult {
-  return generateResult(parseArguments(arg))
+  return generateResult(parseRollArguments(arg))
 }

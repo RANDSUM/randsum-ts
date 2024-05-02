@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 
-import { Coin } from '../src'
+import { Coin } from '~Die'
 
 describe('Coin', () => {
   const sides: [string, string] = ['Chansey', 'Pokeball']

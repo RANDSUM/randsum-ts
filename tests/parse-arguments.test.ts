@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'bun:test'
 
-import { CustomSidesDie, StandardDie } from '../src/Die/constants'
-import parseArguments from '../src/roll/parse-arguments'
+import { CustomSidesDie, StandardDie } from '~Die'
 import { DiceNotation, DicePoolParameters, RollParameters } from '../src/types'
+import parseRollArguments from '~src/roll/parse-roll-arguments'
 
 const testableParams = (
   params: RollParameters
@@ -14,12 +14,12 @@ const testableParams = (
   return pools.map(([key, value]) => ({ key, value }))
 }
 
-describe('parseArguments', () => {
+describe('parseRollArguments', () => {
   describe('given undefined', () => {
     const argument = undefined
 
     test('returns a RollParameter matching the argument', () => {
-      const params = parseArguments(argument)
+      const params = parseRollArguments(argument)
       const testParam = testableParams(params)[0]
 
       expect(typeof testParam.key).toBe('string')
@@ -35,7 +35,7 @@ describe('parseArguments', () => {
     const argument = 2
 
     test('returns a RollParameter matching the argument', () => {
-      const params = parseArguments(argument)
+      const params = parseRollArguments(argument)
       const testParam = testableParams(params)[0]
 
       expect(typeof testParam.key).toBe('string')
@@ -51,7 +51,7 @@ describe('parseArguments', () => {
     const argument = ['h', 't']
 
     test('returns a RollParameter matching the argument', () => {
-      const params = parseArguments(argument)
+      const params = parseRollArguments(argument)
       const testParam = testableParams(params)[0]
 
       expect(typeof testParam.key).toBe('string')
@@ -71,7 +71,7 @@ describe('parseArguments', () => {
       }
 
       test('returns a RollParameter matching the argument', () => {
-        const params = parseArguments(argument)
+        const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
         expect(typeof testParam.key).toBe('string')
@@ -100,7 +100,7 @@ describe('parseArguments', () => {
       }
 
       test('returns a RollParameter matching the argument', () => {
-        const params = parseArguments(argument)
+        const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
         expect(typeof testParam.key).toBe('string')
@@ -118,7 +118,7 @@ describe('parseArguments', () => {
         sides: ['r', 'a', 'n', 'd', 's', 'u', 'm']
       }
       test('returns a RollParameter matching the argument', () => {
-        const params = parseArguments(argument)
+        const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
         expect(typeof testParam.key).toBe('string')
@@ -153,7 +153,7 @@ describe('parseArguments', () => {
       }
 
       test('returns a RollParameter matching the argument', () => {
-        const params = parseArguments(argument)
+        const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
         expect(typeof testParam.key).toBe('string')
@@ -174,7 +174,7 @@ describe('parseArguments', () => {
       const argument = coreTestString
 
       test('returns a RollParameter matching the notation', () => {
-        const params = parseArguments(argument)
+        const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
         expect(typeof testParam.key).toBe('string')
@@ -192,7 +192,7 @@ describe('parseArguments', () => {
         const customSides = ['+', '+', '-', '-', ' ', ' ']
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -209,7 +209,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}H`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -227,7 +227,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}H2`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -247,7 +247,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}L`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -265,7 +265,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}L2`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -285,7 +285,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}D{<2,>5,2,4}`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -305,7 +305,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `400d20D{<2,>5,2,4}`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -327,7 +327,7 @@ describe('parseArguments', () => {
       const argument: DiceNotation<number> = `${coreTestString}C<2>5`
 
       test('returns a RollParameter matching the notation', () => {
-        const params = parseArguments(argument)
+        const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
         expect(typeof testParam.key).toBe('string')
@@ -346,7 +346,7 @@ describe('parseArguments', () => {
       const argument: DiceNotation<number> = `${coreTestString}-2`
 
       test('returns a RollParameter matching the notation', () => {
-        const params = parseArguments(argument)
+        const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
         expect(typeof testParam.key).toBe('string')
@@ -365,7 +365,7 @@ describe('parseArguments', () => {
       const argument: DiceNotation<number> = `${coreTestString}+2`
 
       test('returns a RollParameter matching the notation', () => {
-        const params = parseArguments(argument)
+        const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
         expect(typeof testParam.key).toBe('string')
@@ -385,7 +385,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}R{>6}`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -403,7 +403,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}R{5,2}3R{<6}`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -425,7 +425,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}U{5,6}`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -443,7 +443,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}U`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -462,7 +462,7 @@ describe('parseArguments', () => {
       const argument: DiceNotation<number> = `${coreTestString}!`
 
       test('returns a RollParameter matching the notation', () => {
-        const params = parseArguments(argument)
+        const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
         expect(typeof testParam.key).toBe('string')
@@ -482,7 +482,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}V{1=2,>2=6}`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -505,7 +505,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `${coreTestString}V{<2=6}`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -524,7 +524,7 @@ describe('parseArguments', () => {
       describe('like an ordered dice notation', () => {
         test('it produces proper organized parameters', () => {
           const explodeFirstString: DiceNotation<number> = '4d6!H'
-          const explodeParams = parseArguments(explodeFirstString)
+          const explodeParams = parseRollArguments(explodeFirstString)
           const explodeTestParam = testableParams(explodeParams)[0]
 
           expect(typeof explodeTestParam.key).toBe('string')
@@ -538,7 +538,7 @@ describe('parseArguments', () => {
           })
 
           const dropFirstString: DiceNotation<number> = '4d6H!'
-          const dropFirstParams = parseArguments(dropFirstString)
+          const dropFirstParams = parseRollArguments(dropFirstString)
           const dropFirstTestParam = testableParams(dropFirstParams)[0]
 
           expect(typeof dropFirstTestParam.key).toBe('string')
@@ -557,7 +557,7 @@ describe('parseArguments', () => {
         const argument: DiceNotation<number> = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = parseArguments(argument)
+          const params = parseRollArguments(argument)
           const testParam = testableParams(params)[0]
 
           expect(testParam.value).toMatchObject({
@@ -600,7 +600,7 @@ describe('parseArguments', () => {
     ]
 
     test('returns a RollParameter matching the argument', () => {
-      const params = parseArguments(argument)
+      const params = parseRollArguments(argument)
       const testables = testableParams(params)
 
       const numParams = testables[0]

@@ -1,5 +1,5 @@
-import { coreNotationPattern } from '../../constants/regexp'
-import dieFactory from '../../Die/factories'
+import { coreNotationPattern } from '../../constants'
+import { dieFactory } from '../../Die'
 import {
   CoreRollArgument,
   DiceNotation,
@@ -77,7 +77,9 @@ const normalizeArguments = (
   return [argument].flat()
 }
 
-function parseArguments(argument: RollArgument | undefined): RollParameters {
+function parseRollArguments(
+  argument: RollArgument | undefined
+): RollParameters {
   return {
     dicePools: normalizeArguments(argument).reduce(
       (acc, arg) => ({ ...acc, ...parseArgument(arg) }),
@@ -86,4 +88,4 @@ function parseArguments(argument: RollArgument | undefined): RollParameters {
   }
 }
 
-export default parseArguments
+export default parseRollArguments
