@@ -1,8 +1,7 @@
-import { CustomSides } from '../types/options'
 import { CustomSidesDie, StandardDie } from './constants'
-import { isCustomSides } from './guards'
 import SingleDie from './single-die'
 
+type CustomSides = (string | number)[]
 function dieFactory(sides: number): SingleDie<number>
 function dieFactory(sides: CustomSides): SingleDie<string>
 function dieFactory<D extends string | number>(
@@ -11,10 +10,9 @@ function dieFactory<D extends string | number>(
 function dieFactory(
   sides: number | CustomSides
 ): SingleDie<string> | SingleDie<number> {
-  return isCustomSides(sides)
+  return Array.isArray(sides)
     ? new CustomSidesDie(sides.map(String))
     : new StandardDie(sides)
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { dieFactory }
+export default dieFactory

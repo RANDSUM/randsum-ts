@@ -1,9 +1,16 @@
 import { coreNotationPattern } from '../../constants/regexp'
-import { dieFactory } from '../../Die'
-import { CoreRollArgument, RollArgument } from '../../types/argument'
-import { CustomSides, DicePoolOptions } from '../../types/options'
-import { DicePoolParameters, RollParameters } from '../../types/parameters'
-import { DiceNotation } from '../../types/primitives'
+
+import dieFactory from '../../Die/factories'
+
+import {
+  CoreRollArgument,
+  RollArgument,
+  DicePoolOptions,
+  DicePoolParameters,
+  RollParameters,
+  DiceNotation
+} from '../../types'
+
 import parseNotation from './parse-notation'
 
 const isDicePoolOptions = (
@@ -52,7 +59,7 @@ function parseArgument(
 
 const isCustomSides = (
   argument: RollArgument | undefined
-): argument is CustomSides =>
+): argument is (string | number)[] =>
   Array.isArray(argument) && argument.every((arg) => typeof arg === 'string')
 
 const normalizeArguments = (

@@ -1,11 +1,12 @@
 import {
+  DiceParameters,
+  DicePoolParameters,
   DropOptions,
   GreaterLessOptions,
   Modifiers,
   ReplaceOptions,
   RerollOptions
-} from '../../types/options'
-import { DiceParameters, DicePoolParameters } from '../../types/parameters'
+} from '../../types'
 
 type RollBonuses = {
   rolls: number[]

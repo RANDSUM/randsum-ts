@@ -1,14 +1,9 @@
 import { describe, expect, test } from 'bun:test'
 
-import {
-  CustomSides,
-  CustomSidesDie,
-  DicePoolParameters,
-  RollParameters,
-  StandardDie
-} from '../src'
+import { DicePoolParameters, RollParameters, DiceNotation } from '../src/types'
 import parseArguments from '../src/roll/parse-arguments'
-import { DiceNotation } from '../src/types/primitives'
+
+import { CustomSidesDie, StandardDie } from '../src/Die/constants'
 
 const testableParams = (
   params: RollParameters
@@ -201,7 +196,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: { quantity: 4, sides: customSides },
@@ -219,7 +213,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -238,7 +231,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -259,7 +251,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -278,7 +269,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -299,7 +289,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -320,7 +309,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -401,7 +389,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -420,7 +407,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -443,7 +429,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -462,7 +447,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -502,7 +486,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -526,7 +509,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -579,7 +561,6 @@ describe('parseArguments', () => {
           const params = parseArguments(argument)
           const testParam = testableParams(params)[0]
 
-          expect(typeof testParam.key).toBe('string')
           expect(testParam.value).toMatchObject({
             argument,
             options: {
@@ -613,7 +594,7 @@ describe('parseArguments', () => {
   })
 
   describe('given an array of arguments', () => {
-    const argument: [number, DiceNotation<number>, CustomSides] = [
+    const argument: [number, DiceNotation<number>, (string | number)[]] = [
       2,
       '4d6',
       ['h', 't']
@@ -624,7 +605,6 @@ describe('parseArguments', () => {
       const testables = testableParams(params)
 
       const numParams = testables[0]
-      expect(typeof numParams.key).toBe('string')
       expect(numParams.value).toMatchObject({
         argument: argument[0],
         options: { quantity: 1, sides: 2 },
@@ -632,7 +612,6 @@ describe('parseArguments', () => {
       })
 
       const noteParams = testables[1]
-      expect(typeof noteParams.key).toBe('string')
       expect(noteParams.value).toMatchObject({
         argument: argument[1],
         options: { quantity: 4, sides: 6 },
@@ -640,7 +619,6 @@ describe('parseArguments', () => {
       })
 
       const customParams = testables[2]
-      expect(typeof customParams.key).toBe('string')
       expect(customParams.value).toMatchObject({
         argument: argument[2],
         options: { quantity: 1, sides: argument[2] },

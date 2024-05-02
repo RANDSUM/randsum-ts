@@ -1,10 +1,10 @@
 import {
+  DiceParameters,
   DropOptions,
   Modifiers,
   ReplaceOptions,
   RerollOptions
-} from '../../types/options'
-import { DiceParameters } from '../../types/parameters'
+} from '../../types'
 
 const isMatcherType = <M extends Match>(
   argument: Match,

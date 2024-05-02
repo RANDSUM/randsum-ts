@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test'
 
-import { CustomSidesDie, dieFactory, StandardDie } from '../src'
+import { CustomSidesDie, StandardDie } from '../src/Die/constants'
+import dieFactory from '../src/Die/factories'
 
 describe('SingleDie', () => {
   describe('StandardDie', () => {

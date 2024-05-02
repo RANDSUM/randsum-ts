@@ -4,8 +4,7 @@ import { CustomSidesDie, StandardDie } from '../src/Die'
 import generateResult from '../src/roll/generate-result'
 import { InvalidUniqueError } from '../src/roll/generate-result/apply-modifiers'
 import * as GenerateRawRolls from '../src/roll/generate-result/generate-raw-rolls'
-import { RollParameters } from '../src/types/parameters'
-import { DicePoolType } from '../src/types/primitives'
+import { DicePoolType, RollParameters } from '../src/types'
 
 describe('generateResult', () => {
   const testRollSet = [1, 2, 3, 4]
