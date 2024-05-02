@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test'
 
 import {
+  CustomSides,
   CustomSidesDie,
   DicePoolParameters,
   RollParameters,
@@ -607,6 +608,43 @@ describe('parseArguments', () => {
             die: new StandardDie(20)
           })
         })
+      })
+    })
+  })
+
+  describe('given an array of arguments', () => {
+    const argument: [number, DiceNotation<number>, CustomSides] = [
+      2,
+      '4d6',
+      ['h', 't']
+    ]
+
+    test('returns a RollParameter matching the argument', () => {
+      const params = parseArguments(argument)
+      const testables = testableParams(params)
+
+      const numParams = testables[0]
+      expect(typeof numParams.key).toBe('string')
+      expect(numParams.value).toMatchObject({
+        argument: argument[0],
+        options: { quantity: 1, sides: 2 },
+        die: new StandardDie(2)
+      })
+
+      const noteParams = testables[1]
+      expect(typeof noteParams.key).toBe('string')
+      expect(noteParams.value).toMatchObject({
+        argument: argument[1],
+        options: { quantity: 4, sides: 6 },
+        die: new StandardDie(6)
+      })
+
+      const customParams = testables[2]
+      expect(typeof customParams.key).toBe('string')
+      expect(customParams.value).toMatchObject({
+        argument: argument[2],
+        options: { quantity: 1, sides: argument[2] },
+        die: new CustomSidesDie(argument[2])
       })
     })
   })

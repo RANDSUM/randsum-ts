@@ -12,6 +12,10 @@ type RollBonuses = {
   simpleMathModifier: number
 }
 
+type ModifiedRollBonuses = {
+  rolls: string[]
+  simpleMathModifier: 0
+}
 export class InvalidUniqueError extends Error {
   constructor() {
     super(
@@ -183,17 +187,17 @@ const applyDrop = (
 const isCustomParameters = (
   poolParameters: DicePoolParameters<string> | DicePoolParameters<number>
 ): poolParameters is DicePoolParameters<string> =>
-  typeof poolParameters.options.sides === 'string'
+  Array.isArray(poolParameters.options.sides)
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export default function applyModifiers(
   poolParameters: DicePoolParameters<string> | DicePoolParameters<number>,
   initialRolls: number[] | string[]
-): RollBonuses {
+): RollBonuses | ModifiedRollBonuses {
   if (isCustomParameters(poolParameters)) {
     return {
       simpleMathModifier: 0,
-      rolls: []
+      rolls: initialRolls as string[]
     }
   }
 

@@ -74,12 +74,12 @@ const normalizeArguments = (
 }
 
 function parseArguments(argument: RollArgument | undefined): RollParameters {
-  const args = normalizeArguments(argument)
-  const dicePools = args.reduce(
-    (acc, arg) => ({ ...acc, ...parseArgument(arg) }),
-    {}
-  )
-  return { dicePools }
+  return {
+    dicePools: normalizeArguments(argument).reduce(
+      (acc, arg) => ({ ...acc, ...parseArgument(arg) }),
+      {}
+    )
+  }
 }
 
 export default parseArguments
