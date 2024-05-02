@@ -6,15 +6,13 @@ export default function generateRawRolls(
 ): RollResult['rawRolls'] {
   return Object.fromEntries(
     Object.keys(dicePools).map((key) => {
-      const rawSides = dicePools[key].options.sides
       const {
         die,
         options: { quantity }
       } = dicePools[key]
-      const length = Array.isArray(rawSides) ? rawSides.length : quantity || 1
       const rolls = Array.from(
         {
-          length
+          length: quantity || 1
         },
         () => die.roll()
       ) as string[] | number[]
