@@ -190,7 +190,6 @@ const isCustomParameters = (
 ): poolParameters is DicePoolParameters<string> =>
   Array.isArray(poolParameters.options.sides)
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function applyModifiers(
   poolParameters: DicePoolParameters<string> | DicePoolParameters<number>,
   initialRolls: number[] | string[]
