@@ -584,6 +584,51 @@ describe('generateResult', () => {
     })
   })
 
+  describe('when given multiple dice pools', () => {
+    const parameters: RollParameters = {
+      dicePools: {
+        'test-roll-id': {
+          argument: undefined,
+          options: { sides: 6, quantity: testRollSet.length },
+          die: mockStandardDie
+        },
+        'test-roll-id-2': {
+          argument: undefined,
+          options: { sides: 6, quantity: testRollSet.length },
+          die: mockStandardDie
+        }
+      }
+    }
+
+    test('it returns the combined total', () => {
+      const rawRolls = {
+        'test-roll-id': testRollSet,
+        'test-roll-id-2': testRollSet
+      }
+
+      spyOn(GenerateRawRolls, 'default').mockReturnValueOnce(rawRolls)
+      expect(generateResult(parameters)).toMatchObject({
+        ...parameters,
+        rawRolls,
+        modifiedRolls: {
+          'test-roll-id': {
+            rolls: [1, 2, 3, 4],
+            total: 10
+          },
+          'test-roll-id-2': {
+            rolls: [1, 2, 3, 4],
+            total: 10
+          }
+        },
+        total: 20,
+        result: [
+          [1, 2, 3, 4],
+          [1, 2, 3, 4]
+        ]
+      })
+    })
+  })
+
   describe('when given an roll total with an unrecognized modifier', () => {
     const dropParameters: RollParameters = {
       dicePools: {
