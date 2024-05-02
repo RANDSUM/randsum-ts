@@ -1,5 +1,5 @@
-import { coreNotationPattern } from '../../constants'
-import { dieFactory } from '../../Die'
+import { coreNotationPattern } from '~constants'
+import { dieFactory } from '~Die'
 import {
   CoreRollArgument,
   DiceNotation,
@@ -7,7 +7,7 @@ import {
   DicePoolParameters,
   RollArgument,
   RollParameters
-} from '../../types'
+} from '~types'
 import parseNotation from './parse-notation'
 
 const isDicePoolOptions = (

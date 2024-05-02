@@ -1,10 +1,10 @@
 import { describe, expect, spyOn, test } from 'bun:test'
 
-import { CustomSidesDie, StandardDie } from '../src/Die'
+import { CustomSidesDie, StandardDie } from '~Die'
 import generateResult from '~src/roll/generate-result'
 import { InvalidUniqueError } from '~src/roll/generate-result/apply-modifiers'
 import * as GenerateRawRolls from '~src/roll/generate-result/generate-raw-rolls'
-import { DicePoolType, RollParameters } from '../src/types'
+import { DicePoolType, RollParameters } from '~types'
 
 describe('generateResult', () => {
   const testRollSet = [1, 2, 3, 4]

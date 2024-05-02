@@ -1,5 +1,5 @@
-import { completeRollPattern } from '../../constants'
-import { DiceNotation, DicePoolOptions } from '../../types'
+import { completeRollPattern } from '~constants'
+import { DiceNotation, DicePoolOptions } from '~types'
 import {
   isCoreNotationMatch,
   Match,

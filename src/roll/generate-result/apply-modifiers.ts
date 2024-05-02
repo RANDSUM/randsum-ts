@@ -6,7 +6,7 @@ import {
   Modifiers,
   ReplaceOptions,
   RerollOptions
-} from '../../types'
+} from '~types'
 
 type RollBonuses = {
   rolls: number[]

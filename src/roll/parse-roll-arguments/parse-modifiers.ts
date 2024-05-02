@@ -4,7 +4,7 @@ import {
   Modifiers,
   ReplaceOptions,
   RerollOptions
-} from '../../types'
+} from '~types'
 
 const isMatcherType = <M extends Match>(
   argument: Match,

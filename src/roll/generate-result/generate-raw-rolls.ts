@@ -1,4 +1,4 @@
-import { RollParameters, RollResult } from '../../types'
+import { RollParameters, RollResult } from '~types'
 
 export default function generateRawRolls(
   dicePools: RollParameters['dicePools']

@@ -1,4 +1,4 @@
-import { DicePoolType, RollParameters, RollResult } from '../../types'
+import { DicePoolType, RollParameters, RollResult } from '~types'
 import applyModifiers from './apply-modifiers'
 import generateRawRolls from './generate-raw-rolls'
 

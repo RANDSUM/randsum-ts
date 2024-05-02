@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 
-import { roll } from '../src'
+import roll from '~roll'
 
 describe('roll', () => {
   describe('Stress Test', () => {

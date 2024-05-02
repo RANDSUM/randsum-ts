@@ -1,4 +1,4 @@
-import { RollArgument, RollResult } from '../types'
+import { RollArgument, RollResult } from '~types'
 import generateResult from './generate-result'
 import parseRollArguments from './parse-roll-arguments'
 
