@@ -61,12 +61,12 @@ function parseArgument(
 }
 
 const isCustomSides = (
-  argument: RollArgument
-): argument is (string | number)[] =>
+  argument: RollArgument | undefined
+): argument is string[] =>
   Array.isArray(argument) && argument.every((arg) => typeof arg === 'string')
 
 const normalizeArguments = (
-  argument: RollArgument
+  argument: RollArgument | undefined
 ): CoreRollArgument[] | undefined[] => {
   if (!argument) {
     return [undefined]

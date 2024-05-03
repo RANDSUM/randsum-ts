@@ -677,7 +677,7 @@ describe('parseRollArguments', () => {
   })
 
   describe('given an array of arguments', () => {
-    const argument: [number, DiceNotation<number>, (string | number)[]] = [
+    const argument: [number, DiceNotation<number>, string[]] = [
       2,
       '4d6',
       ['h', 't']

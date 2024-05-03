@@ -24,7 +24,7 @@ export type TypeOrArrayOfType<T> = T | T[]
 
 export interface DicePoolOptions<D extends string | number> {
   quantity?: number
-  sides: D extends number ? number : (string | number)[]
+  sides: D extends number ? number : string[]
   modifiers?: D extends number ? Modifiers : never
 }
 
