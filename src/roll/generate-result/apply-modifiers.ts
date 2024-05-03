@@ -1,18 +1,23 @@
 import {
+  DiceParameters,
+  DicePoolParameters,
   DropOptions,
   GreaterLessOptions,
   Modifiers,
   ReplaceOptions,
-  RerollOptions
-} from '../../types/options'
-import { DiceParameters, RollParameters } from '../../types/parameters'
-import { RollResult } from '../../types/results'
+  RerollOptions,
+  TypeOrArrayOfType
+} from '~types'
 
 type RollBonuses = {
   rolls: number[]
   simpleMathModifier: number
 }
 
+type ModifiedRollBonuses = {
+  rolls: string[]
+  simpleMathModifier: 0
+}
 export class InvalidUniqueError extends Error {
   constructor() {
     super(
@@ -99,23 +104,16 @@ const rerollRoll = (
 
 const applyReroll = (
   rolls: number[],
-  reroll: RerollOptions | Array<RerollOptions>,
+  reroll: RerollOptions,
   rollOne: () => number
 ): number[] => {
-  const parameters = Array.isArray(reroll) ? reroll : [reroll]
-
-  let rerollRolls = rolls
-  parameters.forEach((rerollModifier) => {
-    rerollRolls = rerollRolls.map((roll) =>
-      rerollRoll(roll, rerollModifier, rollOne)
-    )
-  })
-  return rerollRolls
+  const newRolls = [...rolls]
+  return newRolls.map((roll) => rerollRoll(roll, reroll, rollOne))
 }
 
 const applyReplace = (
   rolls: number[],
-  replace: ReplaceOptions | Array<ReplaceOptions>
+  replace: TypeOrArrayOfType<ReplaceOptions>
 ): number[] => {
   const parameters = Array.isArray(replace) ? replace : [replace]
 
@@ -181,22 +179,32 @@ const applyDrop = (
   return sortedResults
 }
 
-const applyModifiers = (
-  rollParameters: RollParameters<number>,
-  initialRolls: number[]
-): RollBonuses => {
-  const {
-    modifiers,
-    dice,
-    diceOptions: [{ sides, quantity }]
-  } = rollParameters
+const isCustomParameters = (
+  poolParameters: DicePoolParameters<string | number>
+): poolParameters is DicePoolParameters<string> =>
+  Array.isArray(poolParameters.options.sides)
+
+export default function applyModifiers(
+  poolParameters: DicePoolParameters<string> | DicePoolParameters<number>,
+  initialRolls: number[] | string[]
+): RollBonuses | ModifiedRollBonuses {
+  if (isCustomParameters(poolParameters)) {
+    return {
+      simpleMathModifier: 0,
+      rolls: initialRolls as string[]
+    }
+  }
 
   const rollBonuses: RollBonuses = {
     simpleMathModifier: 0,
-    rolls: initialRolls
+    rolls: initialRolls as number[]
   }
 
-  const rollOne: () => number = () => dice[0].roll()
+  const {
+    options: { sides, quantity, modifiers = {} }
+  } = poolParameters
+
+  const rollOne: () => number = () => poolParameters.die.roll()
 
   return Object.keys(modifiers).reduce((bonuses, key) => {
     switch (key) {
@@ -214,7 +222,7 @@ const applyModifiers = (
           rolls: modifiers.unique
             ? applyUnique(
                 bonuses.rolls,
-                { sides, quantity, unique: modifiers.unique },
+                { sides, quantity: quantity || 1, unique: modifiers.unique },
                 rollOne
               )
             : bonuses.rolls
@@ -271,21 +279,3 @@ const applyModifiers = (
     }
   }, rollBonuses)
 }
-
-const generateStandardResults = (
-  rollParameters: RollParameters<number>
-): RollResult<number> => {
-  const initialRolls = rollParameters.generateInitialRolls(rollParameters.dice)
-  const modifiedBonuses = applyModifiers(rollParameters, initialRolls)
-
-  return {
-    rollParameters,
-    initialRolls,
-    rolls: modifiedBonuses.rolls,
-    total:
-      modifiedBonuses.rolls.reduce((a, b) => a + b, 0) +
-      modifiedBonuses.simpleMathModifier
-  }
-}
-
-export default generateStandardResults

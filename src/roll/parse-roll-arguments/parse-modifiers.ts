@@ -1,10 +1,10 @@
 import {
+  DiceParameters,
   DropOptions,
   Modifiers,
   ReplaceOptions,
   RerollOptions
-} from '../../types/options'
-import { DiceParameters } from '../../types/parameters'
+} from '~types'
 
 const isMatcherType = <M extends Match>(
   argument: Match,
@@ -70,17 +70,15 @@ export type Match =
 
 export const parseCoreNotation = ({
   coreNotationMatch: notationString
-}: CoreNotationMatch): DiceParameters<number>[] | DiceParameters<string>[] => {
+}: CoreNotationMatch): DiceParameters<number> | DiceParameters<string> => {
   const [quantity, sides] = notationString.split(/[Dd]/)
 
-  return [
-    {
-      quantity: Number(quantity),
-      sides: sides.includes('{')
-        ? [...sides.replaceAll(/{|}/g, '')]
-        : Number(sides)
-    }
-  ] as DiceParameters<number>[] | DiceParameters<string>[]
+  return {
+    quantity: Number(quantity),
+    sides: sides.includes('{')
+      ? [...sides.replaceAll(/{|}/g, '')]
+      : Number(sides)
+  } as DiceParameters<number> | DiceParameters<string>
 }
 
 const parseCapNotation = ({
@@ -275,9 +273,12 @@ const parseReplaceNotation = ({
       return { ...coreReplacement, from: Number(noteFrom) }
     })
 
-  return {
-    replace: replaceOptions.length === 1 ? replaceOptions[0] : replaceOptions
-  }
+  const replace =
+    replaceOptions.length === 1
+      ? replaceOptions[0]
+      : replaceOptions.filter(Boolean)
+
+  return { replace }
 }
 
 export const mergeModifiers = (
@@ -322,9 +323,9 @@ export const mergeModifiers = (
     'reroll' in newModifiers
       ? {
           reroll: {
-            ...oldModifiers.reroll,
-            ...((newModifiers.reroll || []) as RerollOptions)
-          }
+            ...(oldModifiers.reroll || {}),
+            ...(newModifiers.reroll || {})
+          } as RerollOptions
         }
       : {}
   const replace =
@@ -333,10 +334,14 @@ export const mergeModifiers = (
           replace:
             Array.isArray(oldModifiers.replace) ||
             Array.isArray(newModifiers.replace)
-              ? [
-                  ...((oldModifiers.replace || []) as ReplaceOptions[]),
-                  ...((newModifiers.replace || []) as ReplaceOptions[])
-                ]
+              ? (
+                  [
+                    ...([oldModifiers.replace] || []),
+                    ...([newModifiers.replace] || [])
+                  ] as ReplaceOptions[]
+                )
+                  .flat()
+                  .filter(Boolean)
               : {
                   ...oldModifiers.replace,
                   ...((newModifiers.replace || {}) as ReplaceOptions)

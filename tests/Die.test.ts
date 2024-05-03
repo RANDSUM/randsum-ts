@@ -1,11 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 
-import {
-  CustomSidesDie,
-  dicePoolFactory,
-  dieFactory,
-  StandardDie
-} from '../src'
+import { CustomSidesDie, StandardDie, dieFactory } from '~Die'
 
 describe('SingleDie', () => {
   describe('StandardDie', () => {
@@ -65,31 +60,6 @@ describe('dieFactory', () => {
       expect(die.sides).toEqual(sides.length)
       expect(die.faces).toEqual(sides)
       expect(sides).toContain(die.roll())
-    })
-  })
-})
-
-describe('dicePoolFactory', () => {
-  describe('when given dice options', () => {
-    const customFaces = ['+', '+', '-', '-', ' ', ' ']
-    const options = [{ sides: 6 }, { quantity: 2, sides: customFaces }]
-
-    test('returns an array of dice equal to the kinds and sizes provided', () => {
-      const dice = dicePoolFactory(options)
-
-      expect(dice).toHaveLength(3)
-
-      expect(dice[0]).toBeInstanceOf(StandardDie)
-      expect(dice[0].sides).toBe(6)
-      expect(dice[0].faces).toEqual([1, 2, 3, 4, 5, 6])
-
-      expect(dice[1]).toBeInstanceOf(CustomSidesDie)
-      expect(dice[1].sides).toEqual(customFaces.length)
-      expect(dice[1].faces).toEqual(customFaces)
-
-      expect(dice[2]).toBeInstanceOf(CustomSidesDie)
-      expect(dice[2].sides).toEqual(customFaces.length)
-      expect(dice[2].faces).toEqual(customFaces)
     })
   })
 })
