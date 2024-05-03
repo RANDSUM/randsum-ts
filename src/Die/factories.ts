@@ -11,7 +11,7 @@ function dieFactory(
 ): SingleDie<string> | SingleDie<number> {
   return Array.isArray(sides)
     ? new CustomSidesDie(sides.map(String))
-    : new StandardDie(sides)
+    : new StandardDie(Number(sides))
 }
 
 export default dieFactory
