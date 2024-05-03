@@ -1,7 +1,7 @@
 import eslint from '@eslint/js'
 
 export default [
-  eslint.configs.all,
+  eslint.configs.recommended,
   {
     ignores: ['node_modules', 'dist', 'coverage', '*.md']
   }
