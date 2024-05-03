@@ -39,17 +39,14 @@ export type Modifiers = {
   minus?: number
 }
 
-export interface DropOptions {
-  highest?: number
-  lowest?: number
-  greaterThan?: number
-  lessThan?: number
-  exact?: number[]
-}
-
 export interface GreaterLessOptions {
   greaterThan?: number
   lessThan?: number
+}
+export interface DropOptions extends GreaterLessOptions {
+  highest?: number
+  lowest?: number
+  exact?: number[]
 }
 
 export interface RerollOptions extends GreaterLessOptions {

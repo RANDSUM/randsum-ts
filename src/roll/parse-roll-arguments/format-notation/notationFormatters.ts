@@ -14,14 +14,29 @@ export const capNotation = (cap: GreaterLessOptions) => {
 
 export const dropNotation = (drop: DropOptions) => {
   const dropList: string[] = []
-  formatGreaterLess(drop).forEach((str) => dropList.push(str))
+  const greaterLess = formatGreaterLess(drop)
+  greaterLess.forEach((str) => dropList.push(str))
   if (drop.exact) {
     drop.exact.forEach((roll) => {
       dropList.push(String(roll))
     })
   }
 
-  return `D{${dropList.map((str) => str).join(',')}}`
+  const finalList = []
+
+  if (drop.highest) {
+    finalList.push(`H${drop.highest > 1 ? drop.highest : ''}`)
+  }
+
+  if (drop.lowest) {
+    finalList.push(`L${drop.lowest > 1 ? drop.lowest : ''}`)
+  }
+
+  if (dropList.length > 0) {
+    finalList.push(`D{${dropList.map((str) => str).join(',')}}`)
+  }
+
+  return finalList.join('')
 }
 
 export const replaceNotation = (replace: TypeOrArrayOfType<ReplaceOptions>) => {
