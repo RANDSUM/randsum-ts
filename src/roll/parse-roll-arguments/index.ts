@@ -61,12 +61,12 @@ function parseArgument(
 }
 
 const isCustomSides = (
-  argument: RollArgument | undefined
+  argument: RollArgument
 ): argument is (string | number)[] =>
   Array.isArray(argument) && argument.every((arg) => typeof arg === 'string')
 
 const normalizeArguments = (
-  argument: RollArgument | undefined
+  argument: RollArgument
 ): CoreRollArgument[] | undefined[] => {
   if (!argument) {
     return [undefined]
@@ -83,9 +83,7 @@ const normalizeArguments = (
   return [argument].flat()
 }
 
-function parseRollArguments(
-  argument: RollArgument | undefined
-): RollParameters {
+function parseRollArguments(argument: RollArgument): RollParameters {
   return {
     dicePools: normalizeArguments(argument).reduce(
       (acc, arg) => ({ ...acc, ...parseArgument(arg) }),

@@ -72,7 +72,7 @@ export type CoreRollArgument =
   | DiceNotation<string>
   | (number | string)[]
 
-export type RollArgument = CoreRollArgument | CoreRollArgument[] | undefined
+export type RollArgument = TypeOrArrayOfType<CoreRollArgument> | undefined
 
 export type DiceParameters<D extends string | number = number> = Concrete<
   Omit<DicePoolOptions<D>, 'modifiers'>
