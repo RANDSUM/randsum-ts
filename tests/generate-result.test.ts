@@ -451,7 +451,7 @@ describe('generateResult', () => {
               sides: 6,
               quantity: testRollSet.length,
               modifiers: {
-                reroll: [{ lessThan: 2, maxReroll: 2 }, { exact: [3] }]
+                reroll: { lessThan: 2, maxReroll: 2, exact: [3] }
               }
             },
             die: mockStandardDie

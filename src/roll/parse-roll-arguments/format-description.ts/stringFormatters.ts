@@ -44,10 +44,26 @@ export const replaceString = (replace: TypeOrArrayOfType<ReplaceOptions>) => {
   return [singleReplaceString(replace)]
 }
 
-export const rerollString = (reroll: TypeOrArrayOfType<RerollOptions>) => {
-  if (Array.isArray(reroll)) return reroll.map(singleRerollString).flat()
+export const rerollString = (reroll: RerollOptions) => {
+  const rerollList = []
 
-  return singleRerollString(reroll)
+  if (reroll.exact) {
+    if (Array.isArray(reroll.exact)) {
+      reroll.exact.forEach((roll) => {
+        rerollList.push(String(roll))
+      })
+    }
+    rerollList.push(String(reroll.exact))
+  }
+  const greaterLess = `${formatGreaterLess(reroll).join(' and ')}`
+
+  const maxString = reroll.maxReroll ? ` (up to ${reroll.maxReroll} times)` : ''
+  const exactList = formatHumanList(rerollList)
+
+  const exactString = [exactList, greaterLess].filter((i) => i !== '').join(',')
+
+  if (exactString === '') return []
+  return [`Reroll ${exactString}${maxString}`]
 }
 
 export const explodeString = () => 'Exploding Dice'
@@ -78,26 +94,4 @@ const singleReplaceString = (replace: ReplaceOptions) => {
       ? `[${replace.from}]`
       : formatGreaterLess(replace.from).join(' and ')
   return `Replace ${fromValue} with [${replace.to}]`
-}
-
-const singleRerollString = (reroll: RerollOptions) => {
-  const rerollList = []
-
-  if (reroll.exact) {
-    if (Array.isArray(reroll.exact)) {
-      reroll.exact.forEach((roll) => {
-        rerollList.push(String(roll))
-      })
-    }
-    rerollList.push(String(reroll.exact))
-  }
-  const greaterLess = `${formatGreaterLess(reroll).join(' and ')}`
-
-  const maxString = reroll.maxReroll ? ` (up to ${reroll.maxReroll} times)` : ''
-  const exactList = formatHumanList(rerollList)
-
-  const exactString = [exactList, greaterLess].filter((i) => i !== '').join(',')
-
-  if (exactString === '') return []
-  return [`Reroll ${exactString}${maxString}`]
 }

@@ -107,7 +107,7 @@ describe('parseRollArguments', () => {
 
       const foo = `4d6R`
 
-      test.only('returns a RollParameter matching the argument', () => {
+      test('returns a RollParameter matching the argument', () => {
         const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
 
@@ -116,11 +116,11 @@ describe('parseRollArguments', () => {
           argument,
           options: argument,
           die: new StandardDie(argument.sides),
-          notation: 'BAD',
+          notation: '4d6V{>5=1}R{2,1,4}3U',
           description: [
             'Roll 4 6-sided die',
             'Replace greater than [5] with [1]',
-            'Reroll [2] [1] [4] and [2,1,4]',
+            'Reroll [2] [1] [4] and [2,1,4] (up to 3 times)',
             'No Duplicate Rolls'
           ]
         })

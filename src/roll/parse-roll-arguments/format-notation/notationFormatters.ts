@@ -33,13 +33,28 @@ export const replaceNotation = (replace: TypeOrArrayOfType<ReplaceOptions>) => {
   return `V{${args}}`
 }
 
-export const rerollNotation = (reroll: TypeOrArrayOfType<RerollOptions>) => {
-  const args = (
-    Array.isArray(reroll)
-      ? reroll.map(singleRerollNotation).flat()
-      : [singleRerollNotation(reroll)]
-  ).join(',')
-  return `R{${args}}`
+export const rerollNotation = (reroll: RerollOptions) => {
+  console.log(reroll)
+  const rerollList = []
+
+  if (reroll.exact) {
+    if (Array.isArray(reroll.exact)) {
+      reroll.exact.forEach((roll) => {
+        rerollList.push(String(roll))
+      })
+    } else {
+      rerollList.push(String(reroll.exact))
+    }
+  }
+  const greaterLess = formatGreaterLess(reroll)
+  if (greaterLess.length > 0) {
+    rerollList.push(greaterLess.join(','))
+  }
+
+  const maxNotation = reroll.maxReroll ? reroll.maxReroll : ''
+
+  console.log(rerollList)
+  return `R{${rerollList.join(',')}}${maxNotation}`
 }
 
 export const explodeNotation = () => '!'
@@ -55,10 +70,10 @@ const formatGreaterLess = (
   list: string[] = []
 ) => {
   if (options.greaterThan) {
-    list.push(`>[${options.greaterThan}]`)
+    list.push(`>${options.greaterThan}`)
   }
   if (options.lessThan) {
-    list.push(`<[${options.lessThan}]`)
+    list.push(`<${options.lessThan}`)
   }
 
   return list
@@ -70,23 +85,4 @@ const singleReplaceNotation = (replace: ReplaceOptions) => {
       ? replace.from
       : formatGreaterLess(replace.from).join(',')
   return `${fromValue}=${replace.to}`
-}
-
-const singleRerollNotation = (reroll: RerollOptions) => {
-  const rerollList = []
-
-  if (reroll.exact) {
-    if (Array.isArray(reroll.exact)) {
-      reroll.exact.forEach((roll) => {
-        rerollList.push(String(roll))
-      })
-    }
-    rerollList.push(String(reroll.exact))
-  }
-  const greaterLess = `${formatGreaterLess(reroll).join(',')}`
-  rerollList.push(greaterLess)
-
-  const maxNotation = reroll.maxReroll ? reroll.maxReroll : ''
-
-  return `R{${rerollList.join(',')}}${maxNotation}`
 }

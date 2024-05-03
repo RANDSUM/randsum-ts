@@ -32,7 +32,7 @@ export type Modifiers = {
   cap?: GreaterLessOptions
   drop?: DropOptions
   replace?: TypeOrArrayOfType<ReplaceOptions>
-  reroll?: TypeOrArrayOfType<RerollOptions>
+  reroll?: RerollOptions
   unique?: boolean | UniqueOptions
   explode?: boolean
   plus?: number
