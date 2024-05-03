@@ -60,15 +60,6 @@ FairCoin.flip()
 
 Written in 100% Typescript with strong attention paid to return types. You depend on `randsum` to give you what you expect - just not always the roll you want.
 
-```ts
-
-// `standardRollTotal` is `type number`
-const standardRollTotal = roll({sides: 20}).total
-
-// `customSidesRollTotal` is `type string`
-const customSidesRollTotal = roll({sides: ['+', '+', '-'. '-', ' ', ' ']}).total
-```
-
 ## Further Reading
 
 [Getting Started](https://github.com/RANDSUM/randsum-ts/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
