@@ -6,7 +6,7 @@ export default abstract class SingleDie<D extends string | number> {
 
   faces: D[]
 
-  constructor(sides: D extends number ? number : (number | string)[]) {
+  constructor(sides: D extends number ? number : string[]) {
     const isCustom = Array.isArray(sides)
     this.sides = isCustom ? sides.length : Number(sides)
     this.faces = (isCustom ? sides : generateStandardSides(sides)) as D[]

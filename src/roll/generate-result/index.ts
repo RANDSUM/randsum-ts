@@ -22,7 +22,7 @@ function calculateType(dicePools: RollParameters['dicePools']): DicePoolType {
 const isFullNumArray = (arr: unknown[]): arr is number[] =>
   arr.every((item) => typeof item === 'number')
 
-function calculateTotal(rolls: (number | string)[], bonus = 0): number {
+function calculateTotal(rolls: number[] | string[], bonus = 0): number {
   if (isFullNumArray(rolls)) {
     return rolls.reduce((acc, cur) => acc + cur, bonus)
   }

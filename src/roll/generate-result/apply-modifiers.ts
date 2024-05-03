@@ -5,7 +5,8 @@ import {
   GreaterLessOptions,
   Modifiers,
   ReplaceOptions,
-  RerollOptions
+  RerollOptions,
+  TypeOrArrayOfType
 } from '~types'
 
 type RollBonuses = {
@@ -103,23 +104,16 @@ const rerollRoll = (
 
 const applyReroll = (
   rolls: number[],
-  reroll: RerollOptions | Array<RerollOptions>,
+  reroll: RerollOptions,
   rollOne: () => number
 ): number[] => {
-  const parameters = Array.isArray(reroll) ? reroll : [reroll]
-
-  let rerollRolls = rolls
-  parameters.forEach((rerollModifier) => {
-    rerollRolls = rerollRolls.map((roll) =>
-      rerollRoll(roll, rerollModifier, rollOne)
-    )
-  })
-  return rerollRolls
+  const newRolls = [...rolls]
+  return newRolls.map((roll) => rerollRoll(roll, reroll, rollOne))
 }
 
 const applyReplace = (
   rolls: number[],
-  replace: ReplaceOptions | Array<ReplaceOptions>
+  replace: TypeOrArrayOfType<ReplaceOptions>
 ): number[] => {
   const parameters = Array.isArray(replace) ? replace : [replace]
 
@@ -186,7 +180,7 @@ const applyDrop = (
 }
 
 const isCustomParameters = (
-  poolParameters: DicePoolParameters<string> | DicePoolParameters<number>
+  poolParameters: DicePoolParameters<string | number>
 ): poolParameters is DicePoolParameters<string> =>
   Array.isArray(poolParameters.options.sides)
 
