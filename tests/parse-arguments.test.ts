@@ -179,8 +179,21 @@ describe('parseRollArguments', () => {
           argument,
           options: argument,
           die: new StandardDie(argument.sides),
-          notation: 'bad',
-          description: []
+          notation: '4d6C>2<1D{>2,<6,2,3}V{6=1}!U{1,2})+2-1',
+          description: [
+            'Roll 4 6-sided die',
+            'No Rolls greater than [2]',
+            'No Rolls less than [1]',
+            'Drop lowest',
+            'Drop greater than [2]',
+            'Drop less than [6]',
+            'Drop [2] and [3]',
+            'Replace [6] with [1]',
+            'Exploding Dice',
+            'No Duplicates (except [1] and [2])',
+            'Add 2',
+            'Subtract 1'
+          ]
         })
       })
     })
@@ -673,9 +686,24 @@ describe('parseRollArguments', () => {
               }
             },
             die: new StandardDie(20),
-
-            notation: 'bad',
-            description: []
+            notation: '10d20C>18<2D{>5,<2,2,4}V{1=2,>2=6}R{5,2,<6}3!U{5}+5-5',
+            description: [
+              'Roll 10 20-sided die',
+              'No Rolls greater than [18]',
+              'No Rolls less than [2]',
+              'Drop highest 2',
+              'Drop lowest',
+              'Drop greater than [5]',
+              'Drop less than [2]',
+              'Drop [2] and [4]',
+              'Replace [1] with [2]',
+              'Replace greater than [2] with [6]',
+              'Reroll [5] and [2], less than [6] (up to 3 times)',
+              'Exploding Dice',
+              'No Duplicates (except [5])',
+              'Add 5',
+              'Subtract 5'
+            ]
           })
         })
       })
@@ -698,8 +726,8 @@ describe('parseRollArguments', () => {
         argument: argument[0],
         options: { quantity: 1, sides: 2 },
         die: new StandardDie(2),
-        notation: 'bad',
-        description: []
+        notation: '1d2',
+        description: ['Roll 1 2-sided die']
       })
 
       const noteParams = testables[1]
@@ -707,8 +735,8 @@ describe('parseRollArguments', () => {
         argument: argument[1],
         options: { quantity: 4, sides: 6 },
         die: new StandardDie(6),
-        notation: 'bad',
-        description: []
+        notation: '4d6',
+        description: ['Roll 4 6-sided die']
       })
 
       const customParams = testables[2]
@@ -717,8 +745,8 @@ describe('parseRollArguments', () => {
         options: { quantity: 1, sides: argument[2] },
         die: new CustomSidesDie(argument[2]),
 
-        notation: 'bad',
-        description: []
+        notation: '1d{ht}',
+        description: ['Roll 1 Die with the following sides: (h,t)']
       })
     })
   })

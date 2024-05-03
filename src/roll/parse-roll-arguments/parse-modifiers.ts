@@ -273,9 +273,12 @@ const parseReplaceNotation = ({
       return { ...coreReplacement, from: Number(noteFrom) }
     })
 
-  return {
-    replace: replaceOptions.length === 1 ? replaceOptions[0] : replaceOptions
-  }
+  const replace =
+    replaceOptions.length === 1
+      ? replaceOptions[0]
+      : replaceOptions.filter(Boolean)
+
+  return { replace }
 }
 
 export const mergeModifiers = (
@@ -331,10 +334,14 @@ export const mergeModifiers = (
           replace:
             Array.isArray(oldModifiers.replace) ||
             Array.isArray(newModifiers.replace)
-              ? ([
-                  ...([oldModifiers.replace].flat() || []),
-                  ...([newModifiers.replace].flat() || [])
-                ] as ReplaceOptions[])
+              ? (
+                  [
+                    ...([oldModifiers.replace] || []),
+                    ...([newModifiers.replace] || [])
+                  ] as ReplaceOptions[]
+                )
+                  .flat()
+                  .filter(Boolean)
               : {
                   ...oldModifiers.replace,
                   ...((newModifiers.replace || {}) as ReplaceOptions)

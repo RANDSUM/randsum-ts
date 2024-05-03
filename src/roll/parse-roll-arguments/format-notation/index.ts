@@ -17,8 +17,7 @@ function formatModifierNotation({
 
   const modifierStrings = []
 
-  if (modifiers.cap)
-    capNotation(modifiers.cap).forEach((str) => modifierStrings.push(str))
+  if (modifiers.cap) modifierStrings.push(capNotation(modifiers.cap))
   if (modifiers.drop) modifierStrings.push(dropNotation(modifiers.drop))
   if (modifiers.replace)
     modifierStrings.push(replaceNotation(modifiers.replace))

@@ -9,7 +9,7 @@ import {
 
 export const capNotation = (cap: GreaterLessOptions) => {
   const capList = formatGreaterLess(cap)
-  return capList.map((str) => `C{${str}}`)
+  return `C${capList.join('')}`
 }
 
 export const dropNotation = (drop: DropOptions) => {
@@ -34,7 +34,6 @@ export const replaceNotation = (replace: TypeOrArrayOfType<ReplaceOptions>) => {
 }
 
 export const rerollNotation = (reroll: RerollOptions) => {
-  console.log(reroll)
   const rerollList = []
 
   if (reroll.exact) {
@@ -53,7 +52,7 @@ export const rerollNotation = (reroll: RerollOptions) => {
 
   const maxNotation = reroll.maxReroll ? reroll.maxReroll : ''
 
-  console.log(rerollList)
+  if (rerollList.length === 0) return ''
   return `R{${rerollList.join(',')}}${maxNotation}`
 }
 
@@ -62,7 +61,7 @@ export const plusNotation = (plus: number) => `+${plus}`
 export const minusNotation = (minus: number) => `-${minus}`
 export const uniqueNotation = (unique: boolean | UniqueOptions) => {
   if (typeof unique === 'boolean') return 'U'
-  return `U{${unique.notUnique.join(',')}})`
+  return `U{${unique.notUnique.join(',')}}`
 }
 
 const formatGreaterLess = (

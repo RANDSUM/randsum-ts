@@ -52,15 +52,18 @@ export const rerollString = (reroll: RerollOptions) => {
       reroll.exact.forEach((roll) => {
         rerollList.push(String(roll))
       })
+    } else {
+      rerollList.push(String(reroll.exact))
     }
-    rerollList.push(String(reroll.exact))
   }
   const greaterLess = `${formatGreaterLess(reroll).join(' and ')}`
 
   const maxString = reroll.maxReroll ? ` (up to ${reroll.maxReroll} times)` : ''
   const exactList = formatHumanList(rerollList)
 
-  const exactString = [exactList, greaterLess].filter((i) => i !== '').join(',')
+  const exactString = [exactList, greaterLess]
+    .filter((i) => i !== '')
+    .join(', ')
 
   if (exactString === '') return []
   return [`Reroll ${exactString}${maxString}`]
