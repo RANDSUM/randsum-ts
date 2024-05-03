@@ -10,10 +10,6 @@ export type DiceNotation<D extends string | number> = D extends number
   ? DiceNotationWithNumericSides
   : DiceNotationWithCustomSides
 
-export type Concrete<Type> = {
-  [Property in keyof Type]-?: Type[Property]
-}
-
 export enum DicePoolType {
   standard = 'standard',
   custom = 'custom',
@@ -74,9 +70,14 @@ export type CoreRollArgument =
 
 export type RollArgument = TypeOrArrayOfType<CoreRollArgument> | undefined
 
-export type DiceParameters<D extends string | number = number> = Concrete<
-  Omit<DicePoolOptions<D>, 'modifiers'>
+type RawDiceParams<D extends string | number> = Omit<
+  DicePoolOptions<D>,
+  'modifiers'
 >
+
+export type DiceParameters<D extends string | number> = {
+  [Property in keyof RawDiceParams<D>]-?: RawDiceParams<D>[Property]
+}
 
 export interface DicePoolParameters<D extends string | number> {
   argument: RollArgument
