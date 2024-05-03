@@ -112,11 +112,11 @@ In most cases, if you are only rolling a single _kind_ of die - as in, each die 
 
 ### Custom Sides
 
-As of [1.7.0](https://github.com/RANDSUM/randsum-ts/releases/tag/v1.7.0), `roll()` now supports rolling die and getting results with _custom sides_.
+As of [1.7.0](https://github.com/RANDSUM/randsum-ts/releases/tag/v1.7.0), `roll()` now supports rolling die and getting results with _custom sides_. Just pass in an array of strings as your `sides`!
 
 ```ts
 roll({
-  sides: ['+', '+', '-', '-', '_', '_'], // fudge dice!
+  sides: ['+', '+', '-', '-', ' ', ' '], // fudge dice!
   quantity: 4
 }) // Roll 4 fudge dice, return a string result like `+, -, _, _`
 ```

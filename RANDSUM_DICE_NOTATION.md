@@ -89,6 +89,7 @@ roll({
 
 #### Custom Sides Caveats and Gotchas
 
+- Whenever *any* dice pool leverages custom dice, the `total` of the `RollResult` will be `0`.
 - When given custom sides, `randsum` will return a `string` of comma-separated results, not a `number`.
   - For instance, `roll('6d{HT})` will return something like `"H, T, T, T, H, T"`
 - Modifiers are not compatible with custom sides. Under-the-hood, `randsum` is still rolling these as if they were numeric dice, then swapping out the numbers for faces at the end. While modifiers are technically feasible, it would be very easy to code yourself into a confusing place with non-obvious results.
