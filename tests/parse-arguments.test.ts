@@ -185,9 +185,9 @@ describe('parseRollArguments', () => {
             'No Rolls greater than [2]',
             'No Rolls less than [1]',
             'Drop lowest',
+            'Drop [2] and [3]',
             'Drop greater than [2]',
             'Drop less than [6]',
-            'Drop [2] and [3]',
             'Replace [6] with [1]',
             'Exploding Dice',
             'No Duplicates (except [1] and [2])',
@@ -344,9 +344,9 @@ describe('parseRollArguments', () => {
           notation: '4d6D{>5,<2,2,4}',
           description: [
             'Roll 4 6-sided die',
+            'Drop [2] and [4]',
             'Drop greater than [5]',
-            'Drop less than [2]',
-            'Drop [2] and [4]'
+            'Drop less than [2]'
           ]
         })
       })
@@ -421,7 +421,7 @@ describe('parseRollArguments', () => {
     })
 
     describe('given a notation that contains a reroll modifier', () => {
-      const argument: DiceNotation<number> = `${coreTestString}R{5,3,<6}3`
+      const argument: DiceNotation<number> = `${coreTestString}R{5,<6,>2}3`
 
       test('returns a RollParameter matching the notation', () => {
         const params = parseRollArguments(argument)
@@ -432,14 +432,19 @@ describe('parseRollArguments', () => {
           options: {
             ...coreRollParameters,
             modifiers: {
-              reroll: { exact: [5, 3], lessThan: 6, maxReroll: 3 }
+              reroll: {
+                exact: [5],
+                lessThan: 6,
+                greaterThan: 2,
+                maxReroll: 3
+              }
             }
           },
           die: new StandardDie(coreRollParameters.sides),
-          notation: '4d6R{5,3,<6}3',
+          notation: '4d6R{5,>2,<6}3',
           description: [
             'Roll 4 6-sided die',
-            'Reroll [5] and [3], less than [6] (up to 3 times)'
+            'Reroll [5], greater than [2] and less than [6] (up to 3 times)'
           ]
         })
       })
@@ -654,9 +659,9 @@ describe('parseRollArguments', () => {
               'No Rolls less than [2]',
               'Drop highest 2',
               'Drop lowest',
+              'Drop [2] and [4]',
               'Drop greater than [5]',
               'Drop less than [2]',
-              'Drop [2] and [4]',
               'Replace [1] with [2]',
               'Replace greater than [2] with [6]',
               'Reroll [5] and [2], less than [6] (up to 3 times)',

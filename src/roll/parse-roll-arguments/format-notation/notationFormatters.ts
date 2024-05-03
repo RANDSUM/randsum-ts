@@ -52,13 +52,9 @@ export const rerollNotation = (reroll: RerollOptions) => {
   const rerollList = []
 
   if (reroll.exact) {
-    if (Array.isArray(reroll.exact)) {
-      reroll.exact.forEach((roll) => {
-        rerollList.push(String(roll))
-      })
-    } else {
-      rerollList.push(String(reroll.exact))
-    }
+    reroll.exact.forEach((roll) => {
+      rerollList.push(String(roll))
+    })
   }
   const greaterLess = formatGreaterLess(reroll)
   if (greaterLess.length > 0) {
