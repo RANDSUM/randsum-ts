@@ -31,9 +31,9 @@ function parseDiceOptions(
   }
 }
 
-function parameterizeRollArgument<D extends number | string>(
+function parameterizeRollArgument(
   argument: CoreRollArgument | undefined
-): DicePoolParameters<D> {
+): DicePoolParameters<string> | DicePoolParameters<number> {
   const options = parseDiceOptions(argument)
   const die = dieFactory(options.sides)
   return {
@@ -42,7 +42,7 @@ function parameterizeRollArgument<D extends number | string>(
     die,
     notation: formatNotation(options),
     description: formatDescription(options)
-  } as DicePoolParameters<D>
+  } as DicePoolParameters<string> | DicePoolParameters<number>
 }
 
 export default parameterizeRollArgument
