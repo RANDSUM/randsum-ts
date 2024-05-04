@@ -2,15 +2,8 @@ import { CoreRollArgument, DicePoolOptions, DicePoolParameters } from '~types'
 import { dieFactory } from '~Die'
 import formatDescription from './format-description.ts/index.ts'
 import formatNotation from './format-notation/index.ts'
-import { isDiceNotation } from './guards.ts'
+import { isDiceNotation, isDicePoolOptions } from './guards.ts'
 import parseNotation from './parse-notation.ts'
-
-const isDicePoolOptions = (
-  argument: unknown
-): argument is DicePoolOptions<number> | DicePoolOptions<string> =>
-  typeof argument === 'object' &&
-  (argument as DicePoolOptions<number> | DicePoolOptions<string>).sides !==
-    undefined
 
 function parseDiceOptions(
   options: CoreRollArgument | undefined
@@ -38,17 +31,18 @@ function parseDiceOptions(
   }
 }
 
-export default function parameterizeRollArgument(
+function parameterizeRollArgument<D extends number | string>(
   argument: CoreRollArgument | undefined
-): DicePoolParameters<number> | DicePoolParameters<string> {
+): DicePoolParameters<D> {
   const options = parseDiceOptions(argument)
   const die = dieFactory(options.sides)
-
   return {
     options,
     argument,
     die,
     notation: formatNotation(options),
     description: formatDescription(options)
-  } as DicePoolParameters<number> | DicePoolParameters<string>
+  } as DicePoolParameters<D>
 }
+
+export default parameterizeRollArgument
