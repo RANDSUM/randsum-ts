@@ -41,21 +41,19 @@ function parseDiceOptions(
   }
 }
 
-export function parseRollArgument(
+export function parameterizeRollArgument(
   argument: CoreRollArgument | undefined
-): RollParameters['dicePools'] {
-  const id = crypto.randomUUID()
+): DicePoolParameters<number> | DicePoolParameters<string> {
   const options = parseDiceOptions(argument)
+  const die = dieFactory(options.sides)
 
   return {
-    [id]: {
-      options,
-      argument,
-      die: dieFactory(options.sides),
-      notation: formatNotation(options),
-      description: formatDescription(options)
-    } as DicePoolParameters<number> | DicePoolParameters<string>
-  }
+    options,
+    argument,
+    die,
+    notation: formatNotation(options),
+    description: formatDescription(options)
+  } as DicePoolParameters<number> | DicePoolParameters<string>
 }
 
 const isCustomSides = (
@@ -83,10 +81,10 @@ const normalizeArguments = (
 
 function parseRollArguments(argument: RollArgument): RollParameters {
   return {
-    dicePools: normalizeArguments(argument).reduce(
-      (acc, arg) => ({ ...acc, ...parseRollArgument(arg) }),
-      {}
-    )
+    dicePools: normalizeArguments(argument).reduce((acc, arg) => {
+      const id = crypto.randomUUID()
+      return { ...acc, [id]: parameterizeRollArgument(arg) }
+    }, {})
   }
 }
 
