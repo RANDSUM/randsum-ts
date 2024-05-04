@@ -41,7 +41,7 @@ function parseDiceOptions(
   }
 }
 
-function parseArgument(
+export function parseRollArgument(
   argument: CoreRollArgument | undefined
 ): RollParameters['dicePools'] {
   const id = crypto.randomUUID()
@@ -84,7 +84,7 @@ const normalizeArguments = (
 function parseRollArguments(argument: RollArgument): RollParameters {
   return {
     dicePools: normalizeArguments(argument).reduce(
-      (acc, arg) => ({ ...acc, ...parseArgument(arg) }),
+      (acc, arg) => ({ ...acc, ...parseRollArgument(arg) }),
       {}
     )
   }
