@@ -1,4 +1,4 @@
-import { DicePoolOptions } from '~types'
+import { DiceNotation, DicePoolOptions } from '~types'
 import {
   capNotation,
   dropNotation,
@@ -40,7 +40,9 @@ function formatCoreNotation({
   return `${quantity}d${formattedSides}`
 }
 
-function formatNotation(options: DicePoolOptions<string | number>) {
+function formatNotation(
+  options: DicePoolOptions<number> | DicePoolOptions<string>
+) {
   return `${formatCoreNotation(options)}${formatModifierNotation(options)}`
 }
 
