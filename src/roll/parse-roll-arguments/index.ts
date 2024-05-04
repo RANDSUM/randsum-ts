@@ -1,65 +1,6 @@
-import { coreNotationPattern } from '~constants'
-import { dieFactory } from '~Die'
-import {
-  CoreRollArgument,
-  DiceNotation,
-  DicePoolOptions,
-  DicePoolParameters,
-  RollArgument,
-  RollParameters
-} from '~types'
-import parseNotation from './parse-notation'
-import formatNotation from './format-notation'
-import formatDescription from './format-description.ts'
-
-const isDicePoolOptions = (
-  argument: unknown
-): argument is DicePoolOptions<number> | DicePoolOptions<string> =>
-  typeof argument === 'object' &&
-  (argument as DicePoolOptions<number> | DicePoolOptions<string>).sides !==
-    undefined
-
-export const isDiceNotation = (
-  argument: unknown
-): argument is DiceNotation<number> | DiceNotation<string> =>
-  !!coreNotationPattern.test(String(argument))
-
-function parseDiceOptions(
-  options: CoreRollArgument | undefined
-): DicePoolOptions<string | number> {
-  if (isDicePoolOptions(options)) {
-    return options
-  }
-
-  if (isDiceNotation(options)) {
-    return parseNotation(options)
-  }
-
-  return {
-    quantity: 1,
-    sides: Array.isArray(options) ? options.map(String) : Number(options || 20)
-  }
-}
-
-export function parameterizeRollArgument(
-  argument: CoreRollArgument | undefined
-): DicePoolParameters<number> | DicePoolParameters<string> {
-  const options = parseDiceOptions(argument)
-  const die = dieFactory(options.sides)
-
-  return {
-    options,
-    argument,
-    die,
-    notation: formatNotation(options),
-    description: formatDescription(options)
-  } as DicePoolParameters<number> | DicePoolParameters<string>
-}
-
-const isCustomSides = (
-  argument: RollArgument | undefined
-): argument is string[] =>
-  Array.isArray(argument) && argument.every((arg) => typeof arg === 'string')
+import { CoreRollArgument, RollArgument, RollParameters } from '~types'
+import { isCustomSides } from './guards.ts'
+import parameterizeRollArgument from './parameterizeRollArgument.ts'
 
 const normalizeArguments = (
   argument: RollArgument | undefined
