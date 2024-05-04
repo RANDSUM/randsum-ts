@@ -47,7 +47,7 @@ function generateModifiedRolls(
   )
 }
 
-function generateResult(rollParameters: RollParameters): RollResult {
+function generateRollResult(rollParameters: RollParameters): RollResult {
   const rawRolls = generateRawRolls(rollParameters.dicePools)
   const modifiedRolls = generateModifiedRolls(rollParameters, rawRolls)
   const modifiedValues = Object.values(modifiedRolls)
@@ -65,4 +65,4 @@ function generateResult(rollParameters: RollParameters): RollResult {
   }
 }
 
-export default generateResult
+export default generateRollResult
