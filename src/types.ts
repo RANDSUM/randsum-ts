@@ -21,7 +21,7 @@ export type TypeOrArrayOfType<T> = T | T[]
 export interface DicePoolOptions<D extends string | number> {
   quantity?: number
   sides: D extends number ? number : string[]
-  modifiers?: D extends number ? Modifiers : never
+  modifiers?: D extends number ? Modifiers : {}
 }
 
 export type Modifiers = {
@@ -106,4 +106,12 @@ export interface RollResult extends RollParameters {
   result: (string | number)[][]
   type: DicePoolType
   total: number
+}
+
+export interface NotationValidationResult {
+  valid: boolean
+  type?: DicePoolType.custom | DicePoolType.standard
+  digested?: DicePoolOptions<string> | DicePoolOptions<number>
+  notation?: DiceNotation<string> | DiceNotation<number>
+  description: string[]
 }

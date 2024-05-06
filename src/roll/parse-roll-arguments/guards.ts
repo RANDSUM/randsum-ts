@@ -1,10 +1,28 @@
-import { coreNotationPattern } from '~constants'
-import { DiceNotation, DicePoolOptions, RollArgument } from '~types'
+import { completeRollPattern, coreNotationPattern } from '~constants'
+import { DiceNotation, DicePoolOptions, Modifiers, RollArgument } from '~types'
 
 export const isDiceNotation = (
   argument: unknown
-): argument is DiceNotation<number> | DiceNotation<string> =>
-  !!coreNotationPattern.test(String(argument))
+): argument is DiceNotation<number> | DiceNotation<string> => {
+  const basicTest = !!coreNotationPattern.test(String(argument))
+  if (!basicTest || !(typeof argument === 'string')) return false
+
+  const matches = [...argument.matchAll(completeRollPattern)]
+    .flat()
+    .filter(Boolean)
+    .filter((v, i, a) => a.indexOf(v) === i)
+
+  delete matches[1]
+
+  return (
+    matches
+      .reduce((acc, curr) => {
+        return acc.replace(curr, '')
+      }, argument)
+      .replace(/\s/g, '')
+      .replace(/\+|\-|\<|\>|\=/g, '').length === 0
+  )
+}
 
 export const isCustomSides = (
   argument: RollArgument | undefined
@@ -17,3 +35,7 @@ export const isDicePoolOptions = (
   typeof argument === 'object' &&
   (argument as DicePoolOptions<number> | DicePoolOptions<string>).sides !==
     undefined
+
+export const isValidModifier = (
+  modifiers: {} | Modifiers | undefined
+): modifiers is Modifiers => Object.keys(modifiers || {}).length > 0
