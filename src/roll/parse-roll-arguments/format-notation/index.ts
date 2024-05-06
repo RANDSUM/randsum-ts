@@ -1,4 +1,4 @@
-import { DiceNotation, DicePoolOptions } from '~types'
+import { DiceNotation, DicePoolOptions, Modifiers } from '~types'
 import {
   capNotation,
   dropNotation,
@@ -9,11 +9,12 @@ import {
   rerollNotation,
   uniqueNotation
 } from './notationFormatters'
+import { isValidModifier } from '../guards'
 
 function formatModifierNotation({
   modifiers
 }: DicePoolOptions<string> | DicePoolOptions<number>): string {
-  if (!modifiers) return ''
+  if (!isValidModifier(modifiers)) return ''
 
   const modifierStrings = []
 
@@ -42,8 +43,10 @@ function formatCoreNotation({
 
 function formatNotation(
   options: DicePoolOptions<number> | DicePoolOptions<string>
-) {
-  return `${formatCoreNotation(options)}${formatModifierNotation(options)}`
+): DiceNotation<string> | DiceNotation<number> {
+  return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as
+    | DiceNotation<string>
+    | DiceNotation<number>
 }
 
 export default formatNotation

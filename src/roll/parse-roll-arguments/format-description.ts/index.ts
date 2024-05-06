@@ -9,11 +9,12 @@ import {
   dropString,
   capString
 } from './stringFormatters'
+import { isValidModifier } from '../guards'
 
 function formatModifierDescriptions({
   modifiers
 }: DicePoolOptions<number | string>): string[] {
-  if (!modifiers) return []
+  if (!isValidModifier(modifiers)) return []
 
   const modifierStrings = []
 
@@ -38,14 +39,15 @@ function formatCoreDescriptions({
   quantity
 }: DicePoolOptions<number | string>) {
   const base = `Roll ${quantity}`
+  const descriptor = (quantity || 1) > 1 ? 'dice' : 'die'
   if (Array.isArray(sides)) {
-    const formattedSides = `Die with the following sides: (${sides
+    const formattedSides = `${descriptor} with the following sides: (${sides
       .map((s) => (s === '' ? ' ' : s))
       .join(',')})`
     return `${base} ${formattedSides}`
   }
 
-  return `${base} ${sides}-sided die`
+  return `${base} ${sides}-sided ${descriptor}`
 }
 
 function formatDescription(options: DicePoolOptions<number | string>) {
