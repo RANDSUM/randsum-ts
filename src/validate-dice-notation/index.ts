@@ -12,7 +12,7 @@ interface NotationValidationResult<D extends string | number> {
   description: string[]
 }
 
-function validateNotation(
+function validateDiceNotation(
   notation: string
 ): NotationValidationResult<string> | NotationValidationResult<number> {
   if (!isDiceNotation(notation)) {
@@ -34,7 +34,7 @@ function validateNotation(
       type: DicePoolType.custom,
       digested: typedOptions,
       description
-    }
+    } as NotationValidationResult<string>
   }
   const typedOptions = options as DicePoolOptions<number>
   const parsedNotation = formatNotation(typedOptions)
@@ -45,7 +45,7 @@ function validateNotation(
     type: DicePoolType.standard,
     digested: typedOptions,
     description
-  }
+  } as NotationValidationResult<number>
 }
 
-export default validateNotation
+export default validateDiceNotation
