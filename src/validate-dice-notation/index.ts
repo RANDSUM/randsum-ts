@@ -12,16 +12,18 @@ function validateDiceNotation(notation: string): NotationValidationResult {
     }
   }
 
-  const options = parseNotation(notation)
-  const description = formatDescription(options)
-  const typedOptions = options
-  const parsedNotation = formatNotation(typedOptions)
+  const digested = parseNotation(notation)
+  const description = formatDescription(digested)
+  const parsedNotation = formatNotation(digested)
+  const type = Array.isArray(digested.sides)
+    ? DicePoolType.custom
+    : DicePoolType.standard
 
   return {
     valid: true,
     notation: parsedNotation,
-    type: DicePoolType.standard,
-    digested: typedOptions,
+    type,
+    digested,
     description
   }
 }
