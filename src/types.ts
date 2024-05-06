@@ -107,3 +107,11 @@ export interface RollResult extends RollParameters {
   type: DicePoolType
   total: number
 }
+
+export interface NotationValidationResult {
+  valid: boolean
+  type?: DicePoolType.custom | DicePoolType.standard
+  digested?: DicePoolOptions<string> | DicePoolOptions<number>
+  notation?: DiceNotation<string> | DiceNotation<number>
+  description: string[]
+}
