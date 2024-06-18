@@ -41,7 +41,8 @@ describe('generateRollResult', () => {
         rawRolls: coreRawRolls,
         type: DicePoolType.standard,
         total: 10,
-        result: [[1, 2, 3, 4]]
+        result: [[1, 2, 3, 4]],
+        rawResult: [[1, 2, 3, 4]]
       })
     })
   })
