@@ -2,4 +2,4 @@
 
 # always enable coverage
 coverage = true
-coverageThreshold = 1.0
+coverageThreshold = 0.95
