@@ -1,1 +1,2 @@
 coverage = true
+coverageThreshold = 0.95
