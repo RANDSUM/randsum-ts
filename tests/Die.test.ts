@@ -1,6 +1,18 @@
 import { describe, expect, test } from 'bun:test'
 
-import { CustomSidesDie, StandardDie, dieFactory } from '~Die'
+import {
+  CustomSidesDie,
+  D100,
+  D12,
+  D20,
+  D4,
+  D6,
+  D8,
+  FairCoin,
+  StandardDie,
+  TwoHeadedCoin,
+  dieFactory
+} from '~Die'
 
 describe('SingleDie', () => {
   describe('StandardDie', () => {
@@ -61,5 +73,20 @@ describe('dieFactory', () => {
       expect(die.faces).toEqual(sides)
       expect(sides).toContain(die.roll())
     })
+  })
+})
+
+describe('Exports', () => {
+  test('It features all standard exports', () => {
+    expect(StandardDie).toBeDefined()
+    expect(CustomSidesDie).toBeDefined()
+    expect(FairCoin).toBeDefined()
+    expect(TwoHeadedCoin).toBeDefined()
+    expect(D4).toBeDefined()
+    expect(D6).toBeDefined()
+    expect(D8).toBeDefined()
+    expect(D12).toBeDefined()
+    expect(D20).toBeDefined()
+    expect(D100).toBeDefined()
   })
 })

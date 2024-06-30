@@ -51,6 +51,7 @@ function generateRollResult(rollParameters: RollParameters): RollResult {
   const rawRolls = generateRawRolls(rollParameters.dicePools)
   const modifiedRolls = generateModifiedRolls(rollParameters, rawRolls)
   const modifiedValues = Object.values(modifiedRolls)
+  const rawResult = Object.values(rawRolls)
   const result = modifiedValues.map((pool) => pool.rolls)
   const total = calculateTotal(modifiedValues.map((pool) => pool.total))
   const type = calculateType(rollParameters.dicePools)
@@ -58,6 +59,7 @@ function generateRollResult(rollParameters: RollParameters): RollResult {
   return {
     ...rollParameters,
     rawRolls,
+    rawResult,
     modifiedRolls,
     result,
     type,

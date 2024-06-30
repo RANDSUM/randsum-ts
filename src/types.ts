@@ -104,6 +104,7 @@ export interface RollResult extends RollParameters {
     }
   }
   result: (string | number)[][]
+  rawResult: (string | number)[][]
   type: DicePoolType
   total: number
 }
