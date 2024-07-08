@@ -29,6 +29,19 @@ describe('validateNotation', () => {
     })
   })
 
+  describe('when given a nonsensical drop notation that is bugging me', () => {
+    const notation: DiceNotation<number> = '2d5D'
+
+    it('returns an error result', () => {
+      const result = validateNotation(notation)
+
+      expect(result).toEqual({
+        valid: false,
+        description: []
+      })
+    })
+  })
+
   describe('when given a standard notation', () => {
     it('returns a valid result', () => {
       const notation = '2d6'
