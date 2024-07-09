@@ -29,6 +29,26 @@ describe('validateNotation', () => {
     })
   })
 
+  describe('when given comma-less multiple dice notation', () => {
+    const notations: DiceNotation<number>[] = [
+      '2d5D{2>2}',
+      '2d5V{1=2>2=2}',
+      '2d5R{2>2}',
+      '2d5U{2>2}'
+    ]
+
+    notations.forEach((notation) => {
+      it(`returns an error result for ${notation}`, () => {
+        const result = validateNotation(notation)
+
+        expect(result).toEqual({
+          valid: false,
+          description: []
+        })
+      })
+    })
+  })
+
   describe('when given a nonsensical drop notation that is bugging me', () => {
     const notation: DiceNotation<number> = '2d5D'
 
