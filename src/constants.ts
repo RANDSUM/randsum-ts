@@ -16,9 +16,6 @@ const capMatch = /(?<capMatch>[Cc]([<>]?\d+)*)/
 const plusMatch = /(?<plusMatch>\+\d+)/
 const minusMatch = /(?<minusMatch>-\d+)/
 
-// export const modifierRollPatterns =
-//   /(?<dropHighMatch>[Hh]\d*)|(?<dropLowMatch>[Ll]\d*)|(?<dropConstraintsMatch>[Dd]{([<>]?\d+,)*([<>]?\d+)})|(?<explodeMatch>!+{?([<>]?\d+,?)*}?)|(?<uniqueMatch>[Uu]({(\d+,?)+})?)|(?<replaceMatch>[Vv]{?([<>]?\d+=?\d+,?)*}?)|(?<rerollMatch>[Rr]{?([<>]?\d,?)*}\d*)|(?<capMatch>[Cc]([<>]?\d+)*)|(?<plusMatch>\+\d+)|(?<minusMatch>-\d+)/
-
 export const modifierRollPatterns = new RegExp(
   `${dropHighestMatch.source}|${dropLowestMatch.source}|${dropConstraintsMatch.source}|${explodeMatch.source}|${uniqueMatch.source}|${replaceMatch.source}|${rerollMatch.source}|${capMatch.source}|${plusMatch.source}|${minusMatch.source}`
 )
