@@ -5,7 +5,7 @@ const dropLowestMatch = /(?<dropLowMatch>[Ll]\d*)/
 const dropConstraintsMatch =
   /(?<dropConstraintsMatch>[Dd]{([<>]?\d+,)*([<>]?\d+)})/
 
-const explodeMatch = /(?<explodeMatch>!+{?([<>]?\d+,?)*}?)/
+const explodeMatch = /(?<explodeMatch>!)/
 const uniqueMatch = /(?<uniqueMatch>[Uu]({(\d+,)*(\d+)})?)/
 
 const replaceMatch = /(?<replaceMatch>[Vv]{([<>]?\d+=?\d+,)*([<>]?\d+=?\d+)})/
