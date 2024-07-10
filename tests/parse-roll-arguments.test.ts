@@ -105,8 +105,6 @@ describe('parseRollArguments', () => {
         }
       }
 
-      const foo = `4d6R`
-
       test('returns a RollParameter matching the argument', () => {
         const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]
@@ -179,7 +177,7 @@ describe('parseRollArguments', () => {
           argument,
           options: argument,
           die: new StandardDie(argument.sides),
-          notation: '4d6C>2<1LD{>2,<6,2,3}V{6=1}!U{1,2}+2-1',
+          notation: '4d6C{>2,<1}LD{>2,<6,2,3}V{6=1}!U{1,2}+2-1',
           description: [
             'Roll 4 6-sided dice',
             'No Rolls greater than [2]',
@@ -353,7 +351,7 @@ describe('parseRollArguments', () => {
     })
 
     describe('given a notation that contains a cap before and lessThan', () => {
-      const argument: DiceNotation<number> = `${coreTestString}C<2>5`
+      const argument: DiceNotation<number> = `${coreTestString}C{<2,>5}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = parseRollArguments(argument)
@@ -368,7 +366,7 @@ describe('parseRollArguments', () => {
           },
           die: new StandardDie(coreRollParameters.sides),
 
-          notation: '4d6C>5<2',
+          notation: '4d6C{>5,<2}',
           description: [
             'Roll 4 6-sided dice',
             'No Rolls greater than [5]',
@@ -619,7 +617,7 @@ describe('parseRollArguments', () => {
       })
 
       describe('like a complicated dice notation', () => {
-        const argument: DiceNotation<number> = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C<2>18 R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
+        const argument: DiceNotation<number> = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
 
         test('returns a RollParameter matching the notation', () => {
           const params = parseRollArguments(argument)
@@ -652,7 +650,7 @@ describe('parseRollArguments', () => {
             },
             die: new StandardDie(20),
             notation:
-              '10d20C>18<2H2LD{>5,<2,2,4}V{1=2,>2=6}R{5,2,<6}3!U{5}+5-5',
+              '10d20C{>18,<2}H2LD{>5,<2,2,4}V{1=2,>2=6}R{5,2,<6}3!U{5}+5-5',
             description: [
               'Roll 10 20-sided dice',
               'No Rolls greater than [18]',

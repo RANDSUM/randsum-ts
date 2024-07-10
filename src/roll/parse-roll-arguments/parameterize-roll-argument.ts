@@ -6,28 +6,28 @@ import { isDiceNotation, isDicePoolOptions } from './guards.ts'
 import parseNotation from './parse-notation.ts'
 
 function parseDiceOptions(
-  options: CoreRollArgument | undefined
+  argument: CoreRollArgument | undefined
 ): DicePoolOptions<string> | DicePoolOptions<number> {
-  if (isDicePoolOptions(options)) {
-    return options
+  if (isDicePoolOptions(argument)) {
+    return argument
   }
 
-  if (isDiceNotation(options)) {
-    return parseNotation(options)
+  if (isDiceNotation(argument)) {
+    return parseNotation(argument)
   }
 
   const defaultQuantity = 1
 
-  if (Array.isArray(options)) {
+  if (Array.isArray(argument)) {
     return {
       quantity: defaultQuantity,
-      sides: options.map(String)
+      sides: argument.map(String)
     }
   }
 
   return {
     quantity: defaultQuantity,
-    sides: Number(options || 20)
+    sides: Number(argument || 20)
   }
 }
 
