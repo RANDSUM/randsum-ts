@@ -72,5 +72,9 @@
     "size-limit": "^11.1.4",
     "typescript": "^5.5.3"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@types/eslint__js": "^8.42.3",
+    "typescript-eslint": "^7.16.0"
+  }
 }

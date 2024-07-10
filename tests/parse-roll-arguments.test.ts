@@ -105,8 +105,6 @@ describe('parseRollArguments', () => {
         }
       }
 
-      const foo = `4d6R`
-
       test('returns a RollParameter matching the argument', () => {
         const params = parseRollArguments(argument)
         const testParam = testableParams(params)[0]

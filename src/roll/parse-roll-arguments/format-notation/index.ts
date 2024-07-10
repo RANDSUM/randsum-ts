@@ -1,4 +1,4 @@
-import { DiceNotation, DicePoolOptions, Modifiers } from '~types'
+import { DiceNotation, DicePoolOptions } from '~types'
 import {
   capNotation,
   dropNotation,

@@ -33,5 +33,5 @@ export const isDicePoolOptions = (
     undefined
 
 export const isValidModifier = (
-  modifiers: {} | Modifiers | undefined
+  modifiers: unknown | Modifiers | undefined
 ): modifiers is Modifiers => Object.keys(modifiers || {}).length > 0

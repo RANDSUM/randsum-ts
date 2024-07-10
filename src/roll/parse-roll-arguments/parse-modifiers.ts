@@ -339,8 +339,8 @@ export const mergeModifiers = (
             Array.isArray(newModifiers.replace)
               ? (
                   [
-                    ...([oldModifiers.replace] || []),
-                    ...([newModifiers.replace] || [])
+                    ...[oldModifiers.replace],
+                    ...[newModifiers.replace]
                   ] as ReplaceOptions[]
                 )
                   .flat()
