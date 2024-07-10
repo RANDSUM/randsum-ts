@@ -7,21 +7,18 @@ export const isDiceNotation = (
   const basicTest = !!coreNotationPattern.test(String(argument))
   if (!basicTest || !(typeof argument === 'string')) return false
 
-  const matches = [...argument.matchAll(completeRollPattern)]
-    .flat()
-    .filter(Boolean)
-    .filter((v, i, a) => a.indexOf(v) === i)
-
-  delete matches[1]
-
-  return (
-    matches
-      .reduce((acc, curr) => {
-        return acc.replace(curr, '')
-      }, argument)
-      .replace(/\s/g, '')
-      .replace(/\+|\-|\<|\>|\=/g, '').length === 0
+  const matches = [...argument.matchAll(completeRollPattern)].map(
+    (arr) => arr[0]
   )
+
+  const remaining = matches
+    .reduce((acc, curr) => {
+      return acc.replace(curr, '')
+    }, argument)
+    .replace(/\s/g, '')
+    .replace(/\+|\-|\<|\>|\=/g, '')
+
+  return remaining.length === 0
 }
 
 export const isCustomSides = (

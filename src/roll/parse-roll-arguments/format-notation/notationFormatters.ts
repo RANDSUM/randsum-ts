@@ -9,7 +9,7 @@ import {
 
 export const capNotation = (cap: GreaterLessOptions) => {
   const capList = formatGreaterLess(cap)
-  return `C${capList.join('')}`
+  return `C{${capList.join(',')}}`
 }
 
 export const dropNotation = (drop: DropOptions) => {

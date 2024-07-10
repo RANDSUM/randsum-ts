@@ -85,7 +85,10 @@ const parseCapNotation = ({
   capMatch: notationString
 }: CapMatch): Pick<Modifiers, 'cap'> => {
   let capParameters = {}
-  const capString = notationString.split(/[Cc]/)[1].split(/(?!\d)/)
+  const capString = notationString
+    .split(/[Cc]/)[1]
+    .replaceAll(/{|}/g, '')
+    .split(',')
   capString.forEach((note) => {
     if (note.includes('<')) {
       capParameters = {

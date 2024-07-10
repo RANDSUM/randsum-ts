@@ -298,15 +298,15 @@ Reduce all values above a certain value or increase all values below a certain v
 ```
 Cap rolls greater than 18 to be 18
 
-4d20C>17
+4d20C{>17}
 
 Cap rolls less than 4 to be 4
 
-4d20C<4
+4d20C{<4}
 
 Cap rolls less than 2 to be 2 and greater than 19 to be 19
 
-4d20C<2>19
+4d20C{<2,>19}
 ```
 
 In `randsum` :
@@ -314,7 +314,7 @@ In `randsum` :
 ```js
 // Roll 6 twenty-sided die, cap less than 5 and greater than 15
 
-roll('6d20C<5>15')
+roll('6d20C{<5,>15}')
 roll({
   sides: 20,
   quantity: 6,

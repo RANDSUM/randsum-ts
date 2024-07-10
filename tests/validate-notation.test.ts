@@ -34,7 +34,8 @@ describe('validateNotation', () => {
       '2d5D{2>2}',
       '2d5V{1=2>2=2}',
       '2d5R{2>2}',
-      '2d5U{2>2}'
+      '2d5U{2>2}',
+      '2d5C2>2'
     ]
 
     notations.forEach((notation) => {
