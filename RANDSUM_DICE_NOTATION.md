@@ -488,7 +488,7 @@ roll({
 Roll additional dice whenever a die in the pool rolls its maximum value
 
 ```
-Roll an additional die every time you roll maximum value of a die
+Roll four d20. If any roll a 20, roll an additional die!
 
 4d20!
 ```
