@@ -15,8 +15,7 @@ export const isDiceNotation = (
     .reduce((acc, curr) => {
       return acc.replace(curr, '')
     }, argument)
-    .replace(/\s/g, '')
-    .replace(/\+|\-|\<|\>|\=/g, '')
+    .replace(/\+|\-|\<|\>|\=|\s/g, '')
 
   return remaining.length === 0
 }
