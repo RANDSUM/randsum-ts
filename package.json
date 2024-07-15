@@ -63,7 +63,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^11.1.4",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@typescript-eslint/parser": "^7.16.1",
     "bun-plugin-dts": "^0.2.3",
     "bun-types": "latest",
     "eslint": "^9.6.0",
