@@ -1,7 +1,7 @@
 import { CoreRollArgument, RollArgument, RollParameters } from '~types'
 import { isCustomSides } from './guards.ts'
 import parameterizeRollArgument from './parameterize-roll-argument.ts'
-import { v4 as uuid } from 'uuid'
+import { uuidv7 as uuid } from 'uuidv7'
 
 const normalizeArguments = (
   argument: RollArgument | undefined
