@@ -77,6 +77,6 @@
   },
   "type": "module",
   "dependencies": {
-    "uuid": "^10.0.0"
+    "uuidv7": "^1.0.0"
   }
 }
