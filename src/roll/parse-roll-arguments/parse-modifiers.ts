@@ -9,7 +9,7 @@ import {
 const isMatcherType = <M extends Match>(
   argument: Match,
   key: keyof M
-): argument is M => (argument as M)[key] !== undefined
+): argument is M => ((argument || {}) as M)[key] !== undefined
 
 export type CoreNotationMatch = { coreNotationMatch: string }
 export const isCoreNotationMatch = (match: Match): match is CoreNotationMatch =>

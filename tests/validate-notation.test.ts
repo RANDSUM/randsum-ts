@@ -75,6 +75,17 @@ describe('validateNotation', () => {
         digested: { sides: 6, quantity: 2, modifiers: {} },
         description: ['Roll 2 6-sided dice']
       })
+
+      const notation2 = '1D20'
+      const result2 = validateNotation(notation2)
+
+      expect(result2).toEqual({
+        valid: true,
+        notation: '1d20',
+        type: DicePoolType.standard,
+        digested: { sides: 20, quantity: 1, modifiers: {} },
+        description: ['Roll 1 20-sided die']
+      })
     })
   })
 

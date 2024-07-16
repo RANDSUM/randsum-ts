@@ -21,6 +21,7 @@ const parseNotation = (
   }
 
   return findMatches(notationString).reduce((acc, match) => {
+    if (!match) return acc
     if (isCoreNotationMatch(match)) {
       return {
         ...acc,
