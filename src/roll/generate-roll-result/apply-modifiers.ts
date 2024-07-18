@@ -180,7 +180,7 @@ const applyDrop = (
 }
 
 const isCustomParameters = (
-  poolParameters: DicePoolParameters<string | number>
+  poolParameters: DicePoolParameters
 ): poolParameters is DicePoolParameters<string> =>
   Array.isArray(poolParameters.options.sides)
 
