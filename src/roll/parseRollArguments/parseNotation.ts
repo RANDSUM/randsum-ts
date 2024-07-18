@@ -6,7 +6,7 @@ import {
   mergeModifiers,
   parseCoreNotation,
   parseModifiers
-} from './parse-modifiers'
+} from './parseModifiers'
 
 const findMatches = (notations: string): Match[] =>
   [...notations.matchAll(completeRollPattern)].map(

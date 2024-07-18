@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test'
-import validateNotation from '../src/validate-dice-notation'
+import validateNotation from '../src/validateDiceNotation'
 import { DiceNotation, DicePoolType } from '../src'
 
 describe('validateNotation', () => {
