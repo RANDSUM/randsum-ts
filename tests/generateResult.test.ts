@@ -1,9 +1,9 @@
 import { describe, expect, spyOn, test } from 'bun:test'
 
 import { CustomSidesDie, StandardDie } from '~Die'
-import generateRollResult from '../src/roll/generate-roll-result'
-import { InvalidUniqueError } from '../src/roll/generate-roll-result/apply-modifiers'
-import * as GenerateRawRolls from '../src/roll/generate-roll-result/generate-raw-rolls'
+import generateRollResult from '../src/roll/generateRollResult'
+import { InvalidUniqueError } from '../src/roll/generateRollResult/applyModifiers'
+import * as GenerateRawRolls from '../src/roll/generateRollResult/generateRawRolls'
 import { DiceNotation, DicePoolType, RollParameters } from '~types'
 
 describe('generateRollResult', () => {

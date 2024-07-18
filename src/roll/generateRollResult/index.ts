@@ -4,8 +4,8 @@ import {
   RollParameters,
   RollResult
 } from '~types'
-import applyModifiers from './apply-modifiers'
-import generateRawRolls from './generate-raw-rolls'
+import applyModifiers from './applyModifiers'
+import generateRawRolls from './generateRawRolls'
 
 function calculateType(dicePools: RollParameters['dicePools']): DicePoolType {
   switch (true) {

@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'bun:test'
 
 import { DicePoolParameters, RollParameters } from '~types'
-import generateRawRolls from '../src/roll/generate-roll-result/generate-raw-rolls'
+import generateRawRolls from '../src/roll/generateRollResult/generateRawRolls'
 
 describe('generateRawRolls', () => {
   describe('when given a RollParameters object', () => {

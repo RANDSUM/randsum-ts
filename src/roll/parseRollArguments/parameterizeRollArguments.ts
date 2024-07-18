@@ -1,9 +1,9 @@
 import { CoreRollArgument, DicePoolOptions, DicePoolParameters } from '~types'
 import { dieFactory } from '~Die'
-import formatDescription from './format-description.ts/index.ts'
-import formatNotation from './format-notation/index.ts'
+import formatDescription from './formatDescription/index.ts'
+import formatNotation from './formatNotation/index.ts'
 import { isDiceNotation, isDicePoolOptions } from './guards.ts'
-import parseNotation from './parse-notation.ts'
+import parseNotation from './parseNotation.ts'
 
 function parseDiceOptions(
   argument: CoreRollArgument | undefined

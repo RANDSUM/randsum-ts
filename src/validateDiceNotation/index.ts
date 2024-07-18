@@ -1,8 +1,8 @@
 import { DicePoolType, NotationValidationResult } from '~types'
-import { isDiceNotation } from '../roll/parse-roll-arguments/guards'
-import parseNotation from '../roll/parse-roll-arguments/parse-notation'
-import formatDescription from '../roll/parse-roll-arguments/format-description.ts'
-import formatNotation from '../roll/parse-roll-arguments/format-notation'
+import { isDiceNotation } from '../roll/parseRollArguments/guards.ts'
+import parseNotation from '../roll/parseRollArguments/parseNotation.ts'
+import formatDescription from '../roll/parseRollArguments/formatDescription/index.ts'
+import formatNotation from '../roll/parseRollArguments/formatNotation/index.ts'
 
 function validateDiceNotation(notation: string): NotationValidationResult {
   if (!isDiceNotation(notation)) {
