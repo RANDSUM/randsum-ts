@@ -8,7 +8,7 @@ const testableParams = (
   params: RollParameters
 ): {
   key: string
-  value: DicePoolParameters<string> | DicePoolParameters<number>
+  value: DicePoolParameters
 }[] => {
   const pools = Object.entries(params.dicePools)
   return pools.map(([key, value]) => ({ key, value }))
@@ -198,7 +198,7 @@ describe('parseRollArguments', () => {
   })
 
   describe('given DiceNotation', () => {
-    const coreTestString: DiceNotation<number> = '4d6'
+    const coreTestString: DiceNotation = '4d6'
     const coreRollParameters = { sides: 6, quantity: 4 }
 
     describe('given a basic notation', () => {
@@ -221,7 +221,7 @@ describe('parseRollArguments', () => {
 
     describe('given a notation that uses custom faces', () => {
       describe('with a simple notation', () => {
-        const argument: DiceNotation<string> = '4d{++--  }'
+        const argument: DiceNotation = '4d{++--  }'
         const customSides = ['+', '+', '-', '-', ' ', ' ']
 
         test('returns a RollParameter matching the notation', () => {
@@ -241,7 +241,7 @@ describe('parseRollArguments', () => {
 
     describe('given a notation that contains a drop highest modifier', () => {
       describe('with a simple notation', () => {
-        const argument: DiceNotation<number> = `${coreTestString}H`
+        const argument: DiceNotation = `${coreTestString}H`
 
         test('returns a RollParameter matching the notation', () => {
           const params = parseRollArguments(argument)
@@ -261,7 +261,7 @@ describe('parseRollArguments', () => {
       })
 
       describe('with a complex notation', () => {
-        const argument: DiceNotation<number> = `${coreTestString}H2`
+        const argument: DiceNotation = `${coreTestString}H2`
 
         test('returns a RollParameter matching the notation', () => {
           const params = parseRollArguments(argument)
@@ -283,7 +283,7 @@ describe('parseRollArguments', () => {
 
     describe('given a notation that contains a drop lowest modifier', () => {
       describe('with a simple notation', () => {
-        const argument: DiceNotation<number> = `${coreTestString}L`
+        const argument: DiceNotation = `${coreTestString}L`
 
         test('returns a RollParameter matching the notation', () => {
           const params = parseRollArguments(argument)
@@ -303,7 +303,7 @@ describe('parseRollArguments', () => {
       })
 
       describe('with a complex notation', () => {
-        const argument: DiceNotation<number> = `${coreTestString}L2`
+        const argument: DiceNotation = `${coreTestString}L2`
 
         test('returns a RollParameter matching the notation', () => {
           const params = parseRollArguments(argument)
@@ -324,7 +324,7 @@ describe('parseRollArguments', () => {
     })
 
     describe('given a notation that contains a drop less than, greater than, and exact', () => {
-      const argument: DiceNotation<number> = `${coreTestString}D{<2,>5,2,4}`
+      const argument: DiceNotation = `${coreTestString}D{<2,>5,2,4}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = parseRollArguments(argument)
@@ -351,7 +351,7 @@ describe('parseRollArguments', () => {
     })
 
     describe('given a notation that contains a cap before and lessThan', () => {
-      const argument: DiceNotation<number> = `${coreTestString}C{<2,>5}`
+      const argument: DiceNotation = `${coreTestString}C{<2,>5}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = parseRollArguments(argument)
@@ -377,7 +377,7 @@ describe('parseRollArguments', () => {
     })
 
     describe('given a notation that contains a minus modifier', () => {
-      const argument: DiceNotation<number> = `${coreTestString}-2`
+      const argument: DiceNotation = `${coreTestString}-2`
 
       test('returns a RollParameter matching the notation', () => {
         const params = parseRollArguments(argument)
@@ -398,7 +398,7 @@ describe('parseRollArguments', () => {
     })
 
     describe('given a notation that contains a plus modifier', () => {
-      const argument: DiceNotation<number> = `${coreTestString}+2`
+      const argument: DiceNotation = `${coreTestString}+2`
 
       test('returns a RollParameter matching the notation', () => {
         const params = parseRollArguments(argument)
@@ -419,7 +419,7 @@ describe('parseRollArguments', () => {
     })
 
     describe('given a notation that contains a reroll modifier', () => {
-      const argument: DiceNotation<number> = `${coreTestString}R{5,<6,>2}3`
+      const argument: DiceNotation = `${coreTestString}R{5,<6,>2}3`
 
       test('returns a RollParameter matching the notation', () => {
         const params = parseRollArguments(argument)
@@ -450,7 +450,7 @@ describe('parseRollArguments', () => {
 
     describe('given a notation that contains a unique notation', () => {
       describe('with a unique notation', () => {
-        const argument: DiceNotation<number> = `${coreTestString}U{5,6}`
+        const argument: DiceNotation = `${coreTestString}U{5,6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = parseRollArguments(argument)
@@ -473,7 +473,7 @@ describe('parseRollArguments', () => {
       })
 
       describe('with a simple unique notation', () => {
-        const argument: DiceNotation<number> = `${coreTestString}U`
+        const argument: DiceNotation = `${coreTestString}U`
 
         test('returns a RollParameter matching the notation', () => {
           const params = parseRollArguments(argument)
@@ -494,7 +494,7 @@ describe('parseRollArguments', () => {
     })
 
     describe('given a notation that contains an explode modifier', () => {
-      const argument: DiceNotation<number> = `${coreTestString}!`
+      const argument: DiceNotation = `${coreTestString}!`
 
       test('returns a RollParameter matching the notation', () => {
         const params = parseRollArguments(argument)
@@ -516,7 +516,7 @@ describe('parseRollArguments', () => {
 
     describe('given a notation that contains a replace modifier', () => {
       describe('with multiple replacements', () => {
-        const argument: DiceNotation<number> = `${coreTestString}V{1=2,>2=6}`
+        const argument: DiceNotation = `${coreTestString}V{1=2,>2=6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = parseRollArguments(argument)
@@ -546,7 +546,7 @@ describe('parseRollArguments', () => {
       })
 
       describe('with a single replaceent', () => {
-        const argument: DiceNotation<number> = `${coreTestString}V{<2=6}`
+        const argument: DiceNotation = `${coreTestString}V{<2=6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = parseRollArguments(argument)
@@ -573,7 +573,7 @@ describe('parseRollArguments', () => {
     describe('With a corner case dice notation', () => {
       describe('like an ordered dice notation', () => {
         test('it produces proper organized parameters', () => {
-          const explodeFirstString: DiceNotation<number> = '4d6!H'
+          const explodeFirstString: DiceNotation = '4d6!H'
           const explodeParams = parseRollArguments(explodeFirstString)
           const explodeTestParam = testableParams(explodeParams)[0]
 
@@ -593,7 +593,7 @@ describe('parseRollArguments', () => {
             ]
           })
 
-          const dropFirstString: DiceNotation<number> = '4d6H!'
+          const dropFirstString: DiceNotation = '4d6H!'
           const dropFirstParams = parseRollArguments(dropFirstString)
           const dropFirstTestParam = testableParams(dropFirstParams)[0]
 
@@ -617,7 +617,7 @@ describe('parseRollArguments', () => {
       })
 
       describe('like a complicated dice notation', () => {
-        const argument: DiceNotation<number> = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
+        const argument: DiceNotation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
 
         test('returns a RollParameter matching the notation', () => {
           const params = parseRollArguments(argument)
@@ -675,11 +675,7 @@ describe('parseRollArguments', () => {
   })
 
   describe('given an array of arguments', () => {
-    const argument: [number, DiceNotation<number>, string[]] = [
-      2,
-      '4d6',
-      ['h', 't']
-    ]
+    const argument: [number, DiceNotation, string[]] = [2, '4d6', ['h', 't']]
 
     test('returns a RollParameter matching the argument', () => {
       const params = parseRollArguments(argument)

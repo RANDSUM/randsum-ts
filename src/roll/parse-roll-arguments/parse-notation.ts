@@ -14,7 +14,7 @@ const findMatches = (notations: string): Match[] =>
   )
 
 const parseNotation = (
-  notationString: DiceNotation<number> | DiceNotation<string>
+  notationString: DiceNotation
 ): DicePoolOptions<number | string> => {
   const initialParams = {
     modifiers: {}
@@ -36,7 +36,7 @@ const parseNotation = (
       ...acc,
       modifiers: { ...acc.modifiers, ...mergedModifiers }
     }
-  }, initialParams) as DicePoolOptions<number> | DicePoolOptions<string>
+  }, initialParams) as DicePoolOptions
 }
 
 export default parseNotation

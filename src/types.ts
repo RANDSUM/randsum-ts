@@ -6,9 +6,8 @@ export type DiceNotationWithNumericSides = `${number}${
 
 export type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
 
-export type DiceNotation<D extends string | number> = D extends number
-  ? DiceNotationWithNumericSides
-  : DiceNotationWithCustomSides
+export type DiceNotation<D extends string | number = string | number> =
+  D extends number ? DiceNotationWithNumericSides : DiceNotationWithCustomSides
 
 export enum DicePoolType {
   standard = 'standard',
@@ -18,7 +17,7 @@ export enum DicePoolType {
 
 export type TypeOrArrayOfType<T> = T | T[]
 
-export interface DicePoolOptions<D extends string | number> {
+export interface DicePoolOptions<D extends string | number = string | number> {
   quantity?: number
   sides: D extends number ? number : string[]
   modifiers?: D extends number ? Modifiers : Record<string, never>
@@ -62,24 +61,24 @@ export interface UniqueOptions {
 export type CoreRollArgument =
   | string
   | number
-  | DicePoolOptions<string>
-  | DicePoolOptions<number>
-  | DiceNotation<number>
-  | DiceNotation<string>
+  | DicePoolOptions
+  | DiceNotation
   | (number | string)[]
 
 export type RollArgument = TypeOrArrayOfType<CoreRollArgument> | undefined
 
-type RawDiceParams<D extends string | number> = Omit<
+type RawDiceParams<D extends string | number = string | number> = Omit<
   DicePoolOptions<D>,
   'modifiers'
 >
 
-export type DiceParameters<D extends string | number> = {
+export type DiceParameters<D extends string | number = string | number> = {
   [Property in keyof RawDiceParams<D>]-?: RawDiceParams<D>[Property]
 }
 
-export interface DicePoolParameters<D extends string | number> {
+export interface DicePoolParameters<
+  D extends string | number = string | number
+> {
   argument: RollArgument
   options: DicePoolOptions<D>
   die: SingleDie<D>
@@ -112,7 +111,7 @@ export interface RollResult extends RollParameters {
 export interface NotationValidationResult {
   valid: boolean
   type?: DicePoolType.custom | DicePoolType.standard
-  digested?: DicePoolOptions<string> | DicePoolOptions<number>
-  notation?: DiceNotation<string> | DiceNotation<number>
+  digested?: DicePoolOptions
+  notation?: DiceNotation
   description: string[]
 }
