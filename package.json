@@ -1,6 +1,6 @@
 {
   "name": "randsum",
-  "version": "4.5.5",
+  "version": "4.5.4",
   "private": false,
   "author": "Alex Jarvis",
   "icon": "https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp",
@@ -77,8 +77,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@types/string.prototype.matchall": "^4.0.4",
-    "string.prototype.matchall": "^4.0.11",
     "uuidv7": "^1.0.0"
   }
 }

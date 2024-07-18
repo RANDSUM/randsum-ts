@@ -1,6 +1,5 @@
 import { completeRollPattern, coreNotationPattern } from '~constants'
 import { DiceNotation, DicePoolOptions, Modifiers, RollArgument } from '~types'
-import matchAll from 'string.prototype.matchall'
 
 export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
   const basicTest = !!coreNotationPattern.test(String(argument))
@@ -8,7 +7,7 @@ export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
 
   const cleanArg = argument.replace(/\s/g, '')
 
-  const matches = [...matchAll(cleanArg, completeRollPattern)].map(
+  const matches = [...cleanArg.matchAll(completeRollPattern)].map(
     (arr) => arr[0]
   )
 
