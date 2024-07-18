@@ -11,9 +11,7 @@ import {
 } from './notationFormatters'
 import { isValidModifier } from '../guards'
 
-function formatModifierNotation({
-  modifiers
-}: DicePoolOptions<string> | DicePoolOptions<number>): string {
+function formatModifierNotation({ modifiers }: DicePoolOptions): string {
   if (!isValidModifier(modifiers)) return ''
 
   const modifierStrings = []
@@ -41,9 +39,7 @@ function formatCoreNotation({
   return `${quantity}d${formattedSides}`
 }
 
-function formatNotation(
-  options: DicePoolOptions<number> | DicePoolOptions<string>
-): DiceNotation<string> | DiceNotation<number> {
+function formatNotation(options: DicePoolOptions): DiceNotation {
   return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as
     | DiceNotation<string>
     | DiceNotation<number>

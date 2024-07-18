@@ -17,7 +17,7 @@ describe('validateNotation', () => {
   })
 
   describe('when given a typesafe but incorrect dice notation', () => {
-    const notation: DiceNotation<number> = '2d5XXddf'
+    const notation: DiceNotation = '2d5XXddf'
 
     it('returns an error result', () => {
       const result = validateNotation(notation)
@@ -30,7 +30,7 @@ describe('validateNotation', () => {
   })
 
   describe('when given comma-less multiple dice notation', () => {
-    const notations: DiceNotation<number>[] = [
+    const notations: DiceNotation[] = [
       '2d5D{2>2}',
       '2d5V{1=2>2=2}',
       '2d5R{2>2}',
@@ -51,7 +51,7 @@ describe('validateNotation', () => {
   })
 
   describe('when given a nonsensical drop notation that is bugging me', () => {
-    const notation: DiceNotation<number> = '2d5D'
+    const notation: DiceNotation = '2d5D'
 
     it('returns an error result', () => {
       const result = validateNotation(notation)

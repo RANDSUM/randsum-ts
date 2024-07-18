@@ -6,9 +6,7 @@ function dieFactory(sides: string[]): SingleDie<string>
 function dieFactory<D extends string | number>(
   sides: D extends number ? number : string[]
 ): SingleDie<D>
-function dieFactory(
-  sides: number | string[]
-): SingleDie<string> | SingleDie<number> {
+function dieFactory(sides: number | string[]): SingleDie {
   return Array.isArray(sides)
     ? new CustomSidesDie(sides.map(String))
     : new StandardDie(Number(sides))

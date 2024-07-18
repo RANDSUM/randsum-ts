@@ -7,7 +7,7 @@ import parseNotation from './parse-notation.ts'
 
 function parseDiceOptions(
   argument: CoreRollArgument | undefined
-): DicePoolOptions<string> | DicePoolOptions<number> {
+): DicePoolOptions {
   if (isDicePoolOptions(argument)) {
     return argument
   }
@@ -33,7 +33,7 @@ function parseDiceOptions(
 
 function parameterizeRollArgument(
   argument: CoreRollArgument | undefined
-): DicePoolParameters<string> | DicePoolParameters<number> {
+): DicePoolParameters {
   const options = parseDiceOptions(argument)
   const die = dieFactory(options.sides)
   return {
@@ -42,7 +42,7 @@ function parameterizeRollArgument(
     die,
     notation: formatNotation(options),
     description: formatDescription(options)
-  } as DicePoolParameters<string> | DicePoolParameters<number>
+  } as DicePoolParameters
 }
 
 export default parameterizeRollArgument
