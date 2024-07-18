@@ -53,9 +53,6 @@ D20.roll()
 // Make a new 120 sided die and roll it
 const D120 = dieFactory(120)
 D120.roll()
-
-//'heads' or 'tails'?
-FairCoin.flip()
 ```
 
 Written in 100% Typescript with strong attention paid to return types. You depend on `randsum` to give you what you expect - just not always the roll you want.
