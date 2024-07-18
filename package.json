@@ -77,6 +77,8 @@
   },
   "type": "module",
   "dependencies": {
+    "@types/string.prototype.matchall": "^4.0.4",
+    "string.prototype.matchall": "^4.0.11",
     "uuidv7": "^1.0.0"
   }
 }
