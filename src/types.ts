@@ -88,7 +88,7 @@ export interface DicePoolParameters<
 
 export interface RollParameters {
   dicePools: {
-    [key: string]: DicePoolParameters<string> | DicePoolParameters<number>
+    [key: string]: DicePoolParameters
   }
 }
 

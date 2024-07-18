@@ -180,12 +180,12 @@ const applyDrop = (
 }
 
 const isCustomParameters = (
-  poolParameters: DicePoolParameters<string | number>
+  poolParameters: DicePoolParameters
 ): poolParameters is DicePoolParameters<string> =>
   Array.isArray(poolParameters.options.sides)
 
 export default function applyModifiers(
-  poolParameters: DicePoolParameters<string> | DicePoolParameters<number>,
+  poolParameters: DicePoolParameters,
   initialRolls: number[] | string[]
 ): RollBonuses | ModifiedRollBonuses {
   if (isCustomParameters(poolParameters)) {
@@ -201,10 +201,11 @@ export default function applyModifiers(
   }
 
   const {
-    options: { sides, quantity, modifiers = {} }
-  } = poolParameters
+    options: { sides, quantity, modifiers = {} },
+    die
+  } = poolParameters as DicePoolParameters<number>
 
-  const rollOne: () => number = () => poolParameters.die.roll()
+  const rollOne: () => number = () => die.roll()
 
   return Object.keys(modifiers).reduce((bonuses, key) => {
     switch (key) {
