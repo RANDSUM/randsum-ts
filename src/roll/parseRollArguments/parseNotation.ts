@@ -7,10 +7,9 @@ import {
   parseCoreNotation,
   parseModifiers
 } from './parseModifiers'
-import matchAll from 'string.prototype.matchall'
 
 const findMatches = (notations: string): Match[] =>
-  [...matchAll(notations, completeRollPattern)].map(
+  [...notations.matchAll(completeRollPattern)].map(
     ({ groups: match }) => match as Match
   )
 
