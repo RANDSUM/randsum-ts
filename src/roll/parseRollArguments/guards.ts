@@ -1,4 +1,4 @@
-import { completeRollPattern, coreNotationPattern } from '~constants'
+import { completeRollPattern, coreNotationPattern } from '~matchPattern'
 import { DiceNotation, DicePoolOptions, Modifiers, RollArgument } from '~types'
 
 export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
@@ -7,11 +7,16 @@ export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
 
   const cleanArg = argument.replace(/\s/g, '')
 
-  const matches = [...cleanArg.matchAll(completeRollPattern)].map(
-    (arr) => arr[0]
-  )
+  const matches = []
 
-  const remaining = matches.reduce((acc, curr) => {
+  let parsed: RegExpExecArray | null
+  while ((parsed = completeRollPattern.exec(cleanArg))) {
+    if (parsed && parsed.groups) {
+      matches.push(Object.values(parsed.groups))
+    }
+  }
+
+  const remaining = matches.flat().reduce((acc, curr) => {
     return acc.replace(curr, '')
   }, cleanArg)
 

@@ -3,7 +3,7 @@
     "paths": {
       "~roll": ["./src/roll/index.ts"],
       "~Die": ["./src/Die/index.ts"],
-      "~constants": ["./src/constants.ts"],
+      "~matchPattern": ["./src/matchPattern.ts"],
       "~types": ["./src/types.ts"]
     },
     "lib": ["ESNext"],

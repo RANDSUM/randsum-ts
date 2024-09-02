@@ -1,4 +1,4 @@
-import { completeRollPattern } from '~constants'
+import { completeRollPattern } from '~matchPattern'
 import { DiceNotation, DicePoolOptions } from '~types'
 import {
   isCoreNotationMatch,
@@ -8,10 +8,15 @@ import {
   parseModifiers
 } from './parseModifiers'
 
-const findMatches = (notations: string): Match[] =>
-  [...notations.matchAll(completeRollPattern)].map(
-    ({ groups: match }) => match as Match
-  )
+const findMatches = (notations: string): Match[] => {
+  const matches = []
+  let parsed: RegExpExecArray | null
+  while ((parsed = completeRollPattern.exec(notations))) {
+    matches.push(parsed.groups as Match)
+  }
+
+  return matches
+}
 
 const parseNotation = (
   notationString: DiceNotation
