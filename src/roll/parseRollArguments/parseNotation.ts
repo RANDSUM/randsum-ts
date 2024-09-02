@@ -1,4 +1,4 @@
-import { completeRollPattern } from '~constants'
+import { completeRollPattern } from '~matchPattern'
 import { DiceNotation, DicePoolOptions } from '~types'
 import {
   isCoreNotationMatch,

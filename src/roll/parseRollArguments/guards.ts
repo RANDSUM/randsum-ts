@@ -1,4 +1,4 @@
-import { completeRollPattern, coreNotationPattern } from '~constants'
+import { completeRollPattern, coreNotationPattern } from '~matchPattern'
 import { DiceNotation, DicePoolOptions, Modifiers, RollArgument } from '~types'
 
 export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
