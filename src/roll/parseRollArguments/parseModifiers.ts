@@ -98,7 +98,6 @@ const parseDropConstraintsNotation = (
 
   return notations.reduce(
     (acc, notationString) => {
-      console.log('HEREERERERERE', notationString)
       const constraints = notationString
         .split(/[Dd]/)[1]
         .replaceAll('{', '')
@@ -139,7 +138,12 @@ const parseDropConstraintsNotation = (
 const parseDropHighNotation = (
   notations: string[]
 ): Pick<Modifiers, 'drop'> => {
+  console.log('notations', notations)
   const notationString = notations[notations.length - 1]
+  if (!notationString) {
+    return { drop: {} }
+  }
+
   const highestCount = notationString.split(/[Hh]/)[1]
 
   return {
@@ -149,6 +153,9 @@ const parseDropHighNotation = (
 
 const parseDropLowNotation = (notations: string[]): Pick<Modifiers, 'drop'> => {
   const notationString = notations[notations.length - 1]
+  if (!notationString) {
+    return { drop: {} }
+  }
   const lowestCount = notationString.split(/[Ll]/)[1]
 
   return {

@@ -40,7 +40,6 @@ const parseNotation = (
     plusMatch: extractMatches(notationString, plusPattern),
     minusMatch: extractMatches(notationString, minusPattern)
   }
-  console.log('matches', matches)
   const modifiers = parseModifiers(matches)
 
   return {
