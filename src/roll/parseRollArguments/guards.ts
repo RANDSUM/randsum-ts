@@ -7,18 +7,7 @@ export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
 
   const cleanArg = argument.replace(/\s/g, '')
 
-  const matches = []
-
-  let parsed: RegExpExecArray | null
-  while ((parsed = completeRollPattern.exec(cleanArg))) {
-    if (parsed && parsed.groups) {
-      matches.push(Object.values(parsed.groups))
-    }
-  }
-
-  const remaining = matches.flat().reduce((acc, curr) => {
-    return acc.replace(curr, '')
-  }, cleanArg)
+  const remaining = cleanArg.replace(completeRollPattern, '')
 
   return remaining.length === 0
 }

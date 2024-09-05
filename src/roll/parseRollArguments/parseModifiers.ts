@@ -11,6 +11,20 @@ const isMatcherType = <M extends Match>(
   key: keyof M
 ): argument is M => ((argument || {}) as M)[key] !== undefined
 
+export type MatchObject = {
+  coreNotationMatch: CoreNotationMatch
+  dropHighMatch: string[]
+  dropLowMatch: string[]
+  dropConstraintsMatch: string[]
+  explodeMatch: string[]
+  uniqueMatch: string[]
+  replaceMatch: string[]
+  rerollMatch: string[]
+  capMatch: string[]
+  plusMatch: string[]
+  minusMatch: string[]
+}
+
 export type CoreNotationMatch = { coreNotationMatch: string }
 export const isCoreNotationMatch = (match: Match): match is CoreNotationMatch =>
   isMatcherType<CoreNotationMatch>(match, 'coreNotationMatch')
@@ -68,9 +82,7 @@ export type Match =
   | PlusMatch
   | MinusMatch
 
-export const parseCoreNotation = ({
-  coreNotationMatch: notationString
-}: CoreNotationMatch): DiceParameters => {
+export const parseCoreNotation = (notationString: string): DiceParameters => {
   const [quantity, sides] = notationString.split(/[Dd]/)
 
   return {
@@ -161,9 +173,10 @@ const parseDropConstraintsNotation = ({
   return { drop: dropConstraintParameters }
 }
 
-const parseDropHighNotation = ({
-  dropHighMatch: notationString
-}: DropHighMatch): Pick<Modifiers, 'drop'> => {
+const parseDropHighNotation = (
+  notations: string[]
+): Pick<Modifiers, 'drop'> => {
+  const notationString = notations[notations.length -1]
   const highestCount = notationString.split(/[Hh]/)[1]
 
   return {
@@ -364,35 +377,32 @@ export const mergeModifiers = (
   }
 }
 
-export const parseModifiers = (
-  match: Exclude<Match, CoreNotationMatch>
-): Modifiers => {
-  if (isDropHighMatch(match)) {
-    return parseDropHighNotation(match)
+export const parseModifiers = ({
+  dropConstraintsMatch,
+  dropHighMatch,
+  dropLowMatch,
+  explodeMatch,
+  uniqueMatch,
+  replaceMatch,
+  rerollMatch,
+  capMatch,
+  plusMatch,
+  minusMatch
+}: Exclude<MatchObject, 'coreNotationMatch'>): Modifiers => {
+  const dropModifiers = {
+    drop: {
+      ...parseDropHighNotation(dropHighMatch)
+      ...parseDropLowNotation(dropLowMatch),
+      ...parseDropConstraintsNotation(dropConstraintsMatch),
+    }
   }
-  if (isDropLowMatch(match)) {
-    return parseDropLowNotation(match)
+  return {
+    ...parseExplodeNotation(explodeMatch),
+    ...parseUniqueNotation(uniqueMatch),
+    ...parseReplaceNotation(replaceMatch),
+    ...parseRerollNotation(rerollMatch),
+    ...parseCapNotation(capMatch),
+    ...parsePlusNotation(plusMatch),
+    ...parseMinusNotation(minusMatch)
   }
-  if (isDropConstraintsMatch(match)) {
-    return parseDropConstraintsNotation(match)
-  }
-  if (isExplodeMatch(match)) {
-    return parseExplodeNotation(match)
-  }
-  if (isUniqueMatch(match)) {
-    return parseUniqueNotation(match)
-  }
-  if (isReplaceMatch(match)) {
-    return parseReplaceNotation(match)
-  }
-  if (isRerollMatch(match)) {
-    return parseRerollNotation(match)
-  }
-  if (isCapMatch(match)) {
-    return parseCapNotation(match)
-  }
-  if (isPlusMatch(match)) {
-    return parsePlusNotation(match)
-  }
-  return parseMinusNotation(match)
 }

@@ -1,21 +1,40 @@
-import { completeRollPattern } from '~matchPattern'
+import {
+  capPattern,
+  coreNotationPattern,
+  dropConstraintsPattern,
+  dropHighestPattern,
+  explodePattern,
+  minusPattern,
+  plusPattern,
+  replacePattern,
+  rerollPattern,
+  uniquePattern
+} from '~matchPattern'
 import { DiceNotation, DicePoolOptions } from '~types'
 import {
+  CoreNotationMatch,
   isCoreNotationMatch,
-  Match,
+  MatchObject,
   mergeModifiers,
   parseCoreNotation,
   parseModifiers
 } from './parseModifiers'
 
-const findMatches = (notations: string): Match[] => {
-  const matches = []
-  let parsed: RegExpExecArray | null
-  while ((parsed = completeRollPattern.exec(notations))) {
-    matches.push(parsed.groups as Match)
+const findMatches = (notations: string): MatchObject => {
+  return {
+    coreNotationMatch: (notations.match(coreNotationPattern)?.at(0) ||
+      '') as unknown as CoreNotationMatch,
+    dropHighMatch: [...(notations.match(dropHighestPattern) || [])],
+    dropLowMatch: [...(notations.match(dropHighestPattern) || [])],
+    dropConstraintsMatch: [...(notations.match(dropConstraintsPattern) || [])],
+    explodeMatch: [...(notations.match(explodePattern) || [])],
+    uniqueMatch: [...(notations.match(uniquePattern) || [])],
+    replaceMatch: [...(notations.match(replacePattern) || [])],
+    rerollMatch: [...(notations.match(rerollPattern) || [])],
+    capMatch: [...(notations.match(capPattern) || [])],
+    plusMatch: [...(notations.match(plusPattern) || [])],
+    minusMatch: [...(notations.match(minusPattern) || [])]
   }
-
-  return matches
 }
 
 const parseNotation = (
@@ -25,23 +44,29 @@ const parseNotation = (
     modifiers: {}
   }
 
-  return findMatches(notationString).reduce((acc, match) => {
-    if (!match) return acc
-    if (isCoreNotationMatch(match)) {
-      return {
-        ...acc,
-        ...parseCoreNotation(match)
-      }
-    }
+  const coreNotationMatch =
+    notationString.match(coreNotationPattern)!.at(0) || '0d0'
 
-    const newModifiers = parseModifiers(match)
-    const mergedModifiers = mergeModifiers(acc?.modifiers, newModifiers)
+  const diceParams = parseCoreNotation(coreNotationMatch)
 
-    return {
-      ...acc,
-      modifiers: { ...acc.modifiers, ...mergedModifiers }
-    }
-  }, initialParams) as DicePoolOptions
+  const matches = {
+    dropHighMatch: [...(notationString.match(dropHighestPattern) || [])],
+    dropLowMatch: [...(notationString.match(dropHighestPattern) || [])],
+    dropConstraintsMatch: [
+      ...(notationString.match(dropConstraintsPattern) || [])
+    ],
+    explodeMatch: [...(notationString.match(explodePattern) || [])],
+    uniqueMatch: [...(notationString.match(uniquePattern) || [])],
+    replaceMatch: [...(notationString.match(replacePattern) || [])],
+    rerollMatch: [...(notationString.match(rerollPattern) || [])],
+    capMatch: [...(notationString.match(capPattern) || [])],
+    plusMatch: [...(notationString.match(plusPattern) || [])],
+    minusMatch: [...(notationString.match(minusPattern) || [])]
+  }
+
+  return {
+    ...diceParams
+  }
 }
 
 export default parseNotation
