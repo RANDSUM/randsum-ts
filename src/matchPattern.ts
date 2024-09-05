@@ -1,23 +1,22 @@
-export const coreNotationPattern = /(?<coreNotationMatch>^\d+[Dd](\d+|{.*}))/
+export const coreNotationPattern = /^\d+[Dd](\d+|{.*})/
 
-const dropHighestMatch = /(?<dropHighMatch>[Hh]\d*)/
-const dropLowestMatch = /(?<dropLowMatch>[Ll]\d*)/
-const dropConstraintsMatch =
-  /(?<dropConstraintsMatch>[Dd]{([<>]?\d+,)*([<>]?\d+)})/
+export const dropHighestPattern = /[Hh]\d*/g
+export const dropLowestPattern = /[Ll]\d*/g
+export const dropConstraintsPattern = /[Dd]{([<>]?\d+,)*([<>]?\d+)}/g
 
-const explodeMatch = /(?<explodeMatch>!)/
-const uniqueMatch = /(?<uniqueMatch>[Uu]({(\d+,)*(\d+)})?)/
+export const explodePattern = /!/g
+export const uniquePattern = /[Uu]({(\d+,)*(\d+)})?/g
 
-const replaceMatch = /(?<replaceMatch>[Vv]{([<>]?\d+=?\d+,)*([<>]?\d+=?\d+)})/
+export const replacePattern = /[Vv]{([<>]?\d+=?\d+,)*([<>]?\d+=?\d+)}/g
 
-const rerollMatch = /(?<rerollMatch>[Rr]{([<>]?\d,)*([<>]?\d)}\d*)/
+export const rerollPattern = /[Rr]{([<>]?\d,)*([<>]?\d)}\d*/g
 
-const capMatch = /(?<capMatch>[Cc]{([<>]?\d+,)*([<>]?\d+)})/
-const plusMatch = /(?<plusMatch>\+\d+)/
-const minusMatch = /(?<minusMatch>-\d+)/
+export const capPattern = /[Cc]{([<>]?\d+,)*([<>]?\d+)}/g
+export const plusPattern = /\+\d+/g
+export const minusPattern = /-\d+/g
 
 export const modifierRollPatterns = new RegExp(
-  `${dropHighestMatch.source}|${dropLowestMatch.source}|${dropConstraintsMatch.source}|${explodeMatch.source}|${uniqueMatch.source}|${replaceMatch.source}|${rerollMatch.source}|${capMatch.source}|${plusMatch.source}|${minusMatch.source}`
+  `${dropHighestPattern.source}|${dropLowestPattern.source}|${dropConstraintsPattern.source}|${explodePattern.source}|${uniquePattern.source}|${replacePattern.source}|${rerollPattern.source}|${capPattern.source}|${plusPattern.source}|${minusPattern.source}`
 )
 
 export const completeRollPattern = new RegExp(

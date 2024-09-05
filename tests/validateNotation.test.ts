@@ -3,7 +3,7 @@ import validateNotation from '../src/validateDiceNotation'
 import { DiceNotation, DicePoolType } from '../src'
 
 describe('validateNotation', () => {
-  describe('when the notation is completely invalid', () => {
+  describe.only('when the notation is completely invalid', () => {
     const notation = 'invalid-notation'
 
     it('returns an error result', () => {

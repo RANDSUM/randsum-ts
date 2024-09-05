@@ -545,7 +545,7 @@ describe('parseRollArguments', () => {
         })
       })
 
-      describe('with a single replaceent', () => {
+      describe('with a single replacement', () => {
         const argument: DiceNotation = `${coreTestString}V{<2=6}`
 
         test('returns a RollParameter matching the notation', () => {
@@ -556,7 +556,7 @@ describe('parseRollArguments', () => {
             argument,
             options: {
               ...coreRollParameters,
-              modifiers: { replace: { from: { lessThan: 2 }, to: 6 } }
+              modifiers: { replace: [{ from: { lessThan: 2 }, to: 6 }] }
             },
             die: new StandardDie(coreRollParameters.sides),
 
