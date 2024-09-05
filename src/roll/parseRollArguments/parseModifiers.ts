@@ -1,23 +1,22 @@
 import {
+  dropHighestPattern,
+  dropLowestPattern,
+  dropConstraintsPattern,
+  explodePattern,
+  uniquePattern,
+  replacePattern,
+  rerollPattern,
+  capPattern,
+  plusPattern,
+  minusPattern
+} from '~matchPattern'
+import {
   DiceParameters,
   DropOptions,
   GreaterLessOptions,
   Modifiers,
   RerollOptions
 } from '~types'
-
-export type MatchObject = {
-  dropHighMatch: string[]
-  dropLowMatch: string[]
-  dropConstraintsMatch: string[]
-  explodeMatch: string[]
-  uniqueMatch: string[]
-  replaceMatch: string[]
-  rerollMatch: string[]
-  capMatch: string[]
-  plusMatch: string[]
-  minusMatch: string[]
-}
 
 export const parseCoreNotation = (notationString: string): DiceParameters => {
   const [quantity, sides] = notationString.split(/[Dd]/)
@@ -30,7 +29,11 @@ export const parseCoreNotation = (notationString: string): DiceParameters => {
   } as DiceParameters
 }
 
-const parseCapNotation = (notations: string[]): Pick<Modifiers, 'cap'> => {
+const parseCapNotation = (modifiersString: string): Pick<Modifiers, 'cap'> => {
+  const notations = extractMatches(modifiersString, capPattern)
+  if (notations.length === 0) {
+    return {}
+  }
   return notations.reduce(
     (acc, notationString) => {
       const capString = notationString
@@ -63,8 +66,12 @@ const parseCapNotation = (notations: string[]): Pick<Modifiers, 'cap'> => {
 }
 
 const parseUniqueNotation = (
-  notations: string[]
+  modifiersString: string
 ): Pick<Modifiers, 'unique'> => {
+  const notations = extractMatches(modifiersString, uniquePattern)
+  if (notations.length === 0) {
+    return {}
+  }
   return notations.reduce(
     (acc, notationString) => {
       if (notationString === 'u' || notationString === 'U') {
@@ -91,6 +98,9 @@ const parseUniqueNotation = (
 const parseDropConstraintsNotation = (
   notations: string[]
 ): Pick<Modifiers, 'drop'> => {
+  if (notations.length === 0) {
+    return {}
+  }
   const dropConstraintParameters: DropOptions = {}
 
   return notations.reduce(
@@ -115,9 +125,10 @@ const parseDropConstraintsNotation = (
           }
         }
 
+        const exact = [...(innerAcc?.exact || []), Number(constraint)]
         return {
           ...innerAcc,
-          exact: [...(innerAcc?.exact || []), Number(constraint)]
+          ...(exact.length > 0 ? { exact } : {})
         }
       }, dropConstraintParameters)
 
@@ -135,11 +146,11 @@ const parseDropConstraintsNotation = (
 const parseDropHighNotation = (
   notations: string[]
 ): Pick<Modifiers, 'drop'> => {
-  const notationString = notations[notations.length - 1]
-  if (!notationString) {
-    return { drop: {} }
+  if (notations.length === 0) {
+    return {}
   }
 
+  const notationString = notations[notations.length - 1]
   const highestCount = notationString.split(/[Hh]/)[1]
 
   return {
@@ -148,10 +159,10 @@ const parseDropHighNotation = (
 }
 
 const parseDropLowNotation = (notations: string[]): Pick<Modifiers, 'drop'> => {
-  const notationString = notations[notations.length - 1]
-  if (!notationString) {
+  if (notations.length === 0) {
     return { drop: {} }
   }
+  const notationString = notations[notations.length - 1]
   const lowestCount = notationString.split(/[Ll]/)[1]
 
   return {
@@ -162,8 +173,12 @@ const parseDropLowNotation = (notations: string[]): Pick<Modifiers, 'drop'> => {
 }
 
 const parseRerollNotation = (
-  notations: string[]
+  modifiersString: string
 ): Pick<Modifiers, 'reroll'> => {
+  const notations = extractMatches(modifiersString, rerollPattern)
+  if (notations.length === 0) {
+    return {}
+  }
   return notations.reduce(
     (acc, notationString) => {
       const parsedString = notationString
@@ -215,12 +230,23 @@ const parseRerollNotation = (
 }
 
 const parseExplodeNotation = (
-  notations: string[]
-): Pick<Modifiers, 'explode'> => ({
-  explode: Boolean(notations.length > 0)
-})
+  modifiersString: string
+): Pick<Modifiers, 'explode'> => {
+  const notations = extractMatches(modifiersString, explodePattern)
+  return notations.length === 0
+    ? {}
+    : {
+        explode: true
+      }
+}
 
-const parseMinusNotation = (notations: string[]): Pick<Modifiers, 'minus'> => {
+const parseMinusNotation = (
+  modifiersString: string
+): Pick<Modifiers, 'minus'> => {
+  const notations = extractMatches(modifiersString, minusPattern)
+  if (notations.length === 0) {
+    return {}
+  }
   const minus = notations
     .map((notationString) => Number(notationString.split('-')[1]))
     .reduce((acc, num) => acc - num, 0)
@@ -230,7 +256,13 @@ const parseMinusNotation = (notations: string[]): Pick<Modifiers, 'minus'> => {
   }
 }
 
-const parsePlusNotation = (notations: string[]): Pick<Modifiers, 'plus'> => {
+const parsePlusNotation = (
+  modifiersString: string
+): Pick<Modifiers, 'plus'> => {
+  const notations = extractMatches(modifiersString, plusPattern)
+  if (notations.length === 0) {
+    return {}
+  }
   const plus = notations
     .map((notationString) => Number(notationString.split('+')[1]))
     .reduce((acc, num) => acc + num, 0)
@@ -241,8 +273,12 @@ const parsePlusNotation = (notations: string[]): Pick<Modifiers, 'plus'> => {
 }
 
 const parseReplaceNotation = (
-  notations: string[]
+  modifiersString: string
 ): Pick<Modifiers, 'replace'> => {
+  const notations = extractMatches(modifiersString, replacePattern)
+  if (notations.length === 0) {
+    return {}
+  }
   const replace = notations
     .map((notationString) => {
       const replaceOptions = notationString
@@ -277,68 +313,49 @@ const parseReplaceNotation = (
   return { replace }
 }
 
-export const parseModifiers = ({
-  dropConstraintsMatch,
-  dropHighMatch,
-  dropLowMatch,
-  explodeMatch,
-  uniqueMatch,
-  replaceMatch,
-  rerollMatch,
-  capMatch,
-  plusMatch,
-  minusMatch
-}: Exclude<MatchObject, 'coreNotationMatch'>):
-  | Modifiers
-  | Record<never, never> => {
-  const dropHighModifiers = dropHighMatch.length
-    ? parseDropHighNotation(dropHighMatch)
-    : {}
-  const dropLowModifiers = dropLowMatch.length
-    ? parseDropLowNotation(dropLowMatch)
-    : {}
-  const dropConstraintsModifiers = dropConstraintsMatch
-    ? parseDropConstraintsNotation(dropConstraintsMatch)
-    : {}
+const parseDropModifiers = (
+  modifiersString: string
+): Pick<Modifiers, 'drop'> => {
+  const dropHighModifiers = parseDropHighNotation(
+    extractMatches(modifiersString, dropHighestPattern)
+  )
+  const dropLowModifiers = parseDropLowNotation(
+    extractMatches(modifiersString, dropLowestPattern)
+  )
+  const dropConstraintsModifiers = parseDropConstraintsNotation(
+    extractMatches(modifiersString, dropConstraintsPattern)
+  )
 
-  const dropModifiers =
-    dropHighModifiers.drop ||
-    dropLowModifiers.drop ||
-    dropConstraintsModifiers.drop
-      ? {
-          drop: {
-            ...dropHighModifiers.drop,
-            ...dropLowModifiers.drop,
-            ...dropConstraintsModifiers.drop
-          }
-        }
-      : {}
-  const explodeModifiers = explodeMatch.length
-    ? parseExplodeNotation(explodeMatch)
-    : {}
-  const uniqueModifiers = uniqueMatch.length
-    ? parseUniqueNotation(uniqueMatch)
-    : {}
-  const replaceModifiers = replaceMatch.length
-    ? parseReplaceNotation(replaceMatch)
-    : {}
-  const rerollModifiers = rerollMatch.length
-    ? parseRerollNotation(rerollMatch)
-    : {}
-  const capModifiers = capMatch.length ? parseCapNotation(capMatch) : {}
-  const plusModifiers = plusMatch.length ? parsePlusNotation(plusMatch) : {}
-  const minusModifiers = minusMatch.length ? parseMinusNotation(minusMatch) : {}
-
-  const modifiers = {
-    ...dropModifiers,
-    ...minusModifiers,
-    ...plusModifiers,
-    ...capModifiers,
-    ...explodeModifiers,
-    ...replaceModifiers,
-    ...rerollModifiers,
-    ...uniqueModifiers
+  const rawDropModifiers = {
+    drop: {
+      ...dropHighModifiers.drop,
+      ...dropLowModifiers.drop,
+      ...dropConstraintsModifiers.drop
+    }
   }
 
-  return Object.keys(modifiers).length ? { modifiers } : {}
+  return Object.keys(rawDropModifiers.drop).length > 0 ? rawDropModifiers : {}
+}
+
+const extractMatches = (notationString: string, pattern: RegExp) => {
+  return [...(notationString.matchAll(pattern) || [])].map(
+    (matches) => matches[0]
+  )
+}
+
+export const parseModifiers = (
+  modifiersString: string
+): Modifiers | Record<never, never> => {
+  return {
+    modifiers: {
+      ...parseDropModifiers(modifiersString),
+      ...parseExplodeNotation(modifiersString),
+      ...parseUniqueNotation(modifiersString),
+      ...parseReplaceNotation(modifiersString),
+      ...parseRerollNotation(modifiersString),
+      ...parseCapNotation(modifiersString),
+      ...parsePlusNotation(modifiersString),
+      ...parseMinusNotation(modifiersString)
+    }
+  }
 }
