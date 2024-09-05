@@ -40,12 +40,13 @@ const parseNotation = (
     plusMatch: extractMatches(notationString, plusPattern),
     minusMatch: extractMatches(notationString, minusPattern)
   }
-  const modifiers = parseModifiers(matches)
 
-  return {
+  const modifiers = parseModifiers(matches)
+  const options = {
     ...parseCoreNotation(coreNotationMatch),
-    modifiers
+    ...modifiers
   }
+  return options
 }
 
 export default parseNotation

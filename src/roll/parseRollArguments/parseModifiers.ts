@@ -84,17 +84,14 @@ const parseUniqueNotation = (
         }
       }
     },
-    { unique: true } as Pick<Modifiers, 'unique'>
+    { unique: false } as Pick<Modifiers, 'unique'>
   )
 }
 
 const parseDropConstraintsNotation = (
   notations: string[]
 ): Pick<Modifiers, 'drop'> => {
-  const dropConstraintParameters: Pick<
-    DropOptions,
-    'greaterThan' | 'lessThan'
-  > & { exact: number[] } = { exact: [] }
+  const dropConstraintParameters: DropOptions = {}
 
   return notations.reduce(
     (acc, notationString) => {
@@ -120,7 +117,7 @@ const parseDropConstraintsNotation = (
 
         return {
           ...innerAcc,
-          exact: [...innerAcc.exact, Number(constraint)]
+          exact: [...(innerAcc?.exact || []), Number(constraint)]
         }
       }, dropConstraintParameters)
 
@@ -138,7 +135,6 @@ const parseDropConstraintsNotation = (
 const parseDropHighNotation = (
   notations: string[]
 ): Pick<Modifiers, 'drop'> => {
-  console.log('notations', notations)
   const notationString = notations[notations.length - 1]
   if (!notationString) {
     return { drop: {} }
@@ -292,22 +288,57 @@ export const parseModifiers = ({
   capMatch,
   plusMatch,
   minusMatch
-}: Exclude<MatchObject, 'coreNotationMatch'>): Modifiers => {
-  const dropModifiers = {
-    drop: {
-      ...parseDropHighNotation(dropHighMatch).drop,
-      ...parseDropLowNotation(dropLowMatch).drop,
-      ...parseDropConstraintsNotation(dropConstraintsMatch).drop
-    }
-  }
-  return {
+}: Exclude<MatchObject, 'coreNotationMatch'>):
+  | Modifiers
+  | Record<never, never> => {
+  const dropHighModifiers = dropHighMatch.length
+    ? parseDropHighNotation(dropHighMatch)
+    : {}
+  const dropLowModifiers = dropLowMatch.length
+    ? parseDropLowNotation(dropLowMatch)
+    : {}
+  const dropConstraintsModifiers = dropConstraintsMatch
+    ? parseDropConstraintsNotation(dropConstraintsMatch)
+    : {}
+
+  const dropModifiers =
+    dropHighModifiers.drop ||
+    dropLowModifiers.drop ||
+    dropConstraintsModifiers.drop
+      ? {
+          drop: {
+            ...dropHighModifiers.drop,
+            ...dropLowModifiers.drop,
+            ...dropConstraintsModifiers.drop
+          }
+        }
+      : {}
+  const explodeModifiers = explodeMatch.length
+    ? parseExplodeNotation(explodeMatch)
+    : {}
+  const uniqueModifiers = uniqueMatch.length
+    ? parseUniqueNotation(uniqueMatch)
+    : {}
+  const replaceModifiers = replaceMatch.length
+    ? parseReplaceNotation(replaceMatch)
+    : {}
+  const rerollModifiers = rerollMatch.length
+    ? parseRerollNotation(rerollMatch)
+    : {}
+  const capModifiers = capMatch.length ? parseCapNotation(capMatch) : {}
+  const plusModifiers = plusMatch.length ? parsePlusNotation(plusMatch) : {}
+  const minusModifiers = minusMatch.length ? parseMinusNotation(minusMatch) : {}
+
+  const modifiers = {
     ...dropModifiers,
-    ...parseExplodeNotation(explodeMatch),
-    ...parseUniqueNotation(uniqueMatch),
-    ...parseReplaceNotation(replaceMatch),
-    ...parseRerollNotation(rerollMatch),
-    ...parseCapNotation(capMatch),
-    ...parsePlusNotation(plusMatch),
-    ...parseMinusNotation(minusMatch)
+    ...minusModifiers,
+    ...plusModifiers,
+    ...capModifiers,
+    ...explodeModifiers,
+    ...replaceModifiers,
+    ...rerollModifiers,
+    ...uniqueModifiers
   }
+
+  return Object.keys(modifiers).length ? { modifiers } : {}
 }
