@@ -184,9 +184,7 @@ const parseDropHighNotation = (
   }
 }
 
-const parseDropLowNotation = ({
-  dropLowMatch: notationString
-}: DropLowMatch): Pick<Modifiers, 'drop'> => {
+const parseDropLowNotation = (notations: ): Pick<Modifiers, 'drop'> => {
   const lowestCount = notationString.split(/[Ll]/)[1]
 
   return {
