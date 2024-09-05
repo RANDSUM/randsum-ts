@@ -1,4 +1,4 @@
-export const coreNotationPattern = /^\d+[Dd]\d+|{.*}/
+export const coreNotationPattern = /^\d+[Dd](\d+|{.*})/
 
 export const dropHighestPattern = /[Hh]\d*/g
 export const dropLowestPattern = /[Ll]\d*/g

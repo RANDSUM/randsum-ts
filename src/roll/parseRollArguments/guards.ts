@@ -9,6 +9,8 @@ export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
 
   const remaining = cleanArg.replace(completeRollPattern, '')
 
+  console.log('cleanArg', cleanArg)
+  console.log('REMAINING', remaining)
   return remaining.length === 0
 }
 
