@@ -1,5 +1,22 @@
-import { completeRollPattern, coreNotationPattern } from '~matchPattern'
+import {
+  capPattern,
+  coreNotationPattern,
+  dropConstraintsPattern,
+  dropHighestPattern,
+  dropLowestPattern,
+  explodePattern,
+  minusPattern,
+  plusPattern,
+  replacePattern,
+  rerollPattern,
+  uniquePattern
+} from '~matchPattern'
 import { DiceNotation, DicePoolOptions, Modifiers, RollArgument } from '~types'
+
+const completeRollPattern = new RegExp(
+  `${coreNotationPattern.source}|${dropHighestPattern.source}|${dropLowestPattern.source}|${dropConstraintsPattern.source}|${explodePattern.source}|${uniquePattern.source}|${replacePattern.source}|${rerollPattern.source}|${capPattern.source}|${plusPattern.source}|${minusPattern.source}`,
+  'g'
+)
 
 export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
   const basicTest = !!coreNotationPattern.test(String(argument))
