@@ -1,6 +1,7 @@
 import {
   DiceParameters,
   DropOptions,
+  GreaterLessOptions,
   Modifiers,
   ReplaceOptions,
   RerollOptions
@@ -93,90 +94,115 @@ export const parseCoreNotation = (notationString: string): DiceParameters => {
   } as DiceParameters
 }
 
-const parseCapNotation = ({
-  capMatch: notationString
-}: CapMatch): Pick<Modifiers, 'cap'> => {
-  let capParameters = {}
-  const capString = notationString
-    .split(/[Cc]/)[1]
-    .replaceAll(/{|}/g, '')
-    .split(',')
-  capString.forEach((note) => {
-    if (note.includes('<')) {
-      capParameters = {
-        ...capParameters,
-        lessThan: Number(note.replaceAll('<', ''))
+const parseCapNotation = (notations: string[]): Pick<Modifiers, 'cap'> => {
+  return notations.reduce(
+    (acc, notationString) => {
+      const capString = notationString
+        .split(/[Cc]/)[1]
+        .replaceAll(/{|}/g, '')
+        .split(',')
+
+      const capOptions = capString.reduce((innerAcc, note) => {
+        if (note.includes('<')) {
+          return {
+            ...innerAcc,
+            lessThan: Number(note.replaceAll('<', ''))
+          }
+        }
+        return {
+          ...innerAcc,
+          greaterThan: Number(note.replaceAll('>', ''))
+        }
+      }, {} as GreaterLessOptions)
+
+      return {
+        cap: {
+          ...acc.cap,
+          ...capOptions
+        }
       }
-      return
-    }
-    capParameters = {
-      ...capParameters,
-      greaterThan: Number(note.replaceAll('>', ''))
-    }
-  })
-  return { cap: capParameters }
+    },
+    { cap: {} } as Pick<Modifiers, 'cap'>
+  )
 }
 
-const parseUniqueNotation = ({
-  uniqueMatch: notationString
-}: UniqueMatch): Pick<Modifiers, 'unique'> => {
-  if (notationString === 'u' || notationString === 'U') {
-    return { unique: true }
-  }
+const parseUniqueNotation = (
+  notations: string[]
+): Pick<Modifiers, 'unique'> => {
+  return notations.reduce(
+    (acc, notationString) => {
+      if (notationString === 'u' || notationString === 'U') {
+        if (typeof acc.unique === 'object') {
+          return acc
+        }
+        return { unique: true }
+      }
+      const notUnique = notationString
+        .replaceAll(/[Uu]{/g, '')
+        .replaceAll('}', '')
+        .split(',')
 
-  const notUnique = notationString
-    .replaceAll(/[Uu]{/g, '')
-    .replaceAll('}', '')
-    .split(',')
-
-  return {
-    unique: {
-      notUnique: notUnique.map(Number)
-    }
-  }
+      return {
+        unique: {
+          notUnique: notUnique.map(Number)
+        }
+      }
+    },
+    { unique: true } as Pick<Modifiers, 'unique'>
+  )
 }
 
-const parseDropConstraintsNotation = ({
-  dropConstraintsMatch: notationString
-}: DropConstraintsMatch): Pick<Modifiers, 'drop'> => {
-  let dropConstraintParameters: Pick<
+const parseDropConstraintsNotation = (
+  notations: string[]
+): Pick<Modifiers, 'drop'> => {
+  const dropConstraintParameters: Pick<
     DropOptions,
     'greaterThan' | 'lessThan'
   > & { exact: number[] } = { exact: [] }
-  const constraints = notationString
-    .split(/[Dd]/)[1]
-    .replaceAll('{', '')
-    .replaceAll('}', '')
-    .split(',')
-  constraints.forEach((constraint) => {
-    if (constraint.includes('<')) {
-      dropConstraintParameters = {
-        ...dropConstraintParameters,
-        lessThan: Number(constraint.split('<')[1])
-      }
-      return
-    }
 
-    if (constraint.includes('>')) {
-      dropConstraintParameters = {
-        ...dropConstraintParameters,
-        greaterThan: Number(constraint.split('>')[1])
-      }
-      return
-    }
+  return notations.reduce(
+    (acc, notationString) => {
+      const constraints = notationString
+        .split(/[Dd]/)[1]
+        .replaceAll('{', '')
+        .replaceAll('}', '')
+        .split(',')
+      const parsedConstraints = constraints.reduce((innerAcc, constraint) => {
+        if (constraint.includes('<')) {
+          return {
+            ...innerAcc,
+            lessThan: Number(constraint.split('<')[1])
+          }
+        }
 
-    dropConstraintParameters = {
-      ...dropConstraintParameters,
-      exact: [...dropConstraintParameters.exact, Number(constraint)]
-    }
-  })
-  return { drop: dropConstraintParameters }
+        if (constraint.includes('>')) {
+          return {
+            ...innerAcc,
+            greaterThan: Number(constraint.split('>')[1])
+          }
+        }
+
+        return {
+          ...innerAcc,
+          exact: [...innerAcc.exact, Number(constraint)]
+        }
+      }, dropConstraintParameters)
+
+      return {
+        drop: {
+          ...acc.drop,
+          ...parsedConstraints
+        }
+      }
+    },
+    { drop: dropConstraintParameters }
+  )
 }
 
 const parseDropHighNotation = (
   notations: string[]
 ): Pick<Modifiers, 'drop'> => {
-  const notationString = notations[notations.length -1]
+  const notationString = notations[notations.length - 1]
   const highestCount = notationString.split(/[Hh]/)[1]
 
   return {
@@ -184,7 +210,8 @@ const parseDropHighNotation = (
   }
 }
 
-const parseDropLowNotation = (notations: ): Pick<Modifiers, 'drop'> => {
+const parseDropLowNotation = (notations: string[]): Pick<Modifiers, 'drop'> => {
+  const notationString = notations[notations.length - 1]
   const lowestCount = notationString.split(/[Ll]/)[1]
 
   return {
@@ -194,185 +221,118 @@ const parseDropLowNotation = (notations: ): Pick<Modifiers, 'drop'> => {
   }
 }
 
-const parseRerollNotation = ({
-  rerollMatch: notationString
-}: RerollMatch): Pick<Modifiers, 'reroll'> => {
-  const parsedString = notationString
-    .split(/[Rr]/)[1]
-    .replaceAll('{', '')
-    .replaceAll('}', ',!')
-    .split(',')
-  let rerollParameters: RerollOptions = {}
-  parsedString.forEach((notation) => {
-    if (notation === '!') {
-      return
-    }
-    if (notation.includes('<')) {
-      rerollParameters = {
-        ...rerollParameters,
-        lessThan: Number(notation.split('<')[1])
-      }
-      return
-    }
-    if (notation.includes('>')) {
-      rerollParameters = {
-        ...rerollParameters,
-        greaterThan: Number(notation.split('>')[1])
-      }
-      return
-    }
-    if (notation.includes('!')) {
-      rerollParameters = {
-        ...rerollParameters,
-        maxReroll: Number(notation.split('!')[1])
-      }
-      return
-    }
-    rerollParameters = {
-      ...rerollParameters,
-      exact: [
-        ...(Array.isArray(rerollParameters?.exact)
-          ? rerollParameters.exact
-          : []),
-        Number(notation)
-      ]
-    }
-  })
+const parseRerollNotation = (
+  notations: string[]
+): Pick<Modifiers, 'reroll'> => {
+  return notations.reduce(
+    (acc, notationString) => {
+      const parsedString = notationString
+        .split(/[Rr]/)[1]
+        .replaceAll('{', '')
+        .replaceAll('}', ',!')
+        .split(',')
 
-  return { reroll: rerollParameters }
+      const rerollOptions = parsedString.reduce((innerAcc, notation) => {
+        if (notation === '!') {
+          return innerAcc
+        }
+        if (notation.includes('<')) {
+          return {
+            ...innerAcc,
+            lessThan: Number(notation.split('<')[1])
+          }
+        }
+        if (notation.includes('>')) {
+          return {
+            ...innerAcc,
+            greaterThan: Number(notation.split('>')[1])
+          }
+        }
+        if (notation.includes('!')) {
+          return {
+            ...innerAcc,
+            maxReroll: Number(notation.split('!')[1])
+          }
+        }
+        return {
+          ...innerAcc,
+          exact: [
+            ...(Array.isArray(innerAcc?.exact) ? innerAcc.exact : []),
+            Number(notation)
+          ]
+        }
+      }, {} as RerollOptions)
+
+      return {
+        reroll: {
+          ...acc.reroll,
+          ...rerollOptions
+        }
+      }
+    },
+    { reroll: {} }
+  )
 }
 
-const parseExplodeNotation = ({
-  explodeMatch: notationString
-}: ExplodeMatch): Pick<Modifiers, 'explode'> => ({
-  explode: Boolean(notationString)
+const parseExplodeNotation = (
+  notations: string[]
+): Pick<Modifiers, 'explode'> => ({
+  explode: Boolean(notations.length > 0)
 })
 
-const parseMinusNotation = ({
-  minusMatch: notationString
-}: MinusMatch): Pick<Modifiers, 'minus'> => ({
-  minus: Number(notationString.split('-')[1])
-})
-
-const parsePlusNotation = ({
-  plusMatch: notationString
-}: PlusMatch): Pick<Modifiers, 'plus'> => ({
-  plus: Number(notationString.split('+')[1])
-})
-
-const parseReplaceNotation = ({
-  replaceMatch: notationString
-}: ReplaceMatch): Pick<Modifiers, 'replace'> => {
-  const replaceOptions = notationString
-    .split(/[Vv]/)[1]
-    .replaceAll('{', '')
-    .replaceAll('}', '')
-    .split(',')
-    .map((replacement) => {
-      const [noteFrom, noteTo] = replacement.split('=')
-
-      const coreReplacement = { to: Number(noteTo) }
-      if (noteFrom.includes('>')) {
-        return {
-          ...coreReplacement,
-          from: { greaterThan: Number(noteFrom.replaceAll('>', '')) }
-        }
-      }
-      if (noteFrom.includes('<')) {
-        return {
-          ...coreReplacement,
-          from: { lessThan: Number(noteFrom.replaceAll('<', '')) }
-        }
-      }
-      return { ...coreReplacement, from: Number(noteFrom) }
-    })
-
-  const replace =
-    replaceOptions.length === 1
-      ? replaceOptions[0]
-      : replaceOptions.filter(Boolean)
-
-  return { replace }
-}
-
-export const mergeModifiers = (
-  oldModifiers: Modifiers,
-  newModifiers: Modifiers
-): Modifiers => {
-  const newUniqueArg =
-    typeof newModifiers.unique === 'object'
-      ? {
-          ...(typeof oldModifiers?.unique === 'object'
-            ? oldModifiers?.unique
-            : {}),
-          ...newModifiers.unique
-        }
-      : newModifiers.unique
-
-  const cap =
-    'cap' in newModifiers
-      ? { cap: { ...oldModifiers?.cap, ...newModifiers.cap } }
-      : {}
-  const drop =
-    'drop' in newModifiers
-      ? { drop: { ...oldModifiers?.drop, ...newModifiers.drop } }
-      : {}
-  const explode =
-    'explode' in newModifiers ? { explode: newModifiers.explode } : {}
-  const unique = 'unique' in newModifiers ? { unique: newUniqueArg } : {}
-  const plus =
-    'plus' in newModifiers
-      ? { plus: (newModifiers.plus || 0) + (oldModifiers.plus || 0) }
-      : {}
-  const minus =
-    'minus' in newModifiers
-      ? {
-          minus:
-            Math.abs(newModifiers.minus || 0) -
-            Math.abs(oldModifiers.minus || 0)
-        }
-      : {}
-
-  const reroll =
-    'reroll' in newModifiers
-      ? {
-          reroll: {
-            ...(oldModifiers.reroll || {}),
-            ...(newModifiers.reroll || {})
-          } as RerollOptions
-        }
-      : {}
-  const replace =
-    'replace' in newModifiers
-      ? {
-          replace:
-            Array.isArray(oldModifiers.replace) ||
-            Array.isArray(newModifiers.replace)
-              ? (
-                  [
-                    ...[oldModifiers.replace],
-                    ...[newModifiers.replace]
-                  ] as ReplaceOptions[]
-                )
-                  .flat()
-                  .filter(Boolean)
-              : {
-                  ...oldModifiers.replace,
-                  ...((newModifiers.replace || {}) as ReplaceOptions)
-                }
-        }
-      : {}
+const parseMinusNotation = (notations: string[]): Pick<Modifiers, 'minus'> => {
+  const minus = notations
+    .map((notationString) => Number(notationString.split('-')[1]))
+    .reduce((acc, num) => acc - num, 0)
 
   return {
-    ...cap,
-    ...drop,
-    ...explode,
-    ...unique,
-    ...plus,
-    ...minus,
-    ...reroll,
-    ...replace
+    minus: minus
   }
+}
+
+const parsePlusNotation = (notations: string[]): Pick<Modifiers, 'plus'> => {
+  const plus = notations
+    .map((notationString) => Number(notationString.split('+')[1]))
+    .reduce((acc, num) => acc + num, 0)
+
+  return {
+    plus
+  }
+}
+
+const parseReplaceNotation = (
+  notations: string[]
+): Pick<Modifiers, 'replace'> => {
+  const replace = notations.map((notationString) => {
+    const replaceOptions = notationString
+      .split(/[Vv]/)[1]
+      .replaceAll('{', '')
+      .replaceAll('}', '')
+      .split(',')
+      .map((replacement) => {
+        const [noteFrom, noteTo] = replacement.split('=')
+
+        const coreReplacement = { to: Number(noteTo) }
+        if (noteFrom.includes('>')) {
+          return {
+            ...coreReplacement,
+            from: { greaterThan: Number(noteFrom.replaceAll('>', '')) }
+          }
+        }
+        if (noteFrom.includes('<')) {
+          return {
+            ...coreReplacement,
+            from: { lessThan: Number(noteFrom.replaceAll('<', '')) }
+          }
+        }
+        return { ...coreReplacement, from: Number(noteFrom) }
+      })
+
+    return replaceOptions.length === 1
+      ? replaceOptions[0]
+      : replaceOptions.filter(Boolean)
+  }) as ReplaceOptions[]
+  return { replace }
 }
 
 export const parseModifiers = ({
@@ -389,12 +349,13 @@ export const parseModifiers = ({
 }: Exclude<MatchObject, 'coreNotationMatch'>): Modifiers => {
   const dropModifiers = {
     drop: {
-      ...parseDropHighNotation(dropHighMatch)
-      ...parseDropLowNotation(dropLowMatch),
-      ...parseDropConstraintsNotation(dropConstraintsMatch),
+      ...parseDropHighNotation(dropHighMatch).drop,
+      ...parseDropLowNotation(dropLowMatch).drop,
+      ...parseDropConstraintsNotation(dropConstraintsMatch).drop
     }
   }
   return {
+    ...dropModifiers,
     ...parseExplodeNotation(explodeMatch),
     ...parseUniqueNotation(uniqueMatch),
     ...parseReplaceNotation(replaceMatch),

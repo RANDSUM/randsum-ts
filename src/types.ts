@@ -26,7 +26,7 @@ export interface DicePoolOptions<D extends string | number = string | number> {
 export type Modifiers = {
   cap?: GreaterLessOptions
   drop?: DropOptions
-  replace?: TypeOrArrayOfType<ReplaceOptions>
+  replace?: ReplaceOptions[]
   reroll?: RerollOptions
   unique?: boolean | UniqueOptions
   explode?: boolean
