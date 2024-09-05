@@ -7,11 +7,7 @@ export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
 
   const cleanArg = argument.replace(/\s/g, '')
 
-  const remaining = cleanArg.replace(completeRollPattern, '')
-
-  console.log('cleanArg', cleanArg)
-  console.log('REMAINING', remaining)
-  return remaining.length === 0
+  return cleanArg.replace(completeRollPattern, '').length === 0
 }
 
 export const isCustomSides = (
