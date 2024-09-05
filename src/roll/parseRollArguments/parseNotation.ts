@@ -3,6 +3,7 @@ import {
   coreNotationPattern,
   dropConstraintsPattern,
   dropHighestPattern,
+  dropLowestPattern,
   explodePattern,
   minusPattern,
   plusPattern,
@@ -11,61 +12,40 @@ import {
   uniquePattern
 } from '~matchPattern'
 import { DiceNotation, DicePoolOptions } from '~types'
-import {
-  CoreNotationMatch,
-  isCoreNotationMatch,
-  MatchObject,
-  mergeModifiers,
-  parseCoreNotation,
-  parseModifiers
-} from './parseModifiers'
+import { parseCoreNotation, parseModifiers } from './parseModifiers'
 
-const findMatches = (notations: string): MatchObject => {
-  return {
-    coreNotationMatch: (notations.match(coreNotationPattern)?.at(0) ||
-      '') as unknown as CoreNotationMatch,
-    dropHighMatch: [...(notations.match(dropHighestPattern) || [])],
-    dropLowMatch: [...(notations.match(dropHighestPattern) || [])],
-    dropConstraintsMatch: [...(notations.match(dropConstraintsPattern) || [])],
-    explodeMatch: [...(notations.match(explodePattern) || [])],
-    uniqueMatch: [...(notations.match(uniquePattern) || [])],
-    replaceMatch: [...(notations.match(replacePattern) || [])],
-    rerollMatch: [...(notations.match(rerollPattern) || [])],
-    capMatch: [...(notations.match(capPattern) || [])],
-    plusMatch: [...(notations.match(plusPattern) || [])],
-    minusMatch: [...(notations.match(minusPattern) || [])]
-  }
+const extractMatches = (notationString: string, pattern: RegExp) => {
+  return [...(notationString.matchAll(pattern) || [])].map(
+    (matches) => matches[0]
+  )
 }
-
 const parseNotation = (
   notationString: DiceNotation
 ): DicePoolOptions<number | string> => {
-  const initialParams = {
-    modifiers: {}
-  }
-
   const coreNotationMatch =
     notationString.match(coreNotationPattern)!.at(0) || '0d0'
 
-  const diceParams = parseCoreNotation(coreNotationMatch)
-
   const matches = {
-    dropHighMatch: [...(notationString.match(dropHighestPattern) || [])],
-    dropLowMatch: [...(notationString.match(dropHighestPattern) || [])],
-    dropConstraintsMatch: [
-      ...(notationString.match(dropConstraintsPattern) || [])
-    ],
-    explodeMatch: [...(notationString.match(explodePattern) || [])],
-    uniqueMatch: [...(notationString.match(uniquePattern) || [])],
-    replaceMatch: [...(notationString.match(replacePattern) || [])],
-    rerollMatch: [...(notationString.match(rerollPattern) || [])],
-    capMatch: [...(notationString.match(capPattern) || [])],
-    plusMatch: [...(notationString.match(plusPattern) || [])],
-    minusMatch: [...(notationString.match(minusPattern) || [])]
+    dropHighMatch: extractMatches(notationString, dropHighestPattern),
+    dropLowMatch: extractMatches(notationString, dropLowestPattern),
+    dropConstraintsMatch: extractMatches(
+      notationString,
+      dropConstraintsPattern
+    ),
+    explodeMatch: extractMatches(notationString, explodePattern),
+    uniqueMatch: extractMatches(notationString, uniquePattern),
+    replaceMatch: extractMatches(notationString, replacePattern),
+    rerollMatch: extractMatches(notationString, rerollPattern),
+    capMatch: extractMatches(notationString, capPattern),
+    plusMatch: extractMatches(notationString, plusPattern),
+    minusMatch: extractMatches(notationString, minusPattern)
   }
+  console.log('matches', matches)
+  const modifiers = parseModifiers(matches)
 
   return {
-    ...diceParams
+    ...parseCoreNotation(coreNotationMatch),
+    modifiers
   }
 }
 

@@ -40,6 +40,7 @@ export const dropNotation = (drop: DropOptions) => {
 }
 
 export const replaceNotation = (replace: TypeOrArrayOfType<ReplaceOptions>) => {
+  console.log(replace)
   const args = (
     Array.isArray(replace)
       ? replace.map(singleReplaceNotation).flat()
