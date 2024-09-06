@@ -9,7 +9,7 @@ import {
   dropString,
   capString
 } from './stringFormatters'
-import { isValidModifier } from '../guards'
+import { isValidModifier } from '~guards'
 
 function formatModifierDescriptions({
   modifiers

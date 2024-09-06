@@ -1,6 +1,6 @@
 import { CoreRollArgument, RollArgument, RollParameters } from '~types'
-import { isCustomSides } from './guards.ts'
-import parameterizeRollArgument from './parameterizeRollArguments.ts'
+import { isCustomSides } from '~guards'
+import parameterizeRollArgument from './parameterizeRollArguments'
 import { uuidv7 as uuid } from 'uuidv7'
 
 function parseRollArguments(argument: RollArgument): RollParameters {
