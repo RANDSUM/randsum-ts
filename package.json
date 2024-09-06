@@ -61,7 +61,7 @@
     }
   ],
   "devDependencies": {
-    "@eslint/js": "^9.8.0",
+    "@eslint/js": "^9.9.1",
     "@size-limit/preset-small-lib": "^11.1.4",
     "@types/eslint__js": "^8.42.3",
     "@types/uuid": "^10.0.0",
@@ -69,14 +69,14 @@
     "@typescript-eslint/parser": "^5.62.0",
     "bun-plugin-dts": "^0.2.3",
     "bun-types": "latest",
-    "eslint": "^9.8.0",
+    "eslint": "^9.9.1",
     "prettier": "^3.3.3",
     "size-limit": "^11.1.4",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.0.1"
+    "typescript-eslint": "^8.4.0"
   },
   "type": "module",
   "dependencies": {
-    "uuidv7": "^1.0.1"
+    "uuidv7": "^1.0.2"
   }
 }
