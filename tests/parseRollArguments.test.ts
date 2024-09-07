@@ -419,7 +419,7 @@ describe('parseRollArguments', () => {
     })
 
     describe('given a notation that contains a reroll modifier', () => {
-      const argument: DiceNotation = `${coreTestString}R{5,<6,>2}3`
+      const argument: DiceNotation = `${coreTestString}R{5,20,<6,>2}3`
 
       test('returns a RollParameter matching the notation', () => {
         const params = parseRollArguments(argument)
@@ -431,7 +431,7 @@ describe('parseRollArguments', () => {
             ...coreRollParameters,
             modifiers: {
               reroll: {
-                exact: [5],
+                exact: [5, 20],
                 lessThan: 6,
                 greaterThan: 2,
                 maxReroll: 3
@@ -439,10 +439,10 @@ describe('parseRollArguments', () => {
             }
           },
           die: new StandardDie(coreRollParameters.sides),
-          notation: '4d6R{5,>2,<6}3',
+          notation: '4d6R{5,20,>2,<6}3',
           description: [
             'Roll 4 6-sided dice',
-            'Reroll [5], greater than [2] and less than [6] (up to 3 times)'
+            'Reroll [5] and [20], greater than [2] and less than [6] (up to 3 times)'
           ]
         })
       })
