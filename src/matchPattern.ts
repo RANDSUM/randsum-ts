@@ -5,7 +5,7 @@ export const dropConstraintsPattern = /[Dd]{([<>]?\d+,)*([<>]?\d+)}/g
 export const explodePattern = /!/g
 export const uniquePattern = /[Uu]({(\d+,)*(\d+)})?/g
 export const replacePattern = /[Vv]{([<>]?\d+=?\d+,)*([<>]?\d+=?\d+)}/g
-export const rerollPattern = /[Rr]{([<>]?\d,)*([<>]?\d)}\d*/g
+export const rerollPattern = /[Rr]{([<>]?\d+,)*([<>]?\d+)}\d*/g
 export const capPattern = /[Cc]{([<>]?\d+,)*([<>]?\d+)}/g
 export const plusPattern = /\+\d+/g
 export const minusPattern = /-\d+/g
