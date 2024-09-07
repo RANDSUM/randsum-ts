@@ -13,7 +13,6 @@ export const replacePattern = new RegExp(
   /[Vv]/.source + greaterThanLessEqualityThanMatcher.source,
   'g'
 )
-
 export const dropConstraintsPattern = new RegExp(
   /[Dd]/.source + greaterThanLessThanMatcher.source,
   'g'
