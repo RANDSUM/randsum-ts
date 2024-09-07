@@ -12,7 +12,7 @@ import {
   StandardDie,
   TwoHeadedCoin,
   dieFactory
-} from '~Die'
+} from '~src/Die'
 
 describe('SingleDie', () => {
   describe('StandardDie', () => {

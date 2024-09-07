@@ -9,7 +9,7 @@ import {
   rerollNotation,
   uniqueNotation
 } from './notationFormatters'
-import { isValidModifier } from '../guards'
+import { isValidModifier } from '~guards'
 
 function formatModifierNotation({ modifiers }: DicePoolOptions): string {
   if (!isValidModifier(modifiers)) return ''

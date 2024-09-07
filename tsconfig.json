@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "paths": {
-      "~roll": ["./src/roll/index.ts"],
-      "~Die": ["./src/Die/index.ts"],
+      "~src/*": ["./src/*"],
       "~matchPattern": ["./src/matchPattern.ts"],
+      "~guards": ["./src/guards.ts"],
       "~types": ["./src/types.ts"]
     },
     "lib": ["ESNext"],

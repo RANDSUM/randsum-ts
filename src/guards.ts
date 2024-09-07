@@ -19,8 +19,9 @@ const completeRollPattern = new RegExp(
 )
 
 export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
+  const notAString = typeof argument !== 'string'
   const basicTest = !!coreNotationPattern.test(String(argument))
-  if (!basicTest || !(typeof argument === 'string')) return false
+  if (!basicTest || notAString) return false
 
   const cleanArg = argument.replace(/\s/g, '')
 

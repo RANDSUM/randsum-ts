@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
-import validateNotation from '../src/validateDiceNotation'
-import { DiceNotation, DicePoolType } from '../src'
+import validateNotation from '~src/validateDiceNotation'
+import { DiceNotation, DicePoolType } from '~types'
 
 describe('validateNotation', () => {
   describe('when the notation is completely invalid', () => {
