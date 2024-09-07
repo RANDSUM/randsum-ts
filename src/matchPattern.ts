@@ -9,8 +9,3 @@ export const rerollPattern = /[Rr]{([<>]?\d,)*([<>]?\d)}\d*/g
 export const capPattern = /[Cc]{([<>]?\d+,)*([<>]?\d+)}/g
 export const plusPattern = /\+\d+/g
 export const minusPattern = /-\d+/g
-
-export const completeRollPattern = new RegExp(
-  `${coreNotationPattern.source}|${dropHighestPattern.source}|${dropLowestPattern.source}|${dropConstraintsPattern.source}|${explodePattern.source}|${uniquePattern.source}|${replacePattern.source}|${rerollPattern.source}|${capPattern.source}|${plusPattern.source}|${minusPattern.source}`,
-  'g'
-)
