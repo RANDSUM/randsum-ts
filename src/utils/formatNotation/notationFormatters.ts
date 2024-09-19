@@ -7,12 +7,12 @@ import {
   UniqueOptions
 } from '~types'
 
-export const capNotation = (cap: GreaterLessOptions) => {
+export function capNotation(cap: GreaterLessOptions) {
   const capList = formatGreaterLess(cap)
   return `C{${capList.join(',')}}`
 }
 
-export const dropNotation = (drop: DropOptions) => {
+export function dropNotation(drop: DropOptions) {
   const dropList: string[] = []
   const greaterLess = formatGreaterLess(drop)
   greaterLess.forEach((str) => dropList.push(str))
@@ -39,7 +39,7 @@ export const dropNotation = (drop: DropOptions) => {
   return finalList.join('')
 }
 
-export const replaceNotation = (replace: TypeOrArrayOfType<ReplaceOptions>) => {
+export function replaceNotation(replace: TypeOrArrayOfType<ReplaceOptions>) {
   const args = (
     Array.isArray(replace)
       ? replace.map(singleReplaceNotation).flat()
@@ -48,7 +48,7 @@ export const replaceNotation = (replace: TypeOrArrayOfType<ReplaceOptions>) => {
   return `V{${args}}`
 }
 
-export const rerollNotation = (reroll: RerollOptions) => {
+export function rerollNotation(reroll: RerollOptions) {
   const rerollList = []
 
   if (reroll.exact) {
@@ -67,18 +67,23 @@ export const rerollNotation = (reroll: RerollOptions) => {
   return `R{${rerollList.join(',')}}${maxNotation}`
 }
 
-export const explodeNotation = () => '!'
-export const plusNotation = (plus: number) => `+${plus}`
-export const minusNotation = (minus: number) => `-${minus}`
-export const uniqueNotation = (unique: boolean | UniqueOptions) => {
+export function explodeNotation() {
+  return '!'
+}
+export function plusNotation(plus: number) {
+  return `+${plus}`
+}
+
+export function minusNotation(minus: number) {
+  return `-${minus}`
+}
+
+export function uniqueNotation(unique: boolean | UniqueOptions) {
   if (typeof unique === 'boolean') return 'U'
   return `U{${unique.notUnique.join(',')}}`
 }
 
-const formatGreaterLess = (
-  options: GreaterLessOptions,
-  list: string[] = []
-) => {
+function formatGreaterLess(options: GreaterLessOptions, list: string[] = []) {
   if (options.greaterThan) {
     list.push(`>${options.greaterThan}`)
   }
@@ -89,7 +94,7 @@ const formatGreaterLess = (
   return list
 }
 
-const singleReplaceNotation = (replace: ReplaceOptions) => {
+function singleReplaceNotation(replace: ReplaceOptions) {
   const fromValue =
     typeof replace.from === 'number'
       ? replace.from

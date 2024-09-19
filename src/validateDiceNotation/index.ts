@@ -1,8 +1,8 @@
 import { DicePoolType, NotationValidationResult } from '~types'
 import { isDiceNotation } from '~guards'
-import formatNotation from '~src/utils/formatNotation'
-import parseNotation from '~src/utils/parseNotation'
-import formatDescription from '~src/utils/formatDescription'
+import formatNotation from '~utils/formatNotation'
+import parseNotation from '~utils/parseNotation'
+import formatDescription from '~utils/formatDescription'
 
 function validateDiceNotation(notation: string): NotationValidationResult {
   if (!isDiceNotation(notation)) {

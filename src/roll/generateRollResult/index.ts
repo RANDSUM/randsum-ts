@@ -6,6 +6,7 @@ import {
 } from '~types'
 import applyModifiers from './applyModifiers'
 import generateRawRolls from './generateRawRolls'
+import { isFullNumArray } from '~guards'
 
 function calculateType(dicePools: RollParameters['dicePools']): DicePoolType {
   switch (true) {
@@ -23,9 +24,6 @@ function calculateType(dicePools: RollParameters['dicePools']): DicePoolType {
       return DicePoolType.mixed
   }
 }
-
-const isFullNumArray = (arr: unknown[]): arr is number[] =>
-  arr.every((item) => typeof item === 'number')
 
 function calculateTotal(rolls: number[] | string[], bonus = 0): number {
   if (isFullNumArray(rolls)) {

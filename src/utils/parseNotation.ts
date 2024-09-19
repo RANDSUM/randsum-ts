@@ -1,10 +1,10 @@
-import { coreNotationPattern } from '~matchPattern'
+import { coreNotationPattern } from '~patterns'
 import { DiceNotation, DicePoolOptions } from '~types'
 import { parseCoreNotation, parseModifiers } from './parseModifiers'
 
-const parseNotation = (
+function parseNotation(
   notationString: DiceNotation
-): DicePoolOptions<number | string> => {
+): DicePoolOptions<number | string> {
   const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)
   const modifiersString = notationString.replace(coreNotationMatch!, '')
 

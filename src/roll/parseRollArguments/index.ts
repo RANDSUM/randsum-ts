@@ -13,9 +13,9 @@ function parseRollArguments(argument: RollArgument): RollParameters {
   }
 }
 
-const normalizeArgumentsIntoFlatArray = (
+function normalizeArgumentsIntoFlatArray(
   argument: RollArgument | undefined
-): CoreRollArgument[] | undefined[] => {
+): CoreRollArgument[] | undefined[] {
   if (!argument) {
     return [undefined]
   }

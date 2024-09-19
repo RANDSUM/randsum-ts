@@ -1,3 +1,4 @@
+import { isCustomParameters } from '~guards'
 import {
   DiceParameters,
   DicePoolParameters,
@@ -26,7 +27,7 @@ export class InvalidUniqueError extends Error {
   }
 }
 
-const applyUnique = (
+function applyUnique(
   rolls: number[],
   {
     unique,
@@ -34,7 +35,7 @@ const applyUnique = (
     quantity
   }: DiceParameters<number> & Pick<Modifiers, 'unique'>,
   rollOne: () => number
-): number[] => {
+): number[] {
   if (quantity > sides) {
     throw new InvalidUniqueError()
   }
@@ -58,9 +59,11 @@ const applyUnique = (
   })
 }
 
-const applySingleCap =
-  ({ greaterThan, lessThan }: GreaterLessOptions, value?: number) =>
-  (roll: number) => {
+function applySingleCap(
+  { greaterThan, lessThan }: GreaterLessOptions,
+  value?: number
+) {
+  return (roll: number) => {
     if (greaterThan !== undefined && roll > greaterThan) {
       return value ?? greaterThan
     }
@@ -69,13 +72,14 @@ const applySingleCap =
     }
     return roll
   }
+}
 
-const rerollRoll = (
+function rerollRoll(
   roll: number,
   { greaterThan, lessThan, exact, maxReroll }: RerollOptions,
   rollOne: () => number,
   index = 0
-): number => {
+): number {
   if (maxReroll === index) {
     return roll
   }
@@ -102,19 +106,19 @@ const rerollRoll = (
   return roll
 }
 
-const applyReroll = (
+function applyReroll(
   rolls: number[],
   reroll: RerollOptions,
   rollOne: () => number
-): number[] => {
+): number[] {
   const newRolls = [...rolls]
   return newRolls.map((roll) => rerollRoll(roll, reroll, rollOne))
 }
 
-const applyReplace = (
+function applyReplace(
   rolls: number[],
   replace: TypeOrArrayOfType<ReplaceOptions>
-): number[] => {
+): number[] {
   const parameters = Array.isArray(replace) ? replace : [replace]
 
   let replaceRolls = rolls
@@ -136,27 +140,29 @@ const applyReplace = (
   return replaceRolls
 }
 
-const applyExplode = (
+function applyExplode(
   rolls: number[],
   { sides }: Pick<DiceParameters<number>, 'sides'>,
   rollOne: () => number
-): number[] => {
+): number[] {
   const explodeCount = rolls.filter((roll) => roll === sides).length
   const explodeResults = Array.from({ length: explodeCount }, rollOne)
   return [...rolls, ...explodeResults]
 }
 
-const times = (iterator: number) => (callback: (index?: number) => void) => {
-  if (iterator > 0) {
-    callback(iterator)
-    times(iterator - 1)(callback)
+function times(iterator: number) {
+  return (callback: (index?: number) => void) => {
+    if (iterator > 0) {
+      callback(iterator)
+      times(iterator - 1)(callback)
+    }
   }
 }
 
-const applyDrop = (
+function applyDrop(
   rolls: number[],
   { highest, lowest, greaterThan, lessThan, exact }: DropOptions
-): number[] => {
+): number[] {
   const sortedResults = rolls
     .filter(
       (roll) =>
@@ -178,11 +184,6 @@ const applyDrop = (
 
   return sortedResults
 }
-
-const isCustomParameters = (
-  poolParameters: DicePoolParameters
-): poolParameters is DicePoolParameters<string> =>
-  Array.isArray(poolParameters.options.sides)
 
 export default function applyModifiers(
   poolParameters: DicePoolParameters<string> | DicePoolParameters<number>,
