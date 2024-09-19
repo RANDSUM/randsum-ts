@@ -1,13 +1,13 @@
 import { CoreRollArgument, RollArgument, RollParameters } from '~types'
 import { isCustomSides } from '~guards'
-import parseRollArgument from './parseRollArgument'
 import { uuidv7 as uuid } from 'uuidv7'
+import parameterizeRollArgument from '~src/parameterizeRollArgument'
 
 function parseRollArguments(argument: RollArgument): RollParameters {
   const normalizedArgs = normalizeArgumentsIntoFlatArray(argument)
   return {
     dicePools: normalizedArgs.reduce(
-      (acc, arg) => ({ ...acc, [uuid()]: parseRollArgument(arg) }),
+      (acc, arg) => ({ ...acc, [uuid()]: parameterizeRollArgument(arg) }),
       {}
     )
   }
@@ -31,5 +31,4 @@ const normalizeArgumentsIntoFlatArray = (
   return [argument].flat()
 }
 
-export { parseRollArgument }
 export default parseRollArguments
