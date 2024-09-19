@@ -1,7 +1,7 @@
 import { CoreRollArgument, RollArgument, RollParameters } from '~types'
 import { isCustomSides } from '~guards'
 import { uuidv7 as uuid } from 'uuidv7'
-import parameterizeRollArgument from '~src/parameterizeRollArgument'
+import { parameterizeRollArgument } from '~src/parameterizeRollArgument'
 
 function parseRollArguments(argument: RollArgument): RollParameters {
   const normalizedArgs = normalizeArgumentsIntoFlatArray(argument)
@@ -31,4 +31,4 @@ function normalizeArgumentsIntoFlatArray(
   return [argument].flat()
 }
 
-export default parseRollArguments
+export { parseRollArguments }

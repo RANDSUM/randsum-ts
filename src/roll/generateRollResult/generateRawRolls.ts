@@ -1,6 +1,6 @@
 import { RollParameters, RollResult } from '~types'
 
-export default function generateRawRolls(
+function generateRawRolls(
   dicePools: RollParameters['dicePools']
 ): RollResult['rawRolls'] {
   return Object.fromEntries(
@@ -19,3 +19,5 @@ export default function generateRawRolls(
     })
   )
 }
+
+export { generateRawRolls }

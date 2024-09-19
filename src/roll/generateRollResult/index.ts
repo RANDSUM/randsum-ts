@@ -4,8 +4,8 @@ import {
   RollParameters,
   RollResult
 } from '~types'
-import applyModifiers from './applyModifiers'
-import generateRawRolls from './generateRawRolls'
+import { applyModifiers } from './applyModifiers'
+import { generateRawRolls } from './generateRawRolls'
 import { isFullNumArray } from '~guards'
 
 function calculateType(dicePools: RollParameters['dicePools']): DicePoolType {
@@ -72,4 +72,4 @@ function generateRollResult(rollParameters: RollParameters): RollResult {
   }
 }
 
-export default generateRollResult
+export { generateRollResult }

@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'bun:test'
 
 import { CustomSidesDie, StandardDie } from '~src/Die'
-import parseRollArguments from '~src/roll/parseRollArguments'
+import { parseRollArguments } from '~src/roll/parseRollArguments'
 import { DiceNotation, DicePoolParameters, RollParameters } from '~types'
 
 const testableParams = (

@@ -1,35 +1,8 @@
-import { CoreRollArgument, DicePoolOptions, DicePoolParameters } from '~types'
+import { CoreRollArgument, DicePoolParameters } from '~types'
 import { dieFactory } from '~src/Die'
-import formatDescription from '~utils/formatDescription'
-import formatNotation from '~utils/formatNotation'
-import { isDiceNotation, isDicePoolOptions } from '~guards'
-import parseNotation from '~utils/parseNotation'
-
-function parseDiceOptions(
-  argument: CoreRollArgument | undefined
-): DicePoolOptions {
-  if (isDicePoolOptions(argument)) {
-    return argument
-  }
-
-  if (isDiceNotation(argument)) {
-    return parseNotation(argument)
-  }
-
-  const defaultQuantity = 1
-
-  if (Array.isArray(argument)) {
-    return {
-      quantity: defaultQuantity,
-      sides: argument.map(String)
-    }
-  }
-
-  return {
-    quantity: defaultQuantity,
-    sides: Number(argument || 20)
-  }
-}
+import { formatDescription } from '~utils/formatDescription'
+import { formatNotation } from '~utils/formatNotation'
+import { parseDiceOptions } from './parseDiceOptions'
 
 function parameterizeRollArgument(
   argument: CoreRollArgument | undefined
@@ -45,4 +18,4 @@ function parameterizeRollArgument(
   } as DicePoolParameters
 }
 
-export default parameterizeRollArgument
+export { parameterizeRollArgument }

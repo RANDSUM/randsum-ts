@@ -1,5 +1,5 @@
 import { CustomSidesDie, StandardDie } from './constants'
-import SingleDie from './single-die'
+import { SingleDie } from './single-die'
 
 function dieFactory(sides: number): SingleDie<number>
 function dieFactory(sides: string[]): SingleDie<string>
@@ -12,4 +12,4 @@ function dieFactory(sides: number | string[]): SingleDie {
     : new StandardDie(Number(sides))
 }
 
-export default dieFactory
+export { dieFactory }

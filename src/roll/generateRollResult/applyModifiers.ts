@@ -185,7 +185,7 @@ function applyDrop(
   return sortedResults
 }
 
-export default function applyModifiers(
+function applyModifiers(
   poolParameters: DicePoolParameters<string> | DicePoolParameters<number>,
   initialRolls: number[] | string[]
 ): RollBonuses | ModifiedRollBonuses {
@@ -280,3 +280,5 @@ export default function applyModifiers(
     }
   }, rollBonuses)
 }
+
+export { applyModifiers }

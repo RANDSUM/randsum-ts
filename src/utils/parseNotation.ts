@@ -14,4 +14,4 @@ function parseNotation(
   }
 }
 
-export default parseNotation
+export { parseNotation }

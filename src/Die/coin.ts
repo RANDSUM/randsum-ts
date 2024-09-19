@@ -1,6 +1,6 @@
-import SingleDie from './single-die'
+import { SingleDie } from './single-die'
 
-export default class Coin extends SingleDie<string> {
+class Coin extends SingleDie<string> {
   constructor(sides: [string, string] = ['heads', 'tails']) {
     super(sides)
   }
@@ -16,3 +16,5 @@ export default class Coin extends SingleDie<string> {
     return super.roll()
   }
 }
+
+export { Coin }

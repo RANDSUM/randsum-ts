@@ -45,4 +45,4 @@ function formatNotation(options: DicePoolOptions): DiceNotation {
     | DiceNotation<number>
 }
 
-export default formatNotation
+export { formatNotation }
