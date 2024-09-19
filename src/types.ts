@@ -1,4 +1,4 @@
-import SingleDie from './Die/single-die'
+import { SingleDie } from './Die/single-die'
 
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
 

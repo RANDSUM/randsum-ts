@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "paths": {
-      "~src/*": ["./src/*"],
-      "~matchPattern": ["./src/matchPattern.ts"],
+      "~utils/*": ["./src/utils/*"],
+      "~patterns": ["./src/patterns.ts"],
       "~guards": ["./src/guards.ts"],
-      "~types": ["./src/types.ts"]
+      "~types": ["./src/types.ts"],
+      "~src/*": ["./src/*"]
     },
     "lib": ["ESNext"],
     "module": "esnext",

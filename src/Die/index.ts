@@ -1,4 +1,4 @@
-export { default as Coin } from './coin'
+export { Coin } from './coin'
+export { dieFactory } from './factories'
+export { SingleDie } from './single-die'
 export * from './constants'
-export { default as dieFactory } from './factories'
-export { default as SingleDie } from './single-die'

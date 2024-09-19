@@ -11,8 +11,9 @@ const coreGreaterLessThanEquals = new RegExp(
   coreGreaterLessThan.source + /=?\d+/.source
 )
 
-const oneOrMany = (core: RegExp) =>
-  new RegExp(`{(${core.source},)*(${core.source})}`, 'g')
+function oneOrMany(core: RegExp) {
+  return new RegExp(`{(${core.source},)*(${core.source})}`, 'g')
+}
 
 const greaterThanLessEqualityThanMatcher = oneOrMany(coreGreaterLessThanEquals)
 export const replacePattern = new RegExp(

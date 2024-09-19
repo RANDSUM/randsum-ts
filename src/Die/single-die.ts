@@ -1,9 +1,8 @@
-const generateStandardSides = (sides: number): number[] =>
-  Array.from({ length: Number(sides) }, (_, index) => index + 1)
+function generateStandardSides(sides: number): number[] {
+  return Array.from({ length: Number(sides) }, (_, index) => index + 1)
+}
 
-export default abstract class SingleDie<
-  D extends string | number = string | number
-> {
+abstract class SingleDie<D extends string | number = string | number> {
   sides: number
 
   faces: D[]
@@ -22,3 +21,5 @@ export default abstract class SingleDie<
     return Math.floor(Math.random() * Number(this.sides))
   }
 }
+
+export { SingleDie }

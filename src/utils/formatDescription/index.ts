@@ -57,4 +57,4 @@ function formatDescription(options: DicePoolOptions<number | string>) {
   ]
 }
 
-export default formatDescription
+export { formatDescription }

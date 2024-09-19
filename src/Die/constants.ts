@@ -1,5 +1,5 @@
-import Coin from './coin'
-import SingleDie from './single-die'
+import { Coin } from './coin'
+import { SingleDie } from './single-die'
 
 export class StandardDie extends SingleDie<number> {}
 export class CustomSidesDie extends SingleDie<string> {}

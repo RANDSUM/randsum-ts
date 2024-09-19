@@ -10,15 +10,21 @@ import {
   replacePattern,
   rerollPattern,
   uniquePattern
-} from '~matchPattern'
-import { DiceNotation, DicePoolOptions, Modifiers, RollArgument } from '~types'
+} from '~patterns'
+import {
+  DiceNotation,
+  DicePoolOptions,
+  DicePoolParameters,
+  Modifiers,
+  RollArgument
+} from '~types'
 
 const completeRollPattern = new RegExp(
   `${coreNotationPattern.source}|${dropHighestPattern.source}|${dropLowestPattern.source}|${dropConstraintsPattern.source}|${explodePattern.source}|${uniquePattern.source}|${replacePattern.source}|${rerollPattern.source}|${capPattern.source}|${plusPattern.source}|${minusPattern.source}`,
   'g'
 )
 
-export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
+export function isDiceNotation(argument: unknown): argument is DiceNotation {
   const notAString = typeof argument !== 'string'
   const basicTest = !!coreNotationPattern.test(String(argument))
   if (!basicTest || notAString) return false
@@ -28,17 +34,35 @@ export const isDiceNotation = (argument: unknown): argument is DiceNotation => {
   return cleanArg.replace(completeRollPattern, '').length === 0
 }
 
-export const isCustomSides = (
+export function isCustomSides(
   argument: RollArgument | undefined
-): argument is string[] =>
-  Array.isArray(argument) && argument.every((arg) => typeof arg === 'string')
+): argument is string[] {
+  return (
+    Array.isArray(argument) && argument.every((arg) => typeof arg === 'string')
+  )
+}
 
-export const isDicePoolOptions = (
+export function isDicePoolOptions(
   argument: unknown
-): argument is DicePoolOptions =>
-  typeof argument === 'object' &&
-  (argument as DicePoolOptions).sides !== undefined
+): argument is DicePoolOptions {
+  return (
+    typeof argument === 'object' &&
+    (argument as DicePoolOptions).sides !== undefined
+  )
+}
 
-export const isValidModifier = (
+export function isValidModifier(
   modifiers: unknown | Modifiers | undefined
-): modifiers is Modifiers => Object.keys(modifiers || {}).length > 0
+): modifiers is Modifiers {
+  return Object.keys(modifiers || {}).length > 0
+}
+
+export function isCustomParameters(
+  poolParameters: DicePoolParameters
+): poolParameters is DicePoolParameters<string> {
+  return Array.isArray(poolParameters.options.sides)
+}
+
+export function isFullNumArray(arr: unknown[]): arr is number[] {
+  return arr.every((item) => typeof item === 'number')
+}
