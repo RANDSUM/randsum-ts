@@ -50,6 +50,7 @@
     "lint:fix": "eslint . --fix",
     "format:fix": "prettier . --write",
     "format": "prettier . --check",
+    "gen:docs": "typedoc ./src/index.ts",
     "ts:check": "tsc --noEmit",
     "prepublish": "bun run build",
     "postversion": "git push --no-verify && git push --tags --no-verify"
