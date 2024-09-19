@@ -3,7 +3,7 @@
   <img width="150" height="150" align="center" src="https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp">
 </div>
 <h1 align="center">randsum</h1>
-<h2 align="center">JS Dice Rolling with Strong Typescript Support</h2>
+<h2 align="center">Random Numbers, for humans.</h2>
 <div align="center">
   <a href="https://www.npmjs.com/package/randsum" align="center">
     <img src="https://img.shields.io/npm/v/randsum">
@@ -30,7 +30,8 @@
 It's a dice roller, used for generating rolls that you might use in popular Tabletop Role-playing Games.
 
 ```ts
-import { roll, D20, dieFactory, FairCoin, Coin } from 'randsum'
+// Let's Roll!
+import { roll } from 'randsum'
 
 // Roll a single D20
 roll(20)
@@ -48,14 +49,20 @@ roll('4d6L')
 roll({ quantity: 4, sides: ['+', '+', '-', '-', ' ', ' '] })
 
 // Roll a single D20
+import { D20 } from 'randsum'
+
 D20.roll()
 
 // Make a new 120 sided die and roll it
+import { dieFactory } from 'randsum'
+
 const D120 = dieFactory(120)
 D120.roll()
 
 //'heads' or 'tails'?
-FairCoin.flip()
+import { Coin } from 'randsum'
+
+Coin.flip()
 ```
 
 Written in 100% Typescript with strong attention paid to return types. You depend on `randsum` to give you what you expect - just not always the roll you want.
