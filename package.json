@@ -4,7 +4,7 @@
   "private": false,
   "author": "Alex Jarvis",
   "icon": "https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp",
-  "description": "Ergonomic Dice Rolling with Strong Typescript Support",
+  "description": "The world's most powerful, flexible, and easy-to-use JS dice-roller.",
   "license": "MIT",
   "homepage": "https://github.com/RANDSUM/randsum-ts ",
   "keywords": [
@@ -50,6 +50,7 @@
     "lint:fix": "eslint . --fix",
     "format:fix": "prettier . --write",
     "format": "prettier . --check",
+    "gen:docs": "typedoc ./src/index.ts",
     "ts:check": "tsc --noEmit",
     "prepublish": "bun run build",
     "postversion": "git push --no-verify && git push --tags --no-verify"
@@ -73,7 +74,8 @@
     "prettier": "^3.3.3",
     "size-limit": "^11.1.5",
     "typescript": "^5.6.2",
-    "typescript-eslint": "^8.6.0"
+    "typescript-eslint": "^8.6.0",
+    "typedoc": "^0.26.7"
   },
   "type": "module",
   "dependencies": {

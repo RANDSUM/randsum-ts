@@ -5,6 +5,6 @@ export default [
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ['node_modules', 'dist', 'coverage', '*.md']
+    ignores: ['node_modules', 'dist', 'coverage', '*.md', 'docs']
   }
 ]
