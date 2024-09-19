@@ -7,7 +7,7 @@ import {
   UniqueOptions
 } from '~types'
 
-const formatHumanList = (list: (string | number)[]) => {
+function formatHumanList(list: (string | number)[]) {
   return list
     .map((num, index, list) => {
       if (list.length === 1) return `[${num}]`
@@ -19,11 +19,11 @@ const formatHumanList = (list: (string | number)[]) => {
     .join('')
 }
 
-export const capString = (cap: GreaterLessOptions) => {
+export function capString(cap: GreaterLessOptions) {
   return formatGreaterLess(cap).map((str) => `No Rolls ${str}`)
 }
 
-export const dropString = (drop: DropOptions) => {
+export function dropString(drop: DropOptions) {
   const dropList = []
 
   if (drop.highest)
@@ -42,13 +42,13 @@ export const dropString = (drop: DropOptions) => {
   return dropList
 }
 
-export const replaceString = (replace: TypeOrArrayOfType<ReplaceOptions>) => {
+export function replaceString(replace: TypeOrArrayOfType<ReplaceOptions>) {
   if (Array.isArray(replace)) return replace.map(singleReplaceString)
 
   return [singleReplaceString(replace)]
 }
 
-export const rerollString = (reroll: RerollOptions) => {
+export function rerollString(reroll: RerollOptions) {
   const rerollList: string[] = []
 
   if (reroll.exact) {
@@ -69,21 +69,24 @@ export const rerollString = (reroll: RerollOptions) => {
   return [`Reroll ${exactString}${maxString}`]
 }
 
-export const explodeString = () => 'Exploding Dice'
+export function explodeString() {
+  return 'Exploding Dice'
+}
 
-export const plusString = (plus: number) => `Add ${plus}`
+export function plusString(plus: number) {
+  return `Add ${plus}`
+}
 
-export const minusString = (minus: number) => `Subtract ${minus}`
+export function minusString(minus: number) {
+  return `Subtract ${minus}`
+}
 
-export const uniqueString = (unique: boolean | UniqueOptions) => {
+export function uniqueString(unique: boolean | UniqueOptions) {
   if (typeof unique === 'boolean') return 'No Duplicate Rolls'
   return `No Duplicates (except ${formatHumanList(unique.notUnique)})`
 }
 
-const formatGreaterLess = (
-  options: GreaterLessOptions,
-  list: string[] = []
-) => {
+function formatGreaterLess(options: GreaterLessOptions, list: string[] = []) {
   if (options.greaterThan) {
     list.push(`greater than [${options.greaterThan}]`)
   }
@@ -94,12 +97,12 @@ const formatGreaterLess = (
   return list
 }
 
-const extractFromValue = (from: number | GreaterLessOptions) => {
+function extractFromValue(from: number | GreaterLessOptions) {
   if (typeof from === 'number') return `[${from}]`
 
   return formatGreaterLess(from).join(' and ')
 }
 
-const singleReplaceString = (replace: ReplaceOptions) => {
+function singleReplaceString(replace: ReplaceOptions) {
   return `Replace ${extractFromValue(replace.from)} with [${replace.to}]`
 }
