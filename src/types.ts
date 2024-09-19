@@ -1,10 +1,8 @@
 import SingleDie from './Die/single-die'
 
-export type DiceNotationWithNumericSides = `${number}${
-  | 'd'
-  | 'D'}${number}${string}`
+type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
 
-export type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
+type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
 
 export type DiceNotation<D extends string | number = string | number> =
   D extends number ? DiceNotationWithNumericSides : DiceNotationWithCustomSides

@@ -6,13 +6,21 @@ export const plusPattern = /\+\d+/g
 export const minusPattern = /-\d+/g
 export const explodePattern = /!/g
 
-const greaterThanLessThanMatcher = /{([<>]?\d+,)*([<>]?\d+)}/
-const greaterThanLessEqualityThanMatcher = /{([<>]?\d+=?\d+,)*([<>]?\d+=?\d+)}/
+const coreGreaterLessThan = /[<>]?\d+/
+const coreGreaterLessThanEquals = new RegExp(
+  coreGreaterLessThan.source + /=?\d+/.source
+)
 
+const oneOrMany = (core: RegExp) =>
+  new RegExp(`{(${core.source},)*(${core.source})}`, 'g')
+
+const greaterThanLessEqualityThanMatcher = oneOrMany(coreGreaterLessThanEquals)
 export const replacePattern = new RegExp(
   /[Vv]/.source + greaterThanLessEqualityThanMatcher.source,
   'g'
 )
+
+const greaterThanLessThanMatcher = oneOrMany(coreGreaterLessThan)
 export const dropConstraintsPattern = new RegExp(
   /[Dd]/.source + greaterThanLessThanMatcher.source,
   'g'
