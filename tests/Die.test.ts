@@ -8,6 +8,7 @@ import {
   D4,
   D6,
   D8,
+  D10,
   FairCoin,
   StandardDie,
   TwoHeadedCoin,
@@ -85,6 +86,7 @@ describe('Exports', () => {
     expect(D4).toBeDefined()
     expect(D6).toBeDefined()
     expect(D8).toBeDefined()
+    expect(D10).toBeDefined()
     expect(D12).toBeDefined()
     expect(D20).toBeDefined()
     expect(D100).toBeDefined()
