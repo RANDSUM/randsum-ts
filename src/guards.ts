@@ -9,7 +9,9 @@ import {
 } from '~types'
 import { D } from './D'
 
-export function isDiceNotation(argument: unknown): argument is RandsumNotation {
+export function isDiceNotationArg(
+  argument: unknown
+): argument is RandsumNotation {
   const notAString = typeof argument !== 'string'
   const basicTest = !!coreNotationPattern.test(String(argument))
   if (!basicTest || notAString) return false
@@ -19,7 +21,7 @@ export function isDiceNotation(argument: unknown): argument is RandsumNotation {
   return cleanArg.replace(completeRollPattern, '').length === 0
 }
 
-export function isCustomSides(
+export function isCustomSidesArg(
   argument: RandsumRollArgument | undefined
 ): argument is string[] {
   return (

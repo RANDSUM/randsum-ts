@@ -80,10 +80,7 @@ export type CoreRollArgument =
   | RandsumNotation
   | (number | string)[]
 
-export type RandsumRollArgument =
-  | CoreRollArgument
-  | CoreRollArgument[]
-  | undefined
+export type RandsumRollArgument = CoreRollArgument | CoreRollArgument[]
 
 // Parameters
 

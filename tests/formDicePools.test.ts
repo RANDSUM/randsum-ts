@@ -10,14 +10,14 @@ const extractDicePoolValues = (params: DicePools): RandsumRollParameters[] => {
 
 describe('formDicePools', () => {
   describe('given a single argument', () => {
-    const argument = undefined
+    const argument = 20
 
     test('returns DicePools with one key', () => {
-      const params = formDicePools(argument)
+      const params = formDicePools([argument])
       const dicePools = extractDicePoolValues(params)
 
       expect(dicePools.length).toBe(1)
-      expect(dicePools[0].argument).toBeUndefined()
+      expect(dicePools[0].argument).toBe(argument)
     })
   })
 

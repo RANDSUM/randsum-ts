@@ -1,5 +1,5 @@
 import { DicePoolType, RandsumNotationValidationResult } from '~types'
-import { isDiceNotation } from '~guards'
+import { isDiceNotationArg } from '~guards'
 import { formatNotation } from '~utils/formatNotation'
 import { parseNotation } from '~utils/parseNotation'
 import { formatDescription } from '~utils/formatDescription'
@@ -7,7 +7,7 @@ import { formatDescription } from '~utils/formatDescription'
 function validateDiceNotation(
   notation: string
 ): RandsumNotationValidationResult {
-  if (!isDiceNotation(notation)) {
+  if (!isDiceNotationArg(notation)) {
     return {
       valid: false,
       description: []

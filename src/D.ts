@@ -1,4 +1,4 @@
-import { isCustomSides } from '~guards'
+import { isCustomSidesArg } from '~guards'
 import { DicePoolType } from '~types'
 
 type Type<T> = T extends string[] ? DicePoolType.custom : DicePoolType.standard
@@ -11,7 +11,7 @@ class D<Sides extends string[] | number> {
   type: Type<Sides>
 
   constructor(sides: Sides) {
-    if (isCustomSides(sides)) {
+    if (isCustomSidesArg(sides)) {
       this.sides = sides.length
       this.type = DicePoolType.custom as Type<Sides>
       this.faces = sides as Faces<Sides>

@@ -1,4 +1,9 @@
-import { isDicePoolOptions, isDiceNotation, isD, isCustomSidesD } from '~guards'
+import {
+  isDicePoolOptions,
+  isDiceNotationArg,
+  isD,
+  isCustomSidesD
+} from '~guards'
 import { CoreRollArgument, RandsumRollOptions } from '~types'
 import { parseNotation } from '~utils/parseNotation'
 
@@ -16,7 +21,7 @@ function parseIntoRollOptions(
     return argument
   }
 
-  if (isDiceNotation(argument)) {
+  if (isDiceNotationArg(argument)) {
     return parseNotation(argument)
   }
 
