@@ -1,8 +1,8 @@
-import { DicePools, RollResult } from '~types'
+import { DicePools, RandsumRollResult } from '~types'
 
 function generateRawRolls(
   dicePools: DicePools['dicePools']
-): RollResult['rawRolls'] {
+): RandsumRollResult['rawRolls'] {
   return Object.fromEntries(
     Object.keys(dicePools).map((key) => {
       const {

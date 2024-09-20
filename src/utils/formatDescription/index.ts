@@ -1,4 +1,4 @@
-import { DicePoolOptions } from '~types'
+import { RandsumRollOptions } from '~types'
 import {
   rerollString,
   explodeString,
@@ -13,7 +13,7 @@ import { isValidModifier } from '~guards'
 
 function formatModifierDescriptions({
   modifiers
-}: DicePoolOptions<number | string>): string[] {
+}: RandsumRollOptions<number | string>): string[] {
   if (!isValidModifier(modifiers)) return []
 
   const modifierStrings = []
@@ -37,7 +37,7 @@ function formatModifierDescriptions({
 function formatCoreDescriptions({
   sides,
   quantity
-}: DicePoolOptions<number | string>) {
+}: RandsumRollOptions<number | string>) {
   const base = `Roll ${quantity}`
   const descriptor = (quantity || 1) > 1 ? 'dice' : 'die'
   if (Array.isArray(sides)) {
@@ -50,7 +50,7 @@ function formatCoreDescriptions({
   return `${base} ${sides}-sided ${descriptor}`
 }
 
-function formatDescription(options: DicePoolOptions<number | string>) {
+function formatDescription(options: RandsumRollOptions<number | string>) {
   return [
     formatCoreDescriptions(options),
     ...formatModifierDescriptions(options)

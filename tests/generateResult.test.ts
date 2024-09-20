@@ -4,7 +4,7 @@ import { CustomSidesDie, StandardDie } from '~src/Die'
 import { generateRollResultFromParameters } from '~src/roll/generateRollResultFromParameters'
 import { InvalidUniqueError } from '~src/roll/generateRollResultFromParameters/applyModifiers'
 import * as GenerateRawRolls from '~src/roll/generateRollResultFromParameters/generateRawRolls'
-import { DiceNotation, DicePoolType, DicePools } from '~types'
+import { RandsumNotation, DicePoolType, DicePools } from '~types'
 
 describe('generateRollResultFromParameters', () => {
   const testRollSet = [1, 2, 3, 4]
@@ -57,7 +57,7 @@ describe('generateRollResultFromParameters', () => {
         'test-roll-id': {
           die: mockStandardDie,
           argument: undefined,
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           options: {
             sides: 4,
@@ -96,7 +96,7 @@ describe('generateRollResultFromParameters', () => {
           'test-roll-id': {
             die: mockStandardDie,
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             type: DicePoolType.standard,
             options: {
@@ -141,7 +141,7 @@ describe('generateRollResultFromParameters', () => {
         dicePools: {
           'test-roll-id': {
             die: mockStandardDie,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             argument: undefined,
             type: DicePoolType.standard,
@@ -177,7 +177,7 @@ describe('generateRollResultFromParameters', () => {
       dicePools: {
         'test-roll-id': {
           die: mockCustomSidesDie,
-          notation: '1d1' as DiceNotation<'string'>,
+          notation: '1d1' as RandsumNotation<'string'>,
           description: ['foo'],
           argument: undefined,
           options: {
@@ -218,7 +218,7 @@ describe('generateRollResultFromParameters', () => {
     const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           argument: undefined,
           die: mockStandardDie,
@@ -267,7 +267,7 @@ describe('generateRollResultFromParameters', () => {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             die: mockStandardDie,
             options: {
@@ -305,7 +305,7 @@ describe('generateRollResultFromParameters', () => {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             die: mockStandardDie,
             options: {
@@ -351,7 +351,7 @@ describe('generateRollResultFromParameters', () => {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           die: mockStandardDie,
           options: {
@@ -393,7 +393,7 @@ describe('generateRollResultFromParameters', () => {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             options: {
               sides: 6,
@@ -430,7 +430,7 @@ describe('generateRollResultFromParameters', () => {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             options: {
               sides: 6,
@@ -469,7 +469,7 @@ describe('generateRollResultFromParameters', () => {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             options: {
               sides: 6,
@@ -508,7 +508,7 @@ describe('generateRollResultFromParameters', () => {
     const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           argument: undefined,
           options: {
@@ -546,7 +546,7 @@ describe('generateRollResultFromParameters', () => {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           options: {
             sides: 6,
@@ -582,7 +582,7 @@ describe('generateRollResultFromParameters', () => {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           options: {
             sides: 6,
@@ -617,14 +617,14 @@ describe('generateRollResultFromParameters', () => {
     const parameters: DicePools = {
       dicePools: {
         'test-roll-id': {
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           argument: undefined,
           options: { sides: 6, quantity: testRollSet.length },
           die: mockStandardDie
         },
         'test-roll-id-2': {
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           argument: undefined,
           options: { sides: 6, quantity: testRollSet.length },

@@ -1,9 +1,9 @@
-import { CoreRollArgument, RollArgument, DicePools } from '~types'
+import { CoreRollArgument, RandsumRollArgument, DicePools } from '~types'
 import { isCustomSides } from '~guards'
 import { uuidv7 as uuid } from 'uuidv7'
 import { parameterizeRollArgument } from '~src/parameterizeRollArgument'
 
-function formDicePools(argument: RollArgument): DicePools {
+function formDicePools(argument: RandsumRollArgument): DicePools {
   const arrayArgs = argsToArray(argument)
   return {
     dicePools: arrayArgs.reduce(
@@ -14,7 +14,7 @@ function formDicePools(argument: RollArgument): DicePools {
 }
 
 function argsToArray(
-  argument: RollArgument | undefined
+  argument: RandsumRollArgument | undefined
 ): CoreRollArgument[] | undefined[] {
   if (!argument) {
     return [undefined]

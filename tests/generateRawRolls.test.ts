@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 
-import { DicePool, DicePools } from '~types'
+import { RandsumRollParameters, DicePools } from '~types'
 import { generateRawRolls } from '~src/roll/generateRollResultFromParameters/generateRawRolls'
 
 describe('generateRawRolls', () => {
@@ -17,7 +17,7 @@ describe('generateRawRolls', () => {
           },
           die: {
             roll: () => 1
-          } as unknown as DicePool<number>['die']
+          } as unknown as RandsumRollParameters<number>['die']
         },
         'second-id': {
           argument: ['h', 't'],
@@ -29,7 +29,7 @@ describe('generateRawRolls', () => {
           },
           die: {
             roll: () => 'h'
-          } as unknown as DicePool<string>['die']
+          } as unknown as RandsumRollParameters<string>['die']
         }
       }
     }

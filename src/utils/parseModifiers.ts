@@ -11,14 +11,16 @@ import {
   minusPattern
 } from '~patterns'
 import {
-  DiceParameters,
+  RequiredCoreDiceParameters,
   DropOptions,
   GreaterLessOptions,
   Modifiers,
   RerollOptions
 } from '~types'
 
-export function parseCoreNotation(notationString: string): DiceParameters {
+export function parseCoreNotation(
+  notationString: string
+): RequiredCoreDiceParameters {
   const [quantity, sides] = notationString.split(/[Dd]/)
 
   return {
@@ -26,7 +28,7 @@ export function parseCoreNotation(notationString: string): DiceParameters {
     sides: sides.includes('{')
       ? [...sides.replaceAll(/{|}/g, '')]
       : Number(sides)
-  } as DiceParameters
+  } as RequiredCoreDiceParameters
 }
 
 function parseCapNotation(modifiersString: string): Pick<Modifiers, 'cap'> {

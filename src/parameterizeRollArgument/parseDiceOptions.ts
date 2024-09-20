@@ -1,10 +1,10 @@
 import { isDicePoolOptions, isDiceNotation } from '~guards'
-import { CoreRollArgument, DicePoolOptions } from '~types'
+import { CoreRollArgument, RandsumRollOptions } from '~types'
 import { parseNotation } from '~utils/parseNotation'
 
 function parseDiceOptions(
   argument: CoreRollArgument | undefined
-): DicePoolOptions {
+): RandsumRollOptions {
   if (isDicePoolOptions(argument)) {
     return argument
   }

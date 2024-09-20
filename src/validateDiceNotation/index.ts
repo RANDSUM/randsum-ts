@@ -1,10 +1,12 @@
-import { DicePoolType, NotationValidationResult } from '~types'
+import { DicePoolType, RandsumNotationValidationResult } from '~types'
 import { isDiceNotation } from '~guards'
 import { formatNotation } from '~utils/formatNotation'
 import { parseNotation } from '~utils/parseNotation'
 import { formatDescription } from '~utils/formatDescription'
 
-function validateDiceNotation(notation: string): NotationValidationResult {
+function validateDiceNotation(
+  notation: string
+): RandsumNotationValidationResult {
   if (!isDiceNotation(notation)) {
     return {
       valid: false,

@@ -1,13 +1,12 @@
 import { isCustomParameters } from '~guards'
 import {
-  DiceParameters,
-  DicePool,
+  RequiredCoreDiceParameters,
+  RandsumRollParameters,
   DropOptions,
   GreaterLessOptions,
   Modifiers,
   ReplaceOptions,
-  RerollOptions,
-  TypeOrArrayOfType
+  RerollOptions
 } from '~types'
 
 type RollBonuses = {
@@ -33,7 +32,7 @@ function applyUnique(
     unique,
     sides,
     quantity
-  }: DiceParameters<number> & Pick<Modifiers, 'unique'>,
+  }: RequiredCoreDiceParameters<number> & Pick<Modifiers, 'unique'>,
   rollOne: () => number
 ): number[] {
   if (quantity > sides) {
@@ -117,7 +116,7 @@ function applyReroll(
 
 function applyReplace(
   rolls: number[],
-  replace: TypeOrArrayOfType<ReplaceOptions>
+  replace: ReplaceOptions | ReplaceOptions[]
 ): number[] {
   const parameters = Array.isArray(replace) ? replace : [replace]
 
@@ -142,7 +141,7 @@ function applyReplace(
 
 function applyExplode(
   rolls: number[],
-  { sides }: Pick<DiceParameters<number>, 'sides'>,
+  { sides }: Pick<RequiredCoreDiceParameters<number>, 'sides'>,
   rollOne: () => number
 ): number[] {
   const explodeCount = rolls.filter((roll) => roll === sides).length
@@ -186,7 +185,7 @@ function applyDrop(
 }
 
 function applyModifiers(
-  poolParameters: DicePool<string> | DicePool<number>,
+  poolParameters: RandsumRollParameters<string> | RandsumRollParameters<number>,
   initialRolls: number[] | string[]
 ): RollBonuses | ModifiedRollBonuses {
   if (isCustomParameters(poolParameters)) {

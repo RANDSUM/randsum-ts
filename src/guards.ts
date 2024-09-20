@@ -12,11 +12,11 @@ import {
   uniquePattern
 } from '~patterns'
 import {
-  DiceNotation,
-  DicePoolOptions,
-  DicePool,
+  RandsumNotation,
+  RandsumRollOptions,
+  RandsumRollParameters,
   Modifiers,
-  RollArgument
+  RandsumRollArgument
 } from '~types'
 
 const completeRollPattern = new RegExp(
@@ -24,7 +24,7 @@ const completeRollPattern = new RegExp(
   'g'
 )
 
-export function isDiceNotation(argument: unknown): argument is DiceNotation {
+export function isDiceNotation(argument: unknown): argument is RandsumNotation {
   const notAString = typeof argument !== 'string'
   const basicTest = !!coreNotationPattern.test(String(argument))
   if (!basicTest || notAString) return false
@@ -35,7 +35,7 @@ export function isDiceNotation(argument: unknown): argument is DiceNotation {
 }
 
 export function isCustomSides(
-  argument: RollArgument | undefined
+  argument: RandsumRollArgument | undefined
 ): argument is string[] {
   return (
     Array.isArray(argument) && argument.every((arg) => typeof arg === 'string')
@@ -44,10 +44,10 @@ export function isCustomSides(
 
 export function isDicePoolOptions(
   argument: unknown
-): argument is DicePoolOptions {
+): argument is RandsumRollOptions {
   return (
     typeof argument === 'object' &&
-    (argument as DicePoolOptions).sides !== undefined
+    (argument as RandsumRollOptions).sides !== undefined
   )
 }
 
@@ -58,8 +58,8 @@ export function isValidModifier(
 }
 
 export function isCustomParameters(
-  poolParameters: DicePool
-): poolParameters is DicePool<string> {
+  poolParameters: RandsumRollParameters
+): poolParameters is RandsumRollParameters<string> {
   return Array.isArray(poolParameters.options.sides)
 }
 

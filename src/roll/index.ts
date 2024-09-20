@@ -1,8 +1,8 @@
-import { RollArgument, RollResult } from '~types'
+import { RandsumRollArgument, RandsumRollResult } from '~types'
 import { generateRollResultFromParameters } from './generateRollResultFromParameters'
 import { formDicePools } from './formDicePools'
 
-function roll(arg?: RollArgument): RollResult {
+function roll(arg?: RandsumRollArgument): RandsumRollResult {
   const dicePools = formDicePools(arg)
   return generateRollResultFromParameters(dicePools)
 }
