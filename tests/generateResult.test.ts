@@ -41,7 +41,7 @@ describe('generateRollResult', () => {
       expect(generateRollResult(coreParameters)).toMatchObject({
         ...coreParameters,
         rawRolls: coreRawRolls,
-        type: DicePoolType.standard,
+        type: DicePoolType.numerical,
         total: 10,
         result: [[1, 2, 3, 4]],
         rawResult: [[1, 2, 3, 4]]
@@ -83,7 +83,7 @@ describe('generateRollResult', () => {
             total: 206
           }
         },
-        type: DicePoolType.standard,
+        type: DicePoolType.numerical,
         total: 206,
         result: [[1, 200, 2, 3]],
         rawResult: [[1, 1, 2, 3]]
@@ -98,7 +98,7 @@ describe('generateRollResult', () => {
             argument: 20,
             notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
-            type: DicePoolType.standard,
+            type: DicePoolType.numerical,
             options: {
               sides: 4,
               quantity: uniqueRolls.length,
@@ -125,7 +125,7 @@ describe('generateRollResult', () => {
               total: 7
             }
           },
-          type: DicePoolType.standard,
+          type: DicePoolType.numerical,
           total: 7,
           result: [[1, 1, 2, 3]]
         })
@@ -142,7 +142,7 @@ describe('generateRollResult', () => {
             notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             argument: 20,
-            type: DicePoolType.standard,
+            type: DicePoolType.numerical,
             options: {
               sides: 6,
               quantity: overflowRollTotals.length,
@@ -250,7 +250,7 @@ describe('generateRollResult', () => {
             total: 17
           }
         },
-        type: DicePoolType.standard,
+        type: DicePoolType.numerical,
         total: 17,
         result: [[4, 6, 7]]
       })
@@ -283,7 +283,7 @@ describe('generateRollResult', () => {
         expect(generateRollResult(dropParameters)).toMatchObject({
           ...dropParameters,
           rawRolls: coreRawRolls,
-          type: DicePoolType.standard,
+          type: DicePoolType.numerical,
           modifiedRolls: {
             'test-roll-id': {
               rolls: [2, 2, 3, 4],
@@ -325,7 +325,7 @@ describe('generateRollResult', () => {
 
         expect(generateRollResult(dropParameters)).toMatchObject({
           ...dropParameters,
-          type: DicePoolType.standard,
+          type: DicePoolType.numerical,
           rawRolls: coreRawRolls,
           modifiedRolls: {
             'test-roll-id': {
@@ -368,7 +368,7 @@ describe('generateRollResult', () => {
       expect(generateRollResult(explodeParameters)).toMatchObject({
         ...explodeParameters,
         rawRolls,
-        type: DicePoolType.standard,
+        type: DicePoolType.numerical,
         modifiedRolls: {
           'test-roll-id': {
             rolls: [1, 2, 3, 6, 200],
@@ -412,7 +412,7 @@ describe('generateRollResult', () => {
               total: 206
             }
           },
-          type: DicePoolType.standard,
+          type: DicePoolType.numerical,
           total: 206,
           result: [[1, 2, 3, 200]]
         })
@@ -452,7 +452,7 @@ describe('generateRollResult', () => {
             }
           },
           total: 404,
-          type: DicePoolType.standard,
+          type: DicePoolType.numerical,
           result: [[1, 200, 3, 200]]
         })
       })
@@ -490,7 +490,7 @@ describe('generateRollResult', () => {
               total: 406
             }
           },
-          type: DicePoolType.standard,
+          type: DicePoolType.numerical,
           total: 406,
           result: [[200, 2, 200, 4]]
         })
@@ -528,7 +528,7 @@ describe('generateRollResult', () => {
             total: 10
           }
         },
-        type: DicePoolType.standard,
+        type: DicePoolType.numerical,
         total: 10,
         result: [[2, 2, 3, 3]]
       })

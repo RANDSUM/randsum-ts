@@ -13,7 +13,7 @@ function calculateType(dicePools: DicePools['dicePools']): DicePoolType {
     case Object.values(dicePools).every(
       (pool) => typeof pool.options.sides === 'number'
     ):
-      return DicePoolType.standard
+      return DicePoolType.numerical
 
     case Object.values(dicePools).every((pool) =>
       Array.isArray(pool.options.sides)

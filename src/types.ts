@@ -10,7 +10,7 @@ export type RandsumNotation<Sides extends string | number = string | number> =
     : DiceNotationWithCustomSides
 
 export enum DicePoolType {
-  standard = 'standard',
+  numerical = 'numerical',
   custom = 'custom',
   mixed = 'mixed'
 }
@@ -118,7 +118,7 @@ export interface RandsumRollResult extends DicePools {
 
 export interface RandsumNotationValidationResult {
   valid: boolean
-  type?: DicePoolType.custom | DicePoolType.standard
+  type?: DicePoolType.custom | DicePoolType.numerical
   digested?: RandsumRollOptions
   notation?: RandsumNotation
   description: string[]

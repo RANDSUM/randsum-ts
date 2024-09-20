@@ -19,7 +19,7 @@ function validateDiceNotation(
   const parsedNotation = formatNotation(digested)
   const type = Array.isArray(digested.sides)
     ? DicePoolType.custom
-    : DicePoolType.standard
+    : DicePoolType.numerical
 
   return {
     valid: true,

@@ -29,7 +29,7 @@ const { roll } = require('randsum')
 ```ts
 import { roll } from 'randsum'
 
-const result = roll()
+const result = roll(20)
 
 console.log(result.total) // a random number between 1 and 20
 ```
@@ -67,7 +67,7 @@ roll('4d20H+2') // Roll 4 20 sided die, drop highest, add 2
 
 ---
 
-You can pass in a `RandsumRollOptions` as the first argument. While rolling standard numerical die, `sides` is the only required value, representing the number of distinct sides of the die.
+You can pass in a `RandsumRollOptions` as the first argument. While rolling numerical die, `sides` is the only required value, representing the number of distinct sides of the die.
 
 ```ts
 roll({ sides: 20 }) // Roll a single 20 sided die
@@ -94,15 +94,11 @@ roll({
 `roll` accepts an array of options in varying different formats!
 
 ```ts
-roll([
-    20,
-    '2d4',
-    {
+roll(20, '2d4', {
       sides: 20,
       quantity: 4,
       modifiers: { drop: { highest: true } }, { plus: 2 }
-    }
-  ])
+    })
   // Roll 1 d20, 2 d4, and 4 d20 (dropping the highest and adding 2)
 ```
 
