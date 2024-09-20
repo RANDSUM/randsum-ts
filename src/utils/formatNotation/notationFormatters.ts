@@ -3,7 +3,6 @@ import {
   GreaterLessOptions,
   ReplaceOptions,
   RerollOptions,
-  TypeOrArrayOfType,
   UniqueOptions
 } from '~types'
 
@@ -39,7 +38,7 @@ export function dropNotation(drop: DropOptions) {
   return finalList.join('')
 }
 
-export function replaceNotation(replace: TypeOrArrayOfType<ReplaceOptions>) {
+export function replaceNotation(replace: ReplaceOptions | ReplaceOptions[]) {
   const args = (
     Array.isArray(replace)
       ? replace.map(singleReplaceNotation).flat()

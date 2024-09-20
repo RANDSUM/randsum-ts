@@ -89,7 +89,7 @@ roll({
 
 #### Custom Sides Caveats and Gotchas
 
-- Whenever _any_ dice pool leverages custom dice, the `total` of the `RollResult` will be `0`.
+- Whenever _any_ dice pool leverages custom dice, the `total` of the `RandsumRollResult` will be `0`.
 - Modifiers are not compatible with custom sides. Under-the-hood, `randsum` is still rolling these as if they were numeric dice, then swapping out the numbers for faces at the end. While modifiers are technically feasible, it would be very easy to code yourself into a confusing place with non-obvious results.
   - for example, given the custom faces argument `[6, 5, 4, 3, 2, 1]`, `1` would be considered the "highest" number, and `6` the "lowest`, which would be silly!
   - In light of this, modifiers are ignored (if provided in JS) or rejected (in TS) when providing custom sides.

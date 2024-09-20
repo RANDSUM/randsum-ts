@@ -36,7 +36,7 @@ console.log(result.total) // a random number between 1 and 20
 
 ### The Roll Result
 
-`roll()` returns a `RollResult` object. This has plenty of helpful keys, but the big ones are `total` and `result`.
+`roll()` returns a `RandsumRollResult` object. This has plenty of helpful keys, but the big ones are `total` and `result`.
 
 `total` returns the combined total of all your rolls, whereas `result` is an `Array` of `Array`s, each one representing the _set_ of different roll results for each pool of dice you rolled.
 
@@ -67,7 +67,7 @@ roll('4d20H+2') // Roll 4 20 sided die, drop highest, add 2
 
 ---
 
-You can pass in a `DicePoolOptions` as the first argument. While rolling standard numerical die, `sides` is the only required value, representing the number of distinct sides of the die.
+You can pass in a `RandsumRollOptions` as the first argument. While rolling standard numerical die, `sides` is the only required value, representing the number of distinct sides of the die.
 
 ```ts
 roll({ sides: 20 }) // Roll a single 20 sided die
@@ -79,7 +79,7 @@ The other commonly used key will be `quantity`, which tells you how many dice to
 roll({ sides: 20, quantity: 4 }) // Roll 4 distinct 20 sided die, and give me the total.
 ```
 
-You can use the `modifier` property of `DicePoolOptions.options` to further modify your roll. `modifiers` is an object that you can fill with Modifier objects. For instance:
+You can use the `modifier` property of `RandsumRollOptions.options` to further modify your roll. `modifiers` is an object that you can fill with Modifier objects. For instance:
 
 ```ts
 roll({
@@ -147,9 +147,9 @@ roll([
 
 ### Advanced Usage
 
-`RollResult` has several other keys that can come in handy for sussing out the specifics of your dice rolls.
+`RandsumRollResult` has several other keys that can come in handy for sussing out the specifics of your dice rolls.
 
-- `dicePools` is an object representing the normalized state of each argument passed to `roll`. This includes a version of the provided dice pool argument as a `DicePoolOption` (`option`), as `DiceNotation` (`notation`), a `Die` representing a single die in this particular `dicePool` and in an array of strings with english-language descriptions of the rolls (`description`)
+- `dicePools` is an object representing the normalized state of each argument passed to `roll`. This includes a version of the provided dice pool argument as a `DicePoolOption` (`option`), as `RandsumNotation` (`notation`), a `Die` representing a single die in this particular `dicePool` and in an array of strings with english-language descriptions of the rolls (`description`)
 - `rawRolls` is an object representing arrays of rolls. It shares keys with `dicePools`, allowing us to easily link pools to rawRolls. Each row should be as long as the `quantity`, rolling the `die` in each `dicePool`.
 - `modifiedRolls` is an object as well. It shares keys with `dicePools` and `rawRolls`, and each value represents the rolls and total of the roll after modifiers have been applied.
 

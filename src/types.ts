@@ -1,10 +1,10 @@
-import { SingleDie } from './Die/single-die'
+import { Die } from './Dice/die'
 
+// Primitives
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
-
 type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
 
-export type DiceNotation<D extends string | number = string | number> =
+export type RandsumNotation<D extends string | number = string | number> =
   D extends number ? DiceNotationWithNumericSides : DiceNotationWithCustomSides
 
 export enum DicePoolType {
@@ -13,9 +13,10 @@ export enum DicePoolType {
   mixed = 'mixed'
 }
 
-export type TypeOrArrayOfType<T> = T | T[]
-
-export interface DicePoolOptions<D extends string | number = string | number> {
+// Options
+export interface RandsumRollOptions<
+  D extends string | number = string | number
+> {
   quantity?: number
   sides: D extends number ? number : string[]
   modifiers?: D extends number ? Modifiers : Record<string, never>
@@ -24,7 +25,7 @@ export interface DicePoolOptions<D extends string | number = string | number> {
 export type Modifiers = {
   cap?: GreaterLessOptions
   drop?: DropOptions
-  replace?: TypeOrArrayOfType<ReplaceOptions>
+  replace?: ReplaceOptions | ReplaceOptions[]
   reroll?: RerollOptions
   unique?: boolean | UniqueOptions
   explode?: boolean
@@ -56,41 +57,51 @@ export interface UniqueOptions {
   notUnique: number[]
 }
 
-export type CoreRollArgument =
-  | string
-  | number
-  | DicePoolOptions
-  | DiceNotation
-  | (number | string)[]
-
-export type RollArgument = TypeOrArrayOfType<CoreRollArgument> | undefined
-
-type RawDiceParams<D extends string | number = string | number> = Omit<
-  DicePoolOptions<D>,
+type CoreRollOptions<D extends string | number = string | number> = Omit<
+  RandsumRollOptions<D>,
   'modifiers'
 >
 
-export type DiceParameters<D extends string | number = string | number> = {
-  [Property in keyof RawDiceParams<D>]-?: RawDiceParams<D>[Property]
+export type RequiredCoreDiceParameters<
+  D extends string | number = string | number
+> = {
+  [Property in keyof CoreRollOptions<D>]-?: CoreRollOptions<D>[Property]
 }
 
-export interface DicePoolParameters<
+// Arguments
+
+export type CoreRollArgument =
+  | string
+  | number
+  | RandsumRollOptions
+  | RandsumNotation
+  | (number | string)[]
+
+export type RandsumRollArgument =
+  | CoreRollArgument
+  | CoreRollArgument[]
+  | undefined
+
+// Parameters
+
+export interface RandsumRollParameters<
   D extends string | number = string | number
 > {
-  argument: RollArgument
-  options: DicePoolOptions<D>
-  die: SingleDie<D>
-  notation: DiceNotation<D>
+  argument: RandsumRollArgument
+  options: RandsumRollOptions<D>
+  die: Die<D>
+  notation: RandsumNotation<D>
   description: string[]
 }
-
-export interface RollParameters {
+export interface DicePools {
   dicePools: {
-    [key: string]: DicePoolParameters
+    [key: string]: RandsumRollParameters
   }
 }
 
-export interface RollResult extends RollParameters {
+// Results
+
+export interface RandsumRollResult extends DicePools {
   rawRolls: {
     [key: string]: string[] | number[]
   }
@@ -106,10 +117,10 @@ export interface RollResult extends RollParameters {
   total: number
 }
 
-export interface NotationValidationResult {
+export interface RandsumNotationValidationResult {
   valid: boolean
   type?: DicePoolType.custom | DicePoolType.standard
-  digested?: DicePoolOptions
-  notation?: DiceNotation
+  digested?: RandsumRollOptions
+  notation?: RandsumNotation
   description: string[]
 }

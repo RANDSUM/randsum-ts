@@ -60,9 +60,8 @@ const D120 = dieFactory(120)
 D120.roll()
 
 //'heads' or 'tails'?
-import { Coin } from 'randsum'
-
-Coin.flip()
+const Coin = dieFactory(['heads', 'tails'])
+Coin.roll()
 ```
 
 Written in 100% Typescript with strong attention paid to return types. You depend on `randsum` to give you what you expect - just not always the roll you want.

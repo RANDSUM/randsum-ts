@@ -1,12 +1,12 @@
 import { describe, expect, spyOn, test } from 'bun:test'
 
-import { CustomSidesDie, StandardDie } from '~src/Die'
-import { generateRollResult } from '~src/roll/generateRollResult'
-import { InvalidUniqueError } from '~src/roll/generateRollResult/applyModifiers'
-import * as GenerateRawRolls from '~src/roll/generateRollResult/generateRawRolls'
-import { DiceNotation, DicePoolType, RollParameters } from '~types'
+import { CustomSidesDie, StandardDie } from '~src/Dice'
+import { generateRollResultFromParameters } from '~src/roll/generateRollResultFromParameters'
+import { InvalidUniqueError } from '~src/roll/generateRollResultFromParameters/applyModifiers'
+import * as GenerateRawRolls from '~src/roll/generateRollResultFromParameters/generateRawRolls'
+import { RandsumNotation, DicePoolType, DicePools } from '~types'
 
-describe('generateRollResult', () => {
+describe('generateRollResultFromParameters', () => {
   const testRollSet = [1, 2, 3, 4]
   const coreRawRolls = {
     'test-roll-id': testRollSet
@@ -21,7 +21,7 @@ describe('generateRollResult', () => {
   } as unknown as CustomSidesDie
 
   describe('when given roll total with no modifiers', () => {
-    const coreParameters: RollParameters = {
+    const coreParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
@@ -38,7 +38,7 @@ describe('generateRollResult', () => {
         coreRawRolls
       )
 
-      expect(generateRollResult(coreParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(coreParameters)).toMatchObject({
         ...coreParameters,
         rawRolls: coreRawRolls,
         type: DicePoolType.standard,
@@ -57,7 +57,7 @@ describe('generateRollResult', () => {
         'test-roll-id': {
           die: mockStandardDie,
           argument: undefined,
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           options: {
             sides: 4,
@@ -74,7 +74,7 @@ describe('generateRollResult', () => {
       }
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(rawRolls)
 
-      expect(generateRollResult(uniqueParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(uniqueParameters)).toMatchObject({
         ...uniqueParameters,
         rawRolls,
         modifiedRolls: {
@@ -96,7 +96,7 @@ describe('generateRollResult', () => {
           'test-roll-id': {
             die: mockStandardDie,
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             type: DicePoolType.standard,
             options: {
@@ -116,7 +116,9 @@ describe('generateRollResult', () => {
           rawRolls
         )
 
-        expect(generateRollResult(notUniqueParameters)).toMatchObject({
+        expect(
+          generateRollResultFromParameters(notUniqueParameters)
+        ).toMatchObject({
           ...notUniqueParameters,
           rawRolls,
           modifiedRolls: {
@@ -139,7 +141,7 @@ describe('generateRollResult', () => {
         dicePools: {
           'test-roll-id': {
             die: mockStandardDie,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             argument: undefined,
             type: DicePoolType.standard,
@@ -160,9 +162,9 @@ describe('generateRollResult', () => {
           rawRolls
         )
 
-        expect(() => generateRollResult(overflowParameters)).toThrow(
-          new InvalidUniqueError()
-        )
+        expect(() =>
+          generateRollResultFromParameters(overflowParameters)
+        ).toThrow(new InvalidUniqueError())
       })
     })
   })
@@ -171,11 +173,11 @@ describe('generateRollResult', () => {
     const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
     const customSidesRoll = ['r', 'a', 'n', 'd']
 
-    const customSidesParameters: RollParameters = {
+    const customSidesParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           die: mockCustomSidesDie,
-          notation: '1d1' as DiceNotation<'string'>,
+          notation: '1d1' as RandsumNotation<'string'>,
           description: ['foo'],
           argument: undefined,
           options: {
@@ -192,7 +194,9 @@ describe('generateRollResult', () => {
       }
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(rawRolls)
 
-      expect(generateRollResult(customSidesParameters)).toMatchObject({
+      expect(
+        generateRollResultFromParameters(customSidesParameters)
+      ).toMatchObject({
         ...customSidesParameters,
         rawRolls,
         modifiedRolls: {
@@ -211,10 +215,10 @@ describe('generateRollResult', () => {
   describe('when given roll total with a "drop" modifier', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    const dropParameters: RollParameters = {
+    const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           argument: undefined,
           die: mockStandardDie,
@@ -241,7 +245,7 @@ describe('generateRollResult', () => {
       }
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(rawRolls)
 
-      expect(generateRollResult(dropParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls,
         modifiedRolls: {
@@ -259,11 +263,11 @@ describe('generateRollResult', () => {
 
   describe('when given roll total with a "replace" modifier', () => {
     describe('that is a single replace modifiers', () => {
-      const dropParameters: RollParameters = {
+      const dropParameters: DicePools = {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             die: mockStandardDie,
             options: {
@@ -280,7 +284,7 @@ describe('generateRollResult', () => {
           coreRawRolls
         )
 
-        expect(generateRollResult(dropParameters)).toMatchObject({
+        expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
           ...dropParameters,
           rawRolls: coreRawRolls,
           type: DicePoolType.standard,
@@ -297,11 +301,11 @@ describe('generateRollResult', () => {
     })
 
     describe('that is an array of replace modifiers', () => {
-      const dropParameters: RollParameters = {
+      const dropParameters: DicePools = {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             die: mockStandardDie,
             options: {
@@ -323,7 +327,7 @@ describe('generateRollResult', () => {
           coreRawRolls
         )
 
-        expect(generateRollResult(dropParameters)).toMatchObject({
+        expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
           ...dropParameters,
           type: DicePoolType.standard,
           rawRolls: coreRawRolls,
@@ -343,11 +347,11 @@ describe('generateRollResult', () => {
   describe('when given roll total with an "explode" modifier', () => {
     const explodeRollTotals = [1, 2, 3, 6]
 
-    const explodeParameters: RollParameters = {
+    const explodeParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           die: mockStandardDie,
           options: {
@@ -365,29 +369,31 @@ describe('generateRollResult', () => {
       }
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(rawRolls)
 
-      expect(generateRollResult(explodeParameters)).toMatchObject({
-        ...explodeParameters,
-        rawRolls,
-        type: DicePoolType.standard,
-        modifiedRolls: {
-          'test-roll-id': {
-            rolls: [1, 2, 3, 6, 200],
-            total: 212
-          }
-        },
-        total: 212,
-        result: [[1, 2, 3, 6, 200]]
-      })
+      expect(generateRollResultFromParameters(explodeParameters)).toMatchObject(
+        {
+          ...explodeParameters,
+          rawRolls,
+          type: DicePoolType.standard,
+          modifiedRolls: {
+            'test-roll-id': {
+              rolls: [1, 2, 3, 6, 200],
+              total: 212
+            }
+          },
+          total: 212,
+          result: [[1, 2, 3, 6, 200]]
+        }
+      )
     })
   })
 
   describe('when given roll total with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
-      const rerollParameters: RollParameters = {
+      const reDicePools: DicePools = {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             options: {
               sides: 6,
@@ -403,8 +409,8 @@ describe('generateRollResult', () => {
         spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
           coreRawRolls
         )
-        expect(generateRollResult(rerollParameters)).toMatchObject({
-          ...rerollParameters,
+        expect(generateRollResultFromParameters(reDicePools)).toMatchObject({
+          ...reDicePools,
           rawRolls: coreRawRolls,
           modifiedRolls: {
             'test-roll-id': {
@@ -420,11 +426,11 @@ describe('generateRollResult', () => {
     })
 
     describe('that is a single reroll modifier', () => {
-      const rerollParameters: RollParameters = {
+      const reDicePools: DicePools = {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             options: {
               sides: 6,
@@ -442,8 +448,8 @@ describe('generateRollResult', () => {
         spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
           coreRawRolls
         )
-        expect(generateRollResult(rerollParameters)).toMatchObject({
-          ...rerollParameters,
+        expect(generateRollResultFromParameters(reDicePools)).toMatchObject({
+          ...reDicePools,
           rawRolls: coreRawRolls,
           modifiedRolls: {
             'test-roll-id': {
@@ -459,11 +465,11 @@ describe('generateRollResult', () => {
     })
 
     describe('that is an array of reroll modifiers', () => {
-      const rerollParameters: RollParameters = {
+      const reDicePools: DicePools = {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
-            notation: '1d1' as DiceNotation<number>,
+            notation: '1d1' as RandsumNotation<number>,
             description: ['foo'],
             options: {
               sides: 6,
@@ -481,8 +487,8 @@ describe('generateRollResult', () => {
         spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
           coreRawRolls
         )
-        expect(generateRollResult(rerollParameters)).toMatchObject({
-          ...rerollParameters,
+        expect(generateRollResultFromParameters(reDicePools)).toMatchObject({
+          ...reDicePools,
           rawRolls: coreRawRolls,
           modifiedRolls: {
             'test-roll-id': {
@@ -499,10 +505,10 @@ describe('generateRollResult', () => {
   })
 
   describe('when given roll total with a "cap" modifier', () => {
-    const dropParameters: RollParameters = {
+    const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           argument: undefined,
           options: {
@@ -519,7 +525,7 @@ describe('generateRollResult', () => {
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
         coreRawRolls
       )
-      expect(generateRollResult(dropParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
@@ -536,11 +542,11 @@ describe('generateRollResult', () => {
   })
 
   describe('when given roll total with a "plus" modifier', () => {
-    const dropParameters: RollParameters = {
+    const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           options: {
             sides: 6,
@@ -556,7 +562,7 @@ describe('generateRollResult', () => {
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
         coreRawRolls
       )
-      expect(generateRollResult(dropParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
@@ -572,11 +578,11 @@ describe('generateRollResult', () => {
   })
 
   describe('when given roll total with a "minus" modifier', () => {
-    const dropParameters: RollParameters = {
+    const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           options: {
             sides: 6,
@@ -592,7 +598,7 @@ describe('generateRollResult', () => {
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
         coreRawRolls
       )
-      expect(generateRollResult(dropParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
@@ -608,17 +614,17 @@ describe('generateRollResult', () => {
   })
 
   describe('when given multiple dice pools', () => {
-    const parameters: RollParameters = {
+    const parameters: DicePools = {
       dicePools: {
         'test-roll-id': {
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           argument: undefined,
           options: { sides: 6, quantity: testRollSet.length },
           die: mockStandardDie
         },
         'test-roll-id-2': {
-          notation: '1d1' as DiceNotation<number>,
+          notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           argument: undefined,
           options: { sides: 6, quantity: testRollSet.length },
@@ -634,7 +640,7 @@ describe('generateRollResult', () => {
       }
 
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(rawRolls)
-      expect(generateRollResult(parameters)).toMatchObject({
+      expect(generateRollResultFromParameters(parameters)).toMatchObject({
         ...parameters,
         rawRolls,
         modifiedRolls: {
@@ -657,7 +663,7 @@ describe('generateRollResult', () => {
   })
 
   describe('when given an roll total with an unrecognized modifier', () => {
-    const dropParameters: RollParameters = {
+    const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
@@ -669,10 +675,10 @@ describe('generateRollResult', () => {
           die: mockStandardDie
         }
       }
-    } as unknown as RollParameters
+    } as unknown as DicePools
 
     test('Throws an error', () => {
-      expect(() => generateRollResult(dropParameters)).toThrow(
+      expect(() => generateRollResultFromParameters(dropParameters)).toThrow(
         'Unknown modifier: foo'
       )
     })

@@ -1,7 +1,6 @@
 import {
   GreaterLessOptions,
   DropOptions,
-  TypeOrArrayOfType,
   ReplaceOptions,
   RerollOptions,
   UniqueOptions
@@ -42,7 +41,7 @@ export function dropString(drop: DropOptions) {
   return dropList
 }
 
-export function replaceString(replace: TypeOrArrayOfType<ReplaceOptions>) {
+export function replaceString(replace: ReplaceOptions | ReplaceOptions[]) {
   if (Array.isArray(replace)) return replace.map(singleReplaceString)
 
   return [singleReplaceString(replace)]

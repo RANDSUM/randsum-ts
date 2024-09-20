@@ -1,4 +1,4 @@
-import { DiceNotation, DicePoolOptions } from '~types'
+import { RandsumNotation, RandsumRollOptions } from '~types'
 import {
   capNotation,
   dropNotation,
@@ -11,7 +11,7 @@ import {
 } from './notationFormatters'
 import { isValidModifier } from '~guards'
 
-function formatModifierNotation({ modifiers }: DicePoolOptions): string {
+function formatModifierNotation({ modifiers }: RandsumRollOptions): string {
   if (!isValidModifier(modifiers)) return ''
 
   const modifierStrings = []
@@ -32,17 +32,17 @@ function formatModifierNotation({ modifiers }: DicePoolOptions): string {
 function formatCoreNotation({
   quantity,
   sides
-}: DicePoolOptions<string | number>) {
+}: RandsumRollOptions<string | number>) {
   const formattedSides = Array.isArray(sides)
     ? `{${sides.map((s) => (s === '' ? ' ' : s)).join('')}}`
     : sides
   return `${quantity}d${formattedSides}`
 }
 
-function formatNotation(options: DicePoolOptions): DiceNotation {
+function formatNotation(options: RandsumRollOptions): RandsumNotation {
   return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as
-    | DiceNotation<string>
-    | DiceNotation<number>
+    | RandsumNotation<string>
+    | RandsumNotation<number>
 }
 
 export { formatNotation }
