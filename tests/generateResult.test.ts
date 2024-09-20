@@ -1,12 +1,12 @@
 import { describe, expect, spyOn, test } from 'bun:test'
 
 import { CustomSidesDie, StandardDie } from '~src/Die'
-import { generateRollResult } from '~src/roll/generateRollResult'
-import { InvalidUniqueError } from '~src/roll/generateRollResult/applyModifiers'
-import * as GenerateRawRolls from '~src/roll/generateRollResult/generateRawRolls'
+import { generateRollResultFromParameters } from '~src/roll/generateRollResultFromParameters'
+import { InvalidUniqueError } from '~src/roll/generateRollResultFromParameters/applyModifiers'
+import * as GenerateRawRolls from '~src/roll/generateRollResultFromParameters/generateRawRolls'
 import { DiceNotation, DicePoolType, RollParameters } from '~types'
 
-describe('generateRollResult', () => {
+describe('generateRollResultFromParameters', () => {
   const testRollSet = [1, 2, 3, 4]
   const coreRawRolls = {
     'test-roll-id': testRollSet
@@ -38,7 +38,7 @@ describe('generateRollResult', () => {
         coreRawRolls
       )
 
-      expect(generateRollResult(coreParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(coreParameters)).toMatchObject({
         ...coreParameters,
         rawRolls: coreRawRolls,
         type: DicePoolType.standard,
@@ -74,7 +74,7 @@ describe('generateRollResult', () => {
       }
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(rawRolls)
 
-      expect(generateRollResult(uniqueParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(uniqueParameters)).toMatchObject({
         ...uniqueParameters,
         rawRolls,
         modifiedRolls: {
@@ -116,7 +116,9 @@ describe('generateRollResult', () => {
           rawRolls
         )
 
-        expect(generateRollResult(notUniqueParameters)).toMatchObject({
+        expect(
+          generateRollResultFromParameters(notUniqueParameters)
+        ).toMatchObject({
           ...notUniqueParameters,
           rawRolls,
           modifiedRolls: {
@@ -160,9 +162,9 @@ describe('generateRollResult', () => {
           rawRolls
         )
 
-        expect(() => generateRollResult(overflowParameters)).toThrow(
-          new InvalidUniqueError()
-        )
+        expect(() =>
+          generateRollResultFromParameters(overflowParameters)
+        ).toThrow(new InvalidUniqueError())
       })
     })
   })
@@ -192,7 +194,9 @@ describe('generateRollResult', () => {
       }
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(rawRolls)
 
-      expect(generateRollResult(customSidesParameters)).toMatchObject({
+      expect(
+        generateRollResultFromParameters(customSidesParameters)
+      ).toMatchObject({
         ...customSidesParameters,
         rawRolls,
         modifiedRolls: {
@@ -241,7 +245,7 @@ describe('generateRollResult', () => {
       }
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(rawRolls)
 
-      expect(generateRollResult(dropParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls,
         modifiedRolls: {
@@ -280,7 +284,7 @@ describe('generateRollResult', () => {
           coreRawRolls
         )
 
-        expect(generateRollResult(dropParameters)).toMatchObject({
+        expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
           ...dropParameters,
           rawRolls: coreRawRolls,
           type: DicePoolType.standard,
@@ -323,7 +327,7 @@ describe('generateRollResult', () => {
           coreRawRolls
         )
 
-        expect(generateRollResult(dropParameters)).toMatchObject({
+        expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
           ...dropParameters,
           type: DicePoolType.standard,
           rawRolls: coreRawRolls,
@@ -365,19 +369,21 @@ describe('generateRollResult', () => {
       }
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(rawRolls)
 
-      expect(generateRollResult(explodeParameters)).toMatchObject({
-        ...explodeParameters,
-        rawRolls,
-        type: DicePoolType.standard,
-        modifiedRolls: {
-          'test-roll-id': {
-            rolls: [1, 2, 3, 6, 200],
-            total: 212
-          }
-        },
-        total: 212,
-        result: [[1, 2, 3, 6, 200]]
-      })
+      expect(generateRollResultFromParameters(explodeParameters)).toMatchObject(
+        {
+          ...explodeParameters,
+          rawRolls,
+          type: DicePoolType.standard,
+          modifiedRolls: {
+            'test-roll-id': {
+              rolls: [1, 2, 3, 6, 200],
+              total: 212
+            }
+          },
+          total: 212,
+          result: [[1, 2, 3, 6, 200]]
+        }
+      )
     })
   })
 
@@ -403,7 +409,9 @@ describe('generateRollResult', () => {
         spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
           coreRawRolls
         )
-        expect(generateRollResult(rerollParameters)).toMatchObject({
+        expect(
+          generateRollResultFromParameters(rerollParameters)
+        ).toMatchObject({
           ...rerollParameters,
           rawRolls: coreRawRolls,
           modifiedRolls: {
@@ -442,7 +450,9 @@ describe('generateRollResult', () => {
         spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
           coreRawRolls
         )
-        expect(generateRollResult(rerollParameters)).toMatchObject({
+        expect(
+          generateRollResultFromParameters(rerollParameters)
+        ).toMatchObject({
           ...rerollParameters,
           rawRolls: coreRawRolls,
           modifiedRolls: {
@@ -481,7 +491,9 @@ describe('generateRollResult', () => {
         spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
           coreRawRolls
         )
-        expect(generateRollResult(rerollParameters)).toMatchObject({
+        expect(
+          generateRollResultFromParameters(rerollParameters)
+        ).toMatchObject({
           ...rerollParameters,
           rawRolls: coreRawRolls,
           modifiedRolls: {
@@ -519,7 +531,7 @@ describe('generateRollResult', () => {
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
         coreRawRolls
       )
-      expect(generateRollResult(dropParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
@@ -556,7 +568,7 @@ describe('generateRollResult', () => {
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
         coreRawRolls
       )
-      expect(generateRollResult(dropParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
@@ -592,7 +604,7 @@ describe('generateRollResult', () => {
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
         coreRawRolls
       )
-      expect(generateRollResult(dropParameters)).toMatchObject({
+      expect(generateRollResultFromParameters(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
@@ -634,7 +646,7 @@ describe('generateRollResult', () => {
       }
 
       spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(rawRolls)
-      expect(generateRollResult(parameters)).toMatchObject({
+      expect(generateRollResultFromParameters(parameters)).toMatchObject({
         ...parameters,
         rawRolls,
         modifiedRolls: {
@@ -672,7 +684,7 @@ describe('generateRollResult', () => {
     } as unknown as RollParameters
 
     test('Throws an error', () => {
-      expect(() => generateRollResult(dropParameters)).toThrow(
+      expect(() => generateRollResultFromParameters(dropParameters)).toThrow(
         'Unknown modifier: foo'
       )
     })

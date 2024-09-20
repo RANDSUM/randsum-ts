@@ -3,17 +3,17 @@ import { isCustomSides } from '~guards'
 import { uuidv7 as uuid } from 'uuidv7'
 import { parameterizeRollArgument } from '~src/parameterizeRollArgument'
 
-function parseRollArguments(argument: RollArgument): RollParameters {
-  const normalizedArgs = normalizeArgumentsIntoFlatArray(argument)
+function formDicePools(argument: RollArgument): RollParameters {
+  const arrayArgs = argsToArray(argument)
   return {
-    dicePools: normalizedArgs.reduce(
+    dicePools: arrayArgs.reduce(
       (acc, arg) => ({ ...acc, [uuid()]: parameterizeRollArgument(arg) }),
       {}
     )
   }
 }
 
-function normalizeArgumentsIntoFlatArray(
+function argsToArray(
   argument: RollArgument | undefined
 ): CoreRollArgument[] | undefined[] {
   if (!argument) {
@@ -31,4 +31,4 @@ function normalizeArgumentsIntoFlatArray(
   return [argument].flat()
 }
 
-export { parseRollArguments }
+export { formDicePools }
