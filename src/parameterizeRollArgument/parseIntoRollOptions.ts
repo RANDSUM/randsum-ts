@@ -4,11 +4,11 @@ import {
   isD,
   isCustomSidesD
 } from '~guards'
-import { CoreRollArgument, RandsumRollOptions } from '~types'
+import { RandsumRollArgument, RandsumRollOptions } from '~types'
 import { parseNotation } from '~utils/parseNotation'
 
 function parseIntoRollOptions(
-  argument: CoreRollArgument | undefined
+  argument: RandsumRollArgument
 ): RandsumRollOptions {
   if (isD(argument)) {
     return {

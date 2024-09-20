@@ -22,7 +22,7 @@ export function isDiceNotationArg(
 }
 
 export function isCustomSidesArg(
-  argument: RandsumRollArgument | undefined
+  argument: RandsumRollArgument
 ): argument is string[] {
   return (
     Array.isArray(argument) && argument.every((arg) => typeof arg === 'string')

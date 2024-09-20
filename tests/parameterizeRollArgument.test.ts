@@ -5,22 +5,6 @@ import { parameterizeRollArgument } from '~src/parameterizeRollArgument'
 import { RandsumNotation } from '~types'
 
 describe('parameterizeRollArgument', () => {
-  describe('given undefined', () => {
-    const argument = undefined
-
-    test('returns a RollParameter matching the argument', () => {
-      const params = parameterizeRollArgument(argument)
-
-      expect(params).toMatchObject({
-        argument,
-        options: { quantity: 1, sides: 20 },
-        die: new D(20),
-        notation: '1d20',
-        description: ['Roll 1 20-sided die']
-      })
-    })
-  })
-
   describe('given a number', () => {
     const argument = 2
 

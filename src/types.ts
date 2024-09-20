@@ -72,15 +72,13 @@ export type RequiredCoreDiceParameters<
 
 // Arguments
 
-export type CoreRollArgument =
+export type RandsumRollArgument =
   | string
   | number
   | D<string[] | number>
   | RandsumRollOptions
   | RandsumNotation
-  | (number | string)[]
-
-export type RandsumRollArgument = CoreRollArgument | CoreRollArgument[]
+  | string[]
 
 // Parameters
 
@@ -93,6 +91,7 @@ export interface RandsumRollParameters<
   notation: RandsumNotation<Sides>
   description: string[]
 }
+
 export interface DicePools {
   dicePools: {
     [key: string]: RandsumRollParameters
