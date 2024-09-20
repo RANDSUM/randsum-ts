@@ -31,7 +31,6 @@ In `randsum` :
 ```js
 // Roll 1 twenty-sided die
 
-roll()
 roll(20)
 roll('1d20')
 roll({

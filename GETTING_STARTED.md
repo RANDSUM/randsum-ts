@@ -36,7 +36,7 @@ console.log(result.total) // a random number between 1 and 20
 
 ### The Roll Result
 
-`roll()` returns a `RandsumRollResult` object. This has plenty of helpful keys, but the big ones are `total` and `result`.
+`roll(arg)` returns a `RandsumRollResult` object. This has plenty of helpful keys, but the big ones are `total` and `result`.
 
 `total` returns the combined total of all your rolls, whereas `result` is an `Array` of `Array`s, each one representing the _set_ of different roll results for each pool of dice you rolled.
 
