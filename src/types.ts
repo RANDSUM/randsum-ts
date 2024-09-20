@@ -73,7 +73,7 @@ export type RequiredCoreDiceParameters<
 // Arguments
 
 export type RandsumRollArgument =
-  | string
+  | `${number}`
   | number
   | D<string[] | number>
   | RandsumRollOptions

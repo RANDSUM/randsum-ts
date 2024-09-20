@@ -3,18 +3,42 @@ import { D } from '~src/D'
 
 import { roll } from '~src/roll'
 
+const loops = 9999
+
 describe('roll', () => {
   describe('Stress Test', () => {
-    const loops = 9999
-    const dummyArray = Array.from(
-      { length: loops },
-      () => roll(20, { sides: 20 }, new D(20)).total
-    )
+    describe('numerical dice', () => {
+      const dummyArray = Array.from(
+        { length: loops },
+        () => roll(20, { sides: 20 }, new D(20), '1d20').total
+      )
 
-    test('it never goes outside of the bounds of the roll', () => {
-      dummyArray.forEach((individualRoll) => {
-        expect(individualRoll).toBeLessThanOrEqual(60)
-        expect(individualRoll).toBeGreaterThan(0)
+      test('it never goes outside of the bounds of the roll', () => {
+        dummyArray.forEach((individualRoll) => {
+          expect(individualRoll).toBeLessThanOrEqual(80)
+          expect(individualRoll).toBeGreaterThan(0)
+        })
+      })
+    })
+
+    describe('custom dice', () => {
+      const dummyArray = Array.from(
+        { length: loops },
+        () =>
+          roll(['h', 't'], { sides: ['h', 't'] }, new D(['h', 't']), '1d{ht}')
+            .result
+      )
+
+      test('it never goes outside of the bounds of the roll', () => {
+        dummyArray.forEach((individualRoll) => {
+          expect(individualRoll).toHaveLength(4)
+          const uniqueRolls = individualRoll
+            .flat()
+            .filter((value, index, array) => array.indexOf(value) === index)
+
+          expect(uniqueRolls.length).toBeLessThan(3)
+          expect(uniqueRolls.length).toBeGreaterThan(0)
+        })
       })
     })
   })

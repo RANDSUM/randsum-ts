@@ -87,6 +87,8 @@ roll({
 })
 ```
 
+Note: When using custom sides with Randsum Dice Notation, we can only mark sides as single characters. When using full options, you can pass in strings of any length!
+
 #### Custom Sides Caveats and Gotchas
 
 - Whenever _any_ dice pool leverages custom dice, the `total` of the `RandsumRollResult` will be `0`.
