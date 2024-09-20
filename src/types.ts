@@ -59,8 +59,8 @@ export interface UniqueOptions {
   notUnique: number[]
 }
 
-type CoreRollOptions<D extends string | number = string | number> = Omit<
-  RandsumRollOptions<D>,
+type CoreRollOptions<Sides extends string | number = string | number> = Omit<
+  RandsumRollOptions<Sides>,
   'modifiers'
 >
 
