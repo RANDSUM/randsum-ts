@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "~utils/*": ["./src/utils/*"],
+      "~models/*": ["./src/models/*"],
       "~patterns": ["./src/patterns.ts"],
       "~guards": ["./src/guards.ts"],
       "~types": ["./src/types.ts"],

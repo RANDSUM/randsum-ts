@@ -1,8 +1,8 @@
 import { coreNotationPattern } from '~patterns'
 import { RandsumNotation, RandsumRollOptions } from '~types'
-import { parseCoreNotation, parseModifiers } from './parseModifiers'
+import { parseCoreNotation, parseModifiers } from './optionsParsers'
 
-function parseNotation(
+function toOptions(
   notationString: RandsumNotation
 ): RandsumRollOptions<number | string> {
   const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)
@@ -14,4 +14,4 @@ function parseNotation(
   }
 }
 
-export { parseNotation }
+export default { toOptions }

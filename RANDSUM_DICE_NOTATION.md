@@ -31,7 +31,6 @@ In `randsum` :
 ```js
 // Roll 1 twenty-sided die
 
-roll()
 roll(20)
 roll('1d20')
 roll({
@@ -86,6 +85,8 @@ roll({
   quantity: 6
 })
 ```
+
+Note: When using custom sides with Randsum Dice Notation, we can only mark sides as single characters. When using full options, you can pass in strings of any length!
 
 #### Custom Sides Caveats and Gotchas
 

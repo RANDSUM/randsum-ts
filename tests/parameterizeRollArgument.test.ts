@@ -5,22 +5,6 @@ import { parameterizeRollArgument } from '~src/parameterizeRollArgument'
 import { RandsumNotation } from '~types'
 
 describe('parameterizeRollArgument', () => {
-  describe('given undefined', () => {
-    const argument = undefined
-
-    test('returns a RollParameter matching the argument', () => {
-      const params = parameterizeRollArgument(argument)
-
-      expect(params).toMatchObject({
-        argument,
-        options: { quantity: 1, sides: 20 },
-        die: new D(20),
-        notation: '1d20',
-        description: ['Roll 1 20-sided die']
-      })
-    })
-  })
-
   describe('given a number', () => {
     const argument = 2
 
@@ -168,6 +152,46 @@ describe('parameterizeRollArgument', () => {
             'Add 2',
             'Subtract 1'
           ]
+        })
+      })
+    })
+  })
+
+  describe('Given a D() object', () => {
+    describe('simple', () => {
+      const argument = new D(6)
+
+      test('returns a RollParameter matching the argument', () => {
+        const params = parameterizeRollArgument(argument)
+
+        expect(params).toMatchObject({
+          argument,
+          options: {
+            sides: argument.sides,
+            quantity: 1
+          },
+          die: argument,
+          notation: '1d6',
+          description: ['Roll 1 6-sided die']
+        })
+      })
+    })
+
+    describe('custom sides', () => {
+      const argument = new D(['r', 'a', 'n', 'd', 's', 'u', 'm'])
+
+      test('returns a RollParameter matching the argument', () => {
+        const params = parameterizeRollArgument(argument)
+
+        expect(params).toMatchObject({
+          argument,
+          options: {
+            sides: argument.faces,
+            quantity: 1
+          },
+          die: argument,
+          notation: '1d{randsum}',
+          description: ['Roll 1 die with the following sides: (r,a,n,d,s,u,m)']
         })
       })
     })

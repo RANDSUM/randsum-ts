@@ -10,7 +10,7 @@ export type RandsumNotation<Sides extends string | number = string | number> =
     : DiceNotationWithCustomSides
 
 export enum DicePoolType {
-  standard = 'standard',
+  numerical = 'numerical',
   custom = 'custom',
   mixed = 'mixed'
 }
@@ -72,17 +72,13 @@ export type RequiredCoreDiceParameters<
 
 // Arguments
 
-export type CoreRollArgument =
-  | string
+export type RandsumRollArgument =
+  | `${number}`
   | number
+  | D<string[] | number>
   | RandsumRollOptions
   | RandsumNotation
-  | (number | string)[]
-
-export type RandsumRollArgument =
-  | CoreRollArgument
-  | CoreRollArgument[]
-  | undefined
+  | string[]
 
 // Parameters
 
@@ -95,6 +91,7 @@ export interface RandsumRollParameters<
   notation: RandsumNotation<Sides>
   description: string[]
 }
+
 export interface DicePools {
   dicePools: {
     [key: string]: RandsumRollParameters
@@ -121,7 +118,7 @@ export interface RandsumRollResult extends DicePools {
 
 export interface RandsumNotationValidationResult {
   valid: boolean
-  type?: DicePoolType.custom | DicePoolType.standard
+  type?: DicePoolType.custom | DicePoolType.numerical
   digested?: RandsumRollOptions
   notation?: RandsumNotation
   description: string[]
