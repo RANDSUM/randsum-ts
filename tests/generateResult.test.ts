@@ -1,9 +1,9 @@
 import { describe, expect, spyOn, test } from 'bun:test'
 
 import { D } from '~src/D'
-import { generateRollResultFromParameters } from '~src/roll/generateRollResultFromParameters'
-import { InvalidUniqueError } from '~src/roll/generateRollResultFromParameters/applyModifiers'
-import * as GenerateRawRolls from '~src/roll/generateRollResultFromParameters/generateRawRolls'
+import { generateRollResultFromParameters } from '~src/roll/generateRollResult'
+import { InvalidUniqueError } from '~src/roll/generateRollResult/applyModifiers'
+import * as GenerateRawRolls from '~src/roll/generateRollResult/generateRawRolls'
 import { RandsumNotation, DicePoolType, DicePools } from '~types'
 
 describe('generateRollResultFromParameters', () => {

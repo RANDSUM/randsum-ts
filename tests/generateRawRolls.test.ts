@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'bun:test'
 
 import { RandsumRollParameters, DicePools } from '~types'
-import { generateRawRolls } from '~src/roll/generateRollResultFromParameters/generateRawRolls'
+import { generateRawRolls } from '~src/roll/generateRollResult/generateRawRolls'
 
 describe('generateRawRolls', () => {
   describe('when given a DicePools object', () => {
