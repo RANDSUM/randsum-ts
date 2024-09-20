@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 
-import { CustomSidesDie, StandardDie } from '~src/Die'
+import { CustomSidesDie, StandardDie } from '~src/Dice'
 import { parameterizeRollArgument } from '~src/parameterizeRollArgument'
 import { RandsumNotation } from '~types'
 

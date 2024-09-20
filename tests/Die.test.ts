@@ -9,13 +9,12 @@ import {
   D6,
   D8,
   D10,
-  FairCoin,
   StandardDie,
-  TwoHeadedCoin,
-  dieFactory
-} from '~src/Die'
+  dieFactory,
+  FudgeDice
+} from '~src/Dice'
 
-describe('SingleDie', () => {
+describe('Die', () => {
   describe('StandardDie', () => {
     const sides = 6
     const die = new StandardDie(sides)
@@ -81,8 +80,6 @@ describe('Exports', () => {
   test('It features all standard exports', () => {
     expect(StandardDie).toBeDefined()
     expect(CustomSidesDie).toBeDefined()
-    expect(FairCoin).toBeDefined()
-    expect(TwoHeadedCoin).toBeDefined()
     expect(D4).toBeDefined()
     expect(D6).toBeDefined()
     expect(D8).toBeDefined()
@@ -90,5 +87,6 @@ describe('Exports', () => {
     expect(D12).toBeDefined()
     expect(D20).toBeDefined()
     expect(D100).toBeDefined()
+    expect(FudgeDice).toBeDefined()
   })
 })

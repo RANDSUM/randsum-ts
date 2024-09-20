@@ -2,7 +2,7 @@ function generateStandardSides(sides: number): number[] {
   return Array.from({ length: Number(sides) }, (_, index) => index + 1)
 }
 
-abstract class SingleDie<D extends string | number = string | number> {
+abstract class Die<D extends string | number = string | number> {
   sides: number
 
   faces: D[]
@@ -22,4 +22,4 @@ abstract class SingleDie<D extends string | number = string | number> {
   }
 }
 
-export { SingleDie }
+export { Die }

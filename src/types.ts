@@ -1,4 +1,4 @@
-import { SingleDie } from './Die/single-die'
+import { Die } from './Dice/die'
 
 // Primitives
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
@@ -89,7 +89,7 @@ export interface RandsumRollParameters<
 > {
   argument: RandsumRollArgument
   options: RandsumRollOptions<D>
-  die: SingleDie<D>
+  die: Die<D>
   notation: RandsumNotation<D>
   description: string[]
 }

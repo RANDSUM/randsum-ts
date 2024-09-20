@@ -1,5 +1,5 @@
 import { CoreRollArgument, RandsumRollParameters } from '~types'
-import { dieFactory } from '~src/Die'
+import { dieFactory } from '~src/Dice'
 import { formatDescription } from '~utils/formatDescription'
 import { formatNotation } from '~utils/formatNotation'
 import { parseDiceOptions } from './parseDiceOptions'
