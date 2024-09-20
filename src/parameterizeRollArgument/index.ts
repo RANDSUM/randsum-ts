@@ -1,5 +1,5 @@
 import { CoreRollArgument, RandsumRollParameters } from '~types'
-import { dieFactory } from '~src/Dice'
+import { D } from '~src/D'
 import { formatDescription } from '~utils/formatDescription'
 import { formatNotation } from '~utils/formatNotation'
 import { parseDiceOptions } from './parseDiceOptions'
@@ -8,7 +8,7 @@ function parameterizeRollArgument(
   argument: CoreRollArgument | undefined
 ): RandsumRollParameters {
   const options = parseDiceOptions(argument)
-  const die = dieFactory(options.sides)
+  const die = new D(options.sides)
   return {
     options,
     argument,

@@ -1,16 +1,4 @@
-import {
-  capPattern,
-  coreNotationPattern,
-  dropConstraintsPattern,
-  dropHighestPattern,
-  dropLowestPattern,
-  explodePattern,
-  minusPattern,
-  plusPattern,
-  replacePattern,
-  rerollPattern,
-  uniquePattern
-} from '~patterns'
+import { completeRollPattern, coreNotationPattern } from '~patterns'
 import {
   RandsumNotation,
   RandsumRollOptions,
@@ -18,11 +6,6 @@ import {
   Modifiers,
   RandsumRollArgument
 } from '~types'
-
-const completeRollPattern = new RegExp(
-  `${coreNotationPattern.source}|${dropHighestPattern.source}|${dropLowestPattern.source}|${dropConstraintsPattern.source}|${explodePattern.source}|${uniquePattern.source}|${replacePattern.source}|${rerollPattern.source}|${capPattern.source}|${plusPattern.source}|${minusPattern.source}`,
-  'g'
-)
 
 export function isDiceNotation(argument: unknown): argument is RandsumNotation {
   const notAString = typeof argument !== 'string'

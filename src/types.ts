@@ -1,11 +1,13 @@
-import { Die } from './Dice/die'
+import { D } from './D'
 
 // Primitives
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
 type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
 
-export type RandsumNotation<D extends string | number = string | number> =
-  D extends number ? DiceNotationWithNumericSides : DiceNotationWithCustomSides
+export type RandsumNotation<Sides extends string | number = string | number> =
+  Sides extends number
+    ? DiceNotationWithNumericSides
+    : DiceNotationWithCustomSides
 
 export enum DicePoolType {
   standard = 'standard',
@@ -15,11 +17,11 @@ export enum DicePoolType {
 
 // Options
 export interface RandsumRollOptions<
-  D extends string | number = string | number
+  Sides extends string | number = string | number
 > {
   quantity?: number
-  sides: D extends number ? number : string[]
-  modifiers?: D extends number ? Modifiers : Record<string, never>
+  sides: Sides extends number ? number : string[]
+  modifiers?: Sides extends number ? Modifiers : Record<string, never>
 }
 
 export type Modifiers = {
@@ -57,15 +59,15 @@ export interface UniqueOptions {
   notUnique: number[]
 }
 
-type CoreRollOptions<D extends string | number = string | number> = Omit<
-  RandsumRollOptions<D>,
+type CoreRollOptions<Sides extends string | number = string | number> = Omit<
+  RandsumRollOptions<Sides>,
   'modifiers'
 >
 
 export type RequiredCoreDiceParameters<
-  D extends string | number = string | number
+  Sides extends string | number = string | number
 > = {
-  [Property in keyof CoreRollOptions<D>]-?: CoreRollOptions<D>[Property]
+  [Property in keyof CoreRollOptions<Sides>]-?: CoreRollOptions<Sides>[Property]
 }
 
 // Arguments
@@ -85,12 +87,12 @@ export type RandsumRollArgument =
 // Parameters
 
 export interface RandsumRollParameters<
-  D extends string | number = string | number
+  Sides extends string | number = string | number
 > {
   argument: RandsumRollArgument
-  options: RandsumRollOptions<D>
-  die: Die<D>
-  notation: RandsumNotation<D>
+  options: RandsumRollOptions<Sides>
+  die: D<Sides extends string ? string[] : number>
+  notation: RandsumNotation<Sides>
   description: string[]
 }
 export interface DicePools {

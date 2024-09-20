@@ -54,13 +54,13 @@ import { D20 } from 'randsum'
 D20.roll()
 
 // Make a new 120 sided die and roll it
-import { dieFactory } from 'randsum'
+import { D } from 'randsum'
 
-const D120 = dieFactory(120)
+const D120 = new D(120)
 D120.roll()
 
 //'heads' or 'tails'?
-const Coin = dieFactory(['heads', 'tails'])
+const Coin = new D(['heads', 'tails'])
 Coin.roll()
 ```
 

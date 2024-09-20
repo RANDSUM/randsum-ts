@@ -1,6 +1,6 @@
 import { describe, expect, spyOn, test } from 'bun:test'
 
-import { CustomSidesDie, StandardDie } from '~src/Dice'
+import { D } from '~src/D'
 import { generateRollResultFromParameters } from '~src/roll/generateRollResultFromParameters'
 import { InvalidUniqueError } from '~src/roll/generateRollResultFromParameters/applyModifiers'
 import * as GenerateRawRolls from '~src/roll/generateRollResultFromParameters/generateRawRolls'
@@ -14,11 +14,11 @@ describe('generateRollResultFromParameters', () => {
 
   const mockStandardDie = {
     roll: () => 200
-  } as unknown as StandardDie
+  } as unknown as D<number>
 
   const mockCustomSidesDie = {
     roll: () => '+'
-  } as unknown as CustomSidesDie
+  } as unknown as D<string[]>
 
   describe('when given roll total with no modifiers', () => {
     const coreParameters: DicePools = {
