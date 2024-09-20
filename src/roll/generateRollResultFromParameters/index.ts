@@ -1,9 +1,9 @@
-import { DicePool, DicePoolType, RollParameters, RollResult } from '~types'
+import { DicePool, DicePoolType, DicePools, RollResult } from '~types'
 import { applyModifiers } from './applyModifiers'
 import { generateRawRolls } from './generateRawRolls'
 import { isFullNumArray } from '~guards'
 
-function calculateType(dicePools: RollParameters['dicePools']): DicePoolType {
+function calculateType(dicePools: DicePools['dicePools']): DicePoolType {
   switch (true) {
     case Object.values(dicePools).every(
       (pool) => typeof pool.options.sides === 'number'
@@ -28,12 +28,12 @@ function calculateTotal(rolls: number[] | string[], bonus = 0): number {
 }
 
 function generateModifiedRolls(
-  rollParameters: RollParameters,
+  DicePools: DicePools,
   rawRolls: RollResult['rawRolls']
 ): RollResult['modifiedRolls'] {
   return Object.fromEntries(
-    Object.keys(rollParameters.dicePools).map((key) => {
-      const pool = rollParameters.dicePools[key] as
+    Object.keys(DicePools.dicePools).map((key) => {
+      const pool = DicePools.dicePools[key] as
         | DicePool<string>
         | DicePool<number>
       const rolls = rawRolls[key]
@@ -47,19 +47,17 @@ function generateModifiedRolls(
   )
 }
 
-function generateRollResultFromParameters(
-  rollParameters: RollParameters
-): RollResult {
-  const rawRolls = generateRawRolls(rollParameters.dicePools)
-  const modifiedRolls = generateModifiedRolls(rollParameters, rawRolls)
+function generateRollResultFromParameters(DicePools: DicePools): RollResult {
+  const rawRolls = generateRawRolls(DicePools.dicePools)
+  const modifiedRolls = generateModifiedRolls(DicePools, rawRolls)
   const modifiedValues = Object.values(modifiedRolls)
   const rawResult = Object.values(rawRolls)
   const result = modifiedValues.map((pool) => pool.rolls)
   const total = calculateTotal(modifiedValues.map((pool) => pool.total))
-  const type = calculateType(rollParameters.dicePools)
+  const type = calculateType(DicePools.dicePools)
 
   return {
-    ...rollParameters,
+    ...DicePools,
     rawRolls,
     rawResult,
     modifiedRolls,

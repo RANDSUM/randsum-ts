@@ -82,13 +82,13 @@ export interface DicePool<D extends string | number = string | number> {
   description: string[]
 }
 
-export interface RollParameters {
+export interface DicePools {
   dicePools: {
     [key: string]: DicePool
   }
 }
 
-export interface RollResult extends RollParameters {
+export interface RollResult extends DicePools {
   rawRolls: {
     [key: string]: string[] | number[]
   }

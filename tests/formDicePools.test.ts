@@ -2,10 +2,10 @@ import { describe, expect, test } from 'bun:test'
 
 import { CustomSidesDie, StandardDie } from '~src/Die'
 import { formDicePools } from '~src/roll/formDicePools'
-import { DiceNotation, DicePool, RollParameters } from '~types'
+import { DiceNotation, DicePool, DicePools } from '~types'
 
 const testableParams = (
-  params: RollParameters
+  params: DicePools
 ): {
   key: string
   value: DicePool
@@ -199,7 +199,7 @@ describe('parseRollArguments', () => {
 
   describe('given DiceNotation', () => {
     const coreTestString: DiceNotation = '4d6'
-    const coreRollParameters = { sides: 6, quantity: 4 }
+    const coreDicePools = { sides: 6, quantity: 4 }
 
     describe('given a basic notation', () => {
       const argument = coreTestString
@@ -211,8 +211,8 @@ describe('parseRollArguments', () => {
         expect(typeof testParam.key).toBe('string')
         expect(testParam.value).toMatchObject({
           argument,
-          options: coreRollParameters,
-          die: new StandardDie(coreRollParameters.sides),
+          options: coreDicePools,
+          die: new StandardDie(coreDicePools.sides),
           notation: '4d6',
           description: ['Roll 4 6-sided dice']
         })
@@ -250,10 +250,10 @@ describe('parseRollArguments', () => {
           expect(testParam.value).toMatchObject({
             argument,
             options: {
-              ...coreRollParameters,
+              ...coreDicePools,
               modifiers: { drop: { highest: 1 } }
             },
-            die: new StandardDie(coreRollParameters.sides),
+            die: new StandardDie(coreDicePools.sides),
             notation: '4d6H',
             description: ['Roll 4 6-sided dice', 'Drop highest']
           })
@@ -270,10 +270,10 @@ describe('parseRollArguments', () => {
           expect(testParam.value).toMatchObject({
             argument,
             options: {
-              ...coreRollParameters,
+              ...coreDicePools,
               modifiers: { drop: { highest: 2 } }
             },
-            die: new StandardDie(coreRollParameters.sides),
+            die: new StandardDie(coreDicePools.sides),
             notation: '4d6H2',
             description: ['Roll 4 6-sided dice', 'Drop highest 2']
           })
@@ -292,10 +292,10 @@ describe('parseRollArguments', () => {
           expect(testParam.value).toMatchObject({
             argument,
             options: {
-              ...coreRollParameters,
+              ...coreDicePools,
               modifiers: { drop: { lowest: 1 } }
             },
-            die: new StandardDie(coreRollParameters.sides),
+            die: new StandardDie(coreDicePools.sides),
             notation: '4d6L',
             description: ['Roll 4 6-sided dice', 'Drop lowest']
           })
@@ -312,10 +312,10 @@ describe('parseRollArguments', () => {
           expect(testParam.value).toMatchObject({
             argument,
             options: {
-              ...coreRollParameters,
+              ...coreDicePools,
               modifiers: { drop: { lowest: 2 } }
             },
-            die: new StandardDie(coreRollParameters.sides),
+            die: new StandardDie(coreDicePools.sides),
             notation: '4d6L2',
             description: ['Roll 4 6-sided dice', 'Drop lowest 2']
           })
@@ -333,12 +333,12 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: {
-            ...coreRollParameters,
+            ...coreDicePools,
             modifiers: {
               drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] }
             }
           },
-          die: new StandardDie(coreRollParameters.sides),
+          die: new StandardDie(coreDicePools.sides),
           notation: '4d6D{>5,<2,2,4}',
           description: [
             'Roll 4 6-sided dice',
@@ -361,10 +361,10 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: {
-            ...coreRollParameters,
+            ...coreDicePools,
             modifiers: { cap: { lessThan: 2, greaterThan: 5 } }
           },
-          die: new StandardDie(coreRollParameters.sides),
+          die: new StandardDie(coreDicePools.sides),
 
           notation: '4d6C{>5,<2}',
           description: [
@@ -387,10 +387,10 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: {
-            ...coreRollParameters,
+            ...coreDicePools,
             modifiers: { minus: 2 }
           },
-          die: new StandardDie(coreRollParameters.sides),
+          die: new StandardDie(coreDicePools.sides),
           notation: '4d6-2',
           description: ['Roll 4 6-sided dice', 'Subtract 2']
         })
@@ -408,10 +408,10 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: {
-            ...coreRollParameters,
+            ...coreDicePools,
             modifiers: { plus: 2 }
           },
-          die: new StandardDie(coreRollParameters.sides),
+          die: new StandardDie(coreDicePools.sides),
           notation: '4d6+2',
           description: ['Roll 4 6-sided dice', 'Add 2']
         })
@@ -428,7 +428,7 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: {
-            ...coreRollParameters,
+            ...coreDicePools,
             modifiers: {
               reroll: {
                 exact: [5, 20],
@@ -438,7 +438,7 @@ describe('parseRollArguments', () => {
               }
             }
           },
-          die: new StandardDie(coreRollParameters.sides),
+          die: new StandardDie(coreDicePools.sides),
           notation: '4d6R{5,20,>2,<6}3',
           description: [
             'Roll 4 6-sided dice',
@@ -459,10 +459,10 @@ describe('parseRollArguments', () => {
           expect(testParam.value).toMatchObject({
             argument,
             options: {
-              ...coreRollParameters,
+              ...coreDicePools,
               modifiers: { unique: { notUnique: [5, 6] } }
             },
-            die: new StandardDie(coreRollParameters.sides),
+            die: new StandardDie(coreDicePools.sides),
             notation: '4d6U{5,6}',
             description: [
               'Roll 4 6-sided dice',
@@ -482,10 +482,10 @@ describe('parseRollArguments', () => {
           expect(testParam.value).toMatchObject({
             argument,
             options: {
-              ...coreRollParameters,
+              ...coreDicePools,
               modifiers: { unique: true }
             },
-            die: new StandardDie(coreRollParameters.sides),
+            die: new StandardDie(coreDicePools.sides),
             notation: '4d6U',
             description: ['Roll 4 6-sided dice', 'No Duplicate Rolls']
           })
@@ -504,10 +504,10 @@ describe('parseRollArguments', () => {
         expect(testParam.value).toMatchObject({
           argument,
           options: {
-            ...coreRollParameters,
+            ...coreDicePools,
             modifiers: { explode: true }
           },
-          die: new StandardDie(coreRollParameters.sides),
+          die: new StandardDie(coreDicePools.sides),
           notation: '4d6!',
           description: ['Roll 4 6-sided dice', 'Exploding Dice']
         })
@@ -525,7 +525,7 @@ describe('parseRollArguments', () => {
           expect(testParam.value).toMatchObject({
             argument,
             options: {
-              ...coreRollParameters,
+              ...coreDicePools,
               modifiers: {
                 replace: [
                   { from: 1, to: 2 },
@@ -533,7 +533,7 @@ describe('parseRollArguments', () => {
                 ]
               }
             },
-            die: new StandardDie(coreRollParameters.sides),
+            die: new StandardDie(coreDicePools.sides),
 
             notation: '4d6V{1=2,>2=6}',
             description: [
@@ -555,10 +555,10 @@ describe('parseRollArguments', () => {
           expect(testParam.value).toMatchObject({
             argument,
             options: {
-              ...coreRollParameters,
+              ...coreDicePools,
               modifiers: { replace: [{ from: { lessThan: 2 }, to: 6 }] }
             },
-            die: new StandardDie(coreRollParameters.sides),
+            die: new StandardDie(coreDicePools.sides),
 
             notation: '4d6V{<2=6}',
             description: [
@@ -581,10 +581,10 @@ describe('parseRollArguments', () => {
           expect(explodeTestParam.value).toMatchObject({
             argument: explodeFirstString,
             options: {
-              ...coreRollParameters,
+              ...coreDicePools,
               modifiers: { explode: true, drop: { highest: 1 } }
             },
-            die: new StandardDie(coreRollParameters.sides),
+            die: new StandardDie(coreDicePools.sides),
             notation: '4d6H!',
             description: [
               'Roll 4 6-sided dice',
@@ -601,10 +601,10 @@ describe('parseRollArguments', () => {
           expect(dropFirstTestParam.value).toMatchObject({
             argument: dropFirstString,
             options: {
-              ...coreRollParameters,
+              ...coreDicePools,
               modifiers: { drop: { highest: 1 }, explode: true }
             },
-            die: new StandardDie(coreRollParameters.sides),
+            die: new StandardDie(coreDicePools.sides),
 
             notation: '4d6H!',
             description: [

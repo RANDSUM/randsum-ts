@@ -1,9 +1,9 @@
-import { CoreRollArgument, RollArgument, RollParameters } from '~types'
+import { CoreRollArgument, RollArgument, DicePools } from '~types'
 import { isCustomSides } from '~guards'
 import { uuidv7 as uuid } from 'uuidv7'
 import { parameterizeRollArgument } from '~src/parameterizeRollArgument'
 
-function formDicePools(argument: RollArgument): RollParameters {
+function formDicePools(argument: RollArgument): DicePools {
   const arrayArgs = argsToArray(argument)
   return {
     dicePools: arrayArgs.reduce(

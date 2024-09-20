@@ -4,7 +4,7 @@ import { CustomSidesDie, StandardDie } from '~src/Die'
 import { generateRollResultFromParameters } from '~src/roll/generateRollResultFromParameters'
 import { InvalidUniqueError } from '~src/roll/generateRollResultFromParameters/applyModifiers'
 import * as GenerateRawRolls from '~src/roll/generateRollResultFromParameters/generateRawRolls'
-import { DiceNotation, DicePoolType, RollParameters } from '~types'
+import { DiceNotation, DicePoolType, DicePools } from '~types'
 
 describe('generateRollResultFromParameters', () => {
   const testRollSet = [1, 2, 3, 4]
@@ -21,7 +21,7 @@ describe('generateRollResultFromParameters', () => {
   } as unknown as CustomSidesDie
 
   describe('when given roll total with no modifiers', () => {
-    const coreParameters: RollParameters = {
+    const coreParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
@@ -173,7 +173,7 @@ describe('generateRollResultFromParameters', () => {
     const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
     const customSidesRoll = ['r', 'a', 'n', 'd']
 
-    const customSidesParameters: RollParameters = {
+    const customSidesParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           die: mockCustomSidesDie,
@@ -215,7 +215,7 @@ describe('generateRollResultFromParameters', () => {
   describe('when given roll total with a "drop" modifier', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    const dropParameters: RollParameters = {
+    const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           notation: '1d1' as DiceNotation<number>,
@@ -263,7 +263,7 @@ describe('generateRollResultFromParameters', () => {
 
   describe('when given roll total with a "replace" modifier', () => {
     describe('that is a single replace modifiers', () => {
-      const dropParameters: RollParameters = {
+      const dropParameters: DicePools = {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
@@ -301,7 +301,7 @@ describe('generateRollResultFromParameters', () => {
     })
 
     describe('that is an array of replace modifiers', () => {
-      const dropParameters: RollParameters = {
+      const dropParameters: DicePools = {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
@@ -347,7 +347,7 @@ describe('generateRollResultFromParameters', () => {
   describe('when given roll total with an "explode" modifier', () => {
     const explodeRollTotals = [1, 2, 3, 6]
 
-    const explodeParameters: RollParameters = {
+    const explodeParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
@@ -389,7 +389,7 @@ describe('generateRollResultFromParameters', () => {
 
   describe('when given roll total with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
-      const rerollParameters: RollParameters = {
+      const reDicePools: DicePools = {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
@@ -409,10 +409,8 @@ describe('generateRollResultFromParameters', () => {
         spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
           coreRawRolls
         )
-        expect(
-          generateRollResultFromParameters(rerollParameters)
-        ).toMatchObject({
-          ...rerollParameters,
+        expect(generateRollResultFromParameters(reDicePools)).toMatchObject({
+          ...reDicePools,
           rawRolls: coreRawRolls,
           modifiedRolls: {
             'test-roll-id': {
@@ -428,7 +426,7 @@ describe('generateRollResultFromParameters', () => {
     })
 
     describe('that is a single reroll modifier', () => {
-      const rerollParameters: RollParameters = {
+      const reDicePools: DicePools = {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
@@ -450,10 +448,8 @@ describe('generateRollResultFromParameters', () => {
         spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
           coreRawRolls
         )
-        expect(
-          generateRollResultFromParameters(rerollParameters)
-        ).toMatchObject({
-          ...rerollParameters,
+        expect(generateRollResultFromParameters(reDicePools)).toMatchObject({
+          ...reDicePools,
           rawRolls: coreRawRolls,
           modifiedRolls: {
             'test-roll-id': {
@@ -469,7 +465,7 @@ describe('generateRollResultFromParameters', () => {
     })
 
     describe('that is an array of reroll modifiers', () => {
-      const rerollParameters: RollParameters = {
+      const reDicePools: DicePools = {
         dicePools: {
           'test-roll-id': {
             argument: undefined,
@@ -491,10 +487,8 @@ describe('generateRollResultFromParameters', () => {
         spyOn(GenerateRawRolls, 'generateRawRolls').mockReturnValueOnce(
           coreRawRolls
         )
-        expect(
-          generateRollResultFromParameters(rerollParameters)
-        ).toMatchObject({
-          ...rerollParameters,
+        expect(generateRollResultFromParameters(reDicePools)).toMatchObject({
+          ...reDicePools,
           rawRolls: coreRawRolls,
           modifiedRolls: {
             'test-roll-id': {
@@ -511,7 +505,7 @@ describe('generateRollResultFromParameters', () => {
   })
 
   describe('when given roll total with a "cap" modifier', () => {
-    const dropParameters: RollParameters = {
+    const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           notation: '1d1' as DiceNotation<number>,
@@ -548,7 +542,7 @@ describe('generateRollResultFromParameters', () => {
   })
 
   describe('when given roll total with a "plus" modifier', () => {
-    const dropParameters: RollParameters = {
+    const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
@@ -584,7 +578,7 @@ describe('generateRollResultFromParameters', () => {
   })
 
   describe('when given roll total with a "minus" modifier', () => {
-    const dropParameters: RollParameters = {
+    const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
@@ -620,7 +614,7 @@ describe('generateRollResultFromParameters', () => {
   })
 
   describe('when given multiple dice pools', () => {
-    const parameters: RollParameters = {
+    const parameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           notation: '1d1' as DiceNotation<number>,
@@ -669,7 +663,7 @@ describe('generateRollResultFromParameters', () => {
   })
 
   describe('when given an roll total with an unrecognized modifier', () => {
-    const dropParameters: RollParameters = {
+    const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
           argument: undefined,
@@ -681,7 +675,7 @@ describe('generateRollResultFromParameters', () => {
           die: mockStandardDie
         }
       }
-    } as unknown as RollParameters
+    } as unknown as DicePools
 
     test('Throws an error', () => {
       expect(() => generateRollResultFromParameters(dropParameters)).toThrow(

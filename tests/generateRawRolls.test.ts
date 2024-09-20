@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'bun:test'
 
-import { DicePool, RollParameters } from '~types'
+import { DicePool, DicePools } from '~types'
 import { generateRawRolls } from '~src/roll/generateRollResultFromParameters/generateRawRolls'
 
 describe('generateRawRolls', () => {
-  describe('when given a RollParameters object', () => {
-    const dicePoolParams: RollParameters = {
+  describe('when given a DicePools object', () => {
+    const dicePoolParams: DicePools = {
       dicePools: {
         'first-id': {
           argument: 20,

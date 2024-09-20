@@ -1,7 +1,7 @@
-import { RollParameters, RollResult } from '~types'
+import { DicePools, RollResult } from '~types'
 
 function generateRawRolls(
-  dicePools: RollParameters['dicePools']
+  dicePools: DicePools['dicePools']
 ): RollResult['rawRolls'] {
   return Object.fromEntries(
     Object.keys(dicePools).map((key) => {
