@@ -1,8 +1,7 @@
 import { RandsumRollArgument, RandsumRollParameters } from '~types'
 import { D } from '~src/D'
-import { formatDescription } from '~utils/formatDescription'
-import { formatNotation } from '~utils/formatNotation'
 import { normalizeArgument } from './normalizeArgument'
+import OptionsModel from '~models/OptionsModel'
 
 function parameterizeRollArgument(
   argument: RandsumRollArgument
@@ -13,8 +12,8 @@ function parameterizeRollArgument(
     options,
     argument,
     die,
-    notation: formatNotation(options),
-    description: formatDescription(options)
+    notation: OptionsModel.toNotation(options),
+    description: OptionsModel.toDescription(options)
   }
 }
 

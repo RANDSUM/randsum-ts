@@ -1,8 +1,7 @@
 import { DicePoolType, RandsumNotationValidationResult } from '~types'
 import { isDiceNotationArg } from '~guards'
-import { formatNotation } from '~utils/formatNotation'
-import { parseNotation } from '~utils/parseNotation'
-import { formatDescription } from '~utils/formatDescription'
+import NotationModel from '~models/NotationModel'
+import OptionsModel from '~models/OptionsModel'
 
 function validateDiceNotation(
   notation: string
@@ -14,9 +13,9 @@ function validateDiceNotation(
     }
   }
 
-  const digested = parseNotation(notation)
-  const description = formatDescription(digested)
-  const parsedNotation = formatNotation(digested)
+  const digested = NotationModel.toOptions(notation)
+  const description = OptionsModel.toDescription(digested)
+  const parsedNotation = OptionsModel.toNotation(digested)
   const type = Array.isArray(digested.sides)
     ? DicePoolType.custom
     : DicePoolType.numerical

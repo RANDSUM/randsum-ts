@@ -1,6 +1,9 @@
+import { isValidModifier } from '~guards'
 import {
   DropOptions,
   GreaterLessOptions,
+  RandsumNotation,
+  RandsumRollOptions,
   ReplaceOptions,
   RerollOptions,
   UniqueOptions
@@ -99,4 +102,34 @@ function singleReplaceNotation(replace: ReplaceOptions) {
       ? replace.from
       : formatGreaterLess(replace.from).join(',')
   return `${fromValue}=${replace.to}`
+}
+
+export function formatModifierNotation({
+  modifiers
+}: RandsumRollOptions): string {
+  if (!isValidModifier(modifiers)) return ''
+
+  const modifierStrings = []
+
+  if (modifiers.cap) modifierStrings.push(capNotation(modifiers.cap))
+  if (modifiers.drop) modifierStrings.push(dropNotation(modifiers.drop))
+  if (modifiers.replace)
+    modifierStrings.push(replaceNotation(modifiers.replace))
+  if (modifiers.reroll) modifierStrings.push(rerollNotation(modifiers.reroll))
+  if (modifiers.explode) modifierStrings.push(explodeNotation())
+  if (modifiers.unique) modifierStrings.push(uniqueNotation(modifiers.unique))
+  if (modifiers.plus) modifierStrings.push(plusNotation(modifiers.plus))
+  if (modifiers.minus) modifierStrings.push(minusNotation(modifiers.minus))
+
+  return modifierStrings.join('')
+}
+
+export function formatCoreNotation({
+  quantity = 1,
+  sides
+}: RandsumRollOptions<string | number>): RandsumNotation {
+  const formattedSides = Array.isArray(sides)
+    ? `{${sides.map((s) => (s === '' ? ' ' : s)).join('')}}`
+    : sides
+  return `${quantity}d${formattedSides}` as RandsumNotation
 }

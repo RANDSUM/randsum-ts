@@ -5,7 +5,7 @@ import {
   isCustomSidesD
 } from '~guards'
 import { RandsumRollArgument, RandsumRollOptions } from '~types'
-import { parseNotation } from '~utils/parseNotation'
+import NotationModel from '~models/NotationModel'
 
 function normalizeArgument(argument: RandsumRollArgument): RandsumRollOptions {
   if (isD(argument)) {
@@ -20,7 +20,7 @@ function normalizeArgument(argument: RandsumRollArgument): RandsumRollOptions {
   }
 
   if (isDiceNotationArg(argument)) {
-    return parseNotation(argument)
+    return NotationModel.toOptions(argument)
   }
 
   if (Array.isArray(argument)) {
