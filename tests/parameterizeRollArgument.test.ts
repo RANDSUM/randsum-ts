@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 
-import { CustomSidesDie, StandardDie } from '~src/Dice'
+import { D } from '~src/D'
 import { parameterizeRollArgument } from '~src/parameterizeRollArgument'
 import { RandsumNotation } from '~types'
 
@@ -14,7 +14,7 @@ describe('parameterizeRollArgument', () => {
       expect(params).toMatchObject({
         argument,
         options: { quantity: 1, sides: 20 },
-        die: new StandardDie(20),
+        die: new D(20),
         notation: '1d20',
         description: ['Roll 1 20-sided die']
       })
@@ -30,7 +30,7 @@ describe('parameterizeRollArgument', () => {
       expect(params).toMatchObject({
         argument,
         options: { quantity: 1, sides: argument },
-        die: new StandardDie(argument),
+        die: new D(argument),
         notation: '1d2',
         description: ['Roll 1 2-sided die']
       })
@@ -46,7 +46,7 @@ describe('parameterizeRollArgument', () => {
       expect(params).toMatchObject({
         argument,
         options: { quantity: 1, sides: argument },
-        die: new CustomSidesDie(argument),
+        die: new D(argument),
         notation: '1d{ht}',
         description: ['Roll 1 die with the following sides: (h,t)']
       })
@@ -66,7 +66,7 @@ describe('parameterizeRollArgument', () => {
         expect(params).toMatchObject({
           argument,
           options: argument,
-          die: new StandardDie(argument.sides),
+          die: new D(argument.sides),
           notation: '4d6',
           description: ['Roll 4 6-sided dice']
         })
@@ -93,7 +93,7 @@ describe('parameterizeRollArgument', () => {
         expect(params).toMatchObject({
           argument,
           options: argument,
-          die: new StandardDie(argument.sides),
+          die: new D(argument.sides),
           notation: '4d6V{>5=1}R{2,1,4}3U',
           description: [
             'Roll 4 6-sided dice',
@@ -117,7 +117,7 @@ describe('parameterizeRollArgument', () => {
         expect(params).toMatchObject({
           argument,
           options: argument,
-          die: new CustomSidesDie(argument.sides),
+          die: new D(argument.sides),
           notation: '4d{randsum}',
           description: ['Roll 4 dice with the following sides: (r,a,n,d,s,u,m)']
         })
@@ -152,7 +152,7 @@ describe('parameterizeRollArgument', () => {
         expect(params).toMatchObject({
           argument,
           options: argument,
-          die: new StandardDie(argument.sides),
+          die: new D(argument.sides),
           notation: '4d6C{>2,<1}LD{>2,<6,2,3}V{6=1}!U{1,2}+2-1',
           description: [
             'Roll 4 6-sided dice',
@@ -186,7 +186,7 @@ describe('parameterizeRollArgument', () => {
         expect(params).toMatchObject({
           argument,
           options: coreDicePools,
-          die: new StandardDie(coreDicePools.sides),
+          die: new D(coreDicePools.sides),
           notation: '4d6',
           description: ['Roll 4 6-sided dice']
         })
@@ -204,7 +204,7 @@ describe('parameterizeRollArgument', () => {
           expect(params).toMatchObject({
             argument,
             options: { quantity: 4, sides: customSides },
-            die: new CustomSidesDie(customSides),
+            die: new D(customSides),
             notation: '4d{++--  }',
             description: ['Roll 4 dice with the following sides: (+,+,-,-, , )']
           })
@@ -225,7 +225,7 @@ describe('parameterizeRollArgument', () => {
               ...coreDicePools,
               modifiers: { drop: { highest: 1 } }
             },
-            die: new StandardDie(coreDicePools.sides),
+            die: new D(coreDicePools.sides),
             notation: '4d6H',
             description: ['Roll 4 6-sided dice', 'Drop highest']
           })
@@ -244,7 +244,7 @@ describe('parameterizeRollArgument', () => {
               ...coreDicePools,
               modifiers: { drop: { highest: 2 } }
             },
-            die: new StandardDie(coreDicePools.sides),
+            die: new D(coreDicePools.sides),
             notation: '4d6H2',
             description: ['Roll 4 6-sided dice', 'Drop highest 2']
           })
@@ -265,7 +265,7 @@ describe('parameterizeRollArgument', () => {
               ...coreDicePools,
               modifiers: { drop: { lowest: 1 } }
             },
-            die: new StandardDie(coreDicePools.sides),
+            die: new D(coreDicePools.sides),
             notation: '4d6L',
             description: ['Roll 4 6-sided dice', 'Drop lowest']
           })
@@ -284,7 +284,7 @@ describe('parameterizeRollArgument', () => {
               ...coreDicePools,
               modifiers: { drop: { lowest: 2 } }
             },
-            die: new StandardDie(coreDicePools.sides),
+            die: new D(coreDicePools.sides),
             notation: '4d6L2',
             description: ['Roll 4 6-sided dice', 'Drop lowest 2']
           })
@@ -306,7 +306,7 @@ describe('parameterizeRollArgument', () => {
               drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] }
             }
           },
-          die: new StandardDie(coreDicePools.sides),
+          die: new D(coreDicePools.sides),
           notation: '4d6D{>5,<2,2,4}',
           description: [
             'Roll 4 6-sided dice',
@@ -330,7 +330,7 @@ describe('parameterizeRollArgument', () => {
             ...coreDicePools,
             modifiers: { cap: { lessThan: 2, greaterThan: 5 } }
           },
-          die: new StandardDie(coreDicePools.sides),
+          die: new D(coreDicePools.sides),
 
           notation: '4d6C{>5,<2}',
           description: [
@@ -354,7 +354,7 @@ describe('parameterizeRollArgument', () => {
             ...coreDicePools,
             modifiers: { minus: 2 }
           },
-          die: new StandardDie(coreDicePools.sides),
+          die: new D(coreDicePools.sides),
           notation: '4d6-2',
           description: ['Roll 4 6-sided dice', 'Subtract 2']
         })
@@ -373,7 +373,7 @@ describe('parameterizeRollArgument', () => {
             ...coreDicePools,
             modifiers: { plus: 2 }
           },
-          die: new StandardDie(coreDicePools.sides),
+          die: new D(coreDicePools.sides),
           notation: '4d6+2',
           description: ['Roll 4 6-sided dice', 'Add 2']
         })
@@ -399,7 +399,7 @@ describe('parameterizeRollArgument', () => {
               }
             }
           },
-          die: new StandardDie(coreDicePools.sides),
+          die: new D(coreDicePools.sides),
           notation: '4d6R{5,20,>2,<6}3',
           description: [
             'Roll 4 6-sided dice',
@@ -422,7 +422,7 @@ describe('parameterizeRollArgument', () => {
               ...coreDicePools,
               modifiers: { unique: { notUnique: [5, 6] } }
             },
-            die: new StandardDie(coreDicePools.sides),
+            die: new D(coreDicePools.sides),
             notation: '4d6U{5,6}',
             description: [
               'Roll 4 6-sided dice',
@@ -444,7 +444,7 @@ describe('parameterizeRollArgument', () => {
               ...coreDicePools,
               modifiers: { unique: true }
             },
-            die: new StandardDie(coreDicePools.sides),
+            die: new D(coreDicePools.sides),
             notation: '4d6U',
             description: ['Roll 4 6-sided dice', 'No Duplicate Rolls']
           })
@@ -464,7 +464,7 @@ describe('parameterizeRollArgument', () => {
             ...coreDicePools,
             modifiers: { explode: true }
           },
-          die: new StandardDie(coreDicePools.sides),
+          die: new D(coreDicePools.sides),
           notation: '4d6!',
           description: ['Roll 4 6-sided dice', 'Exploding Dice']
         })
@@ -489,7 +489,7 @@ describe('parameterizeRollArgument', () => {
                 ]
               }
             },
-            die: new StandardDie(coreDicePools.sides),
+            die: new D(coreDicePools.sides),
 
             notation: '4d6V{1=2,>2=6}',
             description: [
@@ -513,7 +513,7 @@ describe('parameterizeRollArgument', () => {
               ...coreDicePools,
               modifiers: { replace: [{ from: { lessThan: 2 }, to: 6 }] }
             },
-            die: new StandardDie(coreDicePools.sides),
+            die: new D(coreDicePools.sides),
 
             notation: '4d6V{<2=6}',
             description: [
@@ -537,7 +537,7 @@ describe('parameterizeRollArgument', () => {
               ...coreDicePools,
               modifiers: { explode: true, drop: { highest: 1 } }
             },
-            die: new StandardDie(coreDicePools.sides),
+            die: new D(coreDicePools.sides),
             notation: '4d6H!',
             description: [
               'Roll 4 6-sided dice',
@@ -555,7 +555,7 @@ describe('parameterizeRollArgument', () => {
               ...coreDicePools,
               modifiers: { drop: { highest: 1 }, explode: true }
             },
-            die: new StandardDie(coreDicePools.sides),
+            die: new D(coreDicePools.sides),
 
             notation: '4d6H!',
             description: [
@@ -598,7 +598,7 @@ describe('parameterizeRollArgument', () => {
                 minus: 5
               }
             },
-            die: new StandardDie(20),
+            die: new D(20),
             notation:
               '10d20C{>18,<2}H2LD{>5,<2,2,4}V{1=2,>2=6}R{5,2,<6}3!U{5}+5-5',
             description: [

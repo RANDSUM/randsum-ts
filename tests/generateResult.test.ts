@@ -1,6 +1,6 @@
 import { describe, expect, spyOn, test } from 'bun:test'
 
-import { CustomSidesDie, StandardDie } from '~src/Dice'
+import { CustomSidesDie, StandardDie } from '~src/D'
 import { generateRollResultFromParameters } from '~src/roll/generateRollResultFromParameters'
 import { InvalidUniqueError } from '~src/roll/generateRollResultFromParameters/applyModifiers'
 import * as GenerateRawRolls from '~src/roll/generateRollResultFromParameters/generateRawRolls'
