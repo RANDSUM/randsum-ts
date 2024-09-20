@@ -28,7 +28,7 @@ export function parseCoreNotation(
     sides: sides.includes('{')
       ? [...sides.replaceAll(/{|}/g, '')]
       : Number(sides)
-  } as RequiredCoreDiceParameters
+  }
 }
 
 function parseCapNotation(modifiersString: string): Pick<Modifiers, 'cap'> {

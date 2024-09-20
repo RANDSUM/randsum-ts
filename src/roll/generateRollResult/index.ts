@@ -52,9 +52,7 @@ function generateModifiedRolls(
   )
 }
 
-function generateRollResultFromParameters(
-  DicePools: DicePools
-): RandsumRollResult {
+function generateRollResult(DicePools: DicePools): RandsumRollResult {
   const rawRolls = generateRawRolls(DicePools.dicePools)
   const modifiedRolls = generateModifiedRolls(DicePools, rawRolls)
   const modifiedValues = Object.values(modifiedRolls)
@@ -74,4 +72,4 @@ function generateRollResultFromParameters(
   }
 }
 
-export { generateRollResultFromParameters }
+export { generateRollResult }

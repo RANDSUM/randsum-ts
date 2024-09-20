@@ -30,19 +30,17 @@ function formatModifierNotation({ modifiers }: RandsumRollOptions): string {
 }
 
 function formatCoreNotation({
-  quantity,
+  quantity = 1,
   sides
-}: RandsumRollOptions<string | number>) {
+}: RandsumRollOptions<string | number>): RandsumNotation {
   const formattedSides = Array.isArray(sides)
     ? `{${sides.map((s) => (s === '' ? ' ' : s)).join('')}}`
     : sides
-  return `${quantity}d${formattedSides}`
+  return `${quantity}d${formattedSides}` as RandsumNotation
 }
 
 function formatNotation(options: RandsumRollOptions): RandsumNotation {
-  return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as
-    | RandsumNotation<string>
-    | RandsumNotation<number>
+  return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as RandsumNotation
 }
 
 export { formatNotation }

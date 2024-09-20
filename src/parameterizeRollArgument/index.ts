@@ -15,7 +15,7 @@ function parameterizeRollArgument(
     die,
     notation: formatNotation(options),
     description: formatDescription(options)
-  } as RandsumRollParameters
+  }
 }
 
 export { parameterizeRollArgument }
