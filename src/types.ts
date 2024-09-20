@@ -74,9 +74,7 @@ export type DiceParameters<D extends string | number = string | number> = {
   [Property in keyof RawDiceParams<D>]-?: RawDiceParams<D>[Property]
 }
 
-export interface DicePoolParameters<
-  D extends string | number = string | number
-> {
+export interface DicePool<D extends string | number = string | number> {
   argument: RollArgument
   options: DicePoolOptions<D>
   die: SingleDie<D>
@@ -86,7 +84,7 @@ export interface DicePoolParameters<
 
 export interface RollParameters {
   dicePools: {
-    [key: string]: DicePoolParameters
+    [key: string]: DicePool
   }
 }
 

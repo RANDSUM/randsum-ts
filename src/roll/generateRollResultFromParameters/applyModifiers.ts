@@ -1,7 +1,7 @@
 import { isCustomParameters } from '~guards'
 import {
   DiceParameters,
-  DicePoolParameters,
+  DicePool,
   DropOptions,
   GreaterLessOptions,
   Modifiers,
@@ -186,7 +186,7 @@ function applyDrop(
 }
 
 function applyModifiers(
-  poolParameters: DicePoolParameters<string> | DicePoolParameters<number>,
+  poolParameters: DicePool<string> | DicePool<number>,
   initialRolls: number[] | string[]
 ): RollBonuses | ModifiedRollBonuses {
   if (isCustomParameters(poolParameters)) {

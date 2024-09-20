@@ -1,9 +1,4 @@
-import {
-  DicePoolParameters,
-  DicePoolType,
-  RollParameters,
-  RollResult
-} from '~types'
+import { DicePool, DicePoolType, RollParameters, RollResult } from '~types'
 import { applyModifiers } from './applyModifiers'
 import { generateRawRolls } from './generateRawRolls'
 import { isFullNumArray } from '~guards'
@@ -39,8 +34,8 @@ function generateModifiedRolls(
   return Object.fromEntries(
     Object.keys(rollParameters.dicePools).map((key) => {
       const pool = rollParameters.dicePools[key] as
-        | DicePoolParameters<string>
-        | DicePoolParameters<number>
+        | DicePool<string>
+        | DicePool<number>
       const rolls = rawRolls[key]
       const modified = applyModifiers(pool, rolls)
       const modifiedRoll = {

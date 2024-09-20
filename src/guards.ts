@@ -14,7 +14,7 @@ import {
 import {
   DiceNotation,
   DicePoolOptions,
-  DicePoolParameters,
+  DicePool,
   Modifiers,
   RollArgument
 } from '~types'
@@ -58,8 +58,8 @@ export function isValidModifier(
 }
 
 export function isCustomParameters(
-  poolParameters: DicePoolParameters
-): poolParameters is DicePoolParameters<string> {
+  poolParameters: DicePool
+): poolParameters is DicePool<string> {
   return Array.isArray(poolParameters.options.sides)
 }
 

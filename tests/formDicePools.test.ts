@@ -2,13 +2,13 @@ import { describe, expect, test } from 'bun:test'
 
 import { CustomSidesDie, StandardDie } from '~src/Die'
 import { formDicePools } from '~src/roll/formDicePools'
-import { DiceNotation, DicePoolParameters, RollParameters } from '~types'
+import { DiceNotation, DicePool, RollParameters } from '~types'
 
 const testableParams = (
   params: RollParameters
 ): {
   key: string
-  value: DicePoolParameters
+  value: DicePool
 }[] => {
   const pools = Object.entries(params.dicePools)
   return pools.map(([key, value]) => ({ key, value }))
