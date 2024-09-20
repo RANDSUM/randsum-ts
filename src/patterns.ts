@@ -36,3 +36,8 @@ export const capPattern = new RegExp(
   /[Cc]/.source + greaterThanLessThanMatcher.source,
   'g'
 )
+
+export const completeRollPattern = new RegExp(
+  `${coreNotationPattern.source}|${dropHighestPattern.source}|${dropLowestPattern.source}|${dropConstraintsPattern.source}|${explodePattern.source}|${uniquePattern.source}|${replacePattern.source}|${rerollPattern.source}|${capPattern.source}|${plusPattern.source}|${minusPattern.source}`,
+  'g'
+)
