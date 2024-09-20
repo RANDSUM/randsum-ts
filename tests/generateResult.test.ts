@@ -56,7 +56,7 @@ describe('generateRollResult', () => {
       dicePools: {
         'test-roll-id': {
           die: mockStandardDie,
-          argument: '1d1',
+          argument: 1,
           notation: '1d1' as RandsumNotation<number>,
           description: ['foo'],
           options: {
