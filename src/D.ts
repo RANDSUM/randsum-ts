@@ -26,10 +26,10 @@ class D<Sides extends string[] | number> {
   }
 
   roll(): Result<Faces<Sides>> {
-    return this.faces[this.rawRoll()] as Result<Faces<Sides>>
+    return this.faces[this._rawRoll()] as Result<Faces<Sides>>
   }
 
-  protected rawRoll(): number {
+  protected _rawRoll(): number {
     return Math.floor(Math.random() * Number(this.sides))
   }
 }

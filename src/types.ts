@@ -75,6 +75,7 @@ export type RequiredCoreDiceParameters<
 export type CoreRollArgument =
   | string
   | number
+  | D<string[] | number>
   | RandsumRollOptions
   | RandsumNotation
   | (number | string)[]

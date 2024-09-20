@@ -173,6 +173,46 @@ describe('parameterizeRollArgument', () => {
     })
   })
 
+  describe('Given a D() object', () => {
+    describe('simple', () => {
+      const argument = new D(6)
+
+      test('returns a RollParameter matching the argument', () => {
+        const params = parameterizeRollArgument(argument)
+
+        expect(params).toMatchObject({
+          argument,
+          options: {
+            sides: argument.sides,
+            quantity: 1
+          },
+          die: argument,
+          notation: '1d6',
+          description: ['Roll 1 6-sided die']
+        })
+      })
+    })
+
+    describe('custom sides', () => {
+      const argument = new D(['r', 'a', 'n', 'd', 's', 'u', 'm'])
+
+      test('returns a RollParameter matching the argument', () => {
+        const params = parameterizeRollArgument(argument)
+
+        expect(params).toMatchObject({
+          argument,
+          options: {
+            sides: argument.faces,
+            quantity: 1
+          },
+          die: argument,
+          notation: '1d{randsum}',
+          description: ['Roll 1 die with the following sides: (r,a,n,d,s,u,m)']
+        })
+      })
+    })
+  })
+
   describe('given RandsumNotation', () => {
     const coreTestString: RandsumNotation = '4d6'
     const coreDicePools = { sides: 6, quantity: 4 }
