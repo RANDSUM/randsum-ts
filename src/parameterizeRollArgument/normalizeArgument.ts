@@ -7,9 +7,7 @@ import {
 import { RandsumRollArgument, RandsumRollOptions } from '~types'
 import { parseNotation } from '~utils/parseNotation'
 
-function parseIntoRollOptions(
-  argument: RandsumRollArgument
-): RandsumRollOptions {
+function normalizeArgument(argument: RandsumRollArgument): RandsumRollOptions {
   if (isD(argument)) {
     return {
       quantity: 1,
@@ -25,19 +23,17 @@ function parseIntoRollOptions(
     return parseNotation(argument)
   }
 
-  const defaultQuantity = 1
-
   if (Array.isArray(argument)) {
     return {
-      quantity: defaultQuantity,
+      quantity: 1,
       sides: argument.map(String)
     }
   }
 
   return {
-    quantity: defaultQuantity,
+    quantity: 1,
     sides: Number(argument || 20)
   }
 }
 
-export { parseIntoRollOptions }
+export { normalizeArgument }
