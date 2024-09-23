@@ -26,6 +26,10 @@ class D<Sides extends string[] | number> {
   }
 
   roll(): Result<Faces<Sides>> {
+    return this._rawRollResult()
+  }
+
+  protected _rawRollResult(): Result<Faces<Sides>> {
     return this.faces[this._rawRoll()] as Result<Faces<Sides>>
   }
 

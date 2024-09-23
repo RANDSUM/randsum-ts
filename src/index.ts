@@ -1,5 +1,4 @@
 export * from './D'
 export { roll } from './roll'
-export { validateDiceNotation } from './validateDiceNotation'
-export { parameterizeRollArgument } from './parameterizeRollArgument'
+export * from './models'
 export * from './types'

@@ -1,12 +1,6 @@
-import {
-  RandsumRollParameters,
-  DicePoolType,
-  DicePools,
-  RandsumRollResult
-} from '~types'
-import { applyModifiers } from './applyModifiers'
-import { generateRawRolls } from './generateRawRolls'
 import { isFullNumArray } from '~guards'
+import { ParametersModel, RawRollsModel } from '~models'
+import { DicePools, DicePoolType, RandsumRollResult } from '~types'
 
 function calculateType(dicePools: DicePools['dicePools']): DicePoolType {
   switch (true) {
@@ -32,17 +26,15 @@ function calculateTotal(rolls: number[] | string[], bonus = 0): number {
   return 0
 }
 
-function generateModifiedRolls(
+export function generateModifiedRolls(
   DicePools: DicePools,
   rawRolls: RandsumRollResult['rawRolls']
 ): RandsumRollResult['modifiedRolls'] {
   return Object.fromEntries(
     Object.keys(DicePools.dicePools).map((key) => {
-      const pool = DicePools.dicePools[key] as
-        | RandsumRollParameters<string>
-        | RandsumRollParameters<number>
+      const params = DicePools.dicePools[key]
       const rolls = rawRolls[key]
-      const modified = applyModifiers(pool, rolls)
+      const modified = ParametersModel.applyModifiers(params, rolls)
       const modifiedRoll = {
         rolls: modified.rolls,
         total: calculateTotal(modified.rolls, modified.simpleMathModifier)
@@ -53,7 +45,7 @@ function generateModifiedRolls(
 }
 
 function generateRollResult(DicePools: DicePools): RandsumRollResult {
-  const rawRolls = generateRawRolls(DicePools.dicePools)
+  const rawRolls = RawRollsModel.generate(DicePools.dicePools)
   const modifiedRolls = generateModifiedRolls(DicePools, rawRolls)
   const modifiedValues = Object.values(modifiedRolls)
   const rawResult = Object.values(rawRolls)
@@ -71,5 +63,6 @@ function generateRollResult(DicePools: DicePools): RandsumRollResult {
     total
   }
 }
-
-export { generateRollResult }
+export default {
+  generateRollResult
+}

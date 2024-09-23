@@ -1,6 +1,6 @@
 import { DicePools, RandsumRollResult } from '~types'
 
-function generateRawRolls(
+function generate(
   dicePools: DicePools['dicePools']
 ): RandsumRollResult['rawRolls'] {
   return Object.fromEntries(
@@ -20,4 +20,4 @@ function generateRawRolls(
   )
 }
 
-export { generateRawRolls }
+export default { generate }
