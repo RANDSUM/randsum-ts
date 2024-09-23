@@ -1,6 +1,5 @@
 import { isFullNumArray } from '~guards'
-import ParametersModel from '~models/ParametersModel'
-import RawRollsModel from '~models/RawRollsModel'
+import { ParametersModel, RawRollsModel } from '~models'
 import { DicePools, DicePoolType, RandsumRollResult } from '~types'
 
 function calculateType(dicePools: DicePools['dicePools']): DicePoolType {

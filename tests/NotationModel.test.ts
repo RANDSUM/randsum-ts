@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test'
-import NotationModel from '~models/NotationModel'
+import { NotationModel } from '~models'
 import { RandsumNotation, DicePoolType } from '~types'
 
 describe('NotationModel.validate', () => {

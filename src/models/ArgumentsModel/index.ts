@@ -11,9 +11,8 @@ import {
   isDicePoolOptions,
   isDiceNotationArg
 } from '~guards'
-import NotationModel from '~models/NotationModel'
+import { NotationModel, OptionsModel } from '~models'
 import { D } from '~src/D'
-import OptionsModel from '~models/OptionsModel'
 
 function formDicePools(args: RandsumRollArgument[]): DicePools {
   return {

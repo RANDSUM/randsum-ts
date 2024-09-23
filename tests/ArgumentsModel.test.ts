@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
+import { ArgumentsModel } from '~models'
 
-import ArgumentsModel from '~models/ArgumentsModel'
 import { D } from '~src/D'
 import { RandsumNotation, RandsumRollParameters, DicePools } from '~types'
 

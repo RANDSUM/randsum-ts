@@ -1,10 +1,9 @@
 import { describe, expect, spyOn, test } from 'bun:test'
+import { DicePoolsModel, RawRollsModel } from '~models'
 
 import { D } from '~src/D'
-import { InvalidUniqueError } from '~models/ParametersModel/modifierApplicators'
+import { InvalidUniqueError } from '~src/models/ParametersModel/modifierApplicators'
 import { RandsumNotation, DicePoolType, DicePools } from '~types'
-import RawRollsModel from '~models/RawRollsModel'
-import DicePoolsModel from '~models/DicePoolsModel'
 
 describe('DicePoolsModel.generateResult', () => {
   const testRollSet = [1, 2, 3, 4]

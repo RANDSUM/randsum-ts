@@ -7,7 +7,7 @@ import {
 } from '~types'
 import { parseCoreNotation, parseModifiers } from './optionsParsers'
 import { isDiceNotationArg, isCustomSidesArg } from '~guards'
-import OptionsModel from '~models/OptionsModel'
+import { OptionsModel } from '~models'
 
 function toOptions(
   notationString: RandsumNotation

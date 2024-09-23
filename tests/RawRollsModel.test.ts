@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'bun:test'
+import { RawRollsModel } from '~models'
 
 import { RandsumRollParameters, DicePools } from '~types'
-import RawRollsModel from '~models/RawRollsModel'
 
 describe('RawRollsModel', () => {
   describe('RawRollsModel.generate', () => {
