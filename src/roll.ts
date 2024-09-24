@@ -18,21 +18,9 @@ function roll(
 ): RandsumRollResult<string | number, DicePoolType.mixed, string>
 function roll<Sides extends string | number = string | number>(
   ...args: RandsumRollArgument<Sides>[]
-): RandsumRollResult<Sides, DicePoolType> {
+): RandsumRollResult<Sides> {
   const dicePools = ArgumentsModel.formDicePools(args)
   return DicePoolsModel.generateRollResult(dicePools)
 }
-
-const foo = roll(1, 2, 3)
-console.log(foo.total)
-console.log(foo.type)
-
-const bar = roll(['a', 'b', 'c'], ['1'])
-console.log(bar.total)
-console.log(bar.type)
-
-const baz = roll(1, 2, 3, ['1'])
-console.log(baz.total)
-console.log(baz.type)
 
 export { roll }
