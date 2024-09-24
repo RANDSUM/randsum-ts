@@ -72,20 +72,29 @@ export type RequiredCoreDiceParameters<
 
 // Arguments
 
-export type RandsumRollArgument =
+export type RandsumNumericalArgument =
   | `${number}`
   | number
-  | D<string[] | number>
-  | RandsumRollOptions
-  | RandsumNotation
+  | D<number>
+  | RandsumRollOptions<number>
+  | RandsumNotation<number>
+
+export type RandsumCustomArgument =
+  | D<string[]>
+  | RandsumRollOptions<string>
+  | RandsumNotation<string>
   | string[]
+
+export type RandsumRollArgument<
+  Sides extends string | number = string | number
+> = Sides extends string ? RandsumCustomArgument : RandsumNumericalArgument
 
 // Parameters
 
 export interface RandsumRollParameters<
   Sides extends string | number = string | number
 > {
-  argument: RandsumRollArgument
+  argument: RandsumRollArgument<Sides>
   options: RandsumRollOptions<Sides>
   die: D<Sides extends string ? string[] : number>
   notation: RandsumNotation<Sides>
