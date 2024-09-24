@@ -21,25 +21,18 @@ function formDicePools<Sides extends string | number = string | number>(
 }
 
 function toOptions(argument: RandsumRollArgument): RandsumRollOptions {
-  if (isDicePoolOptions(argument)) {
-    return argument
-  }
-
-  if (isD(argument)) {
-    return argument.toOptions()
-  }
-
-  if (isDiceNotationArg(argument)) {
-    return NotationModel.toOptions(argument)
-  }
-
-  const sides = Array.isArray(argument)
-    ? argument.map(String)
-    : Number(argument)
-
-  return {
-    quantity: 1,
-    sides
+  switch (true) {
+    case isDicePoolOptions(argument):
+      return argument
+    case isD(argument):
+      return argument.toOptions()
+    case isDiceNotationArg(argument):
+      return NotationModel.toOptions(argument)
+    default:
+      return {
+        quantity: 1,
+        sides: Array.isArray(argument) ? argument.map(String) : Number(argument)
+      }
   }
 }
 
