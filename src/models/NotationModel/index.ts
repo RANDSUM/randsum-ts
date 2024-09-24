@@ -9,16 +9,16 @@ import { parseCoreNotation, parseModifiers } from './optionsParsers'
 import { isDiceNotationArg, isCustomSidesStringArg } from '~guards'
 import { OptionsModel } from '~models'
 
-function toOptions(
-  notationString: RandsumNotation
-): RandsumRollOptions<number | string> {
+function toOptions<Sides extends string | number>(
+  notationString: RandsumNotation<Sides>
+): RandsumRollOptions<Sides> {
   const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)
   const modifiersString = notationString.replace(coreNotationMatch!, '')
 
   return {
     ...parseCoreNotation(coreNotationMatch!),
     ...parseModifiers(modifiersString)
-  }
+  } as RandsumRollOptions<Sides>
 }
 
 function validate(notation: string): RandsumNotationValidationResult {

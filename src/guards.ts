@@ -34,6 +34,7 @@ export function isDicePoolOptions(
 ): argument is RandsumRollOptions {
   return (
     typeof argument === 'object' &&
+    argument instanceof D === false &&
     (argument as RandsumRollOptions).sides !== undefined
   )
 }

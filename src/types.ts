@@ -2,13 +2,12 @@ import { D } from './D'
 
 // Primitives
 
-type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
-type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
+export type RandsumNumericDiceNotation =
+  `${number}${'d' | 'D'}${number}${string}`
+export type RandsumCustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
 
 export type RandsumNotation<Sides extends string | number = string | number> =
-  Sides extends number
-    ? DiceNotationWithNumericSides
-    : DiceNotationWithCustomSides
+  Sides extends number ? RandsumNumericDiceNotation : RandsumCustomDiceNotation
 
 export enum DicePoolType {
   numerical = 'numerical',

@@ -8,8 +8,10 @@ import {
   formatModifierDescriptions
 } from './stringFormatters'
 
-function toNotation(options: RandsumRollOptions): RandsumNotation {
-  return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as RandsumNotation
+function toNotation<Sides extends string | number = string | number>(
+  options: RandsumRollOptions<Sides>
+): RandsumNotation<Sides> {
+  return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as RandsumNotation<Sides>
 }
 
 function toDescription(options: RandsumRollOptions<number | string>) {

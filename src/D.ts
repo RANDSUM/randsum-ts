@@ -1,5 +1,5 @@
-import { isCustomSidesStringArg } from '~guards'
-import { DicePoolType } from '~types'
+import { isCustomSidesD, isCustomSidesStringArg } from '~guards'
+import { DicePoolType, RandsumRollOptions } from '~types'
 
 type Type<T> = T extends string[] ? DicePoolType.custom : DicePoolType.numerical
 type Faces<T> = T extends string[] ? T : number[]
@@ -29,6 +29,17 @@ class D<Sides extends string[] | number> {
     return this._rawRollResult()
   }
 
+  rollMany(quantity: number): Result<Faces<Sides>>[] {
+    return Array.from({ length: quantity }, () => this._rawRollResult())
+  }
+
+  toOptions(): RandsumRollOptions<Result<Faces<Sides>>> {
+    return {
+      quantity: 1,
+      sides: isCustomSidesD(this) ? this.faces : this.sides
+    } as RandsumRollOptions<Result<Faces<Sides>>>
+  }
+
   protected _rawRollResult(): Result<Faces<Sides>> {
     return this.faces[this._rawRoll()] as Result<Faces<Sides>>
   }
@@ -38,13 +49,4 @@ class D<Sides extends string[] | number> {
   }
 }
 
-const D4 = new D(4)
-const D6 = new D(6)
-const D8 = new D(8)
-const D10 = new D(10)
-const D12 = new D(12)
-const D20 = new D(20)
-const D100 = new D(100)
-const FudgeDice = new D(['+', '+', '+', '-', '0', '0'])
-
-export { D, D4, D6, D8, D10, D12, D20, D100, FudgeDice }
+export { D }
