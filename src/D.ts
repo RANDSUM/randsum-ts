@@ -29,6 +29,10 @@ class D<Sides extends string[] | number> {
     return this._rawRollResult()
   }
 
+  rollMany(quantity: number): Result<Faces<Sides>>[] {
+    return Array.from({ length: quantity }, () => this._rawRollResult())
+  }
+
   protected _rawRollResult(): Result<Faces<Sides>> {
     return this.faces[this._rawRoll()] as Result<Faces<Sides>>
   }

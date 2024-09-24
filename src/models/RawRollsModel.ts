@@ -9,13 +9,7 @@ function generate<Sides extends string | number = string | number>(
         die,
         options: { quantity }
       } = dicePools[key]
-      const rolls = Array.from(
-        {
-          length: quantity || 1
-        },
-        () => die.roll()
-      ) as Sides[]
-      return [key, rolls]
+      return [key, die.rollMany(quantity || 1) as Sides[]]
     })
   )
 }
