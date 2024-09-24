@@ -25,7 +25,7 @@ function formDicePools<Sides extends string | number = string | number>(
   }
 }
 
-function normalizeArgument(argument: RandsumRollArgument): RandsumRollOptions {
+function toOptions(argument: RandsumRollArgument): RandsumRollOptions {
   if (isD(argument)) {
     return {
       quantity: 1,
@@ -55,7 +55,7 @@ function normalizeArgument(argument: RandsumRollArgument): RandsumRollOptions {
 }
 
 function parameterize(argument: RandsumRollArgument): RandsumRollParameters {
-  const options = normalizeArgument(argument)
+  const options = toOptions(argument)
   const die = new D(options.sides)
   return {
     options,
