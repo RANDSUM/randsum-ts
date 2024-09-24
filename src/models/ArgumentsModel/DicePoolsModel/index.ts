@@ -24,11 +24,12 @@ function calculateType(
 function calculateTotal<Sides extends string | number = string | number>(
   rolls: Sides[],
   bonus = 0
-): number {
+): number | string {
   if (isFullNumArray(rolls)) {
     return rolls.reduce((acc, cur) => (acc as number) + (cur as number), bonus)
   }
-  return 0
+
+  return rolls.flat().join(', ')
 }
 
 export function generateModifiedRolls<
@@ -47,22 +48,24 @@ export function generateModifiedRolls<
       }
       return [key, modifiedRoll]
     })
-  )
+  ) as RandsumRollResult<Sides>['modifiedRolls']
 }
 
 function generateRollResult<Sides extends string | number = string | number>(
-  DicePools: DicePools<Sides>
+  dicePools: DicePools<Sides>
 ): RandsumRollResult<Sides> {
-  const rawRolls = RawRollsModel.generate(DicePools.dicePools)
-  const modifiedRolls = generateModifiedRolls(DicePools, rawRolls)
+  const rawRolls = RawRollsModel.generate(dicePools.dicePools)
+  const modifiedRolls = generateModifiedRolls(dicePools, rawRolls)
   const modifiedValues = Object.values(modifiedRolls)
   const rawResult = Object.values(rawRolls)
   const result = modifiedValues.map((pool) => pool.rolls)
-  const total = calculateTotal(modifiedValues.map((pool) => pool.total))
-  const type = calculateType(DicePools.dicePools)
+  const total = calculateTotal(
+    modifiedValues.map((pool) => pool.total)
+  ) as Sides
+  const type = calculateType(dicePools.dicePools)
 
   return {
-    ...DicePools,
+    ...dicePools,
     rawRolls,
     rawResult,
     modifiedRolls,

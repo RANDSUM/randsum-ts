@@ -25,7 +25,7 @@ function applyModifiers<Sides extends string | number = string | number>(
     }
   }
 
-  const rollBonuses: RollBonuses<number> = {
+  const rollBonuses = {
     simpleMathModifier: 0,
     rolls: initialRolls as number[]
   }

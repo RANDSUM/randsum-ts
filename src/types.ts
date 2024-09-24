@@ -1,6 +1,7 @@
 import { D } from './D'
 
 // Primitives
+
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
 type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
 
@@ -16,6 +17,7 @@ export enum DicePoolType {
 }
 
 // Options
+
 export interface RandsumRollOptions<
   Sides extends string | number = string | number
 > {
@@ -110,7 +112,9 @@ export interface DicePools<Sides extends string | number = string | number> {
 // Results
 
 export interface RandsumRollResult<
-  Sides extends string | number = string | number
+  Sides extends string | number = string | number,
+  DP extends DicePoolType = DicePoolType,
+  Total extends Sides = Sides
 > extends DicePools<Sides> {
   rawRolls: {
     [key: string]: Sides[]
@@ -118,13 +122,13 @@ export interface RandsumRollResult<
   modifiedRolls: {
     [key: string]: {
       rolls: Sides[]
-      total: number
+      total: Sides
     }
   }
   result: Sides[][]
   rawResult: Sides[][]
-  type: DicePoolType
-  total: number
+  type: DP
+  total: Total
 }
 
 export interface RandsumNotationValidationResult {
