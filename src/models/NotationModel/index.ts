@@ -25,17 +25,17 @@ function toOptions<Sides extends string | number>(
 
 function validate(
   notation: RandsumNumericDiceNotation
-): RandsumNotationValidationResult<DicePoolType.numerical>
+): RandsumNotationValidationResult<true, DicePoolType.numerical>
 function validate(
   notation: RandsumCustomDiceNotation
-): RandsumNotationValidationResult<DicePoolType.custom>
+): RandsumNotationValidationResult<true, DicePoolType.custom>
 function validate(notation: string): {
   valid: false
   description: []
 }
 function validate<Sides extends string | number = string | number>(
   notation: string
-): RandsumNotationValidationResult<DicePoolType, Sides> {
+): RandsumNotationValidationResult<boolean, DicePoolType, Sides> {
   if (!isDiceNotationArg(notation)) {
     return {
       valid: false,

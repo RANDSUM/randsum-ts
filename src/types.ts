@@ -130,13 +130,19 @@ export interface RandsumRollResult<
   total: Total
 }
 
-export interface RandsumNotationValidationResult<
+export type RandsumNotationValidationResult<
+  Valid extends boolean,
   DP extends DicePoolType,
   Sides extends string | number = string | number
-> {
-  valid: boolean
-  type?: DP
-  digested?: RandsumRollOptions<Sides>
-  notation?: RandsumNotation<Sides>
-  description: string[]
-}
+> = Valid extends true
+  ? {
+      valid: Valid
+      type: DP
+      digested: RandsumRollOptions<Sides>
+      notation: RandsumNotation<Sides>
+      description: string[]
+    }
+  : {
+      valid: Valid
+      description: []
+    }
