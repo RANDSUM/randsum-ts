@@ -35,8 +35,18 @@ function toOptions(argument: RandsumRollArgument): RandsumRollOptions {
       }
   }
 }
-
-function parameterize(argument: RandsumRollArgument): RandsumRollParameters {
+function parameterize(
+  argument: RandsumRollArgument<number>
+): RandsumRollParameters<number>
+function parameterize(
+  argument: RandsumRollArgument<string>
+): RandsumRollParameters<string>
+function parameterize(
+  argument: RandsumRollArgument<string | number>
+): RandsumRollParameters<string | number>
+function parameterize<Sides extends string | number = string | number>(
+  argument: RandsumRollArgument<Sides>
+): RandsumRollParameters<Sides> {
   const options = toOptions(argument)
   return {
     argument,
@@ -44,7 +54,7 @@ function parameterize(argument: RandsumRollArgument): RandsumRollParameters {
     die: new D(options.sides),
     notation: OptionsModel.toNotation(options),
     description: OptionsModel.toDescription(options)
-  }
+  } as RandsumRollParameters<Sides>
 }
 
 export default { formDicePools, parameterize }
