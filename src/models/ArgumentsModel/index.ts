@@ -45,11 +45,10 @@ function toOptions(argument: RandsumRollArgument): RandsumRollOptions {
 
 function parameterize(argument: RandsumRollArgument): RandsumRollParameters {
   const options = toOptions(argument)
-  const die = new D(options.sides)
   return {
-    options,
     argument,
-    die,
+    options,
+    die: new D(options.sides),
     notation: OptionsModel.toNotation(options),
     description: OptionsModel.toDescription(options)
   }
