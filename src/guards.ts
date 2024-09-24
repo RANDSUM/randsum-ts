@@ -21,7 +21,7 @@ export function isDiceNotationArg(
   return cleanArg.replace(completeRollPattern, '').length === 0
 }
 
-export function isCustomSidesArg(
+export function isCustomSidesStringArg(
   argument: RandsumRollArgument
 ): argument is string[] {
   return (
