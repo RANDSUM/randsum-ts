@@ -131,8 +131,8 @@ export interface RandsumRollResult<
 }
 
 export type RandsumNotationValidationResult<
-  Valid extends boolean,
-  DP extends DicePoolType,
+  Valid extends boolean = boolean,
+  DP extends DicePoolType = DicePoolType,
   Sides extends string | number = string | number
 > = Valid extends true
   ? {

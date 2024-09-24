@@ -29,10 +29,7 @@ function validate(
 function validate(
   notation: RandsumCustomDiceNotation
 ): RandsumNotationValidationResult<true, DicePoolType.custom>
-function validate(notation: string): {
-  valid: false
-  description: []
-}
+function validate(notation: string): RandsumNotationValidationResult
 function validate<Sides extends string | number = string | number>(
   notation: string
 ): RandsumNotationValidationResult<boolean, DicePoolType, Sides> {
