@@ -66,33 +66,4 @@ function parameterize(argument: RandsumRollArgument): RandsumRollParameters {
   }
 }
 
-function normalize(argument: RandsumRollArgument): RandsumRollOptions {
-  if (isD(argument)) {
-    return {
-      quantity: 1,
-      sides: isCustomSidesD(argument) ? argument.faces : argument.sides
-    }
-  }
-
-  if (isDicePoolOptions(argument)) {
-    return argument
-  }
-
-  if (isDiceNotationArg(argument)) {
-    return NotationModel.toOptions(argument)
-  }
-
-  if (Array.isArray(argument)) {
-    return {
-      quantity: 1,
-      sides: argument.map(String)
-    }
-  }
-
-  return {
-    quantity: 1,
-    sides: Number(argument || 20)
-  }
-}
-
-export default { formDicePools, normalize, parameterize }
+export default { formDicePools, parameterize }
