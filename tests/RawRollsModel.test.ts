@@ -1,7 +1,8 @@
 import { describe, expect, test } from 'bun:test'
 import { RawRollsModel } from '~models'
+import { D } from '~src/D'
 
-import { RandsumRollParameters, DicePools } from '~types'
+import { DicePools } from '~types'
 
 describe('RawRollsModel', () => {
   describe('RawRollsModel.generate', () => {
@@ -16,9 +17,7 @@ describe('RawRollsModel', () => {
               quantity: 4,
               sides: 20
             },
-            die: {
-              roll: () => 1
-            } as unknown as RandsumRollParameters<number>['die']
+            die: new D(1)
           },
           'second-id': {
             argument: ['h', 't'],
@@ -28,9 +27,7 @@ describe('RawRollsModel', () => {
               quantity: 1,
               sides: ['h', 't']
             },
-            die: {
-              roll: () => 'h'
-            } as unknown as RandsumRollParameters<string>['die']
+            die: new D(['h'])
           }
         }
       }

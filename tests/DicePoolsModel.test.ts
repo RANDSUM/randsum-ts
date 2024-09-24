@@ -12,11 +12,13 @@ describe('DicePoolsModel.generateResult', () => {
   }
 
   const mockStandardDie = {
-    roll: () => 200
+    roll: () => 200,
+    rollMany: (quantity: number) => Array.from({ length: quantity }, () => 200)
   } as unknown as D<number>
 
   const mockCustomSidesDie = {
-    roll: () => '+'
+    roll: () => '+',
+    rollMany: (quantity: number) => Array.from({ length: quantity }, () => '+')
   } as unknown as D<string[]>
 
   describe('when given roll total with no modifiers', () => {
