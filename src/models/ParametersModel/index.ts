@@ -20,7 +20,7 @@ type ModifiedRollBonuses = {
 }
 function applyModifiers(
   poolParameters: RandsumRollParameters<string> | RandsumRollParameters<number>,
-  initialRolls: number[] | string[]
+  initialRolls: (string | number)[]
 ): RollBonuses | ModifiedRollBonuses {
   if (isCustomParameters(poolParameters)) {
     return {

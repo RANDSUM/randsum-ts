@@ -101,26 +101,28 @@ export interface RandsumRollParameters<
   description: string[]
 }
 
-export interface DicePools {
+export interface DicePools<Sides extends string | number = string | number> {
   dicePools: {
-    [key: string]: RandsumRollParameters
+    [key: string]: RandsumRollParameters<Sides>
   }
 }
 
 // Results
 
-export interface RandsumRollResult extends DicePools {
+export interface RandsumRollResult<
+  Sides extends string | number = string | number
+> extends DicePools<Sides> {
   rawRolls: {
-    [key: string]: string[] | number[]
+    [key: string]: Sides[]
   }
   modifiedRolls: {
     [key: string]: {
-      rolls: string[] | number[]
+      rolls: Sides[]
       total: number
     }
   }
-  result: (string | number)[][]
-  rawResult: (string | number)[][]
+  result: Sides[][]
+  rawResult: Sides[][]
   type: DicePoolType
   total: number
 }
