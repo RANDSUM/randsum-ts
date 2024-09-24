@@ -1,8 +1,8 @@
 import { DicePools, RandsumRollResult } from '~types'
 
-function generate(
-  dicePools: DicePools['dicePools']
-): RandsumRollResult['rawRolls'] {
+function generate<Sides extends string | number = string | number>(
+  dicePools: DicePools<Sides>['dicePools']
+): RandsumRollResult<Sides>['rawRolls'] {
   return Object.fromEntries(
     Object.keys(dicePools).map((key) => {
       const {
@@ -14,7 +14,7 @@ function generate(
           length: quantity || 1
         },
         () => die.roll()
-      ) as string[] | number[]
+      ) as Sides[]
       return [key, rolls]
     })
   )

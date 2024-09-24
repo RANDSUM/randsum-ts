@@ -9,36 +9,33 @@ import {
   applySingleCap
 } from './modifierApplicators'
 
-type RollBonuses = {
-  rolls: number[]
+type RollBonuses<Sides extends string | number = string | number> = {
+  rolls: Sides[]
   simpleMathModifier: number
 }
 
-type ModifiedRollBonuses = {
-  rolls: string[]
-  simpleMathModifier: 0
-}
-function applyModifiers(
-  poolParameters: RandsumRollParameters<string> | RandsumRollParameters<number>,
-  initialRolls: (string | number)[]
-): RollBonuses | ModifiedRollBonuses {
+function applyModifiers<Sides extends string | number = string | number>(
+  poolParameters: RandsumRollParameters<Sides>,
+  initialRolls: Sides[]
+): RollBonuses<Sides> {
   if (isCustomParameters(poolParameters)) {
     return {
       simpleMathModifier: 0,
-      rolls: initialRolls as string[]
+      rolls: initialRolls
     }
   }
 
-  const rollBonuses: RollBonuses = {
+  const rollBonuses: RollBonuses<number> = {
     simpleMathModifier: 0,
     rolls: initialRolls as number[]
   }
 
   const {
-    options: { sides, quantity, modifiers = {} }
-  } = poolParameters
+    options: { sides, quantity, modifiers = {} },
+    die
+  } = poolParameters as RandsumRollParameters<number>
 
-  const rollOne: () => number = () => poolParameters.die.roll()
+  const rollOne: () => number = () => die.roll()
 
   return Object.keys(modifiers).reduce((bonuses, key) => {
     switch (key) {
@@ -111,7 +108,7 @@ function applyModifiers(
       default:
         throw new Error(`Unknown modifier: ${key}`)
     }
-  }, rollBonuses)
+  }, rollBonuses) as RollBonuses<Sides>
 }
 
 export default { applyModifiers }

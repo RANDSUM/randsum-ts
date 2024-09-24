@@ -8,10 +8,9 @@ import {
 
 function roll(...args: RandsumNumericalArgument[]): RandsumRollResult<number>
 function roll(...args: RandsumCustomArgument[]): RandsumRollResult<string>
-function roll(
-  ...args: RandsumRollArgument[]
-): RandsumRollResult<string | number>
-function roll(...args: RandsumRollArgument[]): RandsumRollResult {
+function roll<Sides extends string | number = string | number>(
+  ...args: RandsumRollArgument<Sides>[]
+): RandsumRollResult<Sides> {
   const dicePools = ArgumentsModel.formDicePools(args)
   return DicePoolsModel.generateRollResult(dicePools)
 }
