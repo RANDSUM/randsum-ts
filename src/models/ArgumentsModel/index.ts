@@ -5,12 +5,7 @@ import {
   RandsumRollParameters
 } from '~types'
 import { uuidv7 as uuid } from 'uuidv7'
-import {
-  isD,
-  isCustomSidesD,
-  isDicePoolOptions,
-  isDiceNotationArg
-} from '~guards'
+import { isD, isDicePoolOptions, isDiceNotationArg } from '~guards'
 import { NotationModel, OptionsModel } from '~models'
 import { D } from '~src/D'
 
@@ -27,10 +22,7 @@ function formDicePools<Sides extends string | number = string | number>(
 
 function toOptions(argument: RandsumRollArgument): RandsumRollOptions {
   if (isD(argument)) {
-    return {
-      quantity: 1,
-      sides: isCustomSidesD(argument) ? argument.faces : argument.sides
-    }
+    return argument.toOptions()
   }
 
   if (isDicePoolOptions(argument)) {
