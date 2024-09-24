@@ -24,12 +24,15 @@ function calculateType(
 function calculateTotal<Sides extends string | number = string | number>(
   rolls: Sides[],
   bonus = 0
-): number | string {
+): Sides {
   if (isFullNumArray(rolls)) {
-    return rolls.reduce((acc, cur) => (acc as number) + (cur as number), bonus)
+    return rolls.reduce(
+      (acc, cur) => (acc as number) + (cur as number),
+      bonus
+    ) as Sides
   }
 
-  return rolls.flat().join(', ')
+  return rolls.flat().join(', ') as Sides
 }
 
 export function generateModifiedRolls<
@@ -57,21 +60,15 @@ function generateRollResult<Sides extends string | number = string | number>(
   const rawRolls = RawRollsModel.generate(dicePools.dicePools)
   const modifiedRolls = generateModifiedRolls(dicePools, rawRolls)
   const modifiedValues = Object.values(modifiedRolls)
-  const rawResult = Object.values(rawRolls)
-  const result = modifiedValues.map((pool) => pool.rolls)
-  const total = calculateTotal(
-    modifiedValues.map((pool) => pool.total)
-  ) as Sides
-  const type = calculateType(dicePools.dicePools)
 
   return {
     ...dicePools,
     rawRolls,
-    rawResult,
     modifiedRolls,
-    result,
-    type,
-    total
+    rawResult: Object.values(rawRolls),
+    result: modifiedValues.map((pool) => pool.rolls),
+    type: calculateType(dicePools.dicePools),
+    total: calculateTotal(modifiedValues.map((pool) => pool.total))
   }
 }
 export default {
