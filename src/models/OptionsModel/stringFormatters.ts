@@ -20,11 +20,11 @@ function formatHumanList(list: (string | number)[]) {
     .join('')
 }
 
-export function capString(cap: GreaterLessOptions) {
+function capString(cap: GreaterLessOptions) {
   return formatGreaterLess(cap).map((str) => `No Rolls ${str}`)
 }
 
-export function dropString(drop: DropOptions) {
+function dropString(drop: DropOptions) {
   const dropList = []
 
   if (drop.highest)
@@ -43,13 +43,13 @@ export function dropString(drop: DropOptions) {
   return dropList
 }
 
-export function replaceString(replace: ReplaceOptions | ReplaceOptions[]) {
+function replaceString(replace: ReplaceOptions | ReplaceOptions[]) {
   if (Array.isArray(replace)) return replace.map(singleReplaceString)
 
   return [singleReplaceString(replace)]
 }
 
-export function rerollString(reroll: RerollOptions) {
+function rerollString(reroll: RerollOptions) {
   const rerollList: string[] = []
 
   if (reroll.exact) {
@@ -70,19 +70,19 @@ export function rerollString(reroll: RerollOptions) {
   return [`Reroll ${exactString}${maxString}`]
 }
 
-export function explodeString() {
+function explodeString() {
   return 'Exploding Dice'
 }
 
-export function plusString(plus: number) {
+function plusString(plus: number) {
   return `Add ${plus}`
 }
 
-export function minusString(minus: number) {
+function minusString(minus: number) {
   return `Subtract ${minus}`
 }
 
-export function uniqueString(unique: boolean | UniqueOptions) {
+function uniqueString(unique: boolean | UniqueOptions) {
   if (typeof unique === 'boolean') return 'No Duplicate Rolls'
   return `No Duplicates (except ${formatHumanList(unique.notUnique)})`
 }

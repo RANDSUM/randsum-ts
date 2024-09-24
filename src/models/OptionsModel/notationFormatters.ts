@@ -9,12 +9,12 @@ import {
   UniqueOptions
 } from '~types'
 
-export function capNotation(cap: GreaterLessOptions) {
+function capNotation(cap: GreaterLessOptions) {
   const capList = formatGreaterLess(cap)
   return `C{${capList.join(',')}}`
 }
 
-export function dropNotation(drop: DropOptions) {
+function dropNotation(drop: DropOptions) {
   const dropList: string[] = []
   const greaterLess = formatGreaterLess(drop)
   greaterLess.forEach((str) => dropList.push(str))
@@ -41,7 +41,7 @@ export function dropNotation(drop: DropOptions) {
   return finalList.join('')
 }
 
-export function replaceNotation(replace: ReplaceOptions | ReplaceOptions[]) {
+function replaceNotation(replace: ReplaceOptions | ReplaceOptions[]) {
   const args = (
     Array.isArray(replace)
       ? replace.map(singleReplaceNotation).flat()
@@ -50,7 +50,7 @@ export function replaceNotation(replace: ReplaceOptions | ReplaceOptions[]) {
   return `V{${args}}`
 }
 
-export function rerollNotation(reroll: RerollOptions) {
+function rerollNotation(reroll: RerollOptions) {
   const rerollList = []
 
   if (reroll.exact) {
@@ -69,18 +69,18 @@ export function rerollNotation(reroll: RerollOptions) {
   return `R{${rerollList.join(',')}}${maxNotation}`
 }
 
-export function explodeNotation() {
+function explodeNotation() {
   return '!'
 }
-export function plusNotation(plus: number) {
+function plusNotation(plus: number) {
   return `+${plus}`
 }
 
-export function minusNotation(minus: number) {
+function minusNotation(minus: number) {
   return `-${minus}`
 }
 
-export function uniqueNotation(unique: boolean | UniqueOptions) {
+function uniqueNotation(unique: boolean | UniqueOptions) {
   if (typeof unique === 'boolean') return 'U'
   return `U{${unique.notUnique.join(',')}}`
 }
