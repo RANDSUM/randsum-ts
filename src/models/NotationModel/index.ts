@@ -1,10 +1,8 @@
 import { coreNotationPattern } from '~patterns'
 import {
   DicePoolType,
-  RandsumCustomDiceNotation,
   RandsumNotation,
   RandsumNotationValidationResult,
-  RandsumNumericDiceNotation,
   RandsumRollOptions
 } from '~types'
 import { parseCoreNotation, parseModifiers } from './optionsParsers'
@@ -23,16 +21,7 @@ function toOptions<Sides extends string | number>(
   } as RandsumRollOptions<Sides>
 }
 
-function validate(
-  notation: RandsumNumericDiceNotation
-): RandsumNotationValidationResult<true, DicePoolType.numerical>
-function validate(
-  notation: RandsumCustomDiceNotation
-): RandsumNotationValidationResult<true, DicePoolType.custom>
-function validate(notation: string): RandsumNotationValidationResult
-function validate<Sides extends string | number = string | number>(
-  notation: string
-): RandsumNotationValidationResult<boolean, DicePoolType, Sides> {
+function validate(notation: string): RandsumNotationValidationResult {
   if (!isDiceNotationArg(notation)) {
     return {
       valid: false,
@@ -40,7 +29,7 @@ function validate<Sides extends string | number = string | number>(
     }
   }
 
-  const digested = toOptions(notation as RandsumNotation<Sides>)
+  const digested = toOptions(notation)
 
   return {
     valid: true,
