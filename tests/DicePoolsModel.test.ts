@@ -197,10 +197,10 @@ describe('DicePoolsModel.generateResult', () => {
         modifiedRolls: {
           'test-roll-id': {
             rolls: customSidesRoll,
-            total: 0
+            total: 'r, a, n, d'
           }
         },
-        total: 0,
+        total: 'r, a, n, d',
         type: DicePoolType.custom,
         result: [customSidesRoll]
       })

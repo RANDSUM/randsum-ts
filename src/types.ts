@@ -1,6 +1,7 @@
 import { D } from './D'
 
 // Primitives
+
 type DiceNotationWithNumericSides = `${number}${'d' | 'D'}${number}${string}`
 type DiceNotationWithCustomSides = `${number}${'d' | 'D'}{${string}}`
 
@@ -16,6 +17,7 @@ export enum DicePoolType {
 }
 
 // Options
+
 export interface RandsumRollOptions<
   Sides extends string | number = string | number
 > {
@@ -72,48 +74,61 @@ export type RequiredCoreDiceParameters<
 
 // Arguments
 
-export type RandsumRollArgument =
+export type RandsumNumericalArgument =
   | `${number}`
   | number
-  | D<string[] | number>
-  | RandsumRollOptions
-  | RandsumNotation
+  | D<number>
+  | RandsumRollOptions<number>
+  | RandsumNotation<number>
+
+export type RandsumCustomArgument =
+  | D<string[]>
+  | RandsumRollOptions<string>
+  | RandsumNotation<string>
   | string[]
+
+export type RandsumRollArgument<
+  Sides extends string | number = string | number
+> = Sides extends string ? RandsumCustomArgument : RandsumNumericalArgument
 
 // Parameters
 
 export interface RandsumRollParameters<
   Sides extends string | number = string | number
 > {
-  argument: RandsumRollArgument
+  argument: RandsumRollArgument<Sides>
   options: RandsumRollOptions<Sides>
   die: D<Sides extends string ? string[] : number>
   notation: RandsumNotation<Sides>
   description: string[]
 }
 
-export interface DicePools {
+export interface DicePools<Sides extends string | number = string | number> {
   dicePools: {
-    [key: string]: RandsumRollParameters
+    [key: string]: RandsumRollParameters<Sides>
   }
 }
 
 // Results
 
-export interface RandsumRollResult extends DicePools {
+export interface RandsumRollResult<
+  Sides extends string | number = string | number,
+  DP extends DicePoolType = DicePoolType,
+  Total extends Sides = Sides
+> extends DicePools<Sides> {
   rawRolls: {
-    [key: string]: string[] | number[]
+    [key: string]: Sides[]
   }
   modifiedRolls: {
     [key: string]: {
-      rolls: string[] | number[]
-      total: number
+      rolls: Sides[]
+      total: Sides
     }
   }
-  result: (string | number)[][]
-  rawResult: (string | number)[][]
-  type: DicePoolType
-  total: number
+  result: Sides[][]
+  rawResult: Sides[][]
+  type: DP
+  total: Total
 }
 
 export interface RandsumNotationValidationResult {

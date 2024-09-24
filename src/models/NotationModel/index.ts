@@ -6,7 +6,7 @@ import {
   RandsumRollOptions
 } from '~types'
 import { parseCoreNotation, parseModifiers } from './optionsParsers'
-import { isDiceNotationArg, isCustomSidesArg } from '~guards'
+import { isDiceNotationArg, isCustomSidesStringArg } from '~guards'
 import { OptionsModel } from '~models'
 
 function toOptions(
@@ -35,7 +35,7 @@ function validate(notation: string): RandsumNotationValidationResult {
     valid: true,
     digested,
     notation: OptionsModel.toNotation(digested),
-    type: isCustomSidesArg(digested.sides)
+    type: isCustomSidesStringArg(digested.sides)
       ? DicePoolType.custom
       : DicePoolType.numerical,
     description: OptionsModel.toDescription(digested)

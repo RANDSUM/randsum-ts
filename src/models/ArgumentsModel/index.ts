@@ -14,7 +14,9 @@ import {
 import { NotationModel, OptionsModel } from '~models'
 import { D } from '~src/D'
 
-function formDicePools(args: RandsumRollArgument[]): DicePools {
+function formDicePools<Sides extends string | number = string | number>(
+  args: RandsumRollArgument<Sides>[]
+): DicePools<Sides> {
   return {
     dicePools: args.reduce(
       (acc, arg) => ({ ...acc, [uuid()]: parameterize(arg) }),
