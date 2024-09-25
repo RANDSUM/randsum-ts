@@ -1,12 +1,12 @@
-export enum SUCoreMechanic {
+export enum CoreMechanic {
   nailedIt = 'Nailed It',
-  success = 'Success',
+  ccess = 'ccess',
   toughChoice = 'Tough Choice',
   failure = 'Failure',
   cascadeFailure = 'Cascade Failure'
 }
 
-export enum SUTable {
+export enum Table {
   npcAction = 'NPC Action',
   npcReaction = 'Reaction',
   npcMorale = 'Morale',
@@ -20,11 +20,11 @@ export enum SUTable {
   mechSalvage = 'Mech Salvage'
 }
 
-export type SUEntry = {
+export type Entry = {
   label: string
   description: string
 }
 
-export type SUTableType = {
-  [key in SUCoreMechanic]: SUEntry
+export type TableType = {
+  [key in CoreMechanic]: Entry
 }

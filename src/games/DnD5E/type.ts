@@ -1,4 +1,4 @@
-export enum RollMods5E {
+export enum RollMods {
   Advantage = 'advantage',
   Disadvantage = 'disadvantage'
 }
