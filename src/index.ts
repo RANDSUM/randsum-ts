@@ -1,5 +1,4 @@
 export { roll } from './roll'
-export * from './games'
 export * from './D'
 export * from './premadeDice'
 export * from './models'
