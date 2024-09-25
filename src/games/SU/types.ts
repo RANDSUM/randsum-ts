@@ -7,8 +7,17 @@ export enum SUCoreMechanic {
 }
 
 export enum SUTable {
+  npcAction = 'NPC Action',
+  npcReaction = 'Reaction',
+  npcMorale = 'Morale',
   coreMechanic = 'Core Mechanic',
-  npcAction = 'NPC Action'
+  groupInitiative = 'Group Initiative',
+  retreat = 'Retreat',
+  criticalDamage = 'Critical Damage',
+  criticalInjury = 'Critical Injury',
+  reactorOverload = 'Reactor Overload',
+  areaSalvage = 'Area Salvage',
+  mechSalvage = 'Mech Salvage'
 }
 
 export type SUEntry = {
