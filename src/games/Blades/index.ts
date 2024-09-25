@@ -1,7 +1,7 @@
 import { roll as baseRoll } from '~src/roll'
 import { RollResult } from './types'
 
-function judgeResult(sortedRolls: number[]): RollResult {
+function interpretResult(sortedRolls: number[]): RollResult {
   const sixes = sortedRolls.filter((r) => r === 6).length
   if (sixes >= 2) {
     return RollResult.CRITICAL
@@ -25,9 +25,9 @@ function roll(count: number): [RollResult, number[]] {
   })
   const rolls = rollResult.rawResult.flat().sort((a, b) => a - b)
 
-  return [judgeResult(rolls), rolls]
+  return [interpretResult(rolls), rolls]
 }
 
 import * as types from './types'
 
-export default { roll, judgeResult, ...types }
+export default { roll, interpretResult, ...types }
