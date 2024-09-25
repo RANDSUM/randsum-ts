@@ -1,6 +1,6 @@
 export enum CoreMechanic {
   nailedIt = 'Nailed It',
-  ccess = 'ccess',
+  success = 'Success',
   toughChoice = 'Tough Choice',
   failure = 'Failure',
   cascadeFailure = 'Cascade Failure'

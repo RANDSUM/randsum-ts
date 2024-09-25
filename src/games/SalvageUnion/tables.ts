@@ -4,17 +4,17 @@ export const NPCActionTable: TableType = {
   [CoreMechanic.nailedIt]: {
     label: CoreMechanic.nailedIt,
     description:
-      'The NPC cceeds spectacularly at their action. They get an additional bonus of the Mediator’s choice. If they are making an attack, they hit, and do double damage or get another bonus of the Mediator’s choice.'
+      'The NPC succeeds spectacularly at their action. They get an additional bonus of the Mediator’s choice. If they are making an attack, they hit, and do double damage or get another bonus of the Mediator’s choice.'
   },
-  [CoreMechanic.ccess]: {
-    label: CoreMechanic.ccess,
+  [CoreMechanic.success]: {
+    label: CoreMechanic.success,
     description:
-      'The NPC achieves their action ccessfully. An attack hits and deals standard damage.'
+      'The NPC achieves their action successfully. An attack hits and deals standard damage.'
   },
   [CoreMechanic.toughChoice]: {
     label: CoreMechanic.toughChoice,
     description:
-      'The NPC is ccessful, but faces a Tough Choice. The players give the Mediator a choice between two Setbacks. In combat, a weapon attack hits, but with a choice of Setback chosen by the players.'
+      'The NPC is successful, but faces a Tough Choice. The players give the Mediator a choice between two Setbacks. In combat, a weapon attack hits, but with a choice of Setback chosen by the players.'
   },
   [CoreMechanic.failure]: {
     label: CoreMechanic.failure,
@@ -24,7 +24,7 @@ export const NPCActionTable: TableType = {
   [CoreMechanic.cascadeFailure]: {
     label: CoreMechanic.cascadeFailure,
     description:
-      'The NPC has catastrophically failed at their action. They ffer a Severe Setback of the player’s choice. A weapon attack misses, with a Severe Setback chosen by the players.'
+      'The NPC has catastrophically failed at their action. They suffer a Severe Setback of the player’s choice. A weapon attack misses, with a Severe Setback chosen by the players.'
   }
 }
 
@@ -34,7 +34,7 @@ export const NPCReactionTable: TableType = {
     description:
       'The NPCs are incredibly friendly and positive towards the group and will actively help them in any reasonable way they can.'
   },
-  [CoreMechanic.ccess]: {
+  [CoreMechanic.success]: {
     label: 'Friendly',
     description:
       'The NPCs are friendly and willing to talk, trade, and offer information to the group; however, they will still ask for their fair share in return.'
@@ -62,7 +62,7 @@ export const NPMoraleTable: TableType = {
     description:
       'The NPCs see this one through to the end. They hunker down and will not retreat from this fight under any circumstance.'
   },
-  [CoreMechanic.ccess]: {
+  [CoreMechanic.success]: {
     label: 'Keep Fighting',
     description: 'The NPCs continue to fight this one out for now.'
   },
@@ -76,9 +76,9 @@ export const NPMoraleTable: TableType = {
     description: 'The NPCs flee the fight as quickly and safely as possible.'
   },
   [CoreMechanic.cascadeFailure]: {
-    label: 'rrender',
+    label: 'Surrender',
     description:
-      'The NPCs rrender to whoever is attacking them. If there is nobody to rrender to, they will recklessly flee.'
+      'The NPCs surrender to whoever is attacking them. If there is nobody to surrender to, they will recklessly flee.'
   }
 }
 
@@ -86,17 +86,17 @@ export const CoreMechanicTable: TableType = {
   [CoreMechanic.nailedIt]: {
     label: CoreMechanic.nailedIt,
     description:
-      'You have overcome the odds and managed an outstanding ccess. You may achieve an additional bonus of your choice to the action. When dealing damage, you can choose to double it or pick another appropriate bonus effect.'
+      'You have overcome the odds and managed an outstanding success. You may achieve an additional bonus of your choice to the action. When dealing damage, you can choose to double it or pick another appropriate bonus effect.'
   },
-  [CoreMechanic.ccess]: {
-    label: CoreMechanic.ccess,
+  [CoreMechanic.success]: {
+    label: CoreMechanic.success,
     description:
       'You have achieved your goal without any compromises. When attacking, you hit the target and deal standard damage.'
   },
   [CoreMechanic.toughChoice]: {
     label: CoreMechanic.toughChoice,
     description:
-      'You cceed in your action, but at a cost. The Mediator gives you a Tough Choice with some kind of Setback attached. When attacking, you hit, but must make a Tough Choice.'
+      'You succeed in your action, but at a cost. The Mediator gives you a Tough Choice with some kind of Setback attached. When attacking, you hit, but must make a Tough Choice.'
   },
   [CoreMechanic.failure]: {
     label: CoreMechanic.failure,
@@ -106,7 +106,7 @@ export const CoreMechanicTable: TableType = {
   [CoreMechanic.cascadeFailure]: {
     label: CoreMechanic.cascadeFailure,
     description:
-      'Something has gone terribly wrong. You ffer a severe conse- quence of the Mediator’s choice. When attacking, you miss the target and ffer a Setback chosen by the Mediator.'
+      'Something has gone terribly wrong. You suffer a severe conse- quence of the Mediator’s choice. When attacking, you miss the target and suffer a Setback chosen by the Mediator.'
   }
 }
 
@@ -116,7 +116,7 @@ export const GroupInitiativeTable: TableType = {
     description:
       'Two Pilots chosen by the players act first. Play then passes to the NPC group and one NPC chosen by the Mediator acts next.'
   },
-  [CoreMechanic.ccess]: {
+  [CoreMechanic.success]: {
     label: 'Quickdraw',
     description:
       'One Pilot chosen by the players acts first. Play then passes to the NPC group and one NPC chosen by the Mediator acts.'
@@ -142,12 +142,12 @@ export const RetreatTable: TableType = {
   [CoreMechanic.nailedIt]: {
     label: 'Perfect Escape',
     description:
-      'The group makes a perfect escape from the situation to any location of their choice within the Region Map and cannot be pured.'
+      'The group makes a perfect escape from the situation to any location of their choice within the Region Map and cannot be pursued.'
   },
-  [CoreMechanic.ccess]: {
+  [CoreMechanic.success]: {
     label: 'Escape',
     description:
-      'The group makes a safe escape from the situation to any adjacent location of their choice within the Map and cannot be pured.'
+      'The group makes a safe escape from the situation to any adjacent location of their choice within the Map and cannot be pursued.'
   },
   [CoreMechanic.toughChoice]: {
     label: 'Dangerous Escape',
@@ -162,17 +162,17 @@ export const RetreatTable: TableType = {
   [CoreMechanic.cascadeFailure]: {
     label: 'Disastrous Escape',
     description:
-      'he group retreat to an adjacent location of their choice within the Region Map, but at a severe cost. They ffer a Severe Setback and may be pured.'
+      'he group retreat to an adjacent location of their choice within the Region Map, but at a severe cost. They suffer a Severe Setback and may be pursued.'
   }
 }
 
 export const CriticalDamageTable: TableType = {
   [CoreMechanic.nailedIt]: {
-    label: 'Miraculous rvival',
+    label: 'Miraculous Survival',
     description:
       'Your Mech is somehow Intact. It has 1 SP and is still fully operational. Your Pilot is unharmed.'
   },
-  [CoreMechanic.ccess]: {
+  [CoreMechanic.success]: {
     label: 'Core Damage',
     description:
       ' Your Mech Chassis is damaged and inoperable until repaired. All mounted Systems and Modules remain Intact. Your Pilot is reduced to 0 HP unless they have some means to escape the Mech.'
@@ -196,11 +196,11 @@ export const CriticalDamageTable: TableType = {
 
 export const CriticalInjuryTable: TableType = {
   [CoreMechanic.nailedIt]: {
-    label: 'Miraculous rvival',
+    label: 'Miraculous Survival',
     description:
-      'You rvive against the odds. You have 1 HP, remain conscious and can act normally.'
+      'You survive against the odds. You have 1 HP, remain conscious and can act normally.'
   },
-  [CoreMechanic.ccess]: {
+  [CoreMechanic.success]: {
     label: 'Unconscious',
     description:
       'You are stable at 0 HP, but unconscious and cannot move or take actions until you gain at least 1 HP. You will regain consciousness naturally in 1 hour and get back up with 1 HP.'
@@ -208,16 +208,16 @@ export const CriticalInjuryTable: TableType = {
   [CoreMechanic.toughChoice]: {
     label: 'Minor Injury',
     description:
-      'You ffer a Minor Injury ch as a sprain, burns, or minor concussion. Your Max HP is reduced by 1 until healed in a Tech 3 - 4 Med Bay. In addition, you are Unconscious. Apply the relt of 11 - 19.'
+      'You suffer a Minor Injury such as a sprain, burns, or minor concussion. Your Max HP is reduced by 1 until healed in a Tech 3 - 4 Med Bay. In addition, you are Unconscious. Apply the result of 11 - 19.'
   },
   [CoreMechanic.failure]: {
     label: 'Major Injury',
     description:
-      'You ffer a Major Injury ch as permanent scarring, broken ribs, or internal injuries. Your Max HP is reduced by 2 until healed in a Tech 5 - 6 Med Bay. In addition, you are Unconscious. Apply the relt of 11-19.'
+      'You suffer a Major Injury such as permanent scarring, broken ribs, or internal injuries. Your Max HP is reduced by 2 until healed in a Tech 5 - 6 Med Bay. In addition, you are Unconscious. Apply the result of 11-19.'
   },
   [CoreMechanic.cascadeFailure]: {
     label: 'Fatal Injury',
-    description: 'Your Pilot ffers a fatal injury and dies.'
+    description: 'Your Pilot suffers a fatal injury and dies.'
   }
 }
 
@@ -227,7 +227,7 @@ export const ReactorOverloadTable: TableType = {
     description:
       'Your Mech’s reactor goes into overdrive. Your Mech can take any additional action this turn or Push their next roll within 10 minutes for free.'
   },
-  [CoreMechanic.ccess]: {
+  [CoreMechanic.success]: {
     label: 'Reactor Overheat',
     description:
       'Your Mech’s reactor has overheated. Your Mech shuts down and gains the Vulnerable Trait. Your Mech will re-activate at the end of your next turn. In addition, your Mech takes an amount of SP damage equal to your current Heat.'
@@ -255,7 +255,7 @@ export const AreaSalvageTable: TableType = {
     description:
       'You find a Mech Chassis, System, or Module at the Tech Level of the area. It is in the Damaged Condition. This can be randomised or chosen by the Mediator.'
   },
-  [CoreMechanic.ccess]: {
+  [CoreMechanic.success]: {
     label: 'Winning',
     description: 'You find 3 Scrap of the Tech Level of the area.'
   },
@@ -279,7 +279,7 @@ export const MechSalvageTable: TableType = {
     description:
       'You salvage the Mech Chassis, a System and a Module of your choice mounted on it. They both have the Damaged Condition. Anything else is considered destroyed.'
   },
-  [CoreMechanic.ccess]: {
+  [CoreMechanic.success]: {
     label: 'Meat and Potatoes',
     description:
       'You salvage the Mech Chassis or a System or Module of your choice mounted on it. It has the Damaged Condition. Anything else is considered destroyed.'
