@@ -1,4 +1,4 @@
-export enum BladesRollResult {
+export enum InTheDarkRollResult {
   CRITICAL = 'critical',
   SUCCESS = 'success',
   PARTIAL = 'partial',
