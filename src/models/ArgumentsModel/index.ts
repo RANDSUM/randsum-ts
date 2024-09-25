@@ -35,6 +35,7 @@ function toOptions(argument: RandsumRollArgument): RandsumRollOptions {
       }
   }
 }
+
 function parameterize(
   argument: RandsumRollArgument<number>
 ): RandsumRollParameters<number>
@@ -51,7 +52,7 @@ function parameterize<Sides extends string | number = string | number>(
   return {
     argument,
     options,
-    die: new D(options.sides),
+    die: isD(argument) ? argument : new D(options.sides),
     notation: OptionsModel.toNotation(options),
     description: OptionsModel.toDescription(options)
   } as RandsumRollParameters<Sides>
