@@ -50,10 +50,10 @@ describe('DicePoolsModel.generateResult', () => {
       expect(DicePoolsModel.generateRollResult(coreParameters)).toMatchObject({
         ...coreParameters,
         rawRolls: coreRawRolls,
-        type: DicePoolType.numerical,
         total: 10,
-        result: [[1, 2, 3, 4]],
-        rawResult: [[1, 2, 3, 4]]
+        rawResult: [1, 2, 3, 4],
+        result: [1, 2, 3, 4],
+        type: DicePoolType.numerical
       })
     })
   })
@@ -92,10 +92,10 @@ describe('DicePoolsModel.generateResult', () => {
               total: 206
             }
           },
-          type: DicePoolType.numerical,
           total: 206,
-          result: [[1, 200, 2, 3]],
-          rawResult: [[1, 1, 2, 3]]
+          result: [1, 200, 2, 3],
+          rawResult: [1, 1, 2, 3],
+          type: DicePoolType.numerical
         }
       )
     })
@@ -134,9 +134,10 @@ describe('DicePoolsModel.generateResult', () => {
               total: 7
             }
           },
-          type: DicePoolType.numerical,
           total: 7,
-          result: [[1, 1, 2, 3]]
+          result: [1, 1, 2, 3],
+          rawResult: uniqueRolls,
+          type: DicePoolType.numerical
         })
       })
     })
@@ -205,8 +206,9 @@ describe('DicePoolsModel.generateResult', () => {
           }
         },
         total: 'r, a, n, d',
-        type: DicePoolType.custom,
-        result: [customSidesRoll]
+        rawResult: customSidesRoll,
+        result: customSidesRoll,
+        type: DicePoolType.custom
       })
     })
   })
@@ -252,15 +254,16 @@ describe('DicePoolsModel.generateResult', () => {
             total: 17
           }
         },
-        type: DicePoolType.numerical,
         total: 17,
-        result: [[4, 6, 7]]
+        rawResult: longerRollTotals,
+        result: [4, 6, 7],
+        type: DicePoolType.numerical
       })
     })
   })
 
   describe('when given roll total with a "replace" modifier', () => {
-    describe('that is a single replace modifiers', () => {
+    describe('that is a single replace modifier', () => {
       const dropParameters: DicePools = {
         dicePools: {
           'test-roll-id': {
@@ -282,7 +285,6 @@ describe('DicePoolsModel.generateResult', () => {
           {
             ...dropParameters,
             rawRolls: coreRawRolls,
-            type: DicePoolType.numerical,
             modifiedRolls: {
               'test-roll-id': {
                 rolls: [2, 2, 3, 4],
@@ -290,7 +292,9 @@ describe('DicePoolsModel.generateResult', () => {
               }
             },
             total: 11,
-            result: [[2, 2, 3, 4]]
+            rawResult: testRollSet,
+            result: [2, 2, 3, 4],
+            type: DicePoolType.numerical
           }
         )
       })
@@ -322,7 +326,6 @@ describe('DicePoolsModel.generateResult', () => {
         expect(DicePoolsModel.generateRollResult(dropParameters)).toMatchObject(
           {
             ...dropParameters,
-            type: DicePoolType.numerical,
             rawRolls: coreRawRolls,
             modifiedRolls: {
               'test-roll-id': {
@@ -331,7 +334,9 @@ describe('DicePoolsModel.generateResult', () => {
               }
             },
             total: 13,
-            result: [[2, 2, 3, 6]]
+            rawResult: testRollSet,
+            result: [2, 2, 3, 6],
+            type: DicePoolType.numerical
           }
         )
       })
@@ -367,7 +372,6 @@ describe('DicePoolsModel.generateResult', () => {
       ).toMatchObject({
         ...explodeParameters,
         rawRolls,
-        type: DicePoolType.numerical,
         modifiedRolls: {
           'test-roll-id': {
             rolls: [1, 2, 3, 6, 200],
@@ -375,7 +379,9 @@ describe('DicePoolsModel.generateResult', () => {
           }
         },
         total: 212,
-        result: [[1, 2, 3, 6, 200]]
+        rawResult: explodeRollTotals,
+        result: [1, 2, 3, 6, 200],
+        type: DicePoolType.numerical
       })
     })
   })
@@ -408,9 +414,10 @@ describe('DicePoolsModel.generateResult', () => {
               total: 206
             }
           },
-          type: DicePoolType.numerical,
           total: 206,
-          result: [[1, 2, 3, 200]]
+          rawResult: [1, 2, 3, 4],
+          result: [1, 2, 3, 200],
+          type: DicePoolType.numerical
         })
       })
     })
@@ -445,8 +452,9 @@ describe('DicePoolsModel.generateResult', () => {
             }
           },
           total: 404,
-          type: DicePoolType.numerical,
-          result: [[1, 200, 3, 200]]
+          rawResult: [1, 2, 3, 4],
+          result: [1, 200, 3, 200],
+          type: DicePoolType.numerical
         })
       })
     })
@@ -480,9 +488,10 @@ describe('DicePoolsModel.generateResult', () => {
               total: 406
             }
           },
-          type: DicePoolType.numerical,
           total: 406,
-          result: [[200, 2, 200, 4]]
+          rawResult: [1, 2, 3, 4],
+          result: [200, 2, 200, 4],
+          type: DicePoolType.numerical
         })
       })
     })
@@ -515,9 +524,10 @@ describe('DicePoolsModel.generateResult', () => {
             total: 10
           }
         },
-        type: DicePoolType.numerical,
         total: 10,
-        result: [[2, 2, 3, 3]]
+        rawResult: [1, 2, 3, 4],
+        result: [2, 2, 3, 3],
+        type: DicePoolType.numerical
       })
     })
   })
@@ -550,7 +560,9 @@ describe('DicePoolsModel.generateResult', () => {
           }
         },
         total: 12,
-        result: [[1, 2, 3, 4]]
+        rawResult: [1, 2, 3, 4],
+        result: [1, 2, 3, 4],
+        type: DicePoolType.numerical
       })
     })
   })
@@ -583,7 +595,9 @@ describe('DicePoolsModel.generateResult', () => {
           }
         },
         total: 8,
-        result: [[1, 2, 3, 4]]
+        rawResult: [1, 2, 3, 4],
+        result: [1, 2, 3, 4],
+        type: DicePoolType.numerical
       })
     })
   })
@@ -628,10 +642,9 @@ describe('DicePoolsModel.generateResult', () => {
           }
         },
         total: 20,
-        result: [
-          [1, 2, 3, 4],
-          [1, 2, 3, 4]
-        ]
+        rawResult: [1, 2, 3, 4, 1, 2, 3, 4],
+        result: [1, 2, 3, 4, 1, 2, 3, 4],
+        type: DicePoolType.numerical
       })
     })
   })

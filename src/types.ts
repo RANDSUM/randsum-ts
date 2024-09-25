@@ -124,8 +124,8 @@ export interface RandsumRollResult<
       total: Sides
     }
   }
-  result: Sides[][]
-  rawResult: Sides[][]
+  result: Sides[]
+  rawResult: Sides[]
   type: DP
   total: Total
 }

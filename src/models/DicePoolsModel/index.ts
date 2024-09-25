@@ -77,8 +77,8 @@ function generateRollResult<Sides extends string | number = string | number>(
     ...dicePools,
     rawRolls,
     modifiedRolls,
-    rawResult: Object.values(rawRolls),
-    result: modifiedValues.map((pool) => pool.rolls),
+    rawResult: Object.values(rawRolls).flat(),
+    result: modifiedValues.map((pool) => pool.rolls).flat(),
     type: calculateType(dicePools.dicePools),
     total: calculateTotal(modifiedValues.map((pool) => pool.total))
   }
