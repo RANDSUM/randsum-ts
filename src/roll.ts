@@ -1,21 +1,19 @@
 import { ArgumentsModel, DicePoolsModel } from '~models'
 import {
-  DicePoolType,
   RandsumCustomArgument,
+  RandsumCustomRollResult,
+  RandsumMixedRollResult,
   RandsumNumericalArgument,
+  RandsumNumericalRollResult,
   RandsumRollArgument,
   RandsumRollResult
 } from '~types'
 
-function roll(
-  ...args: RandsumNumericalArgument[]
-): RandsumRollResult<number, DicePoolType.numerical>
-function roll(
-  ...args: RandsumCustomArgument[]
-): RandsumRollResult<string, DicePoolType.custom>
+function roll(...args: RandsumNumericalArgument[]): RandsumNumericalRollResult
+function roll(...args: RandsumCustomArgument[]): RandsumCustomRollResult
 function roll(
   ...args: RandsumRollArgument<string | number>[]
-): RandsumRollResult<string | number, DicePoolType.mixed, string>
+): RandsumMixedRollResult
 function roll<Sides extends string | number = string | number>(
   ...args: RandsumRollArgument<Sides>[]
 ): RandsumRollResult<Sides> {

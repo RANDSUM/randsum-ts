@@ -130,6 +130,20 @@ export interface RandsumRollResult<
   total: Total
 }
 
+export type RandsumNumericalRollResult = RandsumRollResult<
+  number,
+  DicePoolType.numerical
+>
+export type RandsumCustomRollResult = RandsumRollResult<
+  string,
+  DicePoolType.custom
+>
+export type RandsumMixedRollResult = RandsumRollResult<
+  string | number,
+  DicePoolType.mixed,
+  string
+>
+
 export interface RandsumNotationValidationResult {
   valid: boolean
   type?: DicePoolType.custom | DicePoolType.numerical
