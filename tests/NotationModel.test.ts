@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
 import { NotationModel } from '~models'
-import { RandsumNotation, DicePoolType } from '~types'
+import { Notation, DicePoolType } from '~types'
 
 describe('NotationModel.validate', () => {
   describe('when the notation is completely invalid', () => {
@@ -17,7 +17,7 @@ describe('NotationModel.validate', () => {
   })
 
   describe('when given a typesafe but incorrect dice notation', () => {
-    const notation: RandsumNotation = '2d5XXddf'
+    const notation: Notation = '2d5XXddf'
 
     it('returns an error result', () => {
       const result = NotationModel.validate(notation)
@@ -30,7 +30,7 @@ describe('NotationModel.validate', () => {
   })
 
   describe('when given comma-less multiple dice notation', () => {
-    const notations: RandsumNotation[] = [
+    const notations: Notation[] = [
       '2d5D{2>2}',
       '2d5V{1=2>2=2}',
       '2d5R{2>2}',
@@ -51,7 +51,7 @@ describe('NotationModel.validate', () => {
   })
 
   describe('when given a nonsensical drop notation that is bugging me', () => {
-    const notation: RandsumNotation = '2d5D'
+    const notation: Notation = '2d5D'
 
     it('returns an error result', () => {
       const result = NotationModel.validate(notation)

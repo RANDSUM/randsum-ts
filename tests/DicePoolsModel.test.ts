@@ -3,7 +3,7 @@ import { DicePoolsModel } from '~models'
 
 import { D } from '~src/D'
 import { InvalidUniqueError } from '~src/models/ParametersModel/modifierApplicators'
-import { RandsumNotation, DicePoolType, DicePools } from '~types'
+import { Notation, DicePoolType, DicePools } from '~types'
 
 function createMockNumericalDie(
   results: number[],
@@ -66,7 +66,7 @@ describe('DicePoolsModel.generateResult', () => {
         'test-roll-id': {
           die: createMockNumericalDie(uniqueRolls, 200),
           argument: 1,
-          notation: '1d1' as RandsumNotation<number>,
+          notation: '1d1' as Notation<number>,
           description: ['foo'],
           options: {
             sides: 4,
@@ -106,7 +106,7 @@ describe('DicePoolsModel.generateResult', () => {
           'test-roll-id': {
             die: createMockNumericalDie(uniqueRolls, 200),
             argument: 20,
-            notation: '1d1' as RandsumNotation<number>,
+            notation: '1d1' as Notation<number>,
             description: ['foo'],
             type: DicePoolType.numerical,
             options: {
@@ -149,7 +149,7 @@ describe('DicePoolsModel.generateResult', () => {
         dicePools: {
           'test-roll-id': {
             die: createMockNumericalDie(overflowRollTotals),
-            notation: '1d1' as RandsumNotation<number>,
+            notation: '1d1' as Notation<number>,
             description: ['foo'],
             argument: 20,
             type: DicePoolType.numerical,
@@ -178,7 +178,7 @@ describe('DicePoolsModel.generateResult', () => {
       dicePools: {
         'test-roll-id': {
           die: createMockCustomDie(customSidesRoll),
-          notation: '1d1' as RandsumNotation<'string'>,
+          notation: '1d1' as Notation<'string'>,
           description: ['foo'],
           argument: 20,
           options: {
@@ -219,7 +219,7 @@ describe('DicePoolsModel.generateResult', () => {
     const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
-          notation: '1d1' as RandsumNotation<number>,
+          notation: '1d1' as Notation<number>,
           description: ['foo'],
           argument: 20,
           die: createMockNumericalDie(longerRollTotals),
@@ -268,7 +268,7 @@ describe('DicePoolsModel.generateResult', () => {
         dicePools: {
           'test-roll-id': {
             argument: 20,
-            notation: '1d1' as RandsumNotation<number>,
+            notation: '1d1' as Notation<number>,
             description: ['foo'],
             die: createMockNumericalDie(testRollSet),
             options: {
@@ -305,7 +305,7 @@ describe('DicePoolsModel.generateResult', () => {
         dicePools: {
           'test-roll-id': {
             argument: 20,
-            notation: '1d1' as RandsumNotation<number>,
+            notation: '1d1' as Notation<number>,
             description: ['foo'],
             die: createMockNumericalDie(testRollSet),
             options: {
@@ -350,7 +350,7 @@ describe('DicePoolsModel.generateResult', () => {
       dicePools: {
         'test-roll-id': {
           argument: 20,
-          notation: '1d1' as RandsumNotation<number>,
+          notation: '1d1' as Notation<number>,
           description: ['foo'],
           die: createMockNumericalDie(explodeRollTotals),
           options: {
@@ -392,7 +392,7 @@ describe('DicePoolsModel.generateResult', () => {
         dicePools: {
           'test-roll-id': {
             argument: 20,
-            notation: '1d1' as RandsumNotation<number>,
+            notation: '1d1' as Notation<number>,
             description: ['foo'],
             options: {
               sides: 6,
@@ -427,7 +427,7 @@ describe('DicePoolsModel.generateResult', () => {
         dicePools: {
           'test-roll-id': {
             argument: 20,
-            notation: '1d1' as RandsumNotation<number>,
+            notation: '1d1' as Notation<number>,
             description: ['foo'],
             options: {
               sides: 6,
@@ -464,7 +464,7 @@ describe('DicePoolsModel.generateResult', () => {
         dicePools: {
           'test-roll-id': {
             argument: 20,
-            notation: '1d1' as RandsumNotation<number>,
+            notation: '1d1' as Notation<number>,
             description: ['foo'],
             options: {
               sides: 6,
@@ -501,7 +501,7 @@ describe('DicePoolsModel.generateResult', () => {
     const dropParameters: DicePools = {
       dicePools: {
         'test-roll-id': {
-          notation: '1d1' as RandsumNotation<number>,
+          notation: '1d1' as Notation<number>,
           description: ['foo'],
           argument: 20,
           options: {
@@ -537,7 +537,7 @@ describe('DicePoolsModel.generateResult', () => {
       dicePools: {
         'test-roll-id': {
           argument: 20,
-          notation: '1d1' as RandsumNotation<number>,
+          notation: '1d1' as Notation<number>,
           description: ['foo'],
           options: {
             sides: 6,
@@ -572,7 +572,7 @@ describe('DicePoolsModel.generateResult', () => {
       dicePools: {
         'test-roll-id': {
           argument: 20,
-          notation: '1d1' as RandsumNotation<number>,
+          notation: '1d1' as Notation<number>,
           description: ['foo'],
           options: {
             sides: 6,
@@ -606,14 +606,14 @@ describe('DicePoolsModel.generateResult', () => {
     const parameters: DicePools = {
       dicePools: {
         'test-roll-id': {
-          notation: '1d1' as RandsumNotation<number>,
+          notation: '1d1' as Notation<number>,
           description: ['foo'],
           argument: 20,
           options: { sides: 6, quantity: testRollSet.length },
           die: createMockNumericalDie(testRollSet)
         },
         'test-roll-id-2': {
-          notation: '1d1' as RandsumNotation<number>,
+          notation: '1d1' as Notation<number>,
           description: ['foo'],
           argument: 20,
           options: { sides: 6, quantity: testRollSet.length },

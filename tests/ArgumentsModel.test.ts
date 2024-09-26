@@ -2,9 +2,9 @@ import { describe, expect, test } from 'bun:test'
 import { ArgumentsModel } from '~models'
 
 import { D } from '~src/D'
-import { RandsumNotation, RandsumRollParameters, DicePools } from '~types'
+import { Notation, RollParameters, DicePools } from '~types'
 
-const extractDicePoolValues = (params: DicePools): RandsumRollParameters[] => {
+const extractDicePoolValues = (params: DicePools): RollParameters[] => {
   const pools = Object.entries(params.dicePools)
   return pools.map(([, value]) => value)
 }
@@ -202,8 +202,8 @@ describe('ArgumentModel.parameterize', () => {
     })
   })
 
-  describe('given RandsumNotation', () => {
-    const coreTestString: RandsumNotation = '4d6'
+  describe('given Notation', () => {
+    const coreTestString: Notation = '4d6'
     const coreDicePools = { sides: 6, quantity: 4 }
 
     describe('given a basic notation', () => {
@@ -224,7 +224,7 @@ describe('ArgumentModel.parameterize', () => {
 
     describe('given a notation that uses custom faces', () => {
       describe('with a simple notation', () => {
-        const argument: RandsumNotation = '4d{++--  }'
+        const argument: Notation = '4d{++--  }'
         const customSides = ['+', '+', '-', '-', ' ', ' ']
 
         test('returns a RollParameter matching the notation', () => {
@@ -243,7 +243,7 @@ describe('ArgumentModel.parameterize', () => {
 
     describe('given a notation that contains a drop highest modifier', () => {
       describe('with a simple notation', () => {
-        const argument: RandsumNotation = `${coreTestString}H`
+        const argument: Notation = `${coreTestString}H`
 
         test('returns a RollParameter matching the notation', () => {
           const params = ArgumentsModel.parameterize(argument)
@@ -262,7 +262,7 @@ describe('ArgumentModel.parameterize', () => {
       })
 
       describe('with a complex notation', () => {
-        const argument: RandsumNotation = `${coreTestString}H2`
+        const argument: Notation = `${coreTestString}H2`
 
         test('returns a RollParameter matching the notation', () => {
           const params = ArgumentsModel.parameterize(argument)
@@ -283,7 +283,7 @@ describe('ArgumentModel.parameterize', () => {
 
     describe('given a notation that contains a drop lowest modifier', () => {
       describe('with a simple notation', () => {
-        const argument: RandsumNotation = `${coreTestString}L`
+        const argument: Notation = `${coreTestString}L`
 
         test('returns a RollParameter matching the notation', () => {
           const params = ArgumentsModel.parameterize(argument)
@@ -302,7 +302,7 @@ describe('ArgumentModel.parameterize', () => {
       })
 
       describe('with a complex notation', () => {
-        const argument: RandsumNotation = `${coreTestString}L2`
+        const argument: Notation = `${coreTestString}L2`
 
         test('returns a RollParameter matching the notation', () => {
           const params = ArgumentsModel.parameterize(argument)
@@ -322,7 +322,7 @@ describe('ArgumentModel.parameterize', () => {
     })
 
     describe('given a notation that contains a drop less than, greater than, and exact', () => {
-      const argument: RandsumNotation = `${coreTestString}D{<2,>5,2,4}`
+      const argument: Notation = `${coreTestString}D{<2,>5,2,4}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = ArgumentsModel.parameterize(argument)
@@ -348,7 +348,7 @@ describe('ArgumentModel.parameterize', () => {
     })
 
     describe('given a notation that contains a cap before and lessThan', () => {
-      const argument: RandsumNotation = `${coreTestString}C{<2,>5}`
+      const argument: Notation = `${coreTestString}C{<2,>5}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = ArgumentsModel.parameterize(argument)
@@ -372,7 +372,7 @@ describe('ArgumentModel.parameterize', () => {
     })
 
     describe('given a notation that contains a minus modifier', () => {
-      const argument: RandsumNotation = `${coreTestString}-2`
+      const argument: Notation = `${coreTestString}-2`
 
       test('returns a RollParameter matching the notation', () => {
         const params = ArgumentsModel.parameterize(argument)
@@ -391,7 +391,7 @@ describe('ArgumentModel.parameterize', () => {
     })
 
     describe('given a notation that contains a plus modifier', () => {
-      const argument: RandsumNotation = `${coreTestString}+2`
+      const argument: Notation = `${coreTestString}+2`
 
       test('returns a RollParameter matching the notation', () => {
         const params = ArgumentsModel.parameterize(argument)
@@ -410,7 +410,7 @@ describe('ArgumentModel.parameterize', () => {
     })
 
     describe('given a notation that contains a reroll modifier', () => {
-      const argument: RandsumNotation = `${coreTestString}R{5,20,<6,>2}3`
+      const argument: Notation = `${coreTestString}R{5,20,<6,>2}3`
 
       test('returns a RollParameter matching the notation', () => {
         const params = ArgumentsModel.parameterize(argument)
@@ -440,7 +440,7 @@ describe('ArgumentModel.parameterize', () => {
 
     describe('given a notation that contains a unique notation', () => {
       describe('with a unique notation', () => {
-        const argument: RandsumNotation = `${coreTestString}U{5,6}`
+        const argument: Notation = `${coreTestString}U{5,6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = ArgumentsModel.parameterize(argument)
@@ -462,7 +462,7 @@ describe('ArgumentModel.parameterize', () => {
       })
 
       describe('with a simple unique notation', () => {
-        const argument: RandsumNotation = `${coreTestString}U`
+        const argument: Notation = `${coreTestString}U`
 
         test('returns a RollParameter matching the notation', () => {
           const params = ArgumentsModel.parameterize(argument)
@@ -482,7 +482,7 @@ describe('ArgumentModel.parameterize', () => {
     })
 
     describe('given a notation that contains an explode modifier', () => {
-      const argument: RandsumNotation = `${coreTestString}!`
+      const argument: Notation = `${coreTestString}!`
 
       test('returns a RollParameter matching the notation', () => {
         const params = ArgumentsModel.parameterize(argument)
@@ -502,7 +502,7 @@ describe('ArgumentModel.parameterize', () => {
 
     describe('given a notation that contains a replace modifier', () => {
       describe('with multiple replacements', () => {
-        const argument: RandsumNotation = `${coreTestString}V{1=2,>2=6}`
+        const argument: Notation = `${coreTestString}V{1=2,>2=6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = ArgumentsModel.parameterize(argument)
@@ -531,7 +531,7 @@ describe('ArgumentModel.parameterize', () => {
       })
 
       describe('with a single replacement', () => {
-        const argument: RandsumNotation = `${coreTestString}V{<2=6}`
+        const argument: Notation = `${coreTestString}V{<2=6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = ArgumentsModel.parameterize(argument)
@@ -557,7 +557,7 @@ describe('ArgumentModel.parameterize', () => {
     describe('With a corner case dice notation', () => {
       describe('like an ordered dice notation', () => {
         test('it produces proper organized parameters', () => {
-          const explodeFirstString: RandsumNotation = '4d6!H'
+          const explodeFirstString: Notation = '4d6!H'
           const explodeParams = ArgumentsModel.parameterize(explodeFirstString)
 
           expect(explodeParams).toMatchObject({
@@ -575,7 +575,7 @@ describe('ArgumentModel.parameterize', () => {
             ]
           })
 
-          const dropFirstString: RandsumNotation = '4d6H!'
+          const dropFirstString: Notation = '4d6H!'
           const dropFirstParams = ArgumentsModel.parameterize(dropFirstString)
 
           expect(dropFirstParams).toMatchObject({
@@ -597,7 +597,7 @@ describe('ArgumentModel.parameterize', () => {
       })
 
       describe('like a complicated dice notation', () => {
-        const argument: RandsumNotation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
+        const argument: Notation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
 
         test('returns a RollParameter matching the notation', () => {
           const params = ArgumentsModel.parameterize(argument)
@@ -668,7 +668,7 @@ describe('ArgumentsModel.formDicePools', () => {
   })
 
   describe('given an array of arguments', () => {
-    const argument: [number, RandsumNotation, string[]] = [2, '4d6', ['h', 't']]
+    const argument: [number, Notation, string[]] = [2, '4d6', ['h', 't']]
 
     test('returns a DicePools matching the argument', () => {
       const params = ArgumentsModel.formDicePools(argument)

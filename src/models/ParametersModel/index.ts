@@ -1,5 +1,5 @@
 import { isCustomParameters } from '~guards'
-import { RandsumRollParameters } from '~types'
+import { RollParameters } from '~types'
 import {
   applyReroll,
   applyUnique,
@@ -15,7 +15,7 @@ type RollBonuses<Sides extends string | number = string | number> = {
 }
 
 function applyModifiers<Sides extends string | number = string | number>(
-  poolParameters: RandsumRollParameters<Sides>,
+  poolParameters: RollParameters<Sides>,
   initialRolls: Sides[]
 ): RollBonuses<Sides> {
   if (isCustomParameters(poolParameters)) {
@@ -33,7 +33,7 @@ function applyModifiers<Sides extends string | number = string | number>(
   const {
     options: { sides, quantity, modifiers = {} },
     die
-  } = poolParameters as RandsumRollParameters<number>
+  } = poolParameters as RollParameters<number>
 
   const rollOne: () => number = () => die.roll()
 

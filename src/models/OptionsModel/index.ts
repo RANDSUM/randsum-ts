@@ -1,4 +1,4 @@
-import { RandsumNotation, RandsumRollOptions } from '~types'
+import { Notation, RollOptions } from '~types'
 import {
   formatCoreNotation,
   formatModifierNotation
@@ -9,12 +9,12 @@ import {
 } from './stringFormatters'
 
 function toNotation<Sides extends string | number = string | number>(
-  options: RandsumRollOptions<Sides>
-): RandsumNotation<Sides> {
-  return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as RandsumNotation<Sides>
+  options: RollOptions<Sides>
+): Notation<Sides> {
+  return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as Notation<Sides>
 }
 
-function toDescription(options: RandsumRollOptions<number | string>) {
+function toDescription(options: RollOptions<number | string>) {
   return [
     formatCoreDescriptions(options),
     ...formatModifierDescriptions(options)

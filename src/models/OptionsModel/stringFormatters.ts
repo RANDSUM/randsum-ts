@@ -5,7 +5,7 @@ import {
   ReplaceOptions,
   RerollOptions,
   UniqueOptions,
-  RandsumRollOptions
+  RollOptions
 } from '~types'
 
 function formatHumanList(list: (string | number)[]) {
@@ -111,7 +111,7 @@ function singleReplaceString(replace: ReplaceOptions) {
 export function formatCoreDescriptions({
   sides,
   quantity
-}: RandsumRollOptions<number | string>) {
+}: RollOptions<number | string>) {
   const base = `Roll ${quantity}`
   const descriptor = (quantity || 1) > 1 ? 'dice' : 'die'
   if (Array.isArray(sides)) {
@@ -126,7 +126,7 @@ export function formatCoreDescriptions({
 
 export function formatModifierDescriptions({
   modifiers
-}: RandsumRollOptions<number | string>): string[] {
+}: RollOptions<number | string>): string[] {
   if (!isValidModifier(modifiers)) return []
 
   const modifierStrings = []

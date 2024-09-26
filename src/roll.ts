@@ -1,22 +1,20 @@
 import { ArgumentsModel, DicePoolsModel } from '~models'
 import {
-  RandsumCustomArgument,
-  RandsumCustomRollResult,
-  RandsumMixedRollResult,
-  RandsumNumericalArgument,
-  RandsumNumericalRollResult,
-  RandsumRollArgument,
-  RandsumRollResult
+  CustomArgument,
+  CustomRollResult,
+  MixedRollResult,
+  NumericalArgument,
+  NumericalRollResult,
+  RollArgument,
+  RollResult
 } from '~types'
 
-function roll(...args: RandsumNumericalArgument[]): RandsumNumericalRollResult
-function roll(...args: RandsumCustomArgument[]): RandsumCustomRollResult
-function roll(
-  ...args: RandsumRollArgument<string | number>[]
-): RandsumMixedRollResult
+function roll(...args: NumericalArgument[]): NumericalRollResult
+function roll(...args: CustomArgument[]): CustomRollResult
+function roll(...args: RollArgument<string | number>[]): MixedRollResult
 function roll<Sides extends string | number = string | number>(
-  ...args: RandsumRollArgument<Sides>[]
-): RandsumRollResult<Sides> {
+  ...args: RollArgument<Sides>[]
+): RollResult<Sides> {
   const dicePools = ArgumentsModel.formDicePools(args)
   return DicePoolsModel.generateRollResult(dicePools)
 }

@@ -2,12 +2,11 @@ import { D } from './D'
 
 // Primitives
 
-export type RandsumNumericDiceNotation =
-  `${number}${'d' | 'D'}${number}${string}`
-export type RandsumCustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
+export type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
+export type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
 
-export type RandsumNotation<Sides extends string | number = string | number> =
-  Sides extends number ? RandsumNumericDiceNotation : RandsumCustomDiceNotation
+export type Notation<Sides extends string | number = string | number> =
+  Sides extends number ? NumericDiceNotation : CustomDiceNotation
 
 export enum DicePoolType {
   numerical = 'numerical',
@@ -17,9 +16,7 @@ export enum DicePoolType {
 
 // Options
 
-export interface RandsumRollOptions<
-  Sides extends string | number = string | number
-> {
+export interface RollOptions<Sides extends string | number = string | number> {
   quantity?: number
   sides: Sides extends number ? number : string[]
   modifiers?: Sides extends number ? Modifiers : Record<string, never>
@@ -61,7 +58,7 @@ export interface UniqueOptions {
 }
 
 type CoreRollOptions<Sides extends string | number = string | number> = Omit<
-  RandsumRollOptions<Sides>,
+  RollOptions<Sides>,
   'modifiers'
 >
 
@@ -73,44 +70,43 @@ export type RequiredCoreDiceParameters<
 
 // Arguments
 
-export type RandsumNumericalArgument =
+export type NumericalArgument =
   | `${number}`
   | number
   | D<number>
-  | RandsumRollOptions<number>
-  | RandsumNotation<number>
+  | RollOptions<number>
+  | Notation<number>
 
-export type RandsumCustomArgument =
+export type CustomArgument =
   | D<string[]>
-  | RandsumRollOptions<string>
-  | RandsumNotation<string>
+  | RollOptions<string>
+  | Notation<string>
   | string[]
 
-export type RandsumRollArgument<
-  Sides extends string | number = string | number
-> = Sides extends string ? RandsumCustomArgument : RandsumNumericalArgument
+export type RollArgument<Sides extends string | number = string | number> =
+  Sides extends string ? CustomArgument : NumericalArgument
 
 // Parameters
 
-export interface RandsumRollParameters<
+export interface RollParameters<
   Sides extends string | number = string | number
 > {
-  argument: RandsumRollArgument<Sides>
-  options: RandsumRollOptions<Sides>
+  argument: RollArgument<Sides>
+  options: RollOptions<Sides>
   die: D<Sides extends string ? string[] : number>
-  notation: RandsumNotation<Sides>
+  notation: Notation<Sides>
   description: string[]
 }
 
 export interface DicePools<Sides extends string | number = string | number> {
   dicePools: {
-    [key: string]: RandsumRollParameters<Sides>
+    [key: string]: RollParameters<Sides>
   }
 }
 
 // Results
 
-export interface RandsumRollResult<
+export interface RollResult<
   Sides extends string | number = string | number,
   DP extends DicePoolType = DicePoolType,
   Total extends Sides = Sides
@@ -130,24 +126,18 @@ export interface RandsumRollResult<
   total: Total
 }
 
-export type RandsumNumericalRollResult = RandsumRollResult<
-  number,
-  DicePoolType.numerical
->
-export type RandsumCustomRollResult = RandsumRollResult<
-  string,
-  DicePoolType.custom
->
-export type RandsumMixedRollResult = RandsumRollResult<
+export type NumericalRollResult = RollResult<number, DicePoolType.numerical>
+export type CustomRollResult = RollResult<string, DicePoolType.custom>
+export type MixedRollResult = RollResult<
   string | number,
   DicePoolType.mixed,
   string
 >
 
-export interface RandsumNotationValidationResult {
+export interface NotationValidationResult {
   valid: boolean
   type?: DicePoolType.custom | DicePoolType.numerical
-  digested?: RandsumRollOptions
-  notation?: RandsumNotation
+  digested?: RollOptions
+  notation?: Notation
   description: string[]
 }

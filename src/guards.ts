@@ -1,17 +1,15 @@
 import { completeRollPattern, coreNotationPattern } from '~patterns'
 import {
-  RandsumNotation,
-  RandsumRollOptions,
-  RandsumRollParameters,
+  Notation,
+  RollOptions,
+  RollParameters,
   Modifiers,
-  RandsumRollArgument,
+  RollArgument,
   DicePoolType
 } from '~types'
 import { D } from './D'
 
-export function isDiceNotationArg(
-  argument: unknown
-): argument is RandsumNotation {
+export function isDiceNotationArg(argument: unknown): argument is Notation {
   const notAString = typeof argument !== 'string'
   const basicTest = !!coreNotationPattern.test(String(argument))
   if (!basicTest || notAString) return false
@@ -22,20 +20,18 @@ export function isDiceNotationArg(
 }
 
 export function isCustomSidesStringArg(
-  argument: RandsumRollArgument
+  argument: RollArgument
 ): argument is string[] {
   return (
     Array.isArray(argument) && argument.every((arg) => typeof arg === 'string')
   )
 }
 
-export function isDicePoolOptions(
-  argument: unknown
-): argument is RandsumRollOptions {
+export function isDicePoolOptions(argument: unknown): argument is RollOptions {
   return (
     typeof argument === 'object' &&
     argument instanceof D === false &&
-    (argument as RandsumRollOptions).sides !== undefined
+    (argument as RollOptions).sides !== undefined
   )
 }
 
@@ -46,8 +42,8 @@ export function isValidModifier(
 }
 
 export function isCustomParameters(
-  poolParameters: RandsumRollParameters
-): poolParameters is RandsumRollParameters<string> {
+  poolParameters: RollParameters
+): poolParameters is RollParameters<string> {
   return Array.isArray(poolParameters.options.sides)
 }
 

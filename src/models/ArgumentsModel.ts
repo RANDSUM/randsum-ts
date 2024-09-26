@@ -1,16 +1,11 @@
-import {
-  RandsumRollArgument,
-  DicePools,
-  RandsumRollOptions,
-  RandsumRollParameters
-} from '~types'
+import { RollArgument, DicePools, RollOptions, RollParameters } from '~types'
 import { uuidv7 as uuid } from 'uuidv7'
 import { isD, isDicePoolOptions, isDiceNotationArg } from '~guards'
 import { NotationModel, OptionsModel } from '~models'
 import { D } from '~src/D'
 
 function formDicePools<Sides extends string | number = string | number>(
-  args: RandsumRollArgument<Sides>[]
+  args: RollArgument<Sides>[]
 ): DicePools<Sides> {
   return {
     dicePools: args.reduce(
@@ -20,7 +15,7 @@ function formDicePools<Sides extends string | number = string | number>(
   }
 }
 
-function toOptions(argument: RandsumRollArgument): RandsumRollOptions {
+function toOptions(argument: RollArgument): RollOptions {
   switch (true) {
     case isDicePoolOptions(argument):
       return argument
@@ -36,18 +31,14 @@ function toOptions(argument: RandsumRollArgument): RandsumRollOptions {
   }
 }
 
+function parameterize(argument: RollArgument<number>): RollParameters<number>
+function parameterize(argument: RollArgument<string>): RollParameters<string>
 function parameterize(
-  argument: RandsumRollArgument<number>
-): RandsumRollParameters<number>
-function parameterize(
-  argument: RandsumRollArgument<string>
-): RandsumRollParameters<string>
-function parameterize(
-  argument: RandsumRollArgument<string | number>
-): RandsumRollParameters<string | number>
+  argument: RollArgument<string | number>
+): RollParameters<string | number>
 function parameterize<Sides extends string | number = string | number>(
-  argument: RandsumRollArgument<Sides>
-): RandsumRollParameters<Sides> {
+  argument: RollArgument<Sides>
+): RollParameters<Sides> {
   const options = toOptions(argument)
   return {
     argument,
@@ -55,7 +46,7 @@ function parameterize<Sides extends string | number = string | number>(
     die: isD(argument) ? argument : new D(options.sides),
     notation: OptionsModel.toNotation(options),
     description: OptionsModel.toDescription(options)
-  } as RandsumRollParameters<Sides>
+  } as RollParameters<Sides>
 }
 
 export default { formDicePools, parameterize }

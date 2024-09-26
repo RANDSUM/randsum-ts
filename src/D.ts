@@ -1,5 +1,5 @@
 import { isCustomSidesD, isCustomSidesStringArg } from '~guards'
-import { DicePoolType, RandsumRollOptions } from '~types'
+import { DicePoolType, RollOptions } from '~types'
 
 type Type<T> = T extends string[] ? DicePoolType.custom : DicePoolType.numerical
 type Faces<T> = T extends string[] ? T : number[]
@@ -33,11 +33,11 @@ class D<Sides extends string[] | number> {
     return Array.from({ length: quantity }, () => this._rawRollResult())
   }
 
-  toOptions(): RandsumRollOptions<Result<Faces<Sides>>> {
+  toOptions(): RollOptions<Result<Faces<Sides>>> {
     return {
       quantity: 1,
       sides: isCustomSidesD(this) ? this.faces : this.sides
-    } as RandsumRollOptions<Result<Faces<Sides>>>
+    } as RollOptions<Result<Faces<Sides>>>
   }
 
   protected _rawRollResult(): Result<Faces<Sides>> {
