@@ -68,7 +68,7 @@
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
-    "bun-plugin-dts": "^0.2.3",
+    "bun-plugin-dts": "^0.3.0",
     "bun-types": "latest",
     "eslint": "^9.11.1",
     "prettier": "^3.3.3",
