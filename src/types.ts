@@ -4,7 +4,6 @@ import { D } from './D'
 
 export type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
 export type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
-
 export type Notation<Sides extends string | number = string | number> =
   Sides extends number ? NumericDiceNotation : CustomDiceNotation
 
