@@ -1,3 +1,5 @@
+const digitPattern = /\d*/.source
+
 export const coreNotationPattern = /^\d+[Dd](\d+|{.*})/
 export const dropHighestPattern = /[Hh]\d*/g
 export const dropLowestPattern = /[Ll]\d*/g
@@ -28,16 +30,28 @@ export const dropConstraintsPattern = new RegExp(
 )
 
 export const rerollPattern = new RegExp(
-  /[Rr]/.source + greaterThanLessThanMatcher.source + /\d*/.source,
+  `${/[Rr]/.source}${greaterThanLessThanMatcher.source}${digitPattern}`,
   'g'
 )
 
 export const capPattern = new RegExp(
-  /[Cc]/.source + greaterThanLessThanMatcher.source,
+  `${/[Cc]/.source}${greaterThanLessThanMatcher.source}`,
   'g'
 )
 
 export const completeRollPattern = new RegExp(
-  `${coreNotationPattern.source}|${dropHighestPattern.source}|${dropLowestPattern.source}|${dropConstraintsPattern.source}|${explodePattern.source}|${uniquePattern.source}|${replacePattern.source}|${rerollPattern.source}|${capPattern.source}|${plusPattern.source}|${minusPattern.source}`,
+  [
+    coreNotationPattern.source,
+    dropHighestPattern.source,
+    dropLowestPattern.source,
+    dropConstraintsPattern.source,
+    explodePattern.source,
+    uniquePattern.source,
+    replacePattern.source,
+    rerollPattern.source,
+    capPattern.source,
+    plusPattern.source,
+    minusPattern.source
+  ].join('|'),
   'g'
 )
