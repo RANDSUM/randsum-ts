@@ -13,17 +13,19 @@ const coreGreaterLessThanEquals = new RegExp(
   coreGreaterLessThan.source + /=?\d+/.source
 )
 
-function oneOrMany(core: RegExp) {
+function createRepeatedPattern(core: RegExp) {
   return new RegExp(`{(${core.source},)*(${core.source})}`, 'g')
 }
 
-const greaterThanLessEqualityThanMatcher = oneOrMany(coreGreaterLessThanEquals)
+const greaterThanLessEqualityThanMatcher = createRepeatedPattern(
+  coreGreaterLessThanEquals
+)
 export const replacePattern = new RegExp(
   /[Vv]/.source + greaterThanLessEqualityThanMatcher.source,
   'g'
 )
 
-const greaterThanLessThanMatcher = oneOrMany(coreGreaterLessThan)
+const greaterThanLessThanMatcher = createRepeatedPattern(coreGreaterLessThan)
 export const dropConstraintsPattern = new RegExp(
   /[Dd]/.source + greaterThanLessThanMatcher.source,
   'g'
