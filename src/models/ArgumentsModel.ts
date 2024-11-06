@@ -1,5 +1,5 @@
 import { RollArgument, DicePools, RollOptions, RollParameters } from '~types'
-import { uuidv7 as uuid } from 'uuidv7'
+import { randomUUIDv7 as uuid } from 'bun'
 import { isD, isDicePoolOptions, isDiceNotationArg } from '~guards'
 import { NotationModel, OptionsModel } from '~models'
 import { D } from '~src/D'
