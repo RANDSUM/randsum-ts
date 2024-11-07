@@ -4,7 +4,7 @@ import { isD, isDicePoolOptions, isDiceNotationArg } from '~guards'
 import { NotationModel, OptionsModel } from '~models'
 import { D } from '~src/D'
 
-function formDicePools<Sides extends string | number = string | number>(
+function formDicePools<Sides extends string | number>(
   args: RollArgument<Sides>[]
 ): DicePools<Sides> {
   return {
@@ -36,7 +36,7 @@ function parameterize(argument: RollArgument<string>): RollParameters<string>
 function parameterize(
   argument: RollArgument<string | number>
 ): RollParameters<string | number>
-function parameterize<Sides extends string | number = string | number>(
+function parameterize<Sides extends string | number>(
   argument: RollArgument<Sides>
 ): RollParameters<Sides> {
   const options = toOptions(argument)

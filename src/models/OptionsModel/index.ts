@@ -8,7 +8,7 @@ import {
   formatModifierDescriptions
 } from './stringFormatters'
 
-function toNotation<Sides extends string | number = string | number>(
+function toNotation<Sides extends string | number>(
   options: RollOptions<Sides>
 ): Notation<Sides> {
   return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as Notation<Sides>

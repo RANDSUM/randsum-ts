@@ -21,7 +21,7 @@ function calculateType(
   }
 }
 
-function calculateTotal<Sides extends string | number = string | number>(
+function calculateTotal<Sides extends string | number>(
   rolls: Sides[],
   bonus = 0
 ): Sides {
@@ -35,7 +35,7 @@ function calculateTotal<Sides extends string | number = string | number>(
   return rolls.flat().join(', ') as Sides
 }
 
-function generateModifiedRolls<Sides extends string | number = string | number>(
+function generateModifiedRolls<Sides extends string | number>(
   DicePools: DicePools<Sides>,
   rawRolls: RollResult<Sides>['rawRolls']
 ): RollResult<Sides>['modifiedRolls'] {
@@ -52,7 +52,7 @@ function generateModifiedRolls<Sides extends string | number = string | number>(
   ) as RollResult<Sides>['modifiedRolls']
 }
 
-function generateRawRolls<Sides extends string | number = string | number>(
+function generateRawRolls<Sides extends string | number>(
   dicePools: DicePools<Sides>['dicePools']
 ): RollResult<Sides>['rawRolls'] {
   return Object.fromEntries(
@@ -66,7 +66,7 @@ function generateRawRolls<Sides extends string | number = string | number>(
   )
 }
 
-function generateRollResult<Sides extends string | number = string | number>(
+function generateRollResult<Sides extends string | number>(
   dicePools: DicePools<Sides>
 ): RollResult<Sides> {
   const rawRolls = generateRawRolls(dicePools.dicePools)

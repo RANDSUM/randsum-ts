@@ -9,12 +9,12 @@ import {
   applySingleCap
 } from './modifierApplicators'
 
-type RollBonuses<Sides extends string | number = string | number> = {
+type RollBonuses<Sides extends string | number> = {
   rolls: Sides[]
   simpleMathModifier: number
 }
 
-function applyModifiers<Sides extends string | number = string | number>(
+function applyModifiers<Sides extends string | number>(
   poolParameters: RollParameters<Sides>,
   initialRolls: Sides[]
 ): RollBonuses<Sides> {

@@ -12,7 +12,7 @@ import {
 function roll(...args: NumericalArgument[]): NumericalRollResult
 function roll(...args: CustomArgument[]): CustomRollResult
 function roll(...args: RollArgument<string | number>[]): MixedRollResult
-function roll<Sides extends string | number = string | number>(
+function roll<Sides extends string | number>(
   ...args: RollArgument<Sides>[]
 ): RollResult<Sides> {
   const dicePools = ArgumentsModel.formDicePools(args)
