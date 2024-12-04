@@ -1,7 +1,7 @@
 import { D } from '~dice'
 import { isD } from '../guards'
 import { RollArgument, RollParameters } from '../types'
-import { argumentToRollConfig } from './argumentToRollConfig'
+import { argumentToRollConfig } from '../../utils/argumentToRollConfig'
 import { configToDescription } from '~src/utils/configToDescription'
 import { configToNotation } from '~src/utils/configToNotation'
 

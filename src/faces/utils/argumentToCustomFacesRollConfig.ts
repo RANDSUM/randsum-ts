@@ -1,5 +1,4 @@
-import { RollArgument } from '~src/tower/types'
-import { argumentToRollConfig } from '~src/tower/utils/argumentToRollConfig'
+import { RollArgument } from '~tower'
 import { CustomFacesD } from '../customFacesD'
 import {
   isCustomFacesDiceNotation,
@@ -8,6 +7,7 @@ import {
 import { CustomFacesRollArgument, CustomFacesRollConfig } from '../types'
 import { customFacesNotationToCustomFacesRollConfig } from './customFacesNotationToCustomFacesRollConfig'
 import { facesFromSides } from './facesFromSides'
+import { argumentToRollConfig } from '~src/utils/argumentToRollConfig'
 
 function baseArgumentToCustomFacesRollConfig(
   arg: RollArgument

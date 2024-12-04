@@ -1,6 +1,6 @@
 import { RollConfig } from '~src/types'
-import { isRollConfigArgument, isD } from '../guards'
-import { RollArgument } from '../types'
+import { isRollConfigArgument, isD } from '../tower/guards'
+import { RollArgument } from '../tower/types'
 import { isDiceNotation } from '~notation'
 import { notationToRollConfig } from '~src/utils/notationToRollConfig'
 

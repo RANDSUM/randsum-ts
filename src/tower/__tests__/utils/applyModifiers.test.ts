@@ -1,11 +1,8 @@
 import { describe, expect, spyOn, test } from 'bun:test'
 import { Modifiers } from '~src/types'
 import { D } from '~dice'
-import { RollParameters } from '~src/tower/types'
-import {
-  applyModifiers,
-  InvalidUniqueError
-} from '~src/tower/utils/applyModifiers'
+import { RollParameters } from '~tower'
+import { applyModifiers, InvalidUniqueError } from '../../utils/applyModifiers'
 
 const mockDie = new D(6)
 

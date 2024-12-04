@@ -1,4 +1,4 @@
-import { RollParameters } from '~src/tower/types'
+import { RollParameters } from '~tower'
 import { RollBonuses } from './types'
 import {
   applyReroll,
