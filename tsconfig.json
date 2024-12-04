@@ -1,28 +1,14 @@
 {
   "compilerOptions": {
     "paths": {
-      "~patterns": [
-        "./src/patterns.ts"
-      ],
-      "~tower": [
-        "./src/tower/index.ts"
-      ],
-      "~dice": [
-        "./src/dice/index.ts"
-      ],
-      "~faces": [
-        "./src/faces/index.ts"
-      ],
-      "~notation": [
-        "./src/notation/index.ts"
-      ],
-      "~src/*": [
-        "./src/*"
-      ]
+      "~patterns": ["./src/patterns.ts"],
+      "~tower": ["./src/tower/index.ts"],
+      "~dice": ["./src/dice/index.ts"],
+      "~faces": ["./src/faces/index.ts"],
+      "~notation": ["./src/notation/index.ts"],
+      "~src/*": ["./src/*"]
     },
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["ESNext"],
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "bundler",
@@ -36,8 +22,6 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": false,
-    "types": [
-      "bun-types"
-    ]
+    "types": ["bun-types"]
   }
 }
