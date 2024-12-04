@@ -1,4 +1,4 @@
-import { RollConfig } from '~src/core/types'
+import { RollConfig } from '~src/types'
 
 export interface NotationValidationResult<V = boolean> {
   valid: V

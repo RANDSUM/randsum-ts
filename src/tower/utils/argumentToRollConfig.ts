@@ -1,4 +1,4 @@
-import { RollConfig } from '~src/core/types'
+import { RollConfig } from '~src/types'
 import { isRollConfigArgument, isD } from '../guards'
 import type { RollArgument } from '../types'
 import { isDiceNotation } from '~src/notation/guards'

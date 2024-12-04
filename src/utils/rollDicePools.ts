@@ -1,4 +1,4 @@
-import { DicePoolLike, DicePoolRollReturn } from '~src/core/types'
+import { DicePoolLike, DicePoolRollReturn } from '~src/types'
 
 export function rollDicePools<R>(
   dicePools: DicePoolLike<R>

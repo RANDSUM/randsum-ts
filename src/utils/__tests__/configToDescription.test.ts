@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { configToDescription } from '~src/core/utils/configToDescription'
+import { configToDescription } from '../configToDescription'
 
 describe('configToDescription', () => {
   test('returns an array strings matching the constraints', () => {

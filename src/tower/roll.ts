@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid'
 import type { DicePools, RollArgument, RollResult } from './types'
 import { applyModifiers, calculateTotal } from './utils/applyModifiers'
 import { argumentToRollParameters } from './utils/argumentToRollParameters'
-import { rollDicePools } from '~src/core/utils/rollDicePools'
+import { rollDicePools } from '~src/utils/rollDicePools'
 
 export function roll(...args: RollArgument[]): RollResult {
   const dicePools = args.reduce(

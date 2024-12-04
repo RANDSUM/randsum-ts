@@ -4,7 +4,7 @@ import {
   Modifiers,
   RequiredCoreDiceParameters,
   RerollOptions
-} from '~src/core/types'
+} from '~src/types'
 import {
   dropHighestPattern,
   dropLowestPattern,

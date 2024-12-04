@@ -1,5 +1,5 @@
-import { formatCoreDescriptions } from '~src/core/utils/configToDescription'
-import type { CustomFacesRollConfig } from '../types'
+import { formatCoreDescriptions } from '~src/utils/configToDescription'
+import { CustomFacesRollConfig } from '../types'
 
 export function customFacesConfigToDescriptions({
   quantity,

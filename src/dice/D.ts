@@ -1,5 +1,5 @@
-import { coreRandom } from '~src/core/utils/coreRandom'
-import { RollConfig } from '~src/core/types'
+import { RollConfig } from '~src/types'
+import { coreRandom } from '~src/utils/coreRandom'
 
 export class D {
   constructor(public sides: number) {
