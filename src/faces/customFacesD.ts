@@ -1,5 +1,5 @@
 import { resultToFaces } from './utils/resultToFaces'
-import type { CustomFacesRollConfig } from './types'
+import { CustomFacesRollConfig } from './types'
 import { D } from '~src/dice/D'
 
 export class CustomFacesD {

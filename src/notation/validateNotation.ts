@@ -1,8 +1,8 @@
+import { notationToRollConfig } from '~src/utils/notationToRollConfig'
 import { isDiceNotation } from './guards'
 import { NotationValidationResult } from './types'
-import { notationToRollConfig } from './utils/notationToRollConfig'
-import { configToNotation } from './utils/configToNotation'
 import { configToDescription } from '~src/utils/configToDescription'
+import { configToNotation } from '~src/utils/configToNotation'
 
 function validateNotation(arg: string): NotationValidationResult {
   if (!isDiceNotation(arg)) {

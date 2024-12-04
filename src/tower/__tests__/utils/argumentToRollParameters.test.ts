@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 import { D } from '~src/dice/D'
-import { DiceNotation } from '~src/notation/types'
+import { DiceNotation } from '~src/types'
 import { argumentToRollParameters } from '~src/tower/utils/argumentToRollParameters'
 
 describe('argumentToRollParameters', () => {

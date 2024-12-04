@@ -1,4 +1,4 @@
-import type { CustomFacesDiceNotation, CustomFacesRollConfig } from '../types'
+import { CustomFacesDiceNotation, CustomFacesRollConfig } from '../types'
 
 export function customConfigToCustomFacesNotation({
   quantity,

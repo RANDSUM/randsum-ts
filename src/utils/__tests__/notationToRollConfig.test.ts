@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
-import { DiceNotation } from '../types'
-import { notationToRollConfig } from '../utils/notationToRollConfig'
+import { notationToRollConfig } from '../notationToRollConfig'
+import { DiceNotation } from '~src/types'
 
 describe('notationToRollConfig', () => {
   it('converts the notation to a roll config', () => {

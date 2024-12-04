@@ -5,7 +5,7 @@ import {
   isCustomFacesDiceNotation,
   isCustomFacesRollConfigArgument
 } from '../guards'
-import type { CustomFacesRollArgument, CustomFacesRollConfig } from '../types'
+import { CustomFacesRollArgument, CustomFacesRollConfig } from '../types'
 import { customFacesNotationToCustomFacesRollConfig } from './customFacesNotationToCustomFacesRollConfig'
 import { facesFromSides } from './facesFromSides'
 

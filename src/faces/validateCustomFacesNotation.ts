@@ -1,6 +1,6 @@
 import { NotationValidationResult } from '~src/notation/types'
 import { isCustomFacesDiceNotation } from './guards'
-import type { CustomFacesNotationValidationResult } from './types'
+import { CustomFacesNotationValidationResult } from './types'
 import { customConfigToCustomFacesNotation } from './utils/customFacesConfigToCustomFacesNotation'
 import { customFacesConfigToDescriptions } from './utils/customFacesConfigToDescription'
 import { customFacesNotationToCustomFacesRollConfig } from './utils/customFacesNotationToCustomFacesRollConfig'

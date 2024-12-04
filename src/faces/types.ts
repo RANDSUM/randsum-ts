@@ -1,7 +1,7 @@
 import { RollConfig } from '~src/types'
 import { NotationValidationResult } from '~src/notation/types'
 import { RollArgument } from '~src/tower/types'
-import type { CustomFacesD } from './customFacesD'
+import { CustomFacesD } from './customFacesD'
 
 export interface CustomFacesRollConfig extends Omit<RollConfig, 'modifiers'> {
   faces: string[]

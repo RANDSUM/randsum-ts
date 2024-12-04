@@ -1,8 +1,5 @@
 import { argumentToCustomFacesRollConfig } from './argumentToCustomFacesRollConfig'
-import type {
-  CustomFacesRollArgument,
-  CustomFacesRollParameters
-} from '../types'
+import { CustomFacesRollArgument, CustomFacesRollParameters } from '../types'
 import { CustomFacesD } from '../customFacesD'
 
 export function argumentToCustomFacesRollParameters(

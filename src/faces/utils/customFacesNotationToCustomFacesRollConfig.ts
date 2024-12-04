@@ -1,8 +1,8 @@
 import { isDiceNotation } from '~src/notation/guards'
-import { DiceNotation } from '~src/notation/types'
+import { DiceNotation } from '~src/types'
 import { argumentToRollConfig } from '~src/tower/utils/argumentToRollConfig'
 import { customCoreNotationPattern } from '../patterns'
-import type { CustomFacesDiceNotation, CustomFacesRollConfig } from '../types'
+import { CustomFacesDiceNotation, CustomFacesRollConfig } from '../types'
 import { facesFromSides } from './facesFromSides'
 
 export function customFacesNotationToCustomFacesRollConfig(

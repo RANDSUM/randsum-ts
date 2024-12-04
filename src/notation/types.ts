@@ -1,4 +1,4 @@
-import { RollConfig } from '~src/types'
+import { DiceNotation, RollConfig } from '~src/types'
 
 export interface NotationValidationResult<V = boolean> {
   valid: V
@@ -7,5 +7,3 @@ export interface NotationValidationResult<V = boolean> {
   config: V extends true ? RollConfig : undefined
   description: V extends true ? string[] : undefined
 }
-
-export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`

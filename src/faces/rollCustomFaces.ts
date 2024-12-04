@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
 
-import type {
+import {
   CustomFacesRollResult,
   CustomFacesRollArgument,
   CustomFacesDicePools

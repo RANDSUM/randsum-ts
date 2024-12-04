@@ -1,4 +1,4 @@
-import type { RollConfig } from '../../types'
+import { RollConfig } from '../../types'
 import {
   formatCoreDescriptions,
   formatModifierDescriptions

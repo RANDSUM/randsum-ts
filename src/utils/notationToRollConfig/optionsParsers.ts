@@ -6,16 +6,16 @@ import {
   RerollOptions
 } from '~src/types'
 import {
+  addPattern,
+  capPattern,
+  dropConstraintsPattern,
   dropHighestPattern,
   dropLowestPattern,
-  dropConstraintsPattern,
   explodePattern,
-  uniquePattern,
   replacePattern,
   rerollPattern,
-  capPattern,
-  addPattern,
-  subtractPattern
+  subtractPattern,
+  uniquePattern
 } from '../../patterns'
 
 export function parseCoreNotation(

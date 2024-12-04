@@ -1,7 +1,7 @@
+import { coreNotationPattern } from '~patterns'
 import { parseCoreNotation, parseModifiers } from './optionsParsers'
-import { coreNotationPattern } from '../../patterns'
 import { RollConfig } from '~src/types'
-import { DiceNotation } from '~src/notation/types'
+import { DiceNotation } from '~src/types'
 
 export function notationToRollConfig(notationString: DiceNotation): RollConfig {
   const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)!

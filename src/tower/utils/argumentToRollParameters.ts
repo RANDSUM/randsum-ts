@@ -1,9 +1,9 @@
 import { D } from '~src/dice/D'
 import { isD } from '../guards'
-import type { RollArgument, RollParameters } from '../types'
+import { RollArgument, RollParameters } from '../types'
 import { argumentToRollConfig } from './argumentToRollConfig'
-import { configToNotation } from '~src/notation/utils/configToNotation'
 import { configToDescription } from '~src/utils/configToDescription'
+import { configToNotation } from '~src/utils/configToNotation'
 
 export function argumentToRollParameters(
   argument: RollArgument

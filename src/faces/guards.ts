@@ -1,8 +1,5 @@
 import { customCoreNotationPattern } from './patterns'
-import type {
-  CustomFacesDiceNotation,
-  CustomFacesRollConfigArgument
-} from './types'
+import { CustomFacesDiceNotation, CustomFacesRollConfigArgument } from './types'
 
 export function isCustomFacesRollConfigArgument(
   arg: unknown

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test'
 
-import type { DiceNotation } from '../types'
 import { validateNotation } from '../validateNotation'
+import { DiceNotation } from '~src/types'
 
 describe('validateNotation', () => {
   describe('when the notation is completely invalid', () => {

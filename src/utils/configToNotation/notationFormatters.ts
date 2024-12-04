@@ -6,7 +6,7 @@ import {
   UniqueOptions,
   RollConfig
 } from '~src/types'
-import { DiceNotation } from '~src/notation/types'
+import { DiceNotation } from '~src/types'
 
 function capNotation(cap: GreaterLessOptions) {
   const capList = formatGreaterLess(cap)
