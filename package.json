@@ -1,6 +1,6 @@
 {
   "name": "randsum",
-  "version": "7.1.0",
+  "version": "8.0.0",
   "private": false,
   "author": "Alex Jarvis",
   "icon": "https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp",
@@ -75,6 +75,9 @@
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.17.0",
     "typedoc": "^0.27.2"
+  },
+  "dependencies": {
+    "uuid": "^11.0.3"
   },
   "type": "module"
 }
