@@ -1,6 +1,6 @@
 import { resultToFaces } from './utils/resultToFaces'
 import { CustomFacesRollConfig } from './types'
-import { D } from '~src/dice/D'
+import { D } from '~dice'
 
 export class CustomFacesD {
   public sides: number

@@ -1,10 +1,9 @@
-import { NotationValidationResult } from '~src/notation/types'
 import { isCustomFacesDiceNotation } from './guards'
 import { CustomFacesNotationValidationResult } from './types'
 import { customConfigToCustomFacesNotation } from './utils/customFacesConfigToCustomFacesNotation'
 import { customFacesConfigToDescriptions } from './utils/customFacesConfigToDescription'
 import { customFacesNotationToCustomFacesRollConfig } from './utils/customFacesNotationToCustomFacesRollConfig'
-import { validateNotation } from '~src/notation/validateNotation'
+import { validateNotation, NotationValidationResult } from '~notation'
 
 export function validateCustomFacesNotation(
   arg: string

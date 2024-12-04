@@ -1,5 +1,5 @@
 import { RollConfig } from '~src/types'
-import { NotationValidationResult } from '~src/notation/types'
+import { NotationValidationResult } from '~notation'
 import { RollArgument } from '~src/tower/types'
 import { CustomFacesD } from './customFacesD'
 

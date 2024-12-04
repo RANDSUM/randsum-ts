@@ -1,4 +1,4 @@
-import { D } from '~src/dice/D'
+import { D } from '~dice'
 import { isD } from '../guards'
 import { RollArgument, RollParameters } from '../types'
 import { argumentToRollConfig } from './argumentToRollConfig'

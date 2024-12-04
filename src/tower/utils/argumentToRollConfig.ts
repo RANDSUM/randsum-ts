@@ -1,7 +1,7 @@
 import { RollConfig } from '~src/types'
 import { isRollConfigArgument, isD } from '../guards'
 import { RollArgument } from '../types'
-import { isDiceNotation } from '~src/notation/guards'
+import { isDiceNotation } from '~notation'
 import { notationToRollConfig } from '~src/utils/notationToRollConfig'
 
 export function argumentToRollConfig(argument: RollArgument): RollConfig {

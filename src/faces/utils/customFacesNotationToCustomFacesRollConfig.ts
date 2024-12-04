@@ -1,4 +1,4 @@
-import { isDiceNotation } from '~src/notation/guards'
+import { isDiceNotation } from '~notation'
 import { DiceNotation } from '~src/types'
 import { argumentToRollConfig } from '~src/tower/utils/argumentToRollConfig'
 import { customCoreNotationPattern } from '../patterns'

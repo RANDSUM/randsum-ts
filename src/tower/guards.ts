@@ -1,4 +1,4 @@
-import { D } from '~src/dice/D'
+import { D } from '~dice'
 import { RollConfigArgument } from './types'
 
 export function isD(arg: unknown): arg is D {

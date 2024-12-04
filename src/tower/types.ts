@@ -1,5 +1,5 @@
 import { RollConfig } from '~src/types'
-import { D } from '~src/dice/D'
+import { D } from '~dice'
 import { DiceNotation } from '~src/types'
 
 export interface RollConfigArgument extends Partial<RollConfig> {

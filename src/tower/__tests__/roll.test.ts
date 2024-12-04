@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'bun:test'
 
 import { roll } from '../roll'
-import { D } from '~src/dice/D'
+import { D } from '~dice'
 
 const loops = 9999
 
