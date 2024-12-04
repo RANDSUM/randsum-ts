@@ -5,7 +5,7 @@ import {
   ReplaceOptions,
   RequiredCoreDiceParameters,
   RerollOptions
-} from '~src/core/types'
+} from '~types'
 
 export class InvalidUniqueError extends Error {
   constructor() {

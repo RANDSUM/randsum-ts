@@ -1,12 +1,12 @@
 import { v4 as uuid } from 'uuid'
 
-import { rollDicePools } from '~src/core/utils/rollDicePools'
 import type {
   CustomFacesRollResult,
   CustomFacesRollArgument,
   CustomFacesDicePools
 } from './types'
 import { argumentToCustomFacesRollParameters } from './utils/argumentToCustomFacesRollParameters'
+import { rollDicePools } from '~src/utils/rollDicePools'
 
 export function rollCustomFaces(
   ...args: CustomFacesRollArgument[]

@@ -1,5 +1,5 @@
 import { describe, expect, spyOn, test } from 'bun:test'
-import { Modifiers } from '~src/core/types'
+import { Modifiers } from '~types'
 import { D } from '~src/dice/D'
 import { RollParameters } from '~src/tower/types'
 import {
