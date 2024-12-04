@@ -1,5 +1,5 @@
-import { describe, expect, test } from 'bun:test'
 import { D10, D100, D12, D20, D4, D6, D8 } from '../dice'
+import { describe, expect, test } from 'bun:test'
 
 describe('exported dice', () => {
   test('D4 should be a D with 4 sides', () => {

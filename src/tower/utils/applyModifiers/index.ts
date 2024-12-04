@@ -1,12 +1,12 @@
 import { RollParameters } from '~tower'
 import { RollBonuses } from './types'
 import {
-  applyReroll,
-  applyUnique,
-  applyReplace,
-  applySingleCap,
   applyDrop,
-  applyExplode
+  applyExplode,
+  applyReplace,
+  applyReroll,
+  applySingleCap,
+  applyUnique
 } from './modifierApplicators'
 
 export function applyModifiers(

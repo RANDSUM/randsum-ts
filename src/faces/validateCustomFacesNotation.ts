@@ -3,7 +3,7 @@ import { CustomFacesNotationValidationResult } from './types'
 import { customConfigToCustomFacesNotation } from './utils/customFacesConfigToCustomFacesNotation'
 import { customFacesConfigToDescriptions } from './utils/customFacesConfigToDescription'
 import { customFacesNotationToCustomFacesRollConfig } from './utils/customFacesNotationToCustomFacesRollConfig'
-import { validateNotation, NotationValidationResult } from '~notation'
+import { NotationValidationResult, validateNotation } from '~notation'
 
 export function validateCustomFacesNotation(
   arg: string

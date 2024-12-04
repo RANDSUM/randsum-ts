@@ -1,10 +1,10 @@
 import {
-  GreaterLessOptions,
   DropOptions,
+  GreaterLessOptions,
   ReplaceOptions,
   RerollOptions,
-  UniqueOptions,
-  RollConfig
+  RollConfig,
+  UniqueOptions
 } from '~src/types'
 import { DiceNotation } from '~src/types'
 

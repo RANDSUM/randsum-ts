@@ -1,9 +1,11 @@
-import { isDiceNotation } from '~notation'
 import { DiceNotation } from '~src/types'
-import { customCoreNotationPattern } from '../patterns'
-import { CustomFacesDiceNotation, CustomFacesRollConfig } from '../types'
-import { facesFromSides } from './facesFromSides'
+import { isDiceNotation } from '~notation'
+
 import { argumentToRollConfig } from '~src/utils/argumentToRollConfig'
+import { customCoreNotationPattern } from '../patterns'
+import { facesFromSides } from './facesFromSides'
+
+import { CustomFacesDiceNotation, CustomFacesRollConfig } from '../types'
 
 export function customFacesNotationToCustomFacesRollConfig(
   notationString: CustomFacesDiceNotation | DiceNotation
