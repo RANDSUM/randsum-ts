@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
-import { rollDicePools } from '~src/utils/rollDicePools'
-import { DicePoolLike } from '~types'
+import { rollDicePools } from '~src/core/utils/rollDicePools'
+import { DicePoolLike } from '~src/core/types'
 
 describe('rollDicePools', () => {
   test('rolls the provided dice a number of times equal to the quantity', () => {

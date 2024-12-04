@@ -1,4 +1,4 @@
-import { RollConfig } from '~types'
+import { RollConfig } from '~src/core/types'
 import { D } from '~src/dice/D'
 import { DiceNotation } from '~src/notation/types'
 

@@ -1,13 +1,22 @@
 {
   "compilerOptions": {
     "paths": {
-      "~models": ["./src/models/index.ts"],
-      "~patterns": ["./src/patterns.ts"],
-      "~guards": ["./src/guards.ts"],
-      "~types": ["./src/types.ts"],
-      "~src/*": ["./src/*"]
+      "~models": [
+        "./src/models/index.ts"
+      ],
+      "~patterns": [
+        "./src/patterns.ts"
+      ],
+      "~guards": [
+        "./src/guards.ts"
+      ],
+      "~src/*": [
+        "./src/*"
+      ]
     },
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "bundler",
@@ -21,6 +30,8 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": false,
-    "types": ["bun-types"]
+    "types": [
+      "bun-types"
+    ]
   }
 }

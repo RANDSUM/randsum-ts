@@ -2,7 +2,7 @@ import { isDiceNotation } from './guards'
 import { NotationValidationResult } from './types'
 import { notationToRollConfig } from './utils/notationToRollConfig'
 import { configToNotation } from './utils/configToNotation'
-import { configToDescription } from '~src/utils/configToDescription'
+import { configToDescription } from '~src/core/utils/configToDescription'
 
 function validateNotation(arg: string): NotationValidationResult {
   if (!isDiceNotation(arg)) {

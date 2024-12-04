@@ -1,6 +1,6 @@
 import { parseCoreNotation, parseModifiers } from './optionsParsers'
 import { coreNotationPattern } from '../../patterns'
-import { RollConfig } from '~types'
+import { RollConfig } from '~src/core/types'
 import { DiceNotation } from '~src/notation/types'
 
 export function notationToRollConfig(notationString: DiceNotation): RollConfig {

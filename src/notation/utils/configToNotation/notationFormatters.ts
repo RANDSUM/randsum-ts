@@ -5,7 +5,7 @@ import {
   RerollOptions,
   UniqueOptions,
   RollConfig
-} from '~types'
+} from '~src/core/types'
 import { DiceNotation } from '~src/notation/types'
 
 function capNotation(cap: GreaterLessOptions) {

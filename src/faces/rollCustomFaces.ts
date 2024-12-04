@@ -6,7 +6,7 @@ import type {
   CustomFacesDicePools
 } from './types'
 import { argumentToCustomFacesRollParameters } from './utils/argumentToCustomFacesRollParameters'
-import { rollDicePools } from '~src/utils/rollDicePools'
+import { rollDicePools } from '~src/core/utils/rollDicePools'
 
 export function rollCustomFaces(
   ...args: CustomFacesRollArgument[]

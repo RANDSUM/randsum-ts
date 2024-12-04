@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { coreRandom } from '~src/utils/coreRandom'
+import { coreRandom } from '~src/core/utils/coreRandom'
 
 describe('coreRandom', () => {
   test('it returns an object between 1 and the provided number', () => {
