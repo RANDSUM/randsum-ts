@@ -60,7 +60,7 @@ roll({
 })
 ```
 
-### Custom Sides
+### Custom Faces
 
 ---
 
@@ -86,9 +86,9 @@ roll({
 })
 ```
 
-Note: When using custom sides with Randsum Dice Notation, we can only mark sides as single characters. When using full options, you can pass in strings of any length!
+Note: When using custom faces with Randsum Dice Notation, we can only mark faces as single characters. When using full options, you can pass in strings of any length!
 
-#### Custom Sides Caveats and Gotchas
+#### Custom Faces Caveats and Gotchas
 
 - Whenever _any_ dice pool leverages custom dice, the `total` of the `RandsumRollResult` will be `0`.
 - Modifiers are not compatible with custom sides. Under-the-hood, `randsum` is still rolling these as if they were numeric dice, then swapping out the numbers for faces at the end. While modifiers are technically feasible, it would be very easy to code yourself into a confusing place with non-obvious results.
