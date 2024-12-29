@@ -128,19 +128,17 @@ import { rollCustomFaces } from 'randsum'
 
 rollCustomFaces('2d20')
 
-
 rollCustomFaces({
   faces: ['h', 't'],
   quantity: 4
 }) /
-
-rollCustomFaces([
-  {
-    faces: ['h', 't'],
-    quantity: 4
-  },
-  '2d20'
-])
+  rollCustomFaces([
+    {
+      faces: ['h', 't'],
+      quantity: 4
+    },
+    '2d20'
+  ])
 ```
 
 ### Advanced Usage
