@@ -119,26 +119,26 @@ roll({
 
 See the [Randsum Dice Notation](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more usage information.
 
-One note on Custom Sides: whenever your roll includes custom dice sides, `total` will return `0`. This is because we can't meaningfully calculate the numerical total of a set of strings! This will return zero if _any_ dice pool in the roll is custom.
-
 For example:
 
 ```ts
-roll('2d20')
-// total = 1-20
+import { rollCustomFaces } from 'randsum'
 
-roll({
-  sides: ['h', 't'],
+rollCustomFaces('2d20')
+
+
+rollCustomFaces({
+  faces: ['h', 't'],
   quantity: 4
-}) // total = 0
+}) /
 
-roll([
+rollCustomFaces([
   {
-    sides: ['h', 't'],
+    faces: ['h', 't'],
     quantity: 4
   },
   '2d20'
-]) // total = 0
+])
 ```
 
 ### Advanced Usage
