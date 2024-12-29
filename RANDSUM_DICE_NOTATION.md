@@ -78,9 +78,10 @@ In `randsum` :
 
 ```js
 // Roll 6 two-sided die with the sides "H" and "T"
+import { rollCustomFaces } from 'randsum'
 
-roll('6d{HT}')
-roll({
+rollCustomFaces('6d{HT}')
+rollCustomFaces({
   sides: ['H', 'T'],
   quantity: 6
 })

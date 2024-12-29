@@ -46,7 +46,10 @@ roll({ quantity: 4, sides: 6, modifiers: { drop: { lowest: true } } })
 roll('4d6L')
 
 // Roll 4 Fudge dice
-roll({ quantity: 4, sides: ['+', '+', '-', '-', ' ', ' '] })
+
+import { rollCustomFaces } from 'randsum'
+
+rollCustomFaces({ quantity: 4, faces: ['+', '+', '-', '-', ' ', ' '] })
 
 // Roll a single D20
 import { D20 } from 'randsum'
@@ -60,7 +63,9 @@ const D120 = new D(120)
 D120.roll()
 
 //'heads' or 'tails'?
-const Coin = new D(['heads', 'tails'])
+import { CustomFacesD } from 'randsum'
+
+const Coin = new CustomFacesD(['heads', 'tails'])
 Coin.roll()
 ```
 

@@ -1,5 +1,7 @@
 # Getting Started
 
+## 12/19/24 Note: This documentation is still broadly accurate, but may contain small errors. I am going through and updating this as we speak, feel free to reach out for any usability questions
+
 ## Insalling
 
 Add `randsum` to your package.json, or copy and paste one of these:
@@ -119,26 +121,24 @@ roll({
 
 See the [Randsum Dice Notation](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more usage information.
 
-One note on Custom Sides: whenever your roll includes custom dice sides, `total` will return `0`. This is because we can't meaningfully calculate the numerical total of a set of strings! This will return zero if _any_ dice pool in the roll is custom.
-
 For example:
 
 ```ts
-roll('2d20')
-// total = 1-20
+import { rollCustomFaces } from 'randsum'
 
-roll({
-  sides: ['h', 't'],
+rollCustomFaces('2d20')
+
+rollCustomFaces({
+  faces: ['h', 't'],
   quantity: 4
-}) // total = 0
-
-roll([
-  {
-    sides: ['h', 't'],
-    quantity: 4
-  },
-  '2d20'
-]) // total = 0
+}) /
+  rollCustomFaces([
+    {
+      faces: ['h', 't'],
+      quantity: 4
+    },
+    '2d20'
+  ])
 ```
 
 ### Advanced Usage
