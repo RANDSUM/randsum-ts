@@ -1,5 +1,7 @@
 # Getting Started
 
+## 12/19/24 Note: This documentation is still broadly accurate, but may contain small errors. I am going through and updating this as we speak, feel free to reach out for any usability questions
+
 ## Insalling
 
 Add `randsum` to your package.json, or copy and paste one of these:
