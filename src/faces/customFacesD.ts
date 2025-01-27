@@ -5,8 +5,9 @@ import { D } from '~dice'
 export class CustomFacesD {
   public sides: number
   private coreDie: D
+  public faces: string[]
 
-  constructor(public faces: string[]) {
+  constructor(faces: string[]) {
     this.sides = faces.length
     this.faces = faces
     this.coreDie = new D(this.sides)

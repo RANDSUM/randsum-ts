@@ -2,7 +2,9 @@ import { RollConfig } from '~src/types'
 import { coreRandom } from '~src/utils/coreRandom'
 
 export class D {
-  constructor(public sides: number) {
+  public sides: number
+
+  constructor(sides: number) {
     this.sides = sides
   }
 
