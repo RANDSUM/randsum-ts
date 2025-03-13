@@ -4,8 +4,8 @@ import {
   formatModifierNotation
 } from './notationGenerators'
 
-export function optionsToNotation<Sides extends string | number>(
-  options: RollOptions<Sides>
-): Notation<Sides> {
-  return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as Notation<Sides>
+export function optionsToNotation<S extends string | number>(
+  options: RollOptions<S>
+): Notation<S> {
+  return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as Notation<S>
 }

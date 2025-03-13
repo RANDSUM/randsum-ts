@@ -30,9 +30,9 @@ function normalizeArgument(
 function normalizeArgument(
   argument: RollArgument<string | number>
 ): RollParameters<string | number>
-function normalizeArgument<Sides extends string | number>(
-  argument: RollArgument<Sides>
-): RollParameters<Sides> {
+function normalizeArgument<S extends string | number>(
+  argument: RollArgument<S>
+): RollParameters<S> {
   const options = toOptions(argument)
   return {
     argument,
@@ -40,7 +40,7 @@ function normalizeArgument<Sides extends string | number>(
     die: isD(argument) ? argument : new D(options.sides),
     notation: optionsToNotation(options),
     description: optionsToDescription(options)
-  } as RollParameters<Sides>
+  } as RollParameters<S>
 }
 
 export { normalizeArgument }

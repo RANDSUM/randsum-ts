@@ -21,24 +21,21 @@ function calculateType(
   }
 }
 
-function calculateTotal<Sides extends string | number>(
-  rolls: Sides[],
-  bonus = 0
-): Sides {
+function calculateTotal<S extends string | number>(rolls: S[], bonus = 0): S {
   if (isFullNumArray(rolls)) {
     return rolls.reduce(
       (acc, cur) => (acc as number) + (cur as number),
       bonus
-    ) as Sides
+    ) as S
   }
 
-  return rolls.flat().join(', ') as Sides
+  return rolls.flat().join(', ') as S
 }
 
-function generateModifiedRolls<Sides extends string | number>(
-  DicePools: DicePools<Sides>,
-  rawRolls: RollResult<Sides>['rawRolls']
-): RollResult<Sides>['modifiedRolls'] {
+function generateModifiedRolls<S extends string | number>(
+  DicePools: DicePools<S>,
+  rawRolls: RollResult<S>['rawRolls']
+): RollResult<S>['modifiedRolls'] {
   return Object.fromEntries(
     Object.keys(DicePools.dicePools).map((key) => {
       const params = DicePools.dicePools[key]
@@ -49,26 +46,26 @@ function generateModifiedRolls<Sides extends string | number>(
       }
       return [key, modifiedRoll]
     })
-  ) as RollResult<Sides>['modifiedRolls']
+  ) as RollResult<S>['modifiedRolls']
 }
 
-function generateRawRolls<Sides extends string | number>(
-  dicePools: DicePools<Sides>['dicePools']
-): RollResult<Sides>['rawRolls'] {
+function generateRawRolls<S extends string | number>(
+  dicePools: DicePools<S>['dicePools']
+): RollResult<S>['rawRolls'] {
   return Object.fromEntries(
     Object.keys(dicePools).map((key) => {
       const {
         die,
         options: { quantity }
       } = dicePools[key]
-      return [key, die.rollMany(quantity || 1) as Sides[]]
+      return [key, die.rollMany(quantity || 1) as S[]]
     })
   )
 }
 
-export function rollResultFromDicePools<Sides extends string | number>(
-  dicePools: DicePools<Sides>
-): RollResult<Sides> {
+export function rollResultFromDicePools<S extends string | number>(
+  dicePools: DicePools<S>
+): RollResult<S> {
   const rawRolls = generateRawRolls(dicePools.dicePools)
   const modifiedRolls = generateModifiedRolls(dicePools, rawRolls)
   const modifiedValues = Object.values(modifiedRolls)

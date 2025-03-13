@@ -9,15 +9,15 @@ import {
   applyUnique
 } from './modifierApplicators'
 
-type RollBonuses<Sides extends string | number> = {
-  rolls: Sides[]
+type RollBonuses<S extends string | number> = {
+  rolls: S[]
   simpleMathModifier: number
 }
 
-function applyModifiers<Sides extends string | number>(
-  poolParameters: RollParameters<Sides>,
-  initialRolls: Sides[]
-): RollBonuses<Sides> {
+function applyModifiers<S extends string | number>(
+  poolParameters: RollParameters<S>,
+  initialRolls: S[]
+): RollBonuses<S> {
   if (isCustomParameters(poolParameters)) {
     return {
       simpleMathModifier: 0,
@@ -108,7 +108,7 @@ function applyModifiers<Sides extends string | number>(
       default:
         throw new Error(`Unknown modifier: ${key}`)
     }
-  }, rollBonuses) as RollBonuses<Sides>
+  }, rollBonuses) as RollBonuses<S>
 }
 
 export { applyModifiers }
