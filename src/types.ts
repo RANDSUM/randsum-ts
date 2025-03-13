@@ -1,9 +1,20 @@
-export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
+import { D } from './D'
 
-export interface RollConfig {
-  quantity: number
-  sides: number
-  modifiers?: Modifiers
+// Primitives
+
+export type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
+export type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
+export type Notation<S extends string | number = string | number> =
+  S extends number ? NumericDiceNotation : CustomDiceNotation
+
+export type DicePoolType = 'numerical' | 'custom' | 'mixed'
+
+// Options
+
+export interface RollOptions<S extends string | number = string | number> {
+  quantity?: number
+  sides: S extends number ? number : string[]
+  modifiers?: S extends number ? Modifiers : Record<string, never>
 }
 
 export type Modifiers = {
@@ -13,8 +24,8 @@ export type Modifiers = {
   reroll?: RerollOptions
   unique?: boolean | UniqueOptions
   explode?: boolean
-  add?: number
-  subtract?: number
+  plus?: number
+  minus?: number
 }
 
 export interface GreaterLessOptions {
@@ -41,17 +52,81 @@ export interface UniqueOptions {
   notUnique: number[]
 }
 
-type CoreRollOptions = Omit<RollConfig, 'modifiers'>
+type CoreRollOptions<S extends string | number = string | number> = Omit<
+  RollOptions<S>,
+  'modifiers'
+>
 
-export type RequiredCoreDiceParameters = {
-  [Property in keyof CoreRollOptions]-?: CoreRollOptions[Property]
+export type RequiredCoreDiceParameters<
+  S extends string | number = string | number
+> = {
+  [Property in keyof CoreRollOptions<S>]-?: CoreRollOptions<S>[Property]
 }
 
-export type DicePoolLike<R> = {
-  [key: string]: {
-    die: { rollMany: (quantity: number) => R[] }
-    config: { quantity: number }
+// Arguments
+
+export type NumericalArgument =
+  | `${number}`
+  | number
+  | D<number>
+  | RollOptions<number>
+  | Notation<number>
+
+export type CustomArgument =
+  | D<string[]>
+  | RollOptions<string>
+  | Notation<string>
+  | string[]
+
+export type RollArgument<S extends string | number = string | number> =
+  S extends string ? CustomArgument : NumericalArgument
+
+// Parameters
+
+export interface RollParameters<S extends string | number = string | number> {
+  argument: RollArgument<S>
+  options: RollOptions<S>
+  die: D<S extends string ? string[] : number>
+  notation: Notation<S>
+  description: string[]
+}
+
+export interface DicePools<S extends string | number = string | number> {
+  dicePools: {
+    [key: string]: RollParameters<S>
   }
 }
 
-export type DicePoolRollReturn<R> = { [key: string]: R[] }
+// Results
+
+export interface RollResult<
+  S extends string | number = string | number,
+  DP extends DicePoolType = DicePoolType,
+  Total extends S = S
+> extends DicePools<S> {
+  rawRolls: {
+    [key: string]: S[]
+  }
+  modifiedRolls: {
+    [key: string]: {
+      rolls: S[]
+      total: S
+    }
+  }
+  result: S[]
+  rawResult: S[]
+  type: DP
+  total: Total
+}
+
+export type NumericalRollResult = RollResult<number, 'numerical'>
+export type CustomRollResult = RollResult<string, 'custom'>
+export type MixedRollResult = RollResult<string | number, 'mixed', string>
+
+export interface NotationValidationResult {
+  valid: boolean
+  type?: 'custom' | 'numerical'
+  digested?: RollOptions
+  notation?: Notation
+  description: string[]
+}

@@ -1,7 +1,6 @@
 {
   "name": "randsum",
   "version": "8.0.1",
-  "private": false,
   "author": "Alex Jarvis",
   "icon": "https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp",
   "description": "The world's most powerful, flexible, and easy-to-use JS dice-roller.",
@@ -34,8 +33,9 @@
   "types": "./dist/index.d.ts",
   "source": "./src/index.ts",
   "files": [
-    "./dist/index.js",
-    "./dist/index.d.ts"
+    "dist",
+    "src",
+    "src/tests"
   ],
   "repository": {
     "type": "git",
@@ -51,9 +51,23 @@
     "format:fix": "prettier . --write",
     "format": "prettier . --check",
     "gen:docs": "typedoc ./src/index.ts",
-    "ts:check": "tsc --noEmit",
+    "ts:check": "tsc --noEmit --erasableSyntaxOnly",
+    "local:check": "bun lint:fix && bun format:fix && bun ts:check && bun run build",
     "prepublish": "bun run build",
     "postversion": "git push --no-verify && git push --tags --no-verify"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./package.json": "./package.json"
   },
   "size-limit": [
     {
@@ -62,22 +76,27 @@
     }
   ],
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@eslint/js": "^9.22.0",
     "@size-limit/preset-small-lib": "^11.2.0",
+    "@types/bun": "1.2.4",
     "@types/eslint__js": "^8.42.3",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "bun-plugin-dts": "^0.3.0",
-    "bun-types": "latest",
-    "eslint": "^9.21.0",
+    "eslint": "^9.22.0",
     "prettier": "^3.5.3",
     "size-limit": "^11.2.0",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.25.0",
-    "typedoc": "^0.27.9"
+    "typescript-eslint": "^8.26.1"
   },
+  "prettier": {
+    "endOfLine": "auto",
+    "trailingComma": "none",
+    "semi": false,
+    "singleQuote": true
+  },
+  "type": "module",
   "dependencies": {
     "uuid": "^11.1.0"
-  },
-  "type": "module"
+  }
 }

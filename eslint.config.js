@@ -6,5 +6,10 @@ export default [
   ...tseslint.configs.recommended,
   {
     ignores: ['node_modules', 'dist', 'coverage', '*.md', 'docs']
+  },
+  {
+    rules: {
+      'no-ternary': 'warn'
+    }
   }
 ]

@@ -3,8 +3,9 @@ import dts from 'bun-plugin-dts'
 const results = await Bun.build({
   entrypoints: ['./src/index.ts'],
   outdir: './dist',
-  splitting: true,
   sourcemap: 'inline',
+  minify: true,
+  splitting: true,
   plugins: [dts()]
 })
 
