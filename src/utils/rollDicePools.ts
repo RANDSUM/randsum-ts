@@ -9,7 +9,7 @@ export function rollDicePools<R>(
         die,
         config: { quantity }
       } = dicePools[key]
-      return [key, die.rollMany(quantity)]
+      return [key, die.rollSpread(quantity)]
     })
   )
 }

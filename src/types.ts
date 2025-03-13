@@ -1,3 +1,9 @@
+export interface Die {
+  sides: number
+  roll(quantity?: number): number | string[]
+  rollSpread(quantity: number): number[] | string[]
+}
+
 export type DiceNotation = `${number}${'d' | 'D'}${number}${string}`
 
 export interface RollConfig {
@@ -49,7 +55,7 @@ export type RequiredCoreDiceParameters = {
 
 export type DicePoolLike<R> = {
   [key: string]: {
-    die: { rollMany: (quantity: number) => R[] }
+    die: { rollSpread: (quantity: number) => R[] }
     config: { quantity: number }
   }
 }

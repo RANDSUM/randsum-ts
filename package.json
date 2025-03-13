@@ -79,5 +79,11 @@
   "dependencies": {
     "uuid": "^11.1.0"
   },
+  "prettier": {
+    "endOfLine": "auto",
+    "trailingComma": "none",
+    "semi": false,
+    "singleQuote": true
+  },
   "type": "module"
 }

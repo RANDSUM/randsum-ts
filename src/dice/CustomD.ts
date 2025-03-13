@@ -1,8 +1,8 @@
 import { D } from '~dice'
-import { CustomFacesRollConfig } from './types'
-import { resultToFaces } from './utils/resultToFaces'
+import { CustomFacesRollConfig } from '~faces'
+import { Die } from '~src/types'
 
-export class CustomFacesD {
+export class CustomD implements Die {
   public sides: number
   private coreDie: D
   public faces: string[]
@@ -21,13 +21,13 @@ export class CustomFacesD {
     }
   }
 
-  roll(): string {
-    return resultToFaces(this.coreDie.roll(), this.faces)
+  roll(quantity = 1): string[] {
+    return this.rollSpread(quantity)
   }
 
-  rollMany(quantity: number): string[] {
+  rollSpread(quantity: number): string[] {
     return this.coreDie
-      .rollMany(quantity)
-      .map((value) => resultToFaces(value, this.faces))
+      .rollSpread(quantity)
+      .map((value) => this.faces[value - 1])
   }
 }
