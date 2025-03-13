@@ -1,20 +1,15 @@
 import { describe, expect, test } from 'bun:test'
-import { ArgumentsModel } from '~models'
 
 import { D } from '~src/D'
-import type { DicePools, Notation, RollParameters } from '~types'
+import type { Notation } from '~types'
+import { normalizeArgument } from '~utils/normalizeArgument'
 
-const extractDicePoolValues = (params: DicePools): RollParameters[] => {
-  const pools = Object.entries(params.dicePools)
-  return pools.map(([, value]) => value)
-}
-
-describe('ArgumentModel.parameterize', () => {
+describe(normalizeArgument, () => {
   describe('given a number', () => {
     const argument = 2
 
     test('returns a RollParameter matching the argument', () => {
-      const params = ArgumentsModel.parameterize(argument)
+      const params = normalizeArgument(argument)
 
       expect(params).toMatchObject({
         argument,
@@ -30,7 +25,7 @@ describe('ArgumentModel.parameterize', () => {
     const argument = ['h', 't']
 
     test('returns a RollParameter matching the argument', () => {
-      const params = ArgumentsModel.parameterize(argument)
+      const params = normalizeArgument(argument)
 
       expect(params).toMatchObject({
         argument,
@@ -50,7 +45,7 @@ describe('ArgumentModel.parameterize', () => {
       }
 
       test('returns a RollParameter matching the argument', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -77,7 +72,7 @@ describe('ArgumentModel.parameterize', () => {
       }
 
       test('returns a RollParameter matching the argument', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -101,7 +96,7 @@ describe('ArgumentModel.parameterize', () => {
       }
 
       test('returns a RollParameter matching the argument', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -136,7 +131,7 @@ describe('ArgumentModel.parameterize', () => {
       }
 
       test('returns a RollParameter matching the argument', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -167,7 +162,7 @@ describe('ArgumentModel.parameterize', () => {
       const argument = new D(6)
 
       test('returns a RollParameter matching the argument', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -186,7 +181,7 @@ describe('ArgumentModel.parameterize', () => {
       const argument = new D(['r', 'a', 'n', 'd', 's', 'u', 'm'])
 
       test('returns a RollParameter matching the argument', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -210,7 +205,7 @@ describe('ArgumentModel.parameterize', () => {
       const argument = coreTestString
 
       test('returns a RollParameter matching the notation', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -228,7 +223,7 @@ describe('ArgumentModel.parameterize', () => {
         const customSides = ['+', '+', '-', '-', ' ', ' ']
 
         test('returns a RollParameter matching the notation', () => {
-          const params = ArgumentsModel.parameterize(argument)
+          const params = normalizeArgument(argument)
 
           expect(params).toMatchObject({
             argument,
@@ -246,7 +241,7 @@ describe('ArgumentModel.parameterize', () => {
         const argument: Notation = `${coreTestString}H`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = ArgumentsModel.parameterize(argument)
+          const params = normalizeArgument(argument)
 
           expect(params).toMatchObject({
             argument,
@@ -265,7 +260,7 @@ describe('ArgumentModel.parameterize', () => {
         const argument: Notation = `${coreTestString}H2`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = ArgumentsModel.parameterize(argument)
+          const params = normalizeArgument(argument)
 
           expect(params).toMatchObject({
             argument,
@@ -286,7 +281,7 @@ describe('ArgumentModel.parameterize', () => {
         const argument: Notation = `${coreTestString}L`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = ArgumentsModel.parameterize(argument)
+          const params = normalizeArgument(argument)
 
           expect(params).toMatchObject({
             argument,
@@ -305,7 +300,7 @@ describe('ArgumentModel.parameterize', () => {
         const argument: Notation = `${coreTestString}L2`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = ArgumentsModel.parameterize(argument)
+          const params = normalizeArgument(argument)
 
           expect(params).toMatchObject({
             argument,
@@ -325,7 +320,7 @@ describe('ArgumentModel.parameterize', () => {
       const argument: Notation = `${coreTestString}D{<2,>5,2,4}`
 
       test('returns a RollParameter matching the notation', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -351,7 +346,7 @@ describe('ArgumentModel.parameterize', () => {
       const argument: Notation = `${coreTestString}C{<2,>5}`
 
       test('returns a RollParameter matching the notation', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -375,7 +370,7 @@ describe('ArgumentModel.parameterize', () => {
       const argument: Notation = `${coreTestString}-2`
 
       test('returns a RollParameter matching the notation', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -394,7 +389,7 @@ describe('ArgumentModel.parameterize', () => {
       const argument: Notation = `${coreTestString}+2`
 
       test('returns a RollParameter matching the notation', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -413,7 +408,7 @@ describe('ArgumentModel.parameterize', () => {
       const argument: Notation = `${coreTestString}R{5,20,<6,>2}3`
 
       test('returns a RollParameter matching the notation', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -443,7 +438,7 @@ describe('ArgumentModel.parameterize', () => {
         const argument: Notation = `${coreTestString}U{5,6}`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = ArgumentsModel.parameterize(argument)
+          const params = normalizeArgument(argument)
 
           expect(params).toMatchObject({
             argument,
@@ -465,7 +460,7 @@ describe('ArgumentModel.parameterize', () => {
         const argument: Notation = `${coreTestString}U`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = ArgumentsModel.parameterize(argument)
+          const params = normalizeArgument(argument)
 
           expect(params).toMatchObject({
             argument,
@@ -485,7 +480,7 @@ describe('ArgumentModel.parameterize', () => {
       const argument: Notation = `${coreTestString}!`
 
       test('returns a RollParameter matching the notation', () => {
-        const params = ArgumentsModel.parameterize(argument)
+        const params = normalizeArgument(argument)
 
         expect(params).toMatchObject({
           argument,
@@ -505,7 +500,7 @@ describe('ArgumentModel.parameterize', () => {
         const argument: Notation = `${coreTestString}V{1=2,>2=6}`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = ArgumentsModel.parameterize(argument)
+          const params = normalizeArgument(argument)
 
           expect(params).toMatchObject({
             argument,
@@ -534,7 +529,7 @@ describe('ArgumentModel.parameterize', () => {
         const argument: Notation = `${coreTestString}V{<2=6}`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = ArgumentsModel.parameterize(argument)
+          const params = normalizeArgument(argument)
 
           expect(params).toMatchObject({
             argument,
@@ -558,7 +553,7 @@ describe('ArgumentModel.parameterize', () => {
       describe('like an ordered dice notation', () => {
         test('it produces proper organized parameters', () => {
           const explodeFirstString: Notation = '4d6!H'
-          const explodeParams = ArgumentsModel.parameterize(explodeFirstString)
+          const explodeParams = normalizeArgument(explodeFirstString)
 
           expect(explodeParams).toMatchObject({
             argument: explodeFirstString,
@@ -576,7 +571,7 @@ describe('ArgumentModel.parameterize', () => {
           })
 
           const dropFirstString: Notation = '4d6H!'
-          const dropFirstParams = ArgumentsModel.parameterize(dropFirstString)
+          const dropFirstParams = normalizeArgument(dropFirstString)
 
           expect(dropFirstParams).toMatchObject({
             argument: dropFirstString,
@@ -600,7 +595,7 @@ describe('ArgumentModel.parameterize', () => {
         const argument: Notation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
 
         test('returns a RollParameter matching the notation', () => {
-          const params = ArgumentsModel.parameterize(argument)
+          const params = normalizeArgument(argument)
 
           expect(params).toMatchObject({
             argument,
@@ -650,35 +645,6 @@ describe('ArgumentModel.parameterize', () => {
           })
         })
       })
-    })
-  })
-})
-
-describe('ArgumentsModel.formDicePools', () => {
-  describe('given a single argument', () => {
-    const argument = 20
-
-    test('returns DicePools with one key', () => {
-      const params = ArgumentsModel.formDicePools([argument])
-      const dicePools = extractDicePoolValues(params)
-
-      expect(dicePools.length).toBe(1)
-      expect(dicePools[0].argument).toBe(argument)
-    })
-  })
-
-  describe('given an array of arguments', () => {
-    const argument: [number, Notation, string[]] = [2, '4d6', ['h', 't']]
-
-    test('returns a DicePools matching the argument', () => {
-      const params = ArgumentsModel.formDicePools(argument)
-      const dicePools = extractDicePoolValues(params)
-
-      expect(dicePools.length).toBe(3)
-
-      expect(dicePools[0].argument).toBe(argument[0])
-      expect(dicePools[1].argument).toBe(argument[1])
-      expect(dicePools[2].argument).toBe(argument[2])
     })
   })
 })

@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'bun:test'
-import { DicePoolsModel } from '~models'
 
 import { D } from '~src/D'
-import { InvalidUniqueError } from '~src/models/ParametersModel/modifierApplicators'
 import type { DicePools, Notation } from '~types'
+import { InvalidUniqueError } from '~utils/modifierApplicators'
+import { rollResultFromDicePools } from '~utils/rollResultFromDicePools'
 
 function createMockNumericalDie(
   results: number[],
@@ -25,7 +25,7 @@ function createMockCustomDie(
   } as unknown as D<string[]>
 }
 
-describe('DicePoolsModel.generateResult', () => {
+describe(rollResultFromDicePools, () => {
   const testRollSet = [1, 2, 3, 4]
   const coreRawRolls = {
     'test-roll-id': testRollSet
@@ -47,7 +47,7 @@ describe('DicePoolsModel.generateResult', () => {
     }
 
     test('it returns the sum total of the quantity and the roll total', () => {
-      expect(DicePoolsModel.generateRollResult(coreParameters)).toMatchObject({
+      expect(rollResultFromDicePools(coreParameters)).toMatchObject({
         ...coreParameters,
         rawRolls: coreRawRolls,
         total: 10,
@@ -82,22 +82,20 @@ describe('DicePoolsModel.generateResult', () => {
         'test-roll-id': uniqueRolls
       }
 
-      expect(DicePoolsModel.generateRollResult(uniqueParameters)).toMatchObject(
-        {
-          ...uniqueParameters,
-          rawRolls,
-          modifiedRolls: {
-            'test-roll-id': {
-              rolls: [1, 200, 2, 3],
-              total: 206
-            }
-          },
-          total: 206,
-          result: [1, 200, 2, 3],
-          rawResult: [1, 1, 2, 3],
-          type: 'numerical'
-        }
-      )
+      expect(rollResultFromDicePools(uniqueParameters)).toMatchObject({
+        ...uniqueParameters,
+        rawRolls,
+        modifiedRolls: {
+          'test-roll-id': {
+            rolls: [1, 200, 2, 3],
+            total: 206
+          }
+        },
+        total: 206,
+        result: [1, 200, 2, 3],
+        rawResult: [1, 1, 2, 3],
+        type: 'numerical'
+      })
     })
 
     describe('when given a "notUnique" array', () => {
@@ -123,9 +121,7 @@ describe('DicePoolsModel.generateResult', () => {
           'test-roll-id': uniqueRolls
         }
 
-        expect(
-          DicePoolsModel.generateRollResult(notUniqueParameters)
-        ).toMatchObject({
+        expect(rollResultFromDicePools(notUniqueParameters)).toMatchObject({
           ...notUniqueParameters,
           rawRolls,
           modifiedRolls: {
@@ -163,9 +159,9 @@ describe('DicePoolsModel.generateResult', () => {
       }
 
       test('it throws an error', () => {
-        expect(() =>
-          DicePoolsModel.generateRollResult(overflowParameters)
-        ).toThrow(new InvalidUniqueError())
+        expect(() => rollResultFromDicePools(overflowParameters)).toThrow(
+          new InvalidUniqueError()
+        )
       })
     })
   })
@@ -194,9 +190,7 @@ describe('DicePoolsModel.generateResult', () => {
         'test-roll-id': customSidesRoll
       }
 
-      expect(
-        DicePoolsModel.generateRollResult(customSidesParameters)
-      ).toMatchObject({
+      expect(rollResultFromDicePools(customSidesParameters)).toMatchObject({
         ...customSidesParameters,
         rawRolls,
         modifiedRolls: {
@@ -245,7 +239,7 @@ describe('DicePoolsModel.generateResult', () => {
         'test-roll-id': longerRollTotals
       }
 
-      expect(DicePoolsModel.generateRollResult(dropParameters)).toMatchObject({
+      expect(rollResultFromDicePools(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls,
         modifiedRolls: {
@@ -281,22 +275,20 @@ describe('DicePoolsModel.generateResult', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(DicePoolsModel.generateRollResult(dropParameters)).toMatchObject(
-          {
-            ...dropParameters,
-            rawRolls: coreRawRolls,
-            modifiedRolls: {
-              'test-roll-id': {
-                rolls: [2, 2, 3, 4],
-                total: 11
-              }
-            },
-            total: 11,
-            rawResult: testRollSet,
-            result: [2, 2, 3, 4],
-            type: 'numerical'
-          }
-        )
+        expect(rollResultFromDicePools(dropParameters)).toMatchObject({
+          ...dropParameters,
+          rawRolls: coreRawRolls,
+          modifiedRolls: {
+            'test-roll-id': {
+              rolls: [2, 2, 3, 4],
+              total: 11
+            }
+          },
+          total: 11,
+          rawResult: testRollSet,
+          result: [2, 2, 3, 4],
+          type: 'numerical'
+        })
       })
     })
 
@@ -323,22 +315,20 @@ describe('DicePoolsModel.generateResult', () => {
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
-        expect(DicePoolsModel.generateRollResult(dropParameters)).toMatchObject(
-          {
-            ...dropParameters,
-            rawRolls: coreRawRolls,
-            modifiedRolls: {
-              'test-roll-id': {
-                rolls: [2, 2, 3, 6],
-                total: 13
-              }
-            },
-            total: 13,
-            rawResult: testRollSet,
-            result: [2, 2, 3, 6],
-            type: 'numerical'
-          }
-        )
+        expect(rollResultFromDicePools(dropParameters)).toMatchObject({
+          ...dropParameters,
+          rawRolls: coreRawRolls,
+          modifiedRolls: {
+            'test-roll-id': {
+              rolls: [2, 2, 3, 6],
+              total: 13
+            }
+          },
+          total: 13,
+          rawResult: testRollSet,
+          result: [2, 2, 3, 6],
+          type: 'numerical'
+        })
       })
     })
   })
@@ -367,9 +357,7 @@ describe('DicePoolsModel.generateResult', () => {
         'test-roll-id': explodeRollTotals
       }
 
-      expect(
-        DicePoolsModel.generateRollResult(explodeParameters)
-      ).toMatchObject({
+      expect(rollResultFromDicePools(explodeParameters)).toMatchObject({
         ...explodeParameters,
         rawRolls,
         modifiedRolls: {
@@ -405,7 +393,7 @@ describe('DicePoolsModel.generateResult', () => {
       }
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
-        expect(DicePoolsModel.generateRollResult(reDicePools)).toMatchObject({
+        expect(rollResultFromDicePools(reDicePools)).toMatchObject({
           ...reDicePools,
           rawRolls: coreRawRolls,
           modifiedRolls: {
@@ -442,7 +430,7 @@ describe('DicePoolsModel.generateResult', () => {
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
-        expect(DicePoolsModel.generateRollResult(reDicePools)).toMatchObject({
+        expect(rollResultFromDicePools(reDicePools)).toMatchObject({
           ...reDicePools,
           rawRolls: coreRawRolls,
           modifiedRolls: {
@@ -479,7 +467,7 @@ describe('DicePoolsModel.generateResult', () => {
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
-        expect(DicePoolsModel.generateRollResult(reDicePools)).toMatchObject({
+        expect(rollResultFromDicePools(reDicePools)).toMatchObject({
           ...reDicePools,
           rawRolls: coreRawRolls,
           modifiedRolls: {
@@ -515,7 +503,7 @@ describe('DicePoolsModel.generateResult', () => {
     }
 
     test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll total', () => {
-      expect(DicePoolsModel.generateRollResult(dropParameters)).toMatchObject({
+      expect(rollResultFromDicePools(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
@@ -550,7 +538,7 @@ describe('DicePoolsModel.generateResult', () => {
     }
 
     test('it returns the total plus the "plus" modifier, and the roll total', () => {
-      expect(DicePoolsModel.generateRollResult(dropParameters)).toMatchObject({
+      expect(rollResultFromDicePools(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
@@ -585,7 +573,7 @@ describe('DicePoolsModel.generateResult', () => {
     }
 
     test('it returns the total minus the "minus" modifier, and the roll total', () => {
-      expect(DicePoolsModel.generateRollResult(dropParameters)).toMatchObject({
+      expect(rollResultFromDicePools(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
@@ -628,7 +616,7 @@ describe('DicePoolsModel.generateResult', () => {
         'test-roll-id-2': testRollSet
       }
 
-      expect(DicePoolsModel.generateRollResult(parameters)).toMatchObject({
+      expect(rollResultFromDicePools(parameters)).toMatchObject({
         ...parameters,
         rawRolls,
         modifiedRolls: {
@@ -665,7 +653,7 @@ describe('DicePoolsModel.generateResult', () => {
     } as unknown as DicePools
 
     test('Throws an error', () => {
-      expect(() => DicePoolsModel.generateRollResult(dropParameters)).toThrow(
+      expect(() => rollResultFromDicePools(dropParameters)).toThrow(
         'Unknown modifier: foo'
       )
     })

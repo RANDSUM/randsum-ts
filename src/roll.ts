@@ -1,4 +1,3 @@
-import { ArgumentsModel, DicePoolsModel } from '~models'
 import type {
   CustomArgument,
   CustomRollResult,
@@ -8,6 +7,8 @@ import type {
   RollArgument,
   RollResult
 } from '~types'
+import { formDicePools } from '~utils/formDicePools'
+import { rollResultFromDicePools } from '~utils/rollResultFromDicePools'
 
 function roll(...args: NumericalArgument[]): NumericalRollResult
 function roll(...args: CustomArgument[]): CustomRollResult
@@ -15,8 +16,8 @@ function roll(...args: RollArgument<string | number>[]): MixedRollResult
 function roll<Sides extends string | number>(
   ...args: RollArgument<Sides>[]
 ): RollResult<Sides> {
-  const dicePools = ArgumentsModel.formDicePools(args)
-  return DicePoolsModel.generateRollResult(dicePools)
+  const dicePools = formDicePools(args)
+  return rollResultFromDicePools(dicePools)
 }
 
 export { roll }

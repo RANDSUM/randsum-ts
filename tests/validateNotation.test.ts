@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'bun:test'
-import { NotationModel } from '~models'
+import { validateNotation } from '~src/validateNotation'
 import { type Notation } from '~types'
 
-describe('NotationModel.validate', () => {
+describe(validateNotation, () => {
   describe('when the notation is completely invalid', () => {
     const notation = 'invalid-notation'
 
     it('returns an error result', () => {
-      const result = NotationModel.validate(notation)
+      const result = validateNotation(notation)
 
       expect(result).toEqual({
         valid: false,
@@ -20,7 +20,7 @@ describe('NotationModel.validate', () => {
     const notation: Notation = '2d5XXddf'
 
     it('returns an error result', () => {
-      const result = NotationModel.validate(notation)
+      const result = validateNotation(notation)
 
       expect(result).toEqual({
         valid: false,
@@ -40,7 +40,7 @@ describe('NotationModel.validate', () => {
 
     notations.forEach((notation) => {
       it(`returns an error result for ${notation}`, () => {
-        const result = NotationModel.validate(notation)
+        const result = validateNotation(notation)
 
         expect(result).toEqual({
           valid: false,
@@ -54,7 +54,7 @@ describe('NotationModel.validate', () => {
     const notation: Notation = '2d5D'
 
     it('returns an error result', () => {
-      const result = NotationModel.validate(notation)
+      const result = validateNotation(notation)
 
       expect(result).toEqual({
         valid: false,
@@ -66,7 +66,7 @@ describe('NotationModel.validate', () => {
   describe('when given a numerical notation', () => {
     it('returns a valid result', () => {
       const notation = '2d6'
-      const result = NotationModel.validate(notation)
+      const result = validateNotation(notation)
 
       expect(result).toEqual({
         valid: true,
@@ -77,7 +77,7 @@ describe('NotationModel.validate', () => {
       })
 
       const notation2 = '1D20'
-      const result2 = NotationModel.validate(notation2)
+      const result2 = validateNotation(notation2)
 
       expect(result2).toEqual({
         valid: true,
@@ -92,7 +92,7 @@ describe('NotationModel.validate', () => {
   describe('when given a custom sides notation', () => {
     it('returns a valid result', () => {
       const notation = '2d{ht}'
-      const result = NotationModel.validate(notation)
+      const result = validateNotation(notation)
 
       expect(result).toEqual({
         valid: true,

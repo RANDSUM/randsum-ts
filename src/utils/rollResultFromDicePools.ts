@@ -1,6 +1,6 @@
 import { isFullNumArray } from '~guards'
-import { ParametersModel } from '~models'
 import type { DicePools, DicePoolType, RollResult } from '~types'
+import { applyModifiers } from './applyModifiers'
 
 function calculateType(
   dicePools: DicePools<string | number>['dicePools']
@@ -42,7 +42,7 @@ function generateModifiedRolls<Sides extends string | number>(
   return Object.fromEntries(
     Object.keys(DicePools.dicePools).map((key) => {
       const params = DicePools.dicePools[key]
-      const modified = ParametersModel.applyModifiers(params, rawRolls[key])
+      const modified = applyModifiers(params, rawRolls[key])
       const modifiedRoll = {
         rolls: modified.rolls,
         total: calculateTotal(modified.rolls, modified.simpleMathModifier)
@@ -66,7 +66,7 @@ function generateRawRolls<Sides extends string | number>(
   )
 }
 
-function generateRollResult<Sides extends string | number>(
+export function rollResultFromDicePools<Sides extends string | number>(
   dicePools: DicePools<Sides>
 ): RollResult<Sides> {
   const rawRolls = generateRawRolls(dicePools.dicePools)
@@ -82,7 +82,4 @@ function generateRollResult<Sides extends string | number>(
     type: calculateType(dicePools.dicePools),
     total: calculateTotal(modifiedValues.map((pool) => pool.total))
   }
-}
-export default {
-  generateRollResult
 }

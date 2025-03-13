@@ -1,5 +1,5 @@
 export * from './D'
-export * from './models'
 export * from './premadeDice'
 export { roll } from './roll'
 export * from './types'
+export { validateNotation } from './validateNotation'

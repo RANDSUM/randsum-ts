@@ -111,4 +111,4 @@ function applyModifiers<Sides extends string | number>(
   }, rollBonuses) as RollBonuses<Sides>
 }
 
-export default { applyModifiers }
+export { applyModifiers }
