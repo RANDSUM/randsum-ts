@@ -1,8 +1,8 @@
 import { isCustomSidesStringArg, isDiceNotationArg } from '~guards'
 import type { NotationValidationResult } from '~types'
-import { notationToOptions } from '~utils/notationToOptions'
-import { optionsToDescription } from './utils/optionsToDescription'
-import { optionsToNotation } from './utils/optionsToNotation'
+import { optionsToDescription } from '~utils/descriptionFormatters'
+import { optionsToNotation } from '~utils/notationFormatters'
+import { notationToOptions } from '~utils/notationParsers'
 
 export function validateNotation(notation: string): NotationValidationResult {
   if (!isDiceNotationArg(notation)) {

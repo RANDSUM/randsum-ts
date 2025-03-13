@@ -156,3 +156,9 @@ function formatSides(sides: string[]): string {
     })
     .join('')
 }
+
+export function optionsToNotation<S extends string | number>(
+  options: RollOptions<S>
+): Notation<S> {
+  return `${formatCoreNotation(options)}${formatModifierNotation(options)}` as Notation<S>
+}

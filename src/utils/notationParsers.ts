@@ -1,5 +1,6 @@
 import {
   capPattern,
+  coreNotationPattern,
   dropConstraintsPattern,
   dropHighestPattern,
   dropLowestPattern,
@@ -14,8 +15,10 @@ import type {
   DropOptions,
   GreaterLessOptions,
   Modifiers,
+  Notation,
   RequiredCoreDiceParameters,
-  RerollOptions
+  RerollOptions,
+  RollOptions
 } from '~types'
 
 export function parseCoreNotation(
@@ -377,4 +380,16 @@ export function parseModifiers(
       ...parseMinusNotation(modifiersString)
     }
   }
+}
+
+export function notationToOptions<S extends string | number>(
+  notationString: Notation<S>
+): RollOptions<S> {
+  const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)
+  const modifiersString = notationString.replace(coreNotationMatch!, '')
+
+  return {
+    ...parseCoreNotation(coreNotationMatch!),
+    ...parseModifiers(modifiersString)
+  } as RollOptions<S>
 }

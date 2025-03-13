@@ -162,3 +162,12 @@ function dieDescriptor(quantity = 1) {
   if (quantity > 1) return 'dice'
   return 'die'
 }
+
+export function optionsToDescription(
+  options: RollOptions<number | string>
+): string[] {
+  return [
+    formatCoreDescriptions(options),
+    ...formatModifierDescriptions(options)
+  ]
+}

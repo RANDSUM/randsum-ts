@@ -1,9 +1,9 @@
 import { isD, isDiceNotationArg, isDicePoolOptions } from '~guards'
 import { D } from '~src/D'
 import type { RollArgument, RollOptions, RollParameters } from '~types'
-import { notationToOptions } from './notationToOptions'
-import { optionsToDescription } from './optionsToDescription'
-import { optionsToNotation } from './optionsToNotation'
+import { optionsToDescription } from './descriptionFormatters'
+import { optionsToNotation } from './notationFormatters'
+import { notationToOptions } from './notationParsers'
 
 function toOptions(argument: RollArgument): RollOptions {
   switch (true) {
