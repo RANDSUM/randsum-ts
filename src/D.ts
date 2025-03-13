@@ -1,9 +1,11 @@
 import { isCustomSidesD, isCustomSidesStringArg } from '~guards'
 import { DicePoolType, RollOptions } from '~types'
 
-type Type<T> = T extends string[] ? DicePoolType.custom : DicePoolType.numerical
-type Faces<T> = T extends string[] ? T : number[]
-type Result<F> = F extends number[] ? number : string
+export type Type<T> = T extends string[]
+  ? DicePoolType.custom
+  : DicePoolType.numerical
+export type Faces<T> = T extends string[] ? T : number[]
+export type Result<F> = F extends number[] ? number : string
 
 class D<Sides extends string[] | number> {
   sides: number
