@@ -163,8 +163,14 @@ function parseDropHighNotation(notations: string[]): Pick<Modifiers, 'drop'> {
   const notationString = notations[notations.length - 1]
   const highestCount = notationString.split(/[Hh]/)[1]
 
+  if (highestCount === '') {
+    return {
+      drop: { highest: 1 }
+    }
+  }
+
   return {
-    drop: { highest: highestCount === '' ? 1 : Number(highestCount) }
+    drop: { highest: Number(highestCount) }
   }
 }
 
@@ -175,9 +181,17 @@ function parseDropLowNotation(notations: string[]): Pick<Modifiers, 'drop'> {
   const notationString = notations[notations.length - 1]
   const lowestCount = notationString.split(/[Ll]/)[1]
 
+  if (lowestCount === '') {
+    return {
+      drop: {
+        lowest: 1
+      }
+    }
+  }
+
   return {
     drop: {
-      lowest: lowestCount === '' ? 1 : Number(lowestCount)
+      lowest: Number(lowestCount)
     }
   }
 }
@@ -219,12 +233,10 @@ function parseRerollNotation(
             maxReroll: Number(notation.split('!')[1])
           }
         }
+
         return {
           ...innerAcc,
-          exact: [
-            ...(Array.isArray(innerAcc?.exact) ? innerAcc.exact : []),
-            Number(notation)
-          ]
+          exact: [...(innerAcc.exact || []), Number(notation)]
         }
       }, {} as RerollOptions)
 
@@ -243,11 +255,10 @@ function parseExplodeNotation(
   modifiersString: string
 ): Pick<Modifiers, 'explode'> {
   const notations = extractMatches(modifiersString, explodePattern)
-  return notations.length === 0
-    ? {}
-    : {
-        explode: true
-      }
+  if (notations.length === 0) {
+    return {}
+  }
+  return { explode: true }
 }
 
 function parseMinusNotation(modifiersString: string): Pick<Modifiers, 'minus'> {
@@ -311,9 +322,10 @@ function parseReplaceNotation(
           return { ...coreReplacement, from: Number(noteFrom) }
         })
 
-      return replaceOptions.length === 1
-        ? replaceOptions[0]
-        : replaceOptions.filter(Boolean)
+      if (replaceOptions.length === 1) {
+        return replaceOptions[0]
+      }
+      return replaceOptions.filter(Boolean)
     })
     .flat()
   return { replace }
@@ -338,7 +350,10 @@ function parseDropModifiers(modifiersString: string): Pick<Modifiers, 'drop'> {
     }
   }
 
-  return Object.keys(rawDropModifiers.drop).length > 0 ? rawDropModifiers : {}
+  if (Object.keys(rawDropModifiers.drop).length > 0) {
+    return rawDropModifiers
+  }
+  return {}
 }
 
 function extractMatches(notationString: string, pattern: RegExp) {
