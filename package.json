@@ -51,7 +51,8 @@
     "format:fix": "prettier . --write",
     "format": "prettier . --check",
     "gen:docs": "typedoc ./src/index.ts",
-    "ts:check": "tsc --noEmit",
+    "ts:check": "tsc --noEmit --erasableSyntaxOnly",
+    "local:check": "bun lint:fix && bun format:fix && bun ts:check && bun run build",
     "prepublish": "bun run build",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
@@ -64,11 +65,10 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@size-limit/preset-small-lib": "^11.2.0",
+    "@types/bun": "^1.2.5",
     "@types/eslint__js": "^8.42.3",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
-    "bun-plugin-dts": "^0.3.0",
-    "bun-types": "latest",
     "eslint": "^9.22.0",
     "prettier": "^3.5.3",
     "size-limit": "^11.2.0",
@@ -81,5 +81,8 @@
     "semi": false,
     "singleQuote": true
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "uuid": "^11.1.0"
+  }
 }
