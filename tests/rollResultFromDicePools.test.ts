@@ -25,7 +25,7 @@ function createMockCustomDie(
   } as unknown as D<string[]>
 }
 
-describe(rollResultFromDicePools, () => {
+describe('rollResultFromDicePools', () => {
   const testRollSet = [1, 2, 3, 4]
   const coreRawRolls = {
     'test-roll-id': testRollSet

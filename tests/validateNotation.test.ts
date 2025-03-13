@@ -2,7 +2,7 @@ import { describe, expect, it } from 'bun:test'
 import { validateNotation } from '~src/validateNotation'
 import { type Notation } from '~types'
 
-describe(validateNotation, () => {
+describe('validateNotation', () => {
   describe('when the notation is completely invalid', () => {
     const notation = 'invalid-notation'
 

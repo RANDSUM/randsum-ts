@@ -4,7 +4,7 @@ import { D } from '~src/D'
 import type { Notation } from '~types'
 import { normalizeArgument } from '~utils/normalizeArgument'
 
-describe(normalizeArgument, () => {
+describe('normalizeArgument', () => {
   describe('given a number', () => {
     const argument = 2
 
