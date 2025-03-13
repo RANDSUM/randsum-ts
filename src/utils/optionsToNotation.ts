@@ -2,7 +2,7 @@ import type { Notation, RollOptions } from '~types'
 import {
   formatCoreNotation,
   formatModifierNotation
-} from './notationGenerators'
+} from './notationFormatters'
 
 export function optionsToNotation<S extends string | number>(
   options: RollOptions<S>

@@ -116,6 +116,29 @@ function singleReplaceString(replace: ReplaceOptions) {
   return `Replace ${extractFromValue(replace.from)} with [${replace.to}]`
 }
 
+export function formatModifierDescriptions({
+  modifiers
+}: RollOptions<number | string>): string[] {
+  if (!isValidModifier(modifiers)) return []
+
+  const modifierStrings = []
+
+  if (modifiers.cap)
+    capString(modifiers.cap).forEach((str) => modifierStrings.push(str))
+  if (modifiers.drop)
+    dropString(modifiers.drop).forEach((str) => modifierStrings.push(str))
+  if (modifiers.replace)
+    replaceString(modifiers.replace).forEach((str) => modifierStrings.push(str))
+  if (modifiers.reroll)
+    rerollString(modifiers.reroll).forEach((str) => modifierStrings.push(str))
+  if (modifiers.explode) modifierStrings.push(explodeString())
+  if (modifiers.unique) modifierStrings.push(uniqueString(modifiers.unique))
+  if (modifiers.plus) modifierStrings.push(plusString(modifiers.plus))
+  if (modifiers.minus) modifierStrings.push(minusString(modifiers.minus))
+
+  return modifierStrings
+}
+
 export function formatCoreDescriptions({
   sides,
   quantity
@@ -138,27 +161,4 @@ export function formatCoreDescriptions({
 function dieDescriptor(quantity = 1) {
   if (quantity > 1) return 'dice'
   return 'die'
-}
-
-export function formatModifierDescriptions({
-  modifiers
-}: RollOptions<number | string>): string[] {
-  if (!isValidModifier(modifiers)) return []
-
-  const modifierStrings = []
-
-  if (modifiers.cap)
-    capString(modifiers.cap).forEach((str) => modifierStrings.push(str))
-  if (modifiers.drop)
-    dropString(modifiers.drop).forEach((str) => modifierStrings.push(str))
-  if (modifiers.replace)
-    replaceString(modifiers.replace).forEach((str) => modifierStrings.push(str))
-  if (modifiers.reroll)
-    rerollString(modifiers.reroll).forEach((str) => modifierStrings.push(str))
-  if (modifiers.explode) modifierStrings.push(explodeString())
-  if (modifiers.unique) modifierStrings.push(uniqueString(modifiers.unique))
-  if (modifiers.plus) modifierStrings.push(plusString(modifiers.plus))
-  if (modifiers.minus) modifierStrings.push(minusString(modifiers.minus))
-
-  return modifierStrings
 }

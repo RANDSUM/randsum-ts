@@ -2,7 +2,7 @@ import type { RollOptions } from '~types'
 import {
   formatCoreDescriptions,
   formatModifierDescriptions
-} from './descriptionGenerators'
+} from './descriptionFormatters'
 
 export function optionsToDescription(
   options: RollOptions<number | string>

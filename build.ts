@@ -4,6 +4,8 @@ const results = await Bun.build({
   entrypoints: ['./src/index.ts'],
   outdir: './dist',
   sourcemap: 'inline',
+  minify: true,
+  splitting: true,
   plugins: [dts()]
 })
 

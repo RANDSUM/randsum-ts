@@ -14,7 +14,7 @@ type RollBonuses<S extends string | number> = {
   simpleMathModifier: number
 }
 
-function applyModifiers<S extends string | number>(
+export function applyModifiers<S extends string | number>(
   poolParameters: RollParameters<S>,
   initialRolls: S[]
 ): RollBonuses<S> {
@@ -103,5 +103,3 @@ function applyModifiers<S extends string | number>(
     }
   }, rollBonuses) as RollBonuses<S>
 }
-
-export { applyModifiers }

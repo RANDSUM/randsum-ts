@@ -29,40 +29,6 @@ describe('validateNotation', () => {
     })
   })
 
-  describe('when given comma-less multiple dice notation', () => {
-    const notations: Notation[] = [
-      '2d5D{2>2}',
-      '2d5V{1=2>2=2}',
-      '2d5R{2>2}',
-      '2d5U{2>2}',
-      '2d5C2>2'
-    ]
-
-    notations.forEach((notation) => {
-      it(`returns an error result for ${notation}`, () => {
-        const result = validateNotation(notation)
-
-        expect(result).toEqual({
-          valid: false,
-          description: []
-        })
-      })
-    })
-  })
-
-  describe('when given a nonsensical drop notation that is bugging me', () => {
-    const notation: Notation = '2d5D'
-
-    it('returns an error result', () => {
-      const result = validateNotation(notation)
-
-      expect(result).toEqual({
-        valid: false,
-        description: []
-      })
-    })
-  })
-
   describe('when given a numerical notation', () => {
     it('returns a valid result', () => {
       const notation = '2d6'
@@ -100,6 +66,42 @@ describe('validateNotation', () => {
         type: 'custom',
         digested: { sides: ['h', 't'], quantity: 2, modifiers: {} },
         description: ['Roll 2 dice with the following sides: (h,t)']
+      })
+    })
+  })
+
+  describe('corner cases', () => {
+    describe('when given comma-less multiple dice notation', () => {
+      const notations: Notation[] = [
+        '2d5D{2>2}',
+        '2d5V{1=2>2=2}',
+        '2d5R{2>2}',
+        '2d5U{2>2}',
+        '2d5C2>2'
+      ]
+
+      notations.forEach((notation) => {
+        it(`returns an error result for ${notation}`, () => {
+          const result = validateNotation(notation)
+
+          expect(result).toEqual({
+            valid: false,
+            description: []
+          })
+        })
+      })
+    })
+
+    describe('when given a nonsensical drop notation that is bugging me', () => {
+      const notation: Notation = '2d5D'
+
+      it('returns an error result', () => {
+        const result = validateNotation(notation)
+
+        expect(result).toEqual({
+          valid: false,
+          description: []
+        })
       })
     })
   })
