@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
 import { NotationModel } from '~models'
-import { Notation, DicePoolType } from '~types'
+import { DicePoolType, type Notation } from '~types'
 
 describe('NotationModel.validate', () => {
   describe('when the notation is completely invalid', () => {

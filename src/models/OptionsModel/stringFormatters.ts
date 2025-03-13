@@ -1,11 +1,11 @@
 import { isValidModifier } from '~guards'
-import {
-  GreaterLessOptions,
+import type {
   DropOptions,
+  GreaterLessOptions,
   ReplaceOptions,
   RerollOptions,
-  UniqueOptions,
-  RollOptions
+  RollOptions,
+  UniqueOptions
 } from '~types'
 
 function formatHumanList(list: (string | number)[]) {

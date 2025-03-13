@@ -1,20 +1,20 @@
 import {
+  capPattern,
+  dropConstraintsPattern,
   dropHighestPattern,
   dropLowestPattern,
-  dropConstraintsPattern,
   explodePattern,
-  uniquePattern,
+  minusPattern,
+  plusPattern,
   replacePattern,
   rerollPattern,
-  capPattern,
-  plusPattern,
-  minusPattern
+  uniquePattern
 } from '~patterns'
-import {
-  RequiredCoreDiceParameters,
+import type {
   DropOptions,
   GreaterLessOptions,
   Modifiers,
+  RequiredCoreDiceParameters,
   RerollOptions
 } from '~types'
 

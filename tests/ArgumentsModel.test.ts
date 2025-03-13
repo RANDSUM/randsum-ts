@@ -2,7 +2,7 @@ import { describe, expect, test } from 'bun:test'
 import { ArgumentsModel } from '~models'
 
 import { D } from '~src/D'
-import { Notation, RollParameters, DicePools } from '~types'
+import type { DicePools, Notation, RollParameters } from '~types'
 
 const extractDicePoolValues = (params: DicePools): RollParameters[] => {
   const pools = Object.entries(params.dicePools)

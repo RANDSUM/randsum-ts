@@ -1,5 +1,6 @@
 import { isCustomSidesD, isCustomSidesStringArg } from '~guards'
-import { DicePoolType, RollOptions } from '~types'
+import type { RollOptions } from '~types'
+import { DicePoolType } from '~types'
 
 export type Type<T> = T extends string[]
   ? DicePoolType.custom

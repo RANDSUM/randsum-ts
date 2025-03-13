@@ -1,11 +1,11 @@
 import { isValidModifier } from '~guards'
-import {
+import type {
   DropOptions,
   GreaterLessOptions,
   Notation,
-  RollOptions,
   ReplaceOptions,
   RerollOptions,
+  RollOptions,
   UniqueOptions
 } from '~types'
 

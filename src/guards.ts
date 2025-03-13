@@ -1,12 +1,12 @@
 import { completeRollPattern, coreNotationPattern } from '~patterns'
-import {
-  Notation,
-  RollOptions,
-  RollParameters,
+import type {
   Modifiers,
+  Notation,
   RollArgument,
-  DicePoolType
+  RollOptions,
+  RollParameters
 } from '~types'
+import { DicePoolType } from '~types'
 import { D } from './D'
 
 export function isDiceNotationArg(argument: unknown): argument is Notation {

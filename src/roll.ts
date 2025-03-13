@@ -1,5 +1,5 @@
 import { ArgumentsModel, DicePoolsModel } from '~models'
-import {
+import type {
   CustomArgument,
   CustomRollResult,
   MixedRollResult,

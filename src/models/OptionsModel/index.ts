@@ -1,4 +1,4 @@
-import { Notation, RollOptions } from '~types'
+import type { Notation, RollOptions } from '~types'
 import {
   formatCoreNotation,
   formatModifierNotation

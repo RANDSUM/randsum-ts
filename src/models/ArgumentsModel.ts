@@ -1,8 +1,13 @@
-import { RollArgument, DicePools, RollOptions, RollParameters } from '~types'
 import { randomUUIDv7 as uuid } from 'bun'
-import { isD, isDicePoolOptions, isDiceNotationArg } from '~guards'
+import { isD, isDiceNotationArg, isDicePoolOptions } from '~guards'
 import { NotationModel, OptionsModel } from '~models'
 import { D } from '~src/D'
+import type {
+  DicePools,
+  RollArgument,
+  RollOptions,
+  RollParameters
+} from '~types'
 
 function formDicePools<Sides extends string | number>(
   args: RollArgument<Sides>[]

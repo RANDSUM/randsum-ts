@@ -1,13 +1,9 @@
-import { coreNotationPattern } from '~patterns'
-import {
-  DicePoolType,
-  Notation,
-  NotationValidationResult,
-  RollOptions
-} from '~types'
-import { parseCoreNotation, parseModifiers } from './optionsParsers'
-import { isDiceNotationArg, isCustomSidesStringArg } from '~guards'
+import { isCustomSidesStringArg, isDiceNotationArg } from '~guards'
 import { OptionsModel } from '~models'
+import { coreNotationPattern } from '~patterns'
+import type { Notation, NotationValidationResult, RollOptions } from '~types'
+import { DicePoolType } from '~types'
+import { parseCoreNotation, parseModifiers } from './optionsParsers'
 
 function toOptions<Sides extends string | number>(
   notationString: Notation<Sides>

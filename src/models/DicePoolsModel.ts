@@ -1,6 +1,7 @@
 import { isFullNumArray } from '~guards'
 import { ParametersModel } from '~models'
-import { DicePools, DicePoolType, RollResult } from '~types'
+import type { DicePools, RollResult } from '~types'
+import { DicePoolType } from '~types'
 
 function calculateType(
   dicePools: DicePools<string | number>['dicePools']

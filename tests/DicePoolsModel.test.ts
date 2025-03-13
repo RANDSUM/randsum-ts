@@ -3,7 +3,7 @@ import { DicePoolsModel } from '~models'
 
 import { D } from '~src/D'
 import { InvalidUniqueError } from '~src/models/ParametersModel/modifierApplicators'
-import { Notation, DicePoolType, DicePools } from '~types'
+import { DicePoolType, type DicePools, type Notation } from '~types'
 
 function createMockNumericalDie(
   results: number[],

@@ -1,9 +1,9 @@
-import {
-  RequiredCoreDiceParameters,
+import type {
   DropOptions,
   GreaterLessOptions,
   Modifiers,
   ReplaceOptions,
+  RequiredCoreDiceParameters,
   RerollOptions
 } from '~types'
 

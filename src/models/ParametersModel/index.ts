@@ -1,12 +1,12 @@
 import { isCustomParameters } from '~guards'
-import { RollParameters } from '~types'
+import type { RollParameters } from '~types'
 import {
-  applyReroll,
-  applyUnique,
-  applyReplace,
   applyDrop,
   applyExplode,
-  applySingleCap
+  applyReplace,
+  applyReroll,
+  applySingleCap,
+  applyUnique
 } from './modifierApplicators'
 
 type RollBonuses<Sides extends string | number> = {
