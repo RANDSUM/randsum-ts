@@ -111,7 +111,7 @@ function singleReplaceString(replace: ReplaceOptions) {
 export function formatCoreDescriptions({
   sides,
   quantity
-}: RollOptions<number | string>) {
+}: RollOptions<number | string>): string {
   const base = `Roll ${quantity}`
   const descriptor = (quantity || 1) > 1 ? 'dice' : 'die'
   if (Array.isArray(sides)) {

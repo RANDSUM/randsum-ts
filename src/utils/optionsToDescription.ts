@@ -4,7 +4,9 @@ import {
   formatModifierDescriptions
 } from './descriptionGenerators'
 
-export function optionsToDescription(options: RollOptions<number | string>) {
+export function optionsToDescription(
+  options: RollOptions<number | string>
+): string[] {
   return [
     formatCoreDescriptions(options),
     ...formatModifierDescriptions(options)
