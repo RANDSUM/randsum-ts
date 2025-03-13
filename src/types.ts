@@ -7,11 +7,7 @@ export type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
 export type Notation<Sides extends string | number = string | number> =
   Sides extends number ? NumericDiceNotation : CustomDiceNotation
 
-export enum DicePoolType {
-  numerical = 'numerical',
-  custom = 'custom',
-  mixed = 'mixed'
-}
+export type DicePoolType = 'numerical' | 'custom' | 'mixed'
 
 // Options
 
@@ -125,17 +121,13 @@ export interface RollResult<
   total: Total
 }
 
-export type NumericalRollResult = RollResult<number, DicePoolType.numerical>
-export type CustomRollResult = RollResult<string, DicePoolType.custom>
-export type MixedRollResult = RollResult<
-  string | number,
-  DicePoolType.mixed,
-  string
->
+export type NumericalRollResult = RollResult<number, 'numerical'>
+export type CustomRollResult = RollResult<string, 'custom'>
+export type MixedRollResult = RollResult<string | number, 'mixed', string>
 
 export interface NotationValidationResult {
   valid: boolean
-  type?: DicePoolType.custom | DicePoolType.numerical
+  type?: 'custom' | 'numerical'
   digested?: RollOptions
   notation?: Notation
   description: string[]

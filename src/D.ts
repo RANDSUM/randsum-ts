@@ -1,10 +1,7 @@
 import { isCustomSidesD, isCustomSidesStringArg } from '~guards'
 import type { RollOptions } from '~types'
-import { DicePoolType } from '~types'
 
-export type Type<T> = T extends string[]
-  ? DicePoolType.custom
-  : DicePoolType.numerical
+export type Type<T> = T extends string[] ? 'custom' : 'numerical'
 export type Faces<T> = T extends string[] ? T : number[]
 export type Result<F> = F extends number[] ? number : string
 
@@ -16,12 +13,12 @@ class D<Sides extends string[] | number> {
   constructor(sides: Sides) {
     if (isCustomSidesStringArg(sides)) {
       this.sides = sides.length
-      this.type = DicePoolType.custom as Type<Sides>
+      this.type = 'custom' as Type<Sides>
       this.faces = sides as Faces<Sides>
       return
     }
     this.sides = sides
-    this.type = DicePoolType.numerical as Type<Sides>
+    this.type = 'numerical' as Type<Sides>
     this.faces = Array.from(
       { length: Number(sides) },
       (_, index) => index + 1

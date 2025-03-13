@@ -2,7 +2,6 @@ import { isCustomSidesStringArg, isDiceNotationArg } from '~guards'
 import { OptionsModel } from '~models'
 import { coreNotationPattern } from '~patterns'
 import type { Notation, NotationValidationResult, RollOptions } from '~types'
-import { DicePoolType } from '~types'
 import { parseCoreNotation, parseModifiers } from './optionsParsers'
 
 function toOptions<Sides extends string | number>(
@@ -31,9 +30,7 @@ function validate(notation: string): NotationValidationResult {
     valid: true,
     digested,
     notation: OptionsModel.toNotation(digested),
-    type: isCustomSidesStringArg(digested.sides)
-      ? DicePoolType.custom
-      : DicePoolType.numerical,
+    type: isCustomSidesStringArg(digested.sides) ? 'custom' : 'numerical',
     description: OptionsModel.toDescription(digested)
   }
 }

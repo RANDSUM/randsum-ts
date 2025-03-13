@@ -6,7 +6,6 @@ import type {
   RollOptions,
   RollParameters
 } from '~types'
-import { DicePoolType } from '~types'
 import { D } from './D'
 
 export function isDiceNotationArg(argument: unknown): argument is Notation {
@@ -56,5 +55,5 @@ export function isD(arg: unknown): arg is D<number | string[]> {
 }
 
 export function isCustomSidesD(arg: D<number | string[]>): arg is D<string[]> {
-  return arg.type === DicePoolType.custom
+  return arg.type === 'custom'
 }

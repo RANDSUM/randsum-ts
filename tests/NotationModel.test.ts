@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
 import { NotationModel } from '~models'
-import { DicePoolType, type Notation } from '~types'
+import { type Notation } from '~types'
 
 describe('NotationModel.validate', () => {
   describe('when the notation is completely invalid', () => {
@@ -71,7 +71,7 @@ describe('NotationModel.validate', () => {
       expect(result).toEqual({
         valid: true,
         notation: '2d6',
-        type: DicePoolType.numerical,
+        type: 'numerical',
         digested: { sides: 6, quantity: 2, modifiers: {} },
         description: ['Roll 2 6-sided dice']
       })
@@ -82,7 +82,7 @@ describe('NotationModel.validate', () => {
       expect(result2).toEqual({
         valid: true,
         notation: '1d20',
-        type: DicePoolType.numerical,
+        type: 'numerical',
         digested: { sides: 20, quantity: 1, modifiers: {} },
         description: ['Roll 1 20-sided die']
       })
@@ -97,7 +97,7 @@ describe('NotationModel.validate', () => {
       expect(result).toEqual({
         valid: true,
         notation: '2d{ht}',
-        type: DicePoolType.custom,
+        type: 'custom',
         digested: { sides: ['h', 't'], quantity: 2, modifiers: {} },
         description: ['Roll 2 dice with the following sides: (h,t)']
       })

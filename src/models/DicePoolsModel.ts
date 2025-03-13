@@ -1,7 +1,6 @@
 import { isFullNumArray } from '~guards'
 import { ParametersModel } from '~models'
-import type { DicePools, RollResult } from '~types'
-import { DicePoolType } from '~types'
+import type { DicePools, DicePoolType, RollResult } from '~types'
 
 function calculateType(
   dicePools: DicePools<string | number>['dicePools']
@@ -10,15 +9,15 @@ function calculateType(
     case Object.values(dicePools).every(
       (pool) => typeof pool.options.sides === 'number'
     ):
-      return DicePoolType.numerical
+      return 'numerical'
 
     case Object.values(dicePools).every((pool) =>
       Array.isArray(pool.options.sides)
     ):
-      return DicePoolType.custom
+      return 'custom'
 
     default:
-      return DicePoolType.mixed
+      return 'mixed'
   }
 }
 
