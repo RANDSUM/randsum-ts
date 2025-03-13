@@ -18,7 +18,14 @@ export function validateNotation(notation: string): NotationValidationResult {
     valid: true,
     digested,
     notation: optionsToNotation(digested),
-    type: isCustomSidesStringArg(digested.sides) ? 'custom' : 'numerical',
+    type: notationType(digested.sides),
     description: optionsToDescription(digested)
   }
+}
+
+function notationType(sides: number | string[]): 'custom' | 'numerical' {
+  if (isCustomSidesStringArg(sides)) {
+    return 'custom'
+  }
+  return 'numerical'
 }

@@ -5,7 +5,7 @@ export type Type<T> = T extends string[] ? 'custom' : 'numerical'
 export type Faces<T> = T extends string[] ? T : number[]
 export type Result<F> = F extends number[] ? number : string
 
-class D<Sides extends string[] | number> {
+export class D<Sides extends string[] | number> {
   sides: number
   faces: Faces<Sides>
   type: Type<Sides>
@@ -36,8 +36,8 @@ class D<Sides extends string[] | number> {
   toOptions(): RollOptions<Result<Faces<Sides>>> {
     return {
       quantity: 1,
-      sides: isCustomSidesD(this) ? this.faces : this.sides
-    } as RollOptions<Result<Faces<Sides>>>
+      sides: this.sidesForOptions()
+    }
   }
 
   protected _rawRollResult(): Result<Faces<Sides>> {
@@ -47,6 +47,13 @@ class D<Sides extends string[] | number> {
   protected _rawRoll(): number {
     return Math.floor(Math.random() * Number(this.sides))
   }
-}
+  private sidesForOptions(): RollOptions<Result<Faces<Sides>>>['sides'] {
+    if (this.isCustom)
+      return this.faces as RollOptions<Result<Faces<Sides>>>['sides']
+    return this.sides as RollOptions<Result<Faces<Sides>>>['sides']
+  }
 
-export { D }
+  private get isCustom(): boolean {
+    return isCustomSidesD(this)
+  }
+}

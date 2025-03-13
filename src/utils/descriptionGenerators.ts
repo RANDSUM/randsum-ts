@@ -27,11 +27,15 @@ function capString(cap: GreaterLessOptions) {
 function dropString(drop: DropOptions) {
   const dropList = []
 
-  if (drop.highest)
-    dropList.push(`Drop highest${drop.highest > 1 ? ` ${drop.highest}` : ''}`)
+  if (drop.highest && drop.highest > 1)
+    dropList.push(`Drop highest ${drop.highest}`)
 
-  if (drop.lowest)
-    dropList.push(`Drop lowest${drop.lowest > 1 ? ` ${drop.lowest}` : ''}`)
+  if (drop.highest && drop.highest <= 1) dropList.push(`Drop highest`)
+
+  if (drop.lowest && drop.lowest > 1)
+    dropList.push(`Drop lowest ${drop.lowest}`)
+
+  if (drop.lowest && drop.lowest <= 1) dropList.push(`Drop lowest`)
 
   if (drop.exact) {
     const exact = formatHumanList(drop.exact)
@@ -59,7 +63,6 @@ function rerollString(reroll: RerollOptions) {
   }
   const greaterLess = `${formatGreaterLess(reroll).join(' and ')}`
 
-  const maxString = reroll.maxReroll ? ` (up to ${reroll.maxReroll} times)` : ''
   const exactList = formatHumanList(rerollList)
 
   const exactString = [exactList, greaterLess]
@@ -67,7 +70,12 @@ function rerollString(reroll: RerollOptions) {
     .join(', ')
 
   if (exactString === '') return []
-  return [`Reroll ${exactString}${maxString}`]
+
+  if (reroll.maxReroll) {
+    return [`Reroll ${exactString} (up to ${reroll.maxReroll} times)`]
+  }
+
+  return [`Reroll ${exactString}`]
 }
 
 function explodeString() {
@@ -113,15 +121,23 @@ export function formatCoreDescriptions({
   quantity
 }: RollOptions<number | string>): string {
   const base = `Roll ${quantity}`
-  const descriptor = (quantity || 1) > 1 ? 'dice' : 'die'
+  const descriptor = dieDescriptor(quantity)
   if (Array.isArray(sides)) {
     const formattedSides = `${descriptor} with the following sides: (${sides
-      .map((s) => (s === '' ? ' ' : s))
+      .map((s) => {
+        if (s === '') return ' '
+        return s
+      })
       .join(',')})`
     return `${base} ${formattedSides}`
   }
 
   return `${base} ${sides}-sided ${descriptor}`
+}
+
+function dieDescriptor(quantity = 1) {
+  if (quantity > 1) return 'dice'
+  return 'die'
 }
 
 export function formatModifierDescriptions({

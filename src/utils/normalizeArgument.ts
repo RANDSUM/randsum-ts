@@ -14,10 +14,10 @@ function toOptions(argument: RollArgument): RollOptions {
     case isDiceNotationArg(argument):
       return notationToOptions(argument)
     default:
-      return {
-        quantity: 1,
-        sides: Array.isArray(argument) ? argument.map(String) : Number(argument)
+      if (Array.isArray(argument)) {
+        return { quantity: 1, sides: argument.map(String) }
       }
+      return { quantity: 1, sides: Number(argument) }
   }
 }
 
@@ -37,10 +37,19 @@ function normalizeArgument<S extends string | number>(
   return {
     argument,
     options,
-    die: isD(argument) ? argument : new D(options.sides),
+    die: findDie(argument),
     notation: optionsToNotation(options),
     description: optionsToDescription(options)
   } as RollParameters<S>
+}
+
+function findDie<S extends string | number>(
+  argument: RollArgument<S>
+): RollParameters<S>['die'] {
+  if (isD(argument)) {
+    return argument as RollParameters<S>['die']
+  }
+  return new D(toOptions(argument).sides) as RollParameters<S>['die']
 }
 
 export { normalizeArgument }

@@ -26,12 +26,20 @@ function dropNotation(drop: DropOptions) {
 
   const finalList = []
 
-  if (drop.highest) {
-    finalList.push(`H${drop.highest > 1 ? drop.highest : ''}`)
+  if (drop.highest && drop.highest > 1) {
+    finalList.push(`H${drop.highest}`)
   }
 
-  if (drop.lowest) {
-    finalList.push(`L${drop.lowest > 1 ? drop.lowest : ''}`)
+  if (drop.highest && drop.highest <= 1) {
+    finalList.push(`H`)
+  }
+
+  if (drop.lowest && drop.lowest > 1) {
+    finalList.push(`L${drop.lowest}`)
+  }
+
+  if (drop.lowest && drop.lowest <= 1) {
+    finalList.push(`L`)
   }
 
   if (dropList.length > 0) {
@@ -42,12 +50,12 @@ function dropNotation(drop: DropOptions) {
 }
 
 function replaceNotation(replace: ReplaceOptions | ReplaceOptions[]) {
-  const args = (
-    Array.isArray(replace)
-      ? replace.map(singleReplaceNotation).flat()
-      : [singleReplaceNotation(replace)]
-  ).join(',')
-  return `V{${args}}`
+  return `V{${replaceArgs(replace).join(',')}}`
+}
+
+function replaceArgs(replace: ReplaceOptions | ReplaceOptions[]): string[] {
+  if (Array.isArray(replace)) return replace.map(singleReplaceNotation).flat()
+  return [singleReplaceNotation(replace)]
 }
 
 function rerollNotation(reroll: RerollOptions) {
@@ -63,10 +71,13 @@ function rerollNotation(reroll: RerollOptions) {
     rerollList.push(greaterLess.join(','))
   }
 
-  const maxNotation = reroll.maxReroll ? reroll.maxReroll : ''
-
   if (rerollList.length === 0) return ''
-  return `R{${rerollList.join(',')}}${maxNotation}`
+  return `R{${rerollList.join(',')}}${maxNotation(reroll.maxReroll)}`
+}
+
+function maxNotation(max: number | undefined): string | number {
+  if (max === undefined) return ''
+  return max
 }
 
 function explodeNotation() {
@@ -97,11 +108,12 @@ function formatGreaterLess(options: GreaterLessOptions, list: string[] = []) {
 }
 
 function singleReplaceNotation(replace: ReplaceOptions) {
-  const fromValue =
-    typeof replace.from === 'number'
-      ? replace.from
-      : formatGreaterLess(replace.from).join(',')
-  return `${fromValue}=${replace.to}`
+  return `${fromValue(replace.from)}=${replace.to}`
+}
+
+function fromValue(from: number | GreaterLessOptions) {
+  if (typeof from === 'number') return from
+  return formatGreaterLess(from).join(',')
 }
 
 export function formatModifierNotation({ modifiers }: RollOptions): string {
@@ -121,13 +133,26 @@ export function formatModifierNotation({ modifiers }: RollOptions): string {
 
   return modifierStrings.join('')
 }
-
 export function formatCoreNotation({
   quantity = 1,
   sides
 }: RollOptions<string | number>): Notation {
-  const formattedSides = Array.isArray(sides)
-    ? `{${sides.map((s) => (s === '' ? ' ' : s)).join('')}}`
-    : sides
-  return `${quantity}d${formattedSides}` as Notation
+  if (Array.isArray(sides)) {
+    return formatNotation(quantity, `{${formatSides(sides)}}`)
+  }
+
+  return formatNotation(quantity, sides)
+}
+
+function formatNotation(quantity: number, sides: string | number): Notation {
+  return `${quantity}d${sides}` as Notation
+}
+
+function formatSides(sides: string[]): string {
+  return sides
+    .map((s) => {
+      if (s === '') return ' '
+      return s
+    })
+    .join('')
 }

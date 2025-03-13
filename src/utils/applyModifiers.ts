@@ -40,55 +40,48 @@ function applyModifiers<S extends string | number>(
   return Object.keys(modifiers).reduce((bonuses, key) => {
     switch (key) {
       case 'reroll':
+        if (!modifiers.reroll) return bonuses
         return {
           ...bonuses,
-          rolls: modifiers.reroll
-            ? applyReroll(bonuses.rolls, modifiers.reroll, rollOne)
-            : bonuses.rolls
+          rolls: applyReroll(bonuses.rolls, modifiers.reroll, rollOne)
         }
-
       case 'unique':
+        if (!modifiers.unique) return bonuses
         return {
           ...bonuses,
-          rolls: modifiers.unique
-            ? applyUnique(
-                bonuses.rolls,
-                { sides, quantity: quantity || 1, unique: modifiers.unique },
-                rollOne
-              )
-            : bonuses.rolls
+          rolls: applyUnique(
+            bonuses.rolls,
+            { sides, quantity: quantity || 1, unique: modifiers.unique },
+            rollOne
+          )
         }
 
       case 'replace':
+        if (!modifiers.replace) return bonuses
         return {
           ...bonuses,
-          rolls: modifiers.replace
-            ? applyReplace(bonuses.rolls, modifiers.replace)
-            : bonuses.rolls
+          rolls: applyReplace(bonuses.rolls, modifiers.replace)
         }
 
       case 'cap':
+        if (!modifiers.cap) return bonuses
         return {
           ...bonuses,
-          rolls: modifiers.cap
-            ? bonuses.rolls.map(applySingleCap(modifiers.cap))
-            : bonuses.rolls
+          rolls: bonuses.rolls.map(applySingleCap(modifiers.cap))
         }
 
       case 'drop':
+        if (!modifiers.drop) return bonuses
         return {
           ...bonuses,
-          rolls: modifiers.drop
-            ? applyDrop(bonuses.rolls, modifiers.drop)
-            : bonuses.rolls
+          rolls: applyDrop(bonuses.rolls, modifiers.drop)
         }
 
       case 'explode':
+        if (!modifiers.explode) return bonuses
         return {
           ...bonuses,
-          rolls: modifiers.explode
-            ? applyExplode(bonuses.rolls, { sides }, rollOne)
-            : bonuses.rolls
+          rolls: applyExplode(bonuses.rolls, { sides }, rollOne)
         }
 
       case 'plus':

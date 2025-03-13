@@ -25,10 +25,15 @@ export function parseCoreNotation(
 
   return {
     quantity: Number(quantity),
-    sides: sides.includes('{')
-      ? [...sides.replaceAll(/{|}/g, '')]
-      : Number(sides)
+    sides: coreSides(sides)
   }
+}
+
+function coreSides(notationString: string): number | string[] {
+  if (notationString.includes('{')) {
+    return [...notationString.replaceAll(/{|}/g, '')]
+  }
+  return Number(notationString)
 }
 
 function parseCapNotation(modifiersString: string): Pick<Modifiers, 'cap'> {
@@ -128,9 +133,14 @@ function parseDropConstraintsNotation(
         }
 
         const exact = [...(innerAcc?.exact || []), Number(constraint)]
+
+        if (exact.length <= 0) {
+          return innerAcc
+        }
+
         return {
           ...innerAcc,
-          ...(exact.length > 0 ? { exact } : {})
+          exact
         }
       }, dropConstraintParameters)
 

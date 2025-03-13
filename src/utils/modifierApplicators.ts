@@ -4,7 +4,8 @@ import type {
   Modifiers,
   ReplaceOptions,
   RequiredCoreDiceParameters,
-  RerollOptions
+  RerollOptions,
+  UniqueOptions
 } from '~types'
 
 export class InvalidUniqueError extends Error {
@@ -27,10 +28,7 @@ export function applyUnique(
   if (quantity > sides) {
     throw new InvalidUniqueError()
   }
-  const notUnique =
-    unique === undefined || typeof unique === 'boolean'
-      ? []
-      : unique.notUnique.map(Number)
+  const notUnique = generateNotUniqueArray(unique)
 
   const filteredArray = new Set(
     rolls.filter((n) => !notUnique.includes(Number(n)))
@@ -45,6 +43,15 @@ export function applyUnique(
     } while (filteredArray.has(newRoll))
     return newRoll
   })
+}
+
+function generateNotUniqueArray(
+  unique: boolean | UniqueOptions | undefined
+): number[] {
+  if (unique === undefined || typeof unique === 'boolean') {
+    return []
+  }
+  return unique.notUnique.map(Number)
 }
 
 export function applySingleCap(
@@ -75,14 +82,10 @@ function rerollRoll(
     return roll
   }
 
-  const exactValue =
-    exact !== undefined && Array.isArray(exact)
-      ? exact.includes(roll)
-      : exact === roll
   if (
     (greaterThan !== undefined && roll > greaterThan) ||
     (lessThan !== undefined && roll < lessThan) ||
-    exactValue
+    exactValue(exact, roll)
   ) {
     return rerollRoll(
       rollOne(),
@@ -92,6 +95,18 @@ function rerollRoll(
     )
   }
   return roll
+}
+function exactValue(
+  exact: number | number[] | undefined,
+  roll: number
+): boolean {
+  if (exact === undefined) {
+    return false
+  }
+  if (Array.isArray(exact)) {
+    return exact.includes(roll)
+  }
+  return exact === roll
 }
 
 export function applyReroll(
@@ -107,9 +122,8 @@ export function applyReplace(
   rolls: number[],
   replace: ReplaceOptions | ReplaceOptions[]
 ): number[] {
-  const parameters = Array.isArray(replace) ? replace : [replace]
-
   let replaceRolls = rolls
+  const parameters = [replace].flat()
 
   parameters.forEach(({ from, to }) => {
     replaceRolls = replaceRolls.map((roll) => {
