@@ -1,6 +1,6 @@
 import type { Modifiers, RequiredCoreDiceParameters } from '~types'
-import { InvalidUniqueError } from '../invalidUniqueError'
 import { generateNotUniqueArray } from './generateNotUniqueArray'
+import { InvalidUniqueError } from './invalidUniqueError'
 
 export function applyUnique(
   rolls: number[],
