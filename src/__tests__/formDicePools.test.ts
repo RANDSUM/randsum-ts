@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'bun:test'
+import { formDicePools } from '~utils/formDicePools'
 
 import type { DicePools, Notation, RollParameters } from '~types'
-import { formDicePools } from '~utils/formDicePools'
 
 const extractDicePoolValues = (params: DicePools): RollParameters[] => {
   const pools = Object.entries(params.dicePools)

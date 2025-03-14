@@ -9,7 +9,9 @@ export default [
   },
   {
     rules: {
-      'no-ternary': 'warn'
+      'no-ternary': 'warn',
+      'func-names': ['error', 'as-needed'],
+      'no-restricted-exports': 'error'
     }
   }
 ]

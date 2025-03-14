@@ -1,5 +1,5 @@
 import { describe, expect } from 'bun:test'
-import { formatModifierDescriptions } from '~utils/descriptionFormatters'
+import { formatModifierDescriptions } from '~utils/descriptionFormatters/formatModifierDescription'
 
 describe('formatModifierDescription', () => {
   describe('given a max reroll set of reroll options', () => {

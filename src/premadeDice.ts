@@ -1,4 +1,4 @@
-import { D } from '~src/D'
+import { D } from './D'
 
 export const D4: D<4> = new D(4)
 export const D6: D<6> = new D(6)

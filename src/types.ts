@@ -2,8 +2,8 @@ import { D } from './D'
 
 // Primitives
 
-export type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
-export type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
+type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
+type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
 export type Notation<S extends string | number = string | number> =
   S extends number ? NumericDiceNotation : CustomDiceNotation
 
@@ -117,6 +117,11 @@ export interface RollResult<
   rawResult: S[]
   type: DP
   total: Total
+}
+
+export type RollBonuses<S extends string | number> = {
+  rolls: S[]
+  simpleMathModifier: number
 }
 
 export type NumericalRollResult = RollResult<number, 'numerical'>
