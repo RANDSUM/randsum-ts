@@ -81,7 +81,7 @@
     "@types/bun": "1.2.4",
     "@types/eslint__js": "^8.42.3",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^8.0.0",
+    "@typescript-eslint/parser": "^8.26.1",
     "bun-plugin-dts": "^0.3.0",
     "eslint": "^9.22.0",
     "prettier": "^3.5.3",
