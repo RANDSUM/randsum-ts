@@ -1,8 +1,8 @@
 import { D } from '~src/D'
 import type { RollArgument, RollParameters } from '~types'
-import { optionsToDescription } from '../descriptionFormatters/optionsToDescription'
-import { optionsToNotation } from '../notationFormatters/optionsToNotation'
-import { argumentToOptions } from './argumentToOptions'
+import { argumentToOptions } from '../argumentToOptions'
+import { optionsToDescription } from '../optionsToDescription'
+import { optionsToNotation } from '../optionsToNotation'
 
 function normalizeArgument(
   argument: RollArgument<number>

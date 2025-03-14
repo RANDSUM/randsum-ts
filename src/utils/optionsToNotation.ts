@@ -1,6 +1,6 @@
 import type { Notation, RollOptions } from '~types'
-import { formatCoreNotation } from './formatCoreNotation'
-import { formatModifierNotation } from './formatModifierNotation'
+import { formatCoreNotation } from './notationFormatters/formatCoreNotation'
+import { formatModifierNotation } from './notationFormatters/formatModifierNotation'
 
 export function optionsToNotation<S extends string | number>(
   options: RollOptions<S>

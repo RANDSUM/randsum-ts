@@ -1,7 +1,7 @@
-import { isD } from '~guards/isD'
 import { D } from '~src/D'
+import { isD } from '~src/guards/isD'
 import type { RollArgument, RollParameters } from '~types'
-import { argumentToOptions } from './argumentToOptions'
+import { argumentToOptions } from '../argumentToOptions'
 
 export function findDieForArgument<S extends string | number>(
   argument: RollArgument<S>

@@ -1,4 +1,4 @@
-import { isFullNumArray } from '~guards/isFullNumArray'
+import { isFullNumArray } from '~src/guards/isFullNumArray'
 
 export function calculateTotal<S extends string | number>(
   rolls: S[],

@@ -1,4 +1,5 @@
 export * from '~src/D'
+export { isD } from '~src/guards/isD'
 export * from '~src/premadeDice'
 export { roll } from '~src/roll'
 export * from '~src/types'

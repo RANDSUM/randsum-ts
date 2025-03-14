@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { formDicePools } from '~src/formDicePools'
+import { formDicePools } from '~utils/formDicePools'
 
 import type { DicePools, Notation, RollParameters } from '~types'
 

@@ -1,6 +1,6 @@
 import type { DropOptions } from '~types'
+import { formatHumanList } from '../formatHumanList'
 import { formatGreaterLess } from './formatGreaterLess'
-import { formatHumanList } from './formatHumanList'
 
 export function dropString(drop: DropOptions): string[] {
   const dropList = []

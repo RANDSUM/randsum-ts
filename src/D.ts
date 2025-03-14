@@ -1,8 +1,8 @@
-import { isCustomSidesD } from '~guards/isCustomSidesD'
-import { isCustomSidesStringArg } from '~guards/isCustomSidesStringArg'
-import { isD } from '~guards/isD'
-import { argumentToOptions } from '~src/argumentNormalizers/argumentToOptions'
+import { isCustomSidesD } from '~src/guards/isCustomSidesD'
+import { isCustomSidesStringArg } from '~src/guards/isCustomSidesStringArg'
+import { isD } from '~src/guards/isD'
 import type { RollArgument, RollOptions, RollParameters } from '~types'
+import { argumentToOptions } from '~utils/argumentToOptions'
 
 export type Type<T> = T extends string[] ? 'custom' : 'numerical'
 export type Faces<T> = T extends string[] ? T : number[]

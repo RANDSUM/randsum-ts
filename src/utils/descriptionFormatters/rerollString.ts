@@ -1,6 +1,6 @@
 import type { RerollOptions } from '~types'
+import { formatHumanList } from '../formatHumanList'
 import { formatGreaterLess } from './formatGreaterLess'
-import { formatHumanList } from './formatHumanList'
 
 export function rerollString(reroll: RerollOptions): string[] {
   const rerollList: string[] = []

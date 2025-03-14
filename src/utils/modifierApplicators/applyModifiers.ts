@@ -1,4 +1,4 @@
-import { isCustomParameters } from '~guards/isCustomParameters'
+import { isCustomParameters } from '~src/guards/isCustomParameters'
 import type { RollBonuses, RollParameters } from '~types'
 import { applyDrop } from './applyDrop'
 import { applyExplode } from './applyExplode'
