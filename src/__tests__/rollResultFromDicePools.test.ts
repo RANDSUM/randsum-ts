@@ -410,7 +410,7 @@ describe('rollResultFromDicePools', () => {
       })
     })
 
-    describe('that is a single reroll modifier', () => {
+    describe('that is a single reroll modifier in an array', () => {
       const reDicePools: DicePools = {
         dicePools: {
           'test-roll-id': {

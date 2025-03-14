@@ -19,10 +19,11 @@ export function rerollString(reroll: RerollOptions): string[] {
     .join(', ')
 
   if (exactString === '') return []
+  const coreString = `Reroll ${exactString}`
 
   if (reroll.maxReroll) {
-    return [`Reroll ${exactString} (up to ${reroll.maxReroll} times)`]
+    return [`${coreString} (up to ${reroll.maxReroll} times)`]
   }
 
-  return [`Reroll ${exactString}`]
+  return [coreString]
 }

@@ -1,5 +1,5 @@
 import type { RerollOptions } from '~types'
-import { exactValue } from './exactValue'
+import { extractExactValue } from './extractExactValue'
 
 export function rerollRoll(
   roll: number,
@@ -17,7 +17,7 @@ export function rerollRoll(
   if (
     (greaterThan !== undefined && roll > greaterThan) ||
     (lessThan !== undefined && roll < lessThan) ||
-    exactValue(exact, roll)
+    extractExactValue(exact, roll)
   ) {
     return rerollRoll(
       rollOne(),

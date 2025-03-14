@@ -405,7 +405,7 @@ describe('normalizeArgument', () => {
     })
 
     describe('given a notation that contains a reroll modifier', () => {
-      const argument: Notation = `${coreTestString}R{5,20,<6,>2}3`
+      const argument: Notation = `${coreTestString}R{5,20,<6,>2}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -418,16 +418,15 @@ describe('normalizeArgument', () => {
               reroll: {
                 exact: [5, 20],
                 lessThan: 6,
-                greaterThan: 2,
-                maxReroll: 3
+                greaterThan: 2
               }
             }
           },
           die: new D(coreDicePools.sides),
-          notation: '4d6R{5,20,>2,<6}3',
+          notation: '4d6R{5,20,>2,<6}',
           description: [
             'Roll 4 6-sided dice',
-            'Reroll [5] and [20], greater than [2] and less than [6] (up to 3 times)'
+            'Reroll [5] and [20], greater than [2] and less than [6]'
           ]
         })
       })
