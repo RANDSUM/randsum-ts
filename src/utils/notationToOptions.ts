@@ -1,7 +1,7 @@
 import { coreNotationPattern } from '~patterns'
 import type { Notation, RollOptions } from '~types'
-import { parseCoreNotation } from '~utils/notationParsers/parseCoreNotation'
-import { parseModifiers } from '~utils/notationParsers/parseModifiers'
+import { parseCoreNotation } from './notationParsers/parseCoreNotation'
+import { parseModifiers } from './notationParsers/parseModifiers'
 
 export function notationToOptions<S extends string | number>(
   notationString: Notation<S>

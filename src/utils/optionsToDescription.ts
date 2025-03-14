@@ -1,5 +1,5 @@
 import type { RollOptions } from '~types'
-import { formatCoreDescriptions } from '~utils/descriptionFormatters/formatCoreDescriptions'
+import { formatCoreDescriptions } from './descriptionFormatters/formatCoreDescriptions'
 import { formatModifierDescriptions } from './descriptionFormatters/formatModifierDescription'
 
 export function optionsToDescription(

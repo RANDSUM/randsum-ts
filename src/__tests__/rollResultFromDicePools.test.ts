@@ -2,7 +2,7 @@ import { describe, expect, test } from 'bun:test'
 
 import { D } from '~src/D'
 import type { DicePools, Notation } from '~types'
-import { InvalidUniqueError } from '~utils/modifierApplicators/invalidUniqueError'
+import { InvalidUniqueError } from '~utils/invalidUniqueError'
 import { rollResultFromDicePools } from '~utils/rollResultFromDicePools'
 
 function createMockNumericalDie(
