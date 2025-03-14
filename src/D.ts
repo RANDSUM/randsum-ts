@@ -4,9 +4,9 @@ import { isD } from '~src/guards/isD'
 import type { RollArgument, RollOptions, RollParameters } from '~types'
 import { argumentToOptions } from '~utils/argumentToOptions'
 
-export type Type<T> = T extends string[] ? 'custom' : 'numerical'
-export type Faces<T> = T extends string[] ? T : number[]
-export type Result<F> = F extends number[] ? number : string
+type Type<T> = T extends string[] ? 'custom' : 'numerical'
+type Faces<T> = T extends string[] ? T : number[]
+type Result<F> = F extends number[] ? number : string
 
 export class D<Sides extends string[] | number> {
   sides: number

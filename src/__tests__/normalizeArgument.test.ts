@@ -2,7 +2,7 @@ import { describe, expect, test } from 'bun:test'
 
 import { D } from '~src/D'
 import type { Notation } from '~types'
-import { normalizeArgument } from '~utils/argumentNormalizers/normalizeArgument'
+import { normalizeArgument } from '~utils/normalizeArgument'
 
 describe('normalizeArgument', () => {
   describe('given a number', () => {
