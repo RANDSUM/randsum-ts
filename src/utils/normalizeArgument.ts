@@ -21,9 +21,9 @@ function normalizeArgument<S extends string | number>(
     argument,
     options,
     die: D.forArgument(argument),
-    notation: optionsToNotation(options),
+    notation: optionsToNotation<S>(options),
     description: optionsToDescription(options)
-  } as RollParameters<S>
+  }
 }
 
 export { normalizeArgument }
