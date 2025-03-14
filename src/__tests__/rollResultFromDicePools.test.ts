@@ -27,6 +27,7 @@ function createMockCustomDie(
 
 describe('rollResultFromDicePools', () => {
   const testRollSet = [1, 2, 3, 4]
+  const testCustomRollSet = ['+', '-', ' ']
   const coreRawRolls = {
     'test-roll-id': testRollSet
   }
@@ -410,7 +411,7 @@ describe('rollResultFromDicePools', () => {
       })
     })
 
-    describe('that is a single reroll modifier', () => {
+    describe('that is a single reroll modifier in an array', () => {
       const reDicePools: DicePools = {
         dicePools: {
           'test-roll-id': {
@@ -633,6 +634,55 @@ describe('rollResultFromDicePools', () => {
         rawResult: [1, 2, 3, 4, 1, 2, 3, 4],
         result: [1, 2, 3, 4, 1, 2, 3, 4],
         type: 'numerical'
+      })
+    })
+  })
+
+  describe('Given multiple dice pools of different dice types', () => {
+    const parameters: DicePools = {
+      dicePools: {
+        'test-roll-id': {
+          notation: '1d1' as Notation<number>,
+          description: ['foo'],
+          argument: 20,
+          options: { sides: 6, quantity: testRollSet.length },
+          die: createMockNumericalDie(testRollSet)
+        },
+        'test-roll-id-2': {
+          notation: '1d{+- }' as Notation<string>,
+          description: ['foo'],
+          argument: '1d{++--  }',
+          options: {
+            sides: ['+', '+', '-', '-', ' ', ' '],
+            quantity: testCustomRollSet.length
+          },
+          die: createMockCustomDie(testCustomRollSet)
+        }
+      }
+    }
+    test('it returns the combined total', () => {
+      const rawRolls = {
+        'test-roll-id': testRollSet,
+        'test-roll-id-2': testCustomRollSet
+      }
+
+      expect(rollResultFromDicePools(parameters)).toMatchObject({
+        ...parameters,
+        rawRolls,
+        modifiedRolls: {
+          'test-roll-id': {
+            rolls: [1, 2, 3, 4],
+            total: 10
+          },
+          'test-roll-id-2': {
+            rolls: ['+', '-', ' '],
+            total: '+, -,  '
+          }
+        },
+        total: '10, +, -,  ',
+        rawResult: [1, 2, 3, 4, '+', '-', ' '],
+        result: [1, 2, 3, 4, '+', '-', ' '],
+        type: 'mixed'
       })
     })
   })
