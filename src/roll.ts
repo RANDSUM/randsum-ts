@@ -7,8 +7,8 @@ import type {
   RollArgument,
   RollResult
 } from '~types'
-import { formDicePools } from '~utils/formDicePools'
-import { rollResultFromDicePools } from '~utils/rollResultFromDicePools'
+import { formDicePools } from './formDicePools'
+import { rollResultFromDicePools } from './rollResultFromDicePools'
 
 function roll(...args: NumericalArgument[]): NumericalRollResult
 function roll(...args: CustomArgument[]): CustomRollResult

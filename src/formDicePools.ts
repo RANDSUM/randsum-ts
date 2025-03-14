@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
 import type { DicePools, RollArgument } from '~types'
-import { normalizeArgument } from './normalizeArgument'
+import { normalizeArgument } from './argumentNormalizers/normalizeArgument'
 
 export function formDicePools<S extends string | number>(
   args: RollArgument<S>[]

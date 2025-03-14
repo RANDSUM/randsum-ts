@@ -1,18 +1,11 @@
-import { isCustomParameters } from '~guards'
-import type { RollParameters } from '~types'
-import {
-  applyDrop,
-  applyExplode,
-  applyReplace,
-  applyReroll,
-  applySingleCap,
-  applyUnique
-} from './modifierApplicators'
-
-type RollBonuses<S extends string | number> = {
-  rolls: S[]
-  simpleMathModifier: number
-}
+import { isCustomParameters } from '~guards/isCustomParameters'
+import type { RollBonuses, RollParameters } from '~types'
+import { applyDrop } from './applyDrop'
+import { applyExplode } from './applyExplode'
+import { applyReplace } from './applyReplace'
+import { applyReroll } from './applyReroll'
+import { applySingleCap } from './applySingleCap'
+import { applyUnique } from './applyUnique'
 
 export function applyModifiers<S extends string | number>(
   poolParameters: RollParameters<S>,

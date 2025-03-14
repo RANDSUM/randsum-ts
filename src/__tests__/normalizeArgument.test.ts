@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'bun:test'
 
+import { normalizeArgument } from '~src/argumentNormalizers/normalizeArgument'
 import { D } from '~src/D'
 import type { Notation } from '~types'
-import { normalizeArgument } from '~utils/normalizeArgument'
 
 describe('normalizeArgument', () => {
   describe('given a number', () => {

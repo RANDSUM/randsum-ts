@@ -1,5 +1,8 @@
-import { isCustomSidesD, isCustomSidesStringArg } from '~guards'
-import type { RollOptions } from '~types'
+import { isCustomSidesD } from '~guards/isCustomSidesD'
+import { isCustomSidesStringArg } from '~guards/isCustomSidesStringArg'
+import { isD } from '~guards/isD'
+import { argumentToOptions } from '~src/argumentNormalizers/argumentToOptions'
+import type { RollArgument, RollOptions, RollParameters } from '~types'
 
 export type Type<T> = T extends string[] ? 'custom' : 'numerical'
 export type Faces<T> = T extends string[] ? T : number[]
@@ -9,6 +12,15 @@ export class D<Sides extends string[] | number> {
   sides: number
   faces: Faces<Sides>
   type: Type<Sides>
+
+  static forArgument<A extends string | number>(
+    argument: RollArgument<A>
+  ): RollParameters<A>['die'] {
+    if (isD(argument)) {
+      return argument as RollParameters<A>['die']
+    }
+    return new D(argumentToOptions(argument).sides) as RollParameters<A>['die']
+  }
 
   constructor(sides: Sides) {
     if (isCustomSidesStringArg(sides)) {

@@ -3,7 +3,7 @@
     "paths": {
       "~utils/*": ["./src/utils/*"],
       "~patterns": ["./src/patterns.ts"],
-      "~guards": ["./src/guards.ts"],
+      "~guards/*": ["./src/guards/*"],
       "~types": ["./src/types.ts"],
       "~src/*": ["./src/*"]
     },

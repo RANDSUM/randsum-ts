@@ -119,6 +119,11 @@ export interface RollResult<
   total: Total
 }
 
+export type RollBonuses<S extends string | number> = {
+  rolls: S[]
+  simpleMathModifier: number
+}
+
 export type NumericalRollResult = RollResult<number, 'numerical'>
 export type CustomRollResult = RollResult<string, 'custom'>
 export type MixedRollResult = RollResult<string | number, 'mixed', string>

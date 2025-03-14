@@ -1,5 +1,0 @@
-export * from './D'
-export * from './premadeDice'
-export { roll } from './roll'
-export * from './types'
-export { validateNotation } from './validateNotation'
