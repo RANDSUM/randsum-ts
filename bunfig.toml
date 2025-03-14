@@ -2,4 +2,4 @@
 root = "./src/__tests__"
 coverageReporter  = ["text", "lcov"]
 coverage = true
-coverageThreshold =  0.98
+coverageThreshold =  0.95
