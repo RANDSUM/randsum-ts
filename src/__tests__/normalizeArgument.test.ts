@@ -483,6 +483,28 @@ describe('normalizeArgument', () => {
         })
       })
 
+      describe('with a repeat unique notation', () => {
+        const argument: Notation = `${coreTestString}U{5,6}U`
+
+        test('returns a RollParameter matching the notation', () => {
+          const params = normalizeArgument(argument)
+
+          expect(params).toMatchObject({
+            argument,
+            options: {
+              ...coreDicePools,
+              modifiers: { unique: { notUnique: [5, 6] } }
+            },
+            die: new D(coreDicePools.sides),
+            notation: '4d6U{5,6}',
+            description: [
+              'Roll 4 6-sided dice',
+              'No Duplicates (except [5] and [6])'
+            ]
+          })
+        })
+      })
+
       describe('with a simple unique notation', () => {
         const argument: Notation = `${coreTestString}U`
 
