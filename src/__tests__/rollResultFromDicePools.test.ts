@@ -11,7 +11,7 @@ function createMockNumericalDie(
 ): D<number> {
   return {
     roll: () => rollResult,
-    rollMany: () => results
+    rollSpread: () => results
   } as unknown as D<number>
 }
 
@@ -21,7 +21,7 @@ function createMockCustomDie(
 ): D<string[]> {
   return {
     roll: () => rollResult,
-    rollMany: () => results
+    rollSpread: () => results
   } as unknown as D<string[]>
 }
 

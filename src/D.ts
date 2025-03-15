@@ -41,7 +41,7 @@ export class D<Sides extends string[] | number> {
     return this._rawRollResult()
   }
 
-  rollMany(quantity: number): Result<Faces<Sides>>[] {
+  rollSpread(quantity = 1): Result<Faces<Sides>>[] {
     return Array.from({ length: quantity }, () => this._rawRollResult())
   }
 
