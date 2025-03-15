@@ -37,15 +37,20 @@ export class D<Sides extends string[] | number> {
     ) as Faces<Sides>
   }
 
-  roll(): Result<Faces<Sides>> {
-    return this._rawRollResult()
+  roll(quantity = 1): Result<Faces<Sides>> {
+    const rolls = this.rollSpread(quantity)
+    if (this.isCustom) return rolls.join(', ') as Result<Faces<Sides>>
+    return rolls.reduce<number>(
+      (acc, roll) => acc + (roll as number),
+      0
+    ) as Result<Faces<Sides>>
   }
 
-  rollMany(quantity: number): Result<Faces<Sides>>[] {
+  rollSpread(quantity = 1): Result<Faces<Sides>>[] {
     return Array.from({ length: quantity }, () => this._rawRollResult())
   }
 
-  toOptions(): RollOptions<Result<Faces<Sides>>> {
+  get toOptions(): RollOptions<Result<Faces<Sides>>> {
     return {
       quantity: 1,
       sides: this.sidesForOptions()

@@ -64,7 +64,7 @@ describe('normalizeArgument', () => {
         modifiers: {
           reroll: {
             exact: [2, 1, 4],
-            maxReroll: 3
+            max: 3
           },
           replace: { from: { greaterThan: 5 }, to: 1 },
           unique: true
@@ -430,7 +430,7 @@ describe('normalizeArgument', () => {
           ]
         })
       })
-      describe('with a maxReroll modifier', () => {
+      describe('with a max modifier', () => {
         const argument: Notation = `${coreTestString}R{5,20,<6,>2}3`
 
         test('returns a RollParameter matching the notation', () => {
@@ -445,7 +445,7 @@ describe('normalizeArgument', () => {
                   exact: [5, 20],
                   lessThan: 6,
                   greaterThan: 2,
-                  maxReroll: 3
+                  max: 3
                 }
               }
             },
@@ -463,6 +463,28 @@ describe('normalizeArgument', () => {
     describe('given a notation that contains a unique notation', () => {
       describe('with a unique notation', () => {
         const argument: Notation = `${coreTestString}U{5,6}`
+
+        test('returns a RollParameter matching the notation', () => {
+          const params = normalizeArgument(argument)
+
+          expect(params).toMatchObject({
+            argument,
+            options: {
+              ...coreDicePools,
+              modifiers: { unique: { notUnique: [5, 6] } }
+            },
+            die: new D(coreDicePools.sides),
+            notation: '4d6U{5,6}',
+            description: [
+              'Roll 4 6-sided dice',
+              'No Duplicates (except [5] and [6])'
+            ]
+          })
+        })
+      })
+
+      describe('with a repeat unique notation', () => {
+        const argument: Notation = `${coreTestString}U{5,6}U`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -642,7 +664,7 @@ describe('normalizeArgument', () => {
                   { from: { greaterThan: 2 }, to: 6 }
                 ],
                 cap: { greaterThan: 18, lessThan: 2 },
-                reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 },
+                reroll: { exact: [5, 2], lessThan: 6, max: 3 },
                 unique: { notUnique: [5] },
                 explode: true,
                 plus: 5,

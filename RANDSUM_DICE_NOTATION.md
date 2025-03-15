@@ -373,7 +373,7 @@ roll({
       above: 15,
       below: 5,
       exactly: [10],
-      maxReroll: 3
+      max: 3
     }
   }
 })

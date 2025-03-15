@@ -9,7 +9,7 @@ export function generateRawRolls<S extends string | number>(
         die,
         options: { quantity }
       } = dicePools[key]
-      return [key, die.rollMany(quantity || 1) as S[]]
+      return [key, die.rollSpread(quantity || 1) as S[]]
     })
   )
 }

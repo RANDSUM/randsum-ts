@@ -16,5 +16,5 @@ export function rerollNotation(reroll: RerollOptions): string {
   }
 
   if (rerollList.length === 0) return ''
-  return `R{${rerollList.join(',')}}${maxNotation(reroll.maxReroll)}`
+  return `R{${rerollList.join(',')}}${maxNotation(reroll.max)}`
 }

@@ -9,7 +9,7 @@ export function argumentToOptions(argument: RollArgument): RollOptions {
     case isDicePoolOptions(argument):
       return argument
     case isD(argument):
-      return argument.toOptions()
+      return argument.toOptions
     case isDiceNotationArg(argument):
       return notationToOptions(argument)
     default:

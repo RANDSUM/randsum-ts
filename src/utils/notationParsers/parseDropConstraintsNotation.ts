@@ -32,10 +32,6 @@ export function parseDropConstraintsNotation(
 
         const exact = [...(innerAcc?.exact || []), Number(constraint)]
 
-        if (exact.length <= 0) {
-          return innerAcc
-        }
-
         return {
           ...innerAcc,
           exact
