@@ -43,14 +43,15 @@ describe('D', () => {
 
     describe('.rollSpread()', () => {
       describe('with no argument', () => {
-        test('.returns a number included in the constructor', () => {
-          expect(sides).toContain(die.roll())
+        test('.returns an array of values in the constructor', () => {
+          expect(sides).toContain(die.rollSpread()[0])
         })
       })
 
       describe('with a numerical argument', () => {
-        test('.returns a number that is a conceivable result of multiple die rolls', () => {
-          expect([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).toContain(die.roll(2))
+        test('.returns an array of values found in the constructor', () => {
+          expect(sides).toContain(die.rollSpread(2)[0])
+          expect(sides).toContain(die.rollSpread(2)[1])
         })
       })
     })
