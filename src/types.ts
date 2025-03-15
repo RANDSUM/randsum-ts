@@ -40,7 +40,7 @@ export interface DropOptions extends GreaterLessOptions {
 
 export interface RerollOptions extends GreaterLessOptions {
   exact?: number[]
-  maxReroll?: number
+  max?: number
 }
 
 export interface ReplaceOptions {

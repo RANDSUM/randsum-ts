@@ -36,7 +36,7 @@ export function parseRerollNotation(
         if (notation.includes('!')) {
           return {
             ...innerAcc,
-            maxReroll: Number(notation.split('!')[1])
+            max: Number(notation.split('!')[1])
           }
         }
 

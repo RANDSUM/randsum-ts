@@ -64,7 +64,7 @@ describe('normalizeArgument', () => {
         modifiers: {
           reroll: {
             exact: [2, 1, 4],
-            maxReroll: 3
+            max: 3
           },
           replace: { from: { greaterThan: 5 }, to: 1 },
           unique: true
@@ -430,7 +430,7 @@ describe('normalizeArgument', () => {
           ]
         })
       })
-      describe('with a maxReroll modifier', () => {
+      describe('with a max modifier', () => {
         const argument: Notation = `${coreTestString}R{5,20,<6,>2}3`
 
         test('returns a RollParameter matching the notation', () => {
@@ -445,7 +445,7 @@ describe('normalizeArgument', () => {
                   exact: [5, 20],
                   lessThan: 6,
                   greaterThan: 2,
-                  maxReroll: 3
+                  max: 3
                 }
               }
             },
@@ -642,7 +642,7 @@ describe('normalizeArgument', () => {
                   { from: { greaterThan: 2 }, to: 6 }
                 ],
                 cap: { greaterThan: 18, lessThan: 2 },
-                reroll: { exact: [5, 2], lessThan: 6, maxReroll: 3 },
+                reroll: { exact: [5, 2], lessThan: 6, max: 3 },
                 unique: { notUnique: [5] },
                 explode: true,
                 plus: 5,

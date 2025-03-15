@@ -422,7 +422,7 @@ describe('rollResultFromDicePools', () => {
               sides: 6,
               quantity: testRollSet.length,
               modifiers: {
-                reroll: { greaterThan: 3, exact: [2], maxReroll: 2 }
+                reroll: { greaterThan: 3, exact: [2], max: 2 }
               }
             },
             die: createMockNumericalDie(testRollSet)
@@ -459,7 +459,7 @@ describe('rollResultFromDicePools', () => {
               sides: 6,
               quantity: testRollSet.length,
               modifiers: {
-                reroll: { lessThan: 2, maxReroll: 2, exact: [3] }
+                reroll: { lessThan: 2, max: 2, exact: [3] }
               }
             },
             die: createMockNumericalDie(testRollSet)
