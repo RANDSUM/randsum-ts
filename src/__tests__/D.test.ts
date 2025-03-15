@@ -41,8 +41,18 @@ describe('D', () => {
       expect(die.faces).toEqual(sides)
     })
 
-    test('.roll() returns a string included in the constructor', () => {
-      expect(sides).toContain(die.roll())
+    describe('.rollSpread()', () => {
+      describe('with no argument', () => {
+        test('.returns a number included in the constructor', () => {
+          expect(sides).toContain(die.roll())
+        })
+      })
+
+      describe('with a numerical argument', () => {
+        test('.returns a number that is a conceivable result of multiple die rolls', () => {
+          expect([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).toContain(die.roll(2))
+        })
+      })
     })
   })
 })
