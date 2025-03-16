@@ -4,7 +4,7 @@ import { D } from '~src/D'
 import type { Notation } from '~types'
 import { normalizeArgument } from '~utils/normalizeArgument'
 
-describe('normalizeArgument', () => {
+describe(normalizeArgument, () => {
   describe('given a number', () => {
     const argument = 2
 
@@ -405,7 +405,7 @@ describe('normalizeArgument', () => {
     })
 
     describe('given a notation that contains a reroll modifier', () => {
-      const argument: Notation = `${coreTestString}R{5,20,<6,>2}`
+      const argument: Notation = `${coreTestString}R{5,<6,>2}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -416,17 +416,17 @@ describe('normalizeArgument', () => {
             ...coreDicePools,
             modifiers: {
               reroll: {
-                exact: [5, 20],
+                exact: [5],
                 lessThan: 6,
                 greaterThan: 2
               }
             }
           },
           die: new D(coreDicePools.sides),
-          notation: '4d6R{5,20,>2,<6}',
+          notation: '4d6R{5,>2,<6}',
           description: [
             'Roll 4 6-sided dice',
-            'Reroll [5] and [20], greater than [2] and less than [6]'
+            'Reroll [5], greater than [2] and less than [6]'
           ]
         })
       })

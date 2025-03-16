@@ -8,7 +8,7 @@ const extractDicePoolValues = (params: DicePools): RollParameters[] => {
   return pools.map(([, value]) => value)
 }
 
-describe('formDicePools', () => {
+describe(formDicePools, () => {
   describe('given a single argument', () => {
     const argument = 20
 

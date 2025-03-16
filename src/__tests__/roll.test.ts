@@ -5,7 +5,7 @@ import { roll } from '~src/roll'
 
 const loops = 9999
 
-describe('roll', () => {
+describe(roll, () => {
   describe('Stress Test', () => {
     describe('numerical dice', () => {
       const dummyArray = Array.from(
