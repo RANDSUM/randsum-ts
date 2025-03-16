@@ -1,59 +1,51 @@
-import { describe, expect, test } from 'bun:test'
+import {
+  afterAll,
+  beforeAll,
+  describe,
+  expect,
+  mock,
+  spyOn,
+  test
+} from 'bun:test'
 
 import { D } from '~src/D'
-import type { DicePools, Notation } from '~types'
+import type { DicePools } from '~types'
+import * as CoreRandom from '~utils/coreRandom'
+import * as CoreSpreadRolls from '~utils/coreSpreadRolls'
 import { InvalidUniqueError } from '~utils/invalidUniqueError'
 import { rollResultFromDicePools } from '~utils/rollResultFromDicePools'
-
-function createMockNumericalDie(
-  results: number[],
-  rollResult: number = 200
-): D<number> {
-  return {
-    roll: () => rollResult,
-    rollSpread: () => results
-  } as unknown as D<number>
-}
-
-function createMockCustomDie(
-  results: string[],
-  rollResult: string = results[0]
-): D<string[]> {
-  return {
-    roll: () => rollResult,
-    rollSpread: () => results
-  } as unknown as D<string[]>
-}
+import { createRollParameters } from './support/fixtures/createRollParameters'
 
 describe('rollResultFromDicePools', () => {
+  beforeAll(() => {
+    spyOn(CoreRandom, 'coreRandom').mockReturnValue(200)
+  })
+
+  afterAll(() => {
+    mock.restore()
+  })
+
   const testRollSet = [1, 2, 3, 4]
   const testCustomRollSet = ['+', '-', ' ']
   const coreRawRolls = {
     'test-roll-id': testRollSet
   }
 
-  const mockStandardDie = createMockNumericalDie([200])
-
   describe('when given roll total with no modifiers', () => {
     const coreParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          argument: '6d4',
-          options: { sides: 6, quantity: testRollSet.length },
-          die: createMockNumericalDie(testRollSet),
-          notation: '6d4',
-          description: ['roll 6d4']
-        }
+        'test-roll-id': createRollParameters()
       }
     }
 
     test('it returns the sum total of the quantity and the roll total', () => {
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(testRollSet)
       expect(rollResultFromDicePools(coreParameters)).toMatchObject({
         ...coreParameters,
         rawRolls: coreRawRolls,
         total: 10,
-        rawResult: [1, 2, 3, 4],
-        result: [1, 2, 3, 4],
+        rawResult: testRollSet,
+        result: testRollSet,
         type: 'numerical'
       })
     })
@@ -64,17 +56,13 @@ describe('rollResultFromDicePools', () => {
 
     const uniqueParameters = {
       dicePools: {
-        'test-roll-id': {
-          die: createMockNumericalDie(uniqueRolls, 200),
-          argument: 1,
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
+        'test-roll-id': createRollParameters({
           options: {
             sides: 4,
             quantity: uniqueRolls.length,
             modifiers: { unique: true }
           }
-        }
+        })
       }
     }
 
@@ -83,6 +71,7 @@ describe('rollResultFromDicePools', () => {
         'test-roll-id': uniqueRolls
       }
 
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(uniqueRolls)
       expect(rollResultFromDicePools(uniqueParameters)).toMatchObject({
         ...uniqueParameters,
         rawRolls,
@@ -102,18 +91,13 @@ describe('rollResultFromDicePools', () => {
     describe('when given a "notUnique" array', () => {
       const notUniqueParameters = {
         dicePools: {
-          'test-roll-id': {
-            die: createMockNumericalDie(uniqueRolls, 200),
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
-            type: 'numerical',
+          'test-roll-id': createRollParameters({
             options: {
               sides: 4,
               quantity: uniqueRolls.length,
               modifiers: { unique: { notUnique: [1] } }
             }
-          }
+          })
         }
       }
 
@@ -122,6 +106,9 @@ describe('rollResultFromDicePools', () => {
           'test-roll-id': uniqueRolls
         }
 
+        spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+          uniqueRolls
+        )
         expect(rollResultFromDicePools(notUniqueParameters)).toMatchObject({
           ...notUniqueParameters,
           rawRolls,
@@ -144,22 +131,20 @@ describe('rollResultFromDicePools', () => {
 
       const overflowParameters = {
         dicePools: {
-          'test-roll-id': {
-            die: createMockNumericalDie(overflowRollTotals),
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
-            argument: 20,
-            type: 'numerical',
+          'test-roll-id': createRollParameters({
             options: {
               sides: 6,
               quantity: overflowRollTotals.length,
               modifiers: { unique: true }
             }
-          }
+          })
         }
       }
 
       test('it throws an error', () => {
+        spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+          overflowRollTotals
+        )
         expect(() => rollResultFromDicePools(overflowParameters)).toThrow(
           new InvalidUniqueError()
         )
@@ -173,16 +158,12 @@ describe('rollResultFromDicePools', () => {
 
     const customSidesParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          die: createMockCustomDie(customSidesRoll),
-          notation: '1d1' as Notation<'string'>,
-          description: ['foo'],
-          argument: 20,
+        'test-roll-id': createRollParameters({
           options: {
             sides: faces,
             quantity: 4
           }
-        }
+        })
       }
     }
 
@@ -190,6 +171,9 @@ describe('rollResultFromDicePools', () => {
       const rawRolls = {
         'test-roll-id': customSidesRoll
       }
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+        customSidesRoll
+      )
 
       expect(rollResultFromDicePools(customSidesParameters)).toMatchObject({
         ...customSidesParameters,
@@ -213,11 +197,7 @@ describe('rollResultFromDicePools', () => {
 
     const dropParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          argument: 20,
-          die: createMockNumericalDie(longerRollTotals),
+        'test-roll-id': createRollParameters({
           options: {
             sides: 10,
             quantity: longerRollTotals.length,
@@ -231,7 +211,7 @@ describe('rollResultFromDicePools', () => {
               }
             }
           }
-        }
+        })
       }
     }
 
@@ -239,6 +219,10 @@ describe('rollResultFromDicePools', () => {
       const rawRolls = {
         'test-roll-id': longerRollTotals
       }
+
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+        longerRollTotals
+      )
 
       expect(rollResultFromDicePools(dropParameters)).toMatchObject({
         ...dropParameters,
@@ -261,21 +245,20 @@ describe('rollResultFromDicePools', () => {
     describe('that is a single replace modifier', () => {
       const dropParameters: DicePools = {
         dicePools: {
-          'test-roll-id': {
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
-            die: createMockNumericalDie(testRollSet),
+          'test-roll-id': createRollParameters({
             options: {
               sides: 10,
               quantity: testRollSet.length,
               modifiers: { replace: { from: 1, to: 2 } }
             }
-          }
+          })
         }
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
+        spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+          testRollSet
+        )
         expect(rollResultFromDicePools(dropParameters)).toMatchObject({
           ...dropParameters,
           rawRolls: coreRawRolls,
@@ -296,11 +279,7 @@ describe('rollResultFromDicePools', () => {
     describe('that is an array of replace modifiers', () => {
       const dropParameters: DicePools = {
         dicePools: {
-          'test-roll-id': {
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
-            die: createMockNumericalDie(testRollSet),
+          'test-roll-id': createRollParameters({
             options: {
               sides: 10,
               quantity: testRollSet.length,
@@ -311,11 +290,14 @@ describe('rollResultFromDicePools', () => {
                 ]
               }
             }
-          }
+          })
         }
       }
 
       test('it returns the total with all values replaced according to the provided rules', () => {
+        spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+          testRollSet
+        )
         expect(rollResultFromDicePools(dropParameters)).toMatchObject({
           ...dropParameters,
           rawRolls: coreRawRolls,
@@ -339,17 +321,13 @@ describe('rollResultFromDicePools', () => {
 
     const explodeParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          argument: 20,
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          die: createMockNumericalDie(explodeRollTotals),
+        'test-roll-id': createRollParameters({
           options: {
             sides: 6,
             quantity: explodeRollTotals.length,
             modifiers: { explode: true }
           }
-        }
+        })
       }
     }
 
@@ -357,6 +335,9 @@ describe('rollResultFromDicePools', () => {
       const rawRolls = {
         'test-roll-id': explodeRollTotals
       }
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+        explodeRollTotals
+      )
 
       expect(rollResultFromDicePools(explodeParameters)).toMatchObject({
         ...explodeParameters,
@@ -379,21 +360,22 @@ describe('rollResultFromDicePools', () => {
     describe('when given an impossible roll', () => {
       const reDicePools: DicePools = {
         dicePools: {
-          'test-roll-id': {
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
+          'test-roll-id': createRollParameters({
             options: {
               sides: 6,
               quantity: testRollSet.length,
               modifiers: { reroll: { greaterThan: 3 } }
             },
-            die: createMockNumericalDie(testRollSet)
-          }
+            die: new D(4)
+          })
         }
       }
 
       test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
+        spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+          testRollSet
+        )
+        // spyOn(CoreRandom, 'coreRandom').mockReturnValueOnce(200)
         expect(rollResultFromDicePools(reDicePools)).toMatchObject({
           ...reDicePools,
           rawRolls: coreRawRolls,
@@ -404,7 +386,7 @@ describe('rollResultFromDicePools', () => {
             }
           },
           total: 206,
-          rawResult: [1, 2, 3, 4],
+          rawResult: testRollSet,
           result: [1, 2, 3, 200],
           type: 'numerical'
         })
@@ -414,23 +396,22 @@ describe('rollResultFromDicePools', () => {
     describe('that is a single reroll modifier in an array', () => {
       const reDicePools: DicePools = {
         dicePools: {
-          'test-roll-id': {
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
+          'test-roll-id': createRollParameters({
             options: {
               sides: 6,
               quantity: testRollSet.length,
               modifiers: {
                 reroll: { greaterThan: 3, exact: [2], max: 2 }
               }
-            },
-            die: createMockNumericalDie(testRollSet)
-          }
+            }
+          })
         }
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
+        spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+          testRollSet
+        )
         expect(rollResultFromDicePools(reDicePools)).toMatchObject({
           ...reDicePools,
           rawRolls: coreRawRolls,
@@ -441,7 +422,7 @@ describe('rollResultFromDicePools', () => {
             }
           },
           total: 404,
-          rawResult: [1, 2, 3, 4],
+          rawResult: testRollSet,
           result: [1, 200, 3, 200],
           type: 'numerical'
         })
@@ -451,23 +432,22 @@ describe('rollResultFromDicePools', () => {
     describe('that is an array of reroll modifiers', () => {
       const reDicePools: DicePools = {
         dicePools: {
-          'test-roll-id': {
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
+          'test-roll-id': createRollParameters({
             options: {
               sides: 6,
               quantity: testRollSet.length,
               modifiers: {
                 reroll: { lessThan: 2, max: 2, exact: [3] }
               }
-            },
-            die: createMockNumericalDie(testRollSet)
-          }
+            }
+          })
         }
       }
 
       test('it returns the total with all values matching the queries rerolled', () => {
+        spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+          testRollSet
+        )
         expect(rollResultFromDicePools(reDicePools)).toMatchObject({
           ...reDicePools,
           rawRolls: coreRawRolls,
@@ -478,7 +458,7 @@ describe('rollResultFromDicePools', () => {
             }
           },
           total: 406,
-          rawResult: [1, 2, 3, 4],
+          rawResult: testRollSet,
           result: [200, 2, 200, 4],
           type: 'numerical'
         })
@@ -489,21 +469,18 @@ describe('rollResultFromDicePools', () => {
   describe('when given roll total with a "cap" modifier', () => {
     const dropParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          argument: 20,
+        'test-roll-id': createRollParameters({
           options: {
             sides: 6,
             quantity: testRollSet.length,
             modifiers: { cap: { greaterThan: 3, lessThan: 2 } }
-          },
-          die: createMockNumericalDie(testRollSet)
-        }
+          }
+        })
       }
     }
 
     test('it returns the total with all values greaterThan greaterThan and lessThan lessThan replaced with their respective comparitor and the roll total', () => {
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(testRollSet)
       expect(rollResultFromDicePools(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
@@ -514,7 +491,7 @@ describe('rollResultFromDicePools', () => {
           }
         },
         total: 10,
-        rawResult: [1, 2, 3, 4],
+        rawResult: testRollSet,
         result: [2, 2, 3, 3],
         type: 'numerical'
       })
@@ -524,33 +501,30 @@ describe('rollResultFromDicePools', () => {
   describe('when given roll total with a "plus" modifier', () => {
     const dropParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          argument: 20,
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
+        'test-roll-id': createRollParameters({
           options: {
             sides: 6,
             quantity: testRollSet.length,
             modifiers: { plus: 2 }
-          },
-          die: createMockNumericalDie(testRollSet)
-        }
+          }
+        })
       }
     }
 
     test('it returns the total plus the "plus" modifier, and the roll total', () => {
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(testRollSet)
       expect(rollResultFromDicePools(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
           'test-roll-id': {
-            rolls: [1, 2, 3, 4],
+            rolls: testRollSet,
             total: 12
           }
         },
         total: 12,
-        rawResult: [1, 2, 3, 4],
-        result: [1, 2, 3, 4],
+        rawResult: testRollSet,
+        result: testRollSet,
         type: 'numerical'
       })
     })
@@ -559,33 +533,30 @@ describe('rollResultFromDicePools', () => {
   describe('when given roll total with a "minus" modifier', () => {
     const dropParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          argument: 20,
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
+        'test-roll-id': createRollParameters({
           options: {
             sides: 6,
             quantity: testRollSet.length,
             modifiers: { minus: 2 }
-          },
-          die: createMockNumericalDie(testRollSet)
-        }
+          }
+        })
       }
     }
 
     test('it returns the total minus the "minus" modifier, and the roll total', () => {
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(testRollSet)
       expect(rollResultFromDicePools(dropParameters)).toMatchObject({
         ...dropParameters,
         rawRolls: coreRawRolls,
         modifiedRolls: {
           'test-roll-id': {
-            rolls: [1, 2, 3, 4],
+            rolls: testRollSet,
             total: 8
           }
         },
         total: 8,
-        rawResult: [1, 2, 3, 4],
-        result: [1, 2, 3, 4],
+        rawResult: testRollSet,
+        result: testRollSet,
         type: 'numerical'
       })
     })
@@ -594,20 +565,8 @@ describe('rollResultFromDicePools', () => {
   describe('when given multiple dice pools', () => {
     const parameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          argument: 20,
-          options: { sides: 6, quantity: testRollSet.length },
-          die: createMockNumericalDie(testRollSet)
-        },
-        'test-roll-id-2': {
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          argument: 20,
-          options: { sides: 6, quantity: testRollSet.length },
-          die: createMockNumericalDie(testRollSet)
-        }
+        'test-roll-id': createRollParameters(),
+        'test-roll-id-2': createRollParameters()
       }
     }
 
@@ -616,17 +575,19 @@ describe('rollResultFromDicePools', () => {
         'test-roll-id': testRollSet,
         'test-roll-id-2': testRollSet
       }
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(testRollSet)
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(testRollSet)
 
       expect(rollResultFromDicePools(parameters)).toMatchObject({
         ...parameters,
         rawRolls,
         modifiedRolls: {
           'test-roll-id': {
-            rolls: [1, 2, 3, 4],
+            rolls: testRollSet,
             total: 10
           },
           'test-roll-id-2': {
-            rolls: [1, 2, 3, 4],
+            rolls: testRollSet,
             total: 10
           }
         },
@@ -641,23 +602,15 @@ describe('rollResultFromDicePools', () => {
   describe('Given multiple dice pools of different dice types', () => {
     const parameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          argument: 20,
-          options: { sides: 6, quantity: testRollSet.length },
-          die: createMockNumericalDie(testRollSet)
-        },
-        'test-roll-id-2': {
-          notation: '1d{+- }' as Notation<string>,
-          description: ['foo'],
-          argument: '1d{++--  }',
+        'test-roll-id': createRollParameters({
+          options: { sides: 6, quantity: testRollSet.length }
+        }),
+        'test-roll-id-2': createRollParameters({
           options: {
             sides: ['+', '+', '-', '-', ' ', ' '],
             quantity: testCustomRollSet.length
-          },
-          die: createMockCustomDie(testCustomRollSet)
-        }
+          }
+        })
       }
     }
     test('it returns the combined total', () => {
@@ -665,13 +618,17 @@ describe('rollResultFromDicePools', () => {
         'test-roll-id': testRollSet,
         'test-roll-id-2': testCustomRollSet
       }
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(testRollSet)
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
+        testCustomRollSet
+      )
 
       expect(rollResultFromDicePools(parameters)).toMatchObject({
         ...parameters,
         rawRolls,
         modifiedRolls: {
           'test-roll-id': {
-            rolls: [1, 2, 3, 4],
+            rolls: testRollSet,
             total: 10
           },
           'test-roll-id-2': {
@@ -690,19 +647,18 @@ describe('rollResultFromDicePools', () => {
   describe('when given an roll total with an unrecognized modifier', () => {
     const dropParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          argument: 20,
+        'test-roll-id': createRollParameters({
           options: {
             sides: 6,
             quantity: testRollSet.length,
             modifiers: { foo: 2 }
-          },
-          die: mockStandardDie
-        }
+          }
+        } as unknown as DicePools['dicePools']['test-roll-id'])
       }
     } as unknown as DicePools
 
     test('Throws an error', () => {
+      spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(testRollSet)
       expect(() => rollResultFromDicePools(dropParameters)).toThrow(
         'Unknown modifier: foo'
       )

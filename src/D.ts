@@ -3,6 +3,8 @@ import { isCustomSidesStringArg } from '~src/guards/isCustomSidesStringArg'
 import { isD } from '~src/guards/isD'
 import type { RollArgument, RollOptions, RollParameters } from '~types'
 import { argumentToOptions } from '~utils/argumentToOptions'
+import { coreSpreadRolls } from '~utils/coreSpreadRolls'
+import { generateNumericalFaces } from '~utils/generateNumericalFaces'
 
 type Type<T> = T extends string[] ? 'custom' : 'numerical'
 type Faces<T> = T extends string[] ? T : number[]
@@ -31,10 +33,7 @@ export class D<Sides extends string[] | number> {
     }
     this.sides = sides
     this.type = 'numerical' as Type<Sides>
-    this.faces = Array.from(
-      { length: Number(sides) },
-      (_, index) => index + 1
-    ) as Faces<Sides>
+    this.faces = generateNumericalFaces(sides) as Faces<Sides>
   }
 
   roll(quantity = 1): Result<Faces<Sides>> {
@@ -47,7 +46,11 @@ export class D<Sides extends string[] | number> {
   }
 
   rollSpread(quantity = 1): Result<Faces<Sides>>[] {
-    return Array.from({ length: quantity }, () => this._rawRollResult())
+    return coreSpreadRolls<string | number>(
+      quantity,
+      this.sides,
+      this.faces
+    ) as Result<Faces<Sides>>[]
   }
 
   get toOptions(): RollOptions<Result<Faces<Sides>>> {
@@ -57,13 +60,6 @@ export class D<Sides extends string[] | number> {
     }
   }
 
-  protected _rawRollResult(): Result<Faces<Sides>> {
-    return this.faces[this._rawRoll()] as Result<Faces<Sides>>
-  }
-
-  protected _rawRoll(): number {
-    return Math.floor(Math.random() * Number(this.sides))
-  }
   private sidesForOptions(): RollOptions<Result<Faces<Sides>>>['sides'] {
     if (this.isCustom)
       return this.faces as RollOptions<Result<Faces<Sides>>>['sides']
