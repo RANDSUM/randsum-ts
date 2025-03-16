@@ -16,7 +16,7 @@ import { InvalidUniqueError } from '~utils/invalidUniqueError'
 import { rollResultFromDicePools } from '~utils/rollResultFromDicePools'
 import { createRollParameters } from './support/fixtures/createRollParameters'
 
-describe('rollResultFromDicePools', () => {
+describe(rollResultFromDicePools, () => {
   beforeAll(() => {
     spyOn(CoreRandom, 'coreRandom').mockReturnValue(200)
   })
