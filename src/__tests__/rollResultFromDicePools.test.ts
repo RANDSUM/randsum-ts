@@ -9,31 +9,12 @@ import {
 } from 'bun:test'
 
 import { D } from '~src/D'
-import type { DicePools, Notation } from '~types'
+import type { DicePools } from '~types'
 import * as CoreRandom from '~utils/coreRandom'
 import * as CoreSpreadRolls from '~utils/coreSpreadRolls'
 import { InvalidUniqueError } from '~utils/invalidUniqueError'
 import { rollResultFromDicePools } from '~utils/rollResultFromDicePools'
-
-function createMockNumericalDie(
-  results: number[],
-  rollResult: number = 200
-): D<number> {
-  return {
-    roll: () => rollResult,
-    rollSpread: () => results
-  } as unknown as D<number>
-}
-
-function createMockCustomDie(
-  results: string[],
-  rollResult: string = results[0]
-): D<string[]> {
-  return {
-    roll: () => rollResult,
-    rollSpread: () => results
-  } as unknown as D<string[]>
-}
+import { createRollParameters } from './support/fixtures/createRollParameters'
 
 describe('rollResultFromDicePools', () => {
   beforeAll(() => {
@@ -50,18 +31,10 @@ describe('rollResultFromDicePools', () => {
     'test-roll-id': testRollSet
   }
 
-  const mockStandardDie = createMockNumericalDie([200])
-
   describe('when given roll total with no modifiers', () => {
     const coreParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          argument: '6d4',
-          options: { sides: 6, quantity: testRollSet.length },
-          die: new D(4),
-          notation: '6d4',
-          description: ['roll 6d4']
-        }
+        'test-roll-id': createRollParameters()
       }
     }
 
@@ -83,17 +56,13 @@ describe('rollResultFromDicePools', () => {
 
     const uniqueParameters = {
       dicePools: {
-        'test-roll-id': {
-          die: createMockNumericalDie(uniqueRolls, 200),
-          argument: 1,
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
+        'test-roll-id': createRollParameters({
           options: {
             sides: 4,
             quantity: uniqueRolls.length,
             modifiers: { unique: true }
           }
-        }
+        })
       }
     }
 
@@ -122,18 +91,13 @@ describe('rollResultFromDicePools', () => {
     describe('when given a "notUnique" array', () => {
       const notUniqueParameters = {
         dicePools: {
-          'test-roll-id': {
-            die: createMockNumericalDie(uniqueRolls, 200),
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
-            type: 'numerical',
+          'test-roll-id': createRollParameters({
             options: {
               sides: 4,
               quantity: uniqueRolls.length,
               modifiers: { unique: { notUnique: [1] } }
             }
-          }
+          })
         }
       }
 
@@ -167,18 +131,13 @@ describe('rollResultFromDicePools', () => {
 
       const overflowParameters = {
         dicePools: {
-          'test-roll-id': {
-            die: createMockNumericalDie(overflowRollTotals),
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
-            argument: 20,
-            type: 'numerical',
+          'test-roll-id': createRollParameters({
             options: {
               sides: 6,
               quantity: overflowRollTotals.length,
               modifiers: { unique: true }
             }
-          }
+          })
         }
       }
 
@@ -199,16 +158,12 @@ describe('rollResultFromDicePools', () => {
 
     const customSidesParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          die: createMockCustomDie(customSidesRoll),
-          notation: '1d1' as Notation<'string'>,
-          description: ['foo'],
-          argument: 20,
+        'test-roll-id': createRollParameters({
           options: {
             sides: faces,
             quantity: 4
           }
-        }
+        })
       }
     }
 
@@ -242,11 +197,7 @@ describe('rollResultFromDicePools', () => {
 
     const dropParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          argument: 20,
-          die: createMockNumericalDie(longerRollTotals),
+        'test-roll-id': createRollParameters({
           options: {
             sides: 10,
             quantity: longerRollTotals.length,
@@ -260,7 +211,7 @@ describe('rollResultFromDicePools', () => {
               }
             }
           }
-        }
+        })
       }
     }
 
@@ -294,17 +245,13 @@ describe('rollResultFromDicePools', () => {
     describe('that is a single replace modifier', () => {
       const dropParameters: DicePools = {
         dicePools: {
-          'test-roll-id': {
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
-            die: new D(4),
+          'test-roll-id': createRollParameters({
             options: {
               sides: 10,
               quantity: testRollSet.length,
               modifiers: { replace: { from: 1, to: 2 } }
             }
-          }
+          })
         }
       }
 
@@ -332,11 +279,7 @@ describe('rollResultFromDicePools', () => {
     describe('that is an array of replace modifiers', () => {
       const dropParameters: DicePools = {
         dicePools: {
-          'test-roll-id': {
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
-            die: new D(4),
+          'test-roll-id': createRollParameters({
             options: {
               sides: 10,
               quantity: testRollSet.length,
@@ -347,7 +290,7 @@ describe('rollResultFromDicePools', () => {
                 ]
               }
             }
-          }
+          })
         }
       }
 
@@ -378,17 +321,13 @@ describe('rollResultFromDicePools', () => {
 
     const explodeParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          argument: 20,
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          die: createMockNumericalDie(explodeRollTotals),
+        'test-roll-id': createRollParameters({
           options: {
             sides: 6,
             quantity: explodeRollTotals.length,
             modifiers: { explode: true }
           }
-        }
+        })
       }
     }
 
@@ -421,17 +360,14 @@ describe('rollResultFromDicePools', () => {
     describe('when given an impossible roll', () => {
       const reDicePools: DicePools = {
         dicePools: {
-          'test-roll-id': {
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
+          'test-roll-id': createRollParameters({
             options: {
               sides: 6,
               quantity: testRollSet.length,
               modifiers: { reroll: { greaterThan: 3 } }
             },
             die: new D(4)
-          }
+          })
         }
       }
 
@@ -460,19 +396,15 @@ describe('rollResultFromDicePools', () => {
     describe('that is a single reroll modifier in an array', () => {
       const reDicePools: DicePools = {
         dicePools: {
-          'test-roll-id': {
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
+          'test-roll-id': createRollParameters({
             options: {
               sides: 6,
               quantity: testRollSet.length,
               modifiers: {
                 reroll: { greaterThan: 3, exact: [2], max: 2 }
               }
-            },
-            die: new D(4)
-          }
+            }
+          })
         }
       }
 
@@ -500,19 +432,15 @@ describe('rollResultFromDicePools', () => {
     describe('that is an array of reroll modifiers', () => {
       const reDicePools: DicePools = {
         dicePools: {
-          'test-roll-id': {
-            argument: 20,
-            notation: '1d1' as Notation<number>,
-            description: ['foo'],
+          'test-roll-id': createRollParameters({
             options: {
               sides: 6,
               quantity: testRollSet.length,
               modifiers: {
                 reroll: { lessThan: 2, max: 2, exact: [3] }
               }
-            },
-            die: new D(4)
-          }
+            }
+          })
         }
       }
 
@@ -541,17 +469,13 @@ describe('rollResultFromDicePools', () => {
   describe('when given roll total with a "cap" modifier', () => {
     const dropParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          argument: 20,
+        'test-roll-id': createRollParameters({
           options: {
             sides: 6,
             quantity: testRollSet.length,
             modifiers: { cap: { greaterThan: 3, lessThan: 2 } }
-          },
-          die: new D(4)
-        }
+          }
+        })
       }
     }
 
@@ -577,17 +501,13 @@ describe('rollResultFromDicePools', () => {
   describe('when given roll total with a "plus" modifier', () => {
     const dropParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          argument: 20,
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
+        'test-roll-id': createRollParameters({
           options: {
             sides: 6,
             quantity: testRollSet.length,
             modifiers: { plus: 2 }
-          },
-          die: new D(4)
-        }
+          }
+        })
       }
     }
 
@@ -613,17 +533,13 @@ describe('rollResultFromDicePools', () => {
   describe('when given roll total with a "minus" modifier', () => {
     const dropParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          argument: 20,
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
+        'test-roll-id': createRollParameters({
           options: {
             sides: 6,
             quantity: testRollSet.length,
             modifiers: { minus: 2 }
-          },
-          die: new D(4)
-        }
+          }
+        })
       }
     }
 
@@ -649,20 +565,8 @@ describe('rollResultFromDicePools', () => {
   describe('when given multiple dice pools', () => {
     const parameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          argument: 20,
-          options: { sides: 6, quantity: testRollSet.length },
-          die: new D(4)
-        },
-        'test-roll-id-2': {
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          argument: 20,
-          options: { sides: 6, quantity: testRollSet.length },
-          die: new D(4)
-        }
+        'test-roll-id': createRollParameters(),
+        'test-roll-id-2': createRollParameters()
       }
     }
 
@@ -698,23 +602,15 @@ describe('rollResultFromDicePools', () => {
   describe('Given multiple dice pools of different dice types', () => {
     const parameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          notation: '1d1' as Notation<number>,
-          description: ['foo'],
-          argument: 20,
-          options: { sides: 6, quantity: testRollSet.length },
-          die: new D(4)
-        },
-        'test-roll-id-2': {
-          notation: '1d{+- }' as Notation<string>,
-          description: ['foo'],
-          argument: '1d{++--  }',
+        'test-roll-id': createRollParameters({
+          options: { sides: 6, quantity: testRollSet.length }
+        }),
+        'test-roll-id-2': createRollParameters({
           options: {
             sides: ['+', '+', '-', '-', ' ', ' '],
             quantity: testCustomRollSet.length
-          },
-          die: createMockCustomDie(testCustomRollSet)
-        }
+          }
+        })
       }
     }
     test('it returns the combined total', () => {
@@ -751,15 +647,13 @@ describe('rollResultFromDicePools', () => {
   describe('when given an roll total with an unrecognized modifier', () => {
     const dropParameters: DicePools = {
       dicePools: {
-        'test-roll-id': {
-          argument: 20,
+        'test-roll-id': createRollParameters({
           options: {
             sides: 6,
             quantity: testRollSet.length,
             modifiers: { foo: 2 }
-          },
-          die: mockStandardDie
-        }
+          }
+        } as unknown as DicePools['dicePools']['test-roll-id'])
       }
     } as unknown as DicePools
 
