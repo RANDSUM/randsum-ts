@@ -7,7 +7,7 @@ describe('formatModifierDescription', () => {
       sides: 20,
       quantity: 20,
       modifiers: {
-        reroll: { greaterThan: 5, lessThan: 15, maxReroll: 2, exact: [1] }
+        reroll: { greaterThan: 5, lessThan: 15, max: 2, exact: [1] }
       }
     })
 

@@ -3,11 +3,11 @@ import { extractExactValue } from './extractExactValue'
 
 export function rerollRoll(
   roll: number,
-  { greaterThan, lessThan, exact, maxReroll }: RerollOptions,
+  { greaterThan, lessThan, exact, max }: RerollOptions,
   rollOne: () => number,
   index = 0
 ): number {
-  if (maxReroll === index) {
+  if (max === index) {
     return roll
   }
   if (index === 99) {
@@ -21,7 +21,7 @@ export function rerollRoll(
   ) {
     return rerollRoll(
       rollOne(),
-      { greaterThan, lessThan, exact, maxReroll },
+      { greaterThan, lessThan, exact, max },
       rollOne,
       index + 1
     )
