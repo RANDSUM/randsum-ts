@@ -1,5 +1,6 @@
 import { isCustomParameters } from '~src/guards/isCustomParameters'
 import type { RollBonuses, RollParameters } from '~types'
+import { coreRandom } from '~utils/coreRandom'
 import { applyDrop } from './applyDrop'
 import { applyExplode } from './applyExplode'
 import { applyReplace } from './applyReplace'
@@ -24,11 +25,10 @@ export function applyModifiers<S extends string | number>(
   }
 
   const {
-    options: { sides, quantity, modifiers = {} },
-    die
+    options: { sides, quantity, modifiers = {} }
   } = poolParameters as RollParameters<number>
 
-  const rollOne: () => number = () => die.roll()
+  const rollOne: () => number = () => coreRandom(sides)
 
   return Object.keys(modifiers).reduce((bonuses, key) => {
     switch (key) {

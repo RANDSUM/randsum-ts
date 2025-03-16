@@ -21,6 +21,17 @@ describe('roll', () => {
       })
     })
 
+    describe('numerical dice simple', () => {
+      const dummyArray = Array.from({ length: loops }, () => roll(20).total)
+
+      test('it never goes outside of the bounds of the roll', () => {
+        dummyArray.forEach((individualRoll) => {
+          expect(individualRoll).toBeLessThanOrEqual(20)
+          expect(individualRoll).toBeGreaterThan(0)
+        })
+      })
+    })
+
     describe('custom dice', () => {
       const dummyArray = Array.from(
         { length: loops },
