@@ -11,15 +11,15 @@ export type DicePoolType = 'numerical' | 'custom' | 'mixed'
 
 export type Type<T> = T extends string[] ? 'custom' : 'numerical'
 export type Faces<T> = T extends string[] ? T : number[]
-export type Result<F> = F extends number[] ? number : string
+export type Result<S> = S extends string[] ? string : number
 
 export interface Die<Sides extends number | string[]> {
   sides: number
   faces: Faces<Sides>
   type: Type<Sides>
-  roll: (quantity?: number) => Result<Faces<Sides>>
-  rollSpread: (quantity?: number) => Result<Faces<Sides>>[]
-  toOptions: RollOptions<Result<Faces<Sides>>>
+  roll: (quantity?: number) => Result<Sides>
+  rollSpread: (quantity?: number) => Result<Sides>[]
+  toOptions: RollOptions<Result<Sides>>
   isCustom: boolean
 }
 

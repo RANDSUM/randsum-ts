@@ -21,34 +21,33 @@ export class D<Sides extends string[] | number> implements Die<Sides> {
     this.faces = generateNumericalFaces(sides) as Faces<Sides>
   }
 
-  roll(quantity = 1): Result<Faces<Sides>> {
+  roll(quantity = 1): Result<Sides> {
     const rolls = this.rollSpread(quantity)
-    if (this.isCustom) return rolls.join(', ') as Result<Faces<Sides>>
+    if (this.isCustom) return rolls.join(', ') as Result<Sides>
     return rolls.reduce<number>(
       (acc, roll) => acc + (roll as number),
       0
-    ) as Result<Faces<Sides>>
+    ) as Result<Sides>
   }
 
-  rollSpread(quantity = 1): Result<Faces<Sides>>[] {
+  rollSpread(quantity = 1): Result<Sides>[] {
     return coreSpreadRolls<string | number>(
       quantity,
       this.sides,
       this.faces
-    ) as Result<Faces<Sides>>[]
+    ) as Result<Sides>[]
   }
 
-  get toOptions(): RollOptions<Result<Faces<Sides>>> {
+  get toOptions(): RollOptions<Result<Sides>> {
     return {
       quantity: 1,
       sides: this.sidesForOptions()
     }
   }
 
-  private sidesForOptions(): RollOptions<Result<Faces<Sides>>>['sides'] {
-    if (this.isCustom)
-      return this.faces as RollOptions<Result<Faces<Sides>>>['sides']
-    return this.sides as RollOptions<Result<Faces<Sides>>>['sides']
+  private sidesForOptions(): RollOptions<Result<Sides>>['sides'] {
+    if (this.isCustom) return this.faces as RollOptions<Result<Sides>>['sides']
+    return this.sides as RollOptions<Result<Sides>>['sides']
   }
 
   get isCustom(): boolean {
