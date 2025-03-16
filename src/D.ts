@@ -1,28 +1,13 @@
 import { isCustomSidesD } from '~src/guards/isCustomSidesD'
 import { isCustomSidesStringArg } from '~src/guards/isCustomSidesStringArg'
-import { isD } from '~src/guards/isD'
-import type { RollArgument, RollOptions, RollParameters } from '~types'
-import { argumentToOptions } from '~utils/argumentToOptions'
+import type { Die, Faces, Result, RollOptions, Type } from '~types'
 import { coreSpreadRolls } from '~utils/coreSpreadRolls'
 import { generateNumericalFaces } from '~utils/generateNumericalFaces'
 
-type Type<T> = T extends string[] ? 'custom' : 'numerical'
-type Faces<T> = T extends string[] ? T : number[]
-type Result<F> = F extends number[] ? number : string
-
-export class D<Sides extends string[] | number> {
+export class D<Sides extends string[] | number> implements Die<Sides> {
   sides: number
   faces: Faces<Sides>
   type: Type<Sides>
-
-  static forArgument<A extends string | number>(
-    argument: RollArgument<A>
-  ): RollParameters<A>['die'] {
-    if (isD(argument)) {
-      return argument as RollParameters<A>['die']
-    }
-    return new D(argumentToOptions(argument).sides) as RollParameters<A>['die']
-  }
 
   constructor(sides: Sides) {
     if (isCustomSidesStringArg(sides)) {
@@ -36,37 +21,36 @@ export class D<Sides extends string[] | number> {
     this.faces = generateNumericalFaces(sides) as Faces<Sides>
   }
 
-  roll(quantity = 1): Result<Faces<Sides>> {
+  roll(quantity = 1): Result<Sides> {
     const rolls = this.rollSpread(quantity)
-    if (this.isCustom) return rolls.join(', ') as Result<Faces<Sides>>
+    if (this.isCustom) return rolls.join(', ') as Result<Sides>
     return rolls.reduce<number>(
       (acc, roll) => acc + (roll as number),
       0
-    ) as Result<Faces<Sides>>
+    ) as Result<Sides>
   }
 
-  rollSpread(quantity = 1): Result<Faces<Sides>>[] {
+  rollSpread(quantity = 1): Result<Sides>[] {
     return coreSpreadRolls<string | number>(
       quantity,
       this.sides,
       this.faces
-    ) as Result<Faces<Sides>>[]
+    ) as Result<Sides>[]
   }
 
-  get toOptions(): RollOptions<Result<Faces<Sides>>> {
+  get toOptions(): RollOptions<Result<Sides>> {
     return {
       quantity: 1,
       sides: this.sidesForOptions()
     }
   }
 
-  private sidesForOptions(): RollOptions<Result<Faces<Sides>>>['sides'] {
-    if (this.isCustom)
-      return this.faces as RollOptions<Result<Faces<Sides>>>['sides']
-    return this.sides as RollOptions<Result<Faces<Sides>>>['sides']
+  private sidesForOptions(): RollOptions<Result<Sides>>['sides'] {
+    if (this.isCustom) return this.faces as RollOptions<Result<Sides>>['sides']
+    return this.sides as RollOptions<Result<Sides>>['sides']
   }
 
-  private get isCustom(): boolean {
+  get isCustom(): boolean {
     return isCustomSidesD(this)
   }
 }

@@ -1,5 +1,3 @@
-import { D } from './D'
-
 // Primitives
 
 type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
@@ -8,6 +6,22 @@ export type Notation<S extends string | number = string | number> =
   S extends number ? NumericDiceNotation : CustomDiceNotation
 
 export type DicePoolType = 'numerical' | 'custom' | 'mixed'
+
+// Die
+
+export type Type<T> = T extends string[] ? 'custom' : 'numerical'
+export type Faces<T> = T extends string[] ? T : number[]
+export type Result<S> = S extends string[] ? string : number
+
+export interface Die<Sides extends number | string[]> {
+  sides: number
+  faces: Faces<Sides>
+  type: Type<Sides>
+  roll: (quantity?: number) => Result<Sides>
+  rollSpread: (quantity?: number) => Result<Sides>[]
+  toOptions: RollOptions<Result<Sides>>
+  isCustom: boolean
+}
 
 // Options
 
@@ -68,12 +82,12 @@ export type RequiredCoreDiceParameters<
 export type NumericalArgument =
   | `${number}`
   | number
-  | D<number>
+  | Die<number>
   | RollOptions<number>
   | Notation<number>
 
 export type CustomArgument =
-  | D<string[]>
+  | Die<string[]>
   | RollOptions<string>
   | Notation<string>
   | string[]
@@ -86,7 +100,7 @@ export type RollArgument<S extends string | number = string | number> =
 export interface RollParameters<S extends string | number = string | number> {
   argument: RollArgument<S>
   options: RollOptions<S>
-  die: D<S extends string ? string[] : number>
+  die: S extends string ? Die<string[]> : Die<number>
   notation: Notation<S>
   description: string[]
 }
