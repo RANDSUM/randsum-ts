@@ -13,7 +13,9 @@ import { rollResultFromDicePools } from './utils/rollResultFromDicePools'
 function roll(...args: NumericalArgument[]): NumericalRollResult
 function roll(...args: CustomArgument[]): CustomRollResult
 function roll(...args: RollArgument<string | number>[]): MixedRollResult
-function roll(...args: RollArgument[]): RollResult {
+function roll(
+  ...args: RollArgument<string | number>[]
+): RollResult<string | number> {
   const dicePools = formDicePools(args)
   return rollResultFromDicePools(dicePools)
 }

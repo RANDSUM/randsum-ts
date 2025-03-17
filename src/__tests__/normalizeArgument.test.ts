@@ -198,7 +198,7 @@ describe(normalizeArgument, () => {
   })
 
   describe('given Notation', () => {
-    const coreTestString: Notation = '4d6'
+    const coreTestString: Notation<number> = '4d6'
     const coreDicePools = { sides: 6, quantity: 4 }
 
     describe('given a basic notation', () => {
@@ -219,7 +219,7 @@ describe(normalizeArgument, () => {
 
     describe('given a notation that uses custom faces', () => {
       describe('with a simple notation', () => {
-        const argument: Notation = '4d{++--  }'
+        const argument: Notation<string> = '4d{++--  }'
         const customSides = ['+', '+', '-', '-', ' ', ' ']
 
         test('returns a RollParameter matching the notation', () => {
@@ -238,7 +238,7 @@ describe(normalizeArgument, () => {
 
     describe('given a notation that contains a drop highest modifier', () => {
       describe('with a simple notation', () => {
-        const argument: Notation = `${coreTestString}H`
+        const argument: Notation<number> = `${coreTestString}H`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -257,7 +257,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('with a complex notation', () => {
-        const argument: Notation = `${coreTestString}H2`
+        const argument: Notation<number> = `${coreTestString}H2`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -278,7 +278,7 @@ describe(normalizeArgument, () => {
 
     describe('given a notation that contains a drop lowest modifier', () => {
       describe('with a simple notation', () => {
-        const argument: Notation = `${coreTestString}L`
+        const argument: Notation<number> = `${coreTestString}L`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -297,7 +297,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('with a complex notation', () => {
-        const argument: Notation = `${coreTestString}L2`
+        const argument: Notation<number> = `${coreTestString}L2`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -317,7 +317,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains a drop less than, greater than, and exact', () => {
-      const argument: Notation = `${coreTestString}D{<2,>5,2,4}`
+      const argument: Notation<number> = `${coreTestString}D{<2,>5,2,4}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -343,7 +343,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains a cap before and lessThan', () => {
-      const argument: Notation = `${coreTestString}C{<2,>5}`
+      const argument: Notation<number> = `${coreTestString}C{<2,>5}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -367,7 +367,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains a minus modifier', () => {
-      const argument: Notation = `${coreTestString}-2`
+      const argument: Notation<number> = `${coreTestString}-2`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -386,7 +386,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains a plus modifier', () => {
-      const argument: Notation = `${coreTestString}+2`
+      const argument: Notation<number> = `${coreTestString}+2`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -405,7 +405,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains a reroll modifier', () => {
-      const argument: Notation = `${coreTestString}R{5,<6,>2}`
+      const argument: Notation<number> = `${coreTestString}R{5,<6,>2}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -431,7 +431,7 @@ describe(normalizeArgument, () => {
         })
       })
       describe('with a max modifier', () => {
-        const argument: Notation = `${coreTestString}R{5,20,<6,>2}3`
+        const argument: Notation<number> = `${coreTestString}R{5,20,<6,>2}3`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -462,7 +462,7 @@ describe(normalizeArgument, () => {
 
     describe('given a notation that contains a unique notation', () => {
       describe('with a unique notation', () => {
-        const argument: Notation = `${coreTestString}U{5,6}`
+        const argument: Notation<number> = `${coreTestString}U{5,6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -484,7 +484,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('with a repeat unique notation', () => {
-        const argument: Notation = `${coreTestString}U{5,6}U`
+        const argument: Notation<number> = `${coreTestString}U{5,6}U`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -506,7 +506,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('with a simple unique notation', () => {
-        const argument: Notation = `${coreTestString}U`
+        const argument: Notation<number> = `${coreTestString}U`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -526,7 +526,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains an explode modifier', () => {
-      const argument: Notation = `${coreTestString}!`
+      const argument: Notation<number> = `${coreTestString}!`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -546,7 +546,7 @@ describe(normalizeArgument, () => {
 
     describe('given a notation that contains a replace modifier', () => {
       describe('with multiple replacements', () => {
-        const argument: Notation = `${coreTestString}V{1=2,>2=6}`
+        const argument: Notation<number> = `${coreTestString}V{1=2,>2=6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -575,7 +575,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('with a single replacement', () => {
-        const argument: Notation = `${coreTestString}V{<2=6}`
+        const argument: Notation<number> = `${coreTestString}V{<2=6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -601,7 +601,7 @@ describe(normalizeArgument, () => {
     describe('With a corner case dice notation', () => {
       describe('like an ordered dice notation', () => {
         test('it produces proper organized parameters', () => {
-          const explodeFirstString: Notation = '4d6!H'
+          const explodeFirstString: Notation<number> = '4d6!H'
           const explodeParams = normalizeArgument(explodeFirstString)
 
           expect(explodeParams).toMatchObject({
@@ -619,7 +619,7 @@ describe(normalizeArgument, () => {
             ]
           })
 
-          const dropFirstString: Notation = '4d6H!'
+          const dropFirstString: Notation<number> = '4d6H!'
           const dropFirstParams = normalizeArgument(dropFirstString)
 
           expect(dropFirstParams).toMatchObject({
@@ -641,7 +641,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('like a complicated dice notation', () => {
-        const argument: Notation = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
+        const argument: Notation<number> = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)

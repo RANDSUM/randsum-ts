@@ -3,7 +3,7 @@ import { parseCoreSides } from './parseCoreSides'
 
 export function parseCoreNotation(
   notationString: string
-): RequiredCoreDiceParameters {
+): RequiredCoreDiceParameters<number | string> {
   const [quantity, sides] = notationString.split(/[Dd]/)
 
   return {

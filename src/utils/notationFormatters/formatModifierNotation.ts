@@ -9,7 +9,9 @@ import { replaceNotation } from './replaceNotation'
 import { rerollNotation } from './rerollNotation'
 import { uniqueNotation } from './uniqueNotation'
 
-export function formatModifierNotation({ modifiers }: RollOptions): string {
+export function formatModifierNotation<S extends number | string>({
+  modifiers
+}: RollOptions<S>): string {
   if (!isValidModifier(modifiers)) return ''
 
   const modifierStrings = []
