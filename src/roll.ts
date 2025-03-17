@@ -15,5 +15,3 @@ function roll<S extends string | number>(
 }
 
 export { roll }
-
-// const rollResult = roll('1d6', '2d8', '3d10', '4d12', '5d20', '6d100')

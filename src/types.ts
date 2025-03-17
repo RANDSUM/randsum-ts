@@ -4,7 +4,9 @@ type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
 type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
 export type Notation<S extends string | number> = S extends number
   ? NumericDiceNotation
-  : CustomDiceNotation
+  : S extends string
+    ? CustomDiceNotation
+    : never
 
 export type DicePoolType<S extends string | number> = S extends string | number
   ? 'mixed'
@@ -34,7 +36,11 @@ export type Faces<T> = T extends string[]
   : T extends number
     ? number[]
     : never
-export type Result<S> = S extends string[] ? string : number
+export type Result<S> = S extends string[]
+  ? string
+  : S extends number
+    ? number
+    : never
 
 export interface Die<Sides extends number | string[]> {
   sides: number
