@@ -143,10 +143,6 @@ export type RollBonuses<S extends string | number> = {
   simpleMathModifier: number
 }
 
-export type NumericalRollResult = RollResult<number>
-export type CustomRollResult = RollResult<string>
-export type MixedRollResult = RollResult<string | number>
-
 export interface NotationValidationResult<S extends string | number> {
   valid: boolean
   type?: 'custom' | 'numerical'
