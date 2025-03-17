@@ -100,6 +100,7 @@
     "uuid": "^11.1.0"
   },
   "resolutions": {
-    "bun-types": "canary"
+    "bun-types": "canary",
+    "typescript": "5.9.0-dev.20250313"
   }
 }

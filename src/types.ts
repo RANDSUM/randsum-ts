@@ -10,8 +10,16 @@ export type DicePoolType = 'numerical' | 'custom' | 'mixed'
 
 // Die
 
-export type Type<T> = T extends string[] ? 'custom' : 'numerical'
-export type Faces<T> = T extends string[] ? T : number[]
+export type Type<T> = T extends string[]
+  ? 'custom'
+  : T extends number
+    ? 'numerical'
+    : never
+export type Faces<T> = T extends string[]
+  ? T
+  : T extends number
+    ? number[]
+    : never
 export type Result<S> = S extends string[] ? string : number
 
 export interface Die<Sides extends number | string[]> {
@@ -78,22 +86,9 @@ export type RequiredCoreDiceParameters<S extends string | number> = {
 
 // Arguments
 
-export type NumericalArgument =
-  | `${number}`
-  | number
-  | Die<number>
-  | RollOptions<number>
-  | Notation<number>
-
-export type CustomArgument =
-  | Die<string[]>
-  | RollOptions<string>
-  | Notation<string>
-  | string[]
-
 export type RollArgument<S extends string | number> = S extends string
-  ? CustomArgument
-  : NumericalArgument
+  ? Die<string[]> | RollOptions<string> | Notation<string> | string[]
+  : `${number}` | number | Die<number> | RollOptions<number> | Notation<number>
 
 // Parameters
 
