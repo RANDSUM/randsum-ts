@@ -6,7 +6,21 @@ export type Notation<S extends string | number> = S extends number
   ? NumericDiceNotation
   : CustomDiceNotation
 
-export type DicePoolType = 'numerical' | 'custom' | 'mixed'
+export type DicePoolType<S extends string | number> = S extends string | number
+  ? 'mixed'
+  : S extends string
+    ? 'custom'
+    : S extends number
+      ? 'numerical'
+      : never
+
+export type TotalType<S extends string | number> = S extends string | number
+  ? string
+  : S extends string
+    ? string
+    : S extends number
+      ? number
+      : never
 
 // Die
 
@@ -108,11 +122,7 @@ export interface DicePools<S extends string | number> {
 
 // Results
 
-export interface RollResult<
-  S extends string | number,
-  DP extends DicePoolType = DicePoolType,
-  Total extends S = S
-> extends DicePools<S> {
+export interface RollResult<S extends string | number> extends DicePools<S> {
   rawRolls: {
     [key: string]: S[]
   }
@@ -124,8 +134,8 @@ export interface RollResult<
   }
   result: S[]
   rawResult: S[]
-  type: DP
-  total: Total
+  type: DicePoolType<S>
+  total: TotalType<S>
 }
 
 export type RollBonuses<S extends string | number> = {
@@ -133,9 +143,9 @@ export type RollBonuses<S extends string | number> = {
   simpleMathModifier: number
 }
 
-export type NumericalRollResult = RollResult<number, 'numerical'>
-export type CustomRollResult = RollResult<string, 'custom'>
-export type MixedRollResult = RollResult<string | number, 'mixed', string>
+export type NumericalRollResult = RollResult<number>
+export type CustomRollResult = RollResult<string>
+export type MixedRollResult = RollResult<string | number>
 
 export interface NotationValidationResult<S extends string | number> {
   valid: boolean
