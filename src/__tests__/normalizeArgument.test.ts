@@ -1,7 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 
 import { D } from '~src/D'
-import type { Notation } from '~types'
 import { normalizeArgument } from '~utils/normalizeArgument'
 
 describe(normalizeArgument, () => {
@@ -14,7 +13,7 @@ describe(normalizeArgument, () => {
       expect(params).toMatchObject({
         argument,
         options: { quantity: 1, sides: argument },
-        die: new D(argument),
+        die: D(argument),
         notation: '1d2',
         description: ['Roll 1 2-sided die']
       })
@@ -30,7 +29,7 @@ describe(normalizeArgument, () => {
       expect(params).toMatchObject({
         argument,
         options: { quantity: 1, sides: argument },
-        die: new D(argument),
+        die: D(argument),
         notation: '1d{ht}',
         description: ['Roll 1 die with the following sides: (h,t)']
       })
@@ -50,7 +49,7 @@ describe(normalizeArgument, () => {
         expect(params).toMatchObject({
           argument,
           options: argument,
-          die: new D(argument.sides),
+          die: D(argument.sides),
           notation: '4d6',
           description: ['Roll 4 6-sided dice']
         })
@@ -77,7 +76,7 @@ describe(normalizeArgument, () => {
         expect(params).toMatchObject({
           argument,
           options: argument,
-          die: new D(argument.sides),
+          die: D(argument.sides),
           notation: '4d6V{>5=1}R{2,1,4}3U',
           description: [
             'Roll 4 6-sided dice',
@@ -101,7 +100,7 @@ describe(normalizeArgument, () => {
         expect(params).toMatchObject({
           argument,
           options: argument,
-          die: new D(argument.sides),
+          die: D(argument.sides),
           notation: '4d{randsum}',
           description: ['Roll 4 dice with the following sides: (r,a,n,d,s,u,m)']
         })
@@ -136,7 +135,7 @@ describe(normalizeArgument, () => {
         expect(params).toMatchObject({
           argument,
           options: argument,
-          die: new D(argument.sides),
+          die: D(argument.sides),
           notation: '4d6C{>2,<1}LD{>2,<6,2,3}V{6=1}!U{1,2}+2-1',
           description: [
             'Roll 4 6-sided dice',
@@ -159,7 +158,7 @@ describe(normalizeArgument, () => {
 
   describe('Given a D() object', () => {
     describe('simple', () => {
-      const argument = new D(6)
+      const argument = D(6)
 
       test('returns a RollParameter matching the argument', () => {
         const params = normalizeArgument(argument)
@@ -178,7 +177,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('custom sides', () => {
-      const argument = new D(['r', 'a', 'n', 'd', 's', 'u', 'm'])
+      const argument = D(['r', 'a', 'n', 'd', 's', 'u', 'm'])
 
       test('returns a RollParameter matching the argument', () => {
         const params = normalizeArgument(argument)
@@ -198,7 +197,7 @@ describe(normalizeArgument, () => {
   })
 
   describe('given Notation', () => {
-    const coreTestString: Notation<number> = '4d6'
+    const coreTestString = '4d6'
     const coreDicePools = { sides: 6, quantity: 4 }
 
     describe('given a basic notation', () => {
@@ -210,7 +209,7 @@ describe(normalizeArgument, () => {
         expect(params).toMatchObject({
           argument,
           options: coreDicePools,
-          die: new D(coreDicePools.sides),
+          die: D(coreDicePools.sides),
           notation: '4d6',
           description: ['Roll 4 6-sided dice']
         })
@@ -219,7 +218,7 @@ describe(normalizeArgument, () => {
 
     describe('given a notation that uses custom faces', () => {
       describe('with a simple notation', () => {
-        const argument: Notation<string> = '4d{++--  }'
+        const argument = '4d{++--  }'
         const customSides = ['+', '+', '-', '-', ' ', ' ']
 
         test('returns a RollParameter matching the notation', () => {
@@ -228,7 +227,7 @@ describe(normalizeArgument, () => {
           expect(params).toMatchObject({
             argument,
             options: { quantity: 4, sides: customSides },
-            die: new D(customSides),
+            die: D(customSides),
             notation: '4d{++--  }',
             description: ['Roll 4 dice with the following sides: (+,+,-,-, , )']
           })
@@ -238,7 +237,7 @@ describe(normalizeArgument, () => {
 
     describe('given a notation that contains a drop highest modifier', () => {
       describe('with a simple notation', () => {
-        const argument: Notation<number> = `${coreTestString}H`
+        const argument = `${coreTestString}H`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -249,7 +248,7 @@ describe(normalizeArgument, () => {
               ...coreDicePools,
               modifiers: { drop: { highest: 1 } }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
             notation: '4d6H',
             description: ['Roll 4 6-sided dice', 'Drop highest']
           })
@@ -257,7 +256,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('with a complex notation', () => {
-        const argument: Notation<number> = `${coreTestString}H2`
+        const argument = `${coreTestString}H2`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -268,7 +267,7 @@ describe(normalizeArgument, () => {
               ...coreDicePools,
               modifiers: { drop: { highest: 2 } }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
             notation: '4d6H2',
             description: ['Roll 4 6-sided dice', 'Drop highest 2']
           })
@@ -278,7 +277,7 @@ describe(normalizeArgument, () => {
 
     describe('given a notation that contains a drop lowest modifier', () => {
       describe('with a simple notation', () => {
-        const argument: Notation<number> = `${coreTestString}L`
+        const argument = `${coreTestString}L`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -289,7 +288,7 @@ describe(normalizeArgument, () => {
               ...coreDicePools,
               modifiers: { drop: { lowest: 1 } }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
             notation: '4d6L',
             description: ['Roll 4 6-sided dice', 'Drop lowest']
           })
@@ -297,7 +296,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('with a complex notation', () => {
-        const argument: Notation<number> = `${coreTestString}L2`
+        const argument = `${coreTestString}L2`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -308,7 +307,7 @@ describe(normalizeArgument, () => {
               ...coreDicePools,
               modifiers: { drop: { lowest: 2 } }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
             notation: '4d6L2',
             description: ['Roll 4 6-sided dice', 'Drop lowest 2']
           })
@@ -317,7 +316,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains a drop less than, greater than, and exact', () => {
-      const argument: Notation<number> = `${coreTestString}D{<2,>5,2,4}`
+      const argument = `${coreTestString}D{<2,>5,2,4}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -330,7 +329,7 @@ describe(normalizeArgument, () => {
               drop: { greaterThan: 5, lessThan: 2, exact: [2, 4] }
             }
           },
-          die: new D(coreDicePools.sides),
+          die: D(coreDicePools.sides),
           notation: '4d6D{>5,<2,2,4}',
           description: [
             'Roll 4 6-sided dice',
@@ -343,7 +342,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains a cap before and lessThan', () => {
-      const argument: Notation<number> = `${coreTestString}C{<2,>5}`
+      const argument = `${coreTestString}C{<2,>5}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -354,7 +353,7 @@ describe(normalizeArgument, () => {
             ...coreDicePools,
             modifiers: { cap: { lessThan: 2, greaterThan: 5 } }
           },
-          die: new D(coreDicePools.sides),
+          die: D(coreDicePools.sides),
 
           notation: '4d6C{>5,<2}',
           description: [
@@ -367,7 +366,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains a minus modifier', () => {
-      const argument: Notation<number> = `${coreTestString}-2`
+      const argument = `${coreTestString}-2`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -378,7 +377,7 @@ describe(normalizeArgument, () => {
             ...coreDicePools,
             modifiers: { minus: 2 }
           },
-          die: new D(coreDicePools.sides),
+          die: D(coreDicePools.sides),
           notation: '4d6-2',
           description: ['Roll 4 6-sided dice', 'Subtract 2']
         })
@@ -386,7 +385,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains a plus modifier', () => {
-      const argument: Notation<number> = `${coreTestString}+2`
+      const argument = `${coreTestString}+2`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -397,7 +396,7 @@ describe(normalizeArgument, () => {
             ...coreDicePools,
             modifiers: { plus: 2 }
           },
-          die: new D(coreDicePools.sides),
+          die: D(coreDicePools.sides),
           notation: '4d6+2',
           description: ['Roll 4 6-sided dice', 'Add 2']
         })
@@ -405,7 +404,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains a reroll modifier', () => {
-      const argument: Notation<number> = `${coreTestString}R{5,<6,>2}`
+      const argument = `${coreTestString}R{5,<6,>2}`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -422,7 +421,7 @@ describe(normalizeArgument, () => {
               }
             }
           },
-          die: new D(coreDicePools.sides),
+          die: D(coreDicePools.sides),
           notation: '4d6R{5,>2,<6}',
           description: [
             'Roll 4 6-sided dice',
@@ -431,7 +430,7 @@ describe(normalizeArgument, () => {
         })
       })
       describe('with a max modifier', () => {
-        const argument: Notation<number> = `${coreTestString}R{5,20,<6,>2}3`
+        const argument = `${coreTestString}R{5,20,<6,>2}3`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -449,7 +448,7 @@ describe(normalizeArgument, () => {
                 }
               }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
             notation: '4d6R{5,20,>2,<6}3',
             description: [
               'Roll 4 6-sided dice',
@@ -462,7 +461,7 @@ describe(normalizeArgument, () => {
 
     describe('given a notation that contains a unique notation', () => {
       describe('with a unique notation', () => {
-        const argument: Notation<number> = `${coreTestString}U{5,6}`
+        const argument = `${coreTestString}U{5,6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -473,7 +472,7 @@ describe(normalizeArgument, () => {
               ...coreDicePools,
               modifiers: { unique: { notUnique: [5, 6] } }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
             notation: '4d6U{5,6}',
             description: [
               'Roll 4 6-sided dice',
@@ -484,7 +483,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('with a repeat unique notation', () => {
-        const argument: Notation<number> = `${coreTestString}U{5,6}U`
+        const argument = `${coreTestString}U{5,6}U`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -495,7 +494,7 @@ describe(normalizeArgument, () => {
               ...coreDicePools,
               modifiers: { unique: { notUnique: [5, 6] } }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
             notation: '4d6U{5,6}',
             description: [
               'Roll 4 6-sided dice',
@@ -506,7 +505,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('with a simple unique notation', () => {
-        const argument: Notation<number> = `${coreTestString}U`
+        const argument = `${coreTestString}U`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -517,7 +516,7 @@ describe(normalizeArgument, () => {
               ...coreDicePools,
               modifiers: { unique: true }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
             notation: '4d6U',
             description: ['Roll 4 6-sided dice', 'No Duplicate Rolls']
           })
@@ -526,7 +525,7 @@ describe(normalizeArgument, () => {
     })
 
     describe('given a notation that contains an explode modifier', () => {
-      const argument: Notation<number> = `${coreTestString}!`
+      const argument = `${coreTestString}!`
 
       test('returns a RollParameter matching the notation', () => {
         const params = normalizeArgument(argument)
@@ -537,7 +536,7 @@ describe(normalizeArgument, () => {
             ...coreDicePools,
             modifiers: { explode: true }
           },
-          die: new D(coreDicePools.sides),
+          die: D(coreDicePools.sides),
           notation: '4d6!',
           description: ['Roll 4 6-sided dice', 'Exploding Dice']
         })
@@ -546,7 +545,7 @@ describe(normalizeArgument, () => {
 
     describe('given a notation that contains a replace modifier', () => {
       describe('with multiple replacements', () => {
-        const argument: Notation<number> = `${coreTestString}V{1=2,>2=6}`
+        const argument = `${coreTestString}V{1=2,>2=6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -562,7 +561,7 @@ describe(normalizeArgument, () => {
                 ]
               }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
 
             notation: '4d6V{1=2,>2=6}',
             description: [
@@ -575,7 +574,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('with a single replacement', () => {
-        const argument: Notation<number> = `${coreTestString}V{<2=6}`
+        const argument = `${coreTestString}V{<2=6}`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -586,7 +585,7 @@ describe(normalizeArgument, () => {
               ...coreDicePools,
               modifiers: { replace: [{ from: { lessThan: 2 }, to: 6 }] }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
 
             notation: '4d6V{<2=6}',
             description: [
@@ -601,7 +600,7 @@ describe(normalizeArgument, () => {
     describe('With a corner case dice notation', () => {
       describe('like an ordered dice notation', () => {
         test('it produces proper organized parameters', () => {
-          const explodeFirstString: Notation<number> = '4d6!H'
+          const explodeFirstString = '4d6!H'
           const explodeParams = normalizeArgument(explodeFirstString)
 
           expect(explodeParams).toMatchObject({
@@ -610,7 +609,7 @@ describe(normalizeArgument, () => {
               ...coreDicePools,
               modifiers: { explode: true, drop: { highest: 1 } }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
             notation: '4d6H!',
             description: [
               'Roll 4 6-sided dice',
@@ -619,7 +618,7 @@ describe(normalizeArgument, () => {
             ]
           })
 
-          const dropFirstString: Notation<number> = '4d6H!'
+          const dropFirstString = '4d6H!'
           const dropFirstParams = normalizeArgument(dropFirstString)
 
           expect(dropFirstParams).toMatchObject({
@@ -628,7 +627,7 @@ describe(normalizeArgument, () => {
               ...coreDicePools,
               modifiers: { drop: { highest: 1 }, explode: true }
             },
-            die: new D(coreDicePools.sides),
+            die: D(coreDicePools.sides),
 
             notation: '4d6H!',
             description: [
@@ -641,7 +640,7 @@ describe(normalizeArgument, () => {
       })
 
       describe('like a complicated dice notation', () => {
-        const argument: Notation<number> = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
+        const argument = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
 
         test('returns a RollParameter matching the notation', () => {
           const params = normalizeArgument(argument)
@@ -671,7 +670,7 @@ describe(normalizeArgument, () => {
                 minus: 5
               }
             },
-            die: new D(20),
+            die: D(20),
             notation:
               '10d20C{>18,<2}H2LD{>5,<2,2,4}V{1=2,>2=6}R{5,2,<6}3!U{5}+5-5',
             description: [

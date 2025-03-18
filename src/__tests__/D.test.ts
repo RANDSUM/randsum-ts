@@ -4,7 +4,7 @@ import { D } from '~src/D'
 describe(D, () => {
   describe('Creating a Numberical Die', () => {
     const sides = 6
-    const die = new D(sides)
+    const die = D(sides)
 
     test('.sides returns the number given as sides', () => {
       expect(die.sides).toEqual(sides)
@@ -46,7 +46,7 @@ describe(D, () => {
 
   describe('Creating a Die with Custom Sides', () => {
     const sides = ['+', '+', '-', '-']
-    const die = new D(sides)
+    const die = D(sides)
 
     test('.sides returns the number of sides given in the contructor', () => {
       expect(die.sides).toEqual(sides.length)

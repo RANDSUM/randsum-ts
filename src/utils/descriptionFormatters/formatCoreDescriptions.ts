@@ -4,7 +4,7 @@ import { dieDescriptor } from './dieDescriptor'
 export function formatCoreDescriptions({
   sides,
   quantity
-}: RollOptions<number | string>): string {
+}: RollOptions): string {
   const base = `Roll ${quantity}`
   const descriptor = dieDescriptor(quantity)
   if (Array.isArray(sides)) {

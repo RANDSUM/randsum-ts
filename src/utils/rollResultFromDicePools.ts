@@ -4,9 +4,7 @@ import { calculateTotal } from './calculateTotal'
 import { generateModifiedRolls } from './generateModifiedRolls'
 import { generateRawRolls } from './generateRawRolls'
 
-export function rollResultFromDicePools<S extends string | number>(
-  dicePools: DicePools<S>
-): RollResult<S> {
+export function rollResultFromDicePools(dicePools: DicePools): RollResult {
   const rawRolls = generateRawRolls(dicePools.dicePools)
   const modifiedRolls = generateModifiedRolls(dicePools, rawRolls)
   const modifiedValues = Object.values(modifiedRolls)
@@ -19,5 +17,5 @@ export function rollResultFromDicePools<S extends string | number>(
     result: modifiedValues.map((pool) => pool.rolls).flat(),
     type: calculateDicePoolType(dicePools.dicePools),
     total: calculateTotal(modifiedValues.map((pool) => pool.total))
-  }
+  } as RollResult
 }

@@ -59,7 +59,7 @@ D20.roll()
 // Make a new 120 sided die and roll it
 import { D } from 'randsum'
 
-const D120 = new D(120)
+const D120 = D(120)
 D120.roll()
 
 //'heads' or 'tails'?

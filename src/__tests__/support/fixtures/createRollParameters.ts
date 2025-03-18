@@ -1,19 +1,19 @@
 import { D } from '~src/D'
-import type { Notation, RollArgument, RollParameters } from '~types'
+import type { RollParameters } from '~types'
 
-export function createRollParameters<S extends string | number>(
-  overrides: Partial<RollParameters<S>> = {}
-): RollParameters<S> {
+export function createRollParameters(
+  overrides: Partial<RollParameters> = {}
+): RollParameters {
   return {
-    die: new D(4) as S extends string ? D<string[]> : D<number>,
-    argument: 1 as RollArgument<S>,
-    notation: '1d4' as Notation<S>,
+    die: D(4),
+    argument: 1,
+    notation: '1d4',
     description: ['Roll 1d4'],
     options: {
-      sides: 4 as S extends number ? number : string[],
+      sides: 4,
       quantity: 1,
       ...overrides.options
     },
     ...overrides
-  }
+  } as RollParameters
 }

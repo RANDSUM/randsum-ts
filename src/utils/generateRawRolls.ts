@@ -2,8 +2,8 @@ import type { DicePools, RollResult } from '~types'
 import { coreSpreadRolls } from './coreSpreadRolls'
 
 export function generateRawRolls<S extends string | number>(
-  dicePools: DicePools<S>['dicePools']
-): RollResult<S>['rawRolls'] {
+  dicePools: DicePools['dicePools']
+): RollResult['rawRolls'] {
   return Object.fromEntries(
     Object.keys(dicePools).map((key) => {
       const {
@@ -18,10 +18,3 @@ export function generateRawRolls<S extends string | number>(
     })
   )
 }
-
-// function maxFromSides(sides: number | string[]): number {
-//   if (typeof sides === 'number') {
-//     return sides
-//   }
-//   return sides.length
-// }
