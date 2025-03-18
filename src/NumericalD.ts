@@ -9,6 +9,12 @@ export class NumericalD implements NumericDie {
   readonly isCustom = false
 
   constructor(sides: number) {
+    if (!Number.isInteger(sides) || sides < 1) {
+      throw new Error(
+        'Die must have at least one side with a positive integer value'
+      )
+    }
+
     this.sides = sides
     this.faces = generateNumericalFaces(sides)
   }

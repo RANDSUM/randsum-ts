@@ -8,8 +8,12 @@ export class CustomD implements CustomDie {
   readonly isCustom = true
 
   constructor(faces: string[]) {
+    if (!faces.length) {
+      throw new Error('Custom die must have at least one face')
+    }
+
     this.sides = faces.length
-    this.faces = faces
+    this.faces = [...faces]
   }
 
   roll(quantity = 1): string {
@@ -24,7 +28,7 @@ export class CustomD implements CustomDie {
   get toOptions(): CustomRollOptions {
     return {
       quantity: 1,
-      sides: this.faces
+      sides: [...this.faces]
     }
   }
 }
