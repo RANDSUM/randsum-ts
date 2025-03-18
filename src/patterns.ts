@@ -1,5 +1,3 @@
-const digitPattern = /\d*/.source
-
 export const coreNotationPattern: RegExp = /^\d+[Dd](\d+|{.*})/
 export const dropHighestPattern: RegExp = /[Hh]\d*/g
 export const dropLowestPattern: RegExp = /[Ll]\d*/g
@@ -33,7 +31,7 @@ export const dropConstraintsPattern: RegExp = new RegExp(
 )
 
 export const rerollPattern: RegExp = new RegExp(
-  `${/[Rr]/.source}${greaterThanLessThanMatcher.source}${digitPattern}`,
+  `${/[Rr]/.source}${greaterThanLessThanMatcher.source}${/\d*/.source}`,
   'g'
 )
 
