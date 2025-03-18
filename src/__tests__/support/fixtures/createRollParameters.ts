@@ -1,9 +1,9 @@
 import { D } from '~src/D'
-import type { RollParameters } from '~types'
+import type { RollParams } from '~types'
 
 export function createRollParameters(
-  overrides: Partial<RollParameters> = {}
-): RollParameters {
+  overrides: Partial<RollParams> = {}
+): RollParams {
   return {
     die: D(4),
     argument: 1,
@@ -15,5 +15,5 @@ export function createRollParameters(
       ...overrides.options
     },
     ...overrides
-  } as RollParameters
+  } as RollParams
 }

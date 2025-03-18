@@ -196,7 +196,7 @@ describe(normalizeArgument, () => {
     })
   })
 
-  describe('given Notation', () => {
+  describe('given DiceNotation', () => {
     const coreTestString = '4d6'
     const coreDicePools = { sides: 6, quantity: 4 }
 

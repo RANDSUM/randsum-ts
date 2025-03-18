@@ -3,7 +3,7 @@ import {
   dropHighestPattern,
   dropLowestPattern
 } from '~patterns'
-import type { Modifiers } from '~types'
+import type { ModifierOptions } from '~types'
 import { extractMatches } from './extractMatches'
 import { parseDropConstraintsNotation } from './parseDropConstraintsNotation'
 import { parseDropHighNotation } from './parseDropHighNotation'
@@ -11,7 +11,7 @@ import { parseDropLowNotation } from './parseDropLowNotation'
 
 export function parseDropModifiers(
   modifiersString: string
-): Pick<Modifiers, 'drop'> {
+): Pick<ModifierOptions, 'drop'> {
   const dropHighModifiers = parseDropHighNotation(
     extractMatches(modifiersString, dropHighestPattern)
   )

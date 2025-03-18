@@ -1,8 +1,8 @@
-import type { NumericalDie, NumericalRollOptions } from '~types'
+import type { NumericDie, NumericRollOptions } from '~types'
 import { coreSpreadRolls } from '~utils/coreSpreadRolls'
 import { generateNumericalFaces } from '~utils/generateNumericalFaces'
 
-export class NumericalD implements NumericalDie {
+export class NumericalD implements NumericDie {
   readonly sides: number
   readonly faces: number[]
   readonly type = 'numerical'
@@ -22,7 +22,7 @@ export class NumericalD implements NumericalDie {
     return coreSpreadRolls(quantity, this.sides, this.faces)
   }
 
-  get toOptions(): NumericalRollOptions {
+  get toOptions(): NumericRollOptions {
     return {
       quantity: 1,
       sides: this.sides

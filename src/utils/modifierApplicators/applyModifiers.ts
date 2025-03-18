@@ -1,5 +1,5 @@
 import { isCustomParameters } from '~src/guards/isCustomParameters'
-import type { RollBonuses, RollParameters } from '~types'
+import type { RollBonus, RollParams } from '~types'
 import { coreRandom } from '~utils/coreRandom'
 import { applyDrop } from './applyDrop'
 import { applyExplode } from './applyExplode'
@@ -9,9 +9,9 @@ import { applySingleCap } from './applySingleCap'
 import { applyUnique } from './applyUnique'
 
 export function applyModifiers(
-  poolParameters: RollParameters,
+  poolParameters: RollParams,
   initialRolls: number[] | string[]
-): RollBonuses {
+): RollBonus {
   if (isCustomParameters(poolParameters)) {
     return {
       simpleMathModifier: 0,

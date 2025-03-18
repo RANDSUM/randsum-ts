@@ -9,7 +9,7 @@ import {
 } from 'bun:test'
 
 import { D } from '~src/D'
-import type { DicePools } from '~types'
+import type { DicePool } from '~types'
 import * as CoreRandom from '~utils/coreRandom'
 import * as CoreSpreadRolls from '~utils/coreSpreadRolls'
 import { InvalidUniqueError } from '~utils/invalidUniqueError'
@@ -653,7 +653,7 @@ describe(rollResultFromDicePools, () => {
             quantity: testRollSet.length,
             modifiers: { foo: 2 }
           }
-        } as unknown as DicePools['dicePools']['test-roll-id'])
+        } as unknown as DicePool['dicePools']['test-roll-id'])
       }
     }
 

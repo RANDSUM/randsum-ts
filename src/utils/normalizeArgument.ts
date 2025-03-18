@@ -1,10 +1,10 @@
-import type { RollArgument, RollParameters } from '~types'
+import type { RollArgument, RollParams } from '~types'
 import { argumentToOptions } from './argumentToOptions'
 import { dieForArgument } from './dieForArgument'
 import { optionsToDescription } from './optionsToDescription'
 import { optionsToNotation } from './optionsToNotation'
 
-function normalizeArgument(argument: RollArgument): RollParameters {
+function normalizeArgument(argument: RollArgument): RollParams {
   const options = argumentToOptions(argument)
   return {
     argument,
@@ -12,7 +12,7 @@ function normalizeArgument(argument: RollArgument): RollParameters {
     die: dieForArgument(argument),
     notation: optionsToNotation(options),
     description: optionsToDescription(options)
-  } as RollParameters
+  } as RollParams
 }
 
 export { normalizeArgument }

@@ -1,8 +1,8 @@
-import type { DicePools, RollResult } from '~types'
+import type { DicePool, RollResult } from '~types'
 import { coreSpreadRolls } from './coreSpreadRolls'
 
 export function generateRawRolls<S extends string | number>(
-  dicePools: DicePools['dicePools']
+  dicePools: DicePool['dicePools']
 ): RollResult['rawRolls'] {
   return Object.fromEntries(
     Object.keys(dicePools).map((key) => {

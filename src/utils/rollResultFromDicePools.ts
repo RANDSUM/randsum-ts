@@ -1,10 +1,10 @@
-import type { DicePools, RollResult } from '~types'
+import type { DicePool, RollResult } from '~types'
 import { calculateDicePoolType } from './calculateDicePooltype'
 import { calculateTotal } from './calculateTotal'
 import { generateModifiedRolls } from './generateModifiedRolls'
 import { generateRawRolls } from './generateRawRolls'
 
-export function rollResultFromDicePools(dicePools: DicePools): RollResult {
+export function rollResultFromDicePools(dicePools: DicePool): RollResult {
   const rawRolls = generateRawRolls(dicePools.dicePools)
   const modifiedRolls = generateModifiedRolls(dicePools, rawRolls)
   const modifiedValues = Object.values(modifiedRolls)

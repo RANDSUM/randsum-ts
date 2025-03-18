@@ -1,7 +1,7 @@
-import type { BaseRollResult, DicePools } from '~types'
+import type { BaseRollResult, DicePool } from '~types'
 
 export function calculateDicePoolType(
-  dicePools: DicePools['dicePools']
+  dicePools: DicePool['dicePools']
 ): BaseRollResult['type'] {
   switch (true) {
     case Object.values(dicePools).every(

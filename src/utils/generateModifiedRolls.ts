@@ -1,9 +1,9 @@
-import type { DicePools, RollResult } from '~types'
+import type { DicePool, RollResult } from '~types'
 import { calculateTotal } from './calculateTotal'
 import { applyModifiers } from './modifierApplicators/applyModifiers'
 
 export function generateModifiedRolls(
-  dicePools: DicePools,
+  dicePools: DicePool,
   rawRolls: RollResult['rawRolls']
 ): RollResult['modifiedRolls'] {
   return Object.fromEntries(

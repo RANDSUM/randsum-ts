@@ -1,9 +1,9 @@
 import { isD } from '~guards/isD'
 import { D } from '~src/D'
-import type { RollArgument, RollParameters } from '~types'
+import type { RollArgument, RollParams } from '~types'
 import { argumentToOptions } from './argumentToOptions'
 
-export function dieForArgument(argument: RollArgument): RollParameters['die'] {
+export function dieForArgument(argument: RollArgument): RollParams['die'] {
   if (isD(argument)) {
     return argument
   }

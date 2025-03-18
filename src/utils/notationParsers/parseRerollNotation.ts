@@ -1,10 +1,10 @@
 import { rerollPattern } from '~patterns'
-import type { Modifiers, RerollOptions } from '~types'
+import type { ModifierOptions, RerollOptions } from '~types'
 import { extractMatches } from './extractMatches'
 
 export function parseRerollNotation(
   modifiersString: string
-): Pick<Modifiers, 'reroll'> {
+): Pick<ModifierOptions, 'reroll'> {
   const notations = extractMatches(modifiersString, rerollPattern)
   if (notations.length === 0) {
     return {}
