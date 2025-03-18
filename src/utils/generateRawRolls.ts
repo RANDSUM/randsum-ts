@@ -1,20 +1,23 @@
+import { isNumericRollOptions } from '~guards/isNumericRollOptions'
 import type { DicePool, RollResult } from '~types'
 import { coreSpreadRolls } from './coreSpreadRolls'
 
-export function generateRawRolls<S extends string | number>(
+export function generateRawRolls(
   dicePools: DicePool['dicePools']
 ): RollResult['rawRolls'] {
   return Object.fromEntries(
     Object.keys(dicePools).map((key) => {
-      const {
-        options: { quantity, sides }
-      } = dicePools[key]
+      const pool = dicePools[key]
+      const { options } = pool
+      const quantity = options.quantity || 1
 
-      if (typeof sides === 'number') {
-        return [key, coreSpreadRolls(quantity || 1, sides)]
+      if (isNumericRollOptions(options)) {
+        const sides = options.sides
+        return [key, coreSpreadRolls(quantity, sides) as number[]]
+      } else {
+        const faces = options.sides
+        return [key, coreSpreadRolls(quantity, faces.length, faces) as string[]]
       }
-
-      return [key, coreSpreadRolls(quantity || 1, sides.length, sides)] as S[]
     })
   )
 }
