@@ -1,10 +1,10 @@
-import { D } from '~src/D'
 import type { RollOptions } from '~types'
+import { isD } from './isD'
 
 export function isDicePoolOptions(argument: unknown): argument is RollOptions {
   return (
     typeof argument === 'object' &&
-    argument instanceof D === false &&
+    !isD(argument) &&
     (argument as RollOptions).sides !== undefined
   )
 }

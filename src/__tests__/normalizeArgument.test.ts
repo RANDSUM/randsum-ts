@@ -156,7 +156,7 @@ describe(normalizeArgument, () => {
     })
   })
 
-  describe('Given a D() object', () => {
+  describe('Given a Die object', () => {
     describe('simple', () => {
       const argument = D(6)
 
