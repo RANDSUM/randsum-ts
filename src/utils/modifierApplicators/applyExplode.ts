@@ -1,8 +1,8 @@
-import type { RequiredCoreNumericalDiceParameters } from '~types'
+import type { RequiredNumericalRolllParameters } from '~types'
 
 export function applyExplode(
   rolls: number[],
-  { sides }: Pick<RequiredCoreNumericalDiceParameters, 'sides'>,
+  { sides }: Pick<RequiredNumericalRolllParameters, 'sides'>,
   rollOne: () => number
 ): number[] {
   const explodeCount = rolls.filter((roll) => roll === sides).length

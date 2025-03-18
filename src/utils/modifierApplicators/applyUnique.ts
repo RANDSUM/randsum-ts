@@ -1,4 +1,4 @@
-import type { Modifiers, RequiredCoreNumericalDiceParameters } from '~types'
+import type { Modifiers, RequiredNumericalRolllParameters } from '~types'
 import { InvalidUniqueError } from '../invalidUniqueError'
 import { generateNotUniqueArray } from './generateNotUniqueArray'
 
@@ -8,7 +8,7 @@ export function applyUnique(
     unique,
     sides,
     quantity
-  }: RequiredCoreNumericalDiceParameters & Pick<Modifiers, 'unique'>,
+  }: RequiredNumericalRolllParameters & Pick<Modifiers, 'unique'>,
   rollOne: () => number
 ): number[] {
   if (quantity > sides) {

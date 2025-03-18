@@ -1,8 +1,8 @@
-import type { DicePools, DicePoolType } from '~types'
+import type { BaseRollResult, DicePools } from '~types'
 
 export function calculateDicePoolType(
   dicePools: DicePools['dicePools']
-): DicePoolType {
+): BaseRollResult['type'] {
   switch (true) {
     case Object.values(dicePools).every(
       (pool) => typeof pool.options.sides === 'number'
