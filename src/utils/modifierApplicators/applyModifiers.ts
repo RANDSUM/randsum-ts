@@ -1,5 +1,5 @@
 import { isCustomParameters } from '~src/guards/isCustomParameters'
-import type { RollBonuses, RollParameters } from '~types'
+import type { RollBonus, RollParams } from '~types'
 import { coreRandom } from '~utils/coreRandom'
 import { applyDrop } from './applyDrop'
 import { applyExplode } from './applyExplode'
@@ -8,14 +8,14 @@ import { applyReroll } from './applyReroll'
 import { applySingleCap } from './applySingleCap'
 import { applyUnique } from './applyUnique'
 
-export function applyModifiers<S extends string | number>(
-  poolParameters: RollParameters<S>,
-  initialRolls: S[]
-): RollBonuses<S> {
+export function applyModifiers(
+  poolParameters: RollParams,
+  initialRolls: number[] | string[]
+): RollBonus {
   if (isCustomParameters(poolParameters)) {
     return {
       simpleMathModifier: 0,
-      rolls: initialRolls
+      rolls: initialRolls as string[]
     }
   }
 
@@ -26,7 +26,7 @@ export function applyModifiers<S extends string | number>(
 
   const {
     options: { sides, quantity, modifiers = {} }
-  } = poolParameters as RollParameters<number>
+  } = poolParameters
 
   const rollOne: () => number = () => coreRandom(sides)
 
@@ -94,5 +94,5 @@ export function applyModifiers<S extends string | number>(
       default:
         throw new Error(`Unknown modifier: ${key}`)
     }
-  }, rollBonuses) as RollBonuses<S>
+  }, rollBonuses)
 }

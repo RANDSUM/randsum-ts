@@ -1,8 +1,8 @@
-import type { DropOptions, Modifiers } from '~types'
+import type { DropOptions, ModifierOptions } from '~types'
 
 export function parseDropConstraintsNotation(
   notations: string[]
-): Pick<Modifiers, 'drop'> {
+): Pick<ModifierOptions, 'drop'> {
   if (notations.length === 0) {
     return {}
   }

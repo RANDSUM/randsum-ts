@@ -9,7 +9,7 @@ import {
 } from 'bun:test'
 
 import { D } from '~src/D'
-import type { DicePools } from '~types'
+import type { DicePool } from '~types'
 import * as CoreRandom from '~utils/coreRandom'
 import * as CoreSpreadRolls from '~utils/coreSpreadRolls'
 import { InvalidUniqueError } from '~utils/invalidUniqueError'
@@ -32,7 +32,7 @@ describe(rollResultFromDicePools, () => {
   }
 
   describe('when given roll total with no modifiers', () => {
-    const coreParameters: DicePools<number> = {
+    const coreParameters = {
       dicePools: {
         'test-roll-id': createRollParameters()
       }
@@ -156,7 +156,7 @@ describe(rollResultFromDicePools, () => {
     const faces = ['r', 'a', 'n', 'd', 's', 'u', 'm']
     const customSidesRoll = ['r', 'a', 'n', 'd']
 
-    const customSidesParameters: DicePools<string> = {
+    const customSidesParameters = {
       dicePools: {
         'test-roll-id': createRollParameters({
           options: {
@@ -195,7 +195,7 @@ describe(rollResultFromDicePools, () => {
   describe('when given roll total with a "drop" modifier', () => {
     const longerRollTotals = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    const dropParameters: DicePools<number> = {
+    const dropParameters = {
       dicePools: {
         'test-roll-id': createRollParameters({
           options: {
@@ -243,7 +243,7 @@ describe(rollResultFromDicePools, () => {
 
   describe('when given roll total with a "replace" modifier', () => {
     describe('that is a single replace modifier', () => {
-      const dropParameters: DicePools<number> = {
+      const dropParameters = {
         dicePools: {
           'test-roll-id': createRollParameters({
             options: {
@@ -277,7 +277,7 @@ describe(rollResultFromDicePools, () => {
     })
 
     describe('that is an array of replace modifiers', () => {
-      const dropParameters: DicePools<number> = {
+      const dropParameters = {
         dicePools: {
           'test-roll-id': createRollParameters({
             options: {
@@ -319,7 +319,7 @@ describe(rollResultFromDicePools, () => {
   describe('when given roll total with an "explode" modifier', () => {
     const explodeRollTotals = [1, 2, 3, 6]
 
-    const explodeParameters: DicePools<number> = {
+    const explodeParameters = {
       dicePools: {
         'test-roll-id': createRollParameters({
           options: {
@@ -358,7 +358,7 @@ describe(rollResultFromDicePools, () => {
 
   describe('when given roll total with a "reroll" modifier', () => {
     describe('when given an impossible roll', () => {
-      const reDicePools: DicePools<number> = {
+      const reDicePools = {
         dicePools: {
           'test-roll-id': createRollParameters({
             options: {
@@ -366,7 +366,7 @@ describe(rollResultFromDicePools, () => {
               quantity: testRollSet.length,
               modifiers: { reroll: { greaterThan: 3 } }
             },
-            die: new D(4)
+            die: D(4)
           })
         }
       }
@@ -394,7 +394,7 @@ describe(rollResultFromDicePools, () => {
     })
 
     describe('that is a single reroll modifier in an array', () => {
-      const reDicePools: DicePools<number> = {
+      const reDicePools = {
         dicePools: {
           'test-roll-id': createRollParameters({
             options: {
@@ -430,7 +430,7 @@ describe(rollResultFromDicePools, () => {
     })
 
     describe('that is an array of reroll modifiers', () => {
-      const reDicePools: DicePools<number> = {
+      const reDicePools = {
         dicePools: {
           'test-roll-id': createRollParameters({
             options: {
@@ -467,7 +467,7 @@ describe(rollResultFromDicePools, () => {
   })
 
   describe('when given roll total with a "cap" modifier', () => {
-    const dropParameters: DicePools<number> = {
+    const dropParameters = {
       dicePools: {
         'test-roll-id': createRollParameters({
           options: {
@@ -499,7 +499,7 @@ describe(rollResultFromDicePools, () => {
   })
 
   describe('when given roll total with a "plus" modifier', () => {
-    const dropParameters: DicePools<number> = {
+    const dropParameters = {
       dicePools: {
         'test-roll-id': createRollParameters({
           options: {
@@ -531,7 +531,7 @@ describe(rollResultFromDicePools, () => {
   })
 
   describe('when given roll total with a "minus" modifier', () => {
-    const dropParameters: DicePools<number> = {
+    const dropParameters = {
       dicePools: {
         'test-roll-id': createRollParameters({
           options: {
@@ -563,7 +563,7 @@ describe(rollResultFromDicePools, () => {
   })
 
   describe('when given multiple dice pools', () => {
-    const parameters: DicePools<number> = {
+    const parameters = {
       dicePools: {
         'test-roll-id': createRollParameters(),
         'test-roll-id-2': createRollParameters()
@@ -600,7 +600,7 @@ describe(rollResultFromDicePools, () => {
   })
 
   describe('Given multiple dice pools of different dice types', () => {
-    const parameters: DicePools<string | number> = {
+    const parameters = {
       dicePools: {
         'test-roll-id': createRollParameters({
           options: { sides: 6, quantity: testRollSet.length }
@@ -645,7 +645,7 @@ describe(rollResultFromDicePools, () => {
   })
 
   describe('when given an roll total with an unrecognized modifier', () => {
-    const dropParameters: DicePools<number> = {
+    const dropParameters = {
       dicePools: {
         'test-roll-id': createRollParameters({
           options: {
@@ -653,9 +653,9 @@ describe(rollResultFromDicePools, () => {
             quantity: testRollSet.length,
             modifiers: { foo: 2 }
           }
-        } as unknown as DicePools<number>['dicePools']['test-roll-id'])
+        } as unknown as DicePool['dicePools']['test-roll-id'])
       }
-    } as unknown as DicePools<number>
+    }
 
     test('Throws an error', () => {
       spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(testRollSet)

@@ -1,10 +1,10 @@
 import { replacePattern } from '~patterns'
-import type { Modifiers } from '~types'
+import type { ModifierOptions } from '~types'
 import { extractMatches } from './extractMatches'
 
 export function parseReplaceNotation(
   modifiersString: string
-): Pick<Modifiers, 'replace'> {
+): Pick<ModifierOptions, 'replace'> {
   const notations = extractMatches(modifiersString, replacePattern)
   if (notations.length === 0) {
     return {}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
 import { validateNotation } from '~src/validateNotation'
-import { type Notation } from '~types'
+import { type NumericValidationResult } from '~types'
 
 describe(validateNotation, () => {
   describe('when the notation is completely invalid', () => {
@@ -17,7 +17,7 @@ describe(validateNotation, () => {
   })
 
   describe('when given a typesafe but incorrect dice notation', () => {
-    const notation: Notation<number> = '2d5XXddf'
+    const notation = '2d5XXddf'
 
     it('returns an error result', () => {
       const result = validateNotation(notation)
@@ -25,7 +25,7 @@ describe(validateNotation, () => {
       expect(result).toEqual({
         valid: false,
         description: []
-      })
+      } as unknown as NumericValidationResult)
     })
   })
 
@@ -72,7 +72,7 @@ describe(validateNotation, () => {
 
   describe('corner cases', () => {
     describe('when given comma-less multiple dice notation', () => {
-      const notations: Notation<number>[] = [
+      const notations = [
         '2d5D{2>2}',
         '2d5V{1=2>2=2}',
         '2d5R{2>2}',
@@ -93,7 +93,7 @@ describe(validateNotation, () => {
     })
 
     describe('when given a nonsensical drop notation that is bugging me', () => {
-      const notation: Notation<number> = '2d5D'
+      const notation = '2d5D'
 
       it('returns an error result', () => {
         const result = validateNotation(notation)
@@ -101,7 +101,7 @@ describe(validateNotation, () => {
         expect(result).toEqual({
           valid: false,
           description: []
-        })
+        } as unknown as NumericValidationResult)
       })
     })
   })

@@ -1,10 +1,10 @@
 import { capPattern } from '~patterns'
-import type { GreaterLessOptions, Modifiers } from '~types'
+import type { ComparisonOptions, ModifierOptions } from '~types'
 import { extractMatches } from './extractMatches'
 
 export function parseCapNotation(
   modifiersString: string
-): Pick<Modifiers, 'cap'> {
+): Pick<ModifierOptions, 'cap'> {
   const notations = extractMatches(modifiersString, capPattern)
   if (notations.length === 0) {
     return {}
@@ -27,7 +27,7 @@ export function parseCapNotation(
           ...innerAcc,
           greaterThan: Number(note.replaceAll('>', ''))
         }
-      }, {} as GreaterLessOptions)
+      }, {} as ComparisonOptions)
 
       return {
         cap: {
@@ -36,6 +36,6 @@ export function parseCapNotation(
         }
       }
     },
-    { cap: {} } as Pick<Modifiers, 'cap'>
+    { cap: {} } as Pick<ModifierOptions, 'cap'>
   )
 }

@@ -1,13 +1,12 @@
 import { isD } from '~guards/isD'
 import { D } from '~src/D'
-import type { RollArgument, RollParameters } from '~types'
+import type { RollArgument, RollParams } from '~types'
 import { argumentToOptions } from './argumentToOptions'
 
-export function dieForArgument<A extends string | number>(
-  argument: RollArgument<A>
-): RollParameters<A>['die'] {
+export function dieForArgument(argument: RollArgument): RollParams['die'] {
   if (isD(argument)) {
-    return argument as RollParameters<A>['die']
+    return argument
   }
-  return new D(argumentToOptions(argument).sides) as RollParameters<A>['die']
+  const options = argumentToOptions(argument)
+  return D(options.sides)
 }

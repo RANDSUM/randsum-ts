@@ -1,20 +1,20 @@
-import type { DicePools, DicePoolType } from '~types'
+import type { BaseRollResult, DicePool } from '~types'
 
-export function calculateDicePoolType<S extends string | number>(
-  dicePools: DicePools<S>['dicePools']
-): DicePoolType<S> {
+export function calculateDicePoolType(
+  dicePools: DicePool['dicePools']
+): BaseRollResult['type'] {
   switch (true) {
     case Object.values(dicePools).every(
       (pool) => typeof pool.options.sides === 'number'
     ):
-      return 'numerical' as DicePoolType<S>
+      return 'numerical'
 
     case Object.values(dicePools).every((pool) =>
       Array.isArray(pool.options.sides)
     ):
-      return 'custom' as DicePoolType<S>
+      return 'custom'
 
     default:
-      return 'mixed' as DicePoolType<S>
+      return 'mixed'
   }
 }

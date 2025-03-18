@@ -1,12 +1,12 @@
 import { uniquePattern } from '~patterns'
-import type { Modifiers } from '~types'
+import type { ModifierOptions } from '~types'
 import { extractMatches } from './extractMatches'
 
 export function parseUniqueNotation(
   modifiersString: string
-): Pick<Modifiers, 'unique'> {
+): Pick<ModifierOptions, 'unique'> {
   return extractMatches(modifiersString, uniquePattern).reduce<
-    Pick<Modifiers, 'unique'>
+    Pick<ModifierOptions, 'unique'>
   >((acc, notationString) => {
     if (notationString.toUpperCase() === 'U') {
       if (typeof acc.unique === 'object') {

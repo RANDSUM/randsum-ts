@@ -1,9 +1,7 @@
 import { completeRollPattern, coreNotationPattern } from '~patterns'
-import type { Notation } from '~types'
+import type { DiceNotation } from '~types'
 
-export function isDiceNotationArg(
-  argument: unknown
-): argument is Notation<string | number> {
+export function isDiceNotationArg(argument: unknown): argument is DiceNotation {
   const notAString = typeof argument !== 'string'
   const basicTest = !!coreNotationPattern.test(String(argument))
   if (!basicTest || notAString) return false

@@ -1,10 +1,10 @@
 import { minusPattern } from '~patterns'
-import type { Modifiers } from '~types'
+import type { ModifierOptions } from '~types'
 import { extractMatches } from './extractMatches'
 
 export function parseMinusNotation(
   modifiersString: string
-): Pick<Modifiers, 'minus'> {
+): Pick<ModifierOptions, 'minus'> {
   const notations = extractMatches(modifiersString, minusPattern)
   if (notations.length === 0) {
     return {}

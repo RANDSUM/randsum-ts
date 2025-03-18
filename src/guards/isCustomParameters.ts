@@ -1,7 +1,7 @@
-import type { RollParameters } from '~types'
+import type { CustomRollParams, RollParams } from '~types'
 
 export function isCustomParameters(
-  poolParameters: RollParameters<string | number>
-): poolParameters is RollParameters<string> {
+  poolParameters: RollParams
+): poolParameters is CustomRollParams {
   return Array.isArray(poolParameters.options.sides)
 }

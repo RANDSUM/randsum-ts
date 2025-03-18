@@ -1,8 +1,8 @@
-import type { Modifiers } from '~types'
+import type { ModifierOptions } from '~types'
 
 export function parseDropLowNotation(
   notations: string[]
-): Pick<Modifiers, 'drop'> {
+): Pick<ModifierOptions, 'drop'> {
   if (notations.length === 0) {
     return { drop: {} }
   }

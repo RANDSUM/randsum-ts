@@ -1,7 +1,7 @@
-import type { GreaterLessOptions } from '~types'
+import type { ComparisonOptions } from '~types'
 
 export function formatGreaterLess(
-  options: GreaterLessOptions,
+  options: ComparisonOptions,
   list: string[] = []
 ): string[] {
   if (options.greaterThan) {

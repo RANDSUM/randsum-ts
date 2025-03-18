@@ -23,7 +23,6 @@
     },
   },
   "overrides": {
-    "typescript": "5.9.0-dev.20250313",
     "bun-types": "canary",
   },
   "packages": {
@@ -169,7 +168,7 @@
 
     "bun-plugin-dts": ["bun-plugin-dts@0.3.0", "", { "dependencies": { "common-path-prefix": "^3.0.0", "dts-bundle-generator": "^9.5.1", "get-tsconfig": "^4.8.1" } }, "sha512-QpiAOKfPcdOToxySOqRY8FwL+brTvyXEHWzrSCRKt4Pv7Z4pnUrhK9tFtM7Ndm7ED09B/0cGXnHJKqmekr/ERw=="],
 
-    "bun-types": ["bun-types@1.2.6-canary.20250316T140615", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-94SNFe0DQooDYiwairZDLdVBqgPxQjQOkfW1eBMmTv+uuuB63xwajJAB4ko/bp7haB5fgftNqhmeYYn4h0gH3g=="],
+    "bun-types": ["bun-types@1.2.6-canary.20250317T140608", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-afrN6ABU/g8Fle6E7qUqvjFXMkcxgZBOZ+kxSaPlAJbmhbyIu0Pt1BoAAYNK4voG6T1SxcnD+ouMRh7nSpPDtw=="],
 
     "bytes-iec": ["bytes-iec@3.1.1", "", {}, "sha512-fey6+4jDK7TFtFg/klGSvNKJctyU7n2aQdnM+CO0ruLPbqqMOM8Tio0Pc+deqUeVKX1tL5DQep1zQ7+37aTAsA=="],
 
@@ -379,7 +378,7 @@
 
     "type-check": ["type-check@0.4.0", "", { "dependencies": { "prelude-ls": "^1.2.1" } }, "sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew=="],
 
-    "typescript": ["typescript@5.9.0-dev.20250313", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-CSJ3yU/30upSGEnuaS+waSGXkPPp73VlwJ1TUerZNv/ySXt/HgN+42IdIrzQCHYiKAZmtic+LIYOavhMA/XJRA=="],
+    "typescript": ["typescript@5.8.2", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ=="],
 
     "typescript-eslint": ["typescript-eslint@8.26.1", "", { "dependencies": { "@typescript-eslint/eslint-plugin": "8.26.1", "@typescript-eslint/parser": "8.26.1", "@typescript-eslint/utils": "8.26.1" }, "peerDependencies": { "eslint": "^8.57.0 || ^9.0.0", "typescript": ">=4.8.4 <5.9.0" } }, "sha512-t/oIs9mYyrwZGRpDv3g+3K6nZ5uhKEMt2oNmAPwaY4/ye0+EH4nXIPYNtkYFS6QHm+1DFg34DbglYBz5P9Xysg=="],
 

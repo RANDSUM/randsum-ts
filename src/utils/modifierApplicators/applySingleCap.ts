@@ -1,7 +1,7 @@
-import type { GreaterLessOptions } from '~types'
+import type { ComparisonOptions } from '~types'
 
 export function applySingleCap(
-  { greaterThan, lessThan }: GreaterLessOptions,
+  { greaterThan, lessThan }: ComparisonOptions,
   value?: number
 ): (roll: number) => number {
   return (roll: number) => {

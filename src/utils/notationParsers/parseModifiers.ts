@@ -1,4 +1,4 @@
-import type { Modifiers } from '~types'
+import type { ModifierOptions } from '~types'
 import { parseCapNotation } from './parseCapNotation'
 import { parseDropModifiers } from './parseDropModifiers'
 import { parseExplodeNotation } from './parseExplodeNotation'
@@ -10,7 +10,7 @@ import { parseUniqueNotation } from './parseUniqueNotation'
 
 export function parseModifiers(
   modifiersString: string
-): Modifiers | Record<never, never> {
+): ModifierOptions | Record<never, never> {
   return {
     modifiers: {
       ...parseDropModifiers(modifiersString),

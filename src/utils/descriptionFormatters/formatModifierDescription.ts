@@ -11,7 +11,7 @@ import { uniqueString } from './uniqueString'
 
 export function formatModifierDescriptions({
   modifiers
-}: RollOptions<number | string>): string[] {
+}: RollOptions): string[] {
   if (!isValidModifier(modifiers)) return []
 
   const modifierStrings = []
