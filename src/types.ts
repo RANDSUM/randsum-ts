@@ -2,53 +2,43 @@
 // --- NOTATION & STRINGS ---
 // --------------------------
 
-// Old: NumericDiceNotation
 export type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
-// Old: CustomDiceNotation
 export type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
-// Old: Notation
 export type DiceNotation = NumericDiceNotation | CustomDiceNotation
 
 // -----------------------
 // --- OPTIONS & MODIFIERS ---
 // -----------------------
 
-// Old: BaseRollOptions
-export interface DiceOptions {
+export interface BaseRollOptions {
   quantity?: number
 }
 
-// Old: ComparisonOptions
 export interface ComparisonOptions {
   greaterThan?: number
   lessThan?: number
 }
 
-// Old: DropOptions
 export interface DropOptions extends ComparisonOptions {
   highest?: number
   lowest?: number
   exact?: number[]
 }
 
-// Old: RerollOptions
 export interface RerollOptions extends ComparisonOptions {
   exact?: number[]
   max?: number
 }
 
-// Old: ReplaceOptions
 export interface ReplaceOptions {
   from: number | ComparisonOptions
   to: number
 }
 
-// Old: UniqueOptions
 export interface UniqueOptions {
   notUnique: number[]
 }
 
-// Old: ModifierOptions
 export interface ModifierOptions {
   cap?: ComparisonOptions
   drop?: DropOptions
@@ -64,13 +54,11 @@ export interface ModifierOptions {
 // --- DIE TYPES ---
 // -----------------------
 
-// Old: CoreDie
 export interface BaseDie {
   sides: number
   isCustom: boolean
 }
 
-// Old: NumericalDie
 export interface NumericDie extends BaseDie {
   type: 'numerical'
   isCustom: false
@@ -80,7 +68,6 @@ export interface NumericDie extends BaseDie {
   toOptions: NumericRollOptions
 }
 
-// Old: CustomDie
 export interface CustomDie extends BaseDie {
   type: 'custom'
   isCustom: true
@@ -90,29 +77,24 @@ export interface CustomDie extends BaseDie {
   toOptions: CustomRollOptions
 }
 
-// Old: Die
 export type Die = NumericDie | CustomDie
 
 // -----------------------
 // --- ROLL OPTIONS ---
 // -----------------------
 
-// Old: NumericalRollOptions
-export interface NumericRollOptions extends DiceOptions {
+export interface NumericRollOptions extends BaseRollOptions {
   sides: number
   modifiers?: ModifierOptions
 }
 
-// Old: CustomRollOptions
-export interface CustomRollOptions extends DiceOptions {
+export interface CustomRollOptions extends BaseRollOptions {
   sides: string[]
   modifiers?: Record<string, never>
 }
 
-// Old: RollOptions
 export type RollOptions = NumericRollOptions | CustomRollOptions
 
-// Old: RequiredNumericalRollParameters
 export type RequiredNumericRollParameters = Required<
   Omit<NumericRollOptions, 'modifiers'>
 >
@@ -121,7 +103,6 @@ export type RequiredNumericRollParameters = Required<
 // --- ROLL ARGUMENTS ---
 // -----------------------
 
-// Old: NumericRollArgument
 export type NumericRollArgument =
   | NumericDie
   | NumericRollOptions
@@ -129,26 +110,22 @@ export type NumericRollArgument =
   | number
   | `${number}`
 
-// Old: CustomRollArgument
 export type CustomRollArgument =
   | CustomDie
   | CustomRollOptions
   | CustomDiceNotation
   | string[]
 
-// Old: RollArgument
 export type RollArgument = NumericRollArgument | CustomRollArgument
 
 // -----------------------
 // --- ROLL PARAMETERS ---
 // -----------------------
 
-// Old: BaseRollParameters
 export interface BaseRollParams {
   description: string[]
 }
 
-// Old: NumericalRollParameters
 export interface NumericRollParams extends BaseRollParams {
   argument: NumericRollArgument
   options: NumericRollOptions
@@ -156,7 +133,6 @@ export interface NumericRollParams extends BaseRollParams {
   notation: NumericDiceNotation
 }
 
-// Old: CustomRollParameters
 export interface CustomRollParams extends BaseRollParams {
   argument: CustomRollArgument
   options: CustomRollOptions
@@ -164,10 +140,8 @@ export interface CustomRollParams extends BaseRollParams {
   notation: CustomDiceNotation
 }
 
-// Old: RollParameters
 export type RollParams = NumericRollParams | CustomRollParams
 
-// Old: DicePools
 export interface DicePool {
   dicePools: Record<string, RollParams>
 }
@@ -176,13 +150,11 @@ export interface DicePool {
 // --- ROLL RESULTS ---
 // -----------------------
 
-// Old: BaseRollResult
 export interface BaseRollResult {
   rawResult: (number | string)[]
   type: 'numerical' | 'custom' | 'mixed'
 }
 
-// Old: NumericalRollResult
 export interface NumericRollResult extends BaseRollResult {
   type: 'numerical'
   rawRolls: Record<string, number[]>
@@ -191,7 +163,6 @@ export interface NumericRollResult extends BaseRollResult {
   total: number
 }
 
-// Old: CustomRollResult
 export interface CustomRollResult extends BaseRollResult {
   type: 'custom'
   rawRolls: Record<string, string[]>
@@ -200,7 +171,6 @@ export interface CustomRollResult extends BaseRollResult {
   total: string
 }
 
-// Old: MixedRollResult
 export interface MixedRollResult extends BaseRollResult {
   type: 'mixed'
   rawRolls: Record<string, number[] | string[]>
@@ -212,39 +182,33 @@ export interface MixedRollResult extends BaseRollResult {
   total: string
 }
 
-// Old: RollResult
 export type RollResult = NumericRollResult | CustomRollResult | MixedRollResult
 
 // -----------------------
 // --- ROLL BONUSES ---
 // -----------------------
 
-// Old: NumericalRollBonuses
 export interface NumericRollBonus {
   rolls: number[]
   simpleMathModifier: number
 }
 
-// Old: CustomRollBonuses
 export interface CustomRollBonus {
   rolls: string[]
   simpleMathModifier: number
 }
 
-// Old: RollBonuses
 export type RollBonus = NumericRollBonus | CustomRollBonus
 
 // -----------------------
 // --- VALIDATION ---
 // -----------------------
 
-// Old: CoreNotationValidationResult
 export interface BaseValidationResult {
   valid: boolean
   description: string[]
 }
 
-// Old: NumericValidationResult
 export interface NumericValidationResult extends BaseValidationResult {
   valid: true
   type: 'numerical'
@@ -252,7 +216,6 @@ export interface NumericValidationResult extends BaseValidationResult {
   notation: NumericDiceNotation
 }
 
-// Old: CustomNotationValidationResult
 export interface CustomValidationResult extends BaseValidationResult {
   valid: true
   type: 'custom'
@@ -260,12 +223,10 @@ export interface CustomValidationResult extends BaseValidationResult {
   notation: CustomDiceNotation
 }
 
-// Old: InvalidNotationValidationResult
 export interface InvalidValidationResult extends BaseValidationResult {
   valid: false
 }
 
-// Old: NotationValidationResult
 export type ValidationResult =
   | NumericValidationResult
   | CustomValidationResult
