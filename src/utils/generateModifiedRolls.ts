@@ -12,9 +12,9 @@ export function generateModifiedRolls<S extends string | number>(
       const modified = applyModifiers(params, rawRolls[key])
       const modifiedRoll = {
         rolls: modified.rolls,
-        total: calculateTotal(modified.rolls, modified.simpleMathModifier)
+        total: calculateTotal<S, S>(modified.rolls, modified.simpleMathModifier)
       }
       return [key, modifiedRoll]
     })
-  ) as RollResult<S>['modifiedRolls']
+  )
 }

@@ -1,8 +1,8 @@
 import type { Notation } from '~types'
 
-export function baseFormatCoreNotation(
+export function baseFormatCoreNotation<S extends string | number>(
   quantity: number,
-  sides: string | number
-): Notation {
-  return `${quantity}d${sides}` as Notation
+  sides: S
+): Notation<S> {
+  return `${quantity}d${sides}` as Notation<S>
 }

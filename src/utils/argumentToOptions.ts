@@ -4,7 +4,9 @@ import { isDicePoolOptions } from '~src/guards/isDicePoolOptions'
 import type { RollArgument, RollOptions } from '~types'
 import { notationToOptions } from './notationToOptions'
 
-export function argumentToOptions(argument: RollArgument): RollOptions {
+export function argumentToOptions(
+  argument: RollArgument<string | number>
+): RollOptions<string | number> {
   switch (true) {
     case isDicePoolOptions(argument):
       return argument

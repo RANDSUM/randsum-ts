@@ -5,7 +5,9 @@ import { notationToOptions } from '~utils/notationToOptions'
 import { optionsToDescription } from '~utils/optionsToDescription'
 import { optionsToNotation } from '~utils/optionsToNotation'
 
-export function validateNotation(notation: string): NotationValidationResult {
+export function validateNotation(
+  notation: string
+): NotationValidationResult<number | string> {
   if (!isDiceNotationArg(notation)) {
     return {
       valid: false,

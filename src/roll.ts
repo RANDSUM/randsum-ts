@@ -1,19 +1,15 @@
-import type {
-  CustomArgument,
-  CustomRollResult,
-  MixedRollResult,
-  NumericalArgument,
-  NumericalRollResult,
-  RollArgument,
-  RollResult
-} from '~types'
+import type { RollArgument, RollResult } from '~types'
 import { formDicePools } from './utils/formDicePools'
 import { rollResultFromDicePools } from './utils/rollResultFromDicePools'
 
-function roll(...args: NumericalArgument[]): NumericalRollResult
-function roll(...args: CustomArgument[]): CustomRollResult
-function roll(...args: RollArgument<string | number>[]): MixedRollResult
-function roll(...args: RollArgument[]): RollResult {
+function roll(...args: RollArgument<number>[]): RollResult<number>
+function roll(...args: RollArgument<string>[]): RollResult<string>
+function roll(
+  ...args: RollArgument<string | number>[]
+): RollResult<string | number>
+function roll<S extends string | number>(
+  ...args: RollArgument<S>[]
+): RollResult<S> {
   const dicePools = formDicePools(args)
   return rollResultFromDicePools(dicePools)
 }
