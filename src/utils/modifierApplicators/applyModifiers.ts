@@ -1,7 +1,6 @@
 import type {
   CustomRollParams,
   ModifierOptions,
-  NumericRollParams,
   RollBonus,
   RollParams
 } from '~types'
@@ -17,23 +16,10 @@ function isCustomParameters(params: RollParams): params is CustomRollParams {
   return Array.isArray((params.options as CustomRollParams['options']).sides)
 }
 
-function isNumericParameters(params: RollParams): params is NumericRollParams {
-  return (
-    typeof (params.options as NumericRollParams['options']).sides === 'number'
-  )
-}
-
 export function applyModifiers(
   poolParameters: RollParams,
   initialRolls: number[] | string[]
 ): RollBonus {
-  if (
-    !isNumericParameters(poolParameters) &&
-    !isCustomParameters(poolParameters)
-  ) {
-    throw new Error('Invalid pool parameters type')
-  }
-
   if (isCustomParameters(poolParameters)) {
     return {
       simpleMathModifier: 0,
@@ -49,10 +35,6 @@ export function applyModifiers(
   const {
     options: { sides, quantity, modifiers = {} }
   } = poolParameters
-
-  if (typeof sides !== 'number') {
-    throw new Error('Invalid sides type for numeric parameters')
-  }
 
   const rollOne = (): number => {
     return coreRandom(sides)
