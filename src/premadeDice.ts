@@ -12,3 +12,22 @@ export const D100: NumericalD = D(100)
 
 export const Coin: CustomD = D(['Heads', 'Tails'])
 export const FudgeDice: CustomD = D(['+', '+', '+', '-', ' ', ' '])
+
+const generateAlphaNumericFaces = (): string[] => {
+  const lowercase = Array.from(
+    { length: 26 },
+    (_, i) => String.fromCharCode(97 + i) // a-z
+  )
+  const uppercase = Array.from(
+    { length: 26 },
+    (_, i) => String.fromCharCode(65 + i) // A-Z
+  )
+  const numbers = Array.from(
+    { length: 10 },
+    (_, i) => String(i) // 0-9
+  )
+
+  return [...lowercase, ...uppercase, ...numbers]
+}
+
+export const AlphaNumDie: CustomD = D(generateAlphaNumericFaces())
