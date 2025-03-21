@@ -40,14 +40,14 @@ export interface UniqueOptions {
 }
 
 export interface ModifierOptions {
-  cap?: ComparisonOptions
-  drop?: DropOptions
-  replace?: ReplaceOptions | ReplaceOptions[]
-  reroll?: RerollOptions
-  unique?: boolean | UniqueOptions
-  explode?: boolean
-  plus?: number
-  minus?: number
+  cap?: ComparisonOptions | null
+  drop?: DropOptions | null
+  replace?: ReplaceOptions | ReplaceOptions[] | null
+  reroll?: RerollOptions | null
+  unique?: boolean | UniqueOptions | null
+  explode?: boolean | null
+  plus?: number | null
+  minus?: number | null
 }
 
 // -----------------------

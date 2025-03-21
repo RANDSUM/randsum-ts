@@ -1,5 +1,10 @@
-import { isCustomParameters } from '~guards/parameters/isCustomParameters'
-import type { RollBonus, RollParams } from '~types'
+import type {
+  CustomRollParams,
+  ModifierOptions,
+  NumericRollParams,
+  RollBonus,
+  RollParams
+} from '~types'
 import { coreRandom } from '~utils/coreRandom'
 import { applyDrop } from './applyDrop'
 import { applyExplode } from './applyExplode'
@@ -8,10 +13,27 @@ import { applyReroll } from './applyReroll'
 import { applySingleCap } from './applySingleCap'
 import { applyUnique } from './applyUnique'
 
+function isCustomParameters(params: RollParams): params is CustomRollParams {
+  return Array.isArray((params.options as CustomRollParams['options']).sides)
+}
+
+function isNumericParameters(params: RollParams): params is NumericRollParams {
+  return (
+    typeof (params.options as NumericRollParams['options']).sides === 'number'
+  )
+}
+
 export function applyModifiers(
   poolParameters: RollParams,
   initialRolls: number[] | string[]
 ): RollBonus {
+  if (
+    !isNumericParameters(poolParameters) &&
+    !isCustomParameters(poolParameters)
+  ) {
+    throw new Error('Invalid pool parameters type')
+  }
+
   if (isCustomParameters(poolParameters)) {
     return {
       simpleMathModifier: 0,
@@ -28,71 +50,80 @@ export function applyModifiers(
     options: { sides, quantity, modifiers = {} }
   } = poolParameters
 
-  const rollOne: () => number = () => coreRandom(sides)
+  if (typeof sides !== 'number') {
+    throw new Error('Invalid sides type for numeric parameters')
+  }
 
-  return Object.keys(modifiers).reduce((bonuses, key) => {
+  const rollOne = (): number => {
+    return coreRandom(sides)
+  }
+
+  return applyModifiersReducer(
+    modifiers,
+    rollBonuses,
+    { sides, quantity: quantity || 1 },
+    rollOne
+  )
+}
+
+function applyModifiersReducer(
+  modifiers: ModifierOptions,
+  initialBonuses: { simpleMathModifier: number; rolls: number[] },
+  params: { sides: number; quantity: number },
+  rollOne: () => number
+): RollBonus {
+  return Object.entries(modifiers).reduce((bonuses, [key, value]) => {
+    if (value === undefined || value === null) {
+      return bonuses
+    }
+
     switch (key) {
       case 'reroll':
-        if (!modifiers.reroll) return bonuses
         return {
           ...bonuses,
-          rolls: applyReroll(bonuses.rolls, modifiers.reroll, rollOne)
+          rolls: applyReroll(bonuses.rolls, value, rollOne)
         }
       case 'unique':
-        if (!modifiers.unique) return bonuses
         return {
           ...bonuses,
           rolls: applyUnique(
             bonuses.rolls,
-            { sides, quantity: quantity || 1, unique: modifiers.unique },
+            { ...params, unique: value },
             rollOne
           )
         }
-
       case 'replace':
-        if (!modifiers.replace) return bonuses
         return {
           ...bonuses,
-          rolls: applyReplace(bonuses.rolls, modifiers.replace)
+          rolls: applyReplace(bonuses.rolls, value)
         }
-
       case 'cap':
-        if (!modifiers.cap) return bonuses
         return {
           ...bonuses,
-          rolls: bonuses.rolls.map(applySingleCap(modifiers.cap))
+          rolls: bonuses.rolls.map(applySingleCap(value))
         }
-
       case 'drop':
-        if (!modifiers.drop) return bonuses
         return {
           ...bonuses,
-          rolls: applyDrop(bonuses.rolls, modifiers.drop)
+          rolls: applyDrop(bonuses.rolls, value)
         }
-
       case 'explode':
-        if (!modifiers.explode) return bonuses
         return {
           ...bonuses,
-          rolls: applyExplode(bonuses.rolls, { sides }, rollOne)
+          rolls: applyExplode(bonuses.rolls, params, rollOne)
         }
-
       case 'plus':
         return {
           ...bonuses,
-          simpleMathModifier:
-            bonuses.simpleMathModifier + Number(modifiers.plus)
+          simpleMathModifier: bonuses.simpleMathModifier + Number(value)
         }
-
       case 'minus':
         return {
           ...bonuses,
-          simpleMathModifier:
-            bonuses.simpleMathModifier - Number(modifiers.minus)
+          simpleMathModifier: bonuses.simpleMathModifier - Number(value)
         }
-
       default:
         throw new Error(`Unknown modifier: ${key}`)
     }
-  }, rollBonuses)
+  }, initialBonuses)
 }
