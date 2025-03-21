@@ -1,4 +1,4 @@
-import { isNumericRollOptions } from '~guards/isNumericRollOptions'
+import { isNumericRollOptions } from '~guards/options/isNumericRollOptions'
 import type { DicePool, RollResult } from '~types'
 import { coreSpreadRolls } from './coreSpreadRolls'
 

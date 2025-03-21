@@ -1,7 +1,8 @@
 import type { CustomRollOptions, NumericRollOptions } from '~types'
+import { isNumericSides } from '../sides/isNumericSides'
 
 export function isNumericRollOptions(
   options: NumericRollOptions | CustomRollOptions
 ): options is NumericRollOptions {
-  return typeof (options as NumericRollOptions).sides === 'number'
+  return isNumericSides(options.sides)
 }

@@ -1,5 +1,14 @@
-import { isCustomParameters } from '~src/guards/isCustomParameters'
-import type { RollBonus, RollParams } from '~types'
+import { isCustomParameters } from '~guards/parameters/isCustomParameters'
+import type {
+  ComparisonOptions,
+  DropOptions,
+  ModifierOptions,
+  ReplaceOptions,
+  RerollOptions,
+  RollBonus,
+  RollParams,
+  UniqueOptions
+} from '~types'
 import { coreRandom } from '~utils/coreRandom'
 import { applyDrop } from './applyDrop'
 import { applyExplode } from './applyExplode'
@@ -7,6 +16,60 @@ import { applyReplace } from './applyReplace'
 import { applyReroll } from './applyReroll'
 import { applySingleCap } from './applySingleCap'
 import { applyUnique } from './applyUnique'
+
+type NumericRollBonus = {
+  simpleMathModifier: number
+  rolls: number[]
+}
+
+type ModifierHandler = (
+  bonuses: NumericRollBonus,
+  value: unknown,
+  params: { sides: number; quantity: number },
+  rollOne: () => number
+) => NumericRollBonus
+
+const MODIFIER_HANDLERS: Record<keyof ModifierOptions, ModifierHandler> = {
+  reroll: (bonuses, value, _, rollOne) => ({
+    ...bonuses,
+    rolls: applyReroll(bonuses.rolls, value as RerollOptions, rollOne)
+  }),
+  unique: (bonuses, value, params, rollOne) => ({
+    ...bonuses,
+    rolls: applyUnique(
+      bonuses.rolls,
+      { ...params, unique: value as boolean | UniqueOptions },
+      rollOne
+    )
+  }),
+  replace: (bonuses, value) => ({
+    ...bonuses,
+    rolls: applyReplace(
+      bonuses.rolls,
+      value as ReplaceOptions | ReplaceOptions[]
+    )
+  }),
+  cap: (bonuses, value) => ({
+    ...bonuses,
+    rolls: bonuses.rolls.map(applySingleCap(value as ComparisonOptions))
+  }),
+  drop: (bonuses, value) => ({
+    ...bonuses,
+    rolls: applyDrop(bonuses.rolls, value as DropOptions)
+  }),
+  explode: (bonuses, _, params, rollOne) => ({
+    ...bonuses,
+    rolls: applyExplode(bonuses.rolls, params, rollOne)
+  }),
+  plus: (bonuses, value) => ({
+    ...bonuses,
+    simpleMathModifier: bonuses.simpleMathModifier + Number(value)
+  }),
+  minus: (bonuses, value) => ({
+    ...bonuses,
+    simpleMathModifier: bonuses.simpleMathModifier - Number(value)
+  })
+}
 
 export function applyModifiers(
   poolParameters: RollParams,
@@ -19,80 +82,37 @@ export function applyModifiers(
     }
   }
 
-  const rollBonuses = {
-    simpleMathModifier: 0,
-    rolls: initialRolls as number[]
-  }
-
   const {
-    options: { sides, quantity, modifiers = {} }
+    options: { sides, quantity = 1, modifiers = {} }
   } = poolParameters
 
-  const rollOne: () => number = () => coreRandom(sides)
+  const params = { sides, quantity }
+  const rollOne = () => coreRandom(sides)
 
-  return Object.keys(modifiers).reduce((bonuses, key) => {
-    switch (key) {
-      case 'reroll':
-        if (!modifiers.reroll) return bonuses
-        return {
-          ...bonuses,
-          rolls: applyReroll(bonuses.rolls, modifiers.reroll, rollOne)
-        }
-      case 'unique':
-        if (!modifiers.unique) return bonuses
-        return {
-          ...bonuses,
-          rolls: applyUnique(
-            bonuses.rolls,
-            { sides, quantity: quantity || 1, unique: modifiers.unique },
-            rollOne
-          )
-        }
+  return applyModifiersInOrder(
+    modifiers,
+    {
+      simpleMathModifier: 0,
+      rolls: initialRolls as number[]
+    },
+    params,
+    rollOne
+  )
+}
 
-      case 'replace':
-        if (!modifiers.replace) return bonuses
-        return {
-          ...bonuses,
-          rolls: applyReplace(bonuses.rolls, modifiers.replace)
-        }
-
-      case 'cap':
-        if (!modifiers.cap) return bonuses
-        return {
-          ...bonuses,
-          rolls: bonuses.rolls.map(applySingleCap(modifiers.cap))
-        }
-
-      case 'drop':
-        if (!modifiers.drop) return bonuses
-        return {
-          ...bonuses,
-          rolls: applyDrop(bonuses.rolls, modifiers.drop)
-        }
-
-      case 'explode':
-        if (!modifiers.explode) return bonuses
-        return {
-          ...bonuses,
-          rolls: applyExplode(bonuses.rolls, { sides }, rollOne)
-        }
-
-      case 'plus':
-        return {
-          ...bonuses,
-          simpleMathModifier:
-            bonuses.simpleMathModifier + Number(modifiers.plus)
-        }
-
-      case 'minus':
-        return {
-          ...bonuses,
-          simpleMathModifier:
-            bonuses.simpleMathModifier - Number(modifiers.minus)
-        }
-
-      default:
+function applyModifiersInOrder(
+  modifiers: ModifierOptions,
+  initialBonuses: NumericRollBonus,
+  params: { sides: number; quantity: number },
+  rollOne: () => number
+): NumericRollBonus {
+  return Object.entries(modifiers)
+    .filter(([, value]) => value != null)
+    .reduce((bonuses, [key, value]) => {
+      const handler = MODIFIER_HANDLERS[key as keyof ModifierOptions]
+      if (!handler) {
         throw new Error(`Unknown modifier: ${key}`)
-    }
-  }, rollBonuses)
+      }
+      return handler(bonuses, value, params, rollOne)
+    }, initialBonuses)
 }

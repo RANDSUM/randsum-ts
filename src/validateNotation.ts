@@ -1,4 +1,4 @@
-import { isDiceNotationArg } from '~src/guards/isDiceNotationArg'
+import { isDiceNotationArg } from '~guards/notation/isDiceNotationArg'
 import type {
   CustomDiceNotation,
   CustomValidationResult,

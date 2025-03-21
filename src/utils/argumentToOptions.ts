@@ -1,6 +1,6 @@
-import { isD } from '~src/guards/isD'
-import { isDiceNotationArg } from '~src/guards/isDiceNotationArg'
-import { isDicePoolOptions } from '~src/guards/isDicePoolOptions'
+import { isD } from '~guards/dice/isD'
+import { isDiceNotationArg } from '~guards/notation/isDiceNotationArg'
+import { isDicePoolOptions } from '~guards/options/isDicePoolOptions'
 import type { RollArgument, RollOptions } from '~types'
 import { notationToOptions } from './notationToOptions'
 
