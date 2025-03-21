@@ -1,4 +1,4 @@
-import { isD } from '~guards/isD'
+import { isD } from '~guards/dice/isD'
 import { D } from '~src/D'
 import type { RollArgument, RollParams } from '~types'
 import { argumentToOptions } from './argumentToOptions'

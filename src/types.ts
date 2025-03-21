@@ -146,13 +146,16 @@ export interface DicePool {
   dicePools: Record<string, RollParams>
 }
 
+export type DiceType = 'numerical' | 'custom'
+export type DicePoolType = DiceType | 'mixed'
+
 // -----------------------
 // --- ROLL RESULTS ---
 // -----------------------
 
 export interface BaseRollResult {
   rawResult: (number | string)[]
-  type: 'numerical' | 'custom' | 'mixed'
+  type: DicePoolType
 }
 
 export interface NumericRollResult extends BaseRollResult {

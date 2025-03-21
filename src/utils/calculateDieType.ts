@@ -1,4 +1,4 @@
-import { isCustomSidesStringArg } from '~guards/isCustomSidesStringArg'
+import { isCustomSidesStringArg } from '~guards/sides/isCustomSidesStringArg'
 
 export function caclulateDieType(
   sides: number | string[]

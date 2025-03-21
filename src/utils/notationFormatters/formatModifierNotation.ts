@@ -1,4 +1,4 @@
-import { isValidModifier } from '~src/guards/isValidModifier'
+import { isValidModifier } from '~guards/modifiers/isValidModifier'
 import type { RollOptions } from '~types'
 import { capNotation } from './capNotation'
 import { dropNotation } from './dropNotation'

@@ -1,4 +1,4 @@
-import { isCustomParameters } from '~src/guards/isCustomParameters'
+import { isCustomParameters } from '~guards/parameters/isCustomParameters'
 import type { RollBonus, RollParams } from '~types'
 import { coreRandom } from '~utils/coreRandom'
 import { applyDrop } from './applyDrop'
