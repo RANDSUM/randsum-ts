@@ -1,11 +1,17 @@
-import type { NumericRollBonus } from '~types'
+import type { NumericRollBonus, RequiredNumericRollParameters } from '~types'
 
 export class ExplodeModifier {
+  private options: boolean | undefined
+  constructor(options: boolean | undefined) {
+    this.options = options
+  }
+
   apply(
     rolls: number[],
-    sides: number,
+    { sides }: RequiredNumericRollParameters,
     rollOne: () => number
   ): NumericRollBonus {
+    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
     const explodeCount = rolls.filter((roll) => roll === sides).length
     const explodeResults = Array.from({ length: explodeCount }, rollOne)
     const explodedRolls = [...rolls, ...explodeResults]
@@ -16,11 +22,13 @@ export class ExplodeModifier {
     }
   }
 
-  toDescription(): string {
+  toDescription(): string | undefined {
+    if (this.options === undefined) return undefined
     return 'Exploding Dice'
   }
 
-  toNotation(): string {
+  toNotation(): string | undefined {
+    if (this.options === undefined) return undefined
     return '!'
   }
 }
