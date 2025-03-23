@@ -6,6 +6,5 @@ export function applyReroll(
   reroll: RerollOptions,
   rollOne: () => number
 ): number[] {
-  const newRolls = [...rolls]
-  return newRolls.map((roll) => rerollRoll(roll, reroll, rollOne))
+  return [...rolls].map((roll) => rerollRoll(roll, reroll, rollOne))
 }

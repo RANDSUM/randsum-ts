@@ -1,7 +1,8 @@
 import type { NumericRollBonus, RerollOptions } from '~types'
 import { formatGreaterLess } from '~utils/descriptionFormatters/formatGreaterLess'
 import { formatHumanList } from '~utils/formatHumanList'
-import { rerollRoll } from '~utils/modifierApplicators/rerollRoll'
+import { extractExactValue } from '~utils/modifierApplicators/extractExactValue'
+import { formatGreaterLess as formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLess'
 import { maxNotation } from '~utils/notationFormatters/maxNotation'
 
 export class RerollModifier {
@@ -11,28 +12,14 @@ export class RerollModifier {
   }
 
   apply(rolls: number[], rollOne: () => number): NumericRollBonus {
+    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
+
     return {
-      rolls: this.reroll(rolls, rollOne),
+      rolls: [...rolls].map((roll) =>
+        this.rerollRoll(roll, this.options as RerollOptions, rollOne)
+      ),
       simpleMathModifier: 0
     }
-  }
-
-  toNotation(): string | undefined {
-    if (this.options === undefined) return undefined
-    const rerollList = []
-
-    if (this.options.exact) {
-      this.options.exact.forEach((roll) => {
-        rerollList.push(String(roll))
-      })
-    }
-    const greaterLess = formatGreaterLess(this.options)
-    if (greaterLess.length > 0) {
-      rerollList.push(greaterLess.join(','))
-    }
-
-    if (rerollList.length === 0) return ''
-    return `R{${rerollList.join(',')}}${maxNotation(this.options.max)}`
   }
 
   toDescription(): string | undefined {
@@ -52,7 +39,7 @@ export class RerollModifier {
       .filter((i) => i !== '')
       .join(', ')
 
-    if (exactString === '') return ''
+    if (exactString === '') return undefined
     const coreString = `Reroll ${exactString}`
 
     if (this.options.max) {
@@ -62,10 +49,49 @@ export class RerollModifier {
     return coreString
   }
 
-  private reroll(rolls: number[], rollOne: () => number): number[] {
-    if (this.options === undefined) return []
-    return [...rolls].map((roll) =>
-      rerollRoll(roll, this.options as RerollOptions, rollOne)
-    )
+  toNotation(): string | undefined {
+    if (this.options === undefined) return undefined
+    const rerollList = []
+
+    if (this.options.exact) {
+      this.options.exact.forEach((roll) => {
+        rerollList.push(String(roll))
+      })
+    }
+    const greaterLess = formatGreaterLessNotation(this.options)
+    if (greaterLess.length > 0) {
+      rerollList.push(greaterLess.join(','))
+    }
+
+    if (rerollList.length === 0) return ''
+    return `R{${rerollList.join(',')}}${maxNotation(this.options.max)}`
+  }
+
+  private rerollRoll(
+    roll: number,
+    { greaterThan, lessThan, exact, max }: RerollOptions,
+    rollOne: () => number,
+    index = 0
+  ): number {
+    if (max === index) {
+      return roll
+    }
+    if (index === 99) {
+      return roll
+    }
+
+    if (
+      (greaterThan !== undefined && roll > greaterThan) ||
+      (lessThan !== undefined && roll < lessThan) ||
+      extractExactValue(exact, roll)
+    ) {
+      return this.rerollRoll(
+        rollOne(),
+        { greaterThan, lessThan, exact, max },
+        rollOne,
+        index + 1
+      )
+    }
+    return roll
   }
 }
