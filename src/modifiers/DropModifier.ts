@@ -2,7 +2,6 @@ import type { DropOptions, NumericRollBonus } from '~types'
 import { formatGreaterLess } from '~utils/descriptionFormatters/formatGreaterLess'
 import { formatHumanList } from '~utils/formatHumanList'
 import { formatGreaterLess as formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLess'
-import { times } from '~utils/times'
 
 export class DropModifier {
   private options: DropOptions | undefined
@@ -26,11 +25,11 @@ export class DropModifier {
       .sort((a, b) => a - b)
 
     if (highest !== undefined) {
-      times(highest)(() => sortedResults.pop())
+      this.times(highest)(() => sortedResults.pop())
     }
 
     if (lowest !== undefined) {
-      times(lowest)(() => sortedResults.shift())
+      this.times(lowest)(() => sortedResults.shift())
     }
 
     return {
@@ -101,5 +100,14 @@ export class DropModifier {
     }
 
     return finalList.join('')
+  }
+
+  private times(iterator: number) {
+    return (callback: (index?: number) => void): void => {
+      if (iterator > 0) {
+        callback(iterator)
+        this.times(iterator - 1)(callback)
+      }
+    }
   }
 }

@@ -10,7 +10,7 @@ export type DiceNotation = NumericDiceNotation | CustomDiceNotation
 // --- OPTIONS & MODIFIERS ---
 // -----------------------
 
-export interface BaseRollOptions {
+interface BaseRollOptions {
   quantity?: number
 }
 
@@ -54,9 +54,12 @@ export interface ModifierOptions {
 // --- DIE TYPES ---
 // -----------------------
 
-export interface BaseDie {
+interface BaseDie {
   sides: number
   isCustom: boolean
+  roll(quantity?: number): number | string
+  rollSpread(quantity?: number): number[] | string[]
+  toOptions: RollOptions
 }
 
 export interface NumericDie extends BaseDie {
@@ -76,8 +79,6 @@ export interface CustomDie extends BaseDie {
   rollSpread(quantity?: number): string[]
   toOptions: CustomRollOptions
 }
-
-export type Die = NumericDie | CustomDie
 
 // -----------------------
 // --- ROLL OPTIONS ---
@@ -122,18 +123,18 @@ export type RollArgument = NumericRollArgument | CustomRollArgument
 // --- ROLL PARAMETERS ---
 // -----------------------
 
-export interface BaseRollParams {
+interface BaseRollParams {
   description: string[]
 }
 
-export interface NumericRollParams extends BaseRollParams {
+interface NumericRollParams extends BaseRollParams {
   argument: NumericRollArgument
   options: NumericRollOptions
   die: NumericDie
   notation: NumericDiceNotation
 }
 
-export interface CustomRollParams extends BaseRollParams {
+interface CustomRollParams extends BaseRollParams {
   argument: CustomRollArgument
   options: CustomRollOptions
   die: CustomDie
@@ -193,7 +194,7 @@ export interface NumericRollBonus {
   simpleMathModifier: number
 }
 
-export interface CustomRollBonus {
+interface CustomRollBonus {
   rolls: string[]
   simpleMathModifier: number
 }
@@ -204,7 +205,7 @@ export type RollBonus = NumericRollBonus | CustomRollBonus
 // --- VALIDATION ---
 // -----------------------
 
-export interface BaseValidationResult {
+interface BaseValidationResult {
   valid: boolean
   description: string[]
 }

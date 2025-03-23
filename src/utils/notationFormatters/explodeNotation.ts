@@ -1,3 +1,0 @@
-export function explodeNotation() {
-  return '!'
-}

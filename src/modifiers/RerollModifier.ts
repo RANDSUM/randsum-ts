@@ -1,7 +1,6 @@
 import type { NumericRollBonus, RerollOptions } from '~types'
 import { formatGreaterLess } from '~utils/descriptionFormatters/formatGreaterLess'
 import { formatHumanList } from '~utils/formatHumanList'
-import { extractExactValue } from '~utils/modifierApplicators/extractExactValue'
 import { formatGreaterLess as formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLess'
 import { maxNotation } from '~utils/notationFormatters/maxNotation'
 
@@ -67,6 +66,16 @@ export class RerollModifier {
     return `R{${rerollList.join(',')}}${maxNotation(this.options.max)}`
   }
 
+  private extractExactValue(
+    exact: number[] | undefined,
+    roll: number
+  ): boolean {
+    if (exact === undefined) {
+      return false
+    }
+    return exact.includes(roll)
+  }
+
   private rerollRoll(
     roll: number,
     { greaterThan, lessThan, exact, max }: RerollOptions,
@@ -83,7 +92,7 @@ export class RerollModifier {
     if (
       (greaterThan !== undefined && roll > greaterThan) ||
       (lessThan !== undefined && roll < lessThan) ||
-      extractExactValue(exact, roll)
+      this.extractExactValue(exact, roll)
     ) {
       return this.rerollRoll(
         rollOne(),

@@ -39,6 +39,7 @@ export function applyModifiers(
           bonuses.rolls,
           rollOne
         )
+
       case 'unique':
         return new UniqueModifier(modifiers.unique).apply(
           bonuses.rolls,
