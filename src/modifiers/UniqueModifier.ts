@@ -17,6 +17,7 @@ export class UniqueModifier {
     { sides, quantity }: RequiredNumericRollParameters,
     rollOne: () => number
   ): NumericRollBonus {
+    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
     if (quantity > sides) {
       throw new InvalidUniqueError()
     }
@@ -43,14 +44,16 @@ export class UniqueModifier {
     }
   }
 
-  toDescription(): string {
+  toDescription(): string | undefined {
+    if (this.options === undefined) return undefined
     if (typeof this.options === 'boolean' || this.options === undefined) {
       return 'No Duplicate Rolls'
     }
     return `No Duplicates (except ${formatHumanList(this.options.notUnique)})`
   }
 
-  toNotation(): string {
+  toNotation(): string | undefined {
+    if (this.options === undefined) return undefined
     if (typeof this.options === 'boolean' || this.options === undefined)
       return 'U'
     return `U{${this.options.notUnique.join(',')}}`
