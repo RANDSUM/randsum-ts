@@ -25,5 +25,6 @@ export function formatModifierDescriptions({
     modifiers.minus && new MinusModifier(modifiers.minus).toDescription()
   ]
     .flat()
-    .filter((i) => typeof i === 'string' && i !== '')
+    .filter((i) => typeof i === 'string')
+    .filter((i) => i.length > 0)
 }
