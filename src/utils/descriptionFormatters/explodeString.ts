@@ -1,3 +1,5 @@
+import { ExplodeModifier } from '../../modifiers/ExplodeModifier'
+
 export function explodeString(): string {
-  return 'Exploding Dice'
+  return new ExplodeModifier().toDescription()
 }

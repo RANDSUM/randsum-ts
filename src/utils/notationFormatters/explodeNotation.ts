@@ -1,3 +1,5 @@
-export function explodeNotation() {
-  return '!'
+import { ExplodeModifier } from '../../modifiers/ExplodeModifier'
+
+export function explodeNotation(): string {
+  return new ExplodeModifier().toNotation()
 }
