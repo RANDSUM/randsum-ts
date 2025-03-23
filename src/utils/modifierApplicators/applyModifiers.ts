@@ -1,14 +1,14 @@
 import { isCustomParameters } from '~src/guards/isCustomParameters'
+import { CapModifier } from '~src/modifiers/CapModifier'
+import { DropModifier } from '~src/modifiers/DropModifier'
 import { ExplodeModifier } from '~src/modifiers/ExplodeModifier'
 import { MinusModifier } from '~src/modifiers/MinusModifier'
 import { PlusModifier } from '~src/modifiers/PlusModifier'
+import { ReplaceModifier } from '~src/modifiers/ReplaceModifier'
 import { RerollModifier } from '~src/modifiers/RerollModifier'
 import { UniqueModifier } from '~src/modifiers/UniqueModifier'
 import type { RollBonus, RollParams } from '~types'
 import { coreRandom } from '~utils/coreRandom'
-import { applyDrop } from './applyDrop'
-import { applyReplace } from './applyReplace'
-import { applySingleCap } from './applySingleCap'
 
 export function applyModifiers(
   poolParameters: RollParams,
@@ -47,25 +47,13 @@ export function applyModifiers(
         )
 
       case 'replace':
-        if (!modifiers.replace) return bonuses
-        return {
-          ...bonuses,
-          rolls: applyReplace(bonuses.rolls, modifiers.replace)
-        }
+        return new ReplaceModifier(modifiers.replace).apply(bonuses.rolls)
 
       case 'cap':
-        if (!modifiers.cap) return bonuses
-        return {
-          ...bonuses,
-          rolls: bonuses.rolls.map(applySingleCap(modifiers.cap))
-        }
+        return new CapModifier(modifiers.cap).apply(bonuses.rolls)
 
       case 'drop':
-        if (!modifiers.drop) return bonuses
-        return {
-          ...bonuses,
-          rolls: applyDrop(bonuses.rolls, modifiers.drop)
-        }
+        return new DropModifier(modifiers.drop).apply(bonuses.rolls)
 
       case 'explode':
         return new ExplodeModifier(modifiers.explode).apply(
