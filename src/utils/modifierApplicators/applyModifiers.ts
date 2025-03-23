@@ -2,12 +2,12 @@ import { isCustomParameters } from '~src/guards/isCustomParameters'
 import { ExplodeModifier } from '~src/modifiers/ExplodeModifier'
 import { MinusModifier } from '~src/modifiers/MinusModifier'
 import { PlusModifier } from '~src/modifiers/PlusModifier'
+import { RerollModifier } from '~src/modifiers/RerollModifier'
 import { UniqueModifier } from '~src/modifiers/UniqueModifier'
 import type { RollBonus, RollParams } from '~types'
 import { coreRandom } from '~utils/coreRandom'
 import { applyDrop } from './applyDrop'
 import { applyReplace } from './applyReplace'
-import { applyReroll } from './applyReroll'
 import { applySingleCap } from './applySingleCap'
 
 export function applyModifiers(
@@ -35,11 +35,10 @@ export function applyModifiers(
   return Object.keys(modifiers).reduce((bonuses, key) => {
     switch (key) {
       case 'reroll':
-        if (!modifiers.reroll) return bonuses
-        return {
-          ...bonuses,
-          rolls: applyReroll(bonuses.rolls, modifiers.reroll, rollOne)
-        }
+        return new RerollModifier(modifiers.reroll).apply(
+          bonuses.rolls,
+          rollOne
+        )
       case 'unique':
         return new UniqueModifier(modifiers.unique).apply(
           bonuses.rolls,
