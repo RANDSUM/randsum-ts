@@ -1,12 +1,14 @@
 import { isCustomParameters } from '~src/guards/isCustomParameters'
+import { ExplodeModifier } from '~src/modifiers/ExplodeModifier'
+import { MinusModifier } from '~src/modifiers/MinusModifier'
+import { PlusModifier } from '~src/modifiers/PlusModifier'
+import { UniqueModifier } from '~src/modifiers/UniqueModifier'
 import type { RollBonus, RollParams } from '~types'
 import { coreRandom } from '~utils/coreRandom'
 import { applyDrop } from './applyDrop'
-import { applyExplode } from './applyExplode'
 import { applyReplace } from './applyReplace'
 import { applyReroll } from './applyReroll'
 import { applySingleCap } from './applySingleCap'
-import { applyUnique } from './applyUnique'
 
 export function applyModifiers(
   poolParameters: RollParams,
@@ -25,7 +27,7 @@ export function applyModifiers(
   }
 
   const {
-    options: { sides, quantity, modifiers = {} }
+    options: { sides, quantity = 1, modifiers = {} }
   } = poolParameters
 
   const rollOne: () => number = () => coreRandom(sides)
@@ -39,15 +41,11 @@ export function applyModifiers(
           rolls: applyReroll(bonuses.rolls, modifiers.reroll, rollOne)
         }
       case 'unique':
-        if (!modifiers.unique) return bonuses
-        return {
-          ...bonuses,
-          rolls: applyUnique(
-            bonuses.rolls,
-            { sides, quantity: quantity || 1, unique: modifiers.unique },
-            rollOne
-          )
-        }
+        return new UniqueModifier(modifiers.unique).apply(
+          bonuses.rolls,
+          { sides, quantity },
+          rollOne
+        )
 
       case 'replace':
         if (!modifiers.replace) return bonuses
@@ -71,25 +69,17 @@ export function applyModifiers(
         }
 
       case 'explode':
-        if (!modifiers.explode) return bonuses
-        return {
-          ...bonuses,
-          rolls: applyExplode(bonuses.rolls, { sides }, rollOne)
-        }
+        return new ExplodeModifier(modifiers.explode).apply(
+          bonuses.rolls,
+          { sides, quantity },
+          rollOne
+        )
 
       case 'plus':
-        return {
-          ...bonuses,
-          simpleMathModifier:
-            bonuses.simpleMathModifier + Number(modifiers.plus)
-        }
+        return new PlusModifier(modifiers.plus).apply(bonuses.rolls)
 
       case 'minus':
-        return {
-          ...bonuses,
-          simpleMathModifier:
-            bonuses.simpleMathModifier - Number(modifiers.minus)
-        }
+        return new MinusModifier(modifiers.minus).apply(bonuses.rolls)
 
       default:
         throw new Error(`Unknown modifier: ${key}`)
