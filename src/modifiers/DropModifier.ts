@@ -1,9 +1,128 @@
-import type { DropOptions, NumericRollBonus } from '~types'
+import {
+  dropConstraintsPattern,
+  dropHighestPattern,
+  dropLowestPattern
+} from '~patterns'
+import type { DropOptions, ModifierOptions, NumericRollBonus } from '~types'
 import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { formatHumanList } from '~utils/formatHumanList'
 import { formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLessNotation'
+import { extractMatches } from '~utils/notationParsers/extractMatches'
 
 export class DropModifier {
+  static parseConstraints(notations: string[]): Pick<ModifierOptions, 'drop'> {
+    if (notations.length === 0) {
+      return {}
+    }
+    const dropConstraintParameters: DropOptions = {}
+
+    return notations.reduce(
+      (acc, notationString) => {
+        const constraints = notationString
+          .split(/[Dd]/)[1]
+          .replaceAll('{', '')
+          .replaceAll('}', '')
+          .split(',')
+        const parsedConstraints = constraints.reduce((innerAcc, constraint) => {
+          if (constraint.includes('<')) {
+            return {
+              ...innerAcc,
+              lessThan: Number(constraint.split('<')[1])
+            }
+          }
+
+          if (constraint.includes('>')) {
+            return {
+              ...innerAcc,
+              greaterThan: Number(constraint.split('>')[1])
+            }
+          }
+
+          const exact = [...(innerAcc?.exact || []), Number(constraint)]
+
+          return {
+            ...innerAcc,
+            exact
+          }
+        }, dropConstraintParameters)
+
+        return {
+          drop: {
+            ...acc.drop,
+            ...parsedConstraints
+          }
+        }
+      },
+      { drop: dropConstraintParameters }
+    )
+  }
+
+  static parseHigh(notations: string[]): Pick<ModifierOptions, 'drop'> {
+    if (notations.length === 0) {
+      return {}
+    }
+
+    const notationString = notations[notations.length - 1]
+    const highestCount = notationString.split(/[Hh]/)[1]
+
+    if (highestCount === '') {
+      return {
+        drop: { highest: 1 }
+      }
+    }
+
+    return {
+      drop: { highest: Number(highestCount) }
+    }
+  }
+
+  static parseLow(notations: string[]): Pick<ModifierOptions, 'drop'> {
+    if (notations.length === 0) {
+      return { drop: {} }
+    }
+    const notationString = notations[notations.length - 1]
+    const lowestCount = notationString.split(/[Ll]/)[1]
+
+    if (lowestCount === '') {
+      return {
+        drop: {
+          lowest: 1
+        }
+      }
+    }
+
+    return {
+      drop: {
+        lowest: Number(lowestCount)
+      }
+    }
+  }
+
+  static parse(modifiersString: string): Pick<ModifierOptions, 'drop'> {
+    const dropHighModifiers = DropModifier.parseHigh(
+      extractMatches(modifiersString, dropHighestPattern)
+    )
+    const dropLowModifiers = DropModifier.parseLow(
+      extractMatches(modifiersString, dropLowestPattern)
+    )
+    const dropConstraintsModifiers = DropModifier.parseConstraints(
+      extractMatches(modifiersString, dropConstraintsPattern)
+    )
+
+    const rawDropModifiers = {
+      drop: {
+        ...dropHighModifiers.drop,
+        ...dropLowModifiers.drop,
+        ...dropConstraintsModifiers.drop
+      }
+    }
+
+    if (Object.keys(rawDropModifiers.drop).length > 0) {
+      return rawDropModifiers
+    }
+    return {}
+  }
+
   private options: DropOptions | undefined
   constructor(options: DropOptions | undefined) {
     this.options = options

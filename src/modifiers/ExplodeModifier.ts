@@ -1,6 +1,20 @@
-import type { NumericRollBonus, RequiredNumericRollParameters } from '~types'
+import { explodePattern } from '~patterns'
+import type {
+  ModifierOptions,
+  NumericRollBonus,
+  RequiredNumericRollParameters
+} from '~types'
+import { extractMatches } from '~utils/notationParsers/extractMatches'
 
 export class ExplodeModifier {
+  static parse(modifiersString: string): Pick<ModifierOptions, 'explode'> {
+    const notations = extractMatches(modifiersString, explodePattern)
+    if (notations.length === 0) {
+      return {}
+    }
+    return { explode: true }
+  }
+
   private options: boolean | undefined
   constructor(options: boolean | undefined) {
     this.options = options

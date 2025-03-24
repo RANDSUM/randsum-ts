@@ -1,9 +1,51 @@
-import type { NumericRollBonus, ReplaceOptions } from '~types'
+import { replacePattern } from '~patterns'
+import type { ModifierOptions, NumericRollBonus, ReplaceOptions } from '~types'
 import { extractFromValue } from '~utils/descriptionFormatters/extractFromValue'
 import { replaceArgs } from '~utils/notationFormatters/replaceArgs'
+import { extractMatches } from '~utils/notationParsers/extractMatches'
 import { CapModifier } from './CapModifier'
 
 export class ReplaceModifier {
+  static parse(modifiersString: string): Pick<ModifierOptions, 'replace'> {
+    const notations = extractMatches(modifiersString, replacePattern)
+    if (notations.length === 0) {
+      return {}
+    }
+    const replace = notations
+      .map((notationString) => {
+        const replaceOptions = notationString
+          .split(/[Vv]/)[1]
+          .replaceAll('{', '')
+          .replaceAll('}', '')
+          .split(',')
+          .map((replacement) => {
+            const [noteFrom, noteTo] = replacement.split('=')
+
+            const coreReplacement = { to: Number(noteTo) }
+            if (noteFrom.includes('>')) {
+              return {
+                ...coreReplacement,
+                from: { greaterThan: Number(noteFrom.replaceAll('>', '')) }
+              }
+            }
+            if (noteFrom.includes('<')) {
+              return {
+                ...coreReplacement,
+                from: { lessThan: Number(noteFrom.replaceAll('<', '')) }
+              }
+            }
+            return { ...coreReplacement, from: Number(noteFrom) }
+          })
+
+        if (replaceOptions.length === 1) {
+          return replaceOptions[0]
+        }
+        return replaceOptions.filter(Boolean)
+      })
+      .flat()
+    return { replace }
+  }
+
   private options: ReplaceOptions | ReplaceOptions[] | undefined
   constructor(options: ReplaceOptions | ReplaceOptions[] | undefined) {
     this.options = options

@@ -1,6 +1,22 @@
-import type { NumericRollBonus } from '~types'
+import { plusPattern } from '~patterns'
+import type { ModifierOptions, NumericRollBonus } from '~types'
+import { extractMatches } from '~utils/notationParsers/extractMatches'
 
 export class PlusModifier {
+  static parse(modifiersString: string): Pick<ModifierOptions, 'plus'> {
+    const notations = extractMatches(modifiersString, plusPattern)
+    if (notations.length === 0) {
+      return {}
+    }
+    const plus = notations
+      .map((notationString) => Number(notationString.split('+')[1]))
+      .reduce((acc, num) => acc + num, 0)
+
+    return {
+      plus
+    }
+  }
+
   private options: number | undefined
   constructor(options: number | undefined) {
     this.options = options

@@ -1,10 +1,65 @@
-import type { NumericRollBonus, RerollOptions } from '~types'
+import { rerollPattern } from '~patterns'
+import type { ModifierOptions, NumericRollBonus, RerollOptions } from '~types'
 import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { formatHumanList } from '~utils/formatHumanList'
 import { formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLessNotation'
 import { maxNotation } from '~utils/notationFormatters/maxNotation'
+import { extractMatches } from '~utils/notationParsers/extractMatches'
 
 export class RerollModifier {
+  static parse(modifiersString: string): Pick<ModifierOptions, 'replace'> {
+    const notations = extractMatches(modifiersString, rerollPattern)
+    if (notations.length === 0) {
+      return {}
+    }
+
+    return notations.reduce(
+      (acc, notationString) => {
+        const parsedString = notationString
+          .split(/[Rr]/)[1]
+          .replaceAll('{', '')
+          .replaceAll('}', ',!')
+          .split(',')
+
+        const rerollOptions = parsedString.reduce((innerAcc, notation) => {
+          if (notation === '!') {
+            return innerAcc
+          }
+          if (notation.includes('<')) {
+            return {
+              ...innerAcc,
+              lessThan: Number(notation.split('<')[1])
+            }
+          }
+          if (notation.includes('>')) {
+            return {
+              ...innerAcc,
+              greaterThan: Number(notation.split('>')[1])
+            }
+          }
+          if (notation.includes('!')) {
+            return {
+              ...innerAcc,
+              max: Number(notation.split('!')[1])
+            }
+          }
+
+          return {
+            ...innerAcc,
+            exact: [...(innerAcc.exact || []), Number(notation)]
+          }
+        }, {} as RerollOptions)
+
+        return {
+          reroll: {
+            ...acc.reroll,
+            ...rerollOptions
+          }
+        }
+      },
+      { reroll: {} }
+    ) as Pick<ModifierOptions, 'replace'>
+  }
   private options: RerollOptions | undefined
   constructor(options: RerollOptions | undefined) {
     this.options = options

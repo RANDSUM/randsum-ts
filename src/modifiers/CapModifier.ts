@@ -1,8 +1,49 @@
-import type { ComparisonOptions, NumericRollBonus } from '~types'
+import { capPattern } from '~patterns'
+import type {
+  ComparisonOptions,
+  ModifierOptions,
+  NumericRollBonus
+} from '~types'
 import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLessNotation'
+import { extractMatches } from '~utils/notationParsers/extractMatches'
 
 export class CapModifier {
+  static parse(modifiersString: string): Pick<ModifierOptions, 'cap'> {
+    const notations = extractMatches(modifiersString, capPattern)
+    if (notations.length === 0) {
+      return {}
+    }
+    return notations.reduce(
+      (acc, notationString) => {
+        const capString = notationString
+          .split(/[Cc]/)[1]
+          .replaceAll(/{|}/g, '')
+          .split(',')
+
+        const capOptions = capString.reduce((innerAcc, note) => {
+          if (note.includes('<')) {
+            return {
+              ...innerAcc,
+              lessThan: Number(note.replaceAll('<', ''))
+            }
+          }
+          return {
+            ...innerAcc,
+            greaterThan: Number(note.replaceAll('>', ''))
+          }
+        }, {} as ComparisonOptions)
+
+        return {
+          cap: {
+            ...acc.cap,
+            ...capOptions
+          }
+        }
+      },
+      { cap: {} } as Pick<ModifierOptions, 'cap'>
+    )
+  }
   static applySingleCap(
     { greaterThan, lessThan }: ComparisonOptions,
     value?: number
