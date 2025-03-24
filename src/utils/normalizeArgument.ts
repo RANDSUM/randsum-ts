@@ -4,7 +4,7 @@ import { dieForArgument } from './dieForArgument'
 import { optionsToDescription } from './optionsToDescription'
 import { optionsToNotation } from './optionsToNotation'
 
-function normalizeArgument(argument: RollArgument): RollParams {
+export function normalizeArgument(argument: RollArgument): RollParams {
   const options = argumentToOptions(argument)
   return {
     argument,
@@ -14,5 +14,3 @@ function normalizeArgument(argument: RollArgument): RollParams {
     description: optionsToDescription(options)
   } as RollParams
 }
-
-export { normalizeArgument }
