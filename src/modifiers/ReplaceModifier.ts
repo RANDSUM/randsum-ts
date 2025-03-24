@@ -1,5 +1,5 @@
 import type { NumericRollBonus, ReplaceOptions } from '~types'
-import { singleReplaceString } from '~utils/descriptionFormatters/singleReplaceString'
+import { extractFromValue } from '~utils/descriptionFormatters/extractFromValue'
 import { applySingleCap } from '~utils/modifierApplicators/applySingleCap'
 import { replaceArgs } from '~utils/notationFormatters/replaceArgs'
 
@@ -37,14 +37,18 @@ export class ReplaceModifier {
   toDescription(): string[] | string | undefined {
     if (this.options === undefined) return undefined
     if (Array.isArray(this.options)) {
-      return this.options.map(singleReplaceString)
+      return this.options.map(this.singleReplaceString)
     }
 
-    return singleReplaceString(this.options)
+    return this.singleReplaceString(this.options)
   }
 
   toNotation(): string | undefined {
     if (this.options === undefined) return undefined
     return `V{${replaceArgs(this.options).join(',')}}`
+  }
+
+  private singleReplaceString({ from, to }: ReplaceOptions): string {
+    return `Replace ${extractFromValue(from)} with [${to}]`
   }
 }

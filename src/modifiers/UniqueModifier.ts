@@ -3,7 +3,6 @@ import type {
   RequiredNumericRollParameters,
   UniqueOptions
 } from '~types'
-import { formatHumanList } from '~utils/formatHumanList'
 import { InvalidUniqueError } from '~utils/invalidUniqueError'
 
 export class UniqueModifier {
@@ -49,7 +48,7 @@ export class UniqueModifier {
     if (typeof this.options === 'boolean' || this.options === undefined) {
       return 'No Duplicate Rolls'
     }
-    return `No Duplicates (except ${formatHumanList(this.options.notUnique)})`
+    return `No Duplicates (except ${this.formatHumanList(this.options.notUnique)})`
   }
 
   toNotation(): string | undefined {
@@ -64,5 +63,17 @@ export class UniqueModifier {
       return []
     }
     return this.options.notUnique.map(Number)
+  }
+
+  private formatHumanList(list: number[]): string {
+    return list
+      .map((num, index, list) => {
+        if (list.length === 1) return `[${num}]`
+
+        if (index === list.length - 1) return `and [${num}]`
+
+        return `[${num}] `
+      })
+      .join('')
   }
 }
