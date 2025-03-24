@@ -1,13 +1,32 @@
 import { coreNotationPattern } from '~patterns'
+import { CapModifier } from '~src/modifiers/CapModifier'
+import { DropModifier } from '~src/modifiers/DropModifier'
+import { ExplodeModifier } from '~src/modifiers/ExplodeModifier'
+import { MinusModifier } from '~src/modifiers/MinusModifier'
+import { PlusModifier } from '~src/modifiers/PlusModifier'
+import { ReplaceModifier } from '~src/modifiers/ReplaceModifier'
+import { RerollModifier } from '~src/modifiers/RerollModifier'
+import { UniqueModifier } from '~src/modifiers/UniqueModifier'
 import type { DiceNotation, RollOptions } from '~types'
 import { parseCoreNotation } from './notationParsers/parseCoreNotation'
-import { parseModifiers } from './notationParsers/parseModifiers'
 
 export function notationToOptions(notationString: DiceNotation): RollOptions {
   const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)
+  const modifiersString = notationString.replace(coreNotationMatch!, '')
 
   return {
     ...parseCoreNotation(coreNotationMatch!),
-    ...parseModifiers(notationString.replace(coreNotationMatch!, ''))
+    ...{
+      modifiers: {
+        ...DropModifier.parse(modifiersString),
+        ...ExplodeModifier.parse(modifiersString),
+        ...UniqueModifier.parse(modifiersString),
+        ...ReplaceModifier.parse(modifiersString),
+        ...RerollModifier.parse(modifiersString),
+        ...CapModifier.parse(modifiersString),
+        ...PlusModifier.parse(modifiersString),
+        ...MinusModifier.parse(modifiersString)
+      }
+    }
   }
 }
