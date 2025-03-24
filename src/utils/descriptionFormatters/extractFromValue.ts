@@ -1,8 +1,8 @@
 import type { ComparisonOptions } from '~types'
-import { formatGreaterLess } from './formatGreaterLess'
+import { formatGreaterLessDescriptions } from './formatGreaterLessDescriptions'
 
 export function extractFromValue(from: number | ComparisonOptions): string {
   if (typeof from === 'number') return `[${from}]`
 
-  return formatGreaterLess(from).join(' and ')
+  return formatGreaterLessDescriptions(from).join(' and ')
 }

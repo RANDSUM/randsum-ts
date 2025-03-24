@@ -1,7 +1,7 @@
 import type { NumericRollBonus, ReplaceOptions } from '~types'
 import { extractFromValue } from '~utils/descriptionFormatters/extractFromValue'
-import { applySingleCap } from '~utils/modifierApplicators/applySingleCap'
 import { replaceArgs } from '~utils/notationFormatters/replaceArgs'
+import { CapModifier } from './CapModifier'
 
 export class ReplaceModifier {
   private options: ReplaceOptions | ReplaceOptions[] | undefined
@@ -18,7 +18,7 @@ export class ReplaceModifier {
       replaceRolls = replaceRolls.map((roll) => {
         if (from !== undefined) {
           if (typeof from === 'object') {
-            return applySingleCap(from, to)(roll)
+            return CapModifier.applySingleCap(from, to)(roll)
           }
           if (roll === from) {
             return to

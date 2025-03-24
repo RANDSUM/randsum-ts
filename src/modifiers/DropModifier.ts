@@ -1,7 +1,7 @@
 import type { DropOptions, NumericRollBonus } from '~types'
-import { formatGreaterLess } from '~utils/descriptionFormatters/formatGreaterLess'
+import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { formatHumanList } from '~utils/formatHumanList'
-import { formatGreaterLess as formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLess'
+import { formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLessNotation'
 
 export class DropModifier {
   private options: DropOptions | undefined
@@ -59,7 +59,7 @@ export class DropModifier {
       dropList.push(`Drop ${exact}`)
     }
 
-    formatGreaterLess(this.options).forEach((str) =>
+    formatGreaterLessDescriptions(this.options).forEach((str) =>
       dropList.push(`Drop ${str}`)
     )
 

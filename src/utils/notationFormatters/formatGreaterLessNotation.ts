@@ -1,6 +1,6 @@
 import type { ComparisonOptions } from '~types'
 
-export function formatGreaterLess(
+export function formatGreaterLessNotation(
   options: ComparisonOptions,
   list: string[] = []
 ): string[] {

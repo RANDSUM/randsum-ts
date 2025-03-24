@@ -1,7 +1,7 @@
 import type { NumericRollBonus, RerollOptions } from '~types'
-import { formatGreaterLess } from '~utils/descriptionFormatters/formatGreaterLess'
+import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { formatHumanList } from '~utils/formatHumanList'
-import { formatGreaterLess as formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLess'
+import { formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLessNotation'
 import { maxNotation } from '~utils/notationFormatters/maxNotation'
 
 export class RerollModifier {
@@ -30,7 +30,7 @@ export class RerollModifier {
         rerollList.push(String(roll))
       })
     }
-    const greaterLess = `${formatGreaterLess(this.options).join(' and ')}`
+    const greaterLess = `${formatGreaterLessDescriptions(this.options).join(' and ')}`
 
     const exactList = formatHumanList(rerollList)
 
