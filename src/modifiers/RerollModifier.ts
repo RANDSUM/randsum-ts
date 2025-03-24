@@ -1,10 +1,10 @@
 import { rerollPattern } from '~patterns'
 import type { ModifierOptions, NumericRollBonus, RerollOptions } from '~types'
 import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
+import { extractMatches } from '~utils/extractMatches'
 import { formatHumanList } from '~utils/formatHumanList'
 import { formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLessNotation'
 import { maxNotation } from '~utils/notationFormatters/maxNotation'
-import { extractMatches } from '~utils/notationParsers/extractMatches'
 
 export class RerollModifier {
   static parse(modifiersString: string): Pick<ModifierOptions, 'replace'> {

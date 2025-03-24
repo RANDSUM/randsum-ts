@@ -8,14 +8,16 @@ import { ReplaceModifier } from '~src/modifiers/ReplaceModifier'
 import { RerollModifier } from '~src/modifiers/RerollModifier'
 import { UniqueModifier } from '~src/modifiers/UniqueModifier'
 import type { DiceNotation, RollOptions } from '~types'
-import { parseCoreNotation } from './notationParsers/parseCoreNotation'
+import { parseCoreSides } from './parseCoreSides'
 
 export function notationToOptions(notationString: DiceNotation): RollOptions {
   const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)
   const modifiersString = notationString.replace(coreNotationMatch!, '')
+  const [quantity, sides] = coreNotationMatch!.split(/[Dd]/)
 
   return {
-    ...parseCoreNotation(coreNotationMatch!),
+    quantity: Number(quantity),
+    sides: parseCoreSides(sides),
     ...{
       modifiers: {
         ...DropModifier.parse(modifiersString),
@@ -28,5 +30,5 @@ export function notationToOptions(notationString: DiceNotation): RollOptions {
         ...MinusModifier.parse(modifiersString)
       }
     }
-  }
+  } as RollOptions
 }

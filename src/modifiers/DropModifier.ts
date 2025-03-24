@@ -5,9 +5,9 @@ import {
 } from '~patterns'
 import type { DropOptions, ModifierOptions, NumericRollBonus } from '~types'
 import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
+import { extractMatches } from '~utils/extractMatches'
 import { formatHumanList } from '~utils/formatHumanList'
 import { formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLessNotation'
-import { extractMatches } from '~utils/notationParsers/extractMatches'
 
 export class DropModifier {
   static parseConstraints(notations: string[]): Pick<ModifierOptions, 'drop'> {

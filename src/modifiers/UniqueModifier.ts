@@ -5,8 +5,8 @@ import type {
   RequiredNumericRollParameters,
   UniqueOptions
 } from '~types'
+import { extractMatches } from '~utils/extractMatches'
 import { InvalidUniqueError } from '~utils/invalidUniqueError'
-import { extractMatches } from '~utils/notationParsers/extractMatches'
 
 export class UniqueModifier {
   static parse(modifiersString: string): Pick<ModifierOptions, 'unique'> {

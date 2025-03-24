@@ -1,8 +1,8 @@
 import { replacePattern } from '~patterns'
 import type { ModifierOptions, NumericRollBonus, ReplaceOptions } from '~types'
 import { extractFromValue } from '~utils/descriptionFormatters/extractFromValue'
+import { extractMatches } from '~utils/extractMatches'
 import { replaceArgs } from '~utils/notationFormatters/replaceArgs'
-import { extractMatches } from '~utils/notationParsers/extractMatches'
 import { CapModifier } from './CapModifier'
 
 export class ReplaceModifier {

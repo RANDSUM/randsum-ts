@@ -5,8 +5,8 @@ import type {
   NumericRollBonus
 } from '~types'
 import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
+import { extractMatches } from '~utils/extractMatches'
 import { formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLessNotation'
-import { extractMatches } from '~utils/notationParsers/extractMatches'
 
 export class CapModifier {
   static parse(modifiersString: string): Pick<ModifierOptions, 'cap'> {

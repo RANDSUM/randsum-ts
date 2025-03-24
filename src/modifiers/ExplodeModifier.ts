@@ -4,7 +4,7 @@ import type {
   NumericRollBonus,
   RequiredNumericRollParameters
 } from '~types'
-import { extractMatches } from '~utils/notationParsers/extractMatches'
+import { extractMatches } from '~utils/extractMatches'
 
 export class ExplodeModifier {
   static parse(modifiersString: string): Pick<ModifierOptions, 'explode'> {
