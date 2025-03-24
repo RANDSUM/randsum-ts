@@ -134,7 +134,7 @@ interface NumericRollParams extends BaseRollParams {
   notation: NumericDiceNotation
 }
 
-interface CustomRollParams extends BaseRollParams {
+export interface CustomRollParams extends BaseRollParams {
   argument: CustomRollArgument
   options: CustomRollOptions
   die: CustomDie
