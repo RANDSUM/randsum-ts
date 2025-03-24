@@ -127,14 +127,14 @@ interface BaseRollParams {
   description: string[]
 }
 
-export interface NumericRollParams extends BaseRollParams {
+interface NumericRollParams extends BaseRollParams {
   argument: NumericRollArgument
   options: NumericRollOptions
   die: NumericDie
   notation: NumericDiceNotation
 }
 
-export interface CustomRollParams extends BaseRollParams {
+interface CustomRollParams extends BaseRollParams {
   argument: CustomRollArgument
   options: CustomRollOptions
   die: CustomDie
@@ -194,18 +194,11 @@ export interface NumericRollBonus {
   simpleMathModifier: number
 }
 
-export interface CustomRollBonus {
-  rolls: string[]
-  simpleMathModifier: number
-}
-
-export type RollBonus = NumericRollBonus | CustomRollBonus
-
 // -----------------------
 // --- VALIDATION ---
 // -----------------------
 
-export interface BaseValidationResult {
+interface BaseValidationResult {
   valid: boolean
   description: string[]
 }
