@@ -4,8 +4,8 @@ import {
   dropLowestPattern
 } from '~patterns'
 import type { DropOptions, ModifierOptions, NumericRollBonus } from '~types'
-import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { extractMatches } from '~utils/extractMatches'
+import { formatGreaterLessDescriptions } from '~utils/formatGreaterLessDescriptions'
 import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
 import { formatHumanList } from '~utils/formatHumanList'
 

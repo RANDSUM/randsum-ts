@@ -5,8 +5,8 @@ import type {
   NumericRollBonus,
   ReplaceOptions
 } from '~types'
-import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { extractMatches } from '~utils/extractMatches'
+import { formatGreaterLessDescriptions } from '~utils/formatGreaterLessDescriptions'
 import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
 import { CapModifier } from './CapModifier'
 
