@@ -8,9 +8,10 @@ import { ReplaceModifier } from '~src/modifiers/ReplaceModifier'
 import { RerollModifier } from '~src/modifiers/RerollModifier'
 import { UniqueModifier } from '~src/modifiers/UniqueModifier'
 import type {
-  BaseRollResult,
   CustomRollParams,
   DicePool,
+  ModifierOptions,
+  NumericRollBonus,
   RollParams,
   RollResult
 } from '~types'
@@ -36,21 +37,18 @@ export function rollResultFromDicePools(dicePools: DicePool): RollResult {
 
 function calculateDicePoolType(
   dicePools: DicePool['dicePools']
-): BaseRollResult['type'] {
-  switch (true) {
-    case Object.values(dicePools).every(
-      (pool) => typeof pool.options.sides === 'number'
-    ):
-      return 'numerical'
+): RollResult['type'] {
+  const pools = Object.values(dicePools)
 
-    case Object.values(dicePools).every((pool) =>
-      Array.isArray(pool.options.sides)
-    ):
-      return 'custom'
-
-    default:
-      return 'mixed'
+  if (pools.every((pool) => typeof pool.options.sides === 'number')) {
+    return 'numerical'
   }
+
+  if (pools.every((pool) => Array.isArray(pool.options.sides))) {
+    return 'custom'
+  }
+
+  return 'mixed'
 }
 
 function isCustomParameters(
@@ -59,20 +57,60 @@ function isCustomParameters(
   return Array.isArray(poolParameters.options.sides)
 }
 
+function applyModifier(
+  key: keyof ModifierOptions,
+  modifiers: ModifierOptions,
+  currentBonuses: NumericRollBonus,
+  rollParams: { sides: number; quantity: number; rollOne: () => number }
+): NumericRollBonus {
+  const modifierMap = {
+    reroll: () =>
+      new RerollModifier(modifiers.reroll).apply(
+        currentBonuses.rolls,
+        rollParams.rollOne
+      ),
+    unique: () =>
+      new UniqueModifier(modifiers.unique).apply(
+        currentBonuses.rolls,
+        { sides: rollParams.sides, quantity: rollParams.quantity },
+        rollParams.rollOne
+      ),
+    replace: () =>
+      new ReplaceModifier(modifiers.replace).apply(currentBonuses.rolls),
+    cap: () => new CapModifier(modifiers.cap).apply(currentBonuses.rolls),
+    drop: () => new DropModifier(modifiers.drop).apply(currentBonuses.rolls),
+    explode: () =>
+      new ExplodeModifier(modifiers.explode).apply(
+        currentBonuses.rolls,
+        { sides: rollParams.sides, quantity: rollParams.quantity },
+        rollParams.rollOne
+      ),
+    plus: () => new PlusModifier(modifiers.plus).apply(currentBonuses.rolls),
+    minus: () => new MinusModifier(modifiers.minus).apply(currentBonuses.rolls)
+  }
+
+  const modifier = modifierMap[key]
+  if (!modifier) {
+    throw new Error(`Unknown modifier: ${key}`)
+  }
+
+  return modifier()
+}
+
 export function generateModifiedRolls(
   dicePools: DicePool,
   rawRolls: RollResult['rawRolls']
 ): RollResult['modifiedRolls'] {
   return Object.fromEntries(
-    Object.keys(dicePools.dicePools).map((key) => {
-      const params = dicePools.dicePools[key]
+    Object.entries(dicePools.dicePools).map(([key, params]) => {
       const rolls = rawRolls[key]
+
       if (isCustomParameters(params)) {
         return [
           key,
           {
             total: calculateTotal(rolls),
-            rolls: rolls
+            rolls
           }
         ]
       }
@@ -80,49 +118,16 @@ export function generateModifiedRolls(
       const {
         options: { sides, quantity = 1, modifiers = {} }
       } = params
+
       const rollOne = () => coreRandom(sides)
       const modified = Object.keys(modifiers).reduce(
-        (bonuses, key) => {
-          switch (key) {
-            case 'reroll':
-              return new RerollModifier(modifiers.reroll).apply(
-                bonuses.rolls,
-                rollOne
-              )
-
-            case 'unique':
-              return new UniqueModifier(modifiers.unique).apply(
-                bonuses.rolls,
-                { sides, quantity },
-                rollOne
-              )
-
-            case 'replace':
-              return new ReplaceModifier(modifiers.replace).apply(bonuses.rolls)
-
-            case 'cap':
-              return new CapModifier(modifiers.cap).apply(bonuses.rolls)
-
-            case 'drop':
-              return new DropModifier(modifiers.drop).apply(bonuses.rolls)
-
-            case 'explode':
-              return new ExplodeModifier(modifiers.explode).apply(
-                bonuses.rolls,
-                { sides, quantity },
-                rollOne
-              )
-
-            case 'plus':
-              return new PlusModifier(modifiers.plus).apply(bonuses.rolls)
-
-            case 'minus':
-              return new MinusModifier(modifiers.minus).apply(bonuses.rolls)
-
-            default:
-              throw new Error(`Unknown modifier: ${key}`)
-          }
-        },
+        (bonuses, modifierKey) =>
+          applyModifier(
+            modifierKey as keyof ModifierOptions,
+            modifiers,
+            bonuses,
+            { sides, quantity, rollOne }
+          ),
         {
           simpleMathModifier: 0,
           rolls: rolls as number[]
@@ -144,18 +149,18 @@ function generateRawRolls(
   dicePools: DicePool['dicePools']
 ): RollResult['rawRolls'] {
   return Object.fromEntries(
-    Object.keys(dicePools).map((key) => {
-      const pool = dicePools[key]
+    Object.entries(dicePools).map(([key, pool]) => {
       const { options } = pool
       const quantity = options.quantity || 1
 
       if (isNumericRollOptions(options)) {
-        const sides = options.sides
-        return [key, coreSpreadRolls(quantity, sides) as number[]]
-      } else {
-        const faces = options.sides
-        return [key, coreSpreadRolls(quantity, faces.length, faces) as string[]]
+        return [key, coreSpreadRolls(quantity, options.sides) as number[]]
       }
+
+      return [
+        key,
+        coreSpreadRolls(quantity, options.sides.length, options.sides)
+      ]
     })
   )
 }
