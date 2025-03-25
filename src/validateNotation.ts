@@ -9,8 +9,7 @@ import type {
   ValidationResult
 } from '~types'
 import { notationToOptions } from '~utils/notationToOptions'
-import { optionsToDescription } from '~utils/optionsToDescription'
-import { optionsToNotation } from '~utils/optionsToNotation'
+import { optionsConverter } from '~utils/optionsConverter'
 
 export function validateNotation(
   notation: NumericDiceNotation
@@ -32,9 +31,9 @@ export function validateNotation(notation: string): ValidationResult {
   return {
     valid: true,
     digested,
-    notation: optionsToNotation(digested),
+    notation: optionsConverter.toNotation(digested),
     type: caclulateDieType(digested.sides),
-    description: optionsToDescription(digested)
+    description: optionsConverter.toDescription(digested)
   } as ValidationResult
 }
 

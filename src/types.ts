@@ -54,35 +54,12 @@ export interface ModifierOptions {
 // --- DIE TYPES ---
 // -----------------------
 
-/**
- * Base type for dice implementations
- * T represents the constructor argument type (number | string[])
- */
 export type BaseD<T extends number | string[]> = {
-  /** Number of sides on the die */
   readonly sides: number
-
-  /** Array of possible face values */
   readonly faces: T extends number ? number[] : string[]
-
-  /** Type of die */
   readonly type: T extends number ? 'numerical' : 'custom'
-
-  /** Whether this is a custom-faced die */
   readonly isCustom: T extends number ? false : true
-
-  /**
-   * Roll the die
-   * @param quantity - Number of dice to roll
-   * @returns For numerical dice: sum of rolls; For custom dice: comma-separated results
-   */
   roll(quantity?: number): T extends number ? number : string
-
-  /**
-   * Roll the die and return individual results
-   * @param quantity - Number of dice to roll
-   * @returns Array of individual roll results
-   */
   rollSpread(quantity?: number): T extends number ? number[] : string[]
   toOptions: T extends number ? NumericRollOptions : CustomRollOptions
 }
@@ -158,7 +135,7 @@ export interface DicePool {
 // --- ROLL RESULTS ---
 // -----------------------
 
-export interface BaseRollResult {
+interface BaseRollResult {
   rawResult: (number | string)[]
   type: 'numerical' | 'custom' | 'mixed'
 }

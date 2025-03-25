@@ -97,7 +97,7 @@ function applyModifier(
   return modifier()
 }
 
-export function generateModifiedRolls(
+function generateModifiedRolls(
   dicePools: DicePool,
   rawRolls: RollResult['rawRolls']
 ): RollResult['modifiedRolls'] {
