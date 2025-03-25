@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test'
 import { CustomD } from '~src/CustomD'
 import { D } from '~src/D'
+import { NewD } from '~src/newD'
 import { NumericalD } from '~src/NumericalD'
 
 describe(D, () => {
@@ -9,7 +10,8 @@ describe(D, () => {
     const die = D(sides)
 
     test('returns a NumericalD instance', () => {
-      expect(die).toBeInstanceOf(NumericalD)
+      expect(die).toBeInstanceOf(NewD)
+      expect(die.type).toEqual('numerical')
     })
 
     test('NumericalD.sides returns the number given as sides', () => {
@@ -55,7 +57,8 @@ describe(D, () => {
     const die = D(sides)
 
     test('returns a CustomD instance', () => {
-      expect(die).toBeInstanceOf(CustomD)
+      expect(die).toBeInstanceOf(NewD)
+      expect(die.type).toEqual('custom')
     })
 
     test('CustomD.sides returns the number of sides given in the contructor', () => {
