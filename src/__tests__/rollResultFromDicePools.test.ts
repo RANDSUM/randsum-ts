@@ -366,7 +366,7 @@ describe(rollResultFromDicePools, () => {
               quantity: testRollSet.length,
               modifiers: { reroll: { greaterThan: 3 } }
             },
-            die: D(4)
+            die: new D(4)
           })
         }
       }

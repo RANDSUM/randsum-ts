@@ -5,7 +5,7 @@ export function createRollParameters(
   overrides: Partial<RollParams> = {}
 ): RollParams {
   return {
-    die: D(4),
+    die: new D(4),
     argument: 1,
     notation: '1d4',
     description: ['Roll 1d4'],

@@ -6,8 +6,7 @@ import type {
   ReplaceOptions
 } from '~types'
 import { extractMatches } from '~utils/extractMatches'
-import { formatGreaterLessDescriptions } from '~utils/formatGreaterLessDescriptions'
-import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
+import { formatters } from '~utils/formatters'
 import { CapModifier } from './CapModifier'
 
 export class ReplaceModifier {
@@ -104,7 +103,7 @@ export class ReplaceModifier {
 
   private extractFromValue = (from: number | ComparisonOptions): string => {
     if (typeof from === 'number') return `[${from}]`
-    return formatGreaterLessDescriptions(from).join(' and ')
+    return formatters.greaterLess.descriptions(from).join(' and ')
   }
 
   private replaceArgs = (
@@ -123,6 +122,6 @@ export class ReplaceModifier {
     from: number | ComparisonOptions
   ): string | number => {
     if (typeof from === 'number') return from
-    return formatGreaterLessNotation(from).join(',')
+    return formatters.greaterLess.notation(from).join(',')
   }
 }

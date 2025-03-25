@@ -1,6 +1,6 @@
-import { CustomD } from '~src/CustomD'
-import { NumericalD } from '~src/NumericalD'
+import { D } from '~src/D'
+import type { BaseD } from '~types'
 
-export function isD(arg: unknown): arg is NumericalD | CustomD {
-  return arg instanceof NumericalD || arg instanceof CustomD
+export function isD(arg: unknown): arg is BaseD<string[] | number> {
+  return arg instanceof D
 }

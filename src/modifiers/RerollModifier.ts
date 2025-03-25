@@ -1,9 +1,7 @@
 import { rerollPattern } from '~patterns'
 import type { ModifierOptions, NumericRollBonus, RerollOptions } from '~types'
 import { extractMatches } from '~utils/extractMatches'
-import { formatGreaterLessDescriptions } from '~utils/formatGreaterLessDescriptions'
-import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
-import { formatHumanList } from '~utils/formatHumanList'
+import { formatters } from '~utils/formatters'
 
 export class RerollModifier {
   static parse(modifiersString: string): Pick<ModifierOptions, 'replace'> {
@@ -84,9 +82,9 @@ export class RerollModifier {
         rerollList.push(String(roll))
       })
     }
-    const greaterLess = `${formatGreaterLessDescriptions(this.options).join(' and ')}`
+    const greaterLess = `${formatters.greaterLess.descriptions(this.options).join(' and ')}`
 
-    const exactList = formatHumanList(rerollList)
+    const exactList = formatters.humanList(rerollList)
 
     const exactString = [exactList, greaterLess]
       .filter((i) => i !== '')
@@ -111,7 +109,7 @@ export class RerollModifier {
         rerollList.push(String(roll))
       })
     }
-    const greaterLess = formatGreaterLessNotation(this.options)
+    const greaterLess = formatters.greaterLess.notation(this.options)
     if (greaterLess.length > 0) {
       rerollList.push(greaterLess.join(','))
     }

@@ -1,92 +1,192 @@
 <div align="center">
-<a href="https://github.com/RANDSUM/randsum-ts" align="center">
-  <img width="150" height="150" align="center" src="https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp">
-</div>
-<h1 align="center">randsum</h1>
-<h2 align="center">The world's most flexible, powerful, and easy-to-use JS dice-roller.</h2>
-<div align="center">
-  <a href="https://www.npmjs.com/package/randsum" align="center">
-    <img src="https://img.shields.io/npm/v/randsum">
-  </a>
-  <a href="https://bundlephobia.com/package/randsum" align="center">
-    <img src="https://img.shields.io/bundlephobia/minzip/randsum">
-  </a>
-  <a href="https://github.com/RANDSUM/randsum-ts/blob/main/CODE_OF_CONDUCT.md" align="center">
-    <img src="https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat">
-  </a>
-  <a href="https://github.com/RANDSUM/randsum-ts/actions/workflows/main.yml" align="center">
-    <img src="https://github.com/RANDSUM/randsum-ts/actions/workflows/main.yml/badge.svg">
-  </a>
-  <a href="https://github.com/RANDSUM/randsum-ts/actions/workflows/github-code-scanning/codeql" align="center">
-    <img src="https://github.com/RANDSUM/randsum-ts/actions/workflows/github-code-scanning/codeql/badge.svg">
-  </a>
-  <a href="https://github.com/oven-sh/bun">
-    <img src="https://img.shields.io/badge/Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white">
-  </a>
+  <img width="150" height="150" src="https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp">
+  <h1>randsum</h1>
+  <h3>A flexible, type-safe dice roller for TypeScript/JavaScript</h3>
+
+[![npm version](https://img.shields.io/npm/v/randsum)](https://www.npmjs.com/package/randsum)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/randsum)](https://bundlephobia.com/package/randsum)
+[![Types](https://img.shields.io/npm/types/randsum)](https://www.npmjs.com/package/randsum)
+[![License](https://img.shields.io/npm/l/randsum)](https://github.com/RANDSUM/randsum-ts/blob/main/LICENSE)
+[![Downloads](https://img.shields.io/npm/dm/randsum)](https://www.npmjs.com/package/randsum)
+
 </div>
 
-## What is this?
+A powerful dice rolling library that supports:
 
-It's a dice roller, used for generating rolls that you might use in popular Tabletop Role-playing Games.
+- 🎲 Standard dice notation (`4d6`, `2d20H`, etc.)
+- 🎯 Complex modifiers (drop lowest, reroll, exploding dice)
+- 🔒 Full TypeScript support
+- 🎮 Perfect for games, RPGs, and simulations
+- 🪶 Tiny footprint (<4KB minified + gzipped)
 
-```ts
-// Let's Roll!
-import { roll } from 'randsum'
+## Table of Contents
 
-// Roll a single D20
-roll(20)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Usage Examples](#usage-examples)
+- [API Reference](#api-reference)
+- [Advanced Features](#advanced-features)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
 
-// Roll 4 D20
-roll({ quantity: 4, sides: 20 })
+## Installation
 
-// Roll 4 D6, drop the lowest
-roll({ quantity: 4, sides: 6, modifiers: { drop: { lowest: true } } })
-
-// Do the same, but with dice notation
-roll('4d6L')
-
-// Roll 4 Fudge dice
-
-import { rollCustomFaces } from 'randsum'
-
-rollCustomFaces({ quantity: 4, faces: ['+', '+', '-', '-', ' ', ' '] })
-
-// Roll a single D20
-import { D20 } from 'randsum'
-
-D20.roll()
-
-// Make a new 120 sided die and roll it
-import { D } from 'randsum'
-
-const D120 = D(120)
-D120.roll()
-
-//'heads' or 'tails'?
-import { CustomFacesD } from 'randsum'
-
-const Coin = new CustomFacesD(['heads', 'tails'])
-Coin.roll()
+```bash
+npm install randsum
+# or
+yarn add randsum
+# or
+bun add randsum
 ```
 
-Written in 100% Typescript with strong attention paid to return types. You depend on `randsum` to give you what you expect - just not always the roll you want.
+## Quick Start
 
-## Further Reading
+```typescript
+import { D, D20, D6 } from 'randsum'
 
-[Getting Started](https://github.com/RANDSUM/randsum-ts/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
+// Using premade dice - fastest way to get rolling
+D20.roll() // Roll a d20
+D6.roll(4) // Roll 4d6
 
-[Roll Dice Notation](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
+// Create custom dice
+const d12 = new D(12)
+d12.roll() // Returns number 1-12
+d12.rollSpread(3) // Returns [n, n, n]
 
-[Contributing](https://github.com/RANDSUM/randsum-ts/blob/main/CONTRIBUTING.md) - help make `randsum` better!
+// Create dice with custom faces
+const coin = new D(['heads', 'tails'])
+coin.roll() // Returns "heads" or "tails"
+```
 
-[Sophie's Dice Notation](https://sophiehoulden.com/dice/documentation/notation.html) - a great dice notation guide that helped me along the way
+## Usage Examples
 
-[\_why's poignant guide to ruby](https://poignant.guide/) - \_why not?
+### Common RPG Scenarios
 
-## Why did you make this?
+```typescript
+import { roll, D20 } from 'randsum'
 
-Sometime around 2012, I decided I wanted to learn to program. I had installed ruby on the best laptop six-hundred dollars could buy, set to make a dice roller as an easy first project.
+// D&D Ability Score (4d6 drop lowest)
+roll('4d6L')
 
-I spent an easy 30 minutes trying to figure out how to make `rand(n)` return `1...n` instead of `0...(n-1)`.
+// Advantage (2d20 keep highest)
+roll('2d20H')
 
-When I found the answer, I laughed and laughed. I've been chasing that high ever since.
+// Attack with +5 modifier
+D20.roll() + 5
+// or
+roll('1d20+5')
+```
+
+### Custom Game Dice
+
+```typescript
+import { D } from 'randsum'
+
+// Create a Fudge/Fate die
+const fateDie = new D(['+', '+', '0', '0', '-', '-'])
+fateDie.roll() // Returns '+', '0', or '-'
+
+// Create a color die
+const colorDie = new D(['red', 'blue', 'green', 'yellow'])
+colorDie.roll() // Returns a random color
+```
+
+## API Reference
+
+### Creating Dice (`D` Class)
+
+The `D` class is the foundation of randsum, allowing you to create both numerical and custom-faced dice:
+
+```typescript
+import { D } from 'randsum'
+
+// Numerical die
+const d20 = new D(20)
+d20.roll() // Returns number 1-20
+d20.rollSpread(3) // Returns [n, n, n]
+
+// Custom-faced die
+const coin = new D(['heads', 'tails'])
+coin.roll() // Returns "heads" or "tails"
+```
+
+### Pre-made Dice
+
+Common dice are available as ready-to-use exports:
+
+```typescript
+import { D4, D6, D8, D10, D12, D20, D100 } from 'randsum'
+
+D20.roll() // Roll a d20
+D6.roll(4) // Roll 4d6
+```
+
+### Roll Function
+
+The `roll` function provides a flexible interface for complex dice rolls:
+
+```typescript
+import { roll } from 'randsum'
+
+// Basic rolls
+roll(20) // Roll 1d20
+roll('4d6') // Roll 4d6
+
+// Advanced notation
+roll('4d6L') // 4d6, drop lowest
+roll('2d20H') // 2d20, keep highest
+roll('4d6R{<3}') // 4d6, reroll values below 3
+roll('3d8U') // 3d8, unique values only
+
+// Options object
+roll({
+  quantity: 4,
+  sides: 6,
+  modifiers: {
+    drop: { lowest: true },
+    reroll: { below: 3 }
+  }
+})
+```
+
+### Notation Validation
+
+Validate dice notation before rolling:
+
+```typescript
+import { validateNotation } from 'randsum'
+
+const result = validateNotation('4d6L')
+if (result.valid) {
+  console.log(result.description) // ["Roll 4 six-sided dice", "Drop lowest roll"]
+}
+```
+
+## Advanced Features
+
+- **Rerolling**: `4d6R{<3}` - Reroll values below 3
+- **Dropping**: `4d6L` - Drop lowest roll
+- **Keeping**: `2d20H` - Keep highest roll
+- **Unique Values**: `3d6U` - Force unique results
+- **Custom Faces**: Support for non-numeric dice faces
+- **Exploding Dice**: `4d6!` - Roll again on maximum values
+- **Math Modifiers**: `2d8+4` - Add/subtract from total
+
+See [Dice Notation Reference](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more examples!
+
+## Type Safety
+
+randsum is written in TypeScript with comprehensive type definitions:
+
+```typescript
+import type { RollResult, DicePool, ModifierOptions } from 'randsum'
+
+const result: RollResult = roll('2d20H')
+console.log(result.total) // Final sum
+console.log(result.rawRolls) // Original rolls
+console.log(result.modifiedRolls) // After modifiers
+```
+
+## License
+
+MIT © Alex Jarvis

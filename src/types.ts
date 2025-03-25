@@ -54,30 +54,14 @@ export interface ModifierOptions {
 // --- DIE TYPES ---
 // -----------------------
 
-interface BaseDie {
-  sides: number
-  isCustom: boolean
-  roll(quantity?: number): number | string
-  rollSpread(quantity?: number): number[] | string[]
-  toOptions: RollOptions
-}
-
-export interface NumericDie extends BaseDie {
-  type: 'numerical'
-  isCustom: false
-  faces: number[]
-  roll(quantity?: number): number
-  rollSpread(quantity?: number): number[]
-  toOptions: NumericRollOptions
-}
-
-export interface CustomDie extends BaseDie {
-  type: 'custom'
-  isCustom: true
-  faces: string[]
-  roll(quantity?: number): string
-  rollSpread(quantity?: number): string[]
-  toOptions: CustomRollOptions
+export type BaseD<T extends number | string[]> = {
+  readonly sides: number
+  readonly faces: T extends number ? number[] : string[]
+  readonly type: T extends number ? 'numerical' : 'custom'
+  readonly isCustom: T extends number ? false : true
+  roll: (quantity?: number) => T extends number ? number : string
+  rollSpread: (quantity?: number) => T extends number ? number[] : string[]
+  toOptions: T extends number ? NumericRollOptions : CustomRollOptions
 }
 
 // -----------------------
@@ -105,14 +89,14 @@ export type RequiredNumericRollParameters = Required<
 // -----------------------
 
 export type NumericRollArgument =
-  | NumericDie
+  | BaseD<number>
   | NumericRollOptions
   | NumericDiceNotation
   | number
   | `${number}`
 
 export type CustomRollArgument =
-  | CustomDie
+  | BaseD<string[]>
   | CustomRollOptions
   | CustomDiceNotation
   | string[]
@@ -127,17 +111,17 @@ interface BaseRollParams {
   description: string[]
 }
 
-interface NumericRollParams extends BaseRollParams {
+export interface NumericRollParams extends BaseRollParams {
   argument: NumericRollArgument
   options: NumericRollOptions
-  die: NumericDie
+  die: BaseD<number>
   notation: NumericDiceNotation
 }
 
 export interface CustomRollParams extends BaseRollParams {
   argument: CustomRollArgument
   options: CustomRollOptions
-  die: CustomDie
+  die: BaseD<string[]>
   notation: CustomDiceNotation
 }
 
@@ -151,7 +135,7 @@ export interface DicePool {
 // --- ROLL RESULTS ---
 // -----------------------
 
-export interface BaseRollResult {
+interface BaseRollResult {
   rawResult: (number | string)[]
   type: 'numerical' | 'custom' | 'mixed'
 }
