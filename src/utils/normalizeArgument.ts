@@ -1,10 +1,11 @@
+import { isD } from '~guards/isD'
+import { D } from '~src/D'
 import type { RollArgument, RollParams } from '~types'
 import { argumentToOptions } from './argumentToOptions'
-import { dieForArgument } from './dieForArgument'
 import { optionsToDescription } from './optionsToDescription'
 import { optionsToNotation } from './optionsToNotation'
 
-function normalizeArgument(argument: RollArgument): RollParams {
+export function normalizeArgument(argument: RollArgument): RollParams {
   const options = argumentToOptions(argument)
   return {
     argument,
@@ -15,4 +16,10 @@ function normalizeArgument(argument: RollArgument): RollParams {
   } as RollParams
 }
 
-export { normalizeArgument }
+function dieForArgument(argument: RollArgument): RollParams['die'] {
+  if (isD(argument)) {
+    return argument
+  }
+  const options = argumentToOptions(argument)
+  return D(options.sides)
+}
