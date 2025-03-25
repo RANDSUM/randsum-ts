@@ -54,30 +54,37 @@ export interface ModifierOptions {
 // --- DIE TYPES ---
 // -----------------------
 
-interface BaseDie {
-  sides: number
-  isCustom: boolean
-  roll(quantity?: number): number | string
-  rollSpread(quantity?: number): number[] | string[]
-  toOptions: RollOptions
-}
+/**
+ * Base type for dice implementations
+ * T represents the constructor argument type (number | string[])
+ */
+export type BaseD<T extends number | string[]> = {
+  /** Number of sides on the die */
+  readonly sides: number
 
-export interface NumericDie extends BaseDie {
-  type: 'numerical'
-  isCustom: false
-  faces: number[]
-  roll(quantity?: number): number
-  rollSpread(quantity?: number): number[]
-  toOptions: NumericRollOptions
-}
+  /** Array of possible face values */
+  readonly faces: T extends number ? number[] : string[]
 
-export interface CustomDie extends BaseDie {
-  type: 'custom'
-  isCustom: true
-  faces: string[]
-  roll(quantity?: number): string
-  rollSpread(quantity?: number): string[]
-  toOptions: CustomRollOptions
+  /** Type of die */
+  readonly type: T extends number ? 'numerical' : 'custom'
+
+  /** Whether this is a custom-faced die */
+  readonly isCustom: T extends number ? false : true
+
+  /**
+   * Roll the die
+   * @param quantity - Number of dice to roll
+   * @returns For numerical dice: sum of rolls; For custom dice: comma-separated results
+   */
+  roll(quantity?: number): T extends number ? number : string
+
+  /**
+   * Roll the die and return individual results
+   * @param quantity - Number of dice to roll
+   * @returns Array of individual roll results
+   */
+  rollSpread(quantity?: number): T extends number ? number[] : string[]
+  toOptions: T extends number ? NumericRollOptions : CustomRollOptions
 }
 
 // -----------------------
@@ -105,14 +112,14 @@ export type RequiredNumericRollParameters = Required<
 // -----------------------
 
 export type NumericRollArgument =
-  | NumericDie
+  | BaseD<number>
   | NumericRollOptions
   | NumericDiceNotation
   | number
   | `${number}`
 
 export type CustomRollArgument =
-  | CustomDie
+  | BaseD<string[]>
   | CustomRollOptions
   | CustomDiceNotation
   | string[]
@@ -130,14 +137,14 @@ interface BaseRollParams {
 interface NumericRollParams extends BaseRollParams {
   argument: NumericRollArgument
   options: NumericRollOptions
-  die: NumericDie
+  die: BaseD<number>
   notation: NumericDiceNotation
 }
 
 export interface CustomRollParams extends BaseRollParams {
   argument: CustomRollArgument
   options: CustomRollOptions
-  die: CustomDie
+  die: BaseD<string[]>
   notation: CustomDiceNotation
 }
 

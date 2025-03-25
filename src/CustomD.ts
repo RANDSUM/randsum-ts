@@ -1,7 +1,7 @@
-import type { CustomDie, CustomRollOptions } from '~types'
+import type { BaseD, CustomRollOptions } from '~types'
 import { coreSpreadRolls } from '~utils/coreSpreadRolls'
 
-export class CustomD implements CustomDie {
+export class CustomD implements BaseD<string[]> {
   readonly sides: number
   readonly faces: string[]
   readonly type = 'custom'
