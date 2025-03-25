@@ -1,5 +1,5 @@
 import { isCustomSidesStringArg } from '~guards/isCustomSidesStringArg'
-import { isDiceNotationArg } from '~src/guards/isDiceNotationArg'
+import { isDiceNotationArg } from '~guards/isDiceNotationArg'
 import type {
   CustomDiceNotation,
   CustomValidationResult,
