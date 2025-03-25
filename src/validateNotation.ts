@@ -1,3 +1,4 @@
+import { isCustomSidesStringArg } from '~guards/isCustomSidesStringArg'
 import { isDiceNotationArg } from '~src/guards/isDiceNotationArg'
 import type {
   CustomDiceNotation,
@@ -7,7 +8,6 @@ import type {
   NumericValidationResult,
   ValidationResult
 } from '~types'
-import { caclulateDieType } from '~utils/calculateDieType'
 import { notationToOptions } from '~utils/notationToOptions'
 import { optionsToDescription } from '~utils/optionsToDescription'
 import { optionsToNotation } from '~utils/optionsToNotation'
@@ -36,4 +36,11 @@ export function validateNotation(notation: string): ValidationResult {
     type: caclulateDieType(digested.sides),
     description: optionsToDescription(digested)
   } as ValidationResult
+}
+
+function caclulateDieType(sides: number | string[]): 'custom' | 'numerical' {
+  if (isCustomSidesStringArg(sides)) {
+    return 'custom'
+  }
+  return 'numerical'
 }

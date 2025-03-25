@@ -8,7 +8,6 @@ import { ReplaceModifier } from '~src/modifiers/ReplaceModifier'
 import { RerollModifier } from '~src/modifiers/RerollModifier'
 import { UniqueModifier } from '~src/modifiers/UniqueModifier'
 import type { DiceNotation, RollOptions } from '~types'
-import { parseCoreSides } from './parseCoreSides'
 
 export function notationToOptions(notationString: DiceNotation): RollOptions {
   const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)
@@ -31,4 +30,11 @@ export function notationToOptions(notationString: DiceNotation): RollOptions {
       }
     }
   } as RollOptions
+}
+
+function parseCoreSides(notationString: string): number | string[] {
+  if (notationString.includes('{')) {
+    return [...notationString.replaceAll(/{|}/g, '')]
+  }
+  return Number(notationString)
 }
