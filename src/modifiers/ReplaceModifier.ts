@@ -1,8 +1,13 @@
 import { replacePattern } from '~patterns'
-import type { ModifierOptions, NumericRollBonus, ReplaceOptions } from '~types'
-import { extractFromValue } from '~utils/descriptionFormatters/extractFromValue'
+import type {
+  ComparisonOptions,
+  ModifierOptions,
+  NumericRollBonus,
+  ReplaceOptions
+} from '~types'
+import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { extractMatches } from '~utils/extractMatches'
-import { replaceArgs } from '~utils/notationFormatters/replaceArgs'
+import { fromValue as fromValueNotation } from '~utils/notationFormatters/fromValue'
 import { CapModifier } from './CapModifier'
 
 export class ReplaceModifier {
@@ -79,18 +84,33 @@ export class ReplaceModifier {
   toDescription(): string[] | string | undefined {
     if (this.options === undefined) return undefined
     if (Array.isArray(this.options)) {
-      return this.options.map(this.singleReplaceString)
+      return this.options.map(this.singleReplaceDescription)
     }
 
-    return this.singleReplaceString(this.options)
+    return this.singleReplaceDescription(this.options)
   }
 
   toNotation(): string | undefined {
     if (this.options === undefined) return undefined
-    return `V{${replaceArgs(this.options).join(',')}}`
+    const args = replaceArgs(this.options)
+    return `V{${args.join(',')}}`
   }
 
-  private singleReplaceString({ from, to }: ReplaceOptions): string {
+  private singleReplaceDescription({ from, to }: ReplaceOptions): string {
     return `Replace ${extractFromValue(from)} with [${to}]`
   }
+}
+
+function extractFromValue(from: number | ComparisonOptions): string {
+  if (typeof from === 'number') return `[${from}]`
+
+  return formatGreaterLessDescriptions(from).join(' and ')
+}
+
+function replaceArgs(replace: ReplaceOptions | ReplaceOptions[]): string[] {
+  if (Array.isArray(replace)) return replace.map(singleReplaceNotation).flat()
+  return [singleReplaceNotation(replace)]
+}
+function singleReplaceNotation(replace: ReplaceOptions): string {
+  return `${fromValueNotation(replace.from)}=${replace.to}`
 }

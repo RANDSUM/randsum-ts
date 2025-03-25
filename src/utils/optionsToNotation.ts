@@ -7,7 +7,6 @@ import { ReplaceModifier } from '~src/modifiers/ReplaceModifier'
 import { RerollModifier } from '~src/modifiers/RerollModifier'
 import { UniqueModifier } from '~src/modifiers/UniqueModifier'
 import type { DiceNotation, RollOptions } from '~types'
-import { formatCoreNotation } from './notationFormatters/formatCoreNotation'
 
 export function optionsToNotation(options: RollOptions): DiceNotation {
   return `${formatCoreNotation(options)}${[
@@ -23,4 +22,30 @@ export function optionsToNotation(options: RollOptions): DiceNotation {
     .flat()
     .filter((i) => typeof i === 'string')
     .join('')}` as DiceNotation
+}
+
+function formatCoreNotation({
+  quantity = 1,
+  sides
+}: RollOptions): DiceNotation {
+  if (Array.isArray(sides)) {
+    return baseFormatCoreNotation(
+      quantity,
+      `{${sides
+        .map((s) => {
+          if (s === '') return ' '
+          return s
+        })
+        .join('')}}`
+    )
+  }
+
+  return baseFormatCoreNotation(quantity, sides)
+}
+
+function baseFormatCoreNotation(
+  quantity: number,
+  sides: string | number
+): DiceNotation {
+  return `${quantity}d${sides}` as DiceNotation
 }

@@ -2,9 +2,8 @@ import { rerollPattern } from '~patterns'
 import type { ModifierOptions, NumericRollBonus, RerollOptions } from '~types'
 import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { extractMatches } from '~utils/extractMatches'
+import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
 import { formatHumanList } from '~utils/formatHumanList'
-import { formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLessNotation'
-import { maxNotation } from '~utils/notationFormatters/maxNotation'
 
 export class RerollModifier {
   static parse(modifiersString: string): Pick<ModifierOptions, 'replace'> {
@@ -118,7 +117,7 @@ export class RerollModifier {
     }
 
     if (rerollList.length === 0) return ''
-    return `R{${rerollList.join(',')}}${maxNotation(this.options.max)}`
+    return `R{${rerollList.join(',')}}${this.maxNotation(this.options.max)}`
   }
 
   private extractExactValue(
@@ -129,6 +128,11 @@ export class RerollModifier {
       return false
     }
     return exact.includes(roll)
+  }
+
+  private maxNotation(max: number | undefined) {
+    if (max === undefined) return ''
+    return max
   }
 
   private rerollRoll(

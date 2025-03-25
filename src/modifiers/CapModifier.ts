@@ -6,7 +6,7 @@ import type {
 } from '~types'
 import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { extractMatches } from '~utils/extractMatches'
-import { formatGreaterLessNotation } from '~utils/notationFormatters/formatGreaterLessNotation'
+import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
 
 export class CapModifier {
   static parse(modifiersString: string): Pick<ModifierOptions, 'cap'> {
