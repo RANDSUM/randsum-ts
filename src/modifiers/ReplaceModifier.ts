@@ -7,7 +7,7 @@ import type {
 } from '~types'
 import { formatGreaterLessDescriptions } from '~utils/descriptionFormatters/formatGreaterLessDescriptions'
 import { extractMatches } from '~utils/extractMatches'
-import { fromValue as fromValueNotation } from '~utils/notationFormatters/fromValue'
+import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
 import { CapModifier } from './CapModifier'
 
 export class ReplaceModifier {
@@ -113,4 +113,8 @@ function replaceArgs(replace: ReplaceOptions | ReplaceOptions[]): string[] {
 }
 function singleReplaceNotation(replace: ReplaceOptions): string {
   return `${fromValueNotation(replace.from)}=${replace.to}`
+}
+function fromValueNotation(from: number | ComparisonOptions): string | number {
+  if (typeof from === 'number') return from
+  return formatGreaterLessNotation(from).join(',')
 }
