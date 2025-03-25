@@ -111,7 +111,7 @@ interface BaseRollParams {
   description: string[]
 }
 
-interface NumericRollParams extends BaseRollParams {
+export interface NumericRollParams extends BaseRollParams {
   argument: NumericRollArgument
   options: NumericRollOptions
   die: BaseD<number>

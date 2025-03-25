@@ -1,11 +1,21 @@
 {
   "name": "randsum",
-  "version": "8.0.1",
-  "author": "Alex Jarvis",
+  "version": "9.0.0",
+  "author": {
+    "name": "Alex Jarvis",
+    "url": "https://github.com/RANDSUM"
+  },
   "icon": "https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp",
   "description": "The world's most powerful, flexible, and easy-to-use JS dice-roller.",
   "license": "MIT",
-  "homepage": "https://github.com/RANDSUM/randsum-ts ",
+  "homepage": "https://github.com/RANDSUM/randsum-ts",
+  "bugs": {
+    "url": "https://github.com/RANDSUM/randsum-ts/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/RANDSUM"
+  },
   "keywords": [
     "dice",
     "d20",
@@ -35,26 +45,33 @@
   "files": [
     "dist",
     "src",
-    "src/tests"
+    "LICENSE",
+    "README.md",
+    "RANDSUM_DICE_NOTATION.md"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/RANDSUM/randsum-ts.git"
   },
   "sideEffects": false,
+  "engines": {
+    "node": ">=16.0.0",
+    "bun": ">=1.0.0"
+  },
   "scripts": {
     "analyze": "size-limit",
     "build": "bun run clean && bun run build.ts",
-    "clean": "rm -rf ./dist/",
+    "clean": "rm -rf ./dist/ ./coverage/",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format:fix": "prettier . --write",
     "format": "prettier . --check",
-    "gen:docs": "typedoc ./src/index.ts",
+    "gen:docs": "npx typedoc ./src/index.ts",
     "ts:check": "tsc --noEmit --erasableSyntaxOnly",
     "local:check": "bun lint:fix && bun format:fix && bun ts:check && bun run build",
-    "prepublish": "bun run build",
-    "postversion": "git push --no-verify && git push --tags --no-verify"
+    "prepublishOnly": "bun run clean && bun run build && bun run ts:check",
+    "postversion": "git push --no-verify && git push --tags --no-verify",
+    "prepack": "bun run build"
   },
   "exports": {
     ".": {
@@ -89,6 +106,9 @@
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0"
   },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
   "prettier": {
     "endOfLine": "auto",
     "trailingComma": "none",
@@ -101,5 +121,9 @@
   },
   "resolutions": {
     "bun-types": "canary"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

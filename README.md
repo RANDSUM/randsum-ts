@@ -187,10 +187,6 @@ console.log(result.rawRolls) // Original rolls
 console.log(result.modifiedRolls) // After modifiers
 ```
 
-## Contributing
-
-Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
 ## License
 
 MIT © Alex Jarvis
