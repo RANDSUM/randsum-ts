@@ -21,5 +21,5 @@ function dieForArgument(argument: RollArgument): RollParams['die'] {
     return argument
   }
   const options = argumentToOptions(argument)
-  return D(options.sides)
+  return new D(options.sides)
 }

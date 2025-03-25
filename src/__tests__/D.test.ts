@@ -1,28 +1,25 @@
 import { describe, expect, test } from 'bun:test'
-import { CustomD } from '~src/CustomD'
 import { D } from '~src/D'
-import { NewD } from '~src/newD'
-import { NumericalD } from '~src/NumericalD'
 
 describe(D, () => {
-  describe('Creating a Numberical Die', () => {
+  describe('Creating a Numerical Die', () => {
     const sides = 6
-    const die = D(sides)
+    const die = new D(sides)
 
-    test('returns a NumericalD instance', () => {
-      expect(die).toBeInstanceOf(NewD)
+    test('returns a D instance', () => {
+      expect(die).toBeInstanceOf(D)
       expect(die.type).toEqual('numerical')
     })
 
-    test('NumericalD.sides returns the number given as sides', () => {
+    test('D.sides returns the number given as sides', () => {
       expect(die.sides).toEqual(sides)
     })
 
-    test('Numerical.faces returns the number given as sides', () => {
+    test('D.faces returns the number given as sides', () => {
       expect(die.faces).toEqual([1, 2, 3, 4, 5, 6])
     })
 
-    describe(NumericalD.prototype.roll, () => {
+    describe(D.prototype.roll, () => {
       describe('with no argument', () => {
         test('.returns a number included in the constructor', () => {
           expect([1, 2, 3, 4, 5, 6]).toContain(die.roll())
@@ -36,7 +33,7 @@ describe(D, () => {
       })
     })
 
-    describe(NumericalD.prototype.rollSpread, () => {
+    describe(D.prototype.rollSpread, () => {
       describe('with no argument', () => {
         test('.returns a number included in the constructor', () => {
           expect([1, 2, 3, 4, 5, 6]).toContain(die.rollSpread()[0])
@@ -54,24 +51,24 @@ describe(D, () => {
 
   describe('Creating a Die with Custom Sides', () => {
     const sides = ['+', '+', '-', '-']
-    const die = D(sides)
+    const die = new D(sides)
 
-    test('returns a CustomD instance', () => {
-      expect(die).toBeInstanceOf(NewD)
+    test('returns a D instance', () => {
+      expect(die).toBeInstanceOf(D)
       expect(die.type).toEqual('custom')
     })
 
-    test('CustomD.sides returns the number of sides given in the contructor', () => {
+    test('D.sides returns the number of sides given in the constructor', () => {
       expect(die.sides).toEqual(sides.length)
     })
 
-    test('CustomD.faces returns the sides given in the contructor', () => {
+    test('D.faces returns the sides given in the constructor', () => {
       expect(die.faces).toEqual(sides)
     })
 
-    describe(CustomD.prototype.roll, () => {
+    describe(D.prototype.roll, () => {
       describe('with no argument', () => {
-        test('.returns a number included in the constructor', () => {
+        test('.returns a value included in the constructor', () => {
           expect(sides).toContain(die.roll())
         })
       })
@@ -87,7 +84,7 @@ describe(D, () => {
       })
     })
 
-    describe(CustomD.prototype.rollSpread, () => {
+    describe(D.prototype.rollSpread, () => {
       describe('with no argument', () => {
         test('.returns an array of values in the constructor', () => {
           expect(sides).toContain(die.rollSpread()[0])
