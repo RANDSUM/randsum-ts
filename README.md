@@ -17,7 +17,7 @@ A powerful dice rolling library that supports:
 - 🎯 Complex modifiers (drop lowest, reroll, exploding dice)
 - 🔒 Full TypeScript support
 - 🎮 Perfect for games, RPGs, and simulations
-- 🪶 Tiny footprint (<4KB minified + gzipped)
+- 🪶 Tiny footprint (<5KB minified + gzipped)
 
 ## Table of Contents
 
