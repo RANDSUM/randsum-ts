@@ -18,9 +18,6 @@ import type {
 } from '~types'
 
 export const optionsConverter = {
-  /**
-   * Converts various roll arguments to standardized RollOptions
-   */
   fromArgument(argument: RollArgument): RollOptions {
     if (isDicePoolOptions(argument)) {
       return argument
@@ -41,16 +38,10 @@ export const optionsConverter = {
     return { quantity: 1, sides: Number(argument) }
   },
 
-  /**
-   * Converts dice notation string to RollOptions
-   */
   fromNotation(notationString: DiceNotation): RollOptions {
     const coreNotationMatch = notationString.match(coreNotationPattern)
-    if (!coreNotationMatch || !coreNotationMatch[0]) {
-      throw new Error('Invalid dice notation')
-    }
 
-    const coreMatch = coreNotationMatch[0]
+    const coreMatch = coreNotationMatch![0]
     const modifiersString = notationString.replace(coreMatch, '')
     const [quantity, sides] = coreMatch.split(/[Dd]/)
 
@@ -72,18 +63,12 @@ export const optionsConverter = {
     } as RollOptions
   },
 
-  /**
-   * Converts RollOptions back to dice notation string
-   */
   toNotation(options: RollOptions): DiceNotation {
     const coreNotation = this.formatCoreNotation(options)
     const modifierNotation = this.formatModifierNotation(options.modifiers)
     return `${coreNotation}${modifierNotation}` as DiceNotation
   },
 
-  /**
-   * Converts RollOptions to human-readable description
-   */
   toDescription(options: RollOptions): string[] {
     return [
       this.formatCoreDescription(options),
@@ -102,8 +87,7 @@ export const optionsConverter = {
     const { quantity = 1, sides } = options
 
     if (Array.isArray(sides)) {
-      const formattedSides = sides.map((s) => (s === '' ? ' ' : s)).join('')
-      return `${quantity}d{${formattedSides}}`
+      return `${quantity}d{${sides.join('')}}`
     }
 
     return `${quantity}d${sides}`
@@ -131,10 +115,23 @@ export const optionsConverter = {
   formatCoreDescription(options: RollOptions): string {
     const { sides, quantity = 1 } = options
     const base = `Roll ${quantity}`
-    const descriptor = quantity > 1 ? 'dice' : 'die'
+    let descriptor = 'die'
+    if (quantity > 1) {
+      descriptor = 'dice'
+    }
 
     if (Array.isArray(sides)) {
-      const formattedSides = sides.map((s) => (s === '' ? ' ' : s)).join(',')
+      let formattedSides = ''
+      for (const s of sides) {
+        if (s === '') {
+          formattedSides += ' '
+        } else {
+          if (formattedSides.length > 0) {
+            formattedSides += ','
+          }
+          formattedSides += s
+        }
+      }
       return `${base} ${descriptor} with the following sides: (${formattedSides})`
     }
 

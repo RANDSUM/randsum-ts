@@ -59,8 +59,8 @@ export type BaseD<T extends number | string[]> = {
   readonly faces: T extends number ? number[] : string[]
   readonly type: T extends number ? 'numerical' : 'custom'
   readonly isCustom: T extends number ? false : true
-  roll(quantity?: number): T extends number ? number : string
-  rollSpread(quantity?: number): T extends number ? number[] : string[]
+  roll: (quantity?: number) => T extends number ? number : string
+  rollSpread: (quantity?: number) => T extends number ? number[] : string[]
   toOptions: T extends number ? NumericRollOptions : CustomRollOptions
 }
 

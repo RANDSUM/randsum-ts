@@ -639,6 +639,18 @@ describe(normalizeArgument, () => {
         })
       })
 
+      describe('like blank custom dice', () => {
+        test('returns a RollParameter matching the notation', () => {
+          expect(normalizeArgument('4d{  }')).toMatchObject({
+            argument: '4d{  }',
+            options: { quantity: 4, sides: [' ', ' '] },
+            die: new D([' ', ' ']),
+            notation: '4d{  }',
+            description: ['Roll 4 dice with the following sides: ( , )']
+          })
+        })
+      })
+
       describe('like a complicated dice notation', () => {
         const argument = `10d20 H2 L V{1=2,>2=6} D{<2,>5,2,4} C{<2,>18} R{5,2}3 U{5}  R{<6} ! +2 -5 +3`
 

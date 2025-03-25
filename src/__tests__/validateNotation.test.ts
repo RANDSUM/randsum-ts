@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
 import { validateNotation } from '~src/validateNotation'
-import { type NumericValidationResult } from '~types'
+import type { NumericValidationResult } from '~types'
 
 describe(validateNotation, () => {
   describe('when the notation is completely invalid', () => {
