@@ -144,7 +144,7 @@ roll({
   sides: 6,
   modifiers: {
     drop: { lowest: true },
-    reroll: { below: 3 }
+    reroll: { lessThan: 3 }
   }
 })
 ```
@@ -162,7 +162,7 @@ if (result.valid) {
 }
 ```
 
-## Advanced Features
+## Advanced Modifiers
 
 - **Rerolling**: `4d6R{<3}` - Reroll values below 3
 - **Dropping**: `4d6L` - Drop lowest roll
@@ -173,20 +173,5 @@ if (result.valid) {
 - **Math Modifiers**: `2d8+4` - Add/subtract from total
 
 See [Dice Notation Reference](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more examples!
-
-## Type Safety
-
-randsum is written in TypeScript with comprehensive type definitions:
-
-```typescript
-import type { RollResult, DicePool, ModifierOptions } from 'randsum'
-
-const result: RollResult = roll('2d20H')
-console.log(result.total) // Final sum
-console.log(result.rawRolls) // Original rolls
-console.log(result.modifiedRolls) // After modifiers
-```
-
-## License
 
 MIT © Alex Jarvis
