@@ -7,7 +7,9 @@ import type {
 import { extractMatches } from '~utils/extractMatches'
 
 export class ExplodeModifier {
-  static parse(modifiersString: string): Pick<ModifierOptions, 'explode'> {
+  static parse = (
+    modifiersString: string
+  ): Pick<ModifierOptions, 'explode'> => {
     const notations = extractMatches(modifiersString, explodePattern)
     if (notations.length === 0) {
       return {}
@@ -20,11 +22,11 @@ export class ExplodeModifier {
     this.options = options
   }
 
-  apply(
+  apply = (
     rolls: number[],
     { sides }: RequiredNumericRollParameters,
     rollOne: () => number
-  ): NumericRollBonus {
+  ): NumericRollBonus => {
     if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
     const explodeCount = rolls.filter((roll) => roll === sides).length
     const explodeResults = Array.from({ length: explodeCount }, rollOne)
@@ -36,12 +38,12 @@ export class ExplodeModifier {
     }
   }
 
-  toDescription(): string | undefined {
+  toDescription = (): string | undefined => {
     if (this.options === undefined) return undefined
     return 'Exploding Dice'
   }
 
-  toNotation(): string | undefined {
+  toNotation = (): string | undefined => {
     if (this.options === undefined) return undefined
     return '!'
   }

@@ -3,7 +3,7 @@ import type { ModifierOptions, NumericRollBonus } from '~types'
 import { extractMatches } from '~utils/extractMatches'
 
 export class PlusModifier {
-  static parse(modifiersString: string): Pick<ModifierOptions, 'plus'> {
+  static parse = (modifiersString: string): Pick<ModifierOptions, 'plus'> => {
     const notations = extractMatches(modifiersString, plusPattern)
     if (notations.length === 0) {
       return {}
@@ -22,7 +22,7 @@ export class PlusModifier {
     this.options = options
   }
 
-  apply(rolls: number[]): NumericRollBonus {
+  apply = (rolls: number[]): NumericRollBonus => {
     if (!this.options) return { rolls, simpleMathModifier: 0 }
     return {
       rolls,
@@ -30,12 +30,12 @@ export class PlusModifier {
     }
   }
 
-  toDescription(): string | undefined {
+  toDescription = (): string | undefined => {
     if (!this.options) return undefined
     return `Add ${this.options}`
   }
 
-  toNotation(): string | undefined {
+  toNotation = (): string | undefined => {
     if (!this.options) return undefined
     return `+${this.options}`
   }

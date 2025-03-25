@@ -10,7 +10,9 @@ import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
 import { formatHumanList } from '~utils/formatHumanList'
 
 export class DropModifier {
-  static parseConstraints(notations: string[]): Pick<ModifierOptions, 'drop'> {
+  static parseConstraints = (
+    notations: string[]
+  ): Pick<ModifierOptions, 'drop'> => {
     if (notations.length === 0) {
       return {}
     }
@@ -98,7 +100,7 @@ export class DropModifier {
     }
   }
 
-  static parse(modifiersString: string): Pick<ModifierOptions, 'drop'> {
+  static parse = (modifiersString: string): Pick<ModifierOptions, 'drop'> => {
     const dropHighModifiers = DropModifier.parseHigh(
       extractMatches(modifiersString, dropHighestPattern)
     )
@@ -124,11 +126,12 @@ export class DropModifier {
   }
 
   private options: DropOptions | undefined
+
   constructor(options: DropOptions | undefined) {
     this.options = options
   }
 
-  apply(rolls: number[]): NumericRollBonus {
+  apply = (rolls: number[]): NumericRollBonus => {
     if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
     const { highest, lowest, greaterThan, lessThan, exact } = this
       .options as DropOptions
@@ -221,7 +224,7 @@ export class DropModifier {
     return finalList.join('')
   }
 
-  private times(iterator: number) {
+  private times = (iterator: number) => {
     return (callback: (index?: number) => void): void => {
       if (iterator > 0) {
         callback(iterator)

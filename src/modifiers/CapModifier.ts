@@ -9,7 +9,7 @@ import { extractMatches } from '~utils/extractMatches'
 import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
 
 export class CapModifier {
-  static parse(modifiersString: string): Pick<ModifierOptions, 'cap'> {
+  static parse = (modifiersString: string): Pick<ModifierOptions, 'cap'> => {
     const notations = extractMatches(modifiersString, capPattern)
     if (notations.length === 0) {
       return {}
@@ -44,10 +44,10 @@ export class CapModifier {
       { cap: {} } as Pick<ModifierOptions, 'cap'>
     )
   }
-  static applySingleCap(
+  static applySingleCap = (
     { greaterThan, lessThan }: ComparisonOptions,
     value?: number
-  ): (roll: number) => number {
+  ): ((roll: number) => number) => {
     return (roll: number) => {
       if (greaterThan !== undefined && roll > greaterThan) {
         return value ?? greaterThan
@@ -64,7 +64,7 @@ export class CapModifier {
     this.options = options
   }
 
-  apply(rolls: number[]): NumericRollBonus {
+  apply = (rolls: number[]): NumericRollBonus => {
     if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
     return {
       rolls: rolls.map(CapModifier.applySingleCap(this.options)),
@@ -72,14 +72,14 @@ export class CapModifier {
     }
   }
 
-  toDescription(): string[] | undefined {
+  toDescription = (): string[] | undefined => {
     if (this.options === undefined) return undefined
     return formatGreaterLessDescriptions(this.options).map(
       (str) => `No Rolls ${str}`
     )
   }
 
-  toNotation(): string | undefined {
+  toNotation = (): string | undefined => {
     if (this.options === undefined) return undefined
     const capList = formatGreaterLessNotation(this.options)
     return `C{${capList.join(',')}}`

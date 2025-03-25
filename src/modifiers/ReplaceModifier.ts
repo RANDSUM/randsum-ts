@@ -11,7 +11,9 @@ import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
 import { CapModifier } from './CapModifier'
 
 export class ReplaceModifier {
-  static parse(modifiersString: string): Pick<ModifierOptions, 'replace'> {
+  static parse = (
+    modifiersString: string
+  ): Pick<ModifierOptions, 'replace'> => {
     const notations = extractMatches(modifiersString, replacePattern)
     if (notations.length === 0) {
       return {}
@@ -56,7 +58,7 @@ export class ReplaceModifier {
     this.options = options
   }
 
-  apply(rolls: number[]): NumericRollBonus {
+  apply = (rolls: number[]): NumericRollBonus => {
     if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
     let replaceRolls = rolls
     const parameters = [this.options].flat()
@@ -81,7 +83,7 @@ export class ReplaceModifier {
     }
   }
 
-  toDescription(): string[] | string | undefined {
+  toDescription = (): string[] | string | undefined => {
     if (this.options === undefined) return undefined
     if (Array.isArray(this.options)) {
       return this.options.map(this.singleReplaceDescription)
@@ -90,31 +92,37 @@ export class ReplaceModifier {
     return this.singleReplaceDescription(this.options)
   }
 
-  toNotation(): string | undefined {
+  toNotation = (): string | undefined => {
     if (this.options === undefined) return undefined
-    const args = replaceArgs(this.options)
+    const args = this.replaceArgs(this.options)
     return `V{${args.join(',')}}`
   }
 
-  private singleReplaceDescription({ from, to }: ReplaceOptions): string {
-    return `Replace ${extractFromValue(from)} with [${to}]`
+  private singleReplaceDescription = ({ from, to }: ReplaceOptions): string => {
+    return `Replace ${this.extractFromValue(from)} with [${to}]`
   }
-}
 
-function extractFromValue(from: number | ComparisonOptions): string {
-  if (typeof from === 'number') return `[${from}]`
+  private extractFromValue = (from: number | ComparisonOptions): string => {
+    if (typeof from === 'number') return `[${from}]`
+    return formatGreaterLessDescriptions(from).join(' and ')
+  }
 
-  return formatGreaterLessDescriptions(from).join(' and ')
-}
+  private replaceArgs = (
+    replace: ReplaceOptions | ReplaceOptions[]
+  ): string[] => {
+    if (Array.isArray(replace))
+      return replace.map(this.singleReplaceNotation).flat()
+    return [this.singleReplaceNotation(replace)]
+  }
 
-function replaceArgs(replace: ReplaceOptions | ReplaceOptions[]): string[] {
-  if (Array.isArray(replace)) return replace.map(singleReplaceNotation).flat()
-  return [singleReplaceNotation(replace)]
-}
-function singleReplaceNotation(replace: ReplaceOptions): string {
-  return `${fromValueNotation(replace.from)}=${replace.to}`
-}
-function fromValueNotation(from: number | ComparisonOptions): string | number {
-  if (typeof from === 'number') return from
-  return formatGreaterLessNotation(from).join(',')
+  private singleReplaceNotation = (replace: ReplaceOptions): string => {
+    return `${this.fromValueNotation(replace.from)}=${replace.to}`
+  }
+
+  private fromValueNotation = (
+    from: number | ComparisonOptions
+  ): string | number => {
+    if (typeof from === 'number') return from
+    return formatGreaterLessNotation(from).join(',')
+  }
 }
