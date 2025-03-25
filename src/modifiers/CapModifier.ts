@@ -5,8 +5,7 @@ import type {
   NumericRollBonus
 } from '~types'
 import { extractMatches } from '~utils/extractMatches'
-import { formatGreaterLessDescriptions } from '~utils/formatGreaterLessDescriptions'
-import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
+import { formatters } from '~utils/formatters'
 
 export class CapModifier {
   static parse = (modifiersString: string): Pick<ModifierOptions, 'cap'> => {
@@ -74,14 +73,14 @@ export class CapModifier {
 
   toDescription = (): string[] | undefined => {
     if (this.options === undefined) return undefined
-    return formatGreaterLessDescriptions(this.options).map(
-      (str) => `No Rolls ${str}`
-    )
+    return formatters.greaterLess
+      .descriptions(this.options)
+      .map((str) => `No Rolls ${str}`)
   }
 
   toNotation = (): string | undefined => {
     if (this.options === undefined) return undefined
-    const capList = formatGreaterLessNotation(this.options)
+    const capList = formatters.greaterLess.notation(this.options)
     return `C{${capList.join(',')}}`
   }
 }

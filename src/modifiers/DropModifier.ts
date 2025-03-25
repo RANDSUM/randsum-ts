@@ -5,9 +5,7 @@ import {
 } from '~patterns'
 import type { DropOptions, ModifierOptions, NumericRollBonus } from '~types'
 import { extractMatches } from '~utils/extractMatches'
-import { formatGreaterLessDescriptions } from '~utils/formatGreaterLessDescriptions'
-import { formatGreaterLessNotation } from '~utils/formatGreaterLessNotation'
-import { formatHumanList } from '~utils/formatHumanList'
+import { formatters } from '~utils/formatters'
 
 export class DropModifier {
   static parseConstraints = (
@@ -177,13 +175,13 @@ export class DropModifier {
       dropList.push(`Drop lowest`)
 
     if (this.options.exact) {
-      const exact = formatHumanList(this.options.exact)
+      const exact = formatters.humanList(this.options.exact)
       dropList.push(`Drop ${exact}`)
     }
 
-    formatGreaterLessDescriptions(this.options).forEach((str) =>
-      dropList.push(`Drop ${str}`)
-    )
+    formatters.greaterLess
+      .descriptions(this.options)
+      .forEach((str) => dropList.push(`Drop ${str}`))
 
     return dropList
   }
@@ -191,7 +189,7 @@ export class DropModifier {
   toNotation(): string | undefined {
     if (this.options === undefined) return undefined
     const dropList: string[] = []
-    const greaterLess = formatGreaterLessNotation(this.options)
+    const greaterLess = formatters.greaterLess.notation(this.options)
     greaterLess.forEach((str) => dropList.push(str))
     if (this.options.exact) {
       this.options.exact.forEach((roll) => {

@@ -6,6 +6,7 @@ import type {
   UniqueOptions
 } from '~types'
 import { extractMatches } from '~utils/extractMatches'
+import { formatters } from '~utils/formatters'
 import { InvalidUniqueError } from '~utils/invalidUniqueError'
 
 export class UniqueModifier {
@@ -92,14 +93,6 @@ export class UniqueModifier {
   }
 
   private formatHumanList(list: number[]): string {
-    return list
-      .map((num, index, list) => {
-        if (list.length === 1) return `[${num}]`
-
-        if (index === list.length - 1) return `and [${num}]`
-
-        return `[${num}] `
-      })
-      .join('')
+    return formatters.humanList(list)
   }
 }

@@ -1,511 +1,329 @@
 # Randsum Dice Notation
 
-## About
+## Overview
 
-### What is Dice Notation?
+Dice notation is a compact way to represent dice rolls and their modifications. For example, `4d20+2` means "roll four twenty-sided dice, then add two".
 
-[Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) is a way of representing different dice rolls and mutations in a simple string. For instance, `4d20+2` means "roll four twenty-sided die, then add two".
+Randsum extends standard dice notation with powerful modifiers like dropping lowest rolls, rerolling specific values, and ensuring unique results.
 
-However, more complex operations - "Drop highest, reroll 3's, and make sure the rolls are unique" - do not always have a well-understood spec. This document describes the more complicated syntax that `randsum` will recognize.
+## Basic Syntax
 
-## Dice Notation
+All notation in randsum is case-insensitive (`2d8` = `2D8`).
 
-Dice Notation in `randsum` is **case-insensitive**. `2d8` and `2D8` both work equally well.
+### Standard Rolls
 
-### Sides And Quantity
-
----
-
-```
-Roll X number of Y sided die
-
-XdY
-
-Roll 4 twenty sided dice
-
-4d20
-```
-
-In `randsum` :
-
-```js
-// Roll 1 twenty-sided die
-
-roll(20)
-roll('1d20')
+```typescript
+// Roll one d20
+roll(20) // number argument
+roll('1d20') // notation string
 roll({
   sides: 20,
   quantity: 1
 })
-```
 
-```js
-// Roll 1 one-hundred-sided die
-
-roll(100)
-roll('1d100')
+// Roll four d6
+roll('4d6')
 roll({
-  sides: 100,
-  quantity: 1
+  sides: 6,
+  quantity: 4
 })
 ```
 
-```js
-// Roll 6 twenty-sided die
+### Custom-Faced Dice
 
-roll('6d20')
-roll({
-  sides: 20,
-  quantity: 6
-})
-```
+Roll dice with non-numeric faces:
 
-### Custom Sides
-
----
-
-```
-Roll X number of a die with the sides "y", "z", " "
-
-Xd{yx }
-
-Roll 4 number of a die with the sides "+", "+", "-", "-", " ", " "
-
-4d{++--  }
-```
-
-In `randsum` :
-
-```js
-// Roll 6 two-sided die with the sides "H" and "T"
+```typescript
+// Roll a coin (heads/tails) four times
 import { rollCustomFaces } from 'randsum'
 
-rollCustomFaces('6d{HT}')
+rollCustomFaces('4d{HT}')
 rollCustomFaces({
   sides: ['H', 'T'],
-  quantity: 6
+  quantity: 4
+})
+
+// Roll Fudge/Fate dice
+rollCustomFaces('4d{++--  }') // Plus, minus, blank faces
+rollCustomFaces({
+  sides: ['+', '+', '-', '-', ' ', ' '],
+  quantity: 4
 })
 ```
 
-Note: When using custom sides with Randsum Dice Notation, we can only mark sides as single characters. When using full options, you can pass in strings of any length!
+Note: Custom-faced dice ignore modifiers and always return a total of 0.
 
-#### Custom Sides Caveats and Gotchas
+## Modifiers
 
-- Whenever _any_ dice pool leverages custom dice, the `total` of the `RandsumRollResult` will be `0`.
-- ModifierOptions are not compatible with custom sides. Under-the-hood, `randsum` is still rolling these as if they were numeric dice, then swapping out the numbers for faces at the end. While modifiers are technically feasible, it would be very easy to code yourself into a confusing place with non-obvious results.
-  - for example, given the custom faces argument `[6, 5, 4, 3, 2, 1]`, `1` would be considered the "highest" number, and `6` the "lowest`, which would be silly!
-  - In light of this, modifiers are ignored (if provided in JS) or rejected (in TS) when providing custom sides.
+### Basic Arithmetic
 
-### Plus
-
----
-
-**Key: `+`**
-
-Add values to the sum total of the rolled dice.
-
-```
-Add 2 to the final result
-
-4d20+2
-```
-
-In `randsum` :
-
-```js
-// Roll 6 twenty-sided die, add 5
-
-roll('6d20+5')
+```typescript
+roll('4d6+2') // Add 2 to total
 roll({
-  sides: 20,
-  quantity: 6,
-  modifiers: { plus: 5 }
+  sides: 6,
+  quantity: 4,
+  modifiers: { plus: 2 }
+})
+
+roll('4d6-1') // Subtract 1 from total
+roll({
+  sides: 6,
+  quantity: 4,
+  modifiers: { minus: 1 }
 })
 ```
 
-### Minus
+### Cap Modifiers
 
-**Key: `-`**
+Limit roll values to specific ranges:
 
-Subtract values to the sum total of the rolled dice
-
-```
-Subtract 2 from the final result
-
-4d20-2
-```
-
-In `randsum` :
-
-```js
-// Roll 6 twenty-sided die, subtract 5
-
-roll('6d20-5')
+```typescript
+roll('4d20C{>18}') // Cap rolls over 18 to 18
 roll({
   sides: 20,
-  quantity: 6,
-  modifiers: { minus: 5 }
-})
-```
-
-### Drop
-
----
-
-Remove values from the pool of rolled dice
-
-#### Highest
-
-**Key: `h | H`**
-
-Remove the highest value(s)
-
-```
-Drop Highest Die
-
-4d20H
-
-Drop Highest 3 Die
-
-4d20H3
-```
-
-In `randsum` :
-
-```js
-// Roll 6 twenty-sided die, drop highest
-
-roll('6d20H')
-roll({
-  sides: 20,
-  quantity: 6,
+  quantity: 4,
   modifiers: {
-    drop: {
-      highest: true
-    }
+    cap: { greaterThan: 18 }
   }
 })
 
-// Roll 6 twenty-sided die, drop highest 3
-
-roll('6d20H3')
+roll('4d20C{<3}') // Cap rolls under 3 to 3
 roll({
   sides: 20,
-  quantity: 6,
+  quantity: 4,
   modifiers: {
-    drop: {
-      highest: 3
-    }
-  }
-})
-```
-
-#### Lowest
-
-**Key: `l | L`**
-
-Remove the lowest value(s)
-
-```
-Drop Lowest Die
-
-4d20L
-
-Drop Lowest 3 Die
-
-4d20L3
-```
-
-In `randsum` :
-
-```js
-// Roll 6 twenty-sided die, drop lowest
-
-roll('6d20L')
-roll({
-  sides: 20,
-  quantity: 6,
-  modifiers: {
-    drop: {
-      lowest: true
-    }
+    cap: { lessThan: 3 }
   }
 })
 
-// Roll 6 twenty-sided die, drop lowest 3
-
-roll('6d20L3')
+roll('4d20C{<2,>19}') // Cap rolls under 2 to 2 and over 19 to 19
 roll({
   sides: 20,
-  quantity: 6,
-  modifiers: {
-    drop: {
-      lowest: 3
-    }
-  }
-})
-```
-
-#### Greater Than, Less than, Exact
-
-**Key: `d | D`**
-
-Remove Dice greater than, lesser than, or equal to value(s)
-
-```
-Drop rolls greater than 17
-
-4d20D{>17}
-
-Drop rolls less than 5
-
-4d20D{<5}
-
-Drop any die that rolls a 8 or a 12
-
-4d20D{8,12}
-
-Mix and Match!
-
-4d20D{<5,>158,12}
-```
-
-In `randsum` :
-
-```js
-// Roll 6 twenty-sided die, drop less than 5, greater than 15, and all 10's
-
-roll('6d20D{<5,>15,10')
-roll({
-  sides: 20,
-  quantity: 6,
-  modifiers: {
-    drop: {
-      greaterThan: 15,
-      lessThan: 5,
-      exactly: [10]
-    }
-  }
-})
-```
-
-### Cap
-
----
-
-**Key: `c | C`**
-
-Reduce all values above a certain value or increase all values below a certain value
-
-```
-Cap rolls greater than 18 to be 18
-
-4d20C{>17}
-
-Cap rolls less than 4 to be 4
-
-4d20C{<4}
-
-Cap rolls less than 2 to be 2 and greater than 19 to be 19
-
-4d20C{<2,>19}
-```
-
-In `randsum` :
-
-```js
-// Roll 6 twenty-sided die, cap less than 5 and greater than 15
-
-roll('6d20C{<5,>15}')
-roll({
-  sides: 20,
-  quantity: 6,
+  quantity: 4,
   modifiers: {
     cap: {
-      greaterThan: 15,
-      lessThan: 5
+      greaterThan: 19,
+      lessThan: 2
     }
   }
 })
 ```
 
-### Reroll
+### Drop Modifiers
 
----
+Drop specific dice from the results:
 
-**Key: `r | R`**
+```typescript
+roll('4d6L') // Drop lowest
+roll({
+  sides: 6,
+  quantity: 4,
+  modifiers: { drop: { lowest: 1 } }
+})
 
-Reroll all values above, below, or equal to certain values
+roll('4d6L2') // Drop 2 lowest
+roll({
+  sides: 6,
+  quantity: 4,
+  modifiers: { drop: { lowest: 2 } }
+})
 
-```
-Reroll rolls greater than 17
+roll('4d6H') // Drop highest
+roll({
+  sides: 6,
+  quantity: 4,
+  modifiers: { drop: { highest: 1 } }
+})
 
-4d20R{>17}
+roll('4d6H2') // Drop 2 highest
+roll({
+  sides: 6,
+  quantity: 4,
+  modifiers: { drop: { highest: 2 } }
+})
 
-Reroll rolls less than 5
-
-4d20R{<5}
-
-Reroll any die that rolls a 8 or a 12
-
-4d20R{8,12}
-
-Reroll any die that rolls a 8 or a 12, stop rerolling after 3
-
-4d20R{8,12}3
-
-Mix and Match!
-
-4d20R{<5,>15,8,12}
-```
-
-In `randsum` :
-
-```js
-// Roll 6 twenty-sided die, reroll less than 5, greater than 15, and all 10's, no more than 3 rerolls
-
-roll('6d20R{<5,>15,10}3')
+// Drop by value
+roll('4d20D{>17}') // Drop rolls over 17
 roll({
   sides: 20,
-  quantity: 6,
+  quantity: 4,
+  modifiers: { drop: { greaterThan: 17 } }
+})
+
+roll('4d20D{<5}') // Drop rolls under 5
+roll({
+  sides: 20,
+  quantity: 4,
+  modifiers: { drop: { lessThan: 5 } }
+})
+
+roll('4d20D{8,12}') // Drop 8s and 12s
+roll({
+  sides: 20,
+  quantity: 4,
+  modifiers: { drop: { exact: [8, 12] } }
+})
+```
+
+### Reroll Modifiers
+
+Reroll dice matching certain conditions:
+
+```typescript
+roll('4d20R{>17}') // Reroll results over 17
+roll({
+  sides: 20,
+  quantity: 4,
+  modifiers: { reroll: { greaterThan: 17 } }
+})
+
+roll('4d20R{<5}') // Reroll results under 5
+roll({
+  sides: 20,
+  quantity: 4,
+  modifiers: { reroll: { lessThan: 5 } }
+})
+
+roll('4d20R{8,12}') // Reroll 8s and 12s
+roll({
+  sides: 20,
+  quantity: 4,
+  modifiers: { reroll: { exact: [8, 12] } }
+})
+
+roll('4d20R{<5}3') // Reroll under 5, max 3 attempts
+roll({
+  sides: 20,
+  quantity: 4,
   modifiers: {
     reroll: {
-      above: 15,
-      below: 5,
-      exactly: [10],
+      lessThan: 5,
       max: 3
     }
   }
 })
 ```
 
-### Replace
+### Replace Modifiers
 
----
+Replace specific results with new values:
 
-**Key: `v | V`**
-
-Replace all values above, below, or equal to certain values with other values
-
-```
-Replace any die that rolls a 8 with a 12
-
-4d20V{8=12}
-
-Replace rolls greater than 17 with 20
-
-4d20V{>17=20}
-
-Replace rolls less than 5 with 1
-
-4d20V{<5=1}
-
-Mix and Match!
-
-4d20V{<5=1,>17=20,8=12}
-```
-
-In `randsum` :
-
-```js
-// Roll 6 twenty-sided die, replace less than 5 with 1, greater than 15 with 20, and all 10's with 2's
-
-roll('6d20v{<5=1,>15=20,10=2')
+```typescript
+roll('4d20V{8=12}') // Replace 8s with 12s
 roll({
   sides: 20,
-  quantity: 6,
+  quantity: 4,
   modifiers: {
-    replace: [
-      {
-        from: {
-          above: 15
-        },
-        to: 20
-      },
-      {
-        from: {
-          below: 5
-        },
-        to: 1
-      },
-      {
-        from: 10,
-        to: 2
-      }
-    ]
+    replace: {
+      from: 8,
+      to: 12
+    }
   }
 })
-```
 
-### Unique
-
----
-
-**Key: `u | U`**
-
-Enforce all rolls in a given pool to be unique**Note: Rolls whose quantitiy of dice exceed the number of sides will fail!**
-
-```
-Force all rolls to be unique
-
-4d20U
-
-Allow 5's and 10's to be repeated, keep all others unique
-
-4d20U{5,10}
-```
-
-In `randsum` :
-
-```js
-// Roll 6 twenty-sided die, make them all unique
-
-roll('6d20U')
+roll('4d20V{>17=20}') // Replace results over 17 with 20
 roll({
   sides: 20,
-  quantity: 6,
-  modifiers: { unique: true }
+  quantity: 4,
+  modifiers: {
+    replace: {
+      from: { greaterThan: 17 },
+      to: 20
+    }
+  }
 })
 
-// Roll 6 twenty-sided die, make them all unique, allow for repeated 5's and 10's
-
-roll('6d20U{5,10}')
+roll('4d20V{<5=1}') // Replace results under 5 with 1
 roll({
   sides: 20,
-  quantity: 6,
+  quantity: 4,
   modifiers: {
-    unique: {
-      notUnique: [5, 10]
+    replace: {
+      from: { lessThan: 5 },
+      to: 1
     }
   }
 })
 ```
 
-### Explode
+### Unique Results
 
----
+Force unique rolls within a pool:
 
-**Key: `!`**
+```typescript
+roll('4d20U') // All results must be unique
+roll({
+  sides: 20,
+  quantity: 4,
+  modifiers: { unique: true }
+})
 
-Roll additional dice whenever a die in the pool rolls its maximum value
-
+roll('4d20U{5,10}') // Unique except 5s and 10s can repeat
+roll({
+  sides: 20,
+  quantity: 4,
+  modifiers: {
+    unique: { notUnique: [5, 10] }
+  }
+})
 ```
-Roll four d20. If any roll a 20, roll an additional die!
 
-4d20!
+### Exploding Dice
+
+Roll additional dice on maximum results:
+
+```typescript
+roll('4d20!') // Roll an extra d20 for each 20 rolled
+roll({
+  sides: 20,
+  quantity: 4,
+  modifiers: { explode: true }
+})
 ```
 
-In `randsum`:
+### Combining Modifiers
 
-```js
-// Roll 6 twenty-sided die, explode them
+Modifiers can be chained together:
 
-roll('6d20!')
-roll({ sides: 20, quantity: 6, modifiers: { explode: true } })
+```typescript
+roll('4d6L+2') // Drop lowest, add 2
+roll({
+  sides: 6,
+  quantity: 4,
+  modifiers: {
+    drop: { lowest: 1 },
+    plus: 2
+  }
+})
+
+roll('2d20H!+1') // Drop highest, explode, add 1
+roll({
+  sides: 20,
+  quantity: 2,
+  modifiers: {
+    drop: { highest: 1 },
+    explode: true,
+    plus: 1
+  }
+})
+
+roll('4d6R{<3}L') // Reroll under 3, then drop lowest
+roll({
+  sides: 6,
+  quantity: 4,
+  modifiers: {
+    reroll: { lessThan: 3 },
+    drop: { lowest: 1 }
+  }
+})
 ```
 
-### Attribution
+## Notes
 
-I looked high and wide for a consensus on a sort "Extended Standard Dice Notation", and could not find anything. The most extensive and thought-out documentation I found was for the game's [Sophie's Dice](https://sophiehoulden.com/dice/documentation/notation.html#keep). Much of that syntax has been mirrored here.
+- When using notation strings with custom faces, each face must be a single character
+- The options object interface allows for multi-character custom faces
+- See the [Getting Started Guide](GETTING_STARTED.md) for more usage examples
 
-Thanks, [Sophie](https://www.patreon.com/SophieHoulden)! Your examples were invaluable. Consider buying their [games](https://sophieh.itch.io/)!
+## Attribution
+
+The extended notation syntax was inspired by [Sophie's Dice](https://sophiehoulden.com/dice/documentation/notation.html#keep).
