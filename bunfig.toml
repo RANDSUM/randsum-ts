@@ -1,5 +1,6 @@
 [test]
 root = "./src/__tests__"
-coverageReporter  = ["text", "lcov"]
+coverageReporter = ["text", "lcov"]
 coverage = true
-coverageThreshold =  1.0
+coverageThreshold = 1.0
+testTimeout = 5000
