@@ -1,15 +1,13 @@
 import { defineConfig } from 'bunup'
 
-const config: ReturnType<typeof defineConfig> = defineConfig({
+export default defineConfig({
   entry: ['src/index.ts'],
   outDir: 'dist',
   format: ['esm', 'cjs'],
   dts: true,
   minify: true,
+  clean: true,
   splitting: true,
   external: ['@randsum/core'],
-  sourcemap: 'inline',
   target: 'node'
 })
-
-export default config

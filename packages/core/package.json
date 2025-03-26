@@ -8,7 +8,7 @@
     "url": "https://github.com/RANDSUM"
   },
   "license": "MIT",
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "source": "./src/index.ts",
@@ -19,6 +19,7 @@
     "README.md"
   ],
   "sideEffects": false,
+  "type": "module",
   "scripts": {
     "build": "bunup",
     "clean": "rm -rf ./dist/ ./coverage/",
