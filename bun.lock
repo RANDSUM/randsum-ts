@@ -15,7 +15,7 @@
     },
     "packages/core": {
       "name": "@randsum/core",
-      "version": "0.0.10",
+      "version": "0.1.0",
       "devDependencies": {
         "@types/bun": "1.2.6",
         "bunup": "^0.1.39",
@@ -23,7 +23,7 @@
     },
     "packages/dice": {
       "name": "@randsum/dice",
-      "version": "0.0.10",
+      "version": "0.1.0",
       "dependencies": {
         "@randsum/core": "workspace:^",
         "@randsum/notation": "workspace:^",
@@ -39,7 +39,7 @@
     },
     "packages/notation": {
       "name": "@randsum/notation",
-      "version": "0.0.10",
+      "version": "0.1.0",
       "dependencies": {
         "@randsum/core": "workspace:^",
       },
