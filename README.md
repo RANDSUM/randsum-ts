@@ -1,177 +1,122 @@
 <div align="center">
   <img width="150" height="150" src="https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp">
   <h1>randsum</h1>
-  <h3>A flexible, type-safe dice roller for TypeScript/JavaScript</h3>
+  <h3>A flexible, type-safe dice rolling ecosystem for TypeScript/JavaScript</h3>
 
-[![npm version](https://img.shields.io/npm/v/randsum)](https://www.npmjs.com/package/randsum)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/randsum)](https://bundlephobia.com/package/randsum)
-[![Types](https://img.shields.io/npm/types/randsum)](https://www.npmjs.com/package/randsum)
 [![License](https://img.shields.io/npm/l/randsum)](https://github.com/RANDSUM/randsum-ts/blob/main/LICENSE)
-[![Downloads](https://img.shields.io/npm/dm/randsum)](https://www.npmjs.com/package/randsum)
+[![CI Status](https://github.com/RANDSUM/randsum-ts/workflows/CI/badge.svg)](https://github.com/RANDSUM/randsum-ts/actions)
+[![Bun](https://img.shields.io/badge/Bun-%23000000.svg?style=flat&logo=bun&logoColor=white)](https://bun.sh)
 
 </div>
 
-A powerful dice rolling library that supports:
+## 🚀 Quick Example
 
-- 🎲 Standard dice notation (`4d6`, `2d20H`, etc.)
-- 🎯 Complex modifiers (drop lowest, reroll, exploding dice)
-- 🔒 Full TypeScript support
-- 🎮 Perfect for games, RPGs, and simulations
-- 🪶 Tiny footprint (<5KB minified + gzipped)
+```typescript
+import { D20, roll } from '@randsum/dice'
 
-## Table of Contents
+// Simple d20 roll
+D20.roll() // Returns 1-20
 
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Usage Examples](#usage-examples)
-- [API Reference](#api-reference)
-- [Advanced Features](#advanced-features)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
+// Complex dice notation
+roll('4d6L') // Roll 4d6, drop lowest
+```
 
-## Installation
+## 📦 Packages
+
+This monorepo contains the following packages:
+
+### [`@randsum/dice`](https://www.npmjs.com/package/@randsum/dice)
+
+[![npm version](https://img.shields.io/npm/v/@randsum/dice)](https://www.npmjs.com/package/@randsum/dice)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/@randsum/dice)](https://bundlephobia.com/package/@randsum/dice)
+
+Core dice rolling implementation, where it all started.
 
 ```bash
-npm install randsum
-# or
-yarn add randsum
-# or
-bun add randsum
+npm install @randsum/dice
 ```
 
-## Quick Start
+### [`@randsum/notation`](https://www.npmjs.com/package/@randsum/notation)
 
-```typescript
-import { D, D20, D6 } from 'randsum'
+[![npm version](https://img.shields.io/npm/v/@randsum/notation)](https://www.npmjs.com/package/@randsum/notation)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/@randsum/notation)](https://bundlephobia.com/package/@randsum/notation)
 
-// Using premade dice - fastest way to get rolling
-D20.roll() // Roll a d20
-D6.roll(4) // Roll 4d6
+Dice notation parser and validator, for parsing the powerful Randsum Dice Notation.
 
-// Create custom dice
-const d12 = new D(12)
-d12.roll() // Returns number 1-12
-d12.rollSpread(3) // Returns [n, n, n]
-
-// Create dice with custom faces
-const coin = new D(['heads', 'tails'])
-coin.roll() // Returns "heads" or "tails"
+```bash
+npm install @randsum/notation
 ```
 
-## Usage Examples
+### `@randsum/core`
 
-### Common RPG Scenarios
+Internal package containing shared utilities and types. Not intended for direct usage. All types are exported in each subsequent package for ease of use.
 
-```typescript
-import { roll, D20 } from 'randsum'
+## 🛠️ Development
 
-// D&D Ability Score (4d6 drop lowest)
-roll('4d6L')
+This is a monorepo using Bun workspaces. To get started:
 
-// Advantage (2d20 keep highest)
-roll('2d20H')
+```bash
+# Clone the repository
+git clone https://github.com/RANDSUM/randsum.git
+cd randsum-ts
 
-// Attack with +5 modifier
-D20.roll() + 5
-// or
-roll('1d20+5')
+# Install dependencies for all packages
+bun run install:all
+
+# Build all packages
+bun run build:all
+
+# Run tests
+bun test
+
+# Run type checks
+bun ts:check
+
+# Lint and format
+bun lint
+bun format
 ```
 
-### Custom Game Dice
+### Package Scripts
 
-```typescript
-import { D } from 'randsum'
+- `build:all`: Build all packages
+- `clean:all`: Clean build artifacts
+- `install:all`: Install dependencies for all packages
+- `test`: Run all tests
+- `lint`/`format`: Code quality checks
 
-// Create a Fudge/Fate die
-const fateDie = new D(['+', '+', '0', '0', '-', '-'])
-fateDie.roll() // Returns '+', '0', or '-'
+## Further Reading
 
-// Create a color die
-const colorDie = new D(['red', 'blue', 'green', 'yellow'])
-colorDie.roll() // Returns a random color
-```
+- [Getting Started](https://github.com/RANDSUM/randsum-ts/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
-## API Reference
+- [Randsum Dice Notation](https://github.com/RANDSUM/randsum-ts/blob/main/packages/notation/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
 
-### Creating Dice (`D` Class)
+- [Contributing](https://github.com/RANDSUM/randsum-ts/blob/main/CONTRIBUTING.md) - help make `randsum` better!
 
-The `D` class is the foundation of randsum, allowing you to create both numerical and custom-faced dice:
+- [Sophie's Dice Notation](https://sophiehoulden.com/dice/documentation/notation.html) - a great dice notation guide that helped me along the way
 
-```typescript
-import { D } from 'randsum'
+- [\_why's poignant guide to ruby](https://poignant.guide/) - \_why not?
 
-// Numerical die
-const d20 = new D(20)
-d20.roll() // Returns number 1-20
-d20.rollSpread(3) // Returns [n, n, n]
+## 🤝 Contributing
 
-// Custom-faced die
-const coin = new D(['heads', 'tails'])
-coin.roll() // Returns "heads" or "tails"
-```
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to your branch
+5. Open a Pull Request
 
-### Pre-made Dice
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for more details.
 
-Common dice are available as ready-to-use exports:
+## Why did you make this?
 
-```typescript
-import { D4, D6, D8, D10, D12, D20, D100 } from 'randsum'
+Sometime around 2012, I decided I wanted to learn to program. I had installed ruby on the best laptop six-hundred dollars could buy, set to make a dice roller as an easy first project.
 
-D20.roll() // Roll a d20
-D6.roll(4) // Roll 4d6
-```
+I spent an easy 30 minutes trying to figure out how to make `rand(n)` return `1...n` instead of `0...(n-1)`.
 
-### Roll Function
+When I found the answer, I laughed and laughed. I've been chasing that high ever since.
 
-The `roll` function provides a flexible interface for complex dice rolls:
+---
 
-```typescript
-import { roll } from 'randsum'
-
-// Basic rolls
-roll(20) // Roll 1d20
-roll('4d6') // Roll 4d6
-
-// Advanced notation
-roll('4d6L') // 4d6, drop lowest
-roll('2d20H') // 2d20, keep highest
-roll('4d6R{<3}') // 4d6, reroll values below 3
-roll('3d8U') // 3d8, unique values only
-
-// Options object
-roll({
-  quantity: 4,
-  sides: 6,
-  modifiers: {
-    drop: { lowest: true },
-    reroll: { lessThan: 3 }
-  }
-})
-```
-
-### Notation Validation
-
-Validate dice notation before rolling:
-
-```typescript
-import { validateNotation } from 'randsum'
-
-const result = validateNotation('4d6L')
-if (result.valid) {
-  console.log(result.description) // ["Roll 4 six-sided dice", "Drop lowest roll"]
-}
-```
-
-## Advanced Modifiers
-
-- **Rerolling**: `4d6R{<3}` - Reroll values below 3
-- **Dropping**: `4d6L` - Drop lowest roll
-- **Keeping**: `2d20H` - Keep highest roll
-- **Unique Values**: `3d6U` - Force unique results
-- **Custom Faces**: Support for non-numeric dice faces
-- **Exploding Dice**: `4d6!` - Roll again on maximum values
-- **Math Modifiers**: `2d8+4` - Add/subtract from total
-
-See [Dice Notation Reference](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for more examples!
-
-MIT © Alex Jarvis
+<div align="center">
+Made with 👹 by <a href="https://github.com/RANDSUM">RANDSUM</a>
+</div>

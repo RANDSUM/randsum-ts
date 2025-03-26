@@ -1,4 +1,4 @@
-name: Publish + Release on Version Bump
+name: Publish + Release
 on:
   workflow_run:
     workflows: [CI]
@@ -17,10 +17,10 @@ jobs:
         uses: oven-sh/setup-bun@v1
 
       - name: Install deps
-        run: bun install
+        run: bun run install:all
 
       - name: Build
-        run: bun run build
+        run: bun run build:all
 
       - uses: JS-DevTools/npm-publish@v1
         id: publish

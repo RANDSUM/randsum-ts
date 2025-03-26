@@ -1,0 +1,43 @@
+{
+  "name": "@randsum/core",
+  "version": "0.0.1",
+  "description": "Internal utilities and types for @randsum packages",
+  "private": true,
+  "author": {
+    "name": "Alex Jarvis",
+    "url": "https://github.com/RANDSUM"
+  },
+  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "bunup",
+    "clean": "rm -rf ./dist/ ./coverage/",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage",
+    "prebuild": "bun run clean",
+    "prepare": "bun run build",
+    "prepack": "bun run build"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "devDependencies": {
+    "@types/bun": "1.2.6",
+    "bunup": "^0.1.39"
+  }
+}

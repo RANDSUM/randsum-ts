@@ -19,7 +19,10 @@ jobs:
           bun-version: latest
 
       - name: Install deps
-        run: bun install
+        run: bun run install:all
+
+      - name: Build
+        run: bun run build:all
 
       - name: TypeCheck
         run: bun ts:check
@@ -29,7 +32,4 @@ jobs:
 
       - name: Test
         run:
-          CI=true bun test
-
-      - name: Build
-        run: bun run build
+          bun run test:ci

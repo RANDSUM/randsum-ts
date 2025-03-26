@@ -1,127 +1,37 @@
 {
-  "name": "randsum",
-  "version": "9.0.3",
-  "author": {
-    "name": "Alex Jarvis",
-    "url": "https://github.com/RANDSUM"
-  },
-  "icon": "https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp",
-  "description": "The world's most powerful, flexible, and easy-to-use JS dice-roller.",
-  "license": "MIT",
-  "homepage": "https://github.com/RANDSUM/randsum-ts",
-  "bugs": {
-    "url": "https://github.com/RANDSUM/randsum-ts/issues"
-  },
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/RANDSUM"
-  },
-  "keywords": [
-    "dice",
-    "d20",
-    "dice roller",
-    "rpg dice roller",
-    "roll",
-    "d&d",
-    "dnd",
-    "rpg",
-    "ttrpg",
-    "rpgs",
-    "ttrpgs",
-    "tabletop",
-    "dungeons",
-    "dragons",
-    "roleplaying game",
-    "rand",
-    "random",
-    "RNG",
-    "notation",
-    "typescript",
-    "bun"
+  "name": "randsum-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "source": "./src/index.ts",
-  "files": [
-    "dist",
-    "src",
-    "LICENSE",
-    "README.md",
-    "RANDSUM_DICE_NOTATION.md"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/RANDSUM/randsum-ts.git"
-  },
-  "sideEffects": false,
-  "engines": {
-    "node": ">=16.0.0",
-    "bun": ">=1.0.0"
-  },
   "scripts": {
-    "analyze": "size-limit",
-    "build": "npx bunup",
-    "clean": "rm -rf ./dist/ ./coverage/",
+    "build:all": "bun run --cwd packages/core build && bun run --cwd packages/dice build && bun run --cwd packages/notation build",
+    "clean:all": "bun run --cwd packages/core clean && bun run --cwd packages/dice clean && bun run --cwd packages/notation clean",
+    "install:all": "bun install && bun install --cwd packages/core && bun install --cwd packages/dice && bun install --cwd packages/notation",
+    "test": "bun run build:all && bun test --cwd=packages",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format:fix": "prettier . --write",
     "format": "prettier . --check",
-    "gen:docs": "npx typedoc ./src/index.ts",
     "ts:check": "tsc --noEmit --erasableSyntaxOnly",
-    "local:check": "bun lint:fix && bun format:fix && bun ts:check && bun run build",
-    "prepublishOnly": "bun run clean && bun run build && bun run ts:check",
-    "postversion": "git push --no-verify && git push --tags --no-verify",
-    "prepack": "bun run build"
+    "dev": "bun run build:watch",
+    "build:watch": "bun run build:all --watch",
+    "test:ci": "bun run test --coverage",
+    "precommit": "bun run lint && bun run test"
   },
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
-      "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.cjs"
-      }
-    },
-    "./package.json": "./package.json"
-  },
-  "size-limit": [
-    {
-      "path": "dist/index.js",
-      "limit": "4 KB"
-    }
-  ],
   "devDependencies": {
     "@eslint/js": "^9.23.0",
-    "@size-limit/preset-small-lib": "^11.2.0",
-    "@types/bun": "1.2.6",
-    "@types/eslint__js": "^8.42.3",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
-    "bunup": "^0.1.39",
     "eslint": "^9.23.0",
     "prettier": "^3.5.3",
-    "size-limit": "^11.2.0",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0"
-  },
-  "peerDependencies": {
-    "typescript": ">=5.0.0"
   },
   "prettier": {
     "endOfLine": "auto",
     "trailingComma": "none",
     "semi": false,
     "singleQuote": true
-  },
-  "type": "module",
-  "dependencies": {
-    "uuid": "^11.1.0"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }
