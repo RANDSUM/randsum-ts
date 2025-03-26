@@ -61,7 +61,7 @@
   },
   "scripts": {
     "analyze": "size-limit",
-    "build": "bun run clean && bun run build.ts",
+    "build": "npx bunup",
     "clean": "rm -rf ./dist/ ./coverage/",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
