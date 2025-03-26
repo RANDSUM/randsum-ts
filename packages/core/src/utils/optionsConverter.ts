@@ -1,13 +1,11 @@
-import {
-  CapModifier,
-  DropModifier,
-  ExplodeModifier,
-  MinusModifier,
-  PlusModifier,
-  ReplaceModifier,
-  RerollModifier,
-  UniqueModifier
-} from '@randsum/core'
+import { CapModifier } from '../modifiers/CapModifier'
+import { DropModifier } from '../modifiers/DropModifier'
+import { ExplodeModifier } from '../modifiers/ExplodeModifier'
+import { MinusModifier } from '../modifiers/MinusModifier'
+import { PlusModifier } from '../modifiers/PlusModifier'
+import { ReplaceModifier } from '../modifiers/ReplaceModifier'
+import { RerollModifier } from '../modifiers/RerollModifier'
+import { UniqueModifier } from '../modifiers/UniqueModifier'
 import type { DiceNotation, ModifierOptions, RollOptions } from '../types'
 
 export const optionsConverter = {
