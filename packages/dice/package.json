@@ -39,8 +39,7 @@
   },
   "dependencies": {
     "@randsum/core": "workspace:^",
-    "@randsum/notation": "workspace:^",
-    "uuid": "^11.1.0"
+    "@randsum/notation": "workspace:^"
   },
   "devDependencies": {
     "@types/bun": "1.2.6",

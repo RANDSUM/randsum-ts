@@ -8,7 +8,7 @@ export default defineConfig({
   minify: true,
   clean: true,
   splitting: true,
-  external: ['uuid', '@randsum/notation', '@randsum/core'],
+  external: ['@randsum/notation', '@randsum/core'],
   sourcemap: 'inline',
   target: 'node'
 })
