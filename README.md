@@ -57,7 +57,7 @@ This is a monorepo using Bun workspaces. To get started:
 
 ```bash
 # Clone the repository
-git clone https://github.com/RANDSUM/randsum-ts.git
+git clone https://github.com/RANDSUM/-randsum.git
 cd randsum-ts
 
 # Install dependencies for all packages

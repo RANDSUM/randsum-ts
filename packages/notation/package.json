@@ -10,7 +10,7 @@
   "homepage": "https://github.com/RANDSUM/randsum-ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RANDSUM/randsum-ts.git",
+    "url": "git+https://github.com/RANDSUM/-randsum.git",
     "directory": "packages/notation"
   },
   "main": "./dist/index.cjs",
