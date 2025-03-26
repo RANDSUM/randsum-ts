@@ -1,7 +1,7 @@
 {
   "name": "@randsum/core",
   "version": "0.0.1",
-  "description": "Shared utilities and types for randsum packages",
+  "description": "Shared utilities and types for @randsum packages",
   "author": {
     "name": "Alex Jarvis",
     "url": "https://github.com/RANDSUM"
