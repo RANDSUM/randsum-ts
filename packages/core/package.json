@@ -21,7 +21,18 @@
   "scripts": {
     "build": "bunup",
     "clean": "rm -rf ./dist/ ./coverage/",
-    "test": "bun test"
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage",
+    "prebuild": "bun run clean",
+    "prepare": "bun run build"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
   },
   "devDependencies": {
     "@types/bun": "1.2.6",
