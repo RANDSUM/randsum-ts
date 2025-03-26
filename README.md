@@ -35,12 +35,9 @@ Dice notation parser and validator, for parsing the powerful Randsum Dice Notati
 npm install @randsum/notation
 ```
 
-### [`@randsum/core`](https://www.npmjs.com/package/@randsum/core)
+### `@randsum/core`
 
-[![npm version](https://img.shields.io/npm/v/@randsum/core)](https://www.npmjs.com/package/@randsum/core)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/@randsum/core)](https://bundlephobia.com/package/@randsum/core)
-
-Shared utilities and types. Don't install this directly. Unless...?
+Internal package containing shared utilities and types. Not intended for direct usage.
 
 ## 🚀 Quick Example
 
