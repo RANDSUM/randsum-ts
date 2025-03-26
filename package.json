@@ -7,6 +7,7 @@
   "scripts": {
     "build": "bun run --cwd packages/core build && bun run --cwd packages/dice build && bun run --cwd packages/notation build",
     "clean": "bun run --cwd packages/core clean && bun run --cwd packages/dice clean && bun run --cwd packages/notation clean",
+    "test": "bun run --cwd packages/core test && bun run --cwd packages/dice test && bun run --cwd packages/notation test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format:fix": "prettier . --write",
