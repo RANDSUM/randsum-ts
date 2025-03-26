@@ -14,9 +14,8 @@ export class CapModifier {
       return {}
     }
     return notations.reduce(
-      (acc, notationString) => {
-        const capString = notationString
-          .split(/[Cc]/)[1]
+      (acc, notationString = '') => {
+        const capString = (notationString.split(/[Cc]/)[1] || '')
           .replaceAll(/{|}/g, '')
           .split(',')
 

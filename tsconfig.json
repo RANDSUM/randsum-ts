@@ -1,38 +1,54 @@
 {
   "compilerOptions": {
-    // Path Aliases
-    "paths": {
-      "@randsum/core": ["./packages/core/src"],
-      "@randsum/dice": ["./packages/dice/src"],
-      "@randsum/notation": ["./packages/notation/src"]
-    },
-    "lib": ["ESNext"],
-    "target": "ESNext",
+    // Module Settings
     "module": "ESNext",
-    "moduleDetection": "force",
-    "jsx": "react-jsx",
-    "allowJs": false,
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "moduleDetection": "force",
+
+    // Type Checking
     "strict": true,
-    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "isolatedDeclarations": true,
-    "declaration": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noImplicitOverride": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "noPropertyAccessFromIndexSignature": true,
-    "forceConsistentCasingInFileNames": true,
+
+    // Type Declaration Settings
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "stripInternal": true,
+    "isolatedModules": true,
+
+    // Project Structure
     "composite": true,
     "rootDir": ".",
-    "baseUrl": "."
+    "baseUrl": ".",
+
+    // Build Settings
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
   "include": [
     "packages/*/src/**/*",
     "packages/*/src/**/*.json",
-    "packages/dice/__tests__"
+    "packages/*/src/**/*.d.ts"
   ],
-  "exclude": ["node_modules", "packages/*/dist", "**/__tests__/**"]
+  "exclude": [
+    "node_modules",
+    "packages/*/dist",
+    "**/coverage",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
 }

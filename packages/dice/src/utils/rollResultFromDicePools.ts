@@ -105,7 +105,7 @@ function generateModifiedRolls(
 ): RollResult['modifiedRolls'] {
   return Object.fromEntries(
     Object.entries(dicePools.dicePools).map(([key, params]) => {
-      const rolls = rawRolls[key]
+      const rolls = rawRolls[key] || []
 
       if (isCustomParameters(params)) {
         return [

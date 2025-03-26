@@ -12,8 +12,7 @@ export class RerollModifier {
 
     return notations.reduce(
       (acc, notationString) => {
-        const parsedString = notationString
-          .split(/[Rr]/)[1]
+        const parsedString = (notationString.split(/[Rr]/)[1] || '')
           .replaceAll('{', '')
           .replaceAll('}', ',!')
           .split(',')
@@ -147,13 +146,23 @@ export class RerollModifier {
     }
 
     if (
-      (greaterThan !== undefined && roll > greaterThan) ||
-      (lessThan !== undefined && roll < lessThan) ||
-      this.extractExactValue(exact, roll)
+      greaterThan !== undefined &&
+      lessThan !== undefined &&
+      exact !== undefined &&
+      max !== undefined &&
+      ((greaterThan !== undefined && roll > greaterThan) ||
+        (lessThan !== undefined && roll < lessThan) ||
+        exact !== undefined ||
+        this.extractExactValue(exact, roll))
     ) {
       return this.rerollRoll(
         rollOne(),
-        { greaterThan, lessThan, exact, max },
+        {
+          greaterThan,
+          lessThan,
+          exact,
+          max
+        },
         rollOne,
         index + 1
       )

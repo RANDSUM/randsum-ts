@@ -18,8 +18,7 @@ export class DropModifier {
 
     return notations.reduce(
       (acc, notationString) => {
-        const constraints = notationString
-          .split(/[Dd]/)[1]
+        const constraints = (notationString.split(/[Dd]/)[1] || '')
           .replaceAll('{', '')
           .replaceAll('}', '')
           .split(',')
@@ -62,7 +61,7 @@ export class DropModifier {
       return {}
     }
 
-    const notationString = notations[notations.length - 1]
+    const notationString = notations[notations.length - 1] || ''
     const highestCount = notationString.split(/[Hh]/)[1]
 
     if (highestCount === '') {
@@ -80,7 +79,7 @@ export class DropModifier {
     if (notations.length === 0) {
       return { drop: {} }
     }
-    const notationString = notations[notations.length - 1]
+    const notationString = notations[notations.length - 1] || ''
     const lowestCount = notationString.split(/[Ll]/)[1]
 
     if (lowestCount === '') {

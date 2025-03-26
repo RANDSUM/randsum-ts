@@ -35,7 +35,7 @@ function optionsFromArgument(argument: RollArgument): RollParams['options'] {
 
     const coreMatch = coreNotationMatch![0]
     const modifiersString = argument.replace(coreMatch, '')
-    const [quantity, sides] = coreMatch.split(/[Dd]/)
+    const [quantity, sides = ''] = coreMatch.split(/[Dd]/)
 
     if (sides.includes('{')) {
       return {

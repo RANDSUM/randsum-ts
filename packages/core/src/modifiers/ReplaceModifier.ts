@@ -19,13 +19,12 @@ export class ReplaceModifier {
     }
     const replace = notations
       .map((notationString) => {
-        const replaceOptions = notationString
-          .split(/[Vv]/)[1]
+        const replaceOptions = (notationString.split(/[Vv]/)[1] || '')
           .replaceAll('{', '')
           .replaceAll('}', '')
           .split(',')
           .map((replacement) => {
-            const [noteFrom, noteTo] = replacement.split('=')
+            const [noteFrom = '', noteTo] = replacement.split('=')
 
             const coreReplacement = { to: Number(noteTo) }
             if (noteFrom.includes('>')) {
@@ -49,6 +48,8 @@ export class ReplaceModifier {
         return replaceOptions.filter(Boolean)
       })
       .flat()
+      .filter((r) => r !== undefined)
+
     return { replace }
   }
 
