@@ -156,7 +156,7 @@ function generateRawRolls(
       const quantity = options.quantity || 1
 
       if (isNumericRollOptions(options)) {
-        return [key, coreSpreadRolls(quantity, options.sides) as number[]]
+        return [key, coreSpreadRolls<number>(quantity, options.sides)]
       }
 
       return [

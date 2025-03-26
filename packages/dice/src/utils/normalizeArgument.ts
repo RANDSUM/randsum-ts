@@ -12,8 +12,7 @@ import {
 import { coreNotationPattern, isDiceNotation } from '@randsum/notation'
 import { D } from '../D'
 import { isD } from '../guards/isD'
-import { isDicePoolOptions } from '../guards/isDicePoolOptions'
-import type { RollArgument, RollOptions, RollParams } from '../types'
+import type { RollArgument, RollParams } from '../types'
 
 export function normalizeArgument(argument: RollArgument): RollParams {
   const options = optionsFromArgument(argument)
@@ -27,10 +26,6 @@ export function normalizeArgument(argument: RollArgument): RollParams {
 }
 
 function optionsFromArgument(argument: RollArgument): RollParams['options'] {
-  if (isDicePoolOptions(argument)) {
-    return argument
-  }
-
   if (argument instanceof D) {
     return argument.toOptions
   }
@@ -42,9 +37,16 @@ function optionsFromArgument(argument: RollArgument): RollParams['options'] {
     const modifiersString = argument.replace(coreMatch, '')
     const [quantity, sides] = coreMatch.split(/[Dd]/)
 
+    if (sides.includes('{')) {
+      return {
+        quantity: Number(quantity),
+        sides: [...sides.replaceAll(/{|}/g, '')]
+      }
+    }
+
     return {
       quantity: Number(quantity),
-      sides: parseCoreSides(sides),
+      sides: Number(sides),
       ...{
         modifiers: {
           ...DropModifier.parse(modifiersString),
@@ -57,21 +59,17 @@ function optionsFromArgument(argument: RollArgument): RollParams['options'] {
           ...MinusModifier.parse(modifiersString)
         }
       }
-    } as RollOptions
+    }
   }
 
   if (Array.isArray(argument)) {
     return { quantity: 1, sides: argument.map(String) }
   }
 
-  return { quantity: 1, sides: Number(argument) }
-}
-
-function parseCoreSides(notationString: string): number | string[] {
-  if (notationString.includes('{')) {
-    return [...notationString.replaceAll(/{|}/g, '')]
+  if (typeof argument === 'string' || typeof argument === 'number') {
+    return { quantity: 1, sides: Number(argument) }
   }
-  return Number(notationString)
+  return argument
 }
 
 function dieForArgument(argument: RollArgument): RollParams['die'] {
