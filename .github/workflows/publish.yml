@@ -10,7 +10,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     env:
-      INPUT_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -31,36 +31,46 @@ jobs:
       - name: Build
         run: bun run build:all
 
-      # Publish @randsum/dice
-      - uses: JS-DevTools/npm-publish@v3
-        id: publish-dice
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: ./packages/dice/package.json
-          access: public
+      - name: Setup .npmrc
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
+          echo "access=public" >> .npmrc
 
-      # Publish @randsum/notation
-      - uses: JS-DevTools/npm-publish@v3
-        id: publish-notation
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: ./packages/notation/package.json
-          access: public
+      # Get current versions
+      - name: Get current versions
+        id: versions
+        run: |
+          echo "dice_old_version=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_OUTPUT
+          echo "notation_old_version=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_OUTPUT
+
+      # Publish packages
+      - name: Publish packages
+        id: publish
+        run: |
+          cd packages/dice && bun publish --no-git-checks || true
+          cd ../notation && bun publish --no-git-checks || true
+
+      # Get new versions
+      - name: Get new versions
+        id: new_versions
+        run: |
+          echo "dice_new_version=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_OUTPUT
+          echo "notation_new_version=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_OUTPUT
 
       # Create GitHub Release if either package was published
       - name: Create Release
-        if: steps.publish-dice.outputs.type != 'none' || steps.publish-notation.outputs.type != 'none'
+        if: steps.versions.outputs.dice_old_version != steps.new_versions.outputs.dice_new_version || steps.versions.outputs.notation_old_version != steps.new_versions.outputs.notation_new_version
         id: release
         uses: softprops/action-gh-release@HEAD
         with:
-          tag_name: ${{ steps.publish-dice.outputs.type != 'none' && format('dice-v{0}', steps.publish-dice.outputs.version) || format('notation-v{0}', steps.publish-notation.outputs.version) }}
+          tag_name: ${{ steps.versions.outputs.dice_old_version != steps.new_versions.outputs.dice_new_version && format('dice-v{0}', steps.new_versions.outputs.dice_new_version) || format('notation-v{0}', steps.new_versions.outputs.notation_new_version) }}
           append_body: true
           generate_release_notes: true
           body: |
             ## Changes in this Release
 
-            ${{ steps.publish-dice.outputs.type != 'none' && format('### @randsum/dice v{0}', steps.publish-dice.outputs.version) || '' }}
-            ${{ steps.publish-dice.outputs.type != 'none' && '- Package updated' || '' }}
+            ${{ steps.versions.outputs.dice_old_version != steps.new_versions.outputs.dice_new_version && format('### @randsum/dice v{0}', steps.new_versions.outputs.dice_new_version) || '' }}
+            ${{ steps.versions.outputs.dice_old_version != steps.new_versions.outputs.dice_new_version && '- Package updated' || '' }}
 
-            ${{ steps.publish-notation.outputs.type != 'none' && format('### @randsum/notation v{0}', steps.publish-notation.outputs.version) || '' }}
-            ${{ steps.publish-notation.outputs.type != 'none' && '- Package updated' || '' }}
+            ${{ steps.versions.outputs.notation_old_version != steps.new_versions.outputs.notation_new_version && format('### @randsum/notation v{0}', steps.new_versions.outputs.notation_new_version) || '' }}
+            ${{ steps.versions.outputs.notation_old_version != steps.new_versions.outputs.notation_new_version && '- Package updated' || '' }}
