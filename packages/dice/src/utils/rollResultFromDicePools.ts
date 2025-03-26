@@ -69,6 +69,7 @@ function applyModifier(
     reroll: () =>
       new RerollModifier(modifiers.reroll).apply(
         currentBonuses.rolls,
+        undefined,
         rollParams.rollOne
       ),
     unique: () =>

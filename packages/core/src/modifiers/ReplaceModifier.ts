@@ -7,10 +7,13 @@ import type {
 } from '../types'
 import { extractMatches } from '../utils/extractMatches'
 import { formatters } from '../utils/formatters'
+import { BaseModifier } from './BaseModifier'
 import { CapModifier } from './CapModifier'
 
-export class ReplaceModifier {
-  static parse = (
+export class ReplaceModifier extends BaseModifier<
+  ReplaceOptions | ReplaceOptions[]
+> {
+  static override parse = (
     modifiersString: string
   ): Pick<ModifierOptions, 'replace'> => {
     const notations = extractMatches(modifiersString, replacePattern)
@@ -53,9 +56,8 @@ export class ReplaceModifier {
     return { replace }
   }
 
-  private options: ReplaceOptions | ReplaceOptions[] | undefined
   constructor(options: ReplaceOptions | ReplaceOptions[] | undefined) {
-    this.options = options
+    super(options)
   }
 
   apply = (rolls: number[]): NumericRollBonus => {
@@ -83,13 +85,13 @@ export class ReplaceModifier {
     }
   }
 
-  toDescription = (): string[] | string | undefined => {
+  toDescription = (): string[] | undefined => {
     if (this.options === undefined) return undefined
     if (Array.isArray(this.options)) {
       return this.options.map(this.singleReplaceDescription)
     }
 
-    return this.singleReplaceDescription(this.options)
+    return [this.singleReplaceDescription(this.options)]
   }
 
   toNotation = (): string | undefined => {

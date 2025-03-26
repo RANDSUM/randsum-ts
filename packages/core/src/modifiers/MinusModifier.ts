@@ -1,9 +1,12 @@
 import { minusPattern } from '../patterns'
 import type { ModifierOptions, NumericRollBonus } from '../types'
 import { extractMatches } from '../utils/extractMatches'
+import { BaseModifier } from './BaseModifier'
 
-export class MinusModifier {
-  static parse = (modifiersString: string): Pick<ModifierOptions, 'minus'> => {
+export class MinusModifier extends BaseModifier<number> {
+  static override parse = (
+    modifiersString: string
+  ): Pick<ModifierOptions, 'minus'> => {
     const notations = extractMatches(modifiersString, minusPattern)
     if (notations.length === 0) {
       return {}
@@ -17,9 +20,8 @@ export class MinusModifier {
     }
   }
 
-  private options: number | undefined
   constructor(options: number | undefined) {
-    this.options = options
+    super(options)
   }
 
   apply = (rolls: number[]): NumericRollBonus => {
@@ -30,9 +32,9 @@ export class MinusModifier {
     }
   }
 
-  toDescription = (): string | undefined => {
+  toDescription = (): string[] | undefined => {
     if (!this.options) return undefined
-    return `Subtract ${this.options}`
+    return [`Subtract ${this.options}`]
   }
 
   toNotation = (): string | undefined => {

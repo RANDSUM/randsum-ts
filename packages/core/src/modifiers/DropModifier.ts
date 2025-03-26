@@ -6,8 +6,9 @@ import {
 import type { DropOptions, ModifierOptions, NumericRollBonus } from '../types'
 import { extractMatches } from '../utils/extractMatches'
 import { formatters } from '../utils/formatters'
+import { BaseModifier } from './BaseModifier'
 
-export class DropModifier {
+export class DropModifier extends BaseModifier<DropOptions> {
   static parseConstraints = (
     notations: string[]
   ): Pick<ModifierOptions, 'drop'> => {
@@ -97,7 +98,9 @@ export class DropModifier {
     }
   }
 
-  static parse = (modifiersString: string): Pick<ModifierOptions, 'drop'> => {
+  static override parse = (
+    modifiersString: string
+  ): Pick<ModifierOptions, 'drop'> => {
     const dropHighModifiers = DropModifier.parseHigh(
       extractMatches(modifiersString, dropHighestPattern)
     )
@@ -122,10 +125,8 @@ export class DropModifier {
     return {}
   }
 
-  private options: DropOptions | undefined
-
   constructor(options: DropOptions | undefined) {
-    this.options = options
+    super(options)
   }
 
   apply = (rolls: number[]): NumericRollBonus => {

@@ -6,9 +6,12 @@ import type {
 } from '../types'
 import { extractMatches } from '../utils/extractMatches'
 import { formatters } from '../utils/formatters'
+import { BaseModifier } from './BaseModifier'
 
-export class CapModifier {
-  static parse = (modifiersString: string): Pick<ModifierOptions, 'cap'> => {
+export class CapModifier extends BaseModifier<ComparisonOptions> {
+  static override parse = (
+    modifiersString: string
+  ): Pick<ModifierOptions, 'cap'> => {
     const notations = extractMatches(modifiersString, capPattern)
     if (notations.length === 0) {
       return {}
@@ -42,6 +45,7 @@ export class CapModifier {
       { cap: {} } as Pick<ModifierOptions, 'cap'>
     )
   }
+
   static applySingleCap = (
     { greaterThan, lessThan }: ComparisonOptions,
     value?: number
@@ -57,17 +61,15 @@ export class CapModifier {
     }
   }
 
-  private options: ComparisonOptions | undefined
   constructor(options: ComparisonOptions | undefined) {
-    this.options = options
+    super(options)
   }
 
   apply = (rolls: number[]): NumericRollBonus => {
-    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
-    return {
-      rolls: rolls.map(CapModifier.applySingleCap(this.options)),
-      simpleMathModifier: 0
-    }
+    if (this.options === undefined) return this.defaultBonus(rolls)
+    return this.defaultBonus(
+      rolls.map(CapModifier.applySingleCap(this.options))
+    )
   }
 
   toDescription = (): string[] | undefined => {

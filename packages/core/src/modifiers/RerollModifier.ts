@@ -2,9 +2,12 @@ import { rerollPattern } from '../patterns'
 import type { ModifierOptions, NumericRollBonus, RerollOptions } from '../types'
 import { extractMatches } from '../utils/extractMatches'
 import { formatters } from '../utils/formatters'
+import { BaseModifier } from './BaseModifier'
 
-export class RerollModifier {
-  static parse(modifiersString: string): Pick<ModifierOptions, 'replace'> {
+export class RerollModifier extends BaseModifier<RerollOptions> {
+  static override parse(
+    modifiersString: string
+  ): Pick<ModifierOptions, 'replace'> {
     const notations = extractMatches(modifiersString, rerollPattern)
     if (notations.length === 0) {
       return {}
@@ -56,12 +59,15 @@ export class RerollModifier {
       { reroll: {} }
     ) as Pick<ModifierOptions, 'replace'>
   }
-  private options: RerollOptions | undefined
   constructor(options: RerollOptions | undefined) {
-    this.options = options
+    super(options)
   }
 
-  apply(rolls: number[], rollOne: () => number): NumericRollBonus {
+  apply(
+    rolls: number[],
+    _params: undefined,
+    rollOne: () => number
+  ): NumericRollBonus {
     if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
 
     return {
@@ -72,7 +78,7 @@ export class RerollModifier {
     }
   }
 
-  toDescription(): string | undefined {
+  toDescription(): string[] | undefined {
     if (this.options === undefined) return undefined
     const rerollList: string[] = []
 
@@ -93,10 +99,10 @@ export class RerollModifier {
     const coreString = `Reroll ${exactString}`
 
     if (this.options.max) {
-      return `${coreString} (up to ${this.options.max} times)`
+      return [`${coreString} (up to ${this.options.max} times)`]
     }
 
-    return coreString
+    return [coreString]
   }
 
   toNotation(): string | undefined {
@@ -148,6 +154,7 @@ export class RerollModifier {
     if (
       (greaterThan !== undefined && roll > greaterThan) ||
       (lessThan !== undefined && roll < lessThan) ||
+      exact !== undefined ||
       this.extractExactValue(exact, roll)
     ) {
       return this.rerollRoll(

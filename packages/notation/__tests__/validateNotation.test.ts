@@ -64,7 +64,7 @@ describe(validateNotation, () => {
         valid: true,
         notation: '2d{ht}',
         type: 'custom',
-        digested: { sides: ['h', 't'], quantity: 2, modifiers: {} },
+        digested: { sides: ['h', 't'], quantity: 2 },
         description: ['Roll 2 dice with the following sides: (h,t)']
       })
     })

@@ -8,9 +8,12 @@ import type {
 import { extractMatches } from '../utils/extractMatches'
 import { formatters } from '../utils/formatters'
 import { InvalidUniqueError } from '../utils/invalidUniqueError'
+import { BaseModifier } from './BaseModifier'
 
-export class UniqueModifier {
-  static parse(modifiersString: string): Pick<ModifierOptions, 'unique'> {
+export class UniqueModifier extends BaseModifier<boolean | UniqueOptions> {
+  static override parse(
+    modifiersString: string
+  ): Pick<ModifierOptions, 'unique'> {
     return extractMatches(modifiersString, uniquePattern).reduce<
       Pick<ModifierOptions, 'unique'>
     >((acc, notationString) => {
@@ -33,9 +36,8 @@ export class UniqueModifier {
     }, {})
   }
 
-  private options: boolean | UniqueOptions | undefined
   constructor(options: boolean | UniqueOptions | undefined) {
-    this.options = options
+    super(options)
   }
 
   apply(
@@ -70,12 +72,14 @@ export class UniqueModifier {
     }
   }
 
-  toDescription(): string | undefined {
+  toDescription(): string[] | undefined {
     if (this.options === undefined) return undefined
     if (typeof this.options === 'boolean' || this.options === undefined) {
-      return 'No Duplicate Rolls'
+      return ['No Duplicate Rolls']
     }
-    return `No Duplicates (except ${this.formatHumanList(this.options.notUnique)})`
+    return [
+      `No Duplicates (except ${this.formatHumanList(this.options.notUnique)})`
+    ]
   }
 
   toNotation(): string | undefined {

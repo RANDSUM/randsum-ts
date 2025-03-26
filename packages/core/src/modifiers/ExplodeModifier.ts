@@ -5,9 +5,10 @@ import type {
   RequiredNumericRollParameters
 } from '../types'
 import { extractMatches } from '../utils/extractMatches'
+import { BaseModifier } from './BaseModifier'
 
-export class ExplodeModifier {
-  static parse = (
+export class ExplodeModifier extends BaseModifier<boolean> {
+  static override parse = (
     modifiersString: string
   ): Pick<ModifierOptions, 'explode'> => {
     const notations = extractMatches(modifiersString, explodePattern)
@@ -17,9 +18,8 @@ export class ExplodeModifier {
     return { explode: true }
   }
 
-  private options: boolean | undefined
   constructor(options: boolean | undefined) {
-    this.options = options
+    super(options)
   }
 
   apply = (
@@ -38,9 +38,9 @@ export class ExplodeModifier {
     }
   }
 
-  toDescription = (): string | undefined => {
+  toDescription = (): string[] | undefined => {
     if (this.options === undefined) return undefined
-    return 'Exploding Dice'
+    return ['Exploding Dice']
   }
 
   toNotation = (): string | undefined => {

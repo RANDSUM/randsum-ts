@@ -16,9 +16,16 @@ export function notationToOptions(notationString: DiceNotation): RollOptions {
   const modifiersString = notationString.replace(coreNotationMatch!, '')
   const [quantity, sides = ''] = coreNotationMatch!.split(/[Dd]/)
 
+  if (sides.includes('{')) {
+    return {
+      quantity: Number(quantity),
+      sides: [...sides.replaceAll(/{|}/g, '')]
+    }
+  }
+
   return {
     quantity: Number(quantity),
-    sides: parseCoreSides(sides),
+    sides: Number(sides),
     ...{
       modifiers: {
         ...DropModifier.parse(modifiersString),
@@ -31,12 +38,5 @@ export function notationToOptions(notationString: DiceNotation): RollOptions {
         ...MinusModifier.parse(modifiersString)
       }
     }
-  } as RollOptions
-}
-
-function parseCoreSides(notationString: string): number | string[] {
-  if (notationString.includes('{')) {
-    return [...notationString.replaceAll(/{|}/g, '')]
   }
-  return Number(notationString)
 }
