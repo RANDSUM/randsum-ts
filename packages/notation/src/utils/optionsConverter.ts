@@ -1,46 +1,10 @@
-import { coreNotationPattern } from '~patterns'
-import { isD } from '~src/guards/isD'
-import { isDiceNotationArg } from '~src/guards/isDiceNotationArg'
-import { isDicePoolOptions } from '~src/guards/isDicePoolOptions'
-import type {
-  DiceNotation,
-  ModifierOptions,
-  RollArgument,
-  RollOptions
-} from '~types'
-import { CapModifier } from '../../packages/notation/src/modifiers/CapModifier'
-import { DropModifier } from '../../packages/notation/src/modifiers/DropModifier'
-import { ExplodeModifier } from '../../packages/notation/src/modifiers/ExplodeModifier'
-import { MinusModifier } from '../../packages/notation/src/modifiers/MinusModifier'
-import { PlusModifier } from '../../packages/notation/src/modifiers/PlusModifier'
-import { ReplaceModifier } from '../../packages/notation/src/modifiers/ReplaceModifier'
-import { RerollModifier } from '../../packages/notation/src/modifiers/RerollModifier'
-import { UniqueModifier } from '../../packages/notation/src/modifiers/UniqueModifier'
+import { CapModifier, DropModifier, ExplodeModifier, MinusModifier, PlusModifier, ReplaceModifier, RerollModifier, UniqueModifier } from "@randsum/core"
+import { coreNotationPattern } from "../patterns"
+import type { DiceNotation, ModifierOptions, RollOptions } from "../types"
 
 export const optionsConverter = {
-  fromArgument(argument: RollArgument): RollOptions {
-    if (isDicePoolOptions(argument)) {
-      return argument
-    }
-
-    if (isD(argument)) {
-      return argument.toOptions
-    }
-
-    if (isDiceNotationArg(argument)) {
-      return this.fromNotation(argument)
-    }
-
-    if (Array.isArray(argument)) {
-      return { quantity: 1, sides: argument.map(String) }
-    }
-
-    return { quantity: 1, sides: Number(argument) }
-  },
-
   fromNotation(notationString: DiceNotation): RollOptions {
     const coreNotationMatch = notationString.match(coreNotationPattern)
-
     const coreMatch = coreNotationMatch![0]
     const modifiersString = notationString.replace(coreMatch, '')
     const [quantity, sides] = coreMatch.split(/[Dd]/)

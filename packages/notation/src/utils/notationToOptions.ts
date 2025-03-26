@@ -1,13 +1,6 @@
-import { coreNotationPattern } from '~patterns'
-import type { DiceNotation, RollOptions } from '~types'
-import { CapModifier } from '../../packages/notation/src/modifiers/CapModifier'
-import { DropModifier } from '../../packages/notation/src/modifiers/DropModifier'
-import { ExplodeModifier } from '../../packages/notation/src/modifiers/ExplodeModifier'
-import { MinusModifier } from '../../packages/notation/src/modifiers/MinusModifier'
-import { PlusModifier } from '../../packages/notation/src/modifiers/PlusModifier'
-import { ReplaceModifier } from '../../packages/notation/src/modifiers/ReplaceModifier'
-import { RerollModifier } from '../../packages/notation/src/modifiers/RerollModifier'
-import { UniqueModifier } from '../../packages/notation/src/modifiers/UniqueModifier'
+import { CapModifier, DropModifier, ExplodeModifier, MinusModifier, PlusModifier, ReplaceModifier, RerollModifier, UniqueModifier } from "@randsum/core"
+import { coreNotationPattern } from "../patterns"
+import type { DiceNotation, RollOptions } from "../types"
 
 export function notationToOptions(notationString: DiceNotation): RollOptions {
   const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)

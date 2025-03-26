@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
+    // Path Aliases
     "paths": {
-      "~utils/*": ["./src/utils/*"],
-      "~patterns": ["./src/patterns.ts"],
-      "~guards/*": ["./src/guards/*"],
-      "~types": ["./src/types.ts"],
-      "~src/*": ["./src/*"]
+      "@randsum/core": ["./packages/core/src"],
+      "@randsum/dice": ["./packages/dice/src"],
+      "@randsum/notation": ["./packages/notation/src"]
     },
     "lib": ["ESNext"],
     "target": "ESNext",
@@ -25,6 +24,18 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noPropertyAccessFromIndexSignature": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "forceConsistentCasingInFileNames": true,
+    "composite": true,
+    "rootDir": ".",
+    "baseUrl": "."
+  },
+  "include": [
+    "packages/*/src/**/*",
+    "packages/*/src/**/*.json"
+  ],
+  "exclude": [
+    "node_modules",
+    "packages/*/dist",
+    "**/__tests__/**"
+  ]
 }

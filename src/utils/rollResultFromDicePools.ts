@@ -1,12 +1,4 @@
 import { isNumericRollOptions } from '~guards/isNumericRollOptions'
-import { CapModifier } from '~src/modifiers/CapModifier'
-import { DropModifier } from '~src/modifiers/DropModifier'
-import { ExplodeModifier } from '~src/modifiers/ExplodeModifier'
-import { MinusModifier } from '~src/modifiers/MinusModifier'
-import { PlusModifier } from '~src/modifiers/PlusModifier'
-import { ReplaceModifier } from '~src/modifiers/ReplaceModifier'
-import { RerollModifier } from '~src/modifiers/RerollModifier'
-import { UniqueModifier } from '~src/modifiers/UniqueModifier'
 import type {
   CustomRollParams,
   DicePool,
@@ -15,6 +7,14 @@ import type {
   RollParams,
   RollResult
 } from '~types'
+import { CapModifier } from '../../packages/notation/src/modifiers/CapModifier'
+import { DropModifier } from '../../packages/notation/src/modifiers/DropModifier'
+import { ExplodeModifier } from '../../packages/notation/src/modifiers/ExplodeModifier'
+import { MinusModifier } from '../../packages/notation/src/modifiers/MinusModifier'
+import { PlusModifier } from '../../packages/notation/src/modifiers/PlusModifier'
+import { ReplaceModifier } from '../../packages/notation/src/modifiers/ReplaceModifier'
+import { RerollModifier } from '../../packages/notation/src/modifiers/RerollModifier'
+import { UniqueModifier } from '../../packages/notation/src/modifiers/UniqueModifier'
 import { calculateTotal } from './calculateTotal'
 import { coreRandom } from './coreRandom'
 import { coreSpreadRolls } from './coreSpreadRolls'

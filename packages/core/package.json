@@ -1,0 +1,30 @@
+{
+  "name": "@randsum/core",
+  "version": "1.0.0",
+  "description": "Shared utilities and types for randsum packages",
+  "author": {
+    "name": "Alex Jarvis",
+    "url": "https://github.com/RANDSUM"
+  },
+  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "bunup",
+    "clean": "rm -rf ./dist/ ./coverage/",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "1.2.6",
+    "bunup": "^0.1.39"
+  }
+}
