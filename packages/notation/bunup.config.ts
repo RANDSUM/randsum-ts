@@ -7,7 +7,7 @@ const config: ReturnType<typeof defineConfig> = defineConfig({
   dts: true,
   minify: true,
   splitting: true,
-  external: [],
+  external: ['@randsum/core'],
   sourcemap: 'inline',
   target: 'node'
 })
