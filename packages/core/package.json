@@ -1,17 +1,23 @@
 {
   "name": "@randsum/core",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "description": "Internal utilities and types for @randsum packages",
   "private": false,
   "author": {
     "name": "Alex Jarvis",
     "url": "https://github.com/RANDSUM"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RANDSUM/randsum.git",
+    "directory": "packages/core"
+  },
   "license": "MIT",
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "source": "./src/index.ts",
+  "react-native": "./src/index.ts",
   "files": [
     "dist",
     "src",
@@ -19,6 +25,7 @@
     "README.md"
   ],
   "sideEffects": false,
+  "type": "module",
   "scripts": {
     "build": "bunup",
     "clean": "rm -rf ./dist/ ./coverage/",
@@ -31,10 +38,16 @@
   },
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    }
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public"
