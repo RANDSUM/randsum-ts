@@ -57,7 +57,7 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 ```bash
 # Clone the repository
-git clone https://github.com/RANDSUM/-randsum.git
+git clone https://github.com/RANDSUM/randsum.git
 cd randsum-ts
 
 # Install dependencies for all packages
