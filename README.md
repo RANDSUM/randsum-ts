@@ -37,7 +37,7 @@ npm install @randsum/notation
 
 ### `@randsum/core`
 
-Internal package containing shared utilities and types. Not intended for direct usage.
+Internal package containing shared utilities and types. Not intended for direct usage. All types are exported in each subsequent package for ease of use.
 
 ## 🚀 Quick Example
 
