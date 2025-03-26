@@ -19,12 +19,6 @@ jobs:
       - name: Use Bun
         uses: oven-sh/setup-bun@v1
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/bun.lock') }}
-
       - name: Install deps
         run: bun run install:all
 
@@ -36,47 +30,44 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
           echo "access=public" >> .npmrc
 
-      # Get current versions
-      - name: Get current versions
-        id: versions
+      # Store initial versions
+      - name: Get initial versions
+        id: initial_versions
         run: |
-          echo "core_old_version=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_OUTPUT
-          echo "dice_old_version=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_OUTPUT
-          echo "notation_old_version=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_OUTPUT
+          echo "CORE_VERSION=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_ENV
+          echo "DICE_VERSION=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_ENV
+          echo "NOTATION_VERSION=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_ENV
 
-      # Publish packages in order: core -> dice/notation
-      - name: Publish packages
-        id: publish
+      # Publish packages in dependency order
+      - name: Publish core
+        run: cd packages/core && bun publish --no-git-checks || echo "No core changes to publish"
+
+      - name: Publish notation
+        run: cd packages/notation && bun publish --no-git-checks || echo "No notation changes to publish"
+
+      - name: Publish dice
+        run: cd packages/dice && bun publish --no-git-checks || echo "No dice changes to publish"
+
+      # Get final versions after publish
+      - name: Get final versions
+        id: final_versions
         run: |
-          cd packages/core && bun publish --no-git-checks || true
-          cd ../notation && bun publish --no-git-checks || true
-          cd ../dice && bun publish --no-git-checks || true
+          echo "NEW_CORE_VERSION=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_ENV
+          echo "NEW_DICE_VERSION=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_ENV
+          echo "NEW_NOTATION_VERSION=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_ENV
 
-      # Get new versions
-      - name: Get new versions
-        id: new_versions
-        run: |
-          echo "core_new_version=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_OUTPUT
-          echo "notation_new_version=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_OUTPUT
-          echo "dice_new_version=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_OUTPUT
-
-      # Create GitHub Release if any package was published
+      # Create release if any package was published
       - name: Create Release
-        if: steps.versions.outputs.core_old_version != steps.new_versions.outputs.core_new_version || steps.versions.outputs.dice_old_version != steps.new_versions.outputs.dice_new_version || steps.versions.outputs.notation_old_version != steps.new_versions.outputs.notation_new_version
-        id: release
-        uses: softprops/action-gh-release@HEAD
+        if: env.CORE_VERSION != env.NEW_CORE_VERSION || env.DICE_VERSION != env.NEW_DICE_VERSION || env.NOTATION_VERSION != env.NEW_NOTATION_VERSION
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.versions.outputs.core_old_version != steps.new_versions.outputs.core_new_version && format('core-v{0}', steps.new_versions.outputs.core_new_version) || steps.versions.outputs.dice_old_version != steps.new_versions.outputs.dice_new_version && format('dice-v{0}', steps.new_versions.outputs.dice_new_version) || format('notation-v{0}', steps.new_versions.outputs.notation_new_version) }}
-          append_body: true
-          generate_release_notes: true
+          tag_name: release-${{ github.sha }}
+          name: Release ${{ github.sha }}
           body: |
-            ## Changes in this Release
+            ## Package Updates
 
-            ${{ steps.versions.outputs.core_old_version != steps.new_versions.outputs.core_new_version && format('### @randsum/core v{0}', steps.new_versions.outputs.core_new_version) || '' }}
-            ${{ steps.versions.outputs.core_old_version != steps.new_versions.outputs.core_new_version && '- Package updated' || '' }}
+            ${{ env.CORE_VERSION != env.NEW_CORE_VERSION && format('### @randsum/core: {0} → {1}', env.CORE_VERSION, env.NEW_CORE_VERSION) || '' }}
+            ${{ env.DICE_VERSION != env.NEW_DICE_VERSION && format('### @randsum/dice: {0} → {1}', env.DICE_VERSION, env.NEW_DICE_VERSION) || '' }}
+            ${{ env.NOTATION_VERSION != env.NEW_NOTATION_VERSION && format('### @randsum/notation: {0} → {1}', env.NOTATION_VERSION, env.NEW_NOTATION_VERSION) || '' }}
 
-            ${{ steps.versions.outputs.dice_old_version != steps.new_versions.outputs.dice_new_version && format('### @randsum/dice v{0}', steps.new_versions.outputs.dice_new_version) || '' }}
-            ${{ steps.versions.outputs.dice_old_version != steps.new_versions.outputs.dice_new_version && '- Package updated' || '' }}
-
-            ${{ steps.versions.outputs.notation_old_version != steps.new_versions.outputs.notation_new_version && format('### @randsum/notation v{0}', steps.new_versions.outputs.notation_new_version) || '' }}
-            ${{ steps.versions.outputs.notation_old_version != steps.new_versions.outputs.notation_new_version && '- Package updated' || '' }}
+            See commit history for detailed changes.
