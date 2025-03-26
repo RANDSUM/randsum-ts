@@ -33,7 +33,8 @@
     "test:coverage": "bun test --coverage",
     "typecheck": "tsc --noEmit",
     "prebuild": "bun run clean",
-    "prepare": "bun run build"
+    "prepare": "bun run build",
+    "prepack": "bun run build"
   },
   "dependencies": {
     "@randsum/core": "workspace:*",

@@ -35,15 +35,14 @@
     "typecheck": "tsc --noEmit",
     "prebuild": "bun run clean",
     "prepare": "bun run build",
-    "docs": "typedoc --out docs src/index.ts"
+    "prepack": "bun run build"
   },
   "dependencies": {
     "@randsum/core": "workspace:*"
   },
   "devDependencies": {
     "@types/bun": "1.2.6",
-    "bunup": "^0.1.39",
-    "typedoc": "^0.25.0"
+    "bunup": "^0.1.39"
   },
   "peerDependencies": {
     "typescript": ">=5.0.0"
