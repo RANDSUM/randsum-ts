@@ -32,7 +32,7 @@ jobs:
         run: bun run build:all
 
       # Publish @randsum/dice
-      - uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v3
         id: publish-dice
         with:
           token: ${{ secrets.NPM_TOKEN }}
@@ -40,7 +40,7 @@ jobs:
           access: public
 
       # Publish @randsum/notation
-      - uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v3
         id: publish-notation
         with:
           token: ${{ secrets.NPM_TOKEN }}
