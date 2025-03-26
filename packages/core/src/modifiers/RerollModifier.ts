@@ -1,7 +1,7 @@
-import { rerollPattern } from "../patterns"
-import type { ModifierOptions, NumericRollBonus, RerollOptions } from "../types"
-import { extractMatches } from "../utils/extractMatches"
-import { formatters } from "../utils/formatters"
+import { rerollPattern } from '../patterns'
+import type { ModifierOptions, NumericRollBonus, RerollOptions } from '../types'
+import { extractMatches } from '../utils/extractMatches'
+import { formatters } from '../utils/formatters'
 
 export class RerollModifier {
   static parse(modifiersString: string): Pick<ModifierOptions, 'replace'> {

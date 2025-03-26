@@ -1,5 +1,14 @@
-import { CapModifier, DropModifier, ExplodeModifier, MinusModifier, PlusModifier, ReplaceModifier, RerollModifier, UniqueModifier } from "@randsum/core"
-import type { DiceNotation, ModifierOptions, RollOptions } from "../types"
+import {
+  CapModifier,
+  DropModifier,
+  ExplodeModifier,
+  MinusModifier,
+  PlusModifier,
+  ReplaceModifier,
+  RerollModifier,
+  UniqueModifier
+} from '@randsum/core'
+import type { DiceNotation, ModifierOptions, RollOptions } from '../types'
 
 export const optionsConverter = {
   toNotation(options: RollOptions): DiceNotation {
@@ -14,7 +23,6 @@ export const optionsConverter = {
       ...this.formatModifierDescriptions(options)
     ]
   },
-
 
   formatCoreNotation(options: RollOptions): string {
     const { quantity = 1, sides } = options

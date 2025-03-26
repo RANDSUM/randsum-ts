@@ -1,7 +1,22 @@
-
-import { CapModifier, DropModifier, ExplodeModifier, MinusModifier, type ModifierOptions, type NumericRollBonus, PlusModifier, ReplaceModifier, RerollModifier, UniqueModifier } from '@randsum/core'
+import {
+  CapModifier,
+  DropModifier,
+  ExplodeModifier,
+  MinusModifier,
+  type ModifierOptions,
+  type NumericRollBonus,
+  PlusModifier,
+  ReplaceModifier,
+  RerollModifier,
+  UniqueModifier
+} from '@randsum/core'
 import { isNumericRollOptions } from '../guards/isNumericRollOptions'
-import type { CustomRollParams, DicePool, RollParams, RollResult } from '../types'
+import type {
+  CustomRollParams,
+  DicePool,
+  RollParams,
+  RollResult
+} from '../types'
 import { calculateTotal } from './calculateTotal'
 import { coreRandom } from './coreRandom'
 import { coreSpreadRolls } from './coreSpreadRolls'

@@ -1,4 +1,3 @@
-
 // --------------------------
 // --- NOTATION & STRINGS ---
 // --------------------------
@@ -75,13 +74,11 @@ export interface CustomRollOptions extends BaseRollOptions {
   modifiers?: Record<string, never>
 }
 
-
 export type RollOptions = NumericRollOptions | CustomRollOptions
 
 // -----------------------
 // --  ROLL PARAMETERS ---
 // -----------------------
-
 
 export type RequiredNumericRollParameters = Required<
   Omit<NumericRollOptions, 'modifiers'>

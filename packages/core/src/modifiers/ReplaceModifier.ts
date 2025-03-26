@@ -1,8 +1,13 @@
-import { replacePattern } from "../patterns"
-import type { ComparisonOptions, ModifierOptions, NumericRollBonus, ReplaceOptions } from "../types"
-import { extractMatches } from "../utils/extractMatches"
-import { formatters } from "../utils/formatters"
-import { CapModifier } from "./CapModifier"
+import { replacePattern } from '../patterns'
+import type {
+  ComparisonOptions,
+  ModifierOptions,
+  NumericRollBonus,
+  ReplaceOptions
+} from '../types'
+import { extractMatches } from '../utils/extractMatches'
+import { formatters } from '../utils/formatters'
+import { CapModifier } from './CapModifier'
 
 export class ReplaceModifier {
   static parse = (

@@ -1,4 +1,15 @@
-import { capPattern, dropConstraintsPattern, dropHighestPattern, dropLowestPattern, explodePattern, minusPattern, plusPattern, replacePattern, rerollPattern, uniquePattern } from "@randsum/core"
+import {
+  capPattern,
+  dropConstraintsPattern,
+  dropHighestPattern,
+  dropLowestPattern,
+  explodePattern,
+  minusPattern,
+  plusPattern,
+  replacePattern,
+  rerollPattern,
+  uniquePattern
+} from '@randsum/core'
 
 export const coreNotationPattern: RegExp = /^\d+[Dd](\d+|{.*})/
 export const completeRollPattern: RegExp = new RegExp(

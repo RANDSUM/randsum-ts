@@ -1,6 +1,10 @@
-import { explodePattern } from "../patterns"
-import type { ModifierOptions, NumericRollBonus, RequiredNumericRollParameters } from "../types"
-import { extractMatches } from "../utils/extractMatches"
+import { explodePattern } from '../patterns'
+import type {
+  ModifierOptions,
+  NumericRollBonus,
+  RequiredNumericRollParameters
+} from '../types'
+import { extractMatches } from '../utils/extractMatches'
 
 export class ExplodeModifier {
   static parse = (

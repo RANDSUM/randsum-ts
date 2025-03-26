@@ -1,8 +1,11 @@
-import { dropConstraintsPattern, dropHighestPattern, dropLowestPattern } from "../patterns"
-import type { DropOptions, ModifierOptions, NumericRollBonus } from "../types"
-import { extractMatches } from "../utils/extractMatches"
-import { formatters } from "../utils/formatters"
-
+import {
+  dropConstraintsPattern,
+  dropHighestPattern,
+  dropLowestPattern
+} from '../patterns'
+import type { DropOptions, ModifierOptions, NumericRollBonus } from '../types'
+import { extractMatches } from '../utils/extractMatches'
+import { formatters } from '../utils/formatters'
 
 export class DropModifier {
   static parseConstraints = (

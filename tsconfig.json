@@ -31,11 +31,8 @@
   },
   "include": [
     "packages/*/src/**/*",
-    "packages/*/src/**/*.json"
-, "packages/dice/__tests__"  ],
-  "exclude": [
-    "node_modules",
-    "packages/*/dist",
-    "**/__tests__/**"
-  ]
+    "packages/*/src/**/*.json",
+    "packages/dice/__tests__"
+  ],
+  "exclude": ["node_modules", "packages/*/dist", "**/__tests__/**"]
 }

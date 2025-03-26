@@ -1,12 +1,6 @@
-import type {
-  CustomRollOptions,
-  NumericRollOptions
-} from '@randsum/core'
+import type { CustomRollOptions, NumericRollOptions } from '@randsum/core'
 
-import type {
-  CustomDiceNotation,
-  NumericDiceNotation
-} from '@randsum/notation'
+import type { CustomDiceNotation, NumericDiceNotation } from '@randsum/notation'
 
 // -----------------------
 // --- DIE TYPES ---
@@ -108,9 +102,20 @@ export interface MixedRollResult extends BaseRollResult {
 export type RollResult = NumericRollResult | CustomRollResult | MixedRollResult
 
 export type {
-  ComparisonOptions, CustomRollOptions, DropOptions, ModifierOptions, NumericRollBonus, NumericRollOptions, ReplaceOptions, RerollOptions, RollOptions, UniqueOptions
+  ComparisonOptions,
+  CustomRollOptions,
+  DropOptions,
+  ModifierOptions,
+  NumericRollBonus,
+  NumericRollOptions,
+  ReplaceOptions,
+  RerollOptions,
+  RollOptions,
+  UniqueOptions
 } from '@randsum/core'
 
 export type {
-  CustomDiceNotation, DiceNotation, NumericDiceNotation
+  CustomDiceNotation,
+  DiceNotation,
+  NumericDiceNotation
 } from '@randsum/notation'

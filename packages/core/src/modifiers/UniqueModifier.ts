@@ -1,8 +1,13 @@
-import { uniquePattern } from "../patterns"
-import type { ModifierOptions, NumericRollBonus, RequiredNumericRollParameters, UniqueOptions } from "../types"
-import { extractMatches } from "../utils/extractMatches"
-import { formatters } from "../utils/formatters"
-import { InvalidUniqueError } from "../utils/invalidUniqueError"
+import { uniquePattern } from '../patterns'
+import type {
+  ModifierOptions,
+  NumericRollBonus,
+  RequiredNumericRollParameters,
+  UniqueOptions
+} from '../types'
+import { extractMatches } from '../utils/extractMatches'
+import { formatters } from '../utils/formatters'
+import { InvalidUniqueError } from '../utils/invalidUniqueError'
 
 export class UniqueModifier {
   static parse(modifiersString: string): Pick<ModifierOptions, 'unique'> {

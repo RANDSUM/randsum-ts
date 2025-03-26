@@ -1,5 +1,9 @@
 import { capPattern } from '../patterns'
-import type { ComparisonOptions, ModifierOptions, NumericRollBonus } from '../types'
+import type {
+  ComparisonOptions,
+  ModifierOptions,
+  NumericRollBonus
+} from '../types'
 import { extractMatches } from '../utils/extractMatches'
 import { formatters } from '../utils/formatters'
 

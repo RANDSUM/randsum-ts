@@ -5,7 +5,14 @@ export default [
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ['node_modules', 'dist', 'coverage', '*.md', 'docs']
+    ignores: [
+      'node_modules',
+      'dist',
+      'coverage',
+      '*.md',
+      'docs',
+      'eslint.config.js'
+    ]
   },
   {
     rules: {

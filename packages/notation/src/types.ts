@@ -1,4 +1,9 @@
-import type { CustomDiceNotation, CustomRollOptions, NumericDiceNotation, NumericRollOptions } from "@randsum/core"
+import type {
+  CustomDiceNotation,
+  CustomRollOptions,
+  NumericDiceNotation,
+  NumericRollOptions
+} from '@randsum/core'
 
 // -----------------------
 // --- VALIDATION ---
@@ -33,5 +38,12 @@ export type ValidationResult =
   | InvalidValidationResult
 
 export type {
-  BaseRollOptions, CustomDiceNotation, CustomRollOptions, DiceNotation, ModifierOptions, NumericDiceNotation, NumericRollOptions, RollOptions
+  BaseRollOptions,
+  CustomDiceNotation,
+  CustomRollOptions,
+  DiceNotation,
+  ModifierOptions,
+  NumericDiceNotation,
+  NumericRollOptions,
+  RollOptions
 } from '@randsum/core'

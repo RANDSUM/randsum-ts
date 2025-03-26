@@ -1,4 +1,4 @@
-import type { CustomRollOptions, NumericRollOptions } from "@randsum/core";
+import type { CustomRollOptions, NumericRollOptions } from '@randsum/core'
 
 export function isNumericRollOptions(
   options: NumericRollOptions | CustomRollOptions

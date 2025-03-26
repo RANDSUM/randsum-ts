@@ -1,6 +1,6 @@
-import { minusPattern } from "../patterns"
-import type { ModifierOptions, NumericRollBonus } from "../types"
-import { extractMatches } from "../utils/extractMatches"
+import { minusPattern } from '../patterns'
+import type { ModifierOptions, NumericRollBonus } from '../types'
+import { extractMatches } from '../utils/extractMatches'
 
 export class MinusModifier {
   static parse = (modifiersString: string): Pick<ModifierOptions, 'minus'> => {

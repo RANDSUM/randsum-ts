@@ -1,7 +1,14 @@
-import { optionsConverter } from "@randsum/core"
-import { isDiceNotation } from "./isDiceNotation"
-import type { CustomDiceNotation, CustomValidationResult, InvalidValidationResult, NumericDiceNotation, NumericValidationResult, ValidationResult } from "./types"
-import { notationToOptions } from "./utils/notationToOptions"
+import { optionsConverter } from '@randsum/core'
+import { isDiceNotation } from './isDiceNotation'
+import type {
+  CustomDiceNotation,
+  CustomValidationResult,
+  InvalidValidationResult,
+  NumericDiceNotation,
+  NumericValidationResult,
+  ValidationResult
+} from './types'
+import { notationToOptions } from './utils/notationToOptions'
 
 /**
  * Validates dice notation strings and provides detailed information about their structure.

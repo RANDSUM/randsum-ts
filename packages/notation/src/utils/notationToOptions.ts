@@ -1,6 +1,15 @@
-import { CapModifier, DropModifier, ExplodeModifier, MinusModifier, PlusModifier, ReplaceModifier, RerollModifier, UniqueModifier } from "@randsum/core"
-import { coreNotationPattern } from "../patterns"
-import type { DiceNotation, RollOptions } from "../types"
+import {
+  CapModifier,
+  DropModifier,
+  ExplodeModifier,
+  MinusModifier,
+  PlusModifier,
+  ReplaceModifier,
+  RerollModifier,
+  UniqueModifier
+} from '@randsum/core'
+import { coreNotationPattern } from '../patterns'
+import type { DiceNotation, RollOptions } from '../types'
 
 export function notationToOptions(notationString: DiceNotation): RollOptions {
   const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)

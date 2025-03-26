@@ -1,5 +1,5 @@
-import { D } from "../../../src/D";
-import { RollParams } from "../../../src/types";
+import { D } from '../../../src/D'
+import { RollParams } from '../../../src/types'
 
 export function createRollParameters(
   overrides: Partial<RollParams> = {}
