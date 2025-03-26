@@ -13,17 +13,6 @@
 
 This monorepo contains the following packages:
 
-### [`randsum`](https://www.npmjs.com/package/randsum)
-
-[![npm version](https://img.shields.io/npm/v/randsum)](https://www.npmjs.com/package/randsum)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/randsum)](https://bundlephobia.com/package/randsum)
-
-The main package that most users should install. Provides a complete dice rolling solution with all features enabled.
-
-```bash
-npm install randsum
-```
-
 ### [`@randsum/dice`](https://www.npmjs.com/package/@randsum/dice)
 
 [![npm version](https://img.shields.io/npm/v/@randsum/dice)](https://www.npmjs.com/package/@randsum/dice)
