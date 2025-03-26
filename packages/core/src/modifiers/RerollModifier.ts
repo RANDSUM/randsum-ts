@@ -154,7 +154,6 @@ export class RerollModifier extends BaseModifier<RerollOptions> {
     if (
       (greaterThan !== undefined && roll > greaterThan) ||
       (lessThan !== undefined && roll < lessThan) ||
-      exact !== undefined ||
       this.extractExactValue(exact, roll)
     ) {
       return this.rerollRoll(
