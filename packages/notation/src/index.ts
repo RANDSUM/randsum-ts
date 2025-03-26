@@ -1,3 +1,4 @@
+export * from './patterns'
 export type * from './types'
 
 export { isDiceNotation } from './isDiceNotation'

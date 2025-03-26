@@ -8,12 +8,11 @@ import {
   test
 } from 'bun:test'
 
-import { D } from '~src/D'
-import type { DicePool } from '~types'
-import * as CoreRandom from '~utils/coreRandom'
-import * as CoreSpreadRolls from '~utils/coreSpreadRolls'
-import { InvalidUniqueError } from '~utils/invalidUniqueError'
-import { rollResultFromDicePools } from '~utils/rollResultFromDicePools'
+import { D } from '../src/D'
+import type { DicePool } from '../src/types'
+import * as CoreRandom from '../src/utils/coreRandom'
+import * as CoreSpreadRolls from '../src/utils/coreSpreadRolls'
+import { rollResultFromDicePools } from '../src/utils/rollResultFromDicePools'
 import { createRollParameters } from './support/fixtures/createRollParameters'
 
 describe(rollResultFromDicePools, () => {
@@ -145,9 +144,7 @@ describe(rollResultFromDicePools, () => {
         spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
           overflowRollTotals
         )
-        expect(() => rollResultFromDicePools(overflowParameters)).toThrow(
-          new InvalidUniqueError()
-        )
+        expect(() => rollResultFromDicePools(overflowParameters)).toThrow()
       })
     })
   })

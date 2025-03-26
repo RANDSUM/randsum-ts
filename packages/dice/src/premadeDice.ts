@@ -1,5 +1,5 @@
-import type { BaseD } from '~types'
 import { D } from './D'
+import type { BaseD } from './types'
 
 export const D4: BaseD<number> = new D(4)
 export const D6: BaseD<number> = new D(6)

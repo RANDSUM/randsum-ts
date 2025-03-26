@@ -32,7 +32,7 @@
   "include": [
     "packages/*/src/**/*",
     "packages/*/src/**/*.json"
-  ],
+, "packages/dice/__tests__"  ],
   "exclude": [
     "node_modules",
     "packages/*/dist",

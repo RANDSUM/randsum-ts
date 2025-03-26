@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { D } from '~src/D'
+import { D } from '../src/D'
 
 describe(D, () => {
   describe('Creating a Numerical Die', () => {

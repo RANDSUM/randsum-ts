@@ -1,20 +1,7 @@
-import { isNumericRollOptions } from '~guards/isNumericRollOptions'
-import type {
-  CustomRollParams,
-  DicePool,
-  ModifierOptions,
-  NumericRollBonus,
-  RollParams,
-  RollResult
-} from '~types'
-import { CapModifier } from '../../packages/notation/src/modifiers/CapModifier'
-import { DropModifier } from '../../packages/notation/src/modifiers/DropModifier'
-import { ExplodeModifier } from '../../packages/notation/src/modifiers/ExplodeModifier'
-import { MinusModifier } from '../../packages/notation/src/modifiers/MinusModifier'
-import { PlusModifier } from '../../packages/notation/src/modifiers/PlusModifier'
-import { ReplaceModifier } from '../../packages/notation/src/modifiers/ReplaceModifier'
-import { RerollModifier } from '../../packages/notation/src/modifiers/RerollModifier'
-import { UniqueModifier } from '../../packages/notation/src/modifiers/UniqueModifier'
+
+import { CapModifier, DropModifier, ExplodeModifier, MinusModifier, type ModifierOptions, type NumericRollBonus, PlusModifier, ReplaceModifier, RerollModifier, UniqueModifier } from '@randsum/core'
+import { isNumericRollOptions } from '../guards/isNumericRollOptions'
+import type { CustomRollParams, DicePool, RollParams, RollResult } from '../types'
 import { calculateTotal } from './calculateTotal'
 import { coreRandom } from './coreRandom'
 import { coreSpreadRolls } from './coreSpreadRolls'

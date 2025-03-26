@@ -1,32 +1,7 @@
 import { CapModifier, DropModifier, ExplodeModifier, MinusModifier, PlusModifier, ReplaceModifier, RerollModifier, UniqueModifier } from "@randsum/core"
-import { coreNotationPattern } from "../patterns"
 import type { DiceNotation, ModifierOptions, RollOptions } from "../types"
 
 export const optionsConverter = {
-  fromNotation(notationString: DiceNotation): RollOptions {
-    const coreNotationMatch = notationString.match(coreNotationPattern)
-    const coreMatch = coreNotationMatch![0]
-    const modifiersString = notationString.replace(coreMatch, '')
-    const [quantity, sides] = coreMatch.split(/[Dd]/)
-
-    return {
-      quantity: Number(quantity),
-      sides: this.parseCoreSides(sides),
-      ...{
-        modifiers: {
-          ...DropModifier.parse(modifiersString),
-          ...ExplodeModifier.parse(modifiersString),
-          ...UniqueModifier.parse(modifiersString),
-          ...ReplaceModifier.parse(modifiersString),
-          ...RerollModifier.parse(modifiersString),
-          ...CapModifier.parse(modifiersString),
-          ...PlusModifier.parse(modifiersString),
-          ...MinusModifier.parse(modifiersString)
-        }
-      }
-    } as RollOptions
-  },
-
   toNotation(options: RollOptions): DiceNotation {
     const coreNotation = this.formatCoreNotation(options)
     const modifierNotation = this.formatModifierNotation(options.modifiers)
@@ -40,12 +15,6 @@ export const optionsConverter = {
     ]
   },
 
-  parseCoreSides(notationString: string): number | string[] {
-    if (notationString.includes('{')) {
-      return [...notationString.replaceAll(/{|}/g, '')]
-    }
-    return Number(notationString)
-  },
 
   formatCoreNotation(options: RollOptions): string {
     const { quantity = 1, sides } = options

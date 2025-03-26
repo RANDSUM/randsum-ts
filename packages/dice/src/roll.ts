@@ -1,18 +1,8 @@
-import { v4 as uuid } from 'uuid'
-import type {
-  CustomRollArgument,
-  CustomRollResult,
-  DicePool,
-  MixedRollResult,
-  NumericRollArgument,
-  NumericRollResult,
-  RollArgument,
-  RollResult
-} from '~types'
-import { normalizeArgument } from '~utils/normalizeArgument'
-import { rollResultFromDicePools } from './utils/rollResultFromDicePools'
+import { v4 as uuid } from "uuid"
+import type { CustomRollArgument, CustomRollResult, DicePool, MixedRollResult, NumericRollArgument, NumericRollResult, RollArgument, RollResult } from "./types"
+import { normalizeArgument } from "./utils/normalizeArgument"
+import { rollResultFromDicePools } from "./utils/rollResultFromDicePools"
 
-// Function overloads for type-safety
 /**
  * Rolls dice based on the provided arguments.
  *

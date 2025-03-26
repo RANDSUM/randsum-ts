@@ -1,4 +1,4 @@
-import type { RollOptions } from '~types'
+import type { RollOptions } from '@randsum/core'
 import { isD } from './isD'
 
 export function isDicePoolOptions(argument: unknown): argument is RollOptions {

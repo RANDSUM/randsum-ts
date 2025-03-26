@@ -1,27 +1,4 @@
-import type { BaseRollOptions, NumericRollOptions } from "@randsum/core"
-
-// --------------------------
-// --- NOTATION & STRINGS ---
-// --------------------------
-
-
-export type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
-export type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
-export type DiceNotation = NumericDiceNotation | CustomDiceNotation
-
-// -----------------------
-// --- ROLL OPTIONS ---
-// -----------------------
-
-export interface CustomRollOptions extends BaseRollOptions {
-  quantity?: number
-  sides: string[]
-  modifiers?: Record<string, never>
-}
-
-
-export type RollOptions = NumericRollOptions | CustomRollOptions
-
+import type { CustomDiceNotation, CustomRollOptions, NumericDiceNotation, NumericRollOptions } from "@randsum/core"
 
 // -----------------------
 // --- VALIDATION ---
@@ -56,6 +33,5 @@ export type ValidationResult =
   | InvalidValidationResult
 
 export type {
-  ModifierOptions,
-  NumericRollOptions
+  BaseRollOptions, CustomDiceNotation, CustomRollOptions, DiceNotation, ModifierOptions, NumericDiceNotation, NumericRollOptions, RollOptions
 } from '@randsum/core'

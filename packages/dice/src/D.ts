@@ -1,6 +1,7 @@
-import type { BaseD, CustomRollOptions, NumericRollOptions } from '~types'
-import { coreSpreadRolls } from '~utils/coreSpreadRolls'
-import { generateNumericalFaces } from '~utils/generateNumericalFaces'
+import type { CustomRollOptions, NumericRollOptions } from "@randsum/core"
+import type { BaseD } from "./types"
+import { coreSpreadRolls } from "./utils/coreSpreadRolls"
+import { generateNumericalFaces } from "./utils/generateNumericalFaces"
 
 /**
  * Represents a die that can have either numerical faces (1 to N) or custom string faces.

@@ -1,3 +1,12 @@
+
+// --------------------------
+// --- NOTATION & STRINGS ---
+// --------------------------
+
+export type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
+export type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
+export type DiceNotation = NumericDiceNotation | CustomDiceNotation
+
 // -----------------------
 // --- MODIFIER OPTIONS ---
 // -----------------------
@@ -59,6 +68,15 @@ export interface NumericRollOptions extends BaseRollOptions {
   sides: number
   modifiers?: ModifierOptions
 }
+
+export interface CustomRollOptions extends BaseRollOptions {
+  quantity?: number
+  sides: string[]
+  modifiers?: Record<string, never>
+}
+
+
+export type RollOptions = NumericRollOptions | CustomRollOptions
 
 // -----------------------
 // --  ROLL PARAMETERS ---

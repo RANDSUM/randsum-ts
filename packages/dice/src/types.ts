@@ -1,54 +1,12 @@
-// --------------------------
-// --- NOTATION & STRINGS ---
-// --------------------------
+import type {
+  CustomRollOptions,
+  NumericRollOptions
+} from '@randsum/core'
 
-export type NumericDiceNotation = `${number}${'d' | 'D'}${number}${string}`
-export type CustomDiceNotation = `${number}${'d' | 'D'}{${string}}`
-export type DiceNotation = NumericDiceNotation | CustomDiceNotation
-
-// -----------------------
-// --- OPTIONS & MODIFIERS ---
-// -----------------------
-
-interface BaseRollOptions {
-  quantity?: number
-}
-
-export interface ComparisonOptions {
-  greaterThan?: number
-  lessThan?: number
-}
-
-export interface DropOptions extends ComparisonOptions {
-  highest?: number
-  lowest?: number
-  exact?: number[]
-}
-
-export interface RerollOptions extends ComparisonOptions {
-  exact?: number[]
-  max?: number
-}
-
-export interface ReplaceOptions {
-  from: number | ComparisonOptions
-  to: number
-}
-
-export interface UniqueOptions {
-  notUnique: number[]
-}
-
-export interface ModifierOptions {
-  cap?: ComparisonOptions
-  drop?: DropOptions
-  replace?: ReplaceOptions | ReplaceOptions[]
-  reroll?: RerollOptions
-  unique?: boolean | UniqueOptions
-  explode?: boolean
-  plus?: number
-  minus?: number
-}
+import type {
+  CustomDiceNotation,
+  NumericDiceNotation
+} from '@randsum/notation'
 
 // -----------------------
 // --- DIE TYPES ---
@@ -63,26 +21,6 @@ export type BaseD<T extends number | string[]> = {
   rollSpread: (quantity?: number) => T extends number ? number[] : string[]
   toOptions: T extends number ? NumericRollOptions : CustomRollOptions
 }
-
-// -----------------------
-// --- ROLL OPTIONS ---
-// -----------------------
-
-export interface NumericRollOptions extends BaseRollOptions {
-  sides: number
-  modifiers?: ModifierOptions
-}
-
-export interface CustomRollOptions extends BaseRollOptions {
-  sides: string[]
-  modifiers?: Record<string, never>
-}
-
-export type RollOptions = NumericRollOptions | CustomRollOptions
-
-export type RequiredNumericRollParameters = Required<
-  Omit<NumericRollOptions, 'modifiers'>
->
 
 // -----------------------
 // --- ROLL ARGUMENTS ---
@@ -169,43 +107,10 @@ export interface MixedRollResult extends BaseRollResult {
 
 export type RollResult = NumericRollResult | CustomRollResult | MixedRollResult
 
-// -----------------------
-// --- ROLL BONUSES ---
-// -----------------------
+export type {
+  ComparisonOptions, CustomRollOptions, DropOptions, ModifierOptions, NumericRollBonus, NumericRollOptions, ReplaceOptions, RerollOptions, RollOptions, UniqueOptions
+} from '@randsum/core'
 
-export interface NumericRollBonus {
-  rolls: number[]
-  simpleMathModifier: number
-}
-
-// -----------------------
-// --- VALIDATION ---
-// -----------------------
-
-interface BaseValidationResult {
-  valid: boolean
-  description: string[]
-}
-
-export interface NumericValidationResult extends BaseValidationResult {
-  valid: true
-  type: 'numerical'
-  digested: NumericRollOptions
-  notation: NumericDiceNotation
-}
-
-export interface CustomValidationResult extends BaseValidationResult {
-  valid: true
-  type: 'custom'
-  digested: CustomRollOptions
-  notation: CustomDiceNotation
-}
-
-export interface InvalidValidationResult extends BaseValidationResult {
-  valid: false
-}
-
-export type ValidationResult =
-  | NumericValidationResult
-  | CustomValidationResult
-  | InvalidValidationResult
+export type {
+  CustomDiceNotation, DiceNotation, NumericDiceNotation
+} from '@randsum/notation'

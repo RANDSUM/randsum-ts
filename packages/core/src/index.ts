@@ -6,6 +6,7 @@ export { PlusModifier } from './modifiers/PlusModifier'
 export { ReplaceModifier } from './modifiers/ReplaceModifier'
 export { RerollModifier } from './modifiers/RerollModifier'
 export { UniqueModifier } from './modifiers/UniqueModifier'
+export { optionsConverter } from './utils/optionsConverter'
 
 export * from './patterns'
 export * from './types'
