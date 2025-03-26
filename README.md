@@ -9,6 +9,18 @@
 
 </div>
 
+## 🚀 Quick Example
+
+```typescript
+import { D20, roll } from '@randsum/dice'
+
+// Simple d20 roll
+D20.roll() // Returns 1-20
+
+// Complex dice notation
+roll('4d6L') // Roll 4d6, drop lowest
+```
+
 ## 📦 Packages
 
 This monorepo contains the following packages:
@@ -38,18 +50,6 @@ npm install @randsum/notation
 ### `@randsum/core`
 
 Internal package containing shared utilities and types. Not intended for direct usage. All types are exported in each subsequent package for ease of use.
-
-## 🚀 Quick Example
-
-```typescript
-import { D20, roll } from 'randsum'
-
-// Simple d20 roll
-D20.roll() // Returns 1-20
-
-// Complex dice notation
-roll('4d6L') // Roll 4d6, drop lowest
-```
 
 ## 🛠️ Development
 

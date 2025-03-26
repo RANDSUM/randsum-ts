@@ -81,10 +81,89 @@ colorDie.roll() // Returns random color
 roll(20) // Roll 1d20
 roll('4d6') // Roll 4d6
 
+// Using RollOptions object
+roll({
+  sides: 6,
+  quantity: 4,
+  modifiers: {
+    drop: { lowest: 1 }, // Drop lowest roll
+    plus: 2 // Add 2 to total
+  }
+})
+
+// Multiple dice in one roll
+roll('2d20', '4d6', '1d8') // Roll them all at once
+roll(D20, D6, D8) // Using predefined dice
+roll(
+  {
+    sides: 20,
+    quantity: 2
+  },
+  {
+    sides: 6,
+    quantity: 4
+  }
+) // Using options objects
+
+// Mix and match different argument types
+roll(
+  '2d20H', // Notation string, with modifiers
+  D6, // Die instance
+  {
+    // Options object
+    sides: 8,
+    quantity: 2,
+    modifiers: {
+      explode: true // Exploding dice
+    }
+  },
+  12 // Simple number (1d12)
+)
+
+// Different Result Types Examples:
+
+// Numeric Results (type: 'numerical')
+const numericResult = roll('4d6')
+// {
+//   type: 'numerical',
+//   result: [3, 4, 5, 2],
+//   total: 14, // number
+//   ...
+// }
+
+// Custom Results (type: 'custom')
+const customResult = roll(new D(['critical', 'hit', 'miss']))
+// {
+//   type: 'custom',
+//   result: ['critical'],
+//   total: 'critical', // string
+//   ...
+// }
+
+// Mixed Results (type: 'mixed')
+const mixedResult = roll(
+  '2d6', // numeric dice
+  new D(['hit', 'miss']) // custom dice
+)
+// {
+//   type: 'mixed',
+//   result: [4, 6, 'hit'],
+//   total: '10, hit', // string
+//   ...
+// }
+
+// Custom-faced dice
+roll(new D(['critical', 'hit', 'miss']))
+roll({
+  sides: ['heads', 'tails'],
+  quantity: 3
+})
+
 // With modifiers
 roll('4d6L') // Drop lowest
 roll('2d20H') // Keep highest
 roll('3d8!') // Exploding dice
+roll('4d6R{<3}') // Reroll values below 3
 ```
 
 See [Dice Notation Reference](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for all supported modifiers.
