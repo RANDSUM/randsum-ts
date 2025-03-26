@@ -382,7 +382,7 @@ describe(rollResultFromDicePools, () => {
         }
       }
 
-      test.only('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
+      test('it stops at 99 rerolls and returns the total with all values matching the queries rerolled', () => {
         spyOn(CoreSpreadRolls, 'coreSpreadRolls').mockReturnValueOnce(
           testRollSet
         )
