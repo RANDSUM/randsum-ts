@@ -2,7 +2,7 @@
   "name": "@randsum/core",
   "version": "0.0.1",
   "description": "Internal utilities and types for @randsum packages",
-  "private": true,
+  "private": false,
   "author": {
     "name": "Alex Jarvis",
     "url": "https://github.com/RANDSUM"
@@ -35,6 +35,9 @@
       "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@types/bun": "1.2.6",

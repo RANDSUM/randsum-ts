@@ -1,6 +1,6 @@
 {
   "name": "@randsum/dice",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "description": "A flexible, type-safe dice roller for TypeScript/JavaScript",
   "author": {
     "name": "Alex Jarvis",
@@ -37,8 +37,8 @@
     "prepack": "bun run build"
   },
   "dependencies": {
-    "@randsum/core": "workspace:*",
-    "@randsum/notation": "workspace:*",
+    "@randsum/core": "workspace:^",
+    "@randsum/notation": "workspace:^",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
@@ -62,8 +62,7 @@
     "./package.json": "./package.json"
   },
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "engines": {
     "node": ">=18.0.0",
