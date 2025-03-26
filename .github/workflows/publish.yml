@@ -7,14 +7,23 @@ on:
 
 jobs:
   publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     env:
       INPUT_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Use Bun
         uses: oven-sh/setup-bun@v1
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/bun.lock') }}
 
       - name: Install deps
         run: bun run install:all
@@ -22,16 +31,36 @@ jobs:
       - name: Build
         run: bun run build:all
 
+      # Publish @randsum/dice
       - uses: JS-DevTools/npm-publish@v1
-        id: publish
+        id: publish-dice
         with:
           token: ${{ secrets.NPM_TOKEN }}
+          package: ./packages/dice/package.json
+          access: public
 
+      # Publish @randsum/notation
+      - uses: JS-DevTools/npm-publish@v1
+        id: publish-notation
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: ./packages/notation/package.json
+          access: public
+
+      # Create GitHub Release if either package was published
       - name: Create Release
-        if: steps.publish.outputs.type != 'none'
+        if: steps.publish-dice.outputs.type != 'none' || steps.publish-notation.outputs.type != 'none'
         id: release
         uses: softprops/action-gh-release@HEAD
         with:
-          tag_name: v${{ steps.publish.outputs.version }}
+          tag_name: ${{ steps.publish-dice.outputs.type != 'none' && format('dice-v{0}', steps.publish-dice.outputs.version) || format('notation-v{0}', steps.publish-notation.outputs.version) }}
           append_body: true
           generate_release_notes: true
+          body: |
+            ## Changes in this Release
+
+            ${{ steps.publish-dice.outputs.type != 'none' && format('### @randsum/dice v{0}', steps.publish-dice.outputs.version) || '' }}
+            ${{ steps.publish-dice.outputs.type != 'none' && '- Package updated' || '' }}
+
+            ${{ steps.publish-notation.outputs.type != 'none' && format('### @randsum/notation v{0}', steps.publish-notation.outputs.version) || '' }}
+            ${{ steps.publish-notation.outputs.type != 'none' && '- Package updated' || '' }}
