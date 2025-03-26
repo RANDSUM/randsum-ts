@@ -1,5 +1,5 @@
 [test]
-root = "./__tests__"
+root = "./src/__tests__"
 coverageReporter = ["text", "lcov"]
 coverage = true
 coverageThreshold = .99

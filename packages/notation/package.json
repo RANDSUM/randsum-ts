@@ -1,6 +1,6 @@
 {
   "name": "@randsum/notation",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "Dice notation parser and validator for TypeScript/JavaScript",
   "author": {
     "name": "Alex Jarvis",
@@ -38,7 +38,7 @@
     "prepack": "bun run build"
   },
   "dependencies": {
-    "@randsum/core": "workspace:*"
+    "@randsum/core": "workspace:^"
   },
   "devDependencies": {
     "@types/bun": "1.2.6",
