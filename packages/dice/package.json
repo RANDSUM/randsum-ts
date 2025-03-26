@@ -1,6 +1,6 @@
 {
   "name": "@randsum/dice",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A flexible, type-safe dice roller for TypeScript/JavaScript",
   "author": {
     "name": "Alex Jarvis",
