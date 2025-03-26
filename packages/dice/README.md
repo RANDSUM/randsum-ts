@@ -171,7 +171,6 @@ See [Dice Notation Reference](https://github.com/RANDSUM/randsum-ts/blob/main/RA
 ## Related Packages
 
 - [@randsum/notation](https://github.com/RANDSUM/randsum-ts/tree/main/packages/notation): Dice notation parser
-- [@randsum/core](https://github.com/RANDSUM/randsum-ts/tree/main/packages/core): Core utilities and types
 
 ## License
 
