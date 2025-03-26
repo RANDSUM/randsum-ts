@@ -10,7 +10,8 @@
   "homepage": "https://github.com/RANDSUM/randsum-ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RANDSUM/randsum-ts.git"
+    "url": "https://github.com/RANDSUM/randsum-ts.git",
+    "directory": "packages/notation"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -24,17 +25,25 @@
     "RANDSUM_DICE_NOTATION.md"
   ],
   "sideEffects": false,
+  "type": "module",
   "scripts": {
     "build": "bunup",
     "clean": "rm -rf ./dist/ ./coverage/",
-    "test": "bun test"
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "bun run clean",
+    "prepare": "bun run build",
+    "docs": "typedoc --out docs src/index.ts"
   },
   "dependencies": {
     "@randsum/core": "workspace:*"
   },
   "devDependencies": {
     "@types/bun": "1.2.6",
-    "bunup": "^0.1.39"
+    "bunup": "^0.1.39",
+    "typedoc": "^0.25.0"
   },
   "peerDependencies": {
     "typescript": ">=5.0.0"
@@ -49,9 +58,30 @@
         "types": "./dist/index.d.ts",
         "default": "./dist/index.cjs"
       }
+    },
+    "./package.json": "./package.json",
+    "./patterns": {
+      "import": "./dist/patterns.mjs",
+      "require": "./dist/patterns.cjs",
+      "types": "./dist/patterns.d.ts"
     }
   },
   "publishConfig": {
-    "access": "public"
-  }
+    "access": "public",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  },
+  "keywords": [
+    "dice-notation",
+    "parser",
+    "validator",
+    "rpg",
+    "typescript",
+    "dnd",
+    "tabletop",
+    "randsum"
+  ]
 }
