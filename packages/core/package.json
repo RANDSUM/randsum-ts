@@ -36,6 +36,9 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@types/bun": "1.2.6",
     "bunup": "^0.1.39"
