@@ -39,7 +39,8 @@
     "typescript",
     "bun"
   ],
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "source": "./src/index.ts",
   "files": [
@@ -77,11 +78,11 @@
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "default": "./dist/index.mjs"
       },
       "require": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "default": "./dist/index.cjs"
       }
     },
     "./package.json": "./package.json"
@@ -94,17 +95,17 @@
   ],
   "devDependencies": {
     "@eslint/js": "^9.23.0",
+    "@size-limit/preset-small-lib": "^11.2.0",
+    "@types/bun": "1.2.6",
+    "@types/eslint__js": "^8.42.3",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
+    "bunup": "^0.1.39",
     "eslint": "^9.23.0",
-    "typescript-eslint": "^8.28.0",
-    "@size-limit/preset-small-lib": "^11.2.0",
-    "@types/bun": "1.2.5",
-    "@types/eslint__js": "^8.42.3",
-    "bun-plugin-dts": "^0.3.0",
     "prettier": "^3.5.3",
     "size-limit": "^11.2.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0"
   },
   "peerDependencies": {
     "typescript": ">=5.0.0"
