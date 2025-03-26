@@ -146,14 +146,9 @@ export class RerollModifier {
     }
 
     if (
-      greaterThan !== undefined &&
-      lessThan !== undefined &&
-      exact !== undefined &&
-      max !== undefined &&
-      ((greaterThan !== undefined && roll > greaterThan) ||
-        (lessThan !== undefined && roll < lessThan) ||
-        exact !== undefined ||
-        this.extractExactValue(exact, roll))
+      (greaterThan !== undefined && roll > greaterThan) ||
+      (lessThan !== undefined && roll < lessThan) ||
+      this.extractExactValue(exact, roll)
     ) {
       return this.rerollRoll(
         rollOne(),
@@ -162,7 +157,7 @@ export class RerollModifier {
           lessThan,
           exact,
           max
-        },
+        } as RerollOptions,
         rollOne,
         index + 1
       )
