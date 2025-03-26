@@ -13,7 +13,11 @@
     "lint:fix": "eslint . --fix",
     "format:fix": "prettier . --write",
     "format": "prettier . --check",
-    "ts:check": "tsc --noEmit --erasableSyntaxOnly"
+    "ts:check": "tsc --noEmit --erasableSyntaxOnly",
+    "dev": "bun run build:watch",
+    "build:watch": "bun run build:all --watch",
+    "test:ci": "bun run test --coverage",
+    "precommit": "bun run lint && bun run test"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
