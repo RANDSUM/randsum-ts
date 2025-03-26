@@ -29,6 +29,9 @@
     "clean": "rm -rf ./dist/ ./coverage/",
     "test": "bun test"
   },
+  "dependencies": {
+    "@randsum/core": "workspace:*"
+  },
   "devDependencies": {
     "@types/bun": "1.2.6",
     "bunup": "^0.1.39"
@@ -50,8 +53,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "@randsum/core": "workspace:*"
   }
 }
