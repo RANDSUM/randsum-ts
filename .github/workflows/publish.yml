@@ -19,6 +19,12 @@ jobs:
       - name: Use Bun
         uses: oven-sh/setup-bun@v1
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/bun.lock') }}
+
       - name: Install deps
         run: bun run install:all
 
@@ -30,35 +36,45 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
           echo "access=public" >> .npmrc
 
-      # Store initial versions
-      - name: Get initial versions
-        id: initial_versions
+      # Get current versions
+      - name: Get current versions
+        id: versions
         run: |
-          echo "CORE_VERSION=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_ENV
-          echo "DICE_VERSION=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_ENV
-          echo "NOTATION_VERSION=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_ENV
+          echo "core_old_version=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_OUTPUT
+          echo "dice_old_version=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_OUTPUT
+          echo "notation_old_version=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_OUTPUT
 
-      # Publish packages in dependency order
-      - name: Publish core
-        run: cd packages/core && bun publish --no-git-checks || echo "No core changes to publish"
-
-      - name: Publish notation
-        run: cd packages/notation && bun publish --no-git-checks || echo "No notation changes to publish"
-
-      - name: Publish dice
-        run: cd packages/dice && bun publish --no-git-checks || echo "No dice changes to publish"
-
-      # Get final versions after publish
-      - name: Get final versions
-        id: final_versions
+      # Publish packages in order: core -> dice/notation
+      - name: Publish packages
+        id: publish
         run: |
-          echo "NEW_CORE_VERSION=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_ENV
-          echo "NEW_DICE_VERSION=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_ENV
-          echo "NEW_NOTATION_VERSION=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_ENV
+          cd packages/core && bun publish --no-git-checks || true
+          cd ../notation && bun publish --no-git-checks || true
+          cd ../dice && bun publish --no-git-checks || true
 
-      # Create release if any package was published
+      # Get new versions
+      - name: Get new versions
+        id: new_versions
+        run: |
+          echo "core_new_version=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_OUTPUT
+          echo "notation_new_version=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_OUTPUT
+          echo "dice_new_version=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_OUTPUT
+
+      # Add a step to check if versions changed
+      - name: Check version changes
+        id: check_versions
+        run: |
+          if [ "$CORE_VERSION" != "$NEW_CORE_VERSION" ] || \
+             [ "$DICE_VERSION" != "$NEW_DICE_VERSION" ] || \
+             [ "$NOTATION_VERSION" != "$NEW_NOTATION_VERSION" ]; then
+            echo "versions_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "versions_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      # Create GitHub Release if any package was published
       - name: Create Release
-        if: env.CORE_VERSION != env.NEW_CORE_VERSION || env.DICE_VERSION != env.NEW_DICE_VERSION || env.NOTATION_VERSION != env.NEW_NOTATION_VERSION
+        if: steps.check_versions.outputs.versions_changed == 'true'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: release-${{ github.sha }}
