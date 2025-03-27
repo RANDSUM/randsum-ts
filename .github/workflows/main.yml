@@ -18,8 +18,8 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install deps
-        run: bun install
+      - name: Install deps (Core)
+        run: bun install --cwd packages/core && bun install --cwd packages/notation && bun install --cwd packages/dice && bun install --cwd packages/5E
 
       - name: Build
         run: bun run build:all
