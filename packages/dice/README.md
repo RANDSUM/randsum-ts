@@ -1,12 +1,12 @@
 <div align="center">
-  <img width="150" height="150" src="https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp">
+  <img width="150" height="150" src="https://raw.githubusercontent.com/RANDSUM/randsum/main/icon.webp">
   <h1>@randsum/dice</h1>
   <h3>Core dice rolling implementation for randsum</h3>
 
 [![npm version](https://img.shields.io/npm/v/@randsum/dice)](https://www.npmjs.com/package/@randsum/dice)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@randsum/dice)](https://bundlephobia.com/package/@randsum/dice)
 [![Types](https://img.shields.io/npm/types/@randsum/dice)](https://www.npmjs.com/package/@randsum/dice)
-[![License](https://img.shields.io/npm/l/@randsum/dice)](https://github.com/RANDSUM/randsum-ts/blob/main/LICENSE)
+[![License](https://img.shields.io/npm/l/@randsum/dice)](https://github.com/RANDSUM/randsum/blob/main/LICENSE)
 [![Downloads](https://img.shields.io/npm/dm/@randsum/dice)](https://www.npmjs.com/package/@randsum/dice)
 
 </div>
@@ -166,11 +166,11 @@ roll('3d8!') // Exploding dice
 roll('4d6R{<3}') // Reroll values below 3
 ```
 
-See [Dice Notation Reference](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for all supported modifiers.
+See [Dice Notation Reference](https://github.com/RANDSUM/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for all supported modifiers.
 
 ## Related Packages
 
-- [@randsum/notation](https://github.com/RANDSUM/randsum-ts/tree/main/packages/notation): Dice notation parser
+- [@randsum/notation](https://github.com/RANDSUM/randsum/tree/main/packages/notation): Dice notation parser
 
 ## License
 
