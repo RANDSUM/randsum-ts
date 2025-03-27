@@ -5,16 +5,16 @@
     "packages/*"
   ],
   "scripts": {
-    "build:all": "bun run --cwd packages/core build && bun run --cwd packages/dice build && bun run --cwd packages/notation build",
-    "clean:all": "bun run --cwd packages/core clean && bun run --cwd packages/dice clean && bun run --cwd packages/notation clean",
+    "build:core": "bun run --cwd packages/core clean && bun run --cwd packages/core build",
+    "build:notation": "bun run --cwd packages/notation clean && bun run --cwd packages/notation build",
+    "build:dice": "bun run --cwd packages/dice clean && bun run --cwd packages/dice build",
+    "build:all": "bun run build:core && bun run build:notation && bun run build:dice",
     "test": "bun run build:all && bun test --cwd=packages",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format:fix": "prettier . --write",
     "format": "prettier . --check",
     "ts:check": "tsc --noEmit --erasableSyntaxOnly",
-    "dev": "bun run build:watch",
-    "build:watch": "bun run build:all --watch",
     "test:ci": "bun run test --coverage",
     "precommit": "bun run lint && bun run test"
   },
