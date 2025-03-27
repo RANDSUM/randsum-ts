@@ -24,7 +24,7 @@ If you're contributing to randsum, you'll interact with this package through the
 
 ```bash
 # From root directory
-bun run install:all
+bun run install
 bun run build:all
 ```
 
