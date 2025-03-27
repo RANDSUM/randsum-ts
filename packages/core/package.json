@@ -32,7 +32,6 @@
     "test": "bun test",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
-    "prebuild": "bun run clean",
     "prepare": "bun run build",
     "prepack": "bun run build"
   },
