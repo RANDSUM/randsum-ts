@@ -30,44 +30,77 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
           echo "access=public" >> .npmrc
 
-      # Store initial versions
-      - name: Get initial versions
-        id: initial_versions
+      # Core Package
+      - name: Get Core initial version
+        id: core_initial
+        run: echo "version=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Publish Core
+        id: publish_core
+        continue-on-error: true
         run: |
-          echo "CORE_VERSION=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_ENV
-          echo "DICE_VERSION=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_ENV
-          echo "NOTATION_VERSION=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_ENV
+          cd packages/core
+          if bun publish --no-git-checks; then
+            echo "published=true" >> $GITHUB_OUTPUT
+            echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+          else
+            echo "published=false" >> $GITHUB_OUTPUT
+          fi
 
-      # Publish packages in dependency order
-      - name: Publish core
-        run: cd packages/core && bun publish --no-git-checks || echo "No core changes to publish"
-
-      - name: Publish notation
-        run: cd packages/notation && bun publish --no-git-checks || echo "No notation changes to publish"
-
-      - name: Publish dice
-        run: cd packages/dice && bun publish --no-git-checks || echo "No dice changes to publish"
-
-      # Get final versions after publish
-      - name: Get final versions
-        id: final_versions
-        run: |
-          echo "NEW_CORE_VERSION=$(node -p "require('./packages/core/package.json').version")" >> $GITHUB_ENV
-          echo "NEW_DICE_VERSION=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_ENV
-          echo "NEW_NOTATION_VERSION=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_ENV
-
-      # Create release if any package was published
-      - name: Create Release
-        if: env.CORE_VERSION != env.NEW_CORE_VERSION || env.DICE_VERSION != env.NEW_DICE_VERSION || env.NOTATION_VERSION != env.NEW_NOTATION_VERSION
+      - name: Create Core Release
+        if: steps.publish_core.outputs.published == 'true'
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: release-${{ github.sha }}
-          name: Release ${{ github.sha }}
-          body: |
-            ## Package Updates
+          tag_name: core-${{ steps.publish_core.outputs.version }}
+          name: "@randsum/core v${{ steps.publish_core.outputs.version }}"
+          generate_release_notes: true
 
-            ${{ env.CORE_VERSION != env.NEW_CORE_VERSION && format('### @randsum/core: {0} → {1}', env.CORE_VERSION, env.NEW_CORE_VERSION) || '' }}
-            ${{ env.DICE_VERSION != env.NEW_DICE_VERSION && format('### @randsum/dice: {0} → {1}', env.DICE_VERSION, env.NEW_DICE_VERSION) || '' }}
-            ${{ env.NOTATION_VERSION != env.NEW_NOTATION_VERSION && format('### @randsum/notation: {0} → {1}', env.NOTATION_VERSION, env.NEW_NOTATION_VERSION) || '' }}
+      # Notation Package
+      - name: Get Notation initial version
+        id: notation_initial
+        run: echo "version=$(node -p "require('./packages/notation/package.json').version")" >> $GITHUB_OUTPUT
 
-            See commit history for detailed changes.
+      - name: Publish Notation
+        id: publish_notation
+        continue-on-error: true
+        run: |
+          cd packages/notation
+          if bun publish --no-git-checks; then
+            echo "published=true" >> $GITHUB_OUTPUT
+            echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+          else
+            echo "published=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Notation Release
+        if: steps.publish_notation.outputs.published == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: notation-${{ steps.publish_notation.outputs.version }}
+          name: "@randsum/notation v${{ steps.publish_notation.outputs.version }}"
+          generate_release_notes: true
+
+      # Dice Package
+      - name: Get Dice initial version
+        id: dice_initial
+        run: echo "version=$(node -p "require('./packages/dice/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Publish Dice
+        id: publish_dice
+        continue-on-error: true
+        run: |
+          cd packages/dice
+          if bun publish --no-git-checks; then
+            echo "published=true" >> $GITHUB_OUTPUT
+            echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+          else
+            echo "published=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Dice Release
+        if: steps.publish_dice.outputs.published == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: dice-${{ steps.publish_dice.outputs.version }}
+          name: "@randsum/dice v${{ steps.publish_dice.outputs.version }}"
+          generate_release_notes: true
