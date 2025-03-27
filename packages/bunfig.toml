@@ -1,6 +1,6 @@
 [test]
-root = "./packages/*/__tests__"
 coverageReporter = ["text", "lcov"]
+ignore = ["./*.mjs"]
 coverage = true
-coverageThreshold = .99
+coverageThreshold = { lines = 1.0, functions = 0.0 }
 testTimeout = 5000

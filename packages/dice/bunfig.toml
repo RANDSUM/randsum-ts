@@ -1,6 +1,0 @@
-[test]
-root = "./src/__tests__"
-coverageReporter = ["text", "lcov"]
-coverage = true
-coverageThreshold = .99
-testTimeout = 5000

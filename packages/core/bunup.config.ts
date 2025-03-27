@@ -1,14 +1,3 @@
-import { defineConfig } from 'bunup'
+import rootConfig from '../bunup.root.config'
 
-export default defineConfig({
-  entry: ['src/index.ts'],
-  outDir: 'dist',
-  format: ['esm', 'cjs'],
-  dts: true,
-  minify: true,
-  clean: true,
-  splitting: true,
-  external: [],
-  sourcemap: 'inline',
-  target: 'node'
-})
+export default rootConfig
