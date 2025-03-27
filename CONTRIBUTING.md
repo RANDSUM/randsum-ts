@@ -61,7 +61,7 @@ git clone https://github.com/RANDSUM/randsum.git
 cd randsum-ts
 
 # Install dependencies for all packages
-bun run install
+bun install
 
 # Build all packages
 bun run build:all

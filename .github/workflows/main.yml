@@ -19,7 +19,7 @@ jobs:
           bun-version: latest
 
       - name: Install deps
-        run: bun run install
+        run: bun install
 
       - name: Build
         run: bun run build:all
