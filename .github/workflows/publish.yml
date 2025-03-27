@@ -20,7 +20,7 @@ jobs:
         uses: oven-sh/setup-bun@v1
 
       - name: Install deps
-        run: bun run install:all
+        run: bun install
 
       - name: Build
         run: bun run build:all

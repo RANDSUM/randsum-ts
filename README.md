@@ -61,7 +61,7 @@ git clone https://github.com/RANDSUM/randsum.git
 cd randsum-ts
 
 # Install dependencies for all packages
-bun run install:all
+bun install
 
 # Build all packages
 bun run build:all
@@ -81,7 +81,6 @@ bun format
 
 - `build:all`: Build all packages
 - `clean:all`: Clean build artifacts
-- `install:all`: Install dependencies for all packages
 - `test`: Run all tests
 - `lint`/`format`: Code quality checks
 
