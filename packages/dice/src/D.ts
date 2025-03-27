@@ -1,5 +1,10 @@
-import type { CustomRollOptions, NumericRollOptions } from '@randsum/core'
-import type { BaseD } from './types'
+import type {
+  CustomRollOptions,
+  ModifierOptions,
+  NumericRollOptions
+} from '@randsum/core'
+import { roll } from './roll'
+import type { BaseD, CustomRollResult, NumericRollResult } from './types'
 import { coreSpreadRolls } from './utils/coreSpreadRolls'
 import { generateNumericalFaces } from './utils/generateNumericalFaces'
 
@@ -52,6 +57,19 @@ export class D<T extends number | string[]> implements BaseD<T> {
       this.sides,
       this.faces
     ) as T extends number ? number[] : string[]
+  }
+
+  rollModified(
+    quantity: number,
+    modifiers: ModifierOptions = {}
+  ): T extends number ? NumericRollResult : CustomRollResult {
+    return roll({
+      ...this.toOptions,
+      quantity,
+      modifiers
+    } as NumericRollOptions) as T extends number
+      ? NumericRollResult
+      : CustomRollResult
   }
 
   get toOptions(): T extends number ? NumericRollOptions : CustomRollOptions {

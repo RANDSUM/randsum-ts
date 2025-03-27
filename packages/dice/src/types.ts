@@ -1,4 +1,8 @@
-import type { CustomRollOptions, NumericRollOptions } from '@randsum/core'
+import type {
+  CustomRollOptions,
+  ModifierOptions,
+  NumericRollOptions
+} from '@randsum/core'
 
 import type { CustomDiceNotation, NumericDiceNotation } from '@randsum/notation'
 
@@ -13,6 +17,10 @@ export type BaseD<T extends number | string[]> = {
   readonly isCustom: T extends number ? false : true
   roll: (quantity?: number) => T extends number ? number : string
   rollSpread: (quantity?: number) => T extends number ? number[] : string[]
+  rollModified: (
+    quantity: number,
+    modifiers?: ModifierOptions
+  ) => T extends number ? NumericRollResult : CustomRollResult
   toOptions: T extends number ? NumericRollOptions : CustomRollOptions
 }
 
