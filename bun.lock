@@ -13,6 +13,20 @@
         "typescript-eslint": "^8.28.0",
       },
     },
+    "packages/5E": {
+      "name": "@randsum/5e",
+      "version": "0.0.1",
+      "dependencies": {
+        "@randsum/dice": "workspace:^",
+      },
+      "devDependencies": {
+        "@types/bun": "1.2.6",
+        "bunup": "^0.1.39",
+      },
+      "peerDependencies": {
+        "typescript": ">=5.0.0",
+      },
+    },
     "packages/core": {
       "name": "@randsum/core",
       "version": "0.1.7",
@@ -117,6 +131,8 @@
     "@oxc-transform/binding-win32-arm64-msvc": ["@oxc-transform/binding-win32-arm64-msvc@0.58.1", "", { "os": "win32", "cpu": "arm64" }, "sha512-jrCOvmabG9TVV/OvO7M3WSXkBX4aZ8RjOwsZEWcMiKeybmUr8E8XHx0YdwzL1M8MSKpdctoHPv1nz3SqM7uo6Q=="],
 
     "@oxc-transform/binding-win32-x64-msvc": ["@oxc-transform/binding-win32-x64-msvc@0.58.1", "", { "os": "win32", "cpu": "x64" }, "sha512-612E4VNg9wK5cpGjaHjdW+aD3b1w80lps6rsFEsWejGB5nF5OkXS8uZxS1iQE/16JUoFNUcH+3yyqQP7ljdOuA=="],
+
+    "@randsum/5e": ["@randsum/5e@workspace:packages/5E"],
 
     "@randsum/core": ["@randsum/core@workspace:packages/core"],
 
