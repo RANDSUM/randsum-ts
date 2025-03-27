@@ -1,10 +1,10 @@
 <div align="center">
-  <img width="150" height="150" src="https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp">
+  <img width="150" height="150" src="https://raw.githubusercontent.com/RANDSUM/randsum/main/icon.webp">
   <h1>randsum</h1>
   <h3>A flexible, type-safe dice rolling ecosystem for TypeScript/JavaScript</h3>
 
-[![License](https://img.shields.io/npm/l/randsum)](https://github.com/RANDSUM/randsum-ts/blob/main/LICENSE)
-[![CI Status](https://github.com/RANDSUM/randsum-ts/workflows/CI/badge.svg)](https://github.com/RANDSUM/randsum-ts/actions)
+[![License](https://img.shields.io/npm/l/randsum)](https://github.com/RANDSUM/randsum/blob/main/LICENSE)
+[![CI Status](https://github.com/RANDSUM/randsum/workflows/CI/badge.svg)](https://github.com/RANDSUM/randsum/actions)
 [![Bun](https://img.shields.io/badge/Bun-%23000000.svg?style=flat&logo=bun&logoColor=white)](https://bun.sh)
 
 </div>
@@ -58,7 +58,7 @@ This is a monorepo using Bun workspaces. To get started:
 ```bash
 # Clone the repository
 git clone https://github.com/RANDSUM/randsum.git
-cd randsum-ts
+cd randsum
 
 # Install dependencies for all packages
 bun install
@@ -86,11 +86,11 @@ bun format
 
 ## Further Reading
 
-- [Getting Started](https://github.com/RANDSUM/randsum-ts/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
+- [Getting Started](https://github.com/RANDSUM/randsum/blob/main/GETTING_STARTED.md) - Installation and Documentation for using `randsum`
 
-- [Randsum Dice Notation](https://github.com/RANDSUM/randsum-ts/blob/main/packages/notation/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
+- [Randsum Dice Notation](https://github.com/RANDSUM/randsum/blob/main/packages/notation/RANDSUM_DICE_NOTATION.md) - A guide for using [Dice Notation](https://en.wikipedia.org/wiki/Dice_notation) with `randsum`.
 
-- [Contributing](https://github.com/RANDSUM/randsum-ts/blob/main/CONTRIBUTING.md) - help make `randsum` better!
+- [Contributing](https://github.com/RANDSUM/randsum/blob/main/CONTRIBUTING.md) - help make `randsum` better!
 
 - [Sophie's Dice Notation](https://sophiehoulden.com/dice/documentation/notation.html) - a great dice notation guide that helped me along the way
 

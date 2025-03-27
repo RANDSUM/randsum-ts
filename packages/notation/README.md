@@ -1,12 +1,12 @@
 <div align="center">
-  <img width="150" height="150" src="https://raw.githubusercontent.com/RANDSUM/randsum-ts/main/icon.webp">
+  <img width="150" height="150" src="https://raw.githubusercontent.com/RANDSUM/randsum/main/icon.webp">
   <h1>@randsum/notation</h1>
   <h3>Dice notation parser and validator for randsum</h3>
 
 [![npm version](https://img.shields.io/npm/v/@randsum/notation)](https://www.npmjs.com/package/@randsum/notation)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@randsum/notation)](https://bundlephobia.com/package/@randsum/notation)
 [![Types](https://img.shields.io/npm/types/@randsum/notation)](https://www.npmjs.com/package/@randsum/notation)
-[![License](https://img.shields.io/npm/l/@randsum/notation)](https://github.com/RANDSUM/randsum-ts/blob/main/LICENSE)
+[![License](https://img.shields.io/npm/l/@randsum/notation)](https://github.com/RANDSUM/randsum/blob/main/LICENSE)
 [![Downloads](https://img.shields.io/npm/dm/@randsum/notation)](https://www.npmjs.com/package/@randsum/notation)
 
 </div>
@@ -153,7 +153,7 @@ function createAttackRoll(bonus: number): DiceNotation {
 - `!`: Exploding dice (e.g., `3d8!`)
 - `U`: Unique results (e.g., `3d6U`)
 
-See [Dice Notation Reference](https://github.com/RANDSUM/randsum-ts/blob/main/RANDSUM_DICE_NOTATION.md) for complete documentation.
+See [Dice Notation Reference](https://github.com/RANDSUM/randsum/blob/main/RANDSUM_DICE_NOTATION.md) for complete documentation.
 
 ## API Reference
 
@@ -187,7 +187,7 @@ notationToOptions('4d6L')
 
 ## Related Packages
 
-- [@randsum/dice](https://github.com/RANDSUM/randsum-ts/tree/main/packages/dice): Dice rolling implementation
+- [@randsum/dice](https://github.com/RANDSUM/randsum/tree/main/packages/dice): Dice rolling implementation
 
 ## License
 
