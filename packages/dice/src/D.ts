@@ -60,7 +60,7 @@ export class D<T extends number | string[]> implements BaseD<T> {
   }
 
   rollModified(
-    quantity: number,
+    quantity = 1,
     modifiers: ModifierOptions = {}
   ): T extends number ? NumericRollResult : CustomRollResult {
     return roll({
