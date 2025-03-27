@@ -47,6 +47,25 @@ describe(D, () => {
         })
       })
     })
+
+    describe(D.prototype.rollModified, () => {
+      describe('with quantity argument', () => {
+        test('returns a NumericRollResult with multiple rolls', () => {
+          const result = die.rollModified(2)
+          expect(result.result).toHaveLength(2)
+          expect(result.total).toBeGreaterThan(1)
+          expect(result.total).toBeLessThanOrEqual(12)
+        })
+      })
+
+      describe('with modifiers', () => {
+        test('applies modifiers to the roll', () => {
+          const result = die.rollModified(1, { plus: 2 })
+          expect(result.total).toBeGreaterThan(2)
+          expect(result.total).toBeLessThanOrEqual(8)
+        })
+      })
+    })
   })
 
   describe('Creating a Die with Custom Sides', () => {
@@ -95,6 +114,29 @@ describe(D, () => {
         test('.returns an array of values found in the constructor', () => {
           expect(sides).toContain(die.rollSpread(2)[0])
           expect(sides).toContain(die.rollSpread(2)[1])
+        })
+      })
+    })
+
+    describe(D.prototype.rollModified, () => {
+      describe('with quantity argument', () => {
+        test('returns a CustomRollResult with multiple rolls', () => {
+          const result = die.rollModified(2)
+          expect(result.result).toHaveLength(2)
+          result.result.forEach((roll) => {
+            expect(sides).toContain(roll)
+          })
+        })
+      })
+
+      describe('with modifiers', () => {
+        test('returns a CustomRollResult ignoring numeric modifiers', () => {
+          const result = die.rollModified(2, { plus: 2 })
+          expect(result.type).toBe('custom')
+          expect(result.result).toHaveLength(2)
+          result.result.forEach((roll) => {
+            expect(sides).toContain(roll)
+          })
         })
       })
     })
