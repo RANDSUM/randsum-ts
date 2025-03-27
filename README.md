@@ -47,6 +47,17 @@ Dice notation parser and validator, for parsing the powerful Randsum Dice Notati
 npm install @randsum/notation
 ```
 
+### [`@randsum/5E`](https://www.npmjs.com/package/@randsum/5E)
+
+[![npm version](https://img.shields.io/npm/v/@randsum/5E)](https://www.npmjs.com/package/@randsum/5E)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/@randsum/5E)](https://bundlephobia.com/package/@randsum/5E)
+
+5th Edition compatible dice rolling implementation.
+
+```bash
+npm install @randsum/5E
+```
+
 ### `@randsum/core`
 
 Internal package containing shared utilities and types. Not intended for direct usage. All types are exported in each subsequent package for ease of use.
