@@ -4,6 +4,10 @@ on:
     workflows: [CI]
     types: [completed]
     branches: [main]
+
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 jobs:
   setup:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -12,26 +16,26 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - uses: oven-sh/setup-bun@v1
+      - run: bun install
+      - run: bun run build:all
 
-      - name: Use Bun
-        uses: oven-sh/setup-bun@v1
-
-      - name: Install deps
-        run: bun install
-
-      - name: Build
-        run: bun run build:all
-
-      - name: Setup .npmrc
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
-          echo "access=public" >> .npmrc
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  publish-core:
+  publish:
     needs: setup
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: core
+            needs: []
+          - name: notation
+            needs: [core]
+          - name: dice
+            needs: [core, notation]
+          - name: 5E
+            needs: [dice]
+          - name: root-rpg
+            needs: [dice]
     steps:
       - uses: actions/checkout@v3
       - uses: oven-sh/setup-bun@v1
@@ -39,67 +43,14 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
           echo "access=public" >> .npmrc
-      - name: Publish Core
-        run: bun publish --no-git-checks --cwd packages/core
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  publish-notation:
-    needs: publish-core
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v1
-      - name: Setup .npmrc
+      - name: Wait for dependencies
+        if: matrix.needs != ''
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
-          echo "access=public" >> .npmrc
-      - name: Publish Notation
-        run: bun publish --no-git-checks --cwd packages/notation
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  publish-dice:
-    needs: [publish-core, publish-notation]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v1
-      - name: Setup .npmrc
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
-          echo "access=public" >> .npmrc
-      - name: Publish Dice
-        run: bun publish --no-git-checks --cwd packages/dice
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  publish-5e:
-    needs: publish-dice
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v1
-      - name: Setup .npmrc
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
-          echo "access=public" >> .npmrc
-      - name: Publish 5E
-        run: bun publish --no-git-checks --cwd packages/5E
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  publish-root-rpg:
-    needs: publish-dice
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: oven-sh/setup-bun@v1
-      - name: Setup .npmrc
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
-          echo "access=public" >> .npmrc
-      - name: Publish Root RPG
-        run: bun publish --no-git-checks --cwd packages/root-rpg
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          for dep in ${{ join(matrix.needs, ' ') }}; do
+            while ! npm view "@randsum/$dep" version; do
+              echo "Waiting for @randsum/$dep to be published..."
+              sleep 10
+            done
+          done
+      - name: Publish ${{ matrix.name }}
+        run: bun publish --no-git-checks --cwd packages/${{ matrix.name }}
