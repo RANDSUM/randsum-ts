@@ -4,43 +4,66 @@ on:
     workflows: [CI]
     types: [completed]
     branches: [main]
+
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 jobs:
-  publish:
+  setup:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - uses: oven-sh/setup-bun@v1
+      - run: bun install
+      - run: bun run build:all
 
-      - name: Use Bun
-        uses: oven-sh/setup-bun@v1
-
-      - name: Install deps
-        run: bun install
-
-      - name: Build
-        run: bun run build:all
-
+  publish:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: core
+            needs: []
+          - name: notation
+            needs: [core]
+          - name: dice
+            needs: [core, notation]
+          - name: 5E
+            needs: [dice]
+          - name: root-rpg
+            needs: [dice]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - uses: oven-sh/setup-bun@v1
       - name: Setup .npmrc
         run: |
           echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
           echo "access=public" >> .npmrc
-
-      - name: Publish Core
+      - name: Wait for dependencies
+        if: matrix.needs != ''
         continue-on-error: true
-        run: bun publish --no-git-checks --cwd packages/core
-
-      - name: Publish Notation
+        run: |
+          for dep in ${{ join(matrix.needs, ' ') }}; do
+            max_attempts=30
+            attempt=1
+            while ! npm view "@randsum/$dep" version; do
+              if [ $attempt -ge $max_attempts ]; then
+                echo "Max attempts reached waiting for @randsum/$dep. Continuing anyway..."
+                break
+              fi
+              echo "Waiting for @randsum/$dep to be published... (Attempt $attempt/$max_attempts)"
+              sleep 10
+              attempt=$((attempt + 1))
+            done
+          done
+      - name: Publish ${{ matrix.name }}
         continue-on-error: true
-        run: bun publish --no-git-checks --cwd packages/notation
-
-      - name: Publish Dice
-        continue-on-error: true
-        run: bun publish --no-git-checks --cwd packages/dice
-
-      - name: Publish 5E
-        continue-on-error: true
-        run: bun publish --no-git-checks --cwd packages/dice
+        run: |
+          if ! bun publish --no-git-checks --cwd packages/${{ matrix.name }}; then
+            echo "::warning::Failed to publish @randsum/${{ matrix.name }}, but continuing with workflow"
+          fi
