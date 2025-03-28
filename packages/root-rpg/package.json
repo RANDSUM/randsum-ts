@@ -1,7 +1,7 @@
 {
   "name": "@randsum/root-rpg",
-  "version": "0.1.1",
-  "description": "Root RPG compatible dice rolling for randsum",
+  "version": "0.1.9",
+  "description": "A flexible, type-safe dice roller for building Root RPG applications",
   "author": {
     "name": "Alex Jarvis",
     "url": "https://github.com/RANDSUM"

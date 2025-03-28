@@ -11,13 +11,12 @@
 
 </div>
 
-A type-safe implementation of Root RPG dice rolling mechanics that supports:
+A small collection of utilities for [Root RPG](https://magpiegames.com/collections/root)!
 
-- 🎲 Standard Root RPG 2d6 rolls
+- 🎲 Standard Root RPG (2d6+N) rolls
 - 🎯 Automatic handling of modifiers
 - 🔒 Full TypeScript support
-- 🎮 Perfect for Root RPG compatible applications
-- 🪶 Tree-shakeable implementation
+- 🪶 smol (not larger than a wolf)
 
 ## Installation
 
@@ -64,22 +63,6 @@ Makes a 2d6 roll following Root RPG rules, returning both the interpreted result
 ```typescript
 function rollRoot(bonus: number): [RootResult, NumericRollResult]
 ```
-
-#### Parameters
-
-- `bonus`: Number to add to the 2d6 roll
-
-#### Returns
-
-A tuple containing:
-
-1. `RootResult`: One of:
-   - `'Strong Hit'` (10 or higher)
-   - `'Weak Hit'` (7-9)
-   - `'Miss'` (6 or lower)
-2. `NumericRollResult`: Detailed roll information from `@randsum/dice`
-
-### Types
 
 ```typescript
 type RootResult = RootStrongHit | RootWeakHit | RootMiss

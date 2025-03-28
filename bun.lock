@@ -27,6 +27,20 @@
         "typescript": ">=5.0.0",
       },
     },
+    "packages/blades": {
+      "name": "@randsum/blades",
+      "version": "0.1.0",
+      "dependencies": {
+        "@randsum/dice": "workspace:^",
+      },
+      "devDependencies": {
+        "@types/bun": "1.2.6",
+        "bunup": "^0.1.39",
+      },
+      "peerDependencies": {
+        "typescript": ">=5.0.0",
+      },
+    },
     "packages/core": {
       "name": "@randsum/core",
       "version": "0.1.10",
@@ -66,7 +80,7 @@
     },
     "packages/root-rpg": {
       "name": "@randsum/root-rpg",
-      "version": "0.1.1",
+      "version": "0.1.9",
       "dependencies": {
         "@randsum/dice": "workspace:^",
       },
@@ -147,6 +161,8 @@
     "@oxc-transform/binding-win32-x64-msvc": ["@oxc-transform/binding-win32-x64-msvc@0.58.1", "", { "os": "win32", "cpu": "x64" }, "sha512-612E4VNg9wK5cpGjaHjdW+aD3b1w80lps6rsFEsWejGB5nF5OkXS8uZxS1iQE/16JUoFNUcH+3yyqQP7ljdOuA=="],
 
     "@randsum/5e": ["@randsum/5e@workspace:packages/5E"],
+
+    "@randsum/blades": ["@randsum/blades@workspace:packages/blades"],
 
     "@randsum/core": ["@randsum/core@workspace:packages/core"],
 
