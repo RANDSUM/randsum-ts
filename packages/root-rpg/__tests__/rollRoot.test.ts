@@ -15,13 +15,13 @@ describe('rollRoot', () => {
   describe('roll ranges', () => {
     test('returns result within valid range (2d6 + modifier)', () => {
       const bonus = 2
-      const [_, details] = rollRoot(bonus)
+      const [, details] = rollRoot(bonus)
       expect(details.total).toBeGreaterThanOrEqual(2 + bonus) // min: 1 + 1 + 2
       expect(details.total).toBeLessThanOrEqual(12 + bonus) // max: 6 + 6 + 2
     })
 
     test('returns two dice results', () => {
-      const [_, details] = rollRoot(0)
+      const [, details] = rollRoot(0)
       expect(details.rawResult).toHaveLength(2)
     })
   })
@@ -29,20 +29,20 @@ describe('rollRoot', () => {
   describe('modifiers', () => {
     test('correctly applies positive modifier', () => {
       const bonus = 3
-      const [_, details] = rollRoot(bonus)
+      const [, details] = rollRoot(bonus)
       const rawTotal = details.rawResult.reduce((sum, roll) => sum + roll, 0)
       expect(details.total).toBe(rawTotal + bonus)
     })
 
     test('correctly applies negative modifier', () => {
       const bonus = -2
-      const [_, details] = rollRoot(bonus)
+      const [, details] = rollRoot(bonus)
       const rawTotal = details.rawResult.reduce((sum, roll) => sum + roll, 0)
       expect(details.total).toBe(rawTotal + bonus)
     })
 
     test('handles zero modifier', () => {
-      const [_, details] = rollRoot(0)
+      const [, details] = rollRoot(0)
       const rawTotal = details.rawResult.reduce((sum, roll) => sum + roll, 0)
       expect(details.total).toBe(rawTotal)
     })
@@ -65,11 +65,7 @@ describe('rollRoot', () => {
           return
         }
 
-        if (result === 'Miss') {
-          expect(details.total).toBeLessThanOrEqual(6)
-          return
-        }
-        expect(false).toBe(true)
+        expect(details.total).toBeLessThanOrEqual(6)
       })
     })
   })
