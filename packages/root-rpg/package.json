@@ -1,7 +1,7 @@
 {
   "name": "@randsum/root-rpg",
   "version": "0.1.9",
-  "description": "A flexible, type-safe dice roller for building Root RPG applications",
+  "description": "A flexible, type-safe dice roller for the Root RPG system",
   "author": {
     "name": "Alex Jarvis",
     "url": "https://github.com/RANDSUM"

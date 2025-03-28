@@ -1,32 +1,24 @@
 {
-  "name": "@randsum/notation",
-  "version": "0.1.10",
-  "description": "A flexible, type-safe dice notation parser and validator",
+  "name": "@randsum/salvageunion",
+  "version": "0.1.0",
+  "description": "A flexible, type-safe dice roller for the Salvage Union system",
   "author": {
     "name": "Alex Jarvis",
-    "url": "https://github.com/RANDSUM"
+    "url": "https://github.com/alxjrvs"
   },
+  "sideEffects": false,
+  "type": "module",
   "license": "MIT",
   "homepage": "https://github.com/RANDSUM/randsum",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RANDSUM/randsum.git",
-    "directory": "packages/notation"
+    "directory": "packages/salvageunion"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "source": "./src/index.ts",
-  "react-native": "./src/index.ts",
-  "files": [
-    "dist",
-    "src",
-    "LICENSE",
-    "README.md",
-    "RANDSUM_DICE_NOTATION.md"
-  ],
-  "sideEffects": false,
-  "type": "module",
   "scripts": {
     "build": "npx bunup",
     "test": "bun test",
@@ -37,7 +29,7 @@
     "prepack": "bun run build"
   },
   "dependencies": {
-    "@randsum/core": "workspace:^"
+    "@randsum/dice": "workspace:^"
   },
   "devDependencies": {
     "@types/bun": "1.2.6",
@@ -65,15 +57,5 @@
   "engines": {
     "node": ">=18.0.0",
     "bun": ">=1.0.0"
-  },
-  "keywords": [
-    "dice-notation",
-    "parser",
-    "validator",
-    "rpg",
-    "typescript",
-    "dnd",
-    "tabletop",
-    "randsum"
-  ]
+  }
 }

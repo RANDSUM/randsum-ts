@@ -89,6 +89,6 @@ const success = meetOrBeat5e(15, {
 - [@randsum/dice](https://github.com/RANDSUM/randsum/tree/main/packages/dice): Core dice rolling implementation
 - [@randsum/notation](https://github.com/RANDSUM/randsum/tree/main/packages/notation): Dice notation parser
 
-## License
-
-MIT © Alex Jarvis
+<div align="center">
+Made with 👹 by <a href="https://github.com/RANDSUM">RANDSUM</a>
+</div>

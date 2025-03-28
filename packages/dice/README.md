@@ -173,6 +173,6 @@ See [Dice Notation Reference](https://github.com/RANDSUM/randsum/blob/main/RANDS
 - [@randsum/notation](https://github.com/RANDSUM/randsum/tree/main/packages/notation): Dice notation parser
 - [@randsum/5e](https://github.com/RANDSUM/randsum/tree/main/packages/5e): 5th Edition compatible dice rolling
 
-## License
-
-MIT © Alex Jarvis
+<div align="center">
+Made with 👹 by <a href="https://github.com/RANDSUM">RANDSUM</a>
+</div>
