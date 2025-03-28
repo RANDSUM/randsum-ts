@@ -78,11 +78,19 @@ export interface DicePool {
 interface BaseRollResult {
   rawResult: (number | string)[]
   type: 'numerical' | 'custom' | 'mixed'
+  rawRolls: Record<string, number[] | string[]>
+  modifiedRolls: Record<
+    string,
+    { rolls: string[] | number[]; total: string | number }
+  >
+  result: (string | number)[]
+  total: string | number
 }
 
 export interface NumericRollResult extends BaseRollResult {
   type: 'numerical'
   rawRolls: Record<string, number[]>
+  rawResult: number[]
   modifiedRolls: Record<string, { rolls: number[]; total: number }>
   result: number[]
   total: number
@@ -91,6 +99,7 @@ export interface NumericRollResult extends BaseRollResult {
 export interface CustomRollResult extends BaseRollResult {
   type: 'custom'
   rawRolls: Record<string, string[]>
+  rawResult: string[]
   modifiedRolls: Record<string, { rolls: string[]; total: string }>
   result: string[]
   total: string
