@@ -69,6 +69,17 @@ Root RPG compatible dice rolling implementation.
 npm install @randsum/root-rpg
 ```
 
+### [`@randsum/blades`](https://www.npmjs.com/package/@randsum/blades)
+
+[![npm version](https://img.shields.io/npm/v/@randsum/blades)](https://www.npmjs.com/package/@randsum/blades)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/@randsum/blades)](https://bundlephobia.com/package/@randsum/blades)
+
+Blades in the Dark compatible dice rolling implementation.
+
+```bash
+npm install @randsum/blades
+```
+
 ### `@randsum/core`
 
 Internal package containing shared utilities and types. Not intended for direct usage. All types are exported in each subsequent package for ease of use.
