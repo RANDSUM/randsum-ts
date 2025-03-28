@@ -16,24 +16,27 @@ export class CapModifier extends BaseModifier<ComparisonOptions> {
     if (notations.length === 0) {
       return {}
     }
-    return notations.reduce(
+    return notations.reduce<Pick<ModifierOptions, 'cap'>>(
       (acc, notationString = '') => {
-        const capString = (notationString.split(/[Cc]/)[1] || '')
+        const capString = (notationString.split(/[Cc]/)[1] ?? '')
           .replaceAll(/{|}/g, '')
           .split(',')
 
-        const capOptions = capString.reduce((innerAcc, note) => {
-          if (note.includes('<')) {
+        const capOptions = capString.reduce<ComparisonOptions>(
+          (innerAcc, note) => {
+            if (note.includes('<')) {
+              return {
+                ...innerAcc,
+                lessThan: Number(note.replaceAll('<', ''))
+              }
+            }
             return {
               ...innerAcc,
-              lessThan: Number(note.replaceAll('<', ''))
+              greaterThan: Number(note.replaceAll('>', ''))
             }
-          }
-          return {
-            ...innerAcc,
-            greaterThan: Number(note.replaceAll('>', ''))
-          }
-        }, {} as ComparisonOptions)
+          },
+          {}
+        )
 
         return {
           cap: {
@@ -42,7 +45,7 @@ export class CapModifier extends BaseModifier<ComparisonOptions> {
           }
         }
       },
-      { cap: {} } as Pick<ModifierOptions, 'cap'>
+      { cap: {} }
     )
   }
 
@@ -61,22 +64,19 @@ export class CapModifier extends BaseModifier<ComparisonOptions> {
     }
   }
 
-  constructor(options: ComparisonOptions | undefined) {
-    super(options)
-  }
-
-  apply = (rolls: number[]): NumericRollBonus => {
-    if (this.options === undefined) return this.defaultBonus(rolls)
-    return this.defaultBonus(
-      rolls.map(CapModifier.applySingleCap(this.options))
-    )
+  apply = (bonus: NumericRollBonus): NumericRollBonus => {
+    if (this.options === undefined) return bonus
+    return {
+      ...bonus,
+      rolls: bonus.rolls.map(CapModifier.applySingleCap(this.options))
+    }
   }
 
   toDescription = (): string[] | undefined => {
     if (this.options === undefined) return undefined
     return formatters.greaterLess
       .descriptions(this.options)
-      .map((str) => `No Rolls ${str}`)
+      .map((str) => `No Rolls ${String(str)}`)
   }
 
   toNotation = (): string | undefined => {

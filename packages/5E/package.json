@@ -1,7 +1,7 @@
 {
-  "name": "@randsum/dice",
-  "version": "0.1.10",
-  "description": "A flexible, type-safe dice roller for TypeScript/JavaScript",
+  "name": "@randsum/5e",
+  "version": "0.1.0",
+  "description": "A flexible, type-safe dice roller for building 5E-compatible applications",
   "author": {
     "name": "Alex Jarvis",
     "url": "https://github.com/RANDSUM"
@@ -11,7 +11,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RANDSUM/randsum.git",
-    "directory": "packages/dice"
+    "directory": "packages/5E"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -36,8 +36,7 @@
     "prepack": "bun run build"
   },
   "dependencies": {
-    "@randsum/core": "workspace:^",
-    "@randsum/notation": "workspace:^"
+    "@randsum/dice": "workspace:^"
   },
   "devDependencies": {
     "@types/bun": "1.2.6",
@@ -73,6 +72,9 @@
     "random",
     "typescript",
     "dnd",
-    "tabletop"
+    "tabletop",
+    "5E",
+    "Dungeons",
+    "Dragons"
   ]
 }

@@ -12,9 +12,10 @@ import { coreNotationPattern } from '../patterns'
 import type { DiceNotation, RollOptions } from '../types'
 
 export function notationToOptions(notationString: DiceNotation): RollOptions {
-  const coreNotationMatch = notationString.match(coreNotationPattern)!.at(0)
-  const modifiersString = notationString.replace(coreNotationMatch!, '')
-  const [quantity, sides = ''] = coreNotationMatch!.split(/[Dd]/)
+  const coreNotationMatch =
+    notationString.match(coreNotationPattern)?.at(0) ?? ''
+  const modifiersString = notationString.replace(coreNotationMatch, '')
+  const [quantity, sides = ''] = coreNotationMatch.split(/[Dd]/)
 
   if (sides.includes('{')) {
     return {

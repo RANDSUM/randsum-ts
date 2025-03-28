@@ -10,7 +10,7 @@ import type { CustomDiceNotation, NumericDiceNotation } from '@randsum/notation'
 // --- DIE TYPES ---
 // -----------------------
 
-export type BaseD<T extends number | string[]> = {
+export interface BaseD<T extends number | string[]> {
   readonly sides: number
   readonly faces: T extends number ? number[] : string[]
   readonly type: T extends number ? 'numerical' : 'custom'
@@ -78,11 +78,19 @@ export interface DicePool {
 interface BaseRollResult {
   rawResult: (number | string)[]
   type: 'numerical' | 'custom' | 'mixed'
+  rawRolls: Record<string, number[] | string[]>
+  modifiedRolls: Record<
+    string,
+    { rolls: string[] | number[]; total: string | number }
+  >
+  result: (string | number)[]
+  total: string | number
 }
 
 export interface NumericRollResult extends BaseRollResult {
   type: 'numerical'
   rawRolls: Record<string, number[]>
+  rawResult: number[]
   modifiedRolls: Record<string, { rolls: number[]; total: number }>
   result: number[]
   total: number
@@ -91,6 +99,7 @@ export interface NumericRollResult extends BaseRollResult {
 export interface CustomRollResult extends BaseRollResult {
   type: 'custom'
   rawRolls: Record<string, string[]>
+  rawResult: string[]
   modifiedRolls: Record<string, { rolls: string[]; total: string }>
   result: string[]
   total: string

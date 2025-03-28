@@ -19,7 +19,7 @@ export class DropModifier extends BaseModifier<DropOptions> {
 
     return notations.reduce(
       (acc, notationString) => {
-        const constraints = (notationString.split(/[Dd]/)[1] || '')
+        const constraints = (notationString.split(/[Dd]/)[1] ?? '')
           .replaceAll('{', '')
           .replaceAll('}', '')
           .split(',')
@@ -38,7 +38,7 @@ export class DropModifier extends BaseModifier<DropOptions> {
             }
           }
 
-          const exact = [...(innerAcc?.exact || []), Number(constraint)]
+          const exact = [...(innerAcc.exact ?? []), Number(constraint)]
 
           return {
             ...innerAcc,
@@ -62,7 +62,7 @@ export class DropModifier extends BaseModifier<DropOptions> {
       return {}
     }
 
-    const notationString = notations[notations.length - 1] || ''
+    const notationString = notations[notations.length - 1] ?? ''
     const highestCount = notationString.split(/[Hh]/)[1]
 
     if (highestCount === '') {
@@ -80,7 +80,7 @@ export class DropModifier extends BaseModifier<DropOptions> {
     if (notations.length === 0) {
       return { drop: {} }
     }
-    const notationString = notations[notations.length - 1] || ''
+    const notationString = notations[notations.length - 1] ?? ''
     const lowestCount = notationString.split(/[Ll]/)[1]
 
     if (lowestCount === '') {
@@ -125,15 +125,10 @@ export class DropModifier extends BaseModifier<DropOptions> {
     return {}
   }
 
-  constructor(options: DropOptions | undefined) {
-    super(options)
-  }
-
-  apply = (rolls: number[]): NumericRollBonus => {
-    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
-    const { highest, lowest, greaterThan, lessThan, exact } = this
-      .options as DropOptions
-    const sortedResults = rolls
+  apply = (bonus: NumericRollBonus): NumericRollBonus => {
+    if (this.options === undefined) return bonus
+    const { highest, lowest, greaterThan, lessThan, exact } = this.options
+    const sortedResults = bonus.rolls
       .filter(
         (roll) =>
           !(
@@ -153,8 +148,8 @@ export class DropModifier extends BaseModifier<DropOptions> {
     }
 
     return {
-      rolls: sortedResults,
-      simpleMathModifier: 0
+      ...bonus,
+      rolls: sortedResults
     }
   }
 
@@ -163,25 +158,25 @@ export class DropModifier extends BaseModifier<DropOptions> {
     const dropList = []
 
     if (this.options.highest && this.options.highest > 1)
-      dropList.push(`Drop highest ${this.options.highest}`)
+      dropList.push(`Drop highest ${String(this.options.highest)}`)
 
     if (this.options.highest && this.options.highest <= 1)
       dropList.push(`Drop highest`)
 
     if (this.options.lowest && this.options.lowest > 1)
-      dropList.push(`Drop lowest ${this.options.lowest}`)
+      dropList.push(`Drop lowest ${String(this.options.lowest)}`)
 
     if (this.options.lowest && this.options.lowest <= 1)
       dropList.push(`Drop lowest`)
 
     if (this.options.exact) {
       const exact = formatters.humanList(this.options.exact)
-      dropList.push(`Drop ${exact}`)
+      dropList.push(`Drop ${String(exact)}`)
     }
 
     formatters.greaterLess
       .descriptions(this.options)
-      .forEach((str) => dropList.push(`Drop ${str}`))
+      .forEach((str) => dropList.push(`Drop ${String(str)}`))
 
     return dropList
   }
@@ -200,7 +195,7 @@ export class DropModifier extends BaseModifier<DropOptions> {
     const finalList = []
 
     if (this.options.highest && this.options.highest > 1) {
-      finalList.push(`H${this.options.highest}`)
+      finalList.push(`H${String(this.options.highest)}`)
     }
 
     if (this.options.highest && this.options.highest <= 1) {
@@ -208,7 +203,7 @@ export class DropModifier extends BaseModifier<DropOptions> {
     }
 
     if (this.options.lowest && this.options.lowest > 1) {
-      finalList.push(`L${this.options.lowest}`)
+      finalList.push(`L${String(this.options.lowest)}`)
     }
 
     if (this.options.lowest && this.options.lowest <= 1) {

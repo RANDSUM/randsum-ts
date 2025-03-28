@@ -18,23 +18,19 @@ export class ExplodeModifier extends BaseModifier<boolean> {
     return { explode: true }
   }
 
-  constructor(options: boolean | undefined) {
-    super(options)
-  }
-
   apply = (
-    rolls: number[],
+    bonus: NumericRollBonus,
     { sides }: RequiredNumericRollParameters,
     rollOne: () => number
   ): NumericRollBonus => {
-    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
-    const explodeCount = rolls.filter((roll) => roll === sides).length
+    if (this.options === undefined) return bonus
+    const explodeCount = bonus.rolls.filter((roll) => roll === sides).length
     const explodeResults = Array.from({ length: explodeCount }, rollOne)
-    const explodedRolls = [...rolls, ...explodeResults]
+    const explodedRolls = [...bonus.rolls, ...explodeResults]
 
     return {
-      rolls: explodedRolls,
-      simpleMathModifier: 0
+      ...bonus,
+      rolls: explodedRolls
     }
   }
 

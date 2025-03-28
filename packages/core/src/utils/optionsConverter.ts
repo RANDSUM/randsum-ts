@@ -26,10 +26,10 @@ export const optionsConverter = {
     const { quantity = 1, sides } = options
 
     if (Array.isArray(sides)) {
-      return `${quantity}d{${sides.join('')}}`
+      return `${String(quantity)}d{${sides.join('')}}`
     }
 
-    return `${quantity}d${sides}`
+    return `${String(quantity)}d${String(sides)}`
   },
 
   formatModifierNotation(modifiers: ModifierOptions | undefined): string {
@@ -53,7 +53,8 @@ export const optionsConverter = {
 
   formatCoreDescription(options: RollOptions): string {
     const { sides, quantity = 1 } = options
-    const base = `Roll ${quantity}`
+
+    const base = `Roll ${String(quantity)}`
     let descriptor = 'die'
     if (quantity > 1) {
       descriptor = 'dice'
@@ -74,7 +75,7 @@ export const optionsConverter = {
       return `${base} ${descriptor} with the following sides: (${formattedSides})`
     }
 
-    return `${base} ${sides}-sided ${descriptor}`
+    return `${base} ${String(sides)}-sided ${descriptor}`
   },
 
   formatModifierDescriptions(options: RollOptions): string[] {

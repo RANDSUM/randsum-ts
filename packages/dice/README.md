@@ -171,6 +171,7 @@ See [Dice Notation Reference](https://github.com/RANDSUM/randsum/blob/main/RANDS
 ## Related Packages
 
 - [@randsum/notation](https://github.com/RANDSUM/randsum/tree/main/packages/notation): Dice notation parser
+- [@randsum/5E](https://github.com/RANDSUM/randsum/tree/main/packages/5E): 5th Edition compatible dice rolling
 
 ## License
 

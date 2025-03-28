@@ -31,7 +31,9 @@ export class D<T extends number | string[]> implements BaseD<T> {
       if (!arg.length) {
         throw new Error('Custom die must have at least one face')
       }
+
       this.sides = arg.length
+      //eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       this.faces = [...(arg as string[])] as T extends number
         ? number[]
         : string[]

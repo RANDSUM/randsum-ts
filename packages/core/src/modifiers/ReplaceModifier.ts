@@ -22,7 +22,7 @@ export class ReplaceModifier extends BaseModifier<
     }
     const replace = notations
       .map((notationString) => {
-        const replaceOptions = (notationString.split(/[Vv]/)[1] || '')
+        const replaceOptions = (notationString.split(/[Vv]/)[1] ?? '')
           .replaceAll('{', '')
           .replaceAll('}', '')
           .split(',')
@@ -56,32 +56,26 @@ export class ReplaceModifier extends BaseModifier<
     return { replace }
   }
 
-  constructor(options: ReplaceOptions | ReplaceOptions[] | undefined) {
-    super(options)
-  }
-
-  apply = (rolls: number[]): NumericRollBonus => {
-    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
-    let replaceRolls = rolls
+  apply = (bonus: NumericRollBonus): NumericRollBonus => {
+    if (this.options === undefined) return bonus
+    let replaceRolls = bonus.rolls
     const parameters = [this.options].flat()
 
     parameters.forEach(({ from, to }) => {
       replaceRolls = replaceRolls.map((roll) => {
-        if (from !== undefined) {
-          if (typeof from === 'object') {
-            return CapModifier.applySingleCap(from, to)(roll)
-          }
-          if (roll === from) {
-            return to
-          }
+        if (typeof from === 'object') {
+          return CapModifier.applySingleCap(from, to)(roll)
+        }
+        if (roll === from) {
+          return to
         }
         return roll
       })
     })
 
     return {
-      rolls: replaceRolls,
-      simpleMathModifier: 0
+      ...bonus,
+      rolls: replaceRolls
     }
   }
 
@@ -101,11 +95,11 @@ export class ReplaceModifier extends BaseModifier<
   }
 
   private singleReplaceDescription = ({ from, to }: ReplaceOptions): string => {
-    return `Replace ${this.extractFromValue(from)} with [${to}]`
+    return `Replace ${String(this.extractFromValue(from))} with [${String(to)}]`
   }
 
   private extractFromValue = (from: number | ComparisonOptions): string => {
-    if (typeof from === 'number') return `[${from}]`
+    if (typeof from === 'number') return `[${String(from)}]`
     return formatters.greaterLess.descriptions(from).join(' and ')
   }
 
@@ -118,7 +112,7 @@ export class ReplaceModifier extends BaseModifier<
   }
 
   private singleReplaceNotation = (replace: ReplaceOptions): string => {
-    return `${this.fromValueNotation(replace.from)}=${replace.to}`
+    return `${String(this.fromValueNotation(replace.from))}=${String(replace.to)}`
   }
 
   private fromValueNotation = (

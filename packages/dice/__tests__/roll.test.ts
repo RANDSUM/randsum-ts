@@ -53,4 +53,27 @@ describe(roll, () => {
       })
     })
   })
+
+  describe('corder cases', () => {
+    test.only('ordered options remain the same', () => {
+      const argsOne = {
+        sides: 1,
+        quantity: 2,
+        modifiers: {
+          plus: 5,
+          drop: { lowest: 1 }
+        }
+      }
+      const argsTwo = {
+        sides: 1,
+        quantity: 2,
+        modifiers: {
+          drop: { lowest: 1 },
+          plus: 5
+        }
+      }
+
+      expect(roll(argsOne).total).toEqual(roll(argsTwo).total)
+    })
+  })
 })

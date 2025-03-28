@@ -20,25 +20,21 @@ export class MinusModifier extends BaseModifier<number> {
     }
   }
 
-  constructor(options: number | undefined) {
-    super(options)
-  }
-
-  apply = (rolls: number[]): NumericRollBonus => {
-    if (!this.options) return { rolls, simpleMathModifier: 0 }
+  apply = (bonus: NumericRollBonus): NumericRollBonus => {
+    if (!this.options) return bonus
     return {
-      rolls,
+      ...bonus,
       simpleMathModifier: -this.options
     }
   }
 
   toDescription = (): string[] | undefined => {
     if (!this.options) return undefined
-    return [`Subtract ${this.options}`]
+    return [`Subtract ${String(this.options)}`]
   }
 
   toNotation = (): string | undefined => {
     if (!this.options) return undefined
-    return `-${this.options}`
+    return `-${String(this.options)}`
   }
 }

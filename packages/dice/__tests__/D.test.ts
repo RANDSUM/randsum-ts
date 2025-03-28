@@ -19,7 +19,7 @@ describe(D, () => {
       expect(die.faces).toEqual([1, 2, 3, 4, 5, 6])
     })
 
-    describe(D.prototype.roll, () => {
+    describe('D.prototype.roll', () => {
       describe('with no argument', () => {
         test('.returns a number included in the constructor', () => {
           expect([1, 2, 3, 4, 5, 6]).toContain(die.roll())
@@ -33,7 +33,7 @@ describe(D, () => {
       })
     })
 
-    describe(D.prototype.rollSpread, () => {
+    describe('D.prototype.rollSpread', () => {
       describe('with no argument', () => {
         test('.returns a number included in the constructor', () => {
           expect([1, 2, 3, 4, 5, 6]).toContain(die.rollSpread()[0])
@@ -48,7 +48,7 @@ describe(D, () => {
       })
     })
 
-    describe(D.prototype.rollModified, () => {
+    describe('D.prototype.rollModified', () => {
       describe('with quantity argument', () => {
         test('returns a NumericRollResult with multiple rolls', () => {
           const result = die.rollModified(2)
@@ -85,7 +85,7 @@ describe(D, () => {
       expect(die.faces).toEqual(sides)
     })
 
-    describe(D.prototype.roll, () => {
+    describe('D.prototype.roll', () => {
       describe('with no argument', () => {
         test('.returns a value included in the constructor', () => {
           expect(sides).toContain(die.roll())
@@ -103,7 +103,7 @@ describe(D, () => {
       })
     })
 
-    describe(D.prototype.rollSpread, () => {
+    describe('D.prototype.rollSpread', () => {
       describe('with no argument', () => {
         test('.returns an array of values in the constructor', () => {
           expect(sides).toContain(die.rollSpread()[0])
@@ -118,7 +118,7 @@ describe(D, () => {
       })
     })
 
-    describe(D.prototype.rollModified, () => {
+    describe('D.prototype.rollModified', () => {
       describe('with quantity argument', () => {
         test('returns a CustomRollResult with multiple rolls', () => {
           const result = die.rollModified(2)

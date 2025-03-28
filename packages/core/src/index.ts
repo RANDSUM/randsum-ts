@@ -1,5 +1,4 @@
 export { isNumericRollOptions } from './guards'
-
 export { BaseModifier } from './modifiers/BaseModifier'
 export { CapModifier } from './modifiers/CapModifier'
 export { DropModifier } from './modifiers/DropModifier'
@@ -9,7 +8,6 @@ export { PlusModifier } from './modifiers/PlusModifier'
 export { ReplaceModifier } from './modifiers/ReplaceModifier'
 export { RerollModifier } from './modifiers/RerollModifier'
 export { UniqueModifier } from './modifiers/UniqueModifier'
-
 export {
   capPattern,
   dropConstraintsPattern,
@@ -22,7 +20,6 @@ export {
   rerollPattern,
   uniquePattern
 } from './patterns'
-
 export type {
   BaseRollOptions,
   ComparisonOptions,
@@ -40,7 +37,6 @@ export type {
   RollOptions,
   UniqueOptions
 } from './types'
-
 export { extractMatches } from './utils/extractMatches'
 export { formatters } from './utils/formatters'
 export { InvalidUniqueError } from './utils/invalidUniqueError'

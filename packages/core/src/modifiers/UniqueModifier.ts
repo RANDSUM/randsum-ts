@@ -36,26 +36,22 @@ export class UniqueModifier extends BaseModifier<boolean | UniqueOptions> {
     }, {})
   }
 
-  constructor(options: boolean | UniqueOptions | undefined) {
-    super(options)
-  }
-
   apply(
-    rolls: number[],
+    bonus: NumericRollBonus,
     { sides, quantity }: RequiredNumericRollParameters,
     rollOne: () => number
   ): NumericRollBonus {
-    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
+    if (this.options === undefined) return bonus
     if (quantity > sides) {
       throw new InvalidUniqueError()
     }
     const notUnique = this.generateNotUniqueArray()
 
     const filteredArray = new Set(
-      rolls.filter((n) => !notUnique.includes(Number(n)))
+      bonus.rolls.filter((n) => !notUnique.includes(Number(n)))
     )
 
-    const uniqueRolls = rolls.map(Number).map((roll, index, array) => {
+    const uniqueRolls = bonus.rolls.map(Number).map((roll, index, array) => {
       let newRoll: number
       if (array.indexOf(roll) === index || notUnique.includes(roll)) {
         return roll
@@ -67,14 +63,14 @@ export class UniqueModifier extends BaseModifier<boolean | UniqueOptions> {
     })
 
     return {
-      rolls: uniqueRolls,
-      simpleMathModifier: 0
+      ...bonus,
+      rolls: uniqueRolls
     }
   }
 
   toDescription(): string[] | undefined {
     if (this.options === undefined) return undefined
-    if (typeof this.options === 'boolean' || this.options === undefined) {
+    if (typeof this.options === 'boolean') {
       return ['No Duplicate Rolls']
     }
     return [
@@ -84,8 +80,7 @@ export class UniqueModifier extends BaseModifier<boolean | UniqueOptions> {
 
   toNotation(): string | undefined {
     if (this.options === undefined) return undefined
-    if (typeof this.options === 'boolean' || this.options === undefined)
-      return 'U'
+    if (typeof this.options === 'boolean') return 'U'
     return `U{${this.options.notUnique.join(',')}}`
   }
 

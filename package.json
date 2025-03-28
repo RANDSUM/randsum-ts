@@ -1,6 +1,7 @@
 {
   "name": "randsum-monorepo",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
@@ -8,7 +9,8 @@
     "build:core": "bun run --cwd packages/core build",
     "build:notation": "bun run --cwd packages/notation build",
     "build:dice": "bun run --cwd packages/dice build",
-    "build:all": "bun run build:core && bun run build:notation && bun run build:dice",
+    "build:5E": "bun run --cwd packages/5E build",
+    "build:all": "bun run build:core && bun run build:notation && bun run build:dice && bun run build:5E",
     "test": "bun run build:all && bun test --cwd=packages",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -32,6 +34,15 @@
     "endOfLine": "auto",
     "trailingComma": "none",
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false,
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "always",
+    "proseWrap": "preserve",
+    "quoteProps": "as-needed",
+    "embeddedLanguageFormatting": "auto"
   }
 }
