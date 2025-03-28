@@ -58,6 +58,17 @@ npm install @randsum/notation
 npm install @randsum/5E
 ```
 
+### [`@randsum/root-rpg`](https://www.npmjs.com/package/@randsum/root-rpg)
+
+[![npm version](https://img.shields.io/npm/v/@randsum/root-rpg)](https://www.npmjs.com/package/@randsum/root-rpg)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/@randsum/root-rpg)](https://bundlephobia.com/package/@randsum/root-rpg)
+
+Root RPG compatible dice rolling implementation.
+
+```bash
+npm install @randsum/root-rpg
+```
+
 ### `@randsum/core`
 
 Internal package containing shared utilities and types. Not intended for direct usage. All types are exported in each subsequent package for ease of use.
