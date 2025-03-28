@@ -15,7 +15,7 @@
     },
     "packages/5E": {
       "name": "@randsum/5e",
-      "version": "0.0.1",
+      "version": "0.0.2",
       "dependencies": {
         "@randsum/dice": "workspace:^",
       },
