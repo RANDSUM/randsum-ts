@@ -64,17 +64,17 @@ export class RerollModifier extends BaseModifier<RerollOptions> {
   }
 
   apply(
-    rolls: number[],
+    bonus: NumericRollBonus,
     _params: undefined,
     rollOne: () => number
   ): NumericRollBonus {
-    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
+    if (this.options === undefined) return bonus
 
     return {
-      rolls: [...rolls].map((roll) =>
+      ...bonus,
+      rolls: [...bonus.rolls].map((roll) =>
         this.rerollRoll(roll, this.options as RerollOptions, rollOne)
-      ),
-      simpleMathModifier: 0
+      )
     }
   }
 

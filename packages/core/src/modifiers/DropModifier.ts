@@ -129,11 +129,11 @@ export class DropModifier extends BaseModifier<DropOptions> {
     super(options)
   }
 
-  apply = (rolls: number[]): NumericRollBonus => {
-    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
+  apply = (bonus: NumericRollBonus): NumericRollBonus => {
+    if (this.options === undefined) return bonus
     const { highest, lowest, greaterThan, lessThan, exact } = this
       .options as DropOptions
-    const sortedResults = rolls
+    const sortedResults = bonus.rolls
       .filter(
         (roll) =>
           !(
@@ -153,8 +153,8 @@ export class DropModifier extends BaseModifier<DropOptions> {
     }
 
     return {
-      rolls: sortedResults,
-      simpleMathModifier: 0
+      ...bonus,
+      rolls: sortedResults
     }
   }
 

@@ -65,11 +65,12 @@ export class CapModifier extends BaseModifier<ComparisonOptions> {
     super(options)
   }
 
-  apply = (rolls: number[]): NumericRollBonus => {
-    if (this.options === undefined) return this.defaultBonus(rolls)
-    return this.defaultBonus(
-      rolls.map(CapModifier.applySingleCap(this.options))
-    )
+  apply = (bonus: NumericRollBonus): NumericRollBonus => {
+    if (this.options === undefined) return bonus
+    return {
+      ...bonus,
+      rolls: bonus.rolls.map(CapModifier.applySingleCap(this.options))
+    }
   }
 
   toDescription = (): string[] | undefined => {

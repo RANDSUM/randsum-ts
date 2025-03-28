@@ -2,13 +2,12 @@ import { roll } from '@randsum/dice'
 import type { AdvantageDisadvantage5E, RollArgument5E } from './types'
 
 export function roll5E({ modifier, rollingWith }: RollArgument5E) {
-  const sides = 20
-
-  return roll({
-    sides,
+  const rollArg = {
+    sides: 20,
     quantity: generateQuantity(rollingWith),
-    modifiers: generateModifiers(modifier, rollingWith)
-  })
+    modifiers: { ...generateModifiers(rollingWith), plus: modifier }
+  }
+  return roll(rollArg)
 }
 
 function generateQuantity(rollingWith?: AdvantageDisadvantage5E) {
@@ -21,25 +20,17 @@ function generateQuantity(rollingWith?: AdvantageDisadvantage5E) {
   }
 }
 
-function generateModifiers(
-  modifier: number,
-  rollingWith?: AdvantageDisadvantage5E
-) {
-  const coreModifiers = {
-    plus: modifier
-  }
+function generateModifiers(rollingWith: AdvantageDisadvantage5E | undefined) {
   switch (rollingWith) {
     case 'Advantage':
       return {
-        ...coreModifiers,
         drop: { lowest: 1 }
       }
     case 'Disadvantage':
       return {
-        ...coreModifiers,
         drop: { highest: 1 }
       }
     default:
-      return coreModifiers
+      return {}
   }
 }

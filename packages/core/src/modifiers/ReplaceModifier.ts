@@ -60,9 +60,9 @@ export class ReplaceModifier extends BaseModifier<
     super(options)
   }
 
-  apply = (rolls: number[]): NumericRollBonus => {
-    if (this.options === undefined) return { rolls, simpleMathModifier: 0 }
-    let replaceRolls = rolls
+  apply = (bonus: NumericRollBonus): NumericRollBonus => {
+    if (this.options === undefined) return bonus
+    let replaceRolls = bonus.rolls
     const parameters = [this.options].flat()
 
     parameters.forEach(({ from, to }) => {
@@ -80,8 +80,8 @@ export class ReplaceModifier extends BaseModifier<
     })
 
     return {
-      rolls: replaceRolls,
-      simpleMathModifier: 0
+      ...bonus,
+      rolls: replaceRolls
     }
   }
 

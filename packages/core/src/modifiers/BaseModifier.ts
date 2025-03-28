@@ -12,7 +12,7 @@ export abstract class BaseModifier<T = unknown> {
   }
 
   abstract apply(
-    rolls: number[],
+    bonuses: NumericRollBonus,
     parameters?: RequiredNumericRollParameters,
     rollOne?: () => number
   ): NumericRollBonus
@@ -24,12 +24,5 @@ export abstract class BaseModifier<T = unknown> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static parse(_modifiersString: string): Partial<ModifierOptions> {
     return {}
-  }
-
-  protected defaultBonus(rolls: number[]): NumericRollBonus {
-    return {
-      rolls,
-      simpleMathModifier: 0
-    }
   }
 }
