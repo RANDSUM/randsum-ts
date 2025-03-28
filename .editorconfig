@@ -1,8 +1,64 @@
+# top-most EditorConfig file
 root = true
 
+# Default settings for all files
 [*]
+# Line endings
 end_of_line = lf
-indent_style = space
-indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
+
+# Indentation
+indent_style = space
+indent_size = 2
+
+# Character set
+charset = utf-8
+
+# Max line length
+max_line_length = 80
+
+# Specific settings for markdown files
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# TypeScript/JavaScript specific settings
+[*.{ts,tsx,js,jsx,mjs,cjs}]
+quote_type = single
+curly_bracket_next_line = false
+spaces_around_operators = true
+spaces_around_brackets = inside
+indent_brace_style = K&R
+
+# JSON files
+[*.{json,jsonc}]
+insert_final_newline = false
+
+# YAML files
+[*.{yml,yaml}]
+indent_size = 2
+
+# Shell scripts
+[*.sh]
+end_of_line = lf
+
+# Windows-specific files
+[*.{cmd,bat,ps1}]
+end_of_line = crlf
+
+# Git files
+[.git*]
+indent_style = tab
+
+# Package files
+[{package.json,package-lock.json,pnpm-lock.yaml,bun.lockb}]
+indent_size = 2
+
+# Configuration files
+[*.{toml,ini}]
+indent_size = 2
+
+# Documentation
+[*.{md,mdx,txt}]
+indent_size = 2
