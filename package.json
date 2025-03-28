@@ -9,7 +9,7 @@
     "build:core": "bun run --cwd packages/core build",
     "build:notation": "bun run --cwd packages/notation build",
     "build:dice": "bun run --cwd packages/dice build",
-    "build:5e": "bun run --cwd packages/5ex build",
+    "build:5ex": "bun run --cwd packages/5ex build",
     "build:root-rpg": "bun run --cwd packages/root-rpg build",
     "build:blades": "bun run --cwd packages/blades build",
     "build:all": "bun run build:core && bun run build:notation && bun run build:dice && bun run build:5ex && bun run build:root-rpg && bun run build:blades",
