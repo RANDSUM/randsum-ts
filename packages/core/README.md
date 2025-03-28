@@ -29,6 +29,6 @@ bun install
 bun run build:all
 ```
 
-## License
-
-MIT © Alex Jarvis
+<div align="center">
+Made with 👹 by <a href="https://github.com/RANDSUM">RANDSUM</a>
+</div>

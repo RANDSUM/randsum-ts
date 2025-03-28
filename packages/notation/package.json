@@ -1,7 +1,7 @@
 {
   "name": "@randsum/notation",
-  "version": "0.1.10",
-  "description": "Dice notation parser and validator for TypeScript/JavaScript",
+  "version": "0.1.11",
+  "description": "A flexible, type-safe dice notation parser and validator",
   "author": {
     "name": "Alex Jarvis",
     "url": "https://github.com/RANDSUM"

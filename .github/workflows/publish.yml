@@ -36,6 +36,8 @@ jobs:
             needs: [dice]
           - name: blades
             needs: [dice]
+          - name: salvageunion
+            needs: [dice]
       fail-fast: false
     steps:
       - uses: actions/checkout@v3

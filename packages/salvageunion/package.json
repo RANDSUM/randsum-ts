@@ -1,39 +1,42 @@
 {
-  "name": "@randsum/core",
+  "name": "@randsum/salvageunion",
   "version": "0.1.11",
-  "description": "Internal utilities and types for @randsum packages",
-  "private": false,
+  "description": "A flexible, type-safe dice roller for the Salvage Union system",
   "author": {
     "name": "Alex Jarvis",
-    "url": "https://github.com/RANDSUM"
+    "url": "https://github.com/alxjrvs"
   },
+  "sideEffects": false,
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/RANDSUM/randsum",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RANDSUM/randsum.git",
-    "directory": "packages/core"
+    "directory": "packages/salvageunion"
   },
-  "license": "MIT",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "source": "./src/index.ts",
-  "react-native": "./src/index.ts",
-  "files": [
-    "dist",
-    "src",
-    "LICENSE",
-    "README.md"
-  ],
-  "sideEffects": false,
-  "type": "module",
   "scripts": {
     "build": "npx bunup",
-    "clean": "rm -rf ./dist/ ./coverage/",
     "test": "bun test",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
+    "typecheck": "tsc --noEmit",
     "prepare": "bun run build",
     "prepack": "bun run build"
+  },
+  "dependencies": {
+    "@randsum/dice": "workspace:^"
+  },
+  "devDependencies": {
+    "@types/bun": "1.2.6",
+    "bunup": "^0.1.39"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
   },
   "exports": {
     ".": {
@@ -51,8 +54,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
-    "@types/bun": "1.2.6",
-    "bunup": "^0.1.39"
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
   }
 }
