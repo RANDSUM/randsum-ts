@@ -98,7 +98,7 @@ packages/
 ├── core/         # Shared utilities and types
 ├── dice/         # Core dice rolling implementation
 ├── notation/     # Dice notation parser
-├── 5E/          # D&D 5E compatible dice rolling
+├── 5e/          # D&D 5e compatible dice rolling
 └── root-rpg/    # Root RPG compatible dice rolling
 ```
 
@@ -115,7 +115,7 @@ Each package has its own:
 - `@randsum/core`: Shared types and utilities
 - `@randsum/dice`: Core dice rolling logic
 - `@randsum/notation`: Dice notation parsing
-- `@randsum/5E`: D&D 5E compatible dice rolling
+- `@randsum/5e`: D&D 5e compatible dice rolling
 - `@randsum/root-rpg`: Root RPG compatible dice rolling
 
 ## Need Help?

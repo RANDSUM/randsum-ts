@@ -10,7 +10,7 @@ Instead of installing this package directly, use one of our public packages whic
 
 - [`@randsum/dice`](https://www.npmjs.com/package/@randsum/dice) - Core dice rolling implementation
 - [`@randsum/notation`](https://www.npmjs.com/package/@randsum/notation) - Dice notation parser
-- [`@randsum/5E`](https://www.npmjs.com/package/@randsum/5E) - 5th Edition compatible dice rolling
+- [`@randsum/5e`](https://www.npmjs.com/package/@randsum/5e) - 5th Edition compatible dice rolling
 
 ## For Contributors
 

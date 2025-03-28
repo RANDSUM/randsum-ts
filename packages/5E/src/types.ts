@@ -1,5 +1,5 @@
-export type AdvantageDisadvantage5E = 'Advantage' | 'Disadvantage'
-export interface RollArgument5E {
+export type AdvantageDisadvantage5e = 'Advantage' | 'Disadvantage'
+export interface RollArgument5e {
   modifier: number
-  rollingWith?: AdvantageDisadvantage5E
+  rollingWith?: AdvantageDisadvantage5e
 }

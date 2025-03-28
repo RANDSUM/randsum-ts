@@ -1,3 +1,3 @@
-export { meetOrBeat5E } from './meetOrBeat5E'
-export { roll5E } from './roll5E'
-export type { AdvantageDisadvantage5E, RollArgument5E } from './types'
+export { meetOrBeat5e } from './meetOrBeat5e'
+export { roll5e } from './roll5e'
+export type { AdvantageDisadvantage5e, RollArgument5e } from './types'
