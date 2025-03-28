@@ -38,7 +38,7 @@ export class DropModifier extends BaseModifier<DropOptions> {
             }
           }
 
-          const exact = [...(innerAcc?.exact || []), Number(constraint)]
+          const exact = [...(innerAcc.exact || []), Number(constraint)]
 
           return {
             ...innerAcc,
@@ -125,14 +125,10 @@ export class DropModifier extends BaseModifier<DropOptions> {
     return {}
   }
 
-  constructor(options: DropOptions | undefined) {
-    super(options)
-  }
-
   apply = (bonus: NumericRollBonus): NumericRollBonus => {
     if (this.options === undefined) return bonus
     const { highest, lowest, greaterThan, lessThan, exact } = this
-      .options as DropOptions
+      .options
     const sortedResults = bonus.rolls
       .filter(
         (roll) =>

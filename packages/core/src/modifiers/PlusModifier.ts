@@ -20,10 +20,6 @@ export class PlusModifier extends BaseModifier<number> {
     }
   }
 
-  constructor(options: number | undefined) {
-    super(options)
-  }
-
   apply = (bonus: NumericRollBonus): NumericRollBonus => {
     if (!this.options) return bonus
     return {

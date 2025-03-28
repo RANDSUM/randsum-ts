@@ -31,9 +31,9 @@ function optionsFromArgument(argument: RollArgument): RollParams['options'] {
   }
 
   if (isDiceNotation(argument)) {
-    const coreNotationMatch = argument.match(coreNotationPattern)
+    const coreNotationMatch = argument.match(coreNotationPattern) ?? ''
 
-    const coreMatch = coreNotationMatch![0]
+    const coreMatch = coreNotationMatch[0]
     const modifiersString = argument.replace(coreMatch, '')
     const [quantity, sides = ''] = coreMatch.split(/[Dd]/)
 

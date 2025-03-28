@@ -92,6 +92,7 @@ function applyModifier(
   }
 
   const modifier = modifierMap[key]
+  //eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!modifier) {
     throw new Error(`Unknown modifier: ${key}`)
   }
@@ -105,7 +106,7 @@ function generateModifiedRolls(
 ): RollResult['modifiedRolls'] {
   return Object.fromEntries(
     Object.entries(dicePools.dicePools).map(([key, params]) => {
-      const rolls = rawRolls[key] || []
+      const rolls = rawRolls[key] ?? []
 
       if (isCustomParameters(params)) {
         return [
@@ -153,7 +154,7 @@ function generateRawRolls(
   return Object.fromEntries(
     Object.entries(dicePools).map(([key, pool]) => {
       const { options } = pool
-      const quantity = options.quantity || 1
+      const quantity = options.quantity ?? 1
 
       if (isNumericRollOptions(options)) {
         return [key, coreSpreadRolls<number>(quantity, options.sides)]
@@ -164,5 +165,5 @@ function generateRawRolls(
         coreSpreadRolls(quantity, options.sides.length, options.sides)
       ]
     })
-  )
+  ) as RollResult['rawRolls']
 }

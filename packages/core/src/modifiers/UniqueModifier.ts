@@ -36,10 +36,6 @@ export class UniqueModifier extends BaseModifier<boolean | UniqueOptions> {
     }, {})
   }
 
-  constructor(options: boolean | UniqueOptions | undefined) {
-    super(options)
-  }
-
   apply(
     bonus: NumericRollBonus,
     { sides, quantity }: RequiredNumericRollParameters,
@@ -74,7 +70,7 @@ export class UniqueModifier extends BaseModifier<boolean | UniqueOptions> {
 
   toDescription(): string[] | undefined {
     if (this.options === undefined) return undefined
-    if (typeof this.options === 'boolean' || this.options === undefined) {
+    if (typeof this.options === 'boolean') {
       return ['No Duplicate Rolls']
     }
     return [
@@ -84,8 +80,7 @@ export class UniqueModifier extends BaseModifier<boolean | UniqueOptions> {
 
   toNotation(): string | undefined {
     if (this.options === undefined) return undefined
-    if (typeof this.options === 'boolean' || this.options === undefined)
-      return 'U'
+    if (typeof this.options === 'boolean') return 'U'
     return `U{${this.options.notUnique.join(',')}}`
   }
 

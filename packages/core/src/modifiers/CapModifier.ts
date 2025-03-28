@@ -16,13 +16,13 @@ export class CapModifier extends BaseModifier<ComparisonOptions> {
     if (notations.length === 0) {
       return {}
     }
-    return notations.reduce(
+    return notations.reduce<Pick<ModifierOptions, 'cap'>>(
       (acc, notationString = '') => {
         const capString = (notationString.split(/[Cc]/)[1] || '')
           .replaceAll(/{|}/g, '')
           .split(',')
 
-        const capOptions = capString.reduce((innerAcc, note) => {
+        const capOptions = capString.reduce<ComparisonOptions>((innerAcc, note) => {
           if (note.includes('<')) {
             return {
               ...innerAcc,
@@ -33,7 +33,7 @@ export class CapModifier extends BaseModifier<ComparisonOptions> {
             ...innerAcc,
             greaterThan: Number(note.replaceAll('>', ''))
           }
-        }, {} as ComparisonOptions)
+        }, {})
 
         return {
           cap: {
@@ -42,7 +42,7 @@ export class CapModifier extends BaseModifier<ComparisonOptions> {
           }
         }
       },
-      { cap: {} } as Pick<ModifierOptions, 'cap'>
+      { cap: {} }
     )
   }
 
@@ -59,10 +59,6 @@ export class CapModifier extends BaseModifier<ComparisonOptions> {
       }
       return roll
     }
-  }
-
-  constructor(options: ComparisonOptions | undefined) {
-    super(options)
   }
 
   apply = (bonus: NumericRollBonus): NumericRollBonus => {

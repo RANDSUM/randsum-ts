@@ -22,7 +22,7 @@ export class ReplaceModifier extends BaseModifier<
     }
     const replace = notations
       .map((notationString) => {
-        const replaceOptions = (notationString.split(/[Vv]/)[1] || '')
+        const replaceOptions = (notationString.split(/[Vv]/)[1] ?? '')
           .replaceAll('{', '')
           .replaceAll('}', '')
           .split(',')
@@ -54,10 +54,6 @@ export class ReplaceModifier extends BaseModifier<
       .filter((r) => r !== undefined)
 
     return { replace }
-  }
-
-  constructor(options: ReplaceOptions | ReplaceOptions[] | undefined) {
-    super(options)
   }
 
   apply = (bonus: NumericRollBonus): NumericRollBonus => {

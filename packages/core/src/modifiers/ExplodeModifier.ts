@@ -18,10 +18,6 @@ export class ExplodeModifier extends BaseModifier<boolean> {
     return { explode: true }
   }
 
-  constructor(options: boolean | undefined) {
-    super(options)
-  }
-
   apply = (
     bonus: NumericRollBonus,
     { sides }: RequiredNumericRollParameters,

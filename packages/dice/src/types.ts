@@ -10,7 +10,7 @@ import type { CustomDiceNotation, NumericDiceNotation } from '@randsum/notation'
 // --- DIE TYPES ---
 // -----------------------
 
-export type BaseD<T extends number | string[]> = {
+export interface BaseD<T extends number | string[]> {
   readonly sides: number
   readonly faces: T extends number ? number[] : string[]
   readonly type: T extends number ? 'numerical' : 'custom'

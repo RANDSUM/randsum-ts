@@ -15,39 +15,42 @@ export class RerollModifier extends BaseModifier<RerollOptions> {
 
     return notations.reduce(
       (acc, notationString) => {
-        const parsedString = (notationString.split(/[Rr]/)[1] || '')
+        const parsedString = (notationString.split(/[Rr]/)[1] ?? '')
           .replaceAll('{', '')
           .replaceAll('}', ',!')
           .split(',')
 
-        const rerollOptions = parsedString.reduce((innerAcc, notation) => {
-          if (notation === '!') {
-            return innerAcc
-          }
-          if (notation.includes('<')) {
-            return {
-              ...innerAcc,
-              lessThan: Number(notation.split('<')[1])
+        const rerollOptions = parsedString.reduce<RerollOptions>(
+          (innerAcc, notation) => {
+            if (notation === '!') {
+              return innerAcc
             }
-          }
-          if (notation.includes('>')) {
-            return {
-              ...innerAcc,
-              greaterThan: Number(notation.split('>')[1])
+            if (notation.includes('<')) {
+              return {
+                ...innerAcc,
+                lessThan: Number(notation.split('<')[1])
+              }
             }
-          }
-          if (notation.includes('!')) {
-            return {
-              ...innerAcc,
-              max: Number(notation.split('!')[1])
+            if (notation.includes('>')) {
+              return {
+                ...innerAcc,
+                greaterThan: Number(notation.split('>')[1])
+              }
             }
-          }
+            if (notation.includes('!')) {
+              return {
+                ...innerAcc,
+                max: Number(notation.split('!')[1])
+              }
+            }
 
-          return {
-            ...innerAcc,
-            exact: [...(innerAcc.exact || []), Number(notation)]
-          }
-        }, {} as RerollOptions)
+            return {
+              ...innerAcc,
+              exact: [...(innerAcc.exact ?? []), Number(notation)]
+            }
+          },
+          {}
+        )
 
         return {
           reroll: {
@@ -59,9 +62,6 @@ export class RerollModifier extends BaseModifier<RerollOptions> {
       { reroll: {} }
     ) as Pick<ModifierOptions, 'replace'>
   }
-  constructor(options: RerollOptions | undefined) {
-    super(options)
-  }
 
   apply(
     bonus: NumericRollBonus,
@@ -72,9 +72,10 @@ export class RerollModifier extends BaseModifier<RerollOptions> {
 
     return {
       ...bonus,
-      rolls: [...bonus.rolls].map((roll) =>
-        this.rerollRoll(roll, this.options as RerollOptions, rollOne)
-      )
+      rolls: [...bonus.rolls].map((roll) => {
+        if (this.options === undefined) return roll
+        return this.rerollRoll(roll, this.options, rollOne)
+      })
     }
   }
 
@@ -87,7 +88,9 @@ export class RerollModifier extends BaseModifier<RerollOptions> {
         rerollList.push(String(roll))
       })
     }
-    const greaterLess = `${formatters.greaterLess.descriptions(this.options).join(' and ')}`
+    const greaterLess = formatters.greaterLess
+      .descriptions(this.options)
+      .join(' and ')
 
     const exactList = formatters.humanList(rerollList)
 
@@ -99,7 +102,7 @@ export class RerollModifier extends BaseModifier<RerollOptions> {
     const coreString = `Reroll ${exactString}`
 
     if (this.options.max) {
-      return [`${coreString} (up to ${this.options.max} times)`]
+      return [`${coreString} (up to ${String(this.options.max)} times)`]
     }
 
     return [coreString]
@@ -120,7 +123,7 @@ export class RerollModifier extends BaseModifier<RerollOptions> {
     }
 
     if (rerollList.length === 0) return ''
-    return `R{${rerollList.join(',')}}${this.maxNotation(this.options.max)}`
+    return `R{${rerollList.join(',')}}${String(this.maxNotation(this.options.max))}`
   }
 
   private extractExactValue(
