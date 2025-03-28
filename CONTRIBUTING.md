@@ -97,7 +97,9 @@ This is a monorepo containing several packages:
 packages/
 ├── core/         # Shared utilities and types
 ├── dice/         # Core dice rolling implementation
-└── notation/      # Dice notation parser
+├── notation/     # Dice notation parser
+├── 5E/          # D&D 5E compatible dice rolling
+└── root-rpg/    # Root RPG compatible dice rolling
 ```
 
 Each package has its own:
@@ -113,7 +115,8 @@ Each package has its own:
 - `@randsum/core`: Shared types and utilities
 - `@randsum/dice`: Core dice rolling logic
 - `@randsum/notation`: Dice notation parsing
-- `randsum`: Main package that most users will install
+- `@randsum/5E`: D&D 5E compatible dice rolling
+- `@randsum/root-rpg`: Root RPG compatible dice rolling
 
 ## Need Help?
 
