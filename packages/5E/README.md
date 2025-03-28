@@ -32,7 +32,7 @@ bun add @randsum/5E
 ## Usage
 
 ```typescript
-import { roll5E, meetOrBeat } from '@randsum/5E'
+import { roll5E, meetOrBeat5E } from '@randsum/5E'
 import type { RollArgument5E } from '@randsum/5E'
 
 // Basic roll with modifier
@@ -55,7 +55,7 @@ const roll: RollArgument5E = {
   modifier: 5,
   rollingWith: 'Advantage'
 }
-meetOrBeat(15, roll) // Returns true if roll meets or exceeds DC 15
+meetOrBeat5E(15, roll) // Returns true if roll meets or exceeds DC 15
 ```
 
 ## API Reference
@@ -66,18 +66,18 @@ Makes a d20 roll following 5th Edition rules.
 
 ```typescript
 const result = roll5E({
-  modifier: 5,
+  modifier: 5, // the result of your bonuses after all bonuses are applied
   rollingWith: 'Advantage' // Optional
 })
 // Returns a roll result with total and details
 ```
 
-### `meetOrBeat`
+### `meetOrBeat5E`
 
 Checks if a roll meets or exceeds a Difficulty Class (DC).
 
 ```typescript
-const success = meetOrBeat(15, {
+const success = meetOrBeat5E(15, {
   modifier: 5,
   rollingWith: 'Advantage'
 })
