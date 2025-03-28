@@ -10,6 +10,7 @@ export function roll5E({ modifier, rollingWith }: RollArgument5E) {
     modifiers: generateModifiers(modifier, rollingWith)
   })
 }
+
 function generateQuantity(rollingWith?: AdvantageDisadvantage5E) {
   switch (rollingWith) {
     case 'Advantage':
