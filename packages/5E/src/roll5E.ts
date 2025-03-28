@@ -1,4 +1,5 @@
-import { roll, type NumericRollResult } from '@randsum/dice'
+import { type NumericRollResult, roll } from '@randsum/dice'
+
 import type { AdvantageDisadvantage5E, RollArgument5E } from './types'
 
 export function roll5E({
