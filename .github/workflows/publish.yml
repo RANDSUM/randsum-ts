@@ -30,7 +30,7 @@ jobs:
             needs: [core]
           - name: dice
             needs: [core, notation]
-          - name: 5e
+          - name: 5ex
             needs: [dice]
           - name: root-rpg
             needs: [dice]
