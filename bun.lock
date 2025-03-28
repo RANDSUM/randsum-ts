@@ -64,6 +64,20 @@
         "typescript": ">=5.0.0",
       },
     },
+    "packages/root-rpg": {
+      "name": "@randsum/root-rpg",
+      "version": "0.1.1",
+      "dependencies": {
+        "@randsum/dice": "workspace:^",
+      },
+      "devDependencies": {
+        "@types/bun": "1.2.6",
+        "bunup": "^0.1.39",
+      },
+      "peerDependencies": {
+        "typescript": ">=5.0.0",
+      },
+    },
   },
   "packages": {
     "@babel/code-frame": ["@babel/code-frame@7.26.2", "", { "dependencies": { "@babel/helper-validator-identifier": "^7.25.9", "js-tokens": "^4.0.0", "picocolors": "^1.0.0" } }, "sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ=="],
@@ -139,6 +153,8 @@
     "@randsum/dice": ["@randsum/dice@workspace:packages/dice"],
 
     "@randsum/notation": ["@randsum/notation@workspace:packages/notation"],
+
+    "@randsum/root-rpg": ["@randsum/root-rpg@workspace:packages/root-rpg"],
 
     "@rollup/rollup-android-arm-eabi": ["@rollup/rollup-android-arm-eabi@4.37.0", "", { "os": "android", "cpu": "arm" }, "sha512-l7StVw6WAa8l3vA1ov80jyetOAEo1FtHvZDbzXDO/02Sq/QVvqlHkYoFwDJPIMj0GKiistsBudfx5tGFnwYWDQ=="],
 
