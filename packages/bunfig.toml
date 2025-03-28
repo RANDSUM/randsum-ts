@@ -15,7 +15,7 @@ resolutionStrategy = "highest"
 [test]
 # Coverage settings
 coverage = true
-coverageReporter = ['text', 'lcov', 'html', 'json']
+coverageReporter = ['text', 'lcov']
 coverageThreshold = { lines = 1.0, functions = 0.0, branches = 0.8, statements = 0.8 }
 coverageDirectory = "coverage"
 coverageIgnorePatterns = [
@@ -111,6 +111,15 @@ extensions = [".ts", ".tsx", ".js", ".jsx", ".json"]
 watchDependencies = true
 aggregateTimeout = 300
 poll = 1000
+
+[build]
+# Build settings
+minify = true
+sourcemap = true
+target = ["node22", "bun1"]
+outDir = "dist"
+splitting = true
+publicPath = "/"
 
 # Monorepo-specific build settings
 workspaceDependencies = true
