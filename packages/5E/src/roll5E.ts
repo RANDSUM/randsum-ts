@@ -1,4 +1,4 @@
-import { roll } from 'packages/dice/src'
+import { roll } from '@randsum/dice'
 import type { AdvantageDisadvantage5E, RollArgument5E } from './types'
 
 export function roll5E({ modifier, rollingWith }: RollArgument5E) {
