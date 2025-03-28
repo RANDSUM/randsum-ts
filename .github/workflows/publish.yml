@@ -13,10 +13,8 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: oven-sh/setup-bun@v1
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
       - run: bun install
       - run: bun run build:all
 
@@ -32,9 +30,11 @@ jobs:
             needs: [core]
           - name: dice
             needs: [core, notation]
-          - name: 5E
+          - name: 5ex
             needs: [dice]
           - name: root-rpg
+            needs: [dice]
+          - name: blades
             needs: [dice]
       fail-fast: false
     steps:

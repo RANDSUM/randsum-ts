@@ -1,33 +1,11 @@
 {
-  "name": "@randsum/5e",
+  "name": "@randsum/blades",
   "version": "0.1.0",
-  "description": "A flexible, type-safe dice roller for building 5E-compatible applications",
-  "author": {
-    "name": "Alex Jarvis",
-    "url": "https://github.com/RANDSUM"
-  },
-  "license": "MIT",
-  "homepage": "https://github.com/RANDSUM/randsum",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RANDSUM/randsum.git",
-    "directory": "packages/5E"
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "source": "./src/index.ts",
-  "react-native": "./src/index.ts",
-  "files": [
-    "dist",
-    "src",
-    "LICENSE",
-    "README.md"
-  ],
+  "description": "Blades in the Dark compatible dice rolling implementation",
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "bunup",
+    "build": "npx bunup",
     "test": "bun test",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
@@ -64,17 +42,5 @@
   "engines": {
     "node": ">=18.0.0",
     "bun": ">=1.0.0"
-  },
-  "keywords": [
-    "dice",
-    "roller",
-    "rpg",
-    "random",
-    "typescript",
-    "dnd",
-    "tabletop",
-    "5E",
-    "Dungeons",
-    "Dragons"
-  ]
+  }
 }
