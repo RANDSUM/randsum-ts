@@ -1,0 +1,46 @@
+name: Publish + Release
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+jobs:
+  publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Use Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install deps
+        run: bun install
+
+      - name: Build
+        run: bun run build:all
+
+      - name: Setup .npmrc
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
+          echo "access=public" >> .npmrc
+
+      - name: Publish Core
+        continue-on-error: true
+        run: bun publish --no-git-checks --cwd packages/core
+
+      - name: Publish Notation
+        continue-on-error: true
+        run: bun publish --no-git-checks --cwd packages/notation
+
+      - name: Publish Dice
+        continue-on-error: true
+        run: bun publish --no-git-checks --cwd packages/dice
+
+      - name: Publish 5E
+        continue-on-error: true
+        run: bun publish --no-git-checks --cwd packages/dice
