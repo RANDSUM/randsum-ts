@@ -1,7 +1,10 @@
-import { roll } from '@randsum/dice'
+import { roll, type NumericRollResult } from '@randsum/dice'
 import type { AdvantageDisadvantage5E, RollArgument5E } from './types'
 
-export function roll5E({ modifier, rollingWith }: RollArgument5E) {
+export function roll5E({
+  modifier,
+  rollingWith
+}: RollArgument5E): NumericRollResult {
   const rollArg = {
     sides: 20,
     quantity: generateQuantity(rollingWith),

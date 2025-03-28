@@ -68,28 +68,27 @@ function applyModifier(
   const modifierMap = {
     reroll: () =>
       new RerollModifier(modifiers.reroll).apply(
-        currentBonuses.rolls,
+        currentBonuses,
         undefined,
         rollParams.rollOne
       ),
     unique: () =>
       new UniqueModifier(modifiers.unique).apply(
-        currentBonuses.rolls,
+        currentBonuses,
         { sides: rollParams.sides, quantity: rollParams.quantity },
         rollParams.rollOne
       ),
-    replace: () =>
-      new ReplaceModifier(modifiers.replace).apply(currentBonuses.rolls),
-    cap: () => new CapModifier(modifiers.cap).apply(currentBonuses.rolls),
-    drop: () => new DropModifier(modifiers.drop).apply(currentBonuses.rolls),
+    replace: () => new ReplaceModifier(modifiers.replace).apply(currentBonuses),
+    cap: () => new CapModifier(modifiers.cap).apply(currentBonuses),
+    drop: () => new DropModifier(modifiers.drop).apply(currentBonuses),
     explode: () =>
       new ExplodeModifier(modifiers.explode).apply(
-        currentBonuses.rolls,
+        currentBonuses,
         { sides: rollParams.sides, quantity: rollParams.quantity },
         rollParams.rollOne
       ),
-    plus: () => new PlusModifier(modifiers.plus).apply(currentBonuses.rolls),
-    minus: () => new MinusModifier(modifiers.minus).apply(currentBonuses.rolls)
+    plus: () => new PlusModifier(modifiers.plus).apply(currentBonuses),
+    minus: () => new MinusModifier(modifiers.minus).apply(currentBonuses)
   }
 
   const modifier = modifierMap[key]
