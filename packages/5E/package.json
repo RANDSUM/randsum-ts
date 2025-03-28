@@ -1,6 +1,6 @@
 {
   "name": "@randsum/5e",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A flexible, type-safe dice roller for building 5E-compatible applications",
   "author": {
     "name": "Alex Jarvis",

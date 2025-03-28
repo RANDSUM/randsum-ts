@@ -15,7 +15,7 @@
     },
     "packages/5E": {
       "name": "@randsum/5e",
-      "version": "0.0.2",
+      "version": "0.1.0",
       "dependencies": {
         "@randsum/dice": "workspace:^",
       },
@@ -29,7 +29,7 @@
     },
     "packages/core": {
       "name": "@randsum/core",
-      "version": "0.1.9",
+      "version": "0.1.10",
       "devDependencies": {
         "@types/bun": "1.2.6",
         "bunup": "^0.1.39",
@@ -37,7 +37,7 @@
     },
     "packages/dice": {
       "name": "@randsum/dice",
-      "version": "0.1.8",
+      "version": "0.1.10",
       "dependencies": {
         "@randsum/core": "workspace:^",
         "@randsum/notation": "workspace:^",
@@ -52,7 +52,7 @@
     },
     "packages/notation": {
       "name": "@randsum/notation",
-      "version": "0.1.7",
+      "version": "0.1.10",
       "dependencies": {
         "@randsum/core": "workspace:^",
       },
