@@ -1,12 +1,20 @@
-export const dropHighestPattern = /[Hh]\d*/g
-export const dropLowestPattern = /[Ll]\d*/g
-export const uniquePattern = /[Uu]({(\d+,)*(\d+)})?/g
-export const plusPattern = /\+\d+/g
-export const minusPattern = /-\d+/g
-export const explodePattern = /!/g
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+export const dropHighestPattern: RegExp = /[Hh]\d*/g
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+export const dropLowestPattern: RegExp = /[Ll]\d*/g
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+export const uniquePattern: RegExp = /[Uu]({(\d+,)*(\d+)})?/g
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+export const plusPattern: RegExp = /\+\d+/g
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+export const minusPattern: RegExp = /-\d+/g
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+export const explodePattern: RegExp = /!/g
 
-const coreGreaterLessThan = /[<>]?\d+/
-const coreGreaterLessThanEquals = new RegExp(
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+const coreGreaterLessThan: RegExp = /[<>]?\d+/
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+const coreGreaterLessThanEquals: RegExp = new RegExp(
   coreGreaterLessThan.source + /=?\d+/.source
 )
 
@@ -17,24 +25,28 @@ function createRepeatedPattern(core: RegExp) {
 const greaterThanLessEqualityThanMatcher: RegExp = createRepeatedPattern(
   coreGreaterLessThanEquals
 )
-export const replacePattern = new RegExp(
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+export const replacePattern: RegExp = new RegExp(
   /[Vv]/.source + greaterThanLessEqualityThanMatcher.source,
   'g'
 )
 
 const greaterThanLessThanMatcher: RegExp =
   createRepeatedPattern(coreGreaterLessThan)
-export const dropConstraintsPattern = new RegExp(
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+export const dropConstraintsPattern: RegExp = new RegExp(
   /[Dd]/.source + greaterThanLessThanMatcher.source,
   'g'
 )
 
-export const rerollPattern = new RegExp(
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+export const rerollPattern: RegExp = new RegExp(
   `${/[Rr]/.source}${greaterThanLessThanMatcher.source}${/\d*/.source}`,
   'g'
 )
 
-export const capPattern = new RegExp(
+//eslint-disable-next-line @typescript-eslint/no-inferrable-types
+export const capPattern: RegExp = new RegExp(
   `${/[Cc]/.source}${greaterThanLessThanMatcher.source}`,
   'g'
 )
