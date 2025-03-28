@@ -27,7 +27,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "bunup",
+    "build": "npx bunup",
     "clean": "rm -rf ./dist/ ./coverage/",
     "test": "bun test",
     "test:watch": "bun test --watch",
