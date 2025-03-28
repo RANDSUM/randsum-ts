@@ -15,7 +15,7 @@ describe('roll5E', () => {
     test('applies modifier correctly', () => {
       const result = roll5E(args)
       const rawRoll = result.rawResult[0]
-      expect(result.total).toBe(rawRoll + args.modifier)
+      expect(result.total).toBe(Number(rawRoll) + args.modifier)
     })
 
     test('returns single roll result', () => {
@@ -74,7 +74,7 @@ describe('roll5E', () => {
     test('applies negative modifier correctly', () => {
       const result = roll5E(args)
       const rawRoll = result.rawResult[0]
-      expect(result.total).toBe(rawRoll + args.modifier)
+      expect(result.total).toBe(Number(rawRoll) + args.modifier)
     })
   })
 })

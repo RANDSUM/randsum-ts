@@ -30,11 +30,11 @@ export class PlusModifier extends BaseModifier<number> {
 
   toDescription = (): string[] | undefined => {
     if (!this.options) return undefined
-    return [`Add ${this.options}`]
+    return [`Add ${String(this.options)}`]
   }
 
   toNotation = (): string | undefined => {
     if (!this.options) return undefined
-    return `+${this.options}`
+    return `+${String(this.options)}`
   }
 }

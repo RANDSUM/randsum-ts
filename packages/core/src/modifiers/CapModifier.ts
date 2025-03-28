@@ -18,22 +18,25 @@ export class CapModifier extends BaseModifier<ComparisonOptions> {
     }
     return notations.reduce<Pick<ModifierOptions, 'cap'>>(
       (acc, notationString = '') => {
-        const capString = (notationString.split(/[Cc]/)[1] || '')
+        const capString = (notationString.split(/[Cc]/)[1] ?? '')
           .replaceAll(/{|}/g, '')
           .split(',')
 
-        const capOptions = capString.reduce<ComparisonOptions>((innerAcc, note) => {
-          if (note.includes('<')) {
+        const capOptions = capString.reduce<ComparisonOptions>(
+          (innerAcc, note) => {
+            if (note.includes('<')) {
+              return {
+                ...innerAcc,
+                lessThan: Number(note.replaceAll('<', ''))
+              }
+            }
             return {
               ...innerAcc,
-              lessThan: Number(note.replaceAll('<', ''))
+              greaterThan: Number(note.replaceAll('>', ''))
             }
-          }
-          return {
-            ...innerAcc,
-            greaterThan: Number(note.replaceAll('>', ''))
-          }
-        }, {})
+          },
+          {}
+        )
 
         return {
           cap: {
@@ -73,7 +76,7 @@ export class CapModifier extends BaseModifier<ComparisonOptions> {
     if (this.options === undefined) return undefined
     return formatters.greaterLess
       .descriptions(this.options)
-      .map((str) => `No Rolls ${str}`)
+      .map((str) => `No Rolls ${String(str)}`)
   }
 
   toNotation = (): string | undefined => {

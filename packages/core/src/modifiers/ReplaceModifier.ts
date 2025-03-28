@@ -63,13 +63,11 @@ export class ReplaceModifier extends BaseModifier<
 
     parameters.forEach(({ from, to }) => {
       replaceRolls = replaceRolls.map((roll) => {
-        if (from !== undefined) {
-          if (typeof from === 'object') {
-            return CapModifier.applySingleCap(from, to)(roll)
-          }
-          if (roll === from) {
-            return to
-          }
+        if (typeof from === 'object') {
+          return CapModifier.applySingleCap(from, to)(roll)
+        }
+        if (roll === from) {
+          return to
         }
         return roll
       })
@@ -97,11 +95,11 @@ export class ReplaceModifier extends BaseModifier<
   }
 
   private singleReplaceDescription = ({ from, to }: ReplaceOptions): string => {
-    return `Replace ${this.extractFromValue(from)} with [${to}]`
+    return `Replace ${String(this.extractFromValue(from))} with [${String(to)}]`
   }
 
   private extractFromValue = (from: number | ComparisonOptions): string => {
-    if (typeof from === 'number') return `[${from}]`
+    if (typeof from === 'number') return `[${String(from)}]`
     return formatters.greaterLess.descriptions(from).join(' and ')
   }
 
@@ -114,7 +112,7 @@ export class ReplaceModifier extends BaseModifier<
   }
 
   private singleReplaceNotation = (replace: ReplaceOptions): string => {
-    return `${this.fromValueNotation(replace.from)}=${replace.to}`
+    return `${String(this.fromValueNotation(replace.from))}=${String(replace.to)}`
   }
 
   private fromValueNotation = (
